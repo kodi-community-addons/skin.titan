@@ -470,10 +470,15 @@ class TitanThread ():
             self.logMsg("[TitanSkin] userId: " + self._userId)
             self.logMsg("[TitanSkin] fullscan interval currently " + str(fullcheckinterval_current))
             self.logMsg("[TitanSkin] shortscan interval currently " + str(shortcheckinterval_current))
+            
+            # actions only needed for Plex add-on currently
+            if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
+                if shortcheckinterval_current <= 0:
+                    self.updatePlexlinks()
 
             # actions only needed for XBMB3C add-on currently
             if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
-                               
+          
                 # get images from server only if fullcheckinterval has reached
                 if fullcheckinterval_current <= 0:
                     self.logMsg("[TitanSkin] loading images from server...")
@@ -582,8 +587,62 @@ class TitanThread ():
                 link = link.replace(",return)", "")
                 win.setProperty(mbstring + ".nextepisodes.content", link)
 
-
             linkCount += 1
+            
+    
+    def updatePlexlinks(self):
+        win = xbmcgui.Window( 10000 )
+        linkCount = 0
+        while linkCount !=10:
+            plexstring = "plexbmc." + str(linkCount)
+            randomNr = random.randrange(1,10+1)
+            link = win.getProperty(plexstring + ".title")
+            self.logMsg(plexstring + ".title --> " + link)
+            plexType = win.getProperty(plexstring + ".type")
+            self.logMsg(plexstring + ".type --> " + plexType)            
+            
+            randomimage = ""
+            if plexType == "movie":
+                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
+                win.setProperty("plexfanartbg", randomimage)
+            elif plexType == "artist":
+                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
+                if randomimage == "":
+                    randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(1).Art(fanart)")
+                if randomimage == "":
+                    randomimage = "special://skin/extras/backgrounds/hover_my music.png"                
+            elif plexType == "show":
+                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Property(Fanart_Image)")
+            elif plexType == "photo":
+                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
+                
+            win.setProperty(plexstring + ".image", randomimage)
+            self.logMsg(plexstring + ".image --> " + randomimage)            
+            
+            link = win.getProperty(plexstring + ".recent")
+            self.logMsg(plexstring + ".recent --> " + link)
+            link = link.replace("ActivateWindow(VideoLibrary, ", "")
+            link = link.replace("ActivateWindow(VideoLibrary,", "")
+            link = link.replace("ActivateWindow(MusicFiles,", "")
+            link = link.replace("ActivateWindow(Pictures,", "")
+            link = link.replace(",return)", "")
+            win.setProperty(plexstring + ".recent.content", link)
+            self.logMsg(plexstring + ".recent --> " + link)
+            
+            link = win.getProperty(plexstring + ".viewed")
+            self.logMsg(plexstring + ".viewed --> " + link)
+            link = link.replace("ActivateWindow(VideoLibrary, ", "")
+            link = link.replace("ActivateWindow(VideoLibrary,", "")
+            link = link.replace("ActivateWindow(MusicFiles,", "")
+            link = link.replace("ActivateWindow(Pictures,", "")
+            link = link.replace(",return)", "")
+            win.setProperty(plexstring + ".viewed.content", link)
+            self.logMsg(plexstring + ".viewed --> " + link)
+
+            linkCount += 1    
+            
+            
+            
 
 xbmc.log("[TitanSkin] Started... fetching background images now")
 pollingthread = TitanThread()
