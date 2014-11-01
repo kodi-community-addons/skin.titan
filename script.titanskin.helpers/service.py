@@ -426,10 +426,10 @@ class TitanThread ():
             timeout -= 1
 
     def getContentFromCache(self):
-        linkCount = 0
         WINDOW = xbmcgui.Window( 10000 )
         self.logMsg("[TitanSkin] get properties from cache...")
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
+            linkCount = 0
             while linkCount !=10:
                 mbstring = "titanmb3." + str(linkCount)
                 if xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)') != "":
@@ -439,6 +439,7 @@ class TitanThread ():
                 linkCount += 1
                 
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
+            linkCount = 0
             while linkCount !=10:
                 plexstring = "plexbmc." + str(linkCount)
                 if xbmc.getInfoLabel("Skin.String(" + plexstring + '.title)') != "":
@@ -447,10 +448,10 @@ class TitanThread ():
                     WINDOW.setProperty(plexstring + '.path', xbmc.getInfoLabel("Skin.String(" + plexstring + '.path)'))
                 linkCount += 1        
 
-    def setContentInCache(self):
-        linkCount = 0            
+    def setContentInCache(self):         
         WINDOW = xbmcgui.Window( 10000 )
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
+            linkCount = 0
             while linkCount !=10:
                 mbstring = "titanmb3." + str(linkCount)
                 if WINDOW.getProperty(mbstring + '.title') != "":
@@ -464,6 +465,7 @@ class TitanThread ():
                 linkCount += 1 
                 
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
+            linkCount = 0
             while linkCount !=10:
                 plexstring = "plexbmc." + str(linkCount)
                 if WINDOW.getProperty(plexstring + '.title') != "":
@@ -499,7 +501,7 @@ class TitanThread ():
             # actions only needed for Plex add-on currently
             if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
                 if shortcheckinterval_current <= 0:
-                    if WINDOW.getProperty('plexbmc.0.title') == "":
+                    if WINDOW.getProperty('plexbmc.0.viewed') == "":
                         self.getContentFromCache()
                     else:
                         self.updatePlexlinks()
@@ -645,8 +647,9 @@ class TitanThread ():
             elif plexType == "photo":
                 randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
                 
-            win.setProperty(plexstring + ".image", randomimage)
-            self.logMsg(plexstring + ".image --> " + randomimage)            
+            if randomimage != "":
+                win.setProperty(plexstring + ".image", randomimage)
+                self.logMsg(plexstring + ".image --> " + randomimage)            
             
             link = win.getProperty(plexstring + ".recent")
             self.logMsg(plexstring + ".recent --> " + link)
