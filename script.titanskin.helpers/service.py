@@ -10,9 +10,9 @@ import random
 import time
 import os
 
-__settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
+__settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
 __cwd__ = __settings__.getAddonInfo('path')
-BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'lib' ) )
+BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources/lib' ) )
 sys.path.append(BASE_RESOURCE_PATH)
 
 class TitanThread ():
@@ -53,7 +53,7 @@ class TitanThread ():
                 currentIndex = 0
 
             if(currentIndex == startIndex):
-                return (currentIndex, linkList[currentIndex]) # we checked everything and nothing was ok so return the first one again
+                return (currentIndex, linkList[currentIndex])
 
             isParentMatch = True
             if(filterOnName != None and filterOnName != ""):
@@ -429,30 +429,55 @@ class TitanThread ():
         linkCount = 0
         WINDOW = xbmcgui.Window( 10000 )
         self.logMsg("[TitanSkin] get properties from cache...")
-
-        while linkCount !=10:
-            mbstring = "titanmb3." + str(linkCount)
-            if xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)') != "":
-                WINDOW.setProperty(mbstring + '.title', xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)'))
-                WINDOW.setProperty(mbstring + '.image', xbmc.getInfoLabel("Skin.String(" + mbstring + '.image)'))
-                WINDOW.setProperty(mbstring + '.path', xbmc.getInfoLabel("Skin.String(" + mbstring + '.path)'))
-            linkCount += 1        
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
+            while linkCount !=10:
+                mbstring = "titanmb3." + str(linkCount)
+                if xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)') != "":
+                    WINDOW.setProperty(mbstring + '.title', xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)'))
+                    WINDOW.setProperty(mbstring + '.image', xbmc.getInfoLabel("Skin.String(" + mbstring + '.image)'))
+                    WINDOW.setProperty(mbstring + '.path', xbmc.getInfoLabel("Skin.String(" + mbstring + '.path)'))
+                linkCount += 1
+                
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
+            while linkCount !=10:
+                plexstring = "plexbmc." + str(linkCount)
+                if xbmc.getInfoLabel("Skin.String(" + plexstring + '.title)') != "":
+                    WINDOW.setProperty(plexstring + '.title', xbmc.getInfoLabel("Skin.String(" + plexstring + '.title)'))
+                    WINDOW.setProperty(plexstring + '.image', xbmc.getInfoLabel("Skin.String(" + plexstring + '.image)'))
+                    WINDOW.setProperty(plexstring + '.path', xbmc.getInfoLabel("Skin.String(" + plexstring + '.path)'))
+                linkCount += 1        
 
     def setContentInCache(self):
         linkCount = 0            
         WINDOW = xbmcgui.Window( 10000 )
-        while linkCount !=10:
-            mbstring = "titanmb3." + str(linkCount)
-            if WINDOW.getProperty(mbstring + '.title') != "":
-                xbmc.executebuiltin('Skin.SetString(' + mbstring + '.title,' + WINDOW.getProperty(mbstring + '.title') + ")")
-                xbmc.executebuiltin('Skin.SetString(' + mbstring + '.image,' + WINDOW.getProperty(mbstring + '.image') + ")")
-                xbmc.executebuiltin('Skin.SetString(' + mbstring + '.path,' + WINDOW.getProperty(mbstring + '.path') + ")")
-            else:
-                xbmc.executebuiltin('Skin.Reset(' + mbstring + '.title)')
-                xbmc.executebuiltin('Skin.Reset(' + mbstring + '.image)')
-                xbmc.executebuiltin('Skin.Reset(' + mbstring + '.path)')
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
+            while linkCount !=10:
+                mbstring = "titanmb3." + str(linkCount)
+                if WINDOW.getProperty(mbstring + '.title') != "":
+                    xbmc.executebuiltin('Skin.SetString(' + mbstring + '.title,' + WINDOW.getProperty(mbstring + '.title') + ")")
+                    xbmc.executebuiltin('Skin.SetString(' + mbstring + '.image,' + WINDOW.getProperty(mbstring + '.image') + ")")
+                    xbmc.executebuiltin('Skin.SetString(' + mbstring + '.path,' + WINDOW.getProperty(mbstring + '.path') + ")")
+                else:
+                    xbmc.executebuiltin('Skin.Reset(' + mbstring + '.title)')
+                    xbmc.executebuiltin('Skin.Reset(' + mbstring + '.image)')
+                    xbmc.executebuiltin('Skin.Reset(' + mbstring + '.path)')
+                linkCount += 1 
                 
-            linkCount += 1         
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
+            while linkCount !=10:
+                plexstring = "plexbmc." + str(linkCount)
+                if WINDOW.getProperty(plexstring + '.title') != "":
+                    xbmc.executebuiltin('Skin.SetString(' + plexstring + '.title,' + WINDOW.getProperty(plexstring + '.title') + ")")
+                    xbmc.executebuiltin('Skin.SetString(' + plexstring + '.image,' + WINDOW.getProperty(plexstring + '.image') + ")")
+                    xbmc.executebuiltin('Skin.SetString(' + plexstring + '.path,' + WINDOW.getProperty(plexstring + '.path') + ")")
+                else:
+                    xbmc.executebuiltin('Skin.Reset(' + plexstring + '.title)')
+                    xbmc.executebuiltin('Skin.Reset(' + plexstring + '.image)')
+                    xbmc.executebuiltin('Skin.Reset(' + plexstring + '.path)')
+                linkCount += 1          
+                
+                
+                
 
     def run(self):
         self.logMsg("Started")
@@ -474,7 +499,10 @@ class TitanThread ():
             # actions only needed for Plex add-on currently
             if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
                 if shortcheckinterval_current <= 0:
-                    self.updatePlexlinks()
+                    if WINDOW.getProperty('plexbmc.0.title') == "":
+                        self.getContentFromCache()
+                    else:
+                        self.updatePlexlinks()
 
             # actions only needed for XBMB3C add-on currently
             if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
@@ -487,6 +515,7 @@ class TitanThread ():
                         self.getContentFromCache()
                     else:
                         self.updateMB3links()
+                        self.setContentInCache()
     
                         updateResult = False
                         try:
