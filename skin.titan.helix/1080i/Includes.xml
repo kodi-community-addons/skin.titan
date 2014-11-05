@@ -22,6 +22,7 @@
 	<include file="IncludesKodi.xml" />
 	<include file="IncludesThemes.xml" />
 	<include file="IncludesPlexbmc.xml" />
+	<include file="Includes_EnhancedHome.xml" />
 	<include file="script-skinshortcuts-includes.xml"/>
     <!--PVR-->
     <include condition="!SubString(System.BuildVersion,14,left)" file="MyPVR.xml" />
@@ -120,7 +121,7 @@
 			<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
 			<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 			<scrollspeed>40</scrollspeed>
-			<visible>Window.IsVisible(Home) + !SubString(Window(Home).Property(submenu),show) + !Window.IsVisible(DialogButtonMenu.xml) + SubString(Window(Home).Property(hidesplash),hide)</visible>
+			<visible>Window.IsVisible(Home) + !SubString(Window(Home).Property(submenu),show) + !Window.IsVisible(DialogButtonMenu.xml) + SubString(Window(Home).Property(hidesplash),hide) + !Skin.String(GadgetRows, enhanced)</visible>
 			<animation time="1500" effect="fade" delay="1500">Visible</animation>
 			<animation time="200" effect="fade">Hidden</animation>				
 		</control>
@@ -1195,6 +1196,9 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults6)">Skin.SetBool(HomeMenuDefaults6)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults7)">Skin.SetBool(HomeMenuDefaults7)</onload>
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded)">SetProperty(BackGroundWorkersLoaded,loaded,Home)</onload>
+		
+		<onload condition="skin.hastheme(classic) + Skin.String(GadgetRows, enhanced)">Skin.SetString(GadgetRows, 2)</onload>
+		
     </include>
 	
     <include name="CastMB3Content">

@@ -15,7 +15,7 @@
 			<shortcut label="10004" grouping="32029" icon="home/settings.png" condition="true">$VAR[SettingsButtonOnClick]</shortcut>
 			<shortcut label="1037" grouping="32029" icon="home/videoaddons.png" condition="true">ActivateWindow(Video,addons,return)</shortcut>
 			<shortcut label="19163" grouping="32029" icon="home/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">$VAR[RecordingsButtonClick]</shortcut>
-			<shortcut label="19021" grouping="32029" icon="home/radio.png" condition="System.GetBool(pvrmanager.enabled)">$VAR[RadioButtonOnClick]</shortcut>
+			<shortcut label="19021" grouping="32029" icon="home/radio.png" condition="true">$VAR[RadioButtonOnClick]</shortcut>
 			<shortcut label="350" grouping="32029" icon="home/programs.png" condition="true">$VAR[ProgramsButtonOnClick]</shortcut>
 			<shortcut label="7" grouping="32029" icon="home/filemanager.png" condition="true">ActivateWindow(filemanager)</shortcut>
 			<shortcut label="10134" grouping="32029" icon="home/favourites.png" condition="true">ActivateWindow(favourites)</shortcut>
@@ -98,7 +98,7 @@
 		<!-- music -->
 		<node label="1211" condition="!Skin.HasSetting(HomeMenuUsePlexforMusic)">
 			<shortcut label="10005" grouping="32029" icon="home/music.png" condition="true">$VAR[MusicButtonOnClick]</shortcut>
-			<shortcut label="19021" grouping="32029" icon="home/radio.png" condition="System.GetBool(pvrmanager.enabled)">$VAR[RadioButtonOnClick]</shortcut>
+			<shortcut label="19021" grouping="32029" icon="home/radio.png" condition="true">$VAR[RadioButtonOnClick]</shortcut>
 			<!-- MB3 music items -->
 			<node label="31116" condition="Skin.HasSetting(HomeMenuUseMBforMusic)">
 				<shortcut label="358" grouping="1211" type="1211">$INFO[Window(Home).Property(xbmb3c.std.music.0.path)]</shortcut>
@@ -119,7 +119,15 @@
 				<shortcut label="1050" grouping="1211" type="1211">musicdb://singles/</shortcut>
 				<shortcut label="136" grouping="1211" type="1211">special://musicplaylists/</shortcut>
 				<shortcut label="1038" grouping="1211" type="1211">addons://sources/audio/</shortcut>
+				<node label="32040">
+					<content>playlist-audio</content>
+				</node>
+				<node label="32075">
+					<content>musicsources</content>
+					<content>upnp-music</content>
+				</node>
 			</node>
+			
 		</node>
 		
 		<!-- Live TV Gotham -->
@@ -358,6 +366,32 @@
 				<shortcut label="20390" grouping="1211" type="1211">videodb://recentlyaddedmusicvideos/ </shortcut>
 			</node>
 		</node>
+			
+		<node label="32020" condition="!Skin.HasSetting(HomeMenuUseMBforPictures) + !Skin.HasSetting(HomeMenuUsePlexforPictures)">
+				<content>picturesources</content>
+		</node>
+		
+		<!-- video -->
+		<node label="32030">
+			<node label="32030">
+				<shortcut label="10006" grouping="32029" icon="home/videos.png" condition="true">$VAR[VideosButtonOnClick]</shortcut>
+				<shortcut label="744" grouping="32029" icon="home/videos.png" condition="true">ActivateWindow(Videos,Files,return)</shortcut>
+				<shortcut label="342" grouping="32029" icon="home/movies.png" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies)">$VAR[MoviesButtonOnClick]</shortcut>
+				<shortcut label="20343" grouping="32029" icon="home/tvseries.png" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries)">$VAR[TVseriesButtonOnClick]</shortcut>
+				<shortcut label="20389" grouping="32029" icon="home/music.png" condition="true">$VAR[MusicVideosButtonOnClick]</shortcut>
+			</node>
+			<node label="32040" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies)">
+				<content>playlist-video</content>
+			</node>
+			<node label="32010">
+				<shortcut label="1037" type="32014" icon="DefaultAddonVideo.png">ActivateWindow(Videos,Addons,return)</shortcut>
+				<content>addon-video</content>
+			</node>
+			<node label="32075">
+				<content>videosources</content>
+			</node>
+			<content>upnp-video</content>
+		</node>
 		
 		<!-- addons -->
 		<node label="32007">
@@ -380,19 +414,17 @@
 			<shortcut label="136" grouping="1047" type="1037" icon="home/mediabrowser.png">$INFO[Window(Home).Property(xbmb3c.std.playlists.0.path)]</shortcut>
 			<shortcut label="137" grouping="1047" type="1037" icon="home/mediabrowser.png">$INFO[Window(Home).Property(xbmb3c.std.search.0.path)]</shortcut>
 		</node>
-		
-		<node label="32020" condition="!Skin.HasSetting(HomeMenuUseMBforPictures) + !Skin.HasSetting(HomeMenuUsePlexforPictures)">
-				<content>picturesources</content>
-		</node>
 			
 		<!-- favourites-->	
 		<node label="32006">
 			<content>favourite</content>
 		</node>
+		
 		<!-- settings -->
 		<node label="10004">
 			<content>settings</content>
 		</node>
+		
 		<!-- xbmc commands -->
 		<node label="32054">
 			<content>commands</content>
