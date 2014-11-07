@@ -2,46 +2,16 @@
 <!--Titan-->
 <includes>
 
-	<include name="WatchedImageSizeNormalLargePoster">
-        <posx>379</posx>
-        <posy>1</posy>
-        <width>100</width>
-        <height>100</height>
-    </include>
-	<include name="WatchedImageSizeClassicLargePoster">
-        <posx>385</posx>
-        <posy>15</posy>
-        <width>80</width>
-        <height>80</height>
-    </include>
-	<include name="WatchedLabelNormalLargePoster">
-        <include condition="!SubString(System.BuildVersion,14,left)">WatchedLabelNormalLargePosterPosGotham</include>
-		<include condition="SubString(System.BuildVersion,14,left)">WatchedLabelNormalLargePosterPosHelix</include>
-        <posy>5</posy>
-        <width>60</width>
-        <height>40</height>
-        <font>Reg30</font>
-    </include>
-	<include name="WatchedLabelClassicLargePoster">
-        <include condition="!SubString(System.BuildVersion,14,left)">WatchedLabelClassicLargePosterPosGotham</include>
-		<include condition="SubString(System.BuildVersion,14,left)">WatchedLabelClassicLargePosterPosHelix</include>
-        <posy>20</posy>
-        <width>60</width>
-        <height>60</height>
-        <font>Reg30</font>
-    </include>
-
-
-    <include name="View_58_LargePoster">
+    <include name="View_508_SinglePoster">
         <!--Panel-->
         <control type="group">
-            <visible>Control.IsVisible(58)</visible>
+            <visible>Control.IsVisible(508)</visible>
             <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
             <include>animation_view_change</include>
             <include>animation_list</include>
 			
 			<control type="image">
-                <visible>Control.IsVisible(58) + !IsEmpty(ListItem.Label)</visible>
+                <visible>Control.IsVisible(508) + !IsEmpty(ListItem.Label)</visible>
                 <posx>8</posx>
                 <posy>673</posy>
                 <width>1902</width>
@@ -50,7 +20,7 @@
 				<visible>skin.hastheme(classic)</visible>
             </control>
 			<control type="image">
-                <visible>Control.IsVisible(58) + !IsEmpty(ListItem.Label)</visible>
+                <visible>Control.IsVisible(508) + !IsEmpty(ListItem.Label)</visible>
                 <posx>-60</posx>
                 <posy>668</posy>
                 <width>2100</width>
@@ -62,85 +32,70 @@
 			<!--Footer-->
 			<include condition="!skin.hassetting(nofooterbar)">Footer</include>
         </control>
-        <!--View 58-->
+        <!--Poster,Cover,Thumb-->
         <control type="group">
-            <visible>Control.IsVisible(58)</visible>
+            <visible>Control.IsVisible(508)</visible>
+            <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
+            <!--no hide at addons-->
+            <animation effect="fade" start="0" end="100" tween="sine" easing="inout" time="1000" delay="400" reversible="false">WindowOpen</animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="slide" start="0" end="0" tween="cubic" easing="out" time="750" />
+                <effect type="fade" start="100" end="0" tween="sine" easing="out" time="300" />
+                <effect type="zoom" start="100" end="85" center="980,550" tween="sine" easing="out" time="750" />
+            </animation>
+            <include>animation_view_change</include>
+        </control>
+        <!--View 50-->
+        <control type="group">
+            <visible>Control.IsVisible(508)</visible>
             <include>animation_view_change</include>
             <include>animation_list</include>
-            <!-- ID="58" -->
-            <control type="panel" id="58">
-                <posx>1340</posx>
-                <posy>342</posy>
-                <width>500</width>
-                <height>720</height>
+            <!-- ID="52" -->
+            <control type="panel" id="508">
+                <posx>1580</posx>
+                <posy>700</posy>
+                <width>260</width>
+                <height>380</height>
                 <onup>9000</onup>
                 <ondown>9000</ondown>
-                <onleft>58</onleft>
-                <onright>58</onright>
-                <viewtype label="Large Poster">biglist</viewtype>
+                <onleft>508</onleft>
+                <onright>508</onright>
+                <viewtype label="Single Poster">biglist</viewtype>
                 <scrolltime tween="Cubic" easing="inout">500</scrolltime>
                 <focusposition>0</focusposition>
                 <orientation>horizontal</orientation>
                 <preloaditems>2</preloaditems>
 
-                <itemlayout height="800" width="500" condition="container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)">
-                    <control type="image">
-						<!--Poster-->
-						<width>480</width>
-						<height>706</height>
-						<texture background="true" diffuse="poster_matte.png" fallback="poster_default.png">$VAR[PosterThumb]</texture>
-						<aspectratio align="center" aligny="center">stretch</aspectratio>
-					</control>
-					<control type="image">
-						<!--Watched Overlay-->
-						<include condition="Skin.HasTheme(classic)">WatchedImageSizeClassicLargePoster</include>
-						<include condition="!Skin.HasTheme(classic)">WatchedImageSizeNormalLargePoster</include>
-						<colordiffuse>ccFFFFFF</colordiffuse>
-						<texture>$VAR[WatchedImage]</texture>
-						<visible>!Skin.HasSetting(HideWatchedOverlayLargePoster)</visible>
-					</control>
-					<control type="label">
-						<!--watched label-->
-						<include condition="!Skin.HasTheme(classic)">WatchedLabelNormalLargePoster</include>
-						 <include condition="Skin.HasTheme(classic)">WatchedLabelClassicLargePoster</include>
-						<align>center</align>
-						<label>$VAR[WatchedLabel]</label>
-						<textcolor>white</textcolor>
-						<visible>!Skin.HasSetting(HideWatchedOverlayLargePoster)</visible>
-					</control>
-                </itemlayout>
-                <focusedlayout height="800" width="500" condition="container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)">
-					<control type="image">
-						<!--Poster-->
-						<width>480</width>
-						<height>706</height>
-						<texture background="true" diffuse="poster_matte.png" fallback="poster_default.png">$VAR[PosterThumb]</texture>
-						<aspectratio align="center" aligny="center">stretch</aspectratio>
-					</control>
-					<control type="image">
-						<!--Watched Overlay-->
-						<include condition="Skin.HasTheme(classic)">WatchedImageSizeClassicLargePoster</include>
-						<include condition="!Skin.HasTheme(classic)">WatchedImageSizeNormalLargePoster</include>
-						<colordiffuse>ccFFFFFF</colordiffuse>
-						<texture>$VAR[WatchedImage]</texture>
-						<visible>!Skin.HasSetting(HideWatchedOverlayLargePoster)</visible>
-					</control>
-					<control type="label">
-						<!--watched label-->
-						<include condition="!Skin.HasTheme(classic)">WatchedLabelNormalLargePoster</include>
-						 <include condition="Skin.HasTheme(classic)">WatchedLabelClassicLargePoster</include>
-						<align>center</align>
-						<label>$VAR[WatchedLabel]</label>
-						<textcolor>white</textcolor>
-						<visible>!Skin.HasSetting(HideWatchedOverlayLargePoster)</visible>
-					</control>
-                </focusedlayout>
+                <itemlayout condition="container.content(MusicVideos) | [Container.Content(tvshows)] | Container.Content(Movies) | container.content(seasons)" height="380" width="259">
+				  <control type="image">
+					<include>BigPanelPosterDimensions</include>
+					<include>PosterThumbBG</include>
+				  </control>
+				  <control type="image">
+					<include>BigPanelPosterDimensions</include>
+					<include>PosterThumb</include>
+				  </control>
+				  <include condition="!skin.hastheme(classic)">BigPanelWatchedImageModern</include>
+				  <include condition="skin.hastheme(classic)">BigPanelWatchedImageClassic</include>
+				</itemlayout>
+				<focusedlayout condition="container.content(MusicVideos) | [Container.Content(tvshows)] | Container.Content(Movies) | container.content(seasons)" height="380" width="259">
+				  <control type="image">
+					<include>BigPanelPosterDimensions</include>
+					<include>PosterThumbBG</include>
+				  </control>
+				  <control type="image">
+					<include>BigPanelPosterDimensions</include>
+					<include>PosterThumb</include>
+				  </control>
+				  <include condition="!skin.hastheme(classic)">BigPanelWatchedImageModern</include>
+				  <include condition="skin.hastheme(classic)">BigPanelWatchedImageClassic</include>
+				</focusedlayout>
             </control>
         </control>
         <!--Info-->
         <control type="grouplist">
             <!--Regie, Duration... Movies, TV-Shows, Sesaons, Music-Videos-->
-            <visible>Control.IsVisible(58)</visible>
+            <visible>Control.IsVisible(508)</visible>
             <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
             <visible>Container.Content(MusicVideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)</visible>
             <include>animation_view_change</include>
