@@ -10,6 +10,11 @@ def sendClick(controlId):
     time.sleep(0.5)
     xbmc.executebuiltin('SendClick('+ controlId +')')
 
+def showInfoPanel():
+    win = xbmcgui.Window( 10000 )
+    xbmc.executebuiltin('Action(info)')
+    time.sleep(5)
+    xbmc.executebuiltin('Action(info)')
 
 def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
@@ -29,12 +34,12 @@ def setView(containerType,viewId):
             viewId="50"        
         elif curView == "Showcase":
             viewId="51"
-        elif curView == "Panel details":
-            viewId="53"  
-        elif curView == "Showcase Details":
-            viewId="54"
         elif curView == "Panel":
-            viewId="52"
+            viewId="52"        
+        elif curView == "Panel details":
+            viewId="53"       
+        elif curView == "Panel Wall":
+            viewId="54"
         elif curView == "Banner list":
             viewId="55"
         elif curView == "Banner Plex":
@@ -159,5 +164,7 @@ elif action == "SETVIEW":
     setView(argument1, argument2)
 elif action == "SHOWSUBMENU":
     showSubmenu(argument1,argument2)
+elif action == "SHOWINFO":
+    showInfoPanel()
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 

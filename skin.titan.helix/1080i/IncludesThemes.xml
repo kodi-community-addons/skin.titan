@@ -728,20 +728,7 @@
 				<height>400</height>
 				<texture background="true">views/filemanager_panel1.png</texture>
 			</control>
-			
-			
-			<!--Cover-->
-			<control type="image">
-				<!--live tv-->
-				<posx>60</posx>
-				<posy>800</posy>
-				<width>220</width>
-				<height>220</height>
-				<fadetime>200</fadetime>
-				<texture background="true" fallback="defaultcovers/tv.png">$INFO[VideoPlayer.Cover]</texture>
-				<aspectratio align="left" aligny="top">keep</aspectratio>
-				<visible>VideoPlayer.Content(livetv)</visible>
-			</control>
+
 			<!-- cd cover -->
 			<control type="image">
 				<posx>140</posx>
@@ -766,51 +753,20 @@
 				<aspectratio align="left" aligny="top">stretch</aspectratio>
 				<visible>Player.HasAudio</visible>
 			</control>
-			<!-- clearlogo -->
-			<control type="image">
-				<!--episode-->
+			
+			<!--Cover-->
+			<control type="image" id="1">
+				<!--live tv-->
 				<posx>60</posx>
 				<posy>800</posy>
-				<width>260</width>
-				<height>210</height>
+				<width>240</width>
+				<height>240</height>
 				<fadetime>200</fadetime>
-				<texture background="true">$INFO[Player.Art(clearart)]</texture>
-				<aspectratio align="center" aligny="center">keep</aspectratio>
-				<visible>!IsEmpty(Player.Art(clearart))</visible>
+				<texture background="true">$VAR[OSDImage]</texture>
+				<aspectratio align="left" aligny="center">keep</aspectratio>
+				<visible>Player.HasVideo</visible>
 			</control>
-			<control type="image">
-				<!--episode-->
-				<posx>60</posx>
-				<posy>800</posy>
-				<width>260</width>
-				<height>210</height>
-				<fadetime>200</fadetime>
-				<texture background="true">$INFO[Player.Art(clearart)]</texture>
-				<aspectratio align="center" aligny="center">keep</aspectratio>
-				<visible>IsEmpty(Player.Art(clearart)) + !IsEmpty(Player.Art(clearlogo))</visible>
-			</control>
-			<control type="image">
-				<!--episode-->
-				<posx>60</posx>
-				<posy>800</posy>
-				<width>195</width>
-				<height>260</height>
-				<fadetime>200</fadetime>
-				<texture background="true" fallback="defaultcovers/video_play.png">$INFO[Player.Art(tvshow.poster)]</texture>
-				<aspectratio align="left" aligny="top">keep</aspectratio>
-				<visible>VideoPlayer.Content(episodes) + IsEmpty(Player.Art(clearlogo)) + IsEmpty(Player.Art(clearart))</visible>
-			</control>
-			<control type="image">
-				<!--Movie-->
-				<posx>60</posx>
-				<posy>800</posy>
-				<width>195</width>
-				<height>260</height>
-				<fadetime>200</fadetime>
-				<texture background="true" fallback="defaultcovers/video_play.png">$INFO[VideoPlayer.Cover]</texture>
-				<aspectratio align="left" aligny="top">scale</aspectratio>
-				<visible>!VideoPlayer.Content(episodes) + !VideoPlayer.Content(livetv) + IsEmpty(Player.Art(clearlogo) + IsEmpty(Player.Art(clearart))</visible>
-			</control>
+
 			<control type="image">
 				<!--record icon-->
 				<posx>250</posx>
@@ -1021,7 +977,6 @@
 		   <!--Time-->
 		   <control type="label">
 				<!--End Time DialogFullscreenInfo-->
-				<visible>Window.IsActive(DialogFullscreenInfo.xml) | Window.IsActive(VideoOSD.xml)</visible>
 				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
 				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
 				<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
@@ -1032,6 +987,7 @@
 				<font>Light30</font>
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$LOCALIZE[31112] $INFO[Player.FinishTime]</label>
+				<visible>!IsEmpty(Player.FinishTime)</visible>
 			</control>
 
 			<control type="label">
