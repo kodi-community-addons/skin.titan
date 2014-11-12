@@ -44,7 +44,7 @@
                     <posx>132</posx>
                     <posy>585</posy>
                     <width>571</width>
-                    <height>400</height>
+                    <height>305</height>
                     <itemgap>0</itemgap>
                     <onup>noop</onup>
                     <ondown>noop</ondown>
@@ -58,6 +58,7 @@
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
                         <label>20410</label>
+						<onclick>Dialog.Close(MovieInformation)</onclick>
                         <onclick>$INFO[ListItem.Trailer]</onclick>
 						<visible>!IsEmpty(ListItem.Trailer)</visible>
                     </control>
@@ -68,6 +69,7 @@
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
                         <label>20410</label>
+						<onclick>Dialog.Close(MovieInformation)</onclick>
                         <onclick>$INFO[Window(Home).Property(MB3.TrailerAction)]</onclick>
 						<visible>!IsEmpty(Window(Home).Property(MB3.TrailerAction))</visible>
                     </control>
@@ -78,12 +80,18 @@
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
                         <label>YouTube $LOCALIZE[20410]</label>
-                        <onclick>Skin.SetBool(youtube)</onclick>
-                        <onclick>Dialog.Close(movieinformation,true)</onclick>
-                        <onclick>ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$INFO[ListItem.Title] Trailer $INFO[System.Language],return)</onclick>
-                        <onclick>SetFocus(50)</onclick>
-						<visible>Container.Content(Movies) | Container.Content(TVshows)</visible>
+                        <onclick>ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
+						<onclick>Dialog.Close(movieinformation)</onclick>
+						<visible>[Container.Content(Movies) | Container.Content(TVshows)] + IsEmpty(Window(Home).Property(MB3.TrailerAction)) + IsEmpty(ListItem.Trailer)</visible>
                     </control>
+					<control type="button" id="113">
+						<description>Home Theatre</description>
+						<label>$INFO[System.AddonTitle(script.cinema.experience)]</label>
+						<onclick>Playlist.Clear</onclick>
+						<onclick>Dialog.Close(MovieInformation)</onclick>
+						<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
+						<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !IsEmpty(ListItem.DBID)</visible>
+					</control>
 					
                     <control type="button" id="8">
                         <!--Play-->
@@ -100,6 +108,7 @@
                         <height>60</height>
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
+						<visible>ListItem.IsResumable</visible>
                     </control>
                     <control type="button" id="6">
                         <!--Refresh-->
@@ -654,7 +663,6 @@
         </control>
         <!--Video Addons-->
         <control type="group">
-            <visible>!Skin.HasSetting(youtube)</visible>
             <visible>substring(Container.FolderPath,addons://sources/video/)</visible>
             <!--Dialog Overlay-->
             <include>DialogOverlay</include>

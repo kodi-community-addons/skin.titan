@@ -50,7 +50,19 @@ def setView(containerType,viewId):
         elif curView == "Landscape details":
             viewId="505"            
         elif curView == "Extended":
-            viewId="506"           
+            viewId="506"
+        elif curView == "FanArt":
+            viewId="507"
+        elif curView == "Single Poster":
+            viewId="508"
+        elif curView == "Panel Square":
+            viewId="509"
+        elif curView == "Panel Square details":
+            viewId="510"
+        elif curView == "Thumbs":
+            viewId="511"
+        elif curView == "Thumbs details":
+            viewId="512"        
 
     else:
         viewId=viewId    

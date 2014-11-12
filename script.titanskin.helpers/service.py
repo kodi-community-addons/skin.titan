@@ -382,12 +382,14 @@ class TitanThread ():
                 self.current_global_art = next
                 backGroundUrl = nextItem["url"]
                 
-        backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
-        backGroundUrl = backGroundUrl + "/1920/1080/0?"
-        backGroundUrl_small = backGroundUrl + "/620/350/0?"
-        backGroundUrl = backGroundUrl + "&EnableImageEnhancers=false"
-        backGroundUrl_small = backGroundUrl_small + "&EnableImageEnhancers=false"
-
+        if "/10000/10000/" in backGroundUrl:        
+            backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
+            backGroundUrl_small = backGroundUrl
+            backGroundUrl = backGroundUrl + "/1920/1080/0?"
+            backGroundUrl_small = backGroundUrl_small + "/620/350/0?"
+        else:
+            backGroundUrl_small = backGroundUrl
+        
         WINDOW.setProperty(windowPropertyName, backGroundUrl)
         WINDOW.setProperty(windowPropertyName + ".small", backGroundUrl_small)
 
@@ -603,6 +605,11 @@ class TitanThread ():
 
             time.sleep(timeout)
             timeout -= 1
+            
+    def setRecommendedMBSettings(self):
+        addonSettings = xbmcaddon.Addon(id='plugin.video.xbmb3c')
+        addonSettings.setSetting('includePeople', 'false')
+        addonSettings.setSetting('showIndicators', 'false')
 
     def getContentFromCache(self):
         WINDOW = xbmcgui.Window( 10000 )
@@ -695,6 +702,7 @@ class TitanThread ():
                     if self._userId == "":
                         self.getContentFromCache()
                     else:
+                        self.setRecommendedMBSettings()
                         self.updateMB3links()
                         self.setContentInCache()
 
@@ -759,23 +767,23 @@ class TitanThread ():
         # global items update
         backGroundString = "MB3.Background.Music.FanArt"
         backGroundUrl = win.getProperty(backGroundString)
-        backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
-        backGroundUrl = backGroundUrl + "/620/350/0?"
-        backGroundUrl = backGroundUrl + "&EnableImageEnhancers=false"
+        if "/10000/10000/" in backGroundUrl:
+            backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
+            backGroundUrl = backGroundUrl + "/620/350/0"
         win.setProperty(backGroundString + ".small", backGroundUrl)
         
         backGroundString = "MB3.Background.Movie.FanArt"
         backGroundUrl = win.getProperty(backGroundString)
-        backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
-        backGroundUrl = backGroundUrl + "/620/350/0?"
-        backGroundUrl = backGroundUrl + "&EnableImageEnhancers=false"
+        if "/10000/10000/" in backGroundUrl:
+            backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
+            backGroundUrl = backGroundUrl + "/620/350/0"
         win.setProperty(backGroundString + ".small", backGroundUrl)
         
         backGroundString = "MB3.Background.TV.FanArt"
         backGroundUrl = win.getProperty(backGroundString)
-        backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
-        backGroundUrl = backGroundUrl + "/620/350/0?"
-        backGroundUrl = backGroundUrl + "&EnableImageEnhancers=false"
+        if "/10000/10000/" in backGroundUrl:
+            backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
+            backGroundUrl = backGroundUrl + "/620/350/0"
         win.setProperty(backGroundString + ".small", backGroundUrl)          
         
         
