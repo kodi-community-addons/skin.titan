@@ -13,7 +13,7 @@ def sendClick(controlId):
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('Action(info)')
-    time.sleep(5)
+    time.sleep(10)
     xbmc.executebuiltin('Action(info)')
 
 def addShortcutWorkAround():
@@ -34,7 +34,7 @@ def setView(containerType,viewId):
             viewId="50"        
         elif curView == "Showcase":
             viewId="51"
-        elif curView == "Panel":
+        elif curView == "Horizontal Panel":
             viewId="52"        
         elif curView == "Panel details":
             viewId="53"       
@@ -51,7 +51,9 @@ def setView(containerType,viewId):
         elif curView == "Big Panel details":
             viewId="59"
         elif curView == "Landscape":
-            viewId="501"            
+            viewId="501"
+        elif curView == "Landscape Single Row":
+            viewId="502"             
         elif curView == "Landscape details":
             viewId="505"            
         elif curView == "Extended":
@@ -67,7 +69,11 @@ def setView(containerType,viewId):
         elif curView == "Thumbs":
             viewId="511"
         elif curView == "Thumbs details":
-            viewId="512"        
+            viewId="512"
+        elif curView == "Poster Row":
+            viewId="513"
+        elif curView == "Poster Shift":
+            viewId="514"            
 
     else:
         viewId=viewId    

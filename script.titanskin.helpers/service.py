@@ -155,8 +155,8 @@ class TitanThread ():
 
                     if images != []:
                         for backdrop in images:
-                            # only get first 2 images
-                            while count <= 1:
+                            # only get first image
+                            while not count == 1:
                                 try:
                                     info = {}
                                     info["url"] = downloadUtils.getArtwork(col_item, "Backdrop")
@@ -429,7 +429,7 @@ class TitanThread ():
             index = 0
             count = 0
             for backdrop in images:
-                while count <= 2:
+                while not count == 1:
                     try:                
                         info = {}
                         info["url"] = downloadUtils.getArtwork(item, "Backdrop", index=str(index))
@@ -467,7 +467,7 @@ class TitanThread ():
             index = 0
             count = 0
             for backdrop in images:
-                while count <= 2:
+                while not count == 1:
                     try:                
                         info = {}
                         info["url"] = downloadUtils.getArtwork(item, "Backdrop", index=str(index))
@@ -487,7 +487,7 @@ class TitanThread ():
         random.shuffle(self.favoriteshows_art_links)    
 
         # load Music Video BG's
-        musicMoviesUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=20&SortOrder=Descending&Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=MusicVideo&format=json"
+        musicMoviesUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=40&SortOrder=Descending&Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=MusicVideo&format=json"
         jsonData = downloadUtils.downloadUrl(musicMoviesUrl, suppress=True, popup=0 )
         result = json.loads(jsonData)
 
@@ -505,7 +505,7 @@ class TitanThread ():
             index = 0
             count = 0
             for backdrop in images:
-                while count <= 2:
+                while not count == 1:
                     try:                
                         info = {}
                         info["url"] = downloadUtils.getArtwork(item, "Backdrop", index=str(index))
