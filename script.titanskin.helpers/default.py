@@ -12,8 +12,9 @@ def sendClick(controlId):
 
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
+    time.sleep(2)
     xbmc.executebuiltin('Action(info)')
-    time.sleep(10)
+    time.sleep(8)
     xbmc.executebuiltin('Action(info)')
 
 def addShortcutWorkAround():
