@@ -3,7 +3,7 @@
 	
 	<include name="PosterThumb">
     <texture background="true" diffuse="poster_matte.png" fallback="poster_default.png">$VAR[PosterThumb]</texture>
-    <aspectratio aligny="top">stretch</aspectratio>
+    <aspectratio scalediffuse="false" aligny="top">scale</aspectratio>
   </include>
   
   <include name="panelPosModern">
@@ -177,12 +177,12 @@
   </include>
   <include name="SquareThumb">
     <texture background="true" diffuse="cover_matte.png" fallback="cover_default.png">$VAR[MusicSquareThumb]</texture>
-    <aspectratio aligny="center">scale</aspectratio>
+    <aspectratio scalediffuse="false" aligny="center">scale</aspectratio>
   </include>
   <include name="SquareThumbBG">
     <bordersize>-6</bordersize>
     <aspectratio aligny="top">stretch</aspectratio>
-	<texture border="8" diffuse="cover_matte.png">cover_default.png</texture>
+	<texture border="8" scalediffuse="false" diffuse="cover_matte.png">cover_default.png</texture>
   </include>
   <include name="SquareThumbFO">
     <bordersize>-6</bordersize>
@@ -346,11 +346,12 @@
         </control>
     </include>
     <include name="BannerViewImagesNormal">
+	
         <control type="image">
             <!--Panel icon image-->
             <include>BannerViewImageSizeNormal</include>
             <texture background="true" diffuse="home/home_matte2.png" fallback="banner_default.png">$VAR[BannerLandscapeImage]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
 		<control type="image">
             <!--season image legacy-->
@@ -1892,7 +1893,7 @@
                 <control type="group">
                     <!--Writer: Movies, Episodes-->
                     <width>800</width>
-                    <height>59</height>
+                    <height>40</height>
                     <visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Writer)</visible>
                     <control type="image">
                         <posx>0</posx>
@@ -1934,7 +1935,7 @@
                 <control type="group">
                     <!--Total: Episodes-->
                     <width>800</width>
-                    <height>40</height>
+                    <height>49</height>
                     <visible>Container.Content(TVShows) + !IsEmpty(ListItem.Property(TotalEpisodes))</visible>
                     <control type="label">
                         <posx>8</posx>
@@ -1951,7 +1952,7 @@
                 <control type="group">
                     <!--Unwatched: Episodes-->
                     <width>800</width>
-                    <height>40</height>
+                    <height>49</height>
                     <visible>Container.Content(TVShows) + !IsEmpty(ListItem.Property(unWatchedepisodes))</visible>
                     <control type="label">
                         <posx>8</posx>
@@ -1965,17 +1966,22 @@
                         <scroll>false</scroll>
                     </control>
                 </control>
-            </control>
-            <!--Flags-->
-            <control type="group">
+				<!-- empty label -->
+				<control type="label">
+					<height>20</height>
+				</control>
+				<control type="group">
                 <orientation>horizontal</orientation>
-                <posy>450</posy>
-                <posx>100</posx>
-                <!--Flags Video-->
+                <width>500</width>
+                <height>60</height>
+				<posx>20</posx>
+				<posy>20</posy>
+                <!--Flags-->
                 <visible>Container.Content(movies) | Container.Content(episodes)</visible>
                 <visible>!IsEmpty(ListItem.VideoCodec)</visible>
                 <include>movieflagssmall</include>
             </control>
+			</control>
             <!-- Plot -->
             <control type="group">
                 <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
