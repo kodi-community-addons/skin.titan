@@ -171,7 +171,6 @@
 
         <!--Pause-->
         <control type="image">
-            <visible>!Skin.HasSetting(subtitle)</visible>
             <visible>player.paused</visible>
             <animation delay="300" time="600" effect="fade">Visible</animation>
             <animation delay="0" time="200" effect="fade">Hidden</animation>
@@ -520,10 +519,22 @@
             <posy>955</posy>
             <width>300</width>
             <align>right</align>
-            <font>Light32</font>
+            <font>Reg28</font>
             <textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
             <label>$LOCALIZE[31112] $INFO[Player.FinishTime]</label>
         </control>
+		<!-- next program -->
+		<control type="label">
+			<!--Play Time-->
+			<posx>550</posx>
+            <posy>955</posy>
+			<width>800</width>
+			<align>left</align>
+			<font>Reg28</font>
+			<textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
+			<label>[COLOR=black]$LOCALIZE[19031]:[/COLOR] $INFO[VideoPlayer.NextTitle]</label>
+			<visible>VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)</visible>
+		</control>
         <control type="grouplist">
             <!--Clock-->
             <posx>1395</posx>
@@ -584,7 +595,6 @@
 		<!-- Player symbols -->
 		<control type="group">
 			<control type="image">
-				<visible>!Skin.HasSetting(subtitle)</visible>
 				<visible>player.paused</visible>
 				<animation delay="300" time="600" effect="fade">Visible</animation>
 				<animation delay="0" time="200" effect="fade">Hidden</animation>
@@ -1067,6 +1077,21 @@
 				<width>493</width>
 				<visible>Player.Seeking</visible>
 			</control>
+		
+			<!-- next program -->
+			<control type="label">
+				<!--Play Time-->
+				<posx>350</posx>
+				<posy>1000</posy>
+				<width>800</width>
+				<align>left</align>
+				<font>Reg32</font>
+				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+				<label>[COLOR=mainblue]$LOCALIZE[19031]:[/COLOR] $INFO[VideoPlayer.NextTitle]</label>
+				<visible>VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)</visible>
+			</control>
+		
+		
 		</control>
     </include>
 	
@@ -1509,8 +1534,8 @@
                     <font>-</font>
                     <texturefocus>osd/SubtitlesFO.png</texturefocus>
                     <texturenofocus>osd/SubtitlesNF.png</texturenofocus>
-                    <onclick>Dialog.Close(VideoOSD)</onclick>
-                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
+                    <onclick condition="!VideoPlayer.Content(livetv)">ActivateWindow(SubtitleSearch)</onclick>
+					<onclick condition="VideoPlayer.Content(livetv)">ActivateWindow(Teletext)</onclick>
                 </control>
             </control>
             <control type="grouplist" id="200">
@@ -1652,8 +1677,8 @@
                     <font>-</font>
                     <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
-                    <onclick>Dialog.Close(VideoOSD)</onclick>
-                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
+                    <onclick condition="!VideoPlayer.Content(livetv)">ActivateWindow(SubtitleSearch)</onclick>
+					<onclick condition="VideoPlayer.Content(livetv)">ActivateWindow(Teletext)</onclick>
                 </control>
             </control>
             <control type="grouplist" id="200">

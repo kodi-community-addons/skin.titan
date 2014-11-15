@@ -351,9 +351,9 @@
 		<value condition="SubString(Container(300).ListItem.Property(defaultID), mb3-7) | SubString(Container(4444).ListItem.Property(defaultID), mb3-7)">$INFO[Window(Home).Property(titanmb3.7.path)]</value>
 		<value condition="SubString(Container(300).ListItem.Property(defaultID), mb3-8) | SubString(Container(4444).ListItem.Property(defaultID), mb3-8)">$INFO[Window(Home).Property(titanmb3.8.path)]</value>
 		<value condition="SubString(Container(300).ListItem.Property(defaultID), mb3-9) | SubString(Container(4444).ListItem.Property(defaultID), mb3-9)">$INFO[Window(Home).Property(titanmb3.9.path)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(defaultID), $LOCALIZE[31036) | StringCompare(Container(4444).ListItem.Property(defaultID), $LOCALIZE[31036)">$INFO[Window(Home).Property(xbmb3c.std.movies.3.path)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(defaultID), $LOCALIZE[31157) | StringCompare(Container(4444).ListItem.Property(defaultID), $LOCALIZE[31157)">$INFO[Window(Home).Property(xbmb3c.std.tvshows.4.path)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(defaultID), $LOCALIZE[19019) | StringCompare(Container(4444).ListItem.Property(defaultID), $LOCALIZE[19019)">$INFO[Window(Home).Property(xbmb3c.std.channels.0.path)]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(defaultID), $LOCALIZE[31036]) | StringCompare(Container(4444).ListItem.Property(defaultID), $LOCALIZE[31036])">$INFO[Window(Home).Property(xbmb3c.std.movies.3.path)]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(defaultID), $LOCALIZE[31157]) | StringCompare(Container(4444).ListItem.Property(defaultID), $LOCALIZE[31157])">$INFO[Window(Home).Property(xbmb3c.std.tvshows.4.path)]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(defaultID), $LOCALIZE[19019]) | StringCompare(Container(4444).ListItem.Property(defaultID), $LOCALIZE[19019])">$INFO[Window(Home).Property(xbmb3c.std.channels.0.path)]</value>
     </variable>
 	
 	
@@ -693,6 +693,7 @@
         <value>FF686868</value>
     </variable>
     <variable name="ThemeFontColorDarkGrey">
+		<value condition="Window.IsActive(Home) + Skin.String(GadgetRows, enhanced) + Skin.String(ColorTheme, white)">FF3e3e3e</value>
         <value condition="!Skin.HasTheme(classic)">FFfffeff</value>
         <value>FF3e3e3e</value>
     </variable>
@@ -980,7 +981,7 @@
    <variable name="HomeButtonDownAction">
 		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]">Control.SetFocus(77777)</value>
 		<value condition="SubString(Container(300).ListItem.Property(hasSubmenu), True) + !skin.hastheme(classic) + !Skin.String(GadgetRows, 2)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
-		<value>ActivateWindow(ShutdownMenu)</value>
+		<value condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</value>
    </variable>
    
    <variable name="HomeButtonUpAction">
@@ -1160,45 +1161,67 @@
    
    
    <variable name="ColorOverlay">
-	<value condition="Skin.String(ColorTheme, light)">bgoverlay_white.png</value>
-	<value condition="Skin.String(ColorTheme, default)">bgoverlay_default.png</value>
-	<value condition="Skin.String(ColorTheme, dark)">bgoverlay_dark.png</value>
-	<value condition="Skin.String(ColorTheme)">$INFO[Skin.String(ColorTheme)]</value>
+	<value condition="Skin.String(ColorTheme, white)">bgoverlays/bgoverlay_white.png</value>
+	<value condition="Skin.String(ColorTheme, light)">bgoverlays/bgoverlay_light.png</value>
+	<value condition="Skin.String(ColorTheme, default)">bgoverlays/bgoverlay_default.png</value>
+	<value condition="Skin.String(ColorTheme, dark)">bgoverlays/bgoverlay_dark.png</value>
+	<value condition="Skin.String(ColorTheme, grey)">bgoverlays/bgoverlay_grey.png</value>
+	<value condition="Skin.String(ColorTheme, blue)">bgoverlays/bgoverlay_blue.png</value>
+	<value condition="Skin.String(ColorTheme, custom)">$INFO[Skin.String(CustomColorTheme)]</value>
+   </variable>
+     
+   <variable name="ColorOverlayClick">
+	<value condition="Skin.String(ColorTheme, white)">Skin.SetString(ColorTheme, light)</value>
+	<value condition="Skin.String(ColorTheme, light)">Skin.SetString(ColorTheme, default)</value>
+	<value condition="Skin.String(ColorTheme, default)">Skin.SetString(ColorTheme, dark)</value>
+	<value condition="Skin.String(ColorTheme, dark)">Skin.SetString(ColorTheme, grey)</value>
+	<value condition="Skin.String(ColorTheme, grey)">Skin.SetString(ColorTheme, blue)</value>
+	<value condition="Skin.String(ColorTheme, blue)">Skin.SetString(ColorTheme, custom)</value>
+	<value condition="Skin.String(ColorTheme, custom)">Skin.SetString(ColorTheme, none)</value>
+	<value condition="Skin.String(ColorTheme, none)">Skin.SetString(ColorTheme, white)</value>
    </variable>
    
    <variable name="ColorOverlayExtra">
-	<value condition="Skin.String(ColorTheme, light)">whitepanel.png</value>
-	<value>bgoverlay_dark.png</value>
+	<value condition="Skin.String(ColorTheme, white)">bgoverlays/bgoverlay_white.png</value>
+	<value>bgoverlays/bgoverlay_dark.png</value>
    </variable>
    
    <variable name="TextColor_aawhite">
-	<value condition="Skin.String(ColorTheme, light)">darkgrey</value>
+	<value condition="Skin.String(ColorTheme, white)">darkgrey</value>
 	<value>aawhite</value>
    </variable>
    
    <variable name="TextColor_bbwhite">
-	<value condition="Skin.String(ColorTheme, light)">black</value>
+	<value condition="Skin.String(ColorTheme, white)">black</value>
 	<value>bbwhite</value>
    </variable>
    
    <variable name="TextColor_77white">
-	<value condition="Skin.String(ColorTheme, light)">black</value>
+	<value condition="Skin.String(ColorTheme, white)">black</value>
 	<value>77white</value>
    </variable>
    
     <variable name="TextColor_white">
-	<value condition="Skin.String(ColorTheme, light)">black</value>
+	<value condition="Skin.String(ColorTheme, white)">black</value>
+	<value>white</value>
+   </variable>
+   
+   <variable name="HeaderTextColor">
+	<value condition="!skin.hastheme(classic) + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml) | Control.IsVisible(88888)]">white</value>
+	<value condition="Skin.String(ColorTheme, white)">black</value>
 	<value>white</value>
    </variable>
    
    <variable name="Views_FontColor">
 		<value condition="Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(508) | Control.IsVisible(50) | Control.IsVisible(51) | Control.IsVisible(52)">bbwhite</value>
-		<value condition="Skin.String(ColorTheme, light)">black</value>
+		<value condition="Skin.String(ColorTheme, white)">black</value>
 		<value>white</value>
    </variable>
    
    <variable name="Views_ShadowColorColor">
-	<value>darkgrey</value>
+   <value condition="!skin.hastheme(classic) + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml) | Control.IsVisible(88888)]">black</value>
+    <value condition="Skin.String(ColorTheme, white)">white</value>
+	<value>black</value>
    </variable>
    
    
@@ -1236,9 +1259,9 @@
 	 <variable name="OSDImage">
 		<value condition="[VideoPlayer.Content(livetv) | VideoPlayer.Content(episodes)] + !IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
 		<value condition="VideoPlayer.Content(livetv) + IsEmpty(VideoPlayer.Cover)">defaultcovers/tv.png</value>
-		<value condition="!IsEmpty(Player.Art(clearart)">$INFO[Player.Art(clearart)]</value>
-		<value condition="!IsEmpty(Player.Art(clearlogo)">$INFO[Player.Art(clearlogo)]</value>
-		<value condition="!IsEmpty(Player.Art(clearlogo)">$INFO[Player.Art(clearlogo)]</value>
+		<value condition="!IsEmpty(Player.Art(clearart))">$INFO[Player.Art(clearart)]</value>
+		<value condition="!IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
+		<value condition="!IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
         <value condition="!IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
         <value condition="!IsEmpty(Player.Art(fanart))">$INFO[Player.Art(fanart)]</value>
         <value condition="!IsEmpty(Player.Thumb)">$INFO[Player.Thumb]</value>
