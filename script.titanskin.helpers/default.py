@@ -13,10 +13,8 @@ def sendClick(controlId):
 
 def setCustomContent(skinString):
     win = xbmcgui.Window( 10000 )
-    print(skinString)
     skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
-    print(skinStringContent)
-    
+
     if "$INFO" in skinStringContent:
         skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
         skinStringContent = skinStringContent.replace(")]", "")
@@ -28,9 +26,8 @@ def setCustomContent(skinString):
         skinStringContent = skinStringContent.replace(")","")
         skinStringContent = skinStringContent.replace("\"","")
            
-        #xbmc.executebuiltin("Skin.SetString(" + skinString + ','+ skinStringContent + ')')         
-    
-    print(skinStringContent)
+        xbmc.executebuiltin("Skin.SetString(" + skinString + ','+ skinStringContent + ')')         
+
     win.setProperty("customwidgetcontent", skinStringContent)
 
 
