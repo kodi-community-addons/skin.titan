@@ -9,6 +9,7 @@
 	<onload condition="System.HasAddon(plugin.video.xbmb3c)">RunScript(plugin.video.xbmb3c,skin)</onload>
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">RunScript(plugin.video.plexbmc,skin)</onload>
 	<onunload>XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,HIDE)</onunload>
+	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
 	<onload>300</onload>
 	<onload>AlarmClock(hidesplash,SetProperty(hidesplash,hide,Home),00:07,silent)</onload>
     <controls>
@@ -22,8 +23,6 @@
         <include>Header</include>
 		<!--Time & Weather-->
         <include>TimeInfo</include>
-		
-		
 		
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
@@ -80,6 +79,17 @@
 						<texture>home/home_shadow.png</texture>
 					</control>
 					<control type="image">
+						<!--focus image-->
+						<posx>11</posx>
+						<posy>13</posy>
+						<width>600</width>
+						<height>250</height>
+						<bordersize>-4</bordersize>
+						<texture>home/home_matte2.png</texture>
+						<colordiffuse>$INFO[Skin.String(HomeFocusColor)]</colordiffuse>
+						<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
+					</control>
+					<control type="image">
 						<!--Panel Normal-->
 						<posx>11</posx>
 						<posy>13</posy>
@@ -126,7 +136,7 @@
                         <font>Reg45</font>
                         <textcolor>$INFO[Skin.String(HomeFocusColor)]</textcolor>
 						<shadowcolor>black</shadowcolor>
-                        <visible>StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
+                        <visible>StringCompare(Container(300).ListItem.Label, ListItem.Label) + ![Skin.HasSetting(NoTitleOnHomeMenuTiles) | StringCompare(ListItem.Property(disableLabel), disable)]</visible>
                     </control>
 				</control>
             </itemlayout>
@@ -223,6 +233,7 @@
                         <onfocus condition="SubString(Container(300).ListItem.Property(labelID),info-window-home-property-titanmb3)">SetProperty(MB3.Background.Collection, $INFO[Container(300).ListItem.Label], Home)</onfocus>
 						<onfocus condition="Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</onfocus>
 						<onfocus condition="Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW)</onfocus>
+						<onfocus condition="!IsEmpty(Container(300).ListItem.Property(customcontent))">XBMC.RunScript(script.titanskin.helpers,SETCUSTOM,$INFO[Container(300).ListItem.Property(customcontent)])</onfocus>
                     </control>
                 </control>
             </focusedlayout>

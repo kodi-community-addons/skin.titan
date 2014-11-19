@@ -4,11 +4,34 @@ import shutil
 import xbmcaddon
 import os
 import time
+import urllib
 
 def sendClick(controlId):
     win = xbmcgui.Window( 10000 )
     time.sleep(0.5)
     xbmc.executebuiltin('SendClick('+ controlId +')')
+
+def setCustomContent(skinString):
+    win = xbmcgui.Window( 10000 )
+
+    skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
+    
+    if "$INFO" in skinStringContent:
+        skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
+        skinStringContent = skinStringContent.replace(")]", "")
+        skinStringContent = win.getProperty(skinStringContent)    
+
+    if "Activate" in skinStringContent:
+        skinStringContent = skinStringContent.split(",",1)[1]
+        skinStringContent = skinStringContent.replace(",return","")
+        skinStringContent = skinStringContent.replace(")","")
+        skinStringContent = skinStringContent.replace("\"","")
+           
+        xbmc.executebuiltin("Skin.SetString(" + skinString + ','+ skinStringContent + ')')         
+    
+    
+    win.setProperty("customwidgetcontent", skinStringContent)
+
 
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
@@ -25,12 +48,12 @@ def addShortcutWorkAround():
 
 
 def setView(containerType,viewId):
-    
+
     if viewId=="00":
         win = xbmcgui.Window( 10000 )
-        
+
         curView = xbmc.getInfoLabel("Container.Viewmode")
-        
+
         if curView == "list":
             viewId="50"        
         elif curView == "Showcase":
@@ -78,14 +101,14 @@ def setView(containerType,viewId):
 
     else:
         viewId=viewId    
-      
+
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
         __settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
         __settings__.setSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType, viewId)
-        
+
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc)"):
         __settings__ = xbmcaddon.Addon(id='plugin.video.netflixbmc')
-        
+
         if containerType=="MOVIES":
             __settings__.setSetting('viewIdVideos', viewId)
         elif containerType=="SERIES":
@@ -96,9 +119,9 @@ def setView(containerType,viewId):
             __settings__.setSetting('viewIdEpisodesNew', viewId)
         else:
             __settings__.setSetting('viewIdActivity', viewId) 
-        
+
         #xbmc.executebuiltin("Container.Refresh")
-    
+
 
 def showSubmenu(showOrHide,doFocus):
 
@@ -107,7 +130,7 @@ def showSubmenu(showOrHide,doFocus):
     submenuloading = ""
     if xbmc.getCondVisibility("Skin.HasSetting(AutoShowSubmenu)"):
         submenuloading = win.getProperty("submenuloading")
-        
+
     # SHOW SUBMENU    
     if showOrHide == "SHOW":
         if submenuloading != "loading":
@@ -121,7 +144,7 @@ def showSubmenu(showOrHide,doFocus):
                 win.setProperty("submenu", "hide")
         else:
             win.setProperty("submenuloading", "")
-    
+
     #HIDE SUBMENU
     elif showOrHide == "HIDE":
         win.setProperty("submenuloading", "loading")
@@ -132,9 +155,9 @@ def showSubmenu(showOrHide,doFocus):
             xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
 
 
-   
 
-        
+
+
 #script init
 action = ""
 argument1 = ""
@@ -151,7 +174,7 @@ try:
     argument1 = str(sys.argv[2])
 except: 
     pass
-   
+
 try:
     argument2 = str(sys.argv[3])
 except: 
@@ -173,5 +196,7 @@ elif action == "SHOWSUBMENU":
     showSubmenu(argument1,argument2)
 elif action == "SHOWINFO":
     showInfoPanel()
+elif action == "SETCUSTOM":
+    setCustomContent(argument1)
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 

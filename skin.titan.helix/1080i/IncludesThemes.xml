@@ -1085,10 +1085,23 @@
 				<posy>1000</posy>
 				<width>800</width>
 				<align>left</align>
-				<font>Reg32</font>
+				<font>Light32</font>
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>[COLOR=mainblue]$LOCALIZE[19031]:[/COLOR] $INFO[VideoPlayer.NextTitle]</label>
-				<visible>VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)</visible>
+				<visible>Player.HasVideo + VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)</visible>
+			</control>
+			
+			<!-- next program -->
+			<control type="label">
+				<!--Play Time-->
+				<posx>350</posx>
+				<posy>1000</posy>
+				<width>800</width>
+				<align>left</align>
+				<font>Light32</font>
+				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+				<label>[COLOR=mainblue]$LOCALIZE[19031]:[/COLOR] $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</label>
+				<visible>Player.HasAudio + !IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)</visible>
 			</control>
 		
 		
@@ -1534,8 +1547,20 @@
                     <font>-</font>
                     <texturefocus>osd/SubtitlesFO.png</texturefocus>
                     <texturenofocus>osd/SubtitlesNF.png</texturenofocus>
-                    <onclick condition="!VideoPlayer.Content(livetv)">ActivateWindow(SubtitleSearch)</onclick>
-					<onclick condition="VideoPlayer.Content(livetv)">ActivateWindow(Teletext)</onclick>
+                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
+					<visible>!VideoPlayer.Content(livetv)</visible>
+                </control>
+				<control type="button" id="105">
+                    <!--teletext-->
+                    <description>Subtitles</description>
+                    <width>60</width>
+                    <height>60</height>
+                    <label>287</label>
+                    <font>-</font>
+                    <texturefocus>osd/text-fo.png</texturefocus>
+                    <texturenofocus>osd/text-nofo.png</texturenofocus>
+					<onclick>ActivateWindow(Teletext)</onclick>
+					<visible>VideoPlayer.Content(livetv)</visible>
                 </control>
             </control>
             <control type="grouplist" id="200">

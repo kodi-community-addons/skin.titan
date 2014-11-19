@@ -24,8 +24,6 @@
                 <texture background="true">$INFO[ListItem.Art(characterart)]</texture>
             </control>
             <include>DialogOverlayExtra</include>
-			
-		
         </control>
         <control type="group">
             <!--Start Dialog-->
@@ -60,9 +58,8 @@
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
                         <label>20410</label>
-						<onclick>Dialog.Close(MovieInformation)</onclick>
                         <onclick>$INFO[ListItem.Trailer]</onclick>
-						<visible>!IsEmpty(ListItem.Trailer)</visible>
+						<visible>!IsEmpty(ListItem.Trailer) + Container.Content(movies)</visible>
                     </control>
 					<control type="button" id="104">
                         <!--MB3 Local Trailer-->
@@ -71,9 +68,9 @@
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
                         <label>20410</label>
-						<onclick>Dialog.Close(MovieInformation)</onclick>
                         <onclick>$INFO[Window(Home).Property(MB3.TrailerAction)]</onclick>
-						<visible>!IsEmpty(Window(Home).Property(MB3.TrailerAction))</visible>
+						<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
+						<visible>!IsEmpty(Window(home).Property("MB3.TrailerAction")) + stringcompare(ListItem.Property(ItemType),Movie)</visible>
                     </control>
                     <control type="button" id="100">
                         <!--Search Trailer on Youtube-->
@@ -82,9 +79,9 @@
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
                         <label>YouTube $LOCALIZE[20410]</label>
+						<onclick>Dialog.Close(MovieInformation)</onclick>
                         <onclick>ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
-						<onclick>Dialog.Close(movieinformation)</onclick>
-						<visible>[Container.Content(Movies) | Container.Content(TVshows)] + IsEmpty(Window(Home).Property(MB3.TrailerAction)) + IsEmpty(ListItem.Trailer)</visible>
+						<visible>[Skin.HasSetting(HomeMenuUseMBforMovies) + IsEmpty(Window(home).Property("MB3.TrailerAction")) + stringcompare(ListItem.Property(ItemType),Movie) | [!Skin.HasSetting(HomeMenuUseMBforMovies) + Container.Content(movies) + IsEmpty(ListItem.Trailer)]</visible>
                     </control>
 					<control type="button" id="113">
 						<description>Home Theatre</description>
@@ -92,7 +89,7 @@
 						<onclick>Playlist.Clear</onclick>
 						<onclick>Dialog.Close(MovieInformation)</onclick>
 						<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
-						<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !IsEmpty(ListItem.DBID)</visible>
+						<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !SubString(Container.FolderPath,plugin)</visible>
 					</control>
 					
                     <control type="button" id="8">
@@ -102,7 +99,21 @@
                         <height>60</height>
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
+						<visible>!substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
                     </control>
+					
+					<control type="button" id="1008">
+                        <!--Play-->
+                        <label>208</label>
+                        <width>585</width>
+                        <height>60</height>
+                        <align>center</align>
+                        <textoffsetx>0</textoffsetx>
+						<onclick condition="!StringCompare(Window(home).Property(MB3.Action),None)]">$INFO[Window(home).Property(MB3.Action)]</onclick>
+						<onclick condition="StringCompare(Window(home).Property(MB3.Action),None)]">PlayMedia($ESCINFO[ListItem.FileNameAndPath])</onclick>
+						<visible>substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
+                    </control>
+
                     <control type="button" id="9">
                         <!--Resume-->
                         <label>13404</label>
@@ -110,7 +121,7 @@
                         <height>60</height>
                         <align>center</align>
                         <textoffsetx>0</textoffsetx>
-						<visible>ListItem.IsResumable</visible>
+						<visible>ListItem.IsResumable + !Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
                     </control>
                     <control type="button" id="6">
                         <!--Refresh-->
