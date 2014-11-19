@@ -31,8 +31,8 @@ class TitanThread ():
     current_musicvideo_art = 0
     current_photo_art = 0
     current_global_art = 0
-    fullcheckinterval = 900
-    shortcheckinterval = 30
+    fullcheckinterval = 3600
+    shortcheckinterval = 60
     _userId = ""
 
     doDebugLog = False
@@ -698,57 +698,64 @@ class TitanThread ():
                 # get images from server only if fullcheckinterval has reached
                 if fullcheckinterval_current <= 0:
                     self.logMsg("[TitanSkin] loading images from server...")
-
-                    if self._userId == "":
-                        self.getContentFromCache()
+                    
+                    if xbmc.getCondVisibility("Player.HasVideo"):
+                        self.logMsg("[TitanSkin] ...skipped - video playing...")
                     else:
-                        self.setRecommendedMBSettings()
-                        self.updateMB3links()
-                        self.setContentInCache()
-
-                        updateResult = False
-                        try:
-                            updateResult = self.updateTypeArtLinks()
-                            self.updateMB3links()
-                            updateResult = self.updateCollectionArtLinks()
-                        except Exception, e:
-                            self.logMsg(str(e))                            
-
-                        if (updateResult == True):
-                            fullcheckinterval_current = self.fullcheckinterval                    
-                            self.logMsg("[TitanSkin] ...load images complete")                 
+                        # load images
+                        if self._userId == "":
+                            self.getContentFromCache()
                         else:
-                            self.logMsg("[TitanSkin] ...load images failed, will try again later")
+                            self.setRecommendedMBSettings()
+                            self.updateMB3links()
+                            self.setContentInCache()
+    
+                            updateResult = False
+                            try:
+                                updateResult = self.updateTypeArtLinks()
+                                self.updateMB3links()
+                                updateResult = self.updateCollectionArtLinks()
+                            except Exception, e:
+                                self.logMsg(str(e))                            
+    
+                            if (updateResult == True):
+                                fullcheckinterval_current = self.fullcheckinterval                    
+                                self.logMsg("[TitanSkin] ...load images complete")                 
+                            else:
+                                self.logMsg("[TitanSkin] ...load images failed, will try again later")
 
                 # set pictures on properties only every X seconds    
                 if shortcheckinterval_current <= 0:
                     self.logMsg("[TitanSkin] setting tile images")
-
-                    # try to get from cache first
-                    if self._userId == "":
-                        self.getContentFromCache()
-                    else:
-                        self.setBackgroundLink("xbmb3c.std.movies.3.image", "favoritemovies")
-                        self.setBackgroundLink("xbmb3c.std.tvshows.4.image", "favoriteshows")
-                        self.setBackgroundLink("xbmb3c.std.channels.0.image", "channels")
-                        self.setBackgroundLink("xbmb3c.std.music.3.image", "musicvideos")
-                        self.setBackgroundLink("xbmb3c.std.photo.0.image", "photos")
-
-                        # set MB3 content links
-                        self.updateMB3links()                    
-                        linkCount = 0
-
-                        while linkCount !=10:
-                            mbstring = "titanmb3." + str(linkCount)
-                            self.logMsg("set backgroundlink for: " + mbstring)
-                            if not "virtual" in WINDOW.getProperty(mbstring + ".type"):
-                                self.setBackgroundLink(mbstring + ".image", WINDOW.getProperty(mbstring + ".title"))
-                            linkCount += 1
-
-                        self.setContentInCache()
-
-                        self.logMsg("[TitanSkin] setting images complete")
-                        shortcheckinterval_current = self.shortcheckinterval
+                    
+                    if xbmc.getCondVisibility("Player.HasVideo"):
+                        self.logMsg("[TitanSkin] ...skipped - video playing...")
+                    else:                    
+                        # try to get from cache first
+                        if self._userId == "":
+                            self.getContentFromCache()
+                        else:
+                            self.setBackgroundLink("xbmb3c.std.movies.3.image", "favoritemovies")
+                            self.setBackgroundLink("xbmb3c.std.tvshows.4.image", "favoriteshows")
+                            self.setBackgroundLink("xbmb3c.std.channels.0.image", "channels")
+                            self.setBackgroundLink("xbmb3c.std.music.3.image", "musicvideos")
+                            self.setBackgroundLink("xbmb3c.std.photo.0.image", "photos")
+    
+                            # set MB3 content links
+                            self.updateMB3links()                    
+                            linkCount = 0
+    
+                            while linkCount !=10:
+                                mbstring = "titanmb3." + str(linkCount)
+                                self.logMsg("set backgroundlink for: " + mbstring)
+                                if not "virtual" in WINDOW.getProperty(mbstring + ".type"):
+                                    self.setBackgroundLink(mbstring + ".image", WINDOW.getProperty(mbstring + ".title"))
+                                linkCount += 1
+    
+                            self.setContentInCache()
+    
+                    self.logMsg("[TitanSkin] setting images complete")
+                    shortcheckinterval_current = self.shortcheckinterval
 
             fullcheckinterval_current -= 2
             shortcheckinterval_current -= 2
