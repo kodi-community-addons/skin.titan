@@ -32,7 +32,7 @@
 			<animation type="Conditional" condition="ControlGroup(77777).HasFocus">
                 <effect type="slide" start="0,-0" end="0,600" time="800" tween="cubic" easing="inout" />
             </animation>
-			 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !StringCompare(Container(300).ListItem.Property(widget),usercustom)</visible>
+			 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + ![StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(customwidgetcontent),submenuaswidget)]</visible>
 			<height>560</height>
 			<posy>-700</posy>
 			<posx>20</posx>
@@ -101,19 +101,19 @@
 			<posx>1555</posx>
 			<posy>140</posy>
 			<width>261</width>
-			<height>351</height>
-			<aspectratio>stretch</aspectratio>
-			<texture background="true" fallback="defaultcovers/video_play.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
-			<visible>!StringCompare(Container(300).ListItem.Property(widget),music) + !StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
+			<height>361</height>
+			<aspectratio>scale</aspectratio>
+			<texture background="true" fallback="DefaultVideo.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
+			<visible>!StringCompare(Window(Home).Property(activewidget),music) + !StringCompare(Window(Home).Property(activewidget),weather)</visible>
 		</control>
 		<control type="image">
 			<posx>1555</posx>
 			<posy>220</posy>
 			<width>261</width>
 			<height>261</height>
-			<aspectratio>stretch</aspectratio>
-			<texture background="true" fallback="defaultcovers/music_play.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
-			<visible>StringCompare(Container(300).ListItem.Property(widget),music)</visible>
+			<aspectratio>scale</aspectratio>
+			<texture background="true" fallback="DefaultMusicSongs.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
+			<visible>StringCompare(Window(Home).Property(activewidget),music)</visible>
 		</control>
 		<control type="image">
 			<posx>1500</posx>
@@ -122,7 +122,7 @@
 			<height>320</height>
 			<texture>$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<aspectratio>keep</aspectratio>
-			<visible>StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
+			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
 		</control>
 		
 		</control>
@@ -201,7 +201,7 @@
                     <texture>arrow_round_right_focus.png</texture>
                     <aspectratio>stretch</aspectratio>
 					<visible>skin.hastheme(classic)</visible>
-					<visible>!StringCompare(Container(300).ListItem.Property(widget),usercustom) + ![StringCompare(Container(300).ListItem.Property(widget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
+					<visible>!StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
                 </control>
 				<control type="image">
 					<posx>50</posx>
@@ -211,7 +211,7 @@
                     <texture>arrow_round_right_nofocus.png</texture>
                     <aspectratio>stretch</aspectratio>
 					<visible>!skin.hastheme(classic)</visible>
-					<visible>!StringCompare(Container(300).ListItem.Property(widget),usercustom) + ![StringCompare(Container(300).ListItem.Property(widget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
+					<visible>!StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
                 </control>
 				
 				
@@ -231,15 +231,26 @@
 					<texturefocus>-</texturefocus>
 					<texturenofocus>-</texturenofocus>
 					<onclick>$VAR[HomeWidgetClickActions]</onclick>
-					<visible>!StringCompare(Container(300).ListItem.Property(widget),usercustom) + ![StringCompare(Container(300).ListItem.Property(widget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
+					<visible>!StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
 				</control>
 				<control type="image">
-					<posx>1500</posx>
+					<posx>1465</posx>
 					<posy>10</posy>
 					<width>315</width>
 					<height>27</height>
 					<colordiffuse>aaFFFFFF</colordiffuse>
 					<texture>$VAR[HomeMenuWidgetInfoRating]</texture>
+					<visible>ControlGroup(77777).HasFocus</visible>
+				</control>
+				<control type="label">
+					<!--Rating-->
+					<posx>1830</posx>
+					<posy>-8</posy>
+					<width>50</width>
+					<font>Reg30</font>
+					<align>right</align>
+					<textcolor>$VAR[ThemeFontColorBlueGrey]</textcolor>
+					<label>$VAR[HomeMenuWidgetInfoRatingLabel]</label>
 					<visible>ControlGroup(77777).HasFocus</visible>
 				</control>
 				
@@ -268,7 +279,7 @@
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 		<content target="video">$VAR[YouTubeWidgetContent]</content>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),youtube)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),youtube)</visible>
 		</control>
 	</include>
 	
@@ -276,20 +287,20 @@
 		<control type="panel" id="510">
 			<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 			<content target="video">$VAR[CustomWidgetContent]</content>
-			<visible>StringCompare(Container(300).ListItem.Property(widget),custom)</visible>
+			<visible>StringCompare(Window(Home).Property(activewidget),custom) + !StringCompare(Window(Home).Property(customwidgetcontent),submenuaswidget)</visible>
 		</control>
 		<control type="panel" id="510">
 			<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-			<content><include>skinshortcuts-submenu-1</include></content>
-			<visible>StringCompare(Container(300).ListItem.Property(widget),usercustom)</visible>
+			<content><include>skinshortcuts-submenu</include></content>
+			<visible>StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(customwidgetcontent),submenuaswidget)</visible>
 		</control>
 	</include>
-	
+
 	<include name="NetflixWidgetGeneral">
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 		<content target="video">$VAR[NetflixWidgetContentGeneral]</content>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),netflix)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),netflix)</visible>
 		</control>
 	</include>
 	
@@ -297,7 +308,7 @@
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 		<content target="video">$VAR[NetflixWidgetContentMovies]</content>
-		<visible>Skin.HasSetting(HomeMenuUseNetflixforMovies) + StringCompare(Container(300).ListItem.Property(widget),movies)</visible>
+		<visible>Skin.HasSetting(HomeMenuUseNetflixforMovies) + StringCompare(Window(Home).Property(activewidget),movies)</visible>
 		</control>
 	</include>
 	
@@ -305,7 +316,7 @@
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 		<content target="video">$VAR[NetflixWidgetContentTvShows]</content>
-		<visible>Skin.HasSetting(HomeMenuUseNetflixforTVseries) + StringCompare(Container(300).ListItem.Property(widget),tvshows)</visible>
+		<visible>Skin.HasSetting(HomeMenuUseNetflixforTVseries) + StringCompare(Window(Home).Property(activewidget),tvshows)</visible>
 		</control>
 	</include>
 	
@@ -383,7 +394,7 @@
 		
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
 			<include>weatherWidgetContent</include>
 		</control>
 
@@ -394,7 +405,7 @@
 	<!-- recent movies -->
 	<control type="panel" id="510">
 	<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-	<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + StringCompare(skin.string(MoviesWidget),newmovies)</visible>
+	<visible>StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(skin.string(MoviesWidget),newmovies)</visible>
 	<content>
 	<item>
 	<label>$INFO[Window(Home).Property(RecentMovie.1.Title)]</label>
@@ -621,7 +632,7 @@
 	<!-- random movies -->
 	<control type="panel" id="510">
 	<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-	<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + StringCompare(skin.string(MoviesWidget),randommovies)</visible>
+	<visible>StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(skin.string(MoviesWidget),randommovies)</visible>
 	<content>
 	<item>
 	<label>$INFO[Window(Home).Property(RandomMovie.1.Title)]</label>
@@ -849,7 +860,7 @@
 	<!-- in progress movies -->
 	<control type="panel" id="510">
 	<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-	<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + [StringCompare(skin.string(MoviesWidget),recommended) | StringCompare(skin.string(MoviesWidget),inprogressmovies)]</visible>
+	<visible>StringCompare(Window(Home).Property(activewidget),movies) + [StringCompare(skin.string(MoviesWidget),recommended) | StringCompare(skin.string(MoviesWidget),inprogressmovies)]</visible>
 	<content>
 	<item>
 	<label>$INFO[Window(Home).Property(RecommendedMovie.1.Title)]</label>
@@ -1077,7 +1088,7 @@
 	<!-- recent episodes -->
 				<control type="panel" id="510">
 					<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-					<visible>StringCompare(Container(300).ListItem.Property(widget),tvshows) + SubString(skin.string(TvShowsWidget),latest)</visible>
+					<visible>StringCompare(Window(Home).Property(activewidget),tvshows) + SubString(skin.string(TvShowsWidget),latest)</visible>
 					<content>
 					<item>
 					<label>$INFO[Window(Home).Property(RecentEpisode.1.Title)]</label>
@@ -1300,7 +1311,7 @@
 				<!-- random series -->
 				<control type="panel" id="510">
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-				<visible>StringCompare(Container(300).ListItem.Property(widget),tvshows) + SubString(skin.string(TvShowsWidget),random)</visible>
+				<visible>StringCompare(Window(Home).Property(activewidget),tvshows) + SubString(skin.string(TvShowsWidget),random)</visible>
 				<content>
 				<item>
 				<label>$INFO[Window(Home).Property(RandomEpisode.1.Title)]</label>
@@ -1523,7 +1534,7 @@
 				<!-- inprogress episodes -->
 				<control type="panel" id="510">
 					<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-					<visible>StringCompare(Container(300).ListItem.Property(widget),tvshows) + SubString(skin.string(TvShowsWidget),inprogress)</visible>
+					<visible>StringCompare(Window(Home).Property(activewidget),tvshows) + SubString(skin.string(TvShowsWidget),inprogress)</visible>
 					<content>
 					<item>
 					<label>$INFO[Window(Home).Property(RecommendedEpisode.1.Title)]</label>
@@ -1775,7 +1786,7 @@
 		<!-- random series -->
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),tvshows) + SubString(skin.string(TvShowsWidget),random)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),tvshows) + SubString(skin.string(TvShowsWidget),random)</visible>
 		<content>
 		<item>
 		<label>$INFO[Window(Home).Property(RandomEpisodeMB3.1.EpisodeTitle)]</label>
@@ -2000,7 +2011,7 @@
 		<!-- recent episodes -->
 		<control type="panel" id="510">
 			<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-			<visible>StringCompare(Container(300).ListItem.Property(widget),tvshows) + SubString(skin.string(TvShowsWidget),latest)</visible>
+			<visible>StringCompare(Window(Home).Property(activewidget),tvshows) + SubString(skin.string(TvShowsWidget),latest)</visible>
 			<content>
 			<item>
 			<label>$INFO[Window(Home).Property(LatestEpisodeMB3.1.EpisodeTitle)]</label>
@@ -2224,7 +2235,7 @@
 		<!-- nextup episodes -->
 		<control type="panel" id="510">
 			<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-			<visible>StringCompare(Container(300).ListItem.Property(widget),tvshows) + SubString(skin.string(TvShowsWidget),inprogress)</visible>
+			<visible>StringCompare(Window(Home).Property(activewidget),tvshows) + SubString(skin.string(TvShowsWidget),inprogress)</visible>
 			<content>
 			<item>
 			<label>$INFO[Window(Home).Property(NextUpEpisodeMB3.1.EpisodeTitle)]</label>
@@ -2453,7 +2464,7 @@
 		<!-- recent movies -->
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + StringCompare(skin.string(MoviesWidget),newmovies)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(skin.string(MoviesWidget),newmovies)</visible>
 		<content>
 		<item>
 		<label>$INFO[Window(Home).Property(LatestMovieMB3.1.Title)]</label>
@@ -2682,7 +2693,7 @@
 		<!-- random movies -->
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + StringCompare(skin.string(MoviesWidget),randommovies)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(skin.string(MoviesWidget),randommovies)</visible>
 		<content>
 		<item>
 		<label>$INFO[Window(Home).Property(RandomMovieMB3.1.Title)]</label>
@@ -2907,7 +2918,7 @@
 		<!-- recommended movies -->
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + StringCompare(skin.string(MoviesWidget),recommended)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(skin.string(MoviesWidget),recommended)</visible>
 		<content>
 		<item>
 		<label>$INFO[Window(Home).Property(SuggestedMovieMB3.1.Title)]</label>
@@ -3136,7 +3147,7 @@
 		<!-- inprogress movies -->
 		<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),movies) + StringCompare(skin.string(MoviesWidget),inprogressmovies)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(skin.string(MoviesWidget),inprogressmovies)</visible>
 		<content>
 		<item>
 		<label>$INFO[Window(Home).Property(InProgressMovieMB3.1.Title)]</label>
@@ -4492,7 +4503,7 @@
 	<!-- random album -->
 	<control type="panel" id="510">
 	<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-	<visible>StringCompare(Container(300).ListItem.Property(widget),music) + StringCompare(skin.string(MusicWidget),randomalbum)</visible>
+	<visible>StringCompare(Window(Home).Property(activewidget),music) + StringCompare(skin.string(MusicWidget),randomalbum)</visible>
 	<content>
 	<item>
 	<label>$INFO[Window(Home).Property(RandomAlbumMB3.1.Title)]</label>
@@ -4662,7 +4673,7 @@
 	<control type="panel" id="510">
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 		<content target="video">$INFO[Window.Property(xbmb3c.std.music.2.content)]</content>
-		<visible>StringCompare(Container(300).ListItem.Property(widget),music) + StringCompare(skin.string(MusicWidget),inprogress)</visible>
+		<visible>StringCompare(Window(Home).Property(activewidget),music) + StringCompare(skin.string(MusicWidget),inprogress)</visible>
 		</control>
 	
 	</include>

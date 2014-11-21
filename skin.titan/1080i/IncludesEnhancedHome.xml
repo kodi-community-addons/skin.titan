@@ -2,15 +2,15 @@
 
 
 	<variable name="SpotLightWidgetContent">
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),movies) + Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(xbmb3c.std.movies.3.content)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),tvshows) + Skin.HasSetting(HomeMenuUseMBforTvSeries)">$INFO[Window.Property(xbmb3c.std.tvshows.4.content)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),music) + Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(xbmb3c.std.music.2.content)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),musicvideos) + Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window.Property(xbmb3c.std.music.3.content)]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),movies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies) + !Skin.HasSetting(HomeMenuUsePlexforMovies)">special://skin/playlists/recommendedmovies.xsp</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),tvshows) + !Skin.HasSetting(HomeMenuUseNetflixforTvSeries) + !Skin.HasSetting(HomeMenuUsePlexforTvSeries)">special://skin/playlists/recommendedtvshows.xsp</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),music) + !Skin.HasSetting(HomeMenuUseNetflixforMusic) + !Skin.HasSetting(HomeMenuUsePlexforMusic)">musicdb://top100/songs/</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),musicvideos) + !Skin.HasSetting(HomeMenuUseNetflixforMusicVideos) + !Skin.HasSetting(HomeMenuUsePlexforMusicVideos)">videodb://recentlyaddedmusicvideos/</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget),netflix)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=both&amp;url=slider_3</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),movies) + Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(xbmb3c.std.movies.3.content)]</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.HasSetting(HomeMenuUseMBforTvSeries)">$INFO[Window.Property(xbmb3c.std.tvshows.4.content)]</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),music) + Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(xbmb3c.std.music.2.content)]</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),musicvideos) + Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window.Property(xbmb3c.std.music.3.content)]</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),movies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies) + !Skin.HasSetting(HomeMenuUsePlexforMovies)">special://skin/playlists/recommendedmovies.xsp</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + !Skin.HasSetting(HomeMenuUseNetflixforTvSeries) + !Skin.HasSetting(HomeMenuUsePlexforTvSeries)">special://skin/playlists/recommendedtvshows.xsp</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),music) + !Skin.HasSetting(HomeMenuUseNetflixforMusic) + !Skin.HasSetting(HomeMenuUsePlexforMusic)">musicdb://top100/songs/</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),musicvideos) + !Skin.HasSetting(HomeMenuUseNetflixforMusicVideos) + !Skin.HasSetting(HomeMenuUsePlexforMusicVideos)">videodb://recentlyaddedmusicvideos/</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),netflix)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=both&amp;url=slider_3</value>
 		<value>noop</value>
 	 </variable>
 	 
@@ -125,6 +125,23 @@
 				<focusedlayout width="362" height="185">
 					<control type="group">
 						<include>HomeMenuWidgetFocuslayoutEnhanced</include>
+						<control type="button">
+							<left>150</left>
+							<top>0</top>
+							<width>1</width>
+							<height>60</height>
+							<font>Reg28</font>
+							<textcolor>blue</textcolor>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>-</label>
+							<visible>false</visible>
+							<onfocus>Skin.SetString(customwidget, recent)</onfocus>
+							<onfocus condition="!IsEmpty(Container(4444).ListItem.Property(customcontent))">XBMC.RunScript(script.titanskin.helpers,SETCUSTOM,$INFO[Container(4444).ListItem.Property(customcontent)])</onfocus>
+							<onfocus condition="!IsEmpty(Container(4444).ListItem.Property(widget))">SetProperty(activewidget,$INFO[Container(4444).ListItem.Property(widget)],Home)</onfocus>
+							<onfocus condition="!IsEmpty(Container(300).ListItem.Property(widget)) + IsEmpty(Container(4444).ListItem.Property(widget))">SetProperty(activewidget,$INFO[Container(300).ListItem.Property(widget)],Home)</onfocus>
+							<onfocus condition="IsEmpty(Container(300).ListItem.Property(widget)) + IsEmpty(Container(4444).ListItem.Property(widget))">SetProperty(activewidget,""],Home)</onfocus>
+						</control>
 					</control>
 				</focusedlayout>
 				<content>
@@ -391,7 +408,7 @@
 						<height>180</height>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
 						<texture background="true">$INFO[Container(510).ListItem.Thumb]</texture>
-						<visible>StringCompare(Container(300).ListItem.Property(widget), weather)</visible>
+						<visible>StringCompare(Window(Home).Property(activewidget), weather)</visible>
 					</control>
 			</control>
 	
@@ -422,6 +439,7 @@
 				<onright>Control.Move(300,1)</onright>
 				<onup>noop</onup>
 				<ondown>510</ondown>
+				<visible>!StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
 			</control>
 			
 			<!-- widgets -->
@@ -489,7 +507,7 @@
             <width>337</width>
 			<height>175</height>
             <texture background="true" diffuse="home/home_matte2.png" fallback="banner_default.png">$VAR[HomeMenuWidgetImage]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
         </control>
         <control type="image">
             <!--Panel Ovelay-->
@@ -602,6 +620,29 @@
 			<shadowcolor>black</shadowcolor>
 			<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
         </control>
+		<control type="label">
+            <!--Label-->
+            <include condition="!SubString(System.BuildVersion,14,left)">WidgetLabelPosGotham</include>
+			<include condition="SubString(System.BuildVersion,14,left)">WidgetLabelPosHelix</include>
+            <posy>93</posy>
+            <width>305</width>
+            <height>100</height>
+            <align>center</align>
+            <info>ListItem.Label</info>
+            <font>Reg24</font>
+            <textcolor>$INFO[Skin.String(HomeFocusColor)]</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable) + StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
+        </control>
+		<control type="image">
+            <posx>-5</posx>
+            <posy>-7</posy>
+			<width>350</width>
+			<height>191</height>
+			<colordiffuse>$INFO[Skin.String(HomeFocusColor)]</colordiffuse>
+            <texture>home/home_focus.png</texture>
+			<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
+        </control>
     </include>
     
 	<include name="EnhancedHomeMainLayoutFocus">
@@ -641,7 +682,6 @@
 			<height>191</height>
 			<colordiffuse>$INFO[Skin.String(HomeFocusColor)]</colordiffuse>
             <texture>home/home_focus.png</texture>
-			<visible>Control.HasFocus(300)</visible>
         </control>
 		<control type="button">
 			<left>150</left>
@@ -658,6 +698,8 @@
 			<onfocus condition="Skin.HasSetting(UseSectionBackground) + !Player.HasMedia">Skin.SetString(SectionBackground,$VAR[varBackground])</onfocus>
 			<onfocus condition="!Skin.HasSetting(UseSectionBackground)">Skin.Reset(SectionBackground)</onfocus>
 			<onfocus condition="!IsEmpty(Container(300).ListItem.Property(customcontent))">XBMC.RunScript(script.titanskin.helpers,SETCUSTOM,$INFO[Container(300).ListItem.Property(customcontent)])</onfocus>
+			<onfocus condition="!IsEmpty(Container(300).ListItem.Property(widget))">SetProperty(activewidget,$INFO[Container(300).ListItem.Property(widget)],Home)</onfocus>
+			<onfocus condition="IsEmpty(Container(300).ListItem.Property(widget))">SetProperty(activewidget,""],Home)</onfocus>
 		</control>
     </include>
 

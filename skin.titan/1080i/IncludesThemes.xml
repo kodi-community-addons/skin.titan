@@ -764,9 +764,23 @@
 				<visible>Player.HasAudio</visible>
 			</control>
 			
+			<!-- discart -->
+			<control type="image">
+				<posx>120</posx>
+				<posy>820</posy>
+				<width>200</width>
+				<height>200</height>
+				<aligny>center</aligny>
+				<aspectratio align="left">keep</aspectratio>
+				<fadetime>300</fadetime>
+				<animation effect="rotate" end="-360" center="auto" time="12000" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
+				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.Art(discart)]</texture>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+			</control>
+			
 			<!--Cover-->
 			<control type="image" id="1">
-				<!--live tv-->
 				<posx>60</posx>
 				<posy>800</posy>
 				<width>240</width>
@@ -776,6 +790,8 @@
 				<aspectratio align="left" aligny="center">keep</aspectratio>
 				<visible>Player.HasVideo</visible>
 			</control>
+			
+			
 
 			<control type="image">
 				<!--record icon-->
@@ -1565,7 +1581,7 @@
             </control>
             <control type="grouplist" id="200">
                 <!--OSD-->
-                <posx>757</posx>
+                <posx>550</posx>
                 <posy>956</posy>
                 <width>1000</width>
                 <height>60</height>
@@ -1651,6 +1667,30 @@
                     <texturenofocus>osd/NextTrackNF.png</texturenofocus>
                     <onclick>PlayerControl(Next)</onclick>
                 </control>
+				<control type="button" id="214">
+                    <!--bookmarks-->
+                    <include>animation_fade_visible_hidden</include>
+                    <width>60</width>
+                    <height>60</height>
+                    <label>-</label>
+                    <font>-</font>
+                    <texturefocus>osd/text-fo.png</texturefocus>
+                    <texturenofocus>osd/text-nofo.png</texturenofocus>
+                    <onclick>ActivateWindow(VideoBookmarks)</onclick>
+					<visible>Player.HasVideo</visible>
+                </control>
+				<control type="button" id="215">
+                    <!--disc menu-->
+                    <include>animation_fade_visible_hidden</include>
+                    <width>60</width>
+                    <height>60</height>
+                    <label>-</label>
+                    <font>-</font>
+                    <texturefocus>osd/InfoFO.png</texturefocus>
+                    <texturenofocus>osd/InfoNF.png</texturenofocus>
+                    <onclick>PlayerControl(ShowVideoMenu)</onclick>
+					<visible>VideoPlayer.HasMenu</visible>
+                </control>
             </control>
 	</include>
 	
@@ -1702,8 +1742,20 @@
                     <font>-</font>
                     <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
-                    <onclick condition="!VideoPlayer.Content(livetv)">ActivateWindow(SubtitleSearch)</onclick>
-					<onclick condition="VideoPlayer.Content(livetv)">ActivateWindow(Teletext)</onclick>
+                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
+					<visible>!VideoPlayer.Content(livetv)</visible>
+                </control>
+				<control type="button" id="105">
+                    <!--teletext-->
+                    <description>teletext</description>
+                    <width>90</width>
+                    <height>97</height>
+                    <label>287</label>
+                    <font>-</font>
+                    <texturefocus colordiffuse="white">modernosd/text-nofo.png</texturefocus>
+                    <texturenofocus colordiffuse="lightgrey">modernosd/text-nofo.png</texturenofocus>
+					<onclick>ActivateWindow(Teletext)</onclick>
+					<visible>VideoPlayer.Content(livetv)</visible>
                 </control>
             </control>
             <control type="grouplist" id="200">
@@ -1854,6 +1906,30 @@
                     <texturenofocus>modernosd/OSDRecordNF.png</texturenofocus>
                     <onclick>PlayerControl(Record)</onclick>
 					<visible>Player.CanRecord</visible>
+                </control>
+				<control type="button" id="214">
+                    <!--bookmarks-->
+                    <include>animation_fade_visible_hidden</include>
+                    <width>90</width>
+                    <height>98</height>
+                    <label>209</label>
+                    <font>-</font>
+                    <texturefocus>modernosd/OSDBookmarksFO.png</texturefocus>
+                    <texturenofocus>modernosd/OSDBookmarksNF.png</texturenofocus>
+                    <onclick>ActivateWindow(VideoBookmarks)</onclick>
+					<visible>Player.HasVideo</visible>
+                </control>
+				<control type="button" id="215">
+                    <!--disc menu-->
+                    <include>animation_fade_visible_hidden</include>
+                    <width>90</width>
+                    <height>98</height>
+                    <label>209</label>
+                    <font>-</font>
+                    <texturefocus>modernosd/OSDDvdFO.png</texturefocus>
+                    <texturenofocus>modernosd/OSDDvdNF.png</texturenofocus>
+                    <onclick>PlayerControl(ShowVideoMenu)</onclick>
+					<visible>VideoPlayer.HasMenu</visible>
                 </control>
             </control>
 

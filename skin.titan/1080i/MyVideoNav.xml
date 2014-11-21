@@ -182,6 +182,7 @@
 					<include>SubMenuButton</include>
 					<label>581</label>
 					<onclick>XBMC.RunScript(plugin.video.xbmb3c,sortby)</onclick>
+					<visible>substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
 				</control>
 				
 				<!-- sort asc MB alternative -->
@@ -194,6 +195,24 @@
 					<altlabel>584</altlabel>
 					<usealttexture>SubString(Window(Home).Property(currenturl), Ascending)</usealttexture>
 					<onclick>XBMC.RunScript(plugin.video.xbmb3c,sortorder)</onclick>
+					<visible>substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
+				</control>
+				<control type="edit" id="19">
+					<visible>Container.CanFilter + !Container.CanFilterAdvanced</visible>
+					<description>Filter</description>
+					<textwidth>230</textwidth>
+					<include>SubMenuButton</include>
+					<textoffsetx>50</textoffsetx>
+					<label>587</label>
+				</control>
+				<control type="radiobutton" id="98">
+					<visible>Container.CanFilterAdvanced</visible>
+					<description>Filter</description>
+					<include>SubMenuButton</include>
+					<label>587</label>
+					<selected>Container.Filtered</selected>
+					<onclick>right</onclick>
+					<onclick>Filter</onclick>
 				</control>
 				
 				
@@ -221,11 +240,11 @@
 					<visible>substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
                 </control>
 
-				 <control type="button" id="400">
+				 <control type="button" id="2">
                     <!--Set View-->
                     <include>SubMenuButton</include>
-                    <label>View: $INFO[Container.Viewmode]</label>
-                    <onclick>Container.NextViewMode</onclick>
+                    <!-- <label>View: $INFO[Container.Viewmode]</label>
+                    <onclick>Container.NextViewMode</onclick> -->
 					<onclick condition="[substring(Container.FolderPath,plugin://plugin.video.xbmb3c) | substring(Container.FolderPath,plugin://plugin.video.netflixbmc)] + Container.Content(Movies)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,MOVIES,00)</onclick>
                     <onclick condition="[substring(Container.FolderPath,plugin://plugin.video.xbmb3c) | substring(Container.FolderPath,plugin://plugin.video.netflixbmc)] + Container.Content(seasons)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,SEASONS,00)</onclick>
                     <onclick condition="[substring(Container.FolderPath,plugin://plugin.video.xbmb3c) | substring(Container.FolderPath,plugin://plugin.video.netflixbmc)] + Container.Content(TVShows)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,SERIES,00)</onclick>

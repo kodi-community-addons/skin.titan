@@ -217,7 +217,7 @@
 					<align>center</align>
 					<onclick>noop</onclick>
 					<label>31011</label>
-					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages)</visible>
+					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages) | StringCompare(Window.Property(groupname),powermenu)</visible>
 				</control>
 				
 				<!-- disable label -->
@@ -231,7 +231,7 @@
 					<onclick condition="StringCompare(Container(211).ListItem.Property(disableLabel), disable)">SetProperty(customValue, "")</onclick>
 					<onclick>SendClick(404)</onclick>
 					<selected>StringCompare(Container(211).ListItem.Property(disableLabel), disable)</selected>
-					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages)</visible>
+					<visible>[StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages)] + !StringCompare(Window(Home).Property(powermenu), active)</visible>
 				</control>
 				
 				<control type="button" id="309"> <!--widget-->
@@ -239,7 +239,7 @@
 					<align>center</align>
 					<onclick>SetProperty(shortcutDialog, widget, Home)</onclick>
 					<label>$ADDON[script.skinshortcuts 32044]</label>
-					<visible>StringCompare(Window.Property(groupname),mainmenu)</visible>
+					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced)</visible>
 				</control>
 				
 				<control type="button" id="310"> <!--background-->
@@ -249,14 +249,6 @@
 					<label>31169</label>
 					<visible>StringCompare(Window.Property(groupname),mainmenu) + Skin.HasSetting(UseSectionBackground)</visible>
 				</control>
-				
-				<control type="button" id="1310"> <!--background-->
-					<width>465</width>
-					<align>center</align>
-					<onclick>Notification(Section backgrounds are disabled, please enable section backgrounds to set custom backgrounds for tiles) </onclick>
-					<label>31169</label>
-					<visible>StringCompare(Window.Property(groupname),mainmenu) + !Skin.HasSetting(UseSectionBackground)</visible>
-				</control>
 
 				<control type="button" id="405"> <!--sub menu-->
 					<width>465</width>
@@ -265,22 +257,14 @@
 					<label>$ADDON[script.skinshortcuts 32072]</label>
 					<visible>StringCompare(Window.Property(groupname),mainmenu)</visible>
 				</control>
-				
-				<control type="button" id="406"> <!--custom widget menu-->
-					<width>465</width>
-					<align>center</align>
-					<onclick>noop</onclick>
-					<label>31188</label>
-					<visible>StringCompare(Window.Property(groupname),mainmenu) + StringCompare(Container(211).ListItem.Property(widget),usercustom)</visible>
-				</control>
-				
+							
 				<control type="button" id="1406"> <!--custom widget content-->
 					<width>465</width>
 					<align>center</align>
-					<onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;skinAction=custom-$INFO[Container(211).ListItem.Property(defaultID)])</onclick>
+					<onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;skinLabel=label&amp;skinAction=custom-$INFO[Container(211).ListItem.Property(labelID)])</onclick>
 					<onclick>SetProperty(customProperty, customcontent)</onclick>
+					<onclick>SetProperty(customValue, custom-$INFO[Container(211).ListItem.Property(labelID)])</onclick>
 					<onclick>SetProperty(customWidget, active, Home)</onclick>
-					<onclick>SetProperty(customValue, custom-$INFO[Container(211).ListItem.Property(defaultID)])</onclick>
 					<onclick>SendClick(404)</onclick>
 					<label>31203</label>
 					<visible>StringCompare(Container(211).ListItem.Property(widget),custom) + !SubString(Container(211).ListItem.Property(labelID),titanmb3) + !SubString(Container(211).ListItem.Property(labelID),plexbmc-)</visible>
@@ -301,7 +285,7 @@
 					<onclick>SetProperty(shortcutDialog, change, Home)</onclick>
 					<onclick>ClearProperty(customWidget, Home)</onclick>
 					<label>31175</label>
-					<visible>!SubString(Container(211).ListItem.Property(labelID),titanmb3)</visible>
+					<visible>!SubString(Container(211).ListItem.Property(labelID),titanmb3) + !StringCompare(Window(Home).Property(powermenu), active)</visible>
 				</control>
 				
 				<control type="button" id="1308"> <!--reset-->

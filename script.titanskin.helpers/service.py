@@ -791,8 +791,14 @@ class TitanThread ():
         if "/10000/10000/" in backGroundUrl:
             backGroundUrl = backGroundUrl.split("/10000/10000/",1)[0]
             backGroundUrl = backGroundUrl + "/620/350/0"
-        win.setProperty(backGroundString + ".small", backGroundUrl)          
+        win.setProperty(backGroundString + ".small", backGroundUrl)
         
+        #set boxsets collapsed for movies
+        link = win.getProperty("xbmb3c.std.movies.0.path")
+        link = link.replace("&mode=0,return)", "")
+        link = link + "%26CollapseBoxSetItems%3Dtrue&mode=0,return)"
+        win.setProperty("xbmb3c.std.movies.0.collapsed.path", link)        
+        print("[Titanskin] boxsets --> " + link)
         
         # collection items update
         linkCount = 0
@@ -812,7 +818,11 @@ class TitanThread ():
                     win.setProperty(mbstring + ".inprogress.path", win.getProperty(orgmbstring + ".inprogress.path"))
 
                 win.setProperty(mbstring + ".genre.path", win.getProperty(orgmbstring + ".genre.path"))
-                win.setProperty(mbstring + ".path", win.getProperty(orgmbstring + ".path"))
+                
+                if win.getProperty(orgmbstring + ".collapsed.path") != "":
+                    win.setProperty(mbstring + ".path", win.getProperty(orgmbstring + ".collapsed.path"))
+                else:
+                    win.setProperty(mbstring + ".path", win.getProperty(orgmbstring + ".path"))
 
                 link = win.getProperty(orgmbstring + ".recent.path")
                 link = link.replace("ActivateWindow(VideoLibrary,", "")
@@ -827,15 +837,18 @@ class TitanThread ():
                 link = link.replace(",return)", "")
                 win.setProperty(orgmbstring + ".unwatched.content", link)
 
-                link = win.getProperty(orgmbstring + ".inprogress.path")
-                link = link.replace("ActivateWindow(VideoLibrary,", "")
-                link = link.replace(",return)", "")
-                win.setProperty(mbstring + ".inprogress.content", link)  
-
-                link = win.getProperty(orgmbstring + ".nextepisodes.path")
-                link = link.replace("ActivateWindow(VideoLibrary,", "")
-                link = link.replace(",return)", "")
-                win.setProperty(mbstring + ".nextepisodes.content", link)
+                if win.getProperty(orgmbstring + ".inprogress.path") != "":
+                    link = win.getProperty(orgmbstring + ".inprogress.path")
+                    link = link.replace("ActivateWindow(VideoLibrary,", "")
+                    link = link.replace(",return)", "")
+                    win.setProperty(mbstring + ".inprogress.content", link)  
+                
+                if win.getProperty(orgmbstring + ".nextepisodes.path") != "":
+                    link = win.getProperty(orgmbstring + ".nextepisodes.path")
+                    link = link.replace("ActivateWindow(VideoLibrary,", "")
+                    link = link.replace(",return)", "")
+                    win.setProperty(mbstring + ".nextepisodes.content", link)
+                    win.setProperty(mbstring + ".inprogress.content", link)
 
             linkCount += 1
 
