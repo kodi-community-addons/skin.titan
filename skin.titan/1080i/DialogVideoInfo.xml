@@ -4,6 +4,7 @@
     <defaultcontrol always="true">9000</defaultcontrol>
     <allowoverlay>no</allowoverlay>
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
+	<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>
     <controls>
         <!-- Movies, TVShows, Seasons, Episodes -->
         <control type="group">
@@ -142,6 +143,16 @@
                         <textoffsetx>0</textoffsetx>
                         <onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
                         <visible>!substring(Container.FolderPath,plugin://plugin.video) + [Container.Content(Movies) | Container.Content(TVshows)]</visible>
+                    </control>
+					<control type="button" id="102">
+                        <!--Get video extras-->
+                        <width>585</width>
+                        <height>60</height>
+                        <align>center</align>
+                        <textoffsetx>0</textoffsetx>
+                        <label>$INFO[System.AddonTitle(script.videoextras)]</label>
+						<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
+						<visible>System.HasAddon(script.videoextras) + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
                     </control>
                 </control>
                 <!-- thumb -->

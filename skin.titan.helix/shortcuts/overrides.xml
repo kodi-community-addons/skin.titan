@@ -10,18 +10,17 @@
 			<shortcut label="32022" grouping="32029" icon="home/livetv.png" condition="System.GetBool(pvrmanager.enabled)">$VAR[LiveTVButtonOnClick]</shortcut>
 			<shortcut label="342" grouping="32029" icon="home/movies.png" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies)">$VAR[MoviesButtonOnClick]</shortcut>
 			<shortcut label="20343" grouping="32029" icon="home/tvseries.png" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries)">$VAR[TVseriesButtonOnClick]</shortcut>
-			<shortcut label="10005" grouping="32029" icon="home/music.png" condition="!Skin.HasSetting(HomeMenuUsePlexforMusic)">$VAR[MusicButtonOnClick]</shortcut>
+			<shortcut label="10005" grouping="32029" icon="home/music.png" condition="true">$VAR[MusicButtonOnClick]</shortcut>
 			<shortcut label="20389" grouping="32029" icon="home/music.png" condition="true">$VAR[MusicVideosButtonOnClick]</shortcut>
 			<shortcut label="12600" grouping="32029" icon="home/weather.png" condition="true">ActivateWindow(Weather)</shortcut>
-			<shortcut label="10002" grouping="32029" icon="home/pictures.png" condition="!Skin.HasSetting(HomeMenuUsePlexforPictures)">$VAR[PicturesButtonOnClick]</shortcut>
+			<shortcut label="10002" grouping="32029" icon="home/pictures.png" condition="true">$VAR[PicturesButtonOnClick]</shortcut>
 			<shortcut label="10006" grouping="32029" icon="home/videos.png" condition="true">$VAR[VideosButtonOnClick]</shortcut>
-			<shortcut label="10001" grouping="32029" icon="home/addons.png" condition="true">ActivateWindow(Programs,Addons,return)</shortcut>
 			<shortcut label="10004" grouping="32029" icon="home/settings.png" condition="true">$VAR[SettingsButtonOnClick]</shortcut>
 			<shortcut label="1037" grouping="32029" icon="home/videoaddons.png" condition="true">ActivateWindow(Video,addons,return)</shortcut>
 			<shortcut label="19163" grouping="32029" icon="home/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">$VAR[RecordingsButtonClick]</shortcut>
 			<shortcut label="19021" grouping="32029" icon="home/radio.png" condition="true">$VAR[RadioButtonOnClick]</shortcut>
-			<shortcut label="350" grouping="32029" icon="home/programs.png" condition="true">$VAR[ProgramsButtonOnClick]</shortcut>
 			<shortcut label="7" grouping="32029" icon="home/filemanager.png" condition="true">ActivateWindow(filemanager)</shortcut>
+			<shortcut label="10040" grouping="32029" icon="home/addons.png" condition="true">$VAR[AddonsButtonOnClick]</shortcut>
 			<shortcut label="10134" grouping="32029" icon="home/favourites.png" condition="true">ActivateWindow(favourites)</shortcut>
 			<shortcut label="31018" grouping="32029" type="netflix" icon="home/netflix.png" condition="System.HasAddon(plugin.video.netflixbmc)">$VAR[NetflixButtonOnClick]</shortcut>
 			<shortcut label="31062" grouping="32029" type="youtube" icon="home/youtube.png" condition="System.HasAddon(plugin.video.youtube)">ActivateWindow(10025,"plugin://plugin.video.youtube",return)</shortcut>
@@ -30,7 +29,7 @@
 
 		<!-- movies -->
 		<node label="20342" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
-			<shortcut label="342" grouping="32029" icon="home/movies.png" condition="!StringCompare(Window(Home).Property(customWidget), active)">$VAR[MoviesButtonOnClick]</shortcut>
+			<shortcut label="342" grouping="32029" icon="$VAR[MoviesButtonThumb]" condition="!StringCompare(Window(Home).Property(customWidget), active)">$VAR[MoviesButtonOnClick]</shortcut>
 			<shortcut label="31036" grouping="20342" type="20342" icon="home/movies.png" condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">$VAR[CustomCollectionClick]</shortcut>
 			<shortcut label="19019" grouping="1047" type="1037" icon="home/videoaddons.png" condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">$VAR[CustomCollectionClick]</shortcut>
 			<node label="31116" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">
@@ -100,9 +99,10 @@
 		</node>
 		
 		<!-- music -->
-		<node label="1211" condition="!Skin.HasSetting(HomeMenuUsePlexforMusic) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
+		<node label="1211" condition="Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
 			<shortcut label="10005" grouping="32029" icon="home/music.png" condition="!StringCompare(Window(Home).Property(customWidget), active)">$VAR[MusicButtonOnClick]</shortcut>
 			<shortcut label="19021" grouping="32029" icon="home/radio.png" condition="!StringCompare(Window(Home).Property(customWidget), active)">$VAR[RadioButtonOnClick]</shortcut>
+			<shortcut label="1038" grouping="32029" icon="home/music.png" condition="true">ActivateWindow(MusicLibrary,Addons,return)</shortcut>
 			<!-- MB3 music items -->
 			<node label="31116" condition="Skin.HasSetting(HomeMenuUseMBforMusic)">
 				<shortcut label="358" grouping="1211" type="1211" icon="home/music.png">$INFO[Window(Home).Property(xbmb3c.std.music.0.path)]</shortcut>
@@ -110,7 +110,7 @@
 				<shortcut label="517" grouping="1211" type="1211" icon="home/music.png">$INFO[Window(Home).Property(xbmb3c.std.music.2.path)]</shortcut>
 			</node>
 			<!-- XBMC music items -->
-			<node label="31116" condition="!Skin.HasSetting(HomeMenuUseMBforMusic)">
+			<node label="31116" condition="!Skin.HasSetting(HomeMenuUseMBforMusic) + !Skin.HasSetting(HomeMenuUsePlexforMusic)">
 				<shortcut label="10502" grouping="1211" type="1211" icon="home/music.png">ActivateWindow(Music,musicdb://,return)</shortcut>
 				<shortcut label="135" grouping="1211" type="1211" icon="home/music.png">ActivateWindow(Music,musicdb://genres/,return)</shortcut>
 				<shortcut label="133" grouping="1211" type="1211" icon="home/music.png">ActivateWindow(Music,musicdb://artists/,return)</shortcut>
@@ -372,7 +372,9 @@
 		</node>
 			
 		<node label="32020" condition="!Skin.HasSetting(HomeMenuUseMBforPictures) + !Skin.HasSetting(HomeMenuUsePlexforPictures) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window(Home).Property(powermenu), active)">
-				<content>picturesources</content>
+			<shortcut label="10002" grouping="32029" icon="home/pictures.png" condition="true">$VAR[PicturesButtonOnClick]</shortcut>
+			<shortcut label="1039" grouping="32029" icon="home/pictures.png" condition="true">ActivateWindow(Pictures,Addons,return)</shortcut>
+			<content>picturesources</content>
 		</node>
 		
 		
@@ -412,15 +414,19 @@
 		<!-- addons -->
 		<node label="32007" condition="Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window(Home).Property(powermenu), active)">
 			<node label="32009">
+				<shortcut label="10001" grouping="32029" icon="home/addons.png" condition="true">ActivateWindow(Programs,Addons,return)</shortcut>
 				<content>addon-program</content>
 			</node>
 			<node label="32010">
+				<shortcut label="1037" grouping="32029" icon="home/videoaddons.png" condition="true">ActivateWindow(Video,addons,return)</shortcut>
 				<content>addon-video</content>
 			</node>
 			<node label="32011">
+				<shortcut label="1038" grouping="32029" icon="home/music.png" condition="true">ActivateWindow(MusicLibrary,Addons,return)</shortcut>
 				<content>addon-audio</content>
 			</node>
 			<node label="32012">
+				<shortcut label="1039" grouping="32029" icon="home/pictures.png" condition="true">ActivateWindow(Pictures,Addons,return)</shortcut>
 				<content>addon-image</content>
 			</node>
 		</node>
@@ -445,6 +451,8 @@
 		<node label="32054" condition="Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active)">
 			<shortcut label="5" icon="common/settings1.png" condition="StringCompare(Window(Home).Property(powermenu), active)">$VAR[SettingsButtonOnClick]</shortcut>
 			<content>commands</content>
+			<shortcut label="20150" icon="common/shutdown1.png">XBMC.AlarmClock(shutdowntimer,XBMC.Shutdown())</shortcut>
+			<shortcut label="20151" icon="common/shutdown1.png">XBMC.CancelAlarm(shutdowntimer)</shortcut>
 		</node>
 
 	</groupings>
@@ -532,7 +540,7 @@
 	<icon labelID="13005">common/shutdown1.png</icon>
 	<icon labelID="13013">common/reboot1.png</icon>
 	<icon labelID="13010">common/shutdown1.png</icon>
-	<icon labelID="20045">common/lock.png</icon>
+	<icon labelID="20045">common/mastermode.png</icon>
 	<icon labelID="13016">common/shutdown1.png</icon>
 	<icon labelID="13011">common/shutdown1.png</icon>
 	<icon labelID="600">common/rip-cd.png</icon>
@@ -603,7 +611,7 @@
 	<backgrounddefault labelID="pictures">default</backgrounddefault>
 	<backgrounddefault labelID="videos">fanart</backgrounddefault>
 	<backgrounddefault labelID="playdvd">default</backgrounddefault>
-	<backgrounddefault labelID="programs">fanart</backgrounddefault>
+	<backgrounddefault labelID="10040">fanart</backgrounddefault>
 	<backgrounddefault labelID="settings">default</backgrounddefault>
 	<backgrounddefault labelID="19019">fanart</backgrounddefault>
 	<backgrounddefault labelID="31036">fanart</backgrounddefault>

@@ -367,11 +367,13 @@
         <value condition="Skin.String(HomeMenuUseMusicCollection)">ActivateWindow(Music, $INFO[Skin.String(HomeMenuUseMusicCollection)], return)</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforMusic) + !Skin.String(HomeMenuUseMusicCollection) + !Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">ActivateWindow(Music, MusicLibrary, return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMusic) + !Skin.String(HomeMenuUseMusicCollection) + !Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">$INFO[Window.Property(xbmb3c.std.music.0.path)]</value>
-    </variable>
+		<value condition="Skin.HasSetting(HomeMenuUsePlexforMusic)">ActivateWindow(MusicLibrary,"plugin://plugin.video.plexbmc/?url=http://music&amp;mode=22",return)</value>
+	</variable>
 	
 	<variable name="MusicLibraryButtonOnClick">
         <value condition="!Skin.HasSetting(HomeMenuUseMBforMusic)">ActivateWindow(Music, MusicLibrary, return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(xbmb3c.std.music.0.path)]</value>
+		<value condition="Skin.HasSetting(HomeMenuUsePlexforMusic)">ActivateWindow(MusicLibrary,"plugin://plugin.video.plexbmc/?url=http://music&amp;mode=22",return)</value>
     </variable>
 	
 	<variable name="MusicRecentPlayedButtonOnClick">
@@ -496,6 +498,7 @@
 		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforPictures)">ActivateWindow(pictures,return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforPictures)">$INFO[Window.Property(xbmb3c.std.photo.0.path)]</value>
+		<value condition="Skin.HasSetting(HomeMenuUsePlexforPictures)">ActivateWindow(pictures,"plugin://plugin.video.plexbmc/?url=http://photo&amp;mode=22",return)</value>
     </variable>
 	
 	<variable name="VideosButtonOnClick">
@@ -503,7 +506,7 @@
         <value>ActivateWindow(Video,root)</value>
     </variable>
 	
-	<variable name="ProgramsButtonOnClick">
+	<variable name="AddonsButtonOnClick">
 		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value>ActivateWindow(Programs,Addons,return)</value>
     </variable>
@@ -545,6 +548,7 @@
 	
 	
 	<variable name="LargeFanArtImage">
+		<value condition="!IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt))">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
         <value condition="Container.Content(Seasons) + !IsEmpty(ListItem.Art(season.fanart)) + !substring(Container.FolderPath,plugin://plugin.video)">$INFO[ListItem.Art(season.fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
@@ -622,6 +626,11 @@
 		<value condition="!IsEmpty(Container(510).ListItem.Plot)">$INFO[Container(510).ListItem.Plot]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget), weather)">$INFO[Container(510).ListItem.Property(Plot)][CR]$INFO[Container(510).ListItem.label2]</value>
 		<value>$INFO[Container(510).ListItem.Property(Plot)]</value>
+    </variable>
+	
+	<variable name="HomeMenuWidgetInfoPlotAlt">
+		<value condition="!IsEmpty(Container(510).ListItem.Premiered)">[COLOR=mainblue]$INFO[Container(510).ListItem.Premiered]$INFO[Container(510).ListItem.Duration,  • ,min. • ]$INFO[Container(510).ListItem.Genre][/COLOR][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+		<value>$VAR[HomeMenuWidgetInfoPlot]</value>
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoPoster">
