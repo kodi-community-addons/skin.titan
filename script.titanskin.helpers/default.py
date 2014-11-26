@@ -2,9 +2,12 @@ import xbmcplugin
 import xbmcgui
 import shutil
 import xbmcaddon
+import xbmcvfs
 import os
 import time
 import urllib
+import xml.etree.ElementTree as etree
+
 
 def sendClick(controlId):
     win = xbmcgui.Window( 10000 )
@@ -30,7 +33,15 @@ def setCustomContent(skinString):
 
     win.setProperty("customwidgetcontent", skinStringContent)
 
-
+def setRecommendedMBSettings(skin):
+    addonSettings = xbmcaddon.Addon(id='plugin.video.xbmb3c')
+    
+    if skin == "titan":
+        addonSettings.setSetting('includePeople', 'false')
+        addonSettings.setSetting('showIndicators', 'false')
+        addonSettings.setSetting('showArtIndicators', 'false')
+        addonSettings.setSetting('useMenuLoader', 'false')
+       
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
     time.sleep(2)
@@ -41,7 +52,7 @@ def showInfoPanel():
 def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
-    time.sleep(0.5)
+    time.sleep(0.8)
     xbmc.executebuiltin('SendClick(401)')
 
 
@@ -51,52 +62,22 @@ def setView(containerType,viewId):
         win = xbmcgui.Window( 10000 )
 
         curView = xbmc.getInfoLabel("Container.Viewmode")
-
-        if curView == "list":
-            viewId="50"        
-        elif curView == "Showcase":
-            viewId="51"
-        elif curView == "Horizontal Panel":
-            viewId="52"        
-        elif curView == "Panel details":
-            viewId="53"       
-        elif curView == "Panel Wall":
-            viewId="54"
-        elif curView == "Banner list":
-            viewId="55"
-        elif curView == "Banner Plex":
-            viewId="56"            
-        elif curView == "Big Panel":
-            viewId="57" 
-        elif curView == "Large Poster":
-            viewId="58"
-        elif curView == "Big Panel details":
-            viewId="59"
-        elif curView == "Landscape":
-            viewId="501"
-        elif curView == "Landscape Single Row":
-            viewId="502"             
-        elif curView == "Landscape details":
-            viewId="505"            
-        elif curView == "Extended":
-            viewId="506"
-        elif curView == "FanArt":
-            viewId="507"
-        elif curView == "Single Poster":
-            viewId="508"
-        elif curView == "Panel Square":
-            viewId="509"
-        elif curView == "Panel Square details":
-            viewId="510"
-        elif curView == "Thumbs":
-            viewId="511"
-        elif curView == "Thumbs details":
-            viewId="512"
-        elif curView == "Poster Row":
-            viewId="513"
-        elif curView == "Poster Shift":
-            viewId="514"            
-
+        
+        # get all views from views-file
+        skin_view_file = os.path.join(xbmc.translatePath('special://skin'), "views.xml")
+        skin_view_file_alt = os.path.join(xbmc.translatePath('special://skin/extras'), "views.xml")
+        if xbmcvfs.exists(skin_view_file_alt):
+            skin_view_file = skin_view_file_alt
+        try:
+            tree = etree.parse(skin_view_file)
+        except:           
+            sys.exit()
+        
+        root = tree.getroot()
+        
+        for view in root.findall('view'):
+            if curView == view.attrib['id']:
+                viewId=view.attrib['value']
     else:
         viewId=viewId    
 
@@ -118,12 +99,11 @@ def setView(containerType,viewId):
         else:
             __settings__.setSetting('viewIdActivity', viewId) 
 
-        #xbmc.executebuiltin("Container.Refresh")
-
 
 def showSubmenu(showOrHide,doFocus):
 
     win = xbmcgui.Window( 10000 )
+    submenuTitle = xbmc.getInfoLabel("Container(300).ListItem.Label")
     submenu = win.getProperty("submenutype")
     submenuloading = ""
     if xbmc.getCondVisibility("Skin.HasSetting(AutoShowSubmenu)"):
@@ -135,6 +115,7 @@ def showSubmenu(showOrHide,doFocus):
             if submenu != "":
                 win.setProperty("submenu", "show")
                 if doFocus != None:
+                    win.setProperty("submenuTitle", submenuTitle)
                     xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
                     time.sleep(0.2)
                     xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
@@ -196,5 +177,7 @@ elif action == "SHOWINFO":
     showInfoPanel()
 elif action == "SETCUSTOM":
     setCustomContent(argument1)
+elif action == "SETRECOMMENDEDMB3SETTINGS":   
+ setRecommendedMBSettings(argument1)   
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 

@@ -606,11 +606,6 @@ class TitanThread ():
             time.sleep(timeout)
             timeout -= 1
             
-    def setRecommendedMBSettings(self):
-        addonSettings = xbmcaddon.Addon(id='plugin.video.xbmb3c')
-        addonSettings.setSetting('includePeople', 'false')
-        addonSettings.setSetting('showIndicators', 'false')
-
     def getContentFromCache(self):
         WINDOW = xbmcgui.Window( 10000 )
         self.logMsg("[TitanSkin] get properties from cache...")
@@ -706,7 +701,6 @@ class TitanThread ():
                         if self._userId == "":
                             self.getContentFromCache()
                         else:
-                            self.setRecommendedMBSettings()
                             self.updateMB3links()
                             self.setContentInCache()
     
@@ -798,7 +792,6 @@ class TitanThread ():
         link = link.replace("&mode=0,return)", "")
         link = link + "%26CollapseBoxSetItems%3Dtrue&mode=0,return)"
         win.setProperty("xbmb3c.std.movies.0.collapsed.path", link)        
-        print("[Titanskin] boxsets --> " + link)
         
         # collection items update
         linkCount = 0
