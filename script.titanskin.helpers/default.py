@@ -8,6 +8,11 @@ import time
 import urllib
 import xml.etree.ElementTree as etree
 
+doDebugLog = False
+
+def logMsg(msg, level = 1):
+    if self.doDebugLog == True:
+        xbmc.log(msg)
 
 def sendClick(controlId):
     win = xbmcgui.Window( 10000 )
@@ -33,15 +38,59 @@ def setCustomContent(skinString):
 
     win.setProperty("customwidgetcontent", skinStringContent)
 
-def setRecommendedMBSettings(skin):
-    addonSettings = xbmcaddon.Addon(id='plugin.video.xbmb3c')
-    
-    if skin == "titan":
-        addonSettings.setSetting('includePeople', 'false')
-        addonSettings.setSetting('showIndicators', 'false')
-        addonSettings.setSetting('showArtIndicators', 'false')
-        addonSettings.setSetting('useMenuLoader', 'false')
-       
+def updatePlexlinks():
+    win = xbmcgui.Window( 10000 )
+    linkCount = 0
+    while linkCount !=10:
+        plexstring = "plexbmc." + str(linkCount)
+        randomNr = random.randrange(1,10+1)
+        link = win.getProperty(plexstring + ".title")
+        logMsg(plexstring + ".title --> " + link)
+        plexType = win.getProperty(plexstring + ".type")
+        logMsg(plexstring + ".type --> " + plexType)            
+
+        randomimage = ""
+        if plexType == "movie":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
+            win.setProperty("plexfanartbg", randomimage)
+        elif plexType == "artist":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
+            if randomimage == "":
+                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(1).Art(fanart)")
+            if randomimage == "":
+                randomimage = "special://skin/extras/backgrounds/hover_my music.png"                
+        elif plexType == "show":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Property(Fanart_Image)")
+        elif plexType == "photo":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
+
+        if randomimage != "":
+            win.setProperty(plexstring + ".image", randomimage)
+            logMsg(plexstring + ".image --> " + randomimage)            
+
+        link = win.getProperty(plexstring + ".recent")
+        logMsg(plexstring + ".recent --> " + link)
+        link = link.replace("ActivateWindow(VideoLibrary, ", "")
+        link = link.replace("ActivateWindow(VideoLibrary,", "")
+        link = link.replace("ActivateWindow(MusicFiles,", "")
+        link = link.replace("ActivateWindow(Pictures,", "")
+        link = link.replace(",return)", "")
+        win.setProperty(plexstring + ".recent.content", link)
+        logMsg(plexstring + ".recent --> " + link)
+
+        link = win.getProperty(plexstring + ".viewed")
+        logMsg(plexstring + ".viewed --> " + link)
+        link = link.replace("ActivateWindow(VideoLibrary, ", "")
+        link = link.replace("ActivateWindow(VideoLibrary,", "")
+        link = link.replace("ActivateWindow(MusicFiles,", "")
+        link = link.replace("ActivateWindow(Pictures,", "")
+        link = link.replace(",return)", "")
+        win.setProperty(plexstring + ".viewed.content", link)
+        logMsg(plexstring + ".viewed --> " + link)
+
+        linkCount += 1    
+
+        
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
     time.sleep(2)
@@ -80,10 +129,6 @@ def setView(containerType,viewId):
                 viewId=view.attrib['value']
     else:
         viewId=viewId    
-
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
-        __settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
-        __settings__.setSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType, viewId)
 
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc)"):
         __settings__ = xbmcaddon.Addon(id='plugin.video.netflixbmc')
@@ -134,9 +179,6 @@ def showSubmenu(showOrHide,doFocus):
             xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
 
 
-
-
-
 #script init
 action = ""
 argument1 = ""
@@ -177,7 +219,7 @@ elif action == "SHOWINFO":
     showInfoPanel()
 elif action == "SETCUSTOM":
     setCustomContent(argument1)
-elif action == "SETRECOMMENDEDMB3SETTINGS":   
- setRecommendedMBSettings(argument1)   
+elif action == "UPDATEPLEXLINKS":   
+    updatePlexlinks()   
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 
