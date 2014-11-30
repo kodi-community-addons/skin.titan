@@ -30,11 +30,6 @@
 		<value>$INFO[ListItem.Property(Plot)]</value>
     </variable>
 	
-	<variable name="SpotLightWidgetInfoRating">
-		<value condition="!IsEmpty(ListItem.Rating)">$INFO[Container(510).ListItem.Rating,rating/10stars_blue/,.png]</value>
-		<value condition="IsEmpty(ListItem.Rating)">$INFO[Container(510).ListItem.Property(VideoRating),rating/10stars_blue/,.png]</value>
-    </variable>
-
 	<include name="EnhancedHomeScreen">
 	
 		<!-- main menu -->
@@ -51,6 +46,7 @@
 				<orientation>horizontal</orientation>
 				<onleft>300</onleft>
 				<onright>300</onright>
+				<onup condition="!IntegerGreaterThan(Container(4444).NumItems,0)">510</onup>
 				<onup>4444</onup>
 				<ondown>2</ondown>
 				<itemgap>0</itemgap>
@@ -81,7 +77,7 @@
 			<control type="image">
 				<!--Panel Shadow-->
 				<texture>views/nextup.png</texture>
-				<visible>!Skin.HasSetting(EnhancedHomeHidePanel)</visible>
+				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 			</control>
 			
 			
@@ -104,6 +100,7 @@
 				<onright>Control.Move(300,1)</onright>
 				<onup>noop</onup>
 				<ondown>510</ondown>
+				<visible>IntegerGreaterThan(Container(4444).NumItems,0)</visible>
 			</control>
 			
 			
@@ -146,24 +143,6 @@
 				</focusedlayout>
 				<content>
 					<include>skinshortcuts-submenu</include>
-					<item>
-					<label></label>
-					<thumb>defaultadd.png</thumb>
-					<onclick>RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
-					<visible>!SubString(Container(300).ListItem.Property(hasSubmenu),True)</visible>
-					</item>
-					<item>
-					<label></label>
-					<thumb>defaultadd.png</thumb>
-					<onclick>RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
-					<visible>!SubString(Container(300).ListItem.Property(hasSubmenu),True)</visible>
-					</item>
-					<item>
-					<label></label>
-					<thumb>defaultadd.png</thumb>
-					<onclick>RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
-					<visible>!SubString(Container(300).ListItem.Property(hasSubmenu),True)</visible>
-					</item>
 				</content>
 			</control>
 		
@@ -197,6 +176,7 @@
 				<onright>Control.Move(300,1)</onright>
 				<onup>noop</onup>
 				<ondown>510</ondown>
+				<animation effect="slide" end="-345,0" time="0" condition="!IntegerGreaterThan(Container(4444).NumItems,0)">Conditional</animation>
 			</control>
 	
 			<!-- spotlight widget -->
@@ -342,11 +322,11 @@
 				<content>$VAR[SpotLightWidgetContent]</content>
 			</control>
 			
-			<!-- alt widget info -->
+			<!-- alt widget info submenu present-->
 			<control type="group">
 			<posy>40</posy>
 			<posx>10</posx>
-			<visible>!IntegerGreaterThan(Container(1508).NumItems,0) | Control.HasFocus(510)</visible>
+			<visible>[!IntegerGreaterThan(Container(1508).NumItems,0) | Control.HasFocus(510)] + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
 			<!-- spotlight image -->
 					<control type="image">
 						<width>1068</width>
@@ -403,6 +383,76 @@
 					<!-- weather -->
 					<control type="image">
 						<posx>800</posx>
+						<posy>380</posy>
+						<width>250</width>
+						<height>180</height>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+						<texture background="true">$INFO[Container(510).ListItem.Thumb]</texture>
+						<visible>StringCompare(Window(Home).Property(activewidget), weather)</visible>
+					</control>
+			</control>
+			
+			<!-- alt widget info submenu NOT present-->
+			<control type="group">
+			<posy>40</posy>
+			<posx>-342</posx>
+			<visible>!IntegerGreaterThan(Container(4444).NumItems,0)</visible>
+			<!-- spotlight image -->
+					<control type="image">
+						<width>1422</width>
+						<height>550</height>
+						<texture background="true">$VAR[SpotLightWidgetImage]</texture>
+						<aspectratio>scale</aspectratio>
+					</control>
+					<!--info Overlay-->
+					 <control type="image">
+						<width>1422</width>
+						<height>551</height>
+						<colordiffuse>ccFFFFFF</colordiffuse>
+						<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
+					</control>
+					<!-- plot small (with logo)-->
+					<control type="textbox">
+						<posy>395</posy>
+						<posx>20</posx>
+						<width>1050</width>
+						<height>134</height>
+						<align>left</align>
+						<valign>bottom</valign>
+						<label>[B]$VAR[HomeMenuWidgetInfoLabel][CR][/B]$VAR[HomeMenuWidgetInfoPlot]</label>
+						<font>Light26</font>
+						<autoscroll>false</autoscroll>
+						<textcolor>white</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<visible>!IsEmpty(Container(510).ListItem.Property(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(clearlogo))</visible>
+					</control>
+					<!-- plot wide (no logo)-->
+					<control type="textbox">
+						<posy>395</posy>
+						<posx>20</posx>
+						<width>1300</width>
+						<height>134</height>
+						<align>left</align>
+						<valign>bottom</valign>
+						<label>[B]$VAR[HomeMenuWidgetInfoLabel][CR][/B]$VAR[HomeMenuWidgetInfoPlot]</label>
+						<font>Light26</font>
+						<autoscroll>false</autoscroll>
+						<textcolor>white</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<visible>IsEmpty(Container(510).ListItem.Property(clearlogo)) + IsEmpty(Container(510).ListItem.Art(clearlogo))</visible>
+					</control>
+					<!-- clearlogo -->
+					<control type="image">
+						<posx>1200</posx>
+						<posy>390</posy>
+						<width>250</width>
+						<height>140</height>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+						<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+					</control>
+					<!-- weather -->
+					<control type="image">
+						<posx>1200</posx>
 						<posy>380</posy>
 						<width>250</width>
 						<height>180</height>

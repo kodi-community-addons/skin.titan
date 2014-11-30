@@ -4,22 +4,16 @@
     <defaultcontrol always="true">300</defaultcontrol>
     <allowoverlay>yes</allowoverlay>
     <include>defaultskinsettings</include>
-	<onload></onload>
-	<onload condition="Skin.HasSetting(AutoShowSubmenu)">SetProperty(submenuloading,loading,Home)</onload>
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">RunScript(plugin.video.plexbmc,skin)</onload>
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(service.mediabrowser.helper,UPDATEPLEXLINKS)</onload>
-	
 	<onunload>XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,HIDE)</onunload>
+	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
 	<onload>300</onload>
-	<onload>AlarmClock(hidesplash,SetProperty(hidesplash,hide,Home),00:07,silent)</onload>
     <controls>
 	
-	<control type="group">
-	<visible>SubString(Window(Home).Property(hidesplash),hide)</visible>
-        <!--Global Background-->
+	<!--Global Background-->
         <include>GlobalBackground</include>
-
 		<!-- Header -->
         <include>Header</include>
 		<!--Time & Weather-->
@@ -29,7 +23,10 @@
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
         <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
 		<include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
-		
+	
+	<control type="group">
+		<include>animation_window_open_close</include>
+
 		<!-- home menu Widgets -->
 		<include condition="!Skin.String(GadgetRows, enhanced)">HomeMenuWidget</include>
 		
@@ -45,26 +42,31 @@
 		<!--Home tiles List 300-->
         <control type="panel" id="300">
 			<visible>!Skin.String(GadgetRows, enhanced)</visible>
-            <include>animation_home</include>
             <posx>38</posx>
             <width>1845</width>
-            <include condition="Skin.String(GadgetRows, 1)">Gadget1Row</include>
-            <include condition="!Skin.String(GadgetRows, 1)">Gadget2Row</include>
+            <include condition="Skin.String(GadgetRows, 1) + !Skin.HasSetting(DisablePowerMenu)">Gadget1Row</include>
+            <include condition="!Skin.String(GadgetRows, 1) + !Skin.HasSetting(DisablePowerMenu)">Gadget2Row</include>
+			<include condition="Skin.String(GadgetRows, 1) + Skin.HasSetting(DisablePowerMenu)">Gadget1RowNoPowerButton</include>
+            <include condition="!Skin.String(GadgetRows, 1) + Skin.HasSetting(DisablePowerMenu)">Gadget2RowNoPowerButton</include>
 		
 			
-			<animation type="Conditional" condition="ControlGroup(77777).HasFocus | !SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded)">
-                <effect type="slide" start="0,-0" end="0,800" time="800" tween="cubic" easing="inout" />
+			<animation type="Conditional" condition="ControlGroup(77777).HasFocus">
+                <effect type="slide" start="0,-0" end="0,800" time="300" tween="cubic" easing="inout" delay="600" />
             </animation>
 			
-			<animation type="Conditional" condition="Skin.String(GadgetRows, 1) + [[Skin.HasSetting(UseSubmenuImages) + Control.HasFocus(4444) + !skin.hastheme(classic)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)]]">
-                <effect type="slide" start="0,-0" end="0,-80" time="800" tween="cubic" easing="inout" />
+			<animation type="Conditional" condition="SubString(Window(Home).Property(HomeLoaded),loaded)">
+                <effect type="slide" start="0,800" end="0,0" time="450" delay="600" tween="cubic" easing="inout" />
             </animation>
 			
-			<animation type="Conditional" condition="!Skin.String(GadgetRows, 1) + [[Skin.HasSetting(UseSubmenuImages) + Control.HasFocus(4444) + !skin.hastheme(classic)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)]]">
-                <effect type="slide" start="0,-0" end="0,-50" time="800" tween="cubic" easing="inout" />
+			<animation type="Conditional" condition="[Skin.String(GadgetRows, 1) | Skin.HasSetting(DisablePowerMenu)] + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show) + !skin.hastheme(classic)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)]]">
+                <effect type="slide" start="0,-0" end="0,-70" time="300" tween="cubic" easing="inout" />
             </animation>
 			
+			<animation type="Conditional" condition="!Skin.String(GadgetRows, 1) + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show) + !skin.hastheme(classic)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)]] + !Skin.HasSetting(DisablePowerMenu)">
+                <effect type="slide" start="0,-0" end="0,-40" time="300" tween="cubic" easing="inout" />
+            </animation>
 			
+		
 			<onunfocus condition="skin.hastheme(classic)">SetProperty(submenu,hide,Home)</onunfocus>
 			<onup>$VAR[HomeButtonUpAction]</onup>
 			<ondown>$VAR[HomeButtonDownAction]</ondown>
@@ -229,7 +231,6 @@
                         <aligny>center</aligny>
                         <label>-</label>
                         <visible>false</visible>
-						<onfocus>SetProperty(submenu,hide,Home)</onfocus>
 						<onfocus>Skin.SetString(customwidget, recent)</onfocus>
 						<onfocus condition="Skin.HasSetting(UseSectionBackground) + !Player.HasMedia">Skin.SetString(SectionBackground,$VAR[varBackground])</onfocus>
 						<onfocus condition="!Skin.HasSetting(UseSectionBackground)">Skin.Reset(SectionBackground)</onfocus>
@@ -240,8 +241,9 @@
 						<onfocus condition="Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</onfocus>
 						<onfocus condition="Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW)</onfocus>
 						<onfocus condition="!IsEmpty(Container(300).ListItem.Property(customcontent))">XBMC.RunScript(script.titanskin.helpers,SETCUSTOM,$INFO[Container(300).ListItem.Property(customcontent)])</onfocus>
+						<onfocus condition="IsEmpty(Container(300).ListItem.Property(customcontent))">ClearProperty(customwidgetcontent,Home)</onfocus>
 						<onfocus condition="!IsEmpty(Container(300).ListItem.Property(widget))">SetProperty(activewidget,$INFO[Container(300).ListItem.Property(widget)],Home)</onfocus>
-						<onfocus condition="IsEmpty(Container(300).ListItem.Property(widget))">SetProperty(activewidget,""],Home)</onfocus>
+						<onfocus condition="IsEmpty(Container(300).ListItem.Property(widget))">ClearProperty(activewidget,Home)</onfocus>
 					</control>
                 </control>
             </focusedlayout>
@@ -279,43 +281,7 @@
 	
 	</control>	
 		
-	<!-- splash screen -->
-	<control type="group" id="6666">
-	<include>DimensionsFullscreen</include>
-	<visible>!SubString(Window(Home).Property(hidesplash),hide)</visible>
-	<animation time="1200" effect="fade" reversible="false">Hidden</animation>
-		<!-- splashscreen background -->
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-            <texture background="true">$VAR[splashScreenImage]</texture>
-            <fadetime>800</fadetime>
-        </control>
-		<include>Footer</include>
-		
-		<control type="label">
-            <posx>80</posx>
-            <posy>985</posy>
-            <width>520</width>
-            <align>left</align>
-            <font>Reg41</font>
-            <textcolor>white</textcolor>
-            <label>20186</label>
-            <include>animation_fade_visible_hidden</include>
-            <include>animation_fade_open_close</include>
-        </control>
-		<control type="label">
-            <posx>1840</posx>
-            <posy>985</posy>
-            <width>520</width>
-            <align>right</align>
-            <font>Reg41</font>
-            <textcolor>white</textcolor>
-            <label>Titan Mediabrowser</label>
-            <include>animation_fade_visible_hidden</include>
-            <include>animation_fade_open_close</include>
-        </control>
-	</control>
+	
 		
 		
 	</controls>

@@ -19,6 +19,17 @@ def sendClick(controlId):
     time.sleep(0.5)
     xbmc.executebuiltin('SendClick('+ controlId +')')
 
+def showWidget():
+    win = xbmcgui.Window( 10000 )
+    controlId = "77777"
+    linkCount = 0
+    while linkCount !=10 and xbmc.getCondVisibility("Control(77777).HasFocus") == False:
+        time.sleep(0.1)
+        if not xbmc.getCondVisibility("ControlGroup(77777).HasFocus"):
+            xbmc.executebuiltin('Control.SetFocus('+ controlId +',0)')
+        linkCount += 1
+
+    
 def setCustomContent(skinString):
     win = xbmcgui.Window( 10000 )
     skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
@@ -174,11 +185,13 @@ def showSubmenu(showOrHide,doFocus):
         win.setProperty("submenuloading", "loading")
         win.setProperty("submenu", "hide")
         if doFocus != None:
+            win.setProperty("submenu", "show")
             xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
-            time.sleep(0.8)
+            time.sleep(0.5)
             xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
-
-
+            win.setProperty("submenuloading", "loading")
+            win.setProperty("submenu", "hide")
+            
 #script init
 action = ""
 argument1 = ""
@@ -220,6 +233,8 @@ elif action == "SHOWINFO":
 elif action == "SETCUSTOM":
     setCustomContent(argument1)
 elif action == "UPDATEPLEXLINKS":   
-    updatePlexlinks()   
+    updatePlexlinks()
+elif action == "SHOWWIDGET":   
+    showWidget()       
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 

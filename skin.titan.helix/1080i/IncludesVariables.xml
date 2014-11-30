@@ -191,16 +191,18 @@
     <variable name="MoviesButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window.Property(MB3.Background.Movie.FanArt.small))">$INFO[Window.Property(MB3.Background.Movie.FanArt.small)]</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window(Home).Property(RandomMovie.2.Art(fanart)))">$INFO[Window(Home).Property(RandomMovie.2.Art(fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.Movie.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.Movie.FanArt)]</value>
 		<value>home/movies.png</value>
     </variable>
     <variable name="TvseriesButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + !IsEmpty(Window(Home).Property(MB3.Background.TV.FanArt.small))">$INFO[Window.Property(MB3.Background.TV.FanArt.small)]</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !IsEmpty(Window(Home).Property(RandomEpisode.2.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RandomEpisode.2.Art(tvshow.fanart))]</value>
 		<value condition="Skin.HasSetting(HomeMenuUsePlexforTVseries) + !IsEmpty(Window(Home).Property(Window(Home).Property(plexbmc.2.icon)))">$INFO[Window(Home).Property(Window(Home).Property(plexbmc.2.icon))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.TvShow.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.TvShow.FanArt)]</value>
 		<value>home/tvseries.png</value>
     </variable>
     <variable name="MusicVideosButtonThumb">
-        <value condition="Skin.HasSetting(HomeMenuUseMBforMusicVideos) + !IsEmpty(MB3.Background.MusicVideos.FanArt.small))">$INFO[Window(Home).Property(MB3.Background.MusicVideos.FanArt.small)]</value>
+        <value condition="Skin.HasSetting(HomeMenuUseMBforMusicVideos) + !IsEmpty(MB3.Background.MusicVideos.FanArt.small)">$INFO[Window(Home).Property(MB3.Background.MusicVideos.FanArt.small)]</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforMusicVideos) + !IsEmpty(Window(Home).Property(RandomMusicVideo.1.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.1.Fanart)]</value>
 		<value>home/music.png</value>
     </variable>
@@ -341,7 +343,7 @@
     </variable>
 	
 	<variable name="CustomCollectionClick">
-        <value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+        <value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="SubString(Container(300).ListItem.Property(defaultID), mediabrowser-usr-0) | SubString(Container(4444).ListItem.Property(defaultID), mediabrowser-usr-0)">$INFO[Window(Home).Property(MediaBrowser.usr.0.path)]</value>
 		<value condition="SubString(Container(300).ListItem.Property(defaultID), mediabrowser-usr-1) | SubString(Container(4444).ListItem.Property(defaultID), mediabrowser-usr-1)">$INFO[Window(Home).Property(MediaBrowser.usr.1.path)]</value>
 		<value condition="SubString(Container(300).ListItem.Property(defaultID), mediabrowser-usr-2) | SubString(Container(4444).ListItem.Property(defaultID), mediabrowser-usr-2)">$INFO[Window(Home).Property(MediaBrowser.usr.2.path)]</value>
@@ -358,23 +360,22 @@
     </variable>
 	
 	<variable name="RecordingsButtonClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
 		<value condition="SubString(System.BuildVersion,14,left)">ActivateWindow(TVRecordings)</value>
 		<value condition="!SubString(System.BuildVersion,14,left)">ActivateWindowAndFocus(MyPVR, 34,0, 13,0)</value>
 	</variable>
 	
     <variable name="MusicButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
-        <value condition="Skin.String(HomeMenuUseMusicCollection)">ActivateWindow(Music, $INFO[Skin.String(HomeMenuUseMusicCollection)], return)</value>
-        <value condition="!Skin.HasSetting(HomeMenuUseMBforMusic) + !Skin.String(HomeMenuUseMusicCollection) + !Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">ActivateWindow(Music, MusicLibrary, return)</value>
-        <value condition="Skin.HasSetting(HomeMenuUseMBforMusic) + !Skin.String(HomeMenuUseMusicCollection) + !Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">$INFO[Window.Property(MediaBrowser.std.music.0.path)]</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+        <value condition="Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(MediaBrowser.std.music.0.path)]</value>
 		<value condition="Skin.HasSetting(HomeMenuUsePlexforMusic)">ActivateWindow(MusicLibrary,"plugin://plugin.video.plexbmc/?url=http://music&amp;mode=22",return)</value>
+		<value>ActivateWindow(Music, MusicLibrary, return)</value>
 	</variable>
 	
 	<variable name="MusicLibraryButtonOnClick">
-        <value condition="!Skin.HasSetting(HomeMenuUseMBforMusic)">ActivateWindow(Music, MusicLibrary, return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(MediaBrowser.std.music.0.path)]</value>
 		<value condition="Skin.HasSetting(HomeMenuUsePlexforMusic)">ActivateWindow(MusicLibrary,"plugin://plugin.video.plexbmc/?url=http://music&amp;mode=22",return)</value>
+		<value>ActivateWindow(Music, MusicLibrary, return)</value>
     </variable>
 	
 	<variable name="MusicRecentPlayedButtonOnClick">
@@ -388,11 +389,11 @@
     </variable>
 	
     <variable name="NetflixButtonOnClick">
-        <value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+        <value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value>ActivateWindow(10025,"plugin://plugin.video.netflixbmc",return)</value>
     </variable>
     <variable name="MoviesButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=main&amp;thumb&amp;type=movie&amp;url",return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.0.path)]</value>
 		<value>ActivateWindow(Video,movietitles,return)</value>
@@ -445,7 +446,7 @@
 	
 	
     <variable name="TVseriesButtonOnClick">
-		<value condition="Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=main&amp;thumb&amp;type=tv&amp;url",return)</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforTVseries)">ActivateWindow(Video,tvshowtitles,return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window.Property(MediaBrowser.std.tvshows.0.path)]</value>
@@ -490,42 +491,42 @@
     </variable>
 	
     <variable name="RadioButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="Skin.String(HomeMenuUseRadioCollection)">ActivateWindow(Music,$INFO[Skin.String(HomeMenuUseRadioCollection)], return)</value>
         <value condition="!Skin.String(HomeMenuUseRadioCollection)">ActivateWindowAndFocus(MyPVR, 33,0, 10,0)</value>
     </variable>
 	
     <variable name="PicturesButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforPictures)">ActivateWindow(pictures,return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforPictures)">$INFO[Window.Property(MediaBrowser.std.photo.0.path)]</value>
 		<value condition="Skin.HasSetting(HomeMenuUsePlexforPictures)">ActivateWindow(pictures,"plugin://plugin.video.plexbmc/?url=http://photo&amp;mode=22",return)</value>
     </variable>
 	
 	<variable name="VideosButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value>ActivateWindow(Video,root)</value>
     </variable>
 	
 	<variable name="AddonsButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value>ActivateWindow(Programs,Addons,return)</value>
     </variable>
 	
 	<variable name="SettingsButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value>ActivateWindow(Settings)</value>
     </variable>
 
     <variable name="MusicVideosButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
         <value condition="!Skin.HasSetting(HomeMenuUseMBforMusicVideos)">ActivateWindow(Video,MusicVideoTitles ,return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window.Property(MediaBrowser.std.music.3.path)]</value>
     </variable>
 	
 
     <variable name="LiveTVButtonOnClick">
-		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !SubString(Window(Home).Property(submenu),loading)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
+		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
 		<value condition="SubString(System.BuildVersion,14,left)">ActivateWindow(TVGuide)</value>
         <value>ActivateWindowAndFocus(MyPVR, 31,0, 10,0)</value>
     </variable>
@@ -610,10 +611,9 @@
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoLabel2">
-		<value condition="IsEmpty(Container(510).ListItem.Tagline) + [!IsEmpty(Container(510).ListItem.Property(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(clearlogo))]">[CR]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Tagline)">$INFO[Container(510).ListItem.Tagline]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.TvShowTitle]</value>
-		<value condition="IsEmpty(Container(510).ListItem.Art(clearlogo)) + StringCompare(Window(Home).Property(activewidget),tvshows)">$INFO[Container(510).ListItem.Label2]</value>
+		<value>$INFO[Container(510).ListItem.Label2]</value>
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoclearlogo">
@@ -630,7 +630,7 @@
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoPlotAlt">
-		<value condition="!IsEmpty(Container(510).ListItem.Premiered)">[COLOR=mainblue]$INFO[Container(510).ListItem.Premiered]$INFO[Container(510).ListItem.Duration,  • ,min. • ]$INFO[Container(510).ListItem.Genre][/COLOR][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.Premiered)">[COLOR=mainblue]$INFO[Container(510).ListItem.Premiered,, • ]$INFO[Container(510).ListItem.Duration,,min. • ]$INFO[Container(510).ListItem.Genre][/COLOR][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
 		<value>$VAR[HomeMenuWidgetInfoPlot]</value>
     </variable>
 	
@@ -638,8 +638,8 @@
 		<value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.poster))">$INFO[Container(510).ListItem.Art(tvshow.poster)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Property(medium_poster))">$INFO[Container(510).ListItem.Property(medium_poster)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Art(poster))">$INFO[Container(510).ListItem.Art(poster)]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),weather)">$INFO[Container(510).ListItem.Thumb]</value>
-		<value>$INFO[Container(510).ListItem.Property(poster)]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.Property(poster))">$INFO[Container(510).ListItem.Property(poster)]</value>
+		<value>$INFO[Container(510).ListItem.Thumb]</value>
     </variable>
 	
 	<variable name="PosterThumb">
@@ -877,6 +877,7 @@
 		<value condition="StringCompare(skin.string(NetflixWidget),random)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=both&amp;url=slider_3</value>
 		<value condition="StringCompare(skin.string(NetflixWidget),inprogresstvshows)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall</value>
 		<value condition="StringCompare(skin.string(NetflixWidget),inprogressmovies)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall</value>
+		<value>noop</value>
 	 </variable>
 	 
 	 <variable name="YouTubeWidgetContent">
@@ -884,6 +885,7 @@
 		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),mostdiscussed)">plugin://plugin.video.youtube/?feed=feed_discussed&amp;login=false&amp;path=%2froot%2fexplore%2ffeeds%2fdiscussed</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),trending)">plugin://plugin.video.youtube/?feed=feed_trending&amp;login=false&amp;path=%2froot%2fexplore%2ffeeds%2ftrending</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),mostviewed)">plugin://plugin.video.youtube/?feed=feed_viewed&amp;login=false&amp;path=%2froot%2fexplore%2ffeeds%2fviewed</value>
+		<value>noop</value>
 	 </variable>
 	 
 	 <value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, top100trailers)">YouTube Top100 Trailers</value>
@@ -896,12 +898,14 @@
 		<value condition="StringCompare(skin.string(MoviesWidget),newmovies)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson</value>
 		<value condition="StringCompare(skin.string(MoviesWidget),randommovies)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=movie&amp;url=slider_3</value>
 		<value condition="StringCompare(skin.string(MoviesWidget),inprogressmovies)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall</value>
+		<value>noop</value>
 	 </variable>
 	 
 	 <variable name="NetflixWidgetContentTvShows">
 		<value condition="Skin.HasSetting(SubString(skin.string(TvShowsWidget),latest))">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson</value>
 		<value condition="SubString(skin.string(TvShowsWidget),random)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=tv&amp;url=slider_3</value>
 		<value condition="SubString(skin.string(TvShowsWidget),inprogress)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall</value>
+		<value>noop</value>
 	 </variable>
 
 	 <variable name="CustomWidgetContent">
@@ -951,9 +955,8 @@
 		<value condition="SubString(Container(300).ListItem.Property(labelID),info-window-home-property-plexbmc-8) + StringCompare(skin.string(customwidget),inprogress)">$INFO[Window(Home).Property(plexbmc.8.viewed.content)]</value>
 		<value condition="SubString(Container(300).ListItem.Property(labelID),info-window-home-property-plexbmc-9) + StringCompare(skin.string(customwidget),recent)">$INFO[Window(Home).Property(plexbmc.9.recent.content)]</value>
 		<value condition="SubString(Container(300).ListItem.Property(labelID),info-window-home-property-plexbmc-9) + StringCompare(skin.string(customwidget),inprogress)">$INFO[Window(Home).Property(plexbmc.9.viewed.content)]</value>
-		<value>$INFO[Window(Home).Property(customwidgetcontent)]</value>
-
-		
+		<value condition="!StringCompare(Window(Home).Property(customwidgetcontent),submenuaswidget) + !IsEmpty(Window(Home).Property(customwidgetcontent))">$INFO[Window(Home).Property(customwidgetcontent)]</value>
+		<value>noop</value>
 		</variable>
 	 
 		
@@ -996,16 +999,15 @@
     <value condition="Window.IsActive(MyPics.xml)">[CR][COLOR=mainblue]$LOCALIZE[21821]:[/COLOR][CR]$LOCALIZE[416]</value>
     <value condition="!IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
   </variable>
-  
     
    <variable name="HomeButtonDownAction">
-		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]">Control.SetFocus(77777)</value>
+		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]">XBMC.RunScript(script.titanskin.helpers,SHOWWIDGET)</value>
 		<value condition="!IsEmpty(Container(300).ListItem.Property(hasSubmenu)) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + IntegerGreaterThan(Container(4444).NumItems,0) + !skin.hastheme(classic) + !Skin.String(GadgetRows, 2)">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
 		<value condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</value>
    </variable>
    
    <variable name="HomeButtonUpAction">
-		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]">Control.SetFocus(77777)</value>
+		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]">XBMC.RunScript(script.titanskin.helpers,SHOWWIDGET)</value>
 		<value>Control.SetFocus(891,0)</value>
    </variable>
    
