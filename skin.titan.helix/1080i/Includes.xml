@@ -45,7 +45,7 @@
             <align>right</align>
             <font>Light40</font>
             <textcolor>$VAR[TextColor_white]</textcolor>
-            <label>Titan Mediabrowser</label>
+            <label>Titan MediaBrowser</label>
             <include>animation_fade_visible_hidden</include>
         </control>
     </include>
@@ -90,7 +90,7 @@
 	<include name="Footer">
 		<control type="group">
 			<animation type="Conditional" condition="ControlGroup(77777).HasFocus">
-                <effect type="slide" start="0,-0" end="0,800" time="300" tween="cubic" easing="inout" delay="600" />
+                <effect type="slide" start="0,-0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
 			<!--Footer Background-->
 			<control type="group">						
@@ -303,7 +303,7 @@
 			<visible>Pvr.IsRecording</visible>
 		</control>
         <control type="image">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(77777)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)] + !ControlGroup(77777).HasFocus</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>61</posx>
             <posy>41</posy>
@@ -314,7 +314,7 @@
             <texture>$VAR[value_header_icon]</texture>
         </control>
 		<control type="image">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(77777)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)] + !ControlGroup(77777).HasFocus</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>60</posx>
             <posy>40</posy>
@@ -325,7 +325,7 @@
             <texture>$VAR[value_header_icon]</texture>
         </control>
         <control type="label">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(77777)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)] + !ControlGroup(77777).HasFocus</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>155</posx>
             <posy>30</posy>
@@ -342,7 +342,7 @@
 	<include name="TimeInfo">
         <control type="group">
             <include>animation_fade_visible_hidden</include>
-            <visible>!Control.IsVisible(77777)</visible>
+            <visible>![Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)] + !ControlGroup(77777).HasFocus</visible>
             <control type="grouplist">
                 <!--Time Grouplist Line 1-->
                 <!--animation effect="slide" start="0" end="-130" time="200" condition="Weather.IsFetched" >Conditional</animation-->
@@ -460,7 +460,7 @@
 			<defaultcontrol>890</defaultcontrol>
 			<posx>35</posx>
 			<posy>30</posy>
-			<visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + !Control.IsVisible(77777) + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
+			<visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)] + !ControlGroup(77777).HasFocus + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
 			<width>150</width>
 				<height>80</height>
 				<control type="image" id="888">	
@@ -509,7 +509,7 @@
             <height>300</height>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
-            <visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + !Control.IsVisible(77777) + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)] + !ControlGroup(77777).HasFocus + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
@@ -551,11 +551,11 @@
     <include name="MPAARating">
         <!--MPAARating-->
         <control type="group">
-            <visible>Container.Content(movies) | Container.Content(episodes)</visible>
             <control type="image">
-                 <width>161</width>
+                <width>110</width>
 				<height>109</height>
 				<colordiffuse>$VAR[TextColor_aawhite]</colordiffuse>
+				<aspectratio align="right" aligny="center">keep</aspectratio>
                 <texture fallback="flags/mpaa/NR.png">$VAR[RatingFlagVar]</texture>
             </control>
         </control>
@@ -1085,6 +1085,21 @@
             <visible>Skin.HasSetting(ShowFanartBackground) + Window.IsActive(MyVideoNav.xml)</visible>
         </control>
 		
+		<!-- extra fanart background -->
+        <control type="multiimage">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <imagepath>$VAR[itemExtraFanartBackground]</imagepath>
+            <aspectratio>scale</aspectratio>
+            <timeperimage>12000</timeperimage>
+            <fadetime>800</fadetime>
+            <randomize>true</randomize>
+            <include>backgroundfade</include>
+			<visible>Skin.HasSetting(ShowFanartBackground) + IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)</visible>
+        </control>
+		
 		<!-- Widgets background -->
 		<control type="image">
             <include>DimensionsFullscreen</include>
@@ -1208,6 +1223,7 @@
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded) + System.HasAddon(script.artistslideshow)">RunScript(script.artistslideshow, daemon=True)</onload>
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded)">RunScript(script.grab.fanart,mode=random, refresh=60)</onload>
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded) + Skin.String(AutoStartPlayList)">AlarmClock(playliststart,$ESCINFO[Skin.String(AutoStartPlayList)],00:06,silent)</onload>	
+		<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXLINKS)</onload>
 		
 		<!-- finish default settings -->
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetBool(HomeMenuDefaults1)</onload>
