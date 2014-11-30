@@ -763,7 +763,7 @@
 			<!-- discart -->
 			<control type="image">
 				<posx>120</posx>
-				<posy>820</posy>
+				<posy>840</posy>
 				<width>200</width>
 				<height>200</height>
 				<aligny>center</aligny>
@@ -772,21 +772,32 @@
 				<animation effect="rotate" end="-360" center="auto" time="12000" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
 				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
 				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.Art(discart)]</texture>
-				<visible>Player.HasVideo + ![IsEmpty(Player.Art(poster)) | IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
 			</control>
 			
-			<!--Cover-->
+			<!--Cover movies-->
 			<control type="image" id="1">
+				<posx>60</posx>
+				<posy>820</posy>
+				<width>170</width>
+				<height>240</height>
+				<fadetime>200</fadetime>
+				<texture background="true">$VAR[OSDImage]</texture>
+				<aspectratio align="center" aligny="center">scale</aspectratio>
+				<visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
+			</control>
+			
+			<!--Cover livetv-->
+			<control type="image">
 				<posx>60</posx>
 				<posy>800</posy>
 				<width>240</width>
 				<height>240</height>
 				<fadetime>200</fadetime>
-				<texture background="true">$VAR[OSDImage]</texture>
-				<aspectratio align="left" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo</visible>
+				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
+				<aspectratio align="center" aligny="center">keep</aspectratio>
+				<visible>Player.HasVideo + VideoPlayer.Content(livetv)</visible>
 			</control>
-			
 			
 
 			<control type="image">
