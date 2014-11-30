@@ -7,11 +7,12 @@ import os
 import time
 import urllib
 import xml.etree.ElementTree as etree
+import random
 
 doDebugLog = False
 
 def logMsg(msg, level = 1):
-    if self.doDebugLog == True:
+    if doDebugLog == True:
         xbmc.log(msg)
 
 def sendClick(controlId):
@@ -51,33 +52,19 @@ def setCustomContent(skinString):
 
 def updatePlexlinks():
     win = xbmcgui.Window( 10000 )
+    logMsg("update plexlinks started...")
+    xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
     linkCount = 0
+    logMsg("updateplexlinks started...")
+    
+    #update plex window properties
+    xbmc.sleep(3000)
     while linkCount !=10:
         plexstring = "plexbmc." + str(linkCount)
-        randomNr = random.randrange(1,10+1)
         link = win.getProperty(plexstring + ".title")
         logMsg(plexstring + ".title --> " + link)
         plexType = win.getProperty(plexstring + ".type")
         logMsg(plexstring + ".type --> " + plexType)            
-
-        randomimage = ""
-        if plexType == "movie":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
-            win.setProperty("plexfanartbg", randomimage)
-        elif plexType == "artist":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
-            if randomimage == "":
-                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(1).Art(fanart)")
-            if randomimage == "":
-                randomimage = "special://skin/extras/backgrounds/hover_my music.png"                
-        elif plexType == "show":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Property(Fanart_Image)")
-        elif plexType == "photo":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
-
-        if randomimage != "":
-            win.setProperty(plexstring + ".image", randomimage)
-            logMsg(plexstring + ".image --> " + randomimage)            
 
         link = win.getProperty(plexstring + ".recent")
         logMsg(plexstring + ".recent --> " + link)
@@ -99,7 +86,43 @@ def updatePlexlinks():
         win.setProperty(plexstring + ".viewed.content", link)
         logMsg(plexstring + ".viewed --> " + link)
 
-        linkCount += 1    
+        linkCount += 1
+    
+    xbmc.sleep(5000)
+    updatePlexBackgrounds()   
+        
+def updatePlexBackgrounds():
+    win = xbmcgui.Window( 10000 )
+    logMsg("update plex backgrounds started...")        
+    
+    #update plex backgrounds
+    linkCount = 0
+    xbmc.sleep(5000)
+    while linkCount !=10:
+        plexstring = "plexbmc." + str(linkCount)
+        randomNr = random.randrange(1,10+1)       
+        plexType = win.getProperty(plexstring + ".type")
+        randomimage = ""
+        if plexType == "movie":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
+            win.setProperty("plexfanartbg", randomimage)
+        elif plexType == "artist":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
+            if randomimage == "":
+                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(1).Art(fanart)")
+            if randomimage == "":
+                randomimage = "special://skin/extras/backgrounds/hover_my music.png"                
+        elif plexType == "show":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Property(Fanart_Image)")
+        elif plexType == "photo":
+            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
+
+        if randomimage != "":
+            win.setProperty(plexstring + ".background", randomimage)
+            logMsg(plexstring + ".background --> " + randomimage)            
+
+        linkCount += 1
+        
 
         
 def showInfoPanel():
@@ -234,6 +257,8 @@ elif action == "SETCUSTOM":
     setCustomContent(argument1)
 elif action == "UPDATEPLEXLINKS":   
     updatePlexlinks()
+elif action == "UPDATEPLEXBACKGROUNDS":     
+    updatePlexBackgrounds()
 elif action == "SHOWWIDGET":   
     showWidget()       
 else:
