@@ -82,47 +82,6 @@
 						<onright>SetFocus(9001)</onright>
 						<onleft>noop</onleft>
 						<orientation>horizontal</orientation>
-						<control type="button" id="103">
-							<!-- Local Trailer-->
-							<width>300</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<label>20410</label>
-							<onclick>$INFO[ListItem.Trailer]</onclick>
-							<visible>!IsEmpty(ListItem.Trailer) + Container.Content(movies)</visible>
-						</control>
-						<control type="button" id="104">
-							<!--MB3 Local Trailer-->
-							<width>300</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<label>20410</label>
-							<onclick>$INFO[Window(Home).Property(MB3.TrailerAction)]</onclick>
-							<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
-							<visible>!IsEmpty(Window(home).Property(MB3.TrailerAction)) + stringcompare(ListItem.Property(ItemType),Movie)</visible>
-						</control>
-						<control type="button" id="100">
-							<!--Search Trailer on Youtube-->
-							<width>300</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<label>YouTube $LOCALIZE[20410]</label>
-							<onclick>Dialog.Close(MovieInformation)</onclick>
-							<onclick>ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
-						</control>
-						<control type="button" id="113">
-							<width>300</width>
-							<description>Home Theatre</description>
-							<label>$INFO[System.AddonTitle(script.cinema.experience)]</label>
-							<onclick>Playlist.Clear</onclick>
-							<onclick>Dialog.Close(MovieInformation)</onclick>
-							<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
-							<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !SubString(Container.FolderPath,plugin)</visible>
-						</control>
-						
 						<control type="button" id="8">
 							<!--Play-->
 							<label>208</label>
@@ -157,14 +116,46 @@
 							<visible>ListItem.IsResumable + !substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
 						</control>
 						
-						<control type="button" id="101">
-							<!--Get Thumb Artwork Downloader-->
-							<label>13511</label>
+						<control type="button" id="103">
+							<!-- Local Trailer-->
 							<width>300</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
-							<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
+							<label>20410</label>
+							<onclick>$INFO[ListItem.Trailer]</onclick>
+							<visible>!IsEmpty(ListItem.Trailer) + Container.Content(movies)</visible>
+						</control>
+						<control type="button" id="104">
+							<!--MB3 Local Trailer-->
+							<width>300</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<label>20410</label>
+							<onclick>$INFO[Window(Home).Property(MB3.TrailerAction)]</onclick>
+							<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
+							<visible>!IsEmpty(Window(home).Property(MB3.TrailerAction)) + stringcompare(ListItem.Property(ItemType),Movie)</visible>
+						</control>
+						<control type="button" id="100">
+							<!--Search Trailer on Youtube-->
+							<width>300</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<label>YouTube $LOCALIZE[20410]</label>
+							<onclick>Dialog.Close(MovieInformation)</onclick>
+							<onclick>ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
+							<visible>Container.Content(movies) | stringcompare(ListItem.Property(ItemType),Movie)</visible>
+						</control>
+						<control type="button" id="113">
+							<width>300</width>
+							<description>Home Theatre</description>
+							<label>$INFO[System.AddonTitle(script.cinema.experience)]</label>
+							<onclick>Playlist.Clear</onclick>
+							<onclick>Dialog.Close(MovieInformation)</onclick>
+							<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
+							<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !SubString(Container.FolderPath,plugin)</visible>
 						</control>
 						<control type="button" id="102">
 							<!--Get video extras-->
@@ -176,6 +167,16 @@
 							<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
 							<visible>!substring(Container.FolderPath,plugin://plugin.video) + System.HasAddon(script.videoextras) + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
 						</control>
+						<control type="button" id="101">
+							<!--Get Thumb Artwork Downloader-->
+							<label>13511</label>
+							<width>300</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
+						</control>
+						
 						<control type="button" id="6">
 							<!--Refresh-->
 							<label>184</label>

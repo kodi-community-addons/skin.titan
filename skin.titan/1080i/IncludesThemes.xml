@@ -813,7 +813,8 @@
 			</control>
 			<!--Label Movie-->
 			<control type="label">
-				<visible>VideoPlayer.Content(Movies)</visible>
+				<visible>IsEmpty(VideoPlayer.Episode)</visible>
+				<visible>!VideoPlayer.Content(livetv)</visible>
 				<posx>350</posx>
 				<posy>820</posy>
 				<width>1300</width>
@@ -824,7 +825,6 @@
 				<scroll>false</scroll>
 			</control>
 			<control type="label">
-				<visible>VideoPlayer.Content(Movies)</visible>
 				<posx>350</posx>
 				<posy>880</posy>
 				<width>1300</width>
@@ -833,10 +833,12 @@
 				<textcolor>mainblue</textcolor>
 				<label>$INFO[VideoPlayer.Genre]</label>
 				<scroll>false</scroll>
+				<visible>IsEmpty(VideoPlayer.Episode)</visible>
+				<visible>!VideoPlayer.Content(livetv)</visible>
 			</control>
 			<!-- Label Episode-->
 			<control type="label">
-				<visible>VideoPlayer.Content(Episodes)</visible>
+				<visible>!IsEmpty(VideoPlayer.Episode)</visible>
 				<posx>350</posx>
 				<posy>820</posy>
 				<width>1300</width>
@@ -847,7 +849,7 @@
 				<scroll>false</scroll>
 			</control>
 			<control type="label">
-				<visible>VideoPlayer.Content(Episodes)</visible>
+				<visible>!IsEmpty(VideoPlayer.Episode)</visible>
 				<posx>350</posx>
 				<posy>880</posy>
 				<width>1300</width>
@@ -857,9 +859,9 @@
 				<label>$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</label>
 				<scroll>false</scroll>
 			</control>
-			<!--Label Ohter-->
+			<!--Label liveTV-->
 			<control type="label">
-				<visible>!VideoPlayer.Content(Movies) + !VideoPlayer.Content(Episodes)</visible>
+				<visible>VideoPlayer.Content(livetv)</visible>
 				<posx>350</posx>
 				<posy>820</posy>
 				<width>1300</width>
@@ -871,7 +873,7 @@
 			</control>
 			<!--Label Ohter-->
 			<control type="label">
-				<visible>!VideoPlayer.Content(Movies) + !VideoPlayer.Content(Episodes)</visible>
+				<visible>VideoPlayer.Content(livetv)</visible>
 				<posx>350</posx>
 				<posy>880</posy>
 				<width>1300</width>
@@ -932,13 +934,12 @@
 			<!--Flags-->
 			<control type="group">
 				<!--Flags Video-->
-				<visible>!Window.IsActive(VideoOSD)</visible>
-				<visible>VideoPlayer.Content(movies) | VideoPlayer.Content(episodes)</visible>
+				<visible>!IsEmpty(VideoPlayer.VideoResolution)</visible>
 				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
-				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
-				<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
-				<posx>350</posx>
-				<posy>993</posy>
+				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">Visible</animation>
+				<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="300" easing="out">Hidden</animation>
+				<posx>1510</posx>
+				<posy>1000</posy>
 				<control type="image">
 					<!--Video Resolution-->
 					<posx>0</posx>
@@ -975,14 +976,13 @@
 			</control>
 			<control type="group">
 				<!--Flags Audio-->
-				<visible>!Window.IsActive(VideoOSD)</visible>
-				<visible>VideoPlayer.Content(movies) | VideoPlayer.Content(episodes)</visible>
+				<visible>!IsEmpty(VideoPlayer.AudioCodec)</visible>
 				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
-				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
-				<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
-				<posx>580</posx>
+				<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">Visible</animation>
+				<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="300" easing="out">Hidden</animation>
+				<posx>1740</posx>
 				<!-- +230 more-->
-				<posy>993</posy>
+				<posy>1000</posy>
 				<control type="image">
 					<!--Audio Codec-->
 					<posx>0</posx>
@@ -1036,7 +1036,7 @@
 			</control>
 			<control type="label">
 				<!--Play Time-->
-				<posx>980</posx>
+				<posx>1235</posx>
 				<posy>928</posy>
 				<width>400</width>
 				<align>left</align>
@@ -1088,7 +1088,7 @@
 				<posx>465</posx>
 				<posy>950</posy>
 				<height>20</height>
-				<width>493</width>
+				<width>750</width>
 				<info>Player.Progress</info>
 				<visible>Player.HasDuration</visible>
 			</control>
@@ -1097,7 +1097,7 @@
 				<posx>465</posx>
 				<posy>950</posy>
 				<height>20</height>
-				<width>493</width>
+				<width>750</width>
 				<visible>Player.Seeking</visible>
 			</control>
 		
@@ -1704,77 +1704,17 @@
 			<visible>!Window.IsActive(filebrowser)</visible>
             <visible>!Window.IsActive(sliderdialog)</visible>
 		
-            <control type="grouplist" id="100">
-                <!--video Settings-->
-                <posx>1580</posx>
-                <posy>980</posy>
-                <width>1000</width>
-                <height>120</height>
-                <itemgap>0</itemgap>
-                <onup>noop</onup>
-                <ondown>noop</ondown>
-                <onleft>206</onleft>
-                <onright>noop</onright>
-                <orientation>horizontal</orientation>
-				<visible>Player.HasVideo</visible>
-                <control type="button" id="101">
-                    <!--Audio Settings-->
-                    <width>110</width>
-                    <height>97</height>
-                    <label>13396</label>
-                    <font>-</font>
-                    <texturefocus>modernosd/OSDAudioFO.png</texturefocus>
-                    <texturenofocus>modernosd/OSDAudioNF.png</texturenofocus>
-                    <onclick>ActivateWindow(124)</onclick>
-                </control>
-                <control type="button" id="102">
-                    <!--Video Settings-->
-                    <description>Video Settings</description>
-                    <width>90</width>
-                    <height>97</height>
-                    <label>13395</label>
-                    <align>left</align>
-                    <font>-</font>
-                    <texturefocus>modernosd/OSDVideoFO.png</texturefocus>
-                    <texturenofocus>modernosd/OSDVideoNF.png</texturenofocus>
-                    <onclick>ActivateWindow(123)</onclick>
-                </control>
-                <control type="button" id="104">
-                    <!--Subtitles-->
-                    <description>Subtitles</description>
-                    <width>90</width>
-                    <height>97</height>
-                    <label>287</label>
-                    <font>-</font>
-                    <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
-                    <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
-                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-                </control>
-				<control type="button" id="105">
-                    <!--teletext-->
-                    <description>teletext</description>
-                    <width>90</width>
-                    <height>97</height>
-                    <label>287</label>
-                    <font>-</font>
-                    <texturefocus colordiffuse="white">modernosd/text-nofo.png</texturefocus>
-                    <texturenofocus colordiffuse="lightgrey">modernosd/text-nofo.png</texturenofocus>
-					<onclick>ActivateWindow(Teletext)</onclick>
-					<visible>VideoPlayer.Content(livetv)</visible>
-                </control>
-            </control>
             <control type="grouplist" id="200">
                 <!--OSD-->
-                <posx>335</posx>
+                <posx>325</posx>
                 <posy>970</posy>
                 <width>1000</width>
                 <height>130</height>
                 <itemgap>0</itemgap>
                 <onup>noop</onup>
                 <ondown>noop</ondown>
-                <onleft>noop</onleft>
-                <onright>101</onright>
+                <onleft>200</onleft>
+                <onright>200</onright>
                 <orientation>horizontal</orientation>
                 <control type="button" id="201">
                     <!--Skip Back-->
@@ -1936,6 +1876,56 @@
                     <texturenofocus>modernosd/OSDDvdNF.png</texturenofocus>
                     <onclick>PlayerControl(ShowVideoMenu)</onclick>
 					<visible>VideoPlayer.HasMenu</visible>
+                </control>
+				<control type="button" id="101">
+                    <!--Audio Settings-->
+                    <width>110</width>
+                    <height>97</height>
+                    <label>13396</label>
+                    <font>-</font>
+                    <texturefocus>modernosd/OSDAudioFO.png</texturefocus>
+                    <texturenofocus>modernosd/OSDAudioNF.png</texturenofocus>
+                    <onclick>ActivateWindow(124)</onclick>
+					<visible>Player.HasVideo</visible>
+                </control>
+                <control type="button" id="102">
+                    <!--Video Settings-->
+                    <description>Video Settings</description>
+                    <width>90</width>
+                    <height>97</height>
+                    <label>13395</label>
+                    <align>left</align>
+                    <font>-</font>
+                    <texturefocus>modernosd/OSDVideoFO.png</texturefocus>
+                    <texturenofocus>modernosd/OSDVideoNF.png</texturenofocus>
+                    <onclick>ActivateWindow(123)</onclick>
+					<visible>Player.HasVideo</visible>
+                </control>
+                <control type="button" id="104">
+                    <!--Subtitles-->
+                    <description>Subtitles</description>
+                    <width>90</width>
+                    <height>97</height>
+                    <label>287</label>
+                    <font>-</font>
+                    <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
+                    <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
+                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
+					<visible>!VideoPlayer.Content(livetv)</visible>
+					<visible>Player.HasVideo</visible>
+                </control>
+				<control type="button" id="105">
+                    <!--teletext-->
+                    <description>teletext</description>
+                    <width>90</width>
+                    <height>97</height>
+                    <label>287</label>
+                    <font>-</font>
+                    <texturefocus colordiffuse="white">modernosd/text-nofo.png</texturefocus>
+                    <texturenofocus colordiffuse="lightgrey">modernosd/text-nofo.png</texturenofocus>
+					<onclick>ActivateWindow(Teletext)</onclick>
+					<visible>VideoPlayer.Content(livetv)</visible>
+					<visible>Player.HasVideo</visible>
                 </control>
             </control>
 
