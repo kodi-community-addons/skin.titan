@@ -66,7 +66,7 @@
                 <effect type="slide" start="0,-0" end="0,-40" time="300" tween="cubic" easing="inout" />
             </animation>
 			
-		
+			<onfocus>SetProperty(CurrentContainer,300,Home</onfocus>
 			<onunfocus condition="skin.hastheme(classic)">SetProperty(submenu,hide,Home)</onunfocus>
 			<onup>$VAR[HomeButtonUpAction]</onup>
 			<ondown>$VAR[HomeButtonDownAction]</ondown>
@@ -75,6 +75,7 @@
             <orientation>horizontal</orientation>
             <focusposition>-</focusposition>
             <scrolltime tween="cubic" easing="inout">500</scrolltime>
+			<pagecontrol>60</pagecontrol>
             <itemlayout width="612" height="265">
 				<control type="group">
 				<posy>20></posy>
@@ -85,6 +86,7 @@
 						<width>623</width>
 						<height>271</height>
 						<texture>home/home_shadow.png</texture>
+						<visible>!Skin.HasSetting(NoShadowOnHomeMenuTiles)</visible>
 					</control>
 					<control type="image">
 						<!--focus image-->
@@ -266,13 +268,25 @@
             <texturenofocus colordiffuse="$VAR[TextColor_white]">icons/icon_power.png</texturenofocus>
             <onclick>ActivateWindow(111)</onclick>
 			<onfocus>ActivateWindow(111)</onfocus>
-			<visible>!ControlGroup(77777).HasFocus() + !Control.HasFocus(4444) + !Window.IsVisible(DialogButtonMenu.xml) + ![!IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(GadgetRows, 2) + StringCompare(Container(300).Position,3)] + !Skin.HasSetting(DisablePowerMenu)</visible>
+			<visible>!ControlGroup(77777).HasFocus() + !Control.HasFocus(4444) + !Window.IsVisible(DialogButtonMenu.xml) + ![!IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(GadgetRows, 2) + StringCompare(Container(300).Position,3)] + !Skin.HasSetting(DisablePowerMenu) + !Skin.HasSetting(EnableTouchSupport)</visible>
 			<animation time="400" effect="fade">Visible</animation>
 			<animation time="200" effect="fade">Hidden</animation>
         </control>
 		
 		<!-- enhanced home screen -->
 		<include condition="Skin.String(GadgetRows, enhanced)">EnhancedHomeScreen</include>
+		
+		<!-- touchscreen support -->
+		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsHome</include>
+		
+		<control type="scrollbar" id="60">
+			<posx>1835</posx>
+			<posy>390</posy>
+			<height>570</height>
+			<onleft>50</onleft>
+			<onright>noop</onright>
+			<visible>false</visible>
+		</control>
 		
 	
 		<!-- submenu -->
