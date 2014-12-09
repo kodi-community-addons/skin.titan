@@ -61,7 +61,7 @@
 						<include>animation_fade_visible_hidden</include>
 					</control>
 				<control type="group">
-					<visible>!ControlGroup(90001).HasFocus()</visible>
+					<visible>!ControlGroup(9002).HasFocus</visible>
 					<animation type="Visible">
 						<effect type="slide" start="-1920" end="0" time="400" delay="0" tween="sine" easing="inout" />
 					</animation>
@@ -196,8 +196,9 @@
 						<texture background="true">$INFO[ListItem.Art(discart)]</texture>
 						<aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
 						<animation effect="slide" start="0" end="120" tween="cubic" easing="inout" time="600" delay="100">WindowOpen</animation>
-						<animation effect="fade" start="0" end="100" delay="800" time="1200" pulse="false">WindowOpen</animation>
-						<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="true">Conditional</animation>
+						<animation effect="fade" start="0" end="100" delay="0" time="2400" pulse="false">WindowOpen</animation>
+						<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+						<animation effect="rotate" end="-360" center="auto" time="20000" delay="1200" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
 					</control>
 					<control type="image">
 						<!--poster-->
@@ -255,26 +256,25 @@
 					
 
 					<!--Arrow-->
-					<control type="grouplist">
-						<right>-50</right>
-						<posy>1005</posy>
-						<width>240</width>
-						<orientation>horizontal</orientation>
-						<itemgap>20</itemgap>
+					<control type="group">
 						<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 						<!-- Cast Label -->
 						<control type="label">
+							<right>70</right>
+							<posy>1005</posy>
 							<height>60</height>
-							<width min="50" max="400">auto</width>
+							<width>300</width>
 							<label>$LOCALIZE[206]</label>
 							<font>Reg45</font>
 							<textcolor>$VAR[TextColor_aawhite]</textcolor>
-							<align>left</align>
+							<align>right</align>
 							<scroll>false</scroll>
 						</control>
 						<!--Arrow-->
 						<control type="image">
 							<animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
+							<right>30</right>
+							<posy>1005</posy>
 							<posy>50</posy>
 							<width>20</width>
 							<height>60</height>
@@ -522,7 +522,7 @@
 					</control>
 				</control>
 				<!--Cast Stuff-->
-				<control type="group">
+				<control type="group" id="9002">
 					<visible allowhiddenfocus="true">Control.HasFocus(9001) | Control.HasFocus(50)</visible>
 					<animation type="Visible">
 						<effect type="slide" start="1920" end="0" time="400" delay="0" tween="sine" easing="inout" />

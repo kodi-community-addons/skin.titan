@@ -126,9 +126,9 @@
 					<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
 					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 					<scrollspeed>40</scrollspeed>
-					<visible>Window.IsVisible(Home) + ![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)] + !Window.IsVisible(DialogButtonMenu.xml) + !Skin.String(GadgetRows, enhanced) + !Skin.HasSetting(EnableTouchSupport)</visible>
+					<visible>Window.IsVisible(Home) + ![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)] + !Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
 					<animation time="1500" effect="fade" delay="1500">Visible</animation>
-					<animation time="200" effect="fade">Hidden</animation>				
+					<animation time="200" effect="fade">Hidden</animation>	
 				</control>
 			</control>
 			
@@ -347,6 +347,9 @@
         <control type="group">
             <include>animation_fade_visible_hidden</include>
             <visible>!ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml)">
+                <effect type="slide" start="0,0" end="-100,0" time="400" tween="cubic" easing="inout" delay="0" />
+            </animation>
             <control type="grouplist">
                 <!--Time Grouplist Line 1-->
                 <!--animation effect="slide" start="0" end="-130" time="200" condition="Weather.IsFetched" >Conditional</animation-->
@@ -973,8 +976,8 @@
             <!--Rating-->
             <control type="group">
 				<visible>!Window.IsVisible(VideoOSD.xml)</visible>
-                <posx>1790</posx>
-                <posy>980</posy>
+                <posx>1780</posx>
+                <posy>180</posy>
                 <control type="image">
                     <!--10Star Rating-->
                     <posx>-310</posx>
@@ -1011,31 +1014,31 @@
 					<height>220</height>
 					<fadetime>200</fadetime>
 					<texture background="true">$VAR[OSDInfoImage]</texture>
-					<aspectratio align="left" aligny="top">keep</aspectratio>
-					<visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
+					<aspectratio align="center" aligny="center">keep</aspectratio>
+					<visible>!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(clearlogo))</visible>
 				</control>
 
                 <control type="textbox">
                     <posx>350</posx>
                     <posy>0</posy>
-                    <width>1480</width>
-                    <height>200</height>
+                    <width>1500</width>
+                    <height>160</height>
                     <label>$INFO[VideoPlayer.Plot]</label>
                     <textcolor>bbwhite</textcolor>
                     <align>justify</align>
                     <font>Light32</font>
-					<visible>!VideoPlayer.Content(livetv)</visible>
+					<visible>!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(clearlogo))</visible>
                 </control>
 				<control type="textbox">
                     <posx>60</posx>
                     <posy>0</posy>
-                    <width>1770</width>
-                    <height>200</height>
+                    <width>1790</width>
+                    <height>160</height>
                     <label>$INFO[VideoPlayer.Plot]</label>
                     <textcolor>bbwhite</textcolor>
                     <align>justify</align>
                     <font>Light32</font>
-					<visible>VideoPlayer.Content(livetv)</visible>
+					<visible>IsEmpty(Player.Art(clearart)) + IsEmpty(Player.Art(clearlogo))</visible>
                 </control>
             </control>
         </control>
