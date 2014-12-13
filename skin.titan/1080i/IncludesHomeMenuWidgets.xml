@@ -35,7 +35,7 @@
 				<width>2150</width>
 				<texture border="39">views/filemanager_panel1.png</texture>
 				<aspectratio>stretch</aspectratio>
-				<height>980</height>
+				<height>960</height>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground) + !Skin.HasTheme(classic)</visible>
             </control>
 			<control type="image">
@@ -43,7 +43,7 @@
 				<width>2150</width>
 				<texture border="39">views/filemanager_panel1.png</texture>
 				<aspectratio>stretch</aspectratio>
-				<height>620</height>
+				<height>600</height>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground) + Skin.HasTheme(classic)</visible>
             </control>
 
@@ -132,7 +132,7 @@
 				<!--widget Arrow DOWN-->
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<posx>872</posx>
-				<posy>310</posy>
+				<posy>291</posy>
 				<width>149</width>
 				<height>30</height>
 				<texture>basichome_down.png</texture>
@@ -143,7 +143,7 @@
 				<!--widget Arrow DOWN-->
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<posx>872</posx>
-				<posy>301</posy>
+				<posy>281</posy>
 				<width>149</width>
 				<height>30</height>
 				<texture>basichome_down.png</texture>
@@ -157,7 +157,7 @@
 				<width>1930</width>
 				<texture border="39">pvr/pvr_epg_panel.png</texture>
 				<aspectratio>stretch</aspectratio>
-				<height>340</height>
+				<height>320</height>
 				<visible>skin.hastheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 			</control>
@@ -177,7 +177,7 @@
 			
 			<!-- widget type selector -->
 			<control type="group">		
-				<visible>!StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
+				<visible>!SubString(Window(Home).Property(activewidget),smart-) + !StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
 				<visible>ControlGroup(77777).HasFocus</visible>
 				<control type="image">
 					<height>70</height>
@@ -261,6 +261,8 @@
 			<include condition="Skin.HasSetting(HomeMenuUseMBforMusic)">MediaBrowserMusicWidgets</include>
 			
 			<include>CustomWidget</include>
+
+			<include condition="System.HasAddon(service.smartish.widgets)">SmartWidgets</include>
 			
 			<include condition="System.HasAddon(plugin.video.youtube)">YoutubeWidget</include>
 			<include condition="System.HasAddon(plugin.video.netflixbmc)">NetflixWidgetGeneral</include>
@@ -291,6 +293,14 @@
 			<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 			<content><include>skinshortcuts-submenu</include></content>
 			<visible>StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(customwidgetcontent),submenuaswidget)</visible>
+		</control>
+	</include>
+	
+	<include name="SmartWidgets">
+		<control type="panel" id="510">
+		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
+		<content target="video">$VAR[SmartWidgetContent]</content>
+		<visible>SubString(Window(Home).Property(activewidget),smart-)</visible>
 		</control>
 	</include>
 
@@ -4708,7 +4718,7 @@
             <posx>0</posx>
             <posy>0</posy>
             <width>363</width>
-            <height>230</height>
+            <height>210</height>
             <texture>home/home_shadow.png</texture>
         </control>
 
@@ -4717,16 +4727,16 @@
             <posx>0</posx>
             <posy>0</posy>
             <width>355</width>
-            <height>220</height>
+            <height>200</height>
             <texture background="true" diffuse="home/home_matte2.png" fallback="banner_default.png">$VAR[HomeMenuWidgetImage]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
         </control>
         <control type="image">
             <!--Panel Ovelay-->
             <posx></posx>
             <posy>0</posy>
             <width>355</width>
-            <height>220</height>
+            <height>200</height>
             <colordiffuse>ccFFFFFF</colordiffuse>
             <texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
 			<visible>IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
@@ -4734,7 +4744,7 @@
         <control type="label">
             <!--Label-->
             <posx>10</posx>
-            <posy>130</posy>
+            <posy>117</posy>
             <width>340</width>
             <height>100</height>
             <align>left</align>
@@ -4757,7 +4767,7 @@
                 <effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
             </animation>
             <posx>10</posx>
-            <posy>130</posy>
+            <posy>117</posy>
             <width>340</width>
             <height>100</height>
             <align>left</align>
@@ -4778,7 +4788,7 @@
             <posx>-5</posx>
             <posy>-8</posy>
             <width>368</width>
-            <height>235</height>
+            <height>217</height>
             <texture>home/home_focus.png</texture>
 			<colordiffuse>$INFO[Skin.String(HomeFocusColor)]</colordiffuse>
         </control>

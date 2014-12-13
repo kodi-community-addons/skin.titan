@@ -5,12 +5,13 @@
     <allowoverlay>yes</allowoverlay>
     <views>50,51,52,501,502,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514</views>
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
+	<onload condition="System.HasAddon(script.tv.show.next.aired)">RunScript(script.tv.show.next.aired,backend=True)</onload>
+	<onload>ClearProperty(ShowViewSubMenu, Home)</onload>
+	<onunload>ClearProperty(ShowViewSubMenu, Home)</onunload>
     <controls>
         <!-- Video Background -->
         <include>VideoBackground</include>
-		
-	
-		
+
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
         <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
@@ -68,6 +69,9 @@
                 <itemgap>3</itemgap>
                 <onleft>50</onleft>
                 <onright>50</onright>
+				<onright>ClearProperty(ShowViewSubMenu, Home)</onright>
+				<onleft>ClearProperty(ShowViewSubMenu, Home)</onleft>
+				<onback>ClearProperty(ShowViewSubMenu, Home)</onback>
                 <onup>9000</onup>
                 <ondown>9000</ondown>
                 <orientation>vertical</orientation>
@@ -320,8 +324,16 @@
                     <label>20459</label>
                     <onclick>Skin.ToggleSetting(ShowlabelsLandscape)</onclick>
                     <selected>Skin.HasSetting(ShowlabelsLandscape)</selected>
-					<visible>Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(509) | Control.IsVisible(510) | Control.IsVisible(511) | Control.IsVisible(512)</visible>
+					<visible>Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)</visible>
 					<visible>![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]</visible>
+                </control>
+				<control type="radiobutton" id="339">
+                    <!--Show labels-->
+                    <include>SubMenuButton</include>
+                    <label>20459</label>
+                    <onclick>Skin.ToggleSetting(ShowLabelsSquare)</onclick>
+                    <selected>Skin.HasSetting(ShowLabelsSquare)</selected>
+					<visible>Control.IsVisible(509) | Control.IsVisible(510)</visible>
                 </control>
 				<control type="radiobutton" id="329">
                     <!--Show info-->
@@ -403,5 +415,7 @@
                 </control>
             </control>
         </control>
-    </controls>
+    
+	
+	</controls>
 </window>

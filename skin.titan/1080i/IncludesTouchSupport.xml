@@ -48,7 +48,7 @@
 		<onright>200</onright>
 		<orientation>horizontal</orientation>
 		<animation effect="zoom" start="100" end="80" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-		<animation effect="slide" start="0,0" end="0,-12" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+		<animation effect="slide" start="0,0" end="0,-31" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 		<animation time="200" effect="fade" start="100" end="0" delay="0" condition="SubString(Window(Home).Property(submenu),show) + !skin.hastheme(classic)">Conditional</animation>
 		<visible>!Window.IsActive(startup)</visible>
 		<control type="button">
@@ -62,6 +62,7 @@
 			<texturenofocus colordiffuse="bbwhite">icon_home.png</texturenofocus>
 			<aspectratio>keep</aspectratio>
 			<onclick>ActivateWindow(Home)</onclick>
+			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
 		</control>
 		<control type="button">
 			<label></label>
@@ -73,6 +74,7 @@
 			<texturenofocus colordiffuse="bbwhite">icon_back.png</texturenofocus>
 			<aspectratio aligny="bottom">keep</aspectratio>
 			<onclick>Back</onclick>
+			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
 			<visible>!Window.IsActive(Home)</visible>
 		</control>
 		<control type="button">
@@ -85,6 +87,7 @@
 			<texturenofocus colordiffuse="bbwhite">icon_power.png</texturenofocus>
 			<aspectratio aligny="bottom">keep</aspectratio>
 			<onclick>ActivateWindow(111)</onclick>
+			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
 			<visible>Window.IsActive(Home)</visible>
 		</control>
 		<!-- settings button on home -->
@@ -110,8 +113,24 @@
 			<texturefocus colordiffuse="white">icon_menu.png</texturefocus>
 			<texturenofocus colordiffuse="bbwhite">icon_menu.png</texturenofocus>
 			<aspectratio aligny="bottom">keep</aspectratio>
-			<onclick>SetFocus(9000)</onclick>
-			<visible>Control.IsVisible(9000) + !Window.IsActive(settings) + !Window.IsActive(settingscategory.xml)</visible>
+			<onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+			<onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
+			<visible>Control.IsVisible(9000) + !Window.IsActive(settings) + !Window.IsActive(settingscategory.xml) + !Window.IsActive(DialogContextMenu.xml)</visible>
+		</control>
+		<!-- show widget -->
+		<control type="button">
+			<label></label>
+			<include>animation_fade_visible_hidden</include>
+			<width>60</width>
+			<height>60</height>
+			<font>-</font>
+			<texturefocus colordiffuse="white">icon_menu.png</texturefocus>
+			<texturenofocus colordiffuse="bbwhite">icon_menu.png</texturenofocus>
+			<aspectratio aligny="bottom">keep</aspectratio>
+			<onclick condition="!ControlGroup(77777).HasFocus">XBMC.RunScript(script.titanskin.helpers,SHOWWIDGET)</onclick>
+			<onclick condition="ControlGroup(77777).HasFocus">Control.SetFocus(300)</onclick>
+			<visible>Window.IsActive(Home)</visible>
+			<visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
 		</control>
 	</control>
 </include>

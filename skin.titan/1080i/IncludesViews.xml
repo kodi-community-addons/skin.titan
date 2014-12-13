@@ -6,13 +6,143 @@
     <aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
   </include>
   
+  
+  	<!-- TV Shows Next Aired script -->
+	<include name="TVNextAiredListCommonLayout">
+		<posy>0</posy>
+		<posx>0</posx>
+		<width>1316</width>
+		<height>840</height>
+		<onup>60</onup>
+		<ondown>60</ondown>
+		<onleft>5000</onleft>
+		<orientation>horizontal</orientation>
+		<scrolltime tween="quadratic">300</scrolltime>
+		<pagecontrol>60</pagecontrol>
+		<itemlayout width="454" height="740">
+			<control type="group">
+				<posx>0</posx>
+				<posy>40</posy>
+				<width>460</width>
+				<height>740</height>
+				
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>460</width>
+					<height>620</height>
+					<texture border="39">dialogs/default/bg.png</texture>
+					<visible>skin.hastheme(classic)</visible>
+				</control>
+				
+				<control type="image">
+					<posx>-1</posx>
+					<posy>-40</posy>
+					<width>460</width>
+					<height>720</height>
+					<texture border="3">views/filemanager_panel1.png</texture>
+					<visible>!skin.hastheme(classic)</visible>
+				</control>
+				
+				<include condition="!skin.hastheme(classic)">thumblayoutmodern</include>
+				<include condition="skin.hastheme(classic)">thumblayoutclassic</include>
+				
+				<control type="label">
+					<posx>30</posx>
+					<posy>280</posy>
+					<width>400</width>
+					<height>140</height>
+					<label>$INFO[ListItem.Label]</label>
+					<font>Bold32</font>
+					<include condition="!skin.hastheme(classic)">FontColorWhite</include>
+					<include condition="skin.hastheme(classic)">FontColorGray</include>
+					<aligny>top</aligny>
+				</control>
+								
+				<control type="textbox">
+					<posx>30</posx>
+					<posy>330</posy>
+					<width>410</width>
+					<height>305</height>
+					<label>[COLOR=mainblue]$LOCALIZE[126]:[/COLOR][CR]$INFO[ListItem.Property(Status)][CR][CR][COLOR=mainblue]$LOCALIZE[31212]:[/COLOR][CR]$INFO[ListItem.Property(NextNumber),,. ]$INFO[ListItem.Property(NextTitle)][CR][CR][COLOR=mainblue]$LOCALIZE[31213]:[/COLOR][CR]$INFO[ListItem.Property(ShortTime)]$INFO[ListItem.Property(Network), @ ]</label>
+					<font>Reg24</font>
+					<include condition="!skin.hastheme(classic)">FontColorWhite</include>
+					<include condition="skin.hastheme(classic)">FontColorGray</include>
+					<aligny>top</aligny>
+					<autoscroll>false</autoscroll>
+				</control>
+					
+					
+				</control>
+		</itemlayout>
+		<focusedlayout width="454" height="740">
+			<control type="group">
+				<posx>0</posx>
+				<posy>40</posy>
+				<width>460</width>
+				<height>740</height>
+				
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>460</width>
+					<height>630</height>
+					<bordersize>8</bordersize>
+					<texture border="4">cover_panel_matte_fo.png</texture>
+					<colordiffuse>$INFO[Skin.String(focuscolor)]</colordiffuse>
+				</control>
+				
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>460</width>
+					<height>630</height>
+					<texture border="39">dialogs/default/bg.png</texture>
+				</control>
+				
+				<include condition="!skin.hastheme(classic)">thumblayoutmodern</include>
+				<include condition="skin.hastheme(classic)">thumblayoutclassic</include>
+				
+				<control type="label">
+					<posx>30</posx>
+					<posy>280</posy>
+					<width>400</width>
+					<height>140</height>
+					<label>$INFO[ListItem.Label]</label>
+					<font>Bold32</font>
+					<include condition="!skin.hastheme(classic)">FontColorWhite</include>
+					<include condition="skin.hastheme(classic)">FontColorGray</include>
+					<aligny>top</aligny>
+				</control>
+								
+				<control type="textbox">
+					<posx>30</posx>
+					<posy>330</posy>
+					<width>410</width>
+					<height>305</height>
+					<label>[COLOR=mainblue]$LOCALIZE[126]:[/COLOR][CR]$INFO[ListItem.Property(Status)][CR][CR][COLOR=mainblue]$LOCALIZE[31212]:[/COLOR][CR]$INFO[ListItem.Property(NextNumber),,. ]$INFO[ListItem.Property(NextTitle)][CR][CR][COLOR=mainblue]$LOCALIZE[31213]:[/COLOR][CR]$INFO[ListItem.Property(ShortTime)]$INFO[ListItem.Property(Network), @ ]</label>
+					<font>Reg24</font>
+					<include condition="!skin.hastheme(classic)">FontColorWhite</include>
+					<include condition="skin.hastheme(classic)">FontColorGray</include>
+					<aligny>top</aligny>
+					<autoscroll>false</autoscroll>
+				</control>
+					
+					
+				</control>
+		</focusedlayout>
+	</include>
+
+  
+  
+  
   <include name="panelPosModern">
    <posx>-80</posx>
    <width>2137</width>
   </include>
   
   <include name="view52PosModern">
-   <posx>35</posx>
+   <posx>55</posx>
    <width>1825</width>
   </include>
   
@@ -315,7 +445,7 @@
             <include>BannerViewImageSizeNormal</include>
             <texture background="true" diffuse="home/home_matte2.png">$VAR[BannerLandscapeImageSeason]</texture>
             <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
-			<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video)</visible>
+			<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video) + !Skin.HasSetting(DisableLandscapeThumbs)</visible>
         </control>
         <control type="image">
             <!--Panel Overlay-->
@@ -377,7 +507,7 @@
 	
 	<include name="ShowTitleOverlay">
 		<visible>
-		[IsEmpty(ListItem.Art(landscape)) + [container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]] |
+		[[IsEmpty(ListItem.Art(landscape)) | Skin.HasSetting(DisableLandscapeThumbs)] + [container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]] |
 		[Skin.HasSetting(ShowlabelsLandscape) + ![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]]
 		</visible>
 		<visible>!StringCompare(ListItem.Label,..)</visible>
@@ -1558,7 +1688,7 @@
         </control>
         <control type="image">
             <!--Aspectration-->
-            <posx>0</posx>
+            <posx>-1</posx>
             <posy>0</posy>
             <width>141</width>
             <height>30</height>
@@ -1602,7 +1732,7 @@
 			<height>100</height>
 			<colordiffuse>$VAR[TextColor_aawhite]</colordiffuse>
 			<aspectratio align="right" aligny="center">keep</aspectratio>
-			<texture fallback="flags/mpaa/NR.png">$VAR[RatingFlagVar]</texture>
+			<texture fallback="flags/rating/NR.png">$VAR[RatingFlagVar]</texture>
 			<visible>![ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat))]</visible>
 		</control>
     </include>
@@ -1665,6 +1795,16 @@
             <texture>flags/3dbd.png</texture>
             <visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat))</visible>
         </control>
+		<control type="image">
+			<posx>340</posx>
+            <posy>-60</posy>
+			<width>130</width>
+			<height>163</height>
+			<colordiffuse>$VAR[Views_FontColor]</colordiffuse>
+			<aspectratio align="right" aligny="center">keep</aspectratio>
+			<texture fallback="flags/rating/NR.png">$VAR[RatingFlagVar]</texture>
+			<visible>![ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat))]</visible>
+		</control>
     </include>
     <include name="MovieDetails">
         <!-- movie details -->
@@ -1685,7 +1825,7 @@
 				<animation effect="slide" end="-40,0" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
                 <posx>92</posx>
                 <posy>260</posy>
-                <width>800</width>
+                <width>1200</width>
                 <height>700</height>
                 <orientation>vertical</orientation>
                 <control type="group">
@@ -1839,56 +1979,70 @@
                     </control>
                 </control>
                 <control type="group">
-                    <!--Studio: TV-Shows-->
-                    <width>800</width>
-                    <height>40</height>
-                    <visible>Container.Content(TVShows) + !IsEmpty(ListItem.Studio)</visible>
-                    <control type="label">
-                        <posx>8</posx>
-                        <posy>0</posy>
-                        <width>800</width>
-                        
-                        <align>left</align>
-                        <label>$INFO[ListItem.Studio,$LOCALIZE[572]: ,]</label>
+					<!--Studio: TV-Shows-->
+					<width>1200</width>
+					<height>40</height>
+					<visible>Container.Content(TVShows) + !IsEmpty(ListItem.Studio)</visible>
+					<control type="label">
+						<posx>8</posx>
+						<posy>0</posy>
+						<width>1100</width>
 						<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
                         <textcolor>$VAR[Views_FontColor]</textcolor>
-                        <scroll>false</scroll>
-                    </control>
-                </control>
-                <control type="group">
-                    <!--Total: Episodes-->
-                    <width>800</width>
-                    <height>49</height>
-                    <visible>Container.Content(TVShows) + !IsEmpty(ListItem.Property(TotalEpisodes))</visible>
-                    <control type="label">
-                        <posx>8</posx>
-                        <posy>0</posy>
-                        <width>600</width>
-                        
-                        <align>left</align>
-                        <label>$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: ,]</label>
+						<align>left</align>
+						<label>$INFO[ListItem.Studio,[B]$LOCALIZE[572]:[/B] ,  •  ]$INFO[Window(Home).Property(NextAired.Status),[B]$LOCALIZE[126]:[/B] ]</label>
+						<scroll>false</scroll>
+					</control>
+				</control>
+				<control type="group">
+					<!--Total: Episodes-->
+					<width>950</width>
+					<height>40</height>
+					<visible>Container.Content(TVShows) + !IsEmpty(ListItem.Property(TotalEpisodes))</visible>
+					<control type="label">
+						<posx>8</posx>
+						<posy>0</posy>
+						<width>600</width>
 						<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
                         <textcolor>$VAR[Views_FontColor]</textcolor>
-                        <scroll>false</scroll>
-                    </control>
-                </control>
-                <control type="group">
-                    <!--Unwatched: Episodes-->
-                    <width>800</width>
-                    <height>49</height>
-                    <visible>Container.Content(TVShows) + !IsEmpty(ListItem.Property(unWatchedepisodes))</visible>
-                    <control type="label">
-                        <posx>8</posx>
-                        <posy>0</posy>
-                        <width>600</width>
-                        
-                        <align>left</align>
-                        <label>$INFO[ListItem.Property(unWatchedepisodes),$LOCALIZE[31092]: ,]</label>
-                        <textcolor>$VAR[Views_FontColor]</textcolor>
+						<align>left</align>
+						<label>$INFO[ListItem.Property(TotalEpisodes),[B]$LOCALIZE[20360]:[/B] ,  •  ]$INFO[ListItem.Property(unWatchedepisodes),[B]$LOCALIZE[31092]:[/B] ,]</label>
+						<scroll>false</scroll>
+					</control>
+				</control>
+				<control type="group">
+					<!--NextAired Status-->
+					<width>1300</width>
+					<height>40</height>
+					<visible>Container.Content(TVShows) + !IsEmpty(Window(Home).Property(NextAired.LatestNumber))</visible>
+					<control type="label">
+						<posx>8</posx>
+						<posy>0</posy>
+						<width>1300</width>
 						<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
-                        <scroll>false</scroll>
-                    </control>
-                </control>
+                        <textcolor>$VAR[Views_FontColor]</textcolor>
+						<align>left</align>
+						<label>[B]$LOCALIZE[31214]:[/B] $INFO[Window(Home).Property(NextAired.LatestNumber)] $INFO[Window(Home).Property(NextAired.LatestTitle)] ($INFO[Window(Home).Property(NextAired.LatestDate)])</label>
+						<scroll>false</scroll>
+					</control>
+				</control>
+				<control type="group">
+					<!--NextAired Status-->
+					<width>1300</width>
+					<height>40</height>
+					<visible>Container.Content(TVShows) + !IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
+					<control type="label">
+						<posx>8</posx>
+						<posy>0</posy>
+						<width>1300</width>
+						<font>Reg28</font>
+						<align>left</align>
+						<label>[B]$LOCALIZE[31212]:[/B] $INFO[Window(Home).Property(NextAired.NextNumber)] $INFO[Window(Home).Property(NextAired.NextTitle)] ($INFO[Window(Home).Property(NextAired.NextDate)])</label>
+						<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                        <textcolor>$VAR[Views_FontColor]</textcolor>
+						<scroll>false</scroll>
+					</control>
+				</control>
 				<!-- empty label -->
 				<control type="label">
 					<height>20</height>
