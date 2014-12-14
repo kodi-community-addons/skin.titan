@@ -313,60 +313,85 @@
 						<height>700</height>
 						<orientation>vertical</orientation>
 						<control type="label">
-								<posx>60</posx>
-								<posy>0</posy>
-								<width>600</width>
-								<font>Reg28</font>
-								<align>left</align>
-								<label>S$INFO[ListItem.Season]E$INFO[ListItem.Episode] -- $INFO[ListItem.Title]</label>
-								<textcolor>mainblue</textcolor>
-								<scroll>false</scroll>
-								<visible>!IsEmpty(ListItem.Season)</visible>
-							</control>
+							<posx>60</posx>
+							<posy>0</posy>
+							<width>600</width>
+							<font>Reg34</font>
+							<align>left</align>
+							<label>S$INFO[ListItem.Season]E$INFO[ListItem.Episode] -- $INFO[ListItem.Title]</label>
+							<textcolor>mainblue</textcolor>
+							<scroll>false</scroll>
+							<visible>!IsEmpty(ListItem.Season)</visible>
+						</control>
+						<control type="label">
+							<posx>60</posx>
+							<posy>0</posy>
+							<width>600</width>
+							<font>Reg34</font>
+							<align>left</align>
+							<label>$INFO[ListItem.Title]</label>
+							<textcolor>mainblue</textcolor>
+							<scroll>false</scroll>
+							<visible>IsEmpty(ListItem.Season)</visible>
+						</control>
+						<control type="image">
+							<width>1150</width>
+							<height>15</height>
+							<posy>10</posy>
+							<texture>colors/color_transparent.png</texture>
+						</control>
+						<control type="image">
+							<width>1150</width>
+							<height>2</height>
+							<posy>10</posy>
+							<texture>colors/color_lightgrey.png</texture>
+						</control>
 						<control type="textbox">
 							<posx>0</posx>
 							<posy>0</posy>
 							<width>1150</width>
-							<height>320</height>
+							<height>235</height>
 							<label>$INFO[ListItem.Plot]</label>
 							<textcolor>$VAR[TextColor_bbwhite]</textcolor>
 							<align>justify</align>
 							<font>Light32</font>
+							<visible>IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
+						</control>
+						<control type="textbox">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>1150</width>
+							<height>200</height>
+							<label>$INFO[ListItem.Plot]</label>
+							<textcolor>$VAR[TextColor_bbwhite]</textcolor>
+							<align>justify</align>
+							<font>Light32</font>
+							<visible>!IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
+						</control>
+						<control type="image">
+							<width>1150</width>
+							<height>2</height>
+							<posy>10</posy>
+							<texture>colors/color_lightgrey.png</texture>
+						</control>
+						<control type="image">
+							<width>1150</width>
+							<height>15</height>
+							<posy>10</posy>
+							<texture>colors/color_transparent.png</texture>
 						</control>
 						<control type="group">
-							<!--Year: Movies-->
-							<width>1200</width>
-							<height>40</height>
-							<visible>Container.Content(Movies) + !IsEmpty(ListItem.Year)</visible>
-							<control type="image">
-								<posx>0</posx>
-								<posy>3</posy>
-								<width>49</width>
-								<height>49</height>
-								<texture>dialogs/videoinfo/premiered-icon.png</texture>
-							</control>
-							<control type="label">
-								<posx>60</posx>
-								<posy>0</posy>
-								<width>600</width>
-								<font>Reg28</font>
-								<align>left</align>
-								<label>$INFO[ListItem.Year]</label>
-								<textcolor>$VAR[TextColor_aawhite]</textcolor>
-								<scroll>false</scroll>
-							</control>
-						</control>
-						<control type="group">
-							<!--Premiered: TV-Shows, Episodes-->
+							<!--Premiered or Year -->
 							<width>950</width>
 							<height>40</height>
-							<visible>[Container.Content(TVShows) | Container.Content(episodes)] + !IsEmpty(ListItem.Premiered)</visible>
+							<visible>!IsEmpty(ListItem.Premiered) | !IsEmpty(ListItem.Year)</visible>
 							<control type="image">
 								<posx>0</posx>
 								<posy>3</posy>
 								<width>49</width>
 								<height>49</height>
 								<texture>dialogs/videoinfo/premiered-icon.png</texture>
+								<visible>!IsEmpty(ListItem.Premiered) | !IsEmpty(ListItem.Year)</visible>
 							</control>
 							<control type="label">
 								<posx>60</posx>
@@ -377,24 +402,31 @@
 								<label>$INFO[ListItem.Premiered]</label>
 								<textcolor>$VAR[TextColor_aawhite]</textcolor>
 								<scroll>false</scroll>
-							</control>
-						</control>
-						<control type="group">
-							<!--Runtime: Movie, Episodes-->
-							<width>950</width>
-							<height>40</height>
-							<visible>Container.Content(Movies) | Container.Content(episodes)</visible>
-							<control type="image">
-								<posx>0</posx>
-								<posy>3</posy>
-								<width>49</width>
-								<height>49</height>
-								<texture>dialogs/videoinfo/time-icon.png</texture>
+								<visible>!IsEmpty(ListItem.Premiered)</visible>
 							</control>
 							<control type="label">
 								<posx>60</posx>
 								<posy>0</posy>
 								<width>600</width>
+								<font>Reg28</font>
+								<align>left</align>
+								<label>$INFO[ListItem.Year]</label>
+								<textcolor>$VAR[TextColor_aawhite]</textcolor>
+								<scroll>false</scroll>
+								<visible>!IsEmpty(ListItem.Year) + IsEmpty(ListItem.Premiered)</visible>
+							</control>
+							<control type="image">
+								<posx>700</posx>
+								<posy>3</posy>
+								<width>49</width>
+								<height>49</height>
+								<texture>dialogs/videoinfo/time-icon.png</texture>
+								<visible>!IsEmpty(ListItem.Duration)</visible>
+							</control>
+							<control type="label">
+								<posx>760</posx>
+								<posy>0</posy>
+								<width>400</width>
 								<font>Reg28</font>
 								<align>left</align>
 								<label>$INFO[ListItem.Duration,, $LOCALIZE[12391]]</label>
@@ -403,39 +435,17 @@
 							</control>
 						</control>
 						<control type="group">
-							<!--Genre-->
-							<width>950</width>
-							<height>40</height>
-							<visible>!IsEmpty(ListItem.Genre)</visible>
-							<control type="image">
-								<posx>0</posx>
-								<posy>3</posy>
-								<width>49</width>
-								<height>49</height>
-								<texture>dialogs/videoinfo/genre-icon.png</texture>
-							</control>
-							<control type="label">
-								<posx>60</posx>
-								<posy>0</posy>
-								<width>600</width>
-								<font>Reg28</font>
-								<align>left</align>
-								<label>$INFO[ListItem.Genre]</label>
-								<textcolor>$VAR[TextColor_aawhite]</textcolor>
-								<scroll>false</scroll>
-							</control>
-						</control>
-						<control type="group">
-							<!--Director: Movies, Episodes-->
+							<!--Director and Writer -->
 							<width>600</width>
 							<height>40</height>
-							<visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Director)</visible>
+							<visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Director) + !IsEmpty(ListItem.Writer)</visible>
 							<control type="image">
 								<posx>0</posx>
 								<posy>5</posy>
 								<width>49</width>
 								<height>49</height>
 								<texture>dialogs/videoinfo/director-icon.png</texture>
+								<visible>!IsEmpty(ListItem.Director)</visible>
 							</control>
 							<control type="label">
 								<posx>60</posx>
@@ -446,86 +456,91 @@
 								<label>$INFO[ListItem.Director]</label>
 								<textcolor>$VAR[TextColor_aawhite]</textcolor>
 								<scroll>false</scroll>
+								<visible>!IsEmpty(ListItem.Director)</visible>
 							</control>
-						</control>
-						<control type="group">
-							<!--Writer: Movies, Episodes-->
-							<width>950</width>
-							<height>40</height>
-							<visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Writer)</visible>
 							<control type="image">
-								<posx>0</posx>
+								<posx>700</posx>
 								<posy>2</posy>
 								<width>49</width>
 								<height>49</height>
 								<texture>dialogs/videoinfo/writer-icon.png</texture>
+								<visible>!IsEmpty(ListItem.Writer)</visible>
 							</control>
 							<control type="label">
-								<posx>60</posx>
+								<posx>760</posx>
 								<posy>0</posy>
-								<width>600</width>
+								<width>400</width>
 								<font>Reg28</font>
 								<align>left</align>
 								<label>$INFO[ListItem.Writer]</label>
+								<textcolor>$VAR[TextColor_aawhite]</textcolor>
+								<scroll>false</scroll>
+								<visible>!IsEmpty(ListItem.Writer)</visible>
+							</control>
+						</control>
+						<control type="image">
+							<width>1150</width>
+							<height>30</height>
+							<posy>10</posy>
+							<texture>colors/color_transparent.png</texture>
+						</control>
+						<control type="group">
+							<!--Genre-->
+							<width>1150</width>
+							<height>40</height>
+							<visible>!IsEmpty(ListItem.Genre)</visible>
+							<control type="label">
+								<posx>8</posx>
+								<posy>0</posy>
+								<width>1150</width>
+								<font>Reg28</font>
+								<align>left</align>
+								<label>$INFO[ListItem.Genre,[B]$LOCALIZE[515]: [/B]]</label>
 								<textcolor>$VAR[TextColor_aawhite]</textcolor>
 								<scroll>false</scroll>
 							</control>
 						</control>
 						<control type="group">
 							<!--filename-->
-							<width>1250</width>
+							<width>1150</width>
 							<height>40</height>
 							<visible>Container.Content(Movies) + !IsEmpty(ListItem.FileName)</visible>
-							<control type="image">
-								<posx>5</posx>
-								<posy>8</posy>
-								<width>40</width>
-								<height>40</height>
-								<texture>dialogs/filebrowser/DefaultFolder.png</texture>
-								<aspectratio>scale</aspectratio>
-							</control>
 							<control type="label">
-								<posx>60</posx>
+								<posx>8</posx>
 								<posy>0</posy>
-								<width>1200</width>
+								<width>1150</width>
 								<font>Reg28</font>
 								<align>left</align>
-								<label>$INFO[ListItem.FileName]</label>
+								<label>$INFO[ListItem.FileName,[B]$LOCALIZE[21800]: [/B]]</label>
 								<textcolor>$VAR[TextColor_aawhite]</textcolor>
 								<scroll>false</scroll>
 							</control>
 						</control>
-						<!-- white space -->
 						<control type="group">
-							<width>950</width>
+							<!--Studio-->
+							<width>1150</width>
 							<height>40</height>
-							<visible>Container.Content(TVShows)</visible>
-						</control>
-						<control type="group">
-							<!--Studio: TV-Shows-->
-							<width>950</width>
-							<height>40</height>
-							<visible>Container.Content(TVShows) + !IsEmpty(ListItem.Studio)</visible>
+							<visible>!IsEmpty(ListItem.Studio)</visible>
 							<control type="label">
 								<posx>8</posx>
 								<posy>0</posy>
-								<width>600</width>
+								<width>1150</width>
 								<font>Reg28</font>
 								<align>left</align>
-								<label>$INFO[ListItem.Studio,[B]$LOCALIZE[572]:[/B] ,  •  ]$INFO[Window(Home).Property(NextAired.Status),[B]$LOCALIZE[126]:[/B] ]</label>
+								<label>$INFO[ListItem.Studio,[B]$LOCALIZE[572]: [/B]]$INFO[Window(Home).Property(NextAired.Status),  •   [B]$LOCALIZE[126]: [/B]]</label>
 								<textcolor>$VAR[TextColor_aawhite]</textcolor>
 								<scroll>false</scroll>
 							</control>
 						</control>
 						<control type="group">
 							<!--Total: Episodes-->
-							<width>950</width>
+							<width>1150</width>
 							<height>40</height>
-							<visible>Container.Content(TVShows) + !IsEmpty(ListItem.Property(TotalEpisodes))</visible>
+							<visible>!IsEmpty(ListItem.Property(TotalEpisodes))</visible>
 							<control type="label">
 								<posx>8</posx>
 								<posy>0</posy>
-								<width>600</width>
+								<width>1150</width>
 								<font>Reg28</font>
 								<align>left</align>
 								<label>$INFO[ListItem.Property(TotalEpisodes),[B]$LOCALIZE[20360]:[/B] ,  •  ]$INFO[ListItem.Property(unWatchedepisodes),[B]$LOCALIZE[31092]:[/B] ,]</label>
@@ -535,13 +550,13 @@
 						</control>
 						<control type="group">
 							<!--NextAired Status-->
-							<width>1300</width>
+							<width>1150</width>
 							<height>40</height>
-							<visible>Container.Content(TVShows) + !IsEmpty(Window(Home).Property(NextAired.LatestNumber))</visible>
+							<visible>!IsEmpty(Window(Home).Property(NextAired.LatestNumber))</visible>
 							<control type="label">
 								<posx>8</posx>
 								<posy>0</posy>
-								<width>1300</width>
+								<width>1150</width>
 								<font>Reg28</font>
 								<align>left</align>
 								<label>[B]$LOCALIZE[31214]:[/B] $INFO[Window(Home).Property(NextAired.LatestNumber)] $INFO[Window(Home).Property(NextAired.LatestTitle)] ($INFO[Window(Home).Property(NextAired.LatestDate)])</label>
@@ -551,13 +566,13 @@
 						</control>
 						<control type="group">
 							<!--NextAired Status-->
-							<width>1300</width>
+							<width>1150</width>
 							<height>40</height>
-							<visible>Container.Content(TVShows) + !IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
+							<visible>!IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
 							<control type="label">
 								<posx>8</posx>
 								<posy>0</posy>
-								<width>1300</width>
+								<width>1150</width>
 								<font>Reg28</font>
 								<align>left</align>
 								<label>[B]$LOCALIZE[31212]:[/B] $INFO[Window(Home).Property(NextAired.NextNumber)] $INFO[Window(Home).Property(NextAired.NextTitle)] ($INFO[Window(Home).Property(NextAired.NextDate)])</label>

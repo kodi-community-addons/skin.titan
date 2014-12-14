@@ -680,6 +680,7 @@
 			<control type="label">
 				<visible>IsEmpty(VideoPlayer.Episode)</visible>
 				<visible>!VideoPlayer.Content(livetv)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 				<posx>350</posx>
 				<posy>820</posy>
 				<width>1300</width>
@@ -687,6 +688,18 @@
 				<font>Light45</font>
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>[B]$INFO[VideoPlayer.Title][/B]</label>
+				<scroll>false</scroll>
+			</control>
+			<!--Label subitile dialog-->
+			<control type="label">
+				<visible>Control.IsVisible(1410)</visible>
+				<posx>350</posx>
+				<posy>820</posy>
+				<width>1300</width>
+				<align>left</align>
+				<font>Light45</font>
+				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+				<label>[B]$LOCALIZE[287][/B]</label>
 				<scroll>false</scroll>
 			</control>
 			<control type="label">
@@ -700,10 +713,12 @@
 				<scroll>false</scroll>
 				<visible>IsEmpty(VideoPlayer.Episode)</visible>
 				<visible>!VideoPlayer.Content(livetv)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 			<!-- Label Episode-->
 			<control type="label">
 				<visible>!IsEmpty(VideoPlayer.Episode)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 				<posx>350</posx>
 				<posy>820</posy>
 				<width>1300</width>
@@ -715,6 +730,7 @@
 			</control>
 			<control type="label">
 				<visible>!IsEmpty(VideoPlayer.Episode)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 				<posx>350</posx>
 				<posy>880</posy>
 				<width>1300</width>
@@ -727,6 +743,7 @@
 			<!--Label liveTV-->
 			<control type="label">
 				<visible>VideoPlayer.Content(livetv)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 				<posx>350</posx>
 				<posy>820</posy>
 				<width>1300</width>
@@ -739,6 +756,7 @@
 			<!--Label Ohter-->
 			<control type="label">
 				<visible>VideoPlayer.Content(livetv)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 				<posx>350</posx>
 				<posy>880</posy>
 				<width>1300</width>
@@ -886,6 +904,7 @@
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$LOCALIZE[31112] $INFO[Player.FinishTime]</label>
 				<visible>!IsEmpty(Player.FinishTime)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 
 			<control type="label">
@@ -898,6 +917,7 @@
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$INFO[Player.Time]</label>
 				<visible>Player.HasDuration</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 			<control type="label">
 				<!--Play Time-->
@@ -909,13 +929,14 @@
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$INFO[Player.TimeRemaining]</label>
 				<visible>Player.HasDuration</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 			
 			<!-- close dialog button -->
 			<control type="button">
 				<right>70</right>
 				<posx>1450</posx>
-				<posy>820</posy>
+				<posy>835</posy>
 				<width>50</width>
 				<height>50</height>
 				<texturefocus colordiffuse="white">icon_close.png</texturefocus>
@@ -924,6 +945,9 @@
 				<onclick>back</onclick>
 				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
+				<animation type="Conditional" condition="player.paused">
+					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+				</animation>
 			</control>
 			
 			<control type="grouplist">
@@ -976,6 +1000,7 @@
 				<width>750</width>
 				<info>Player.Progress</info>
 				<visible>Player.HasDuration</visible>
+				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 			<control type="slider" id="401">
 				<description>Seekbar</description>
@@ -986,6 +1011,7 @@
 				<visible>Window.IsActive(VideoOSD.xml)</visible>
 				<visible>Player.HasDuration</visible>
 				<action>seek</action>
+				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 		
 			<!-- next program -->
@@ -1934,9 +1960,10 @@
                     <height>97</height>
                     <label>287</label>
                     <font>-</font>
+					<onup>Control.SetFocus(401)</onup>
                     <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
-                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
+                    <onclick>Control.SetFocus(401)</onclick>
 					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>Player.HasVideo</visible>
                 </control>
