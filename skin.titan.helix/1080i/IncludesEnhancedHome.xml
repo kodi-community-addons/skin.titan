@@ -35,10 +35,10 @@
 	
 		<control type="image">
 			<!--Panel Shadow-->
-			<posx>60</posx>
+			<posx>50</posx>
 			<posy>190</posy>
-			<width>1800</width>
-			<height>865</height>
+			<width>1820</width>
+			<height>890</height>
 			<texture>views/nextup.png</texture>
 			<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 		</control>
@@ -84,7 +84,7 @@
 			<posy>190</posy>
 			<width>1800</width>
 			<height>600</height>
-			<visible>![IsEmpty(Container(300).ListItem.Property(submenu)) + IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+			<visible>!IsEmpty(Window(Home).Property(submenutype))</visible>
 		
 			
 			<!-- submenu dummy button -->
@@ -117,6 +117,7 @@
 				<width>365</width>
 				<orientation>vertical</orientation>
 				<onleft>Control.Move(300,-1)</onleft>
+				<onleft>300</onleft>
 				<onright>1508</onright>
 				<ondown>300</ondown>
 				<itemgap>0</itemgap>
@@ -160,7 +161,7 @@
 			<posy>190</posy>
 			<width>1437</width>
 			<height>680</height>
-			<visible>![IsEmpty(Container(300).ListItem.Property(submenu)) + IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+			<visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
 			<animation time="200" delay="200" effect="fade">Visible</animation>
 			<animation time="200" delay="200" effect="fade">Hidden</animation>
 			
@@ -181,6 +182,7 @@
 				<onclick>noop</onclick>
 				<onleft>4444</onleft>
 				<onright>Control.Move(300,1)</onright>
+				<onright>300</onright>
 				<onup>noop</onup>
 				<ondown>510</ondown>
 				<animation effect="slide" end="-345,0" time="0" condition="!IntegerGreaterThan(Container(4444).NumItems,0)">Conditional</animation>
@@ -547,6 +549,8 @@
 			<animation time="200" effect="fade">Hidden</animation>	
 		</control>
 		
+		<!-- touchscreen support -->
+		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsFooter</include>
 		
 		
 	</include>
@@ -559,6 +563,7 @@
 		<height>555</height>
 		<onleft>1508</onleft>
 		<onright>Control.Move(300,1)</onright>
+		<onright>300</onright>
 		<ondown>300</ondown>
 		<onback>300</onback>
 		<onup>511</onup>
@@ -773,6 +778,8 @@
 			<onfocus condition="!IsEmpty(Container(300).ListItem.Property(customcontent))">XBMC.RunScript(script.titanskin.helpers,SETCUSTOM,$INFO[Container(300).ListItem.Property(customcontent)])</onfocus>
 			<onfocus condition="!IsEmpty(Container(300).ListItem.Property(widget))">SetProperty(activewidget,$INFO[Container(300).ListItem.Property(widget)],Home)</onfocus>
 			<onfocus condition="IsEmpty(Container(300).ListItem.Property(widget))">SetProperty(activewidget,""],Home)</onfocus>
+			<onfocus condition="SubString(Container(300).ListItem.Property(hasSubmenu), True)">SetProperty(submenutype,$INFO[Container(300).ListItem.Property(submenuVisibility)],Home)</onfocus>
+			<onfocus condition="!SubString(Container(300).ListItem.Property(hasSubmenu), True)">ClearProperty(submenutype,Home)</onfocus>
 		</control>
     </include>
 
