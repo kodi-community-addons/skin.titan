@@ -945,6 +945,7 @@
 				<onclick>back</onclick>
 				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
+				<visible>!Window.IsActive(DialogSlider.xml)</visible>
 				<animation type="Conditional" condition="player.paused">
 					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
 				</animation>
@@ -1952,6 +1953,7 @@
                     <texturenofocus>modernosd/OSDVideoNF.png</texturenofocus>
                     <onclick>ActivateWindow(123)</onclick>
 					<visible>Player.HasVideo</visible>
+					<onfocus condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onfocus>
                 </control>
                 <control type="button" id="104">
                     <!--Subtitles-->
@@ -1964,6 +1966,9 @@
                     <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
                     <onclick>Control.SetFocus(401)</onclick>
+					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">SetProperty(subtitlemenu,show)</onclick>
+					<onclick condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onclick>
+					<onback condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onback>
 					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>Player.HasVideo</visible>
                 </control>

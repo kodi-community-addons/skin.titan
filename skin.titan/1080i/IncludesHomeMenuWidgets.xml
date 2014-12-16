@@ -4,10 +4,10 @@
 	<include name="HomeMenuWidget">
 		<!-- infopanel -->
 		<control type="group">
-			<animation type="Conditional" condition="ControlGroup(77777).HasFocus  + !Skin.HasSetting(AutoShowWidgets)">
+			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(AutoShowWidgets)">
                 <effect type="slide" start="0,0" end="0,1000" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-			<animation type="Conditional" condition="ControlGroup(77777).HasFocus + Skin.HasSetting(AutoShowWidgets)">
+			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + Skin.HasSetting(AutoShowWidgets)">
                 <effect type="slide" start="0,0" end="0,550" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
 			<animation type="Conditional" condition="Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
@@ -17,7 +17,7 @@
 			<animation type="Conditional" condition="!ControlGroup(77777).HasFocus + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml)]">
                 <effect type="slide" start="0,0" end="0,125" time="400" tween="cubic" easing="inout" delay="0" reversible="false"/>
             </animation>
-			<animation type="Conditional" condition="ControlGroup(77777).HasFocus + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml)]">
+			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml)]">
                 <effect type="slide" start="0,0" end="0,181" time="400" tween="cubic" easing="inout" delay="0" reversible="false"/>
             </animation>
 			
@@ -57,7 +57,7 @@
             <textcolor>white</textcolor>
 			<shadowcolor>black</shadowcolor>
             <label>$VAR[HomeMenuWidgetInfoLabel]</label>
-			<visible>ControlGroup(77777).HasFocus</visible>
+			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
         </control>
 		<control type="fadelabel">
             <posx>0</posx>
@@ -87,7 +87,7 @@
 			<shadowcolor>black</shadowcolor>
 			<align>justify</align>
 			<font>Light32</font>
-			<visible>ControlGroup(77777).HasFocus</visible>
+			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
 			<left>50</left>
@@ -97,7 +97,7 @@
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<texture background="true" fallback="DefaultMovies.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>!StringCompare(Window(Home).Property(activewidget),music) + !StringCompare(Window(Home).Property(activewidget),weather)</visible>
-			<visible>ControlGroup(77777).HasFocus</visible>
+			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
 			<left>50</left>
@@ -107,7 +107,7 @@
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<texture background="true" fallback="DefaultMusicSongs.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>StringCompare(Window(Home).Property(activewidget),music)</visible>
-			<visible>ControlGroup(77777).HasFocus</visible>
+			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
 			<left>50</left>
@@ -117,7 +117,7 @@
 			<texture fallback="DefaultAddonWeather.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
-			<visible>ControlGroup(77777).HasFocus</visible>
+			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		
 
@@ -128,26 +128,30 @@
 			<posy>600</posy>
 			<defaultcontrol>510</defaultcontrol>
 			
-			<control type="image">
+			<control type="button">
 				<!--widget Arrow DOWN-->
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<posx>872</posx>
 				<posy>291</posy>
 				<width>149</width>
 				<height>30</height>
-				<texture>basichome_down.png</texture>
-				<visible>ControlGroup(77777).HasFocus + !skin.hastheme(classic)</visible>
+				<onclick>ClearProperty(ShowWidget, Home)</onclick>
+				<texturefocus>basichome_down.png</texturefocus>
+				<texturenofocus>basichome_down.png</texturenofocus>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !skin.hastheme(classic)</visible>
 			</control>
 			
-			<control type="image">
+			<control type="button">
 				<!--widget Arrow DOWN-->
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<posx>872</posx>
 				<posy>281</posy>
 				<width>149</width>
 				<height>30</height>
-				<texture>basichome_down.png</texture>
-				<visible>ControlGroup(77777).HasFocus + skin.hastheme(classic)</visible>
+				<onclick>ClearProperty(ShowWidget, Home)</onclick>
+				<texturefocus>basichome_down.png</texturefocus>
+				<texturenofocus>basichome_down.png</texturenofocus>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + skin.hastheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 			</control>
 
@@ -178,7 +182,7 @@
 			<!-- widget type selector -->
 			<control type="group">		
 				<visible>!SubString(Window(Home).Property(activewidget),smart-) + !StringCompare(Window(Home).Property(activewidget),usercustom) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Container(300).ListItem.Property(customcontent))]</visible>
-				<visible>ControlGroup(77777).HasFocus</visible>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<control type="image">
 					<height>70</height>
 					<width>60</width>
@@ -233,7 +237,7 @@
 				<height>27</height>
 				<colordiffuse>aaFFFFFF</colordiffuse>
 				<texture>$VAR[HomeMenuWidgetInfoRating]</texture>
-				<visible>ControlGroup(77777).HasFocus</visible>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
 			</control>
@@ -246,7 +250,7 @@
 				<align>right</align>
 				<textcolor>$VAR[ThemeFontColorBlueGrey]</textcolor>
 				<label>$VAR[HomeMenuWidgetInfoRatingLabel]</label>
-				<visible>ControlGroup(77777).HasFocus</visible>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
 			</control>
@@ -4690,7 +4694,7 @@
 		<posx>34</posx>
 		<posy>65</posy>
 		<width>1830</width>
-		<height>300</height>
+		<height>210</height>
 		<onleft></onleft>
 		<onright></onright>
 		<ondown>Skin.Reset(ShowWidgets)</ondown>

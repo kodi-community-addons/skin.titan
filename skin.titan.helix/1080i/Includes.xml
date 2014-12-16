@@ -3,7 +3,7 @@
     <include file="Defaults.xml" />
     <include file="View_50_List.xml" />
     <include file="View_55_BannerList.xml" />
-    <include file="View_51_Showcase.xml" />
+    <include file="View_500_Showcase.xml" />
 	<include file="View_52_HorizontalPanel.xml" />
     <include file="View_53_PanelDetails.xml" />
 	<include file="View_54_PanelWall.xml" />
@@ -90,7 +90,7 @@
 	<!-- Footer -->
 	<include name="Footer">
 		<control type="group">
-			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)]">
+			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(EnableTouchSupport)">
                 <effect type="slide" start="0,0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
 			<!--Footer Background-->
@@ -309,6 +309,9 @@
     <!--Header-->
     <include name="Header">
 	
+		<!-- touchscreen workaround for windows tablets -->
+		<include condition="Skin.HasSetting(EnableTouchSupport) + System.Platform.Windows">WindowsTouchScreenWorkaround</include>
+		
 		<!-- PVR recording icon -->
 		<control type="image">
 			<posx>887</posx>
@@ -319,7 +322,7 @@
 			<visible>Pvr.IsRecording</visible>
 		</control>
         <control type="image">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>61</posx>
             <posy>41</posy>
@@ -330,7 +333,7 @@
             <texture>$VAR[value_header_icon]</texture>
         </control>
 		<control type="image">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>60</posx>
             <posy>40</posy>
@@ -341,7 +344,7 @@
             <texture>$VAR[value_header_icon]</texture>
         </control>
         <control type="label">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>155</posx>
             <posy>30</posy>
@@ -358,7 +361,7 @@
 	<include name="TimeInfo">
         <control type="group">
             <include>animation_fade_visible_hidden</include>
-            <visible>!ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
+            <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))]</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml)">
                 <effect type="slide" start="0,0" end="-100,0" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
@@ -479,7 +482,7 @@
 			<defaultcontrol>890</defaultcontrol>
 			<posx>35</posx>
 			<posy>30</posy>
-			<visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + !ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))] + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
+			<visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))] + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
 			<width>150</width>
 				<height>80</height>
 				<control type="image" id="888">	
@@ -528,7 +531,7 @@
             <height>300</height>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
-            <visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + !ControlGroup(77777).HasFocus + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))] + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget))] + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
@@ -783,7 +786,7 @@
     <include name="SubMenuTabTop">
         <!--Sub Menu Tab Top-->
         <control type="image">
-            <visible>[Control.IsVisible(51) | Control.IsVisible(52) | Control.IsVisible(501) | Control.IsVisible(502) | Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514)] + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>[Control.IsVisible(500) | Control.IsVisible(52) | Control.IsVisible(501) | Control.IsVisible(502) | Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514)] + !Skin.HasSetting(EnableTouchSupport)</visible>
             <include>animation_fade_visible_hidden</include>
             <include>animation_window_open_close</include>
             <posx>860</posx>
@@ -915,7 +918,7 @@
         <disabledcolor>aawhite</disabledcolor>
     </include>
     <include name="Key">
-        <height>90</height>
+        <height>110</height>
         <align>center</align>
         <font>Reg28</font>
         <textoffsetx>0</textoffsetx>
@@ -926,7 +929,7 @@
         <selectedcolor>eewhite</selectedcolor>
     </include>
     <include name="SmallKey">
-        <width>90</width>
+        <width>130</width>
         <include>Key</include>
     </include>
     <include name="BigKey">
@@ -934,22 +937,22 @@
         <include>Key</include>
     </include>
     <include name="SpaceBar">
-        <width>495</width>
+        <width>735</width>
         <include>Key</include>
     </include>
     <include name="BackSpace">
-        <width>333</width>
+        <width>490</width>
         <include>Key</include>
     </include>
     <include name="MediumKeyLarr">
-        <width>104</width>
-        <height>90</height>
+        <width>180</width>
+        <height>110</height>
         <texturefocus>dialogs/keyboard/mediumkeylarrfocus.png</texturefocus>
         <texturenofocus>dialogs/keyboard/mediumkeylarrnofocus.png</texturenofocus>
     </include>
     <include name="MediumKeyRarr">
-        <width>104</width>
-        <height>90</height>
+        <width>180</width>
+        <height>110</height>
         <texturefocus>dialogs/keyboard/mediumkeyrarrfocus.png</texturefocus>
         <texturenofocus>dialogs/keyboard/mediumkeyrarrnofocus.png</texturenofocus>
     </include>
@@ -981,6 +984,7 @@
         <!--Info Stuff-->
         <control type="group">
             <visible>!IsEmpty(VideoPlayer.Plot)</visible>
+			<visible>!Window.IsActive(dialogslider.xml)</visible>
 			<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 			
 			<!-- blue background -->
@@ -1072,14 +1076,14 @@
 		<control type="image">
 			<include>DimensionsFullscreen</include>
 			<include>backgroundfade</include>
-			<texture background="true" fallback="special://skin/extras/backgrounds/hover_my music.jpg">$INFO[MusicPlayer.Property(Fanart_Image)]</texture>
+			<texture background="true" fallback="special://skin/extras/backgrounds/hover_my music.jpg">$INFO[Player.Art(fanart)]</texture>
 			<fadetime>800</fadetime>
 		</control>
     </include>
 	
 	
     <include name="GlobalBackground">
-	<!-- single image background -->
+		<!-- single image background -->
         <control type="image">
             <include>DimensionsFullscreen</include>
 			<include>backgroundfade</include>
@@ -1131,7 +1135,7 @@
             <fadetime>1000</fadetime>
             <texture background="true">$VAR[HomeMenuWidgetBackground]</texture>
 			<aspectratio>scale</aspectratio>
-            <visible>ControlGroup(77777).HasFocus</visible>
+            <visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			<animation effect="fade" start="0" end="100" delay="800" time="1600" pulse="true">Visible</animation>
         </control>
 		

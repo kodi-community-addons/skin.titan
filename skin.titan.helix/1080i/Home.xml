@@ -51,7 +51,7 @@
             <include condition="!Skin.String(GadgetRows, 1) + Skin.HasSetting(DisablePowerMenu)">Gadget2RowNoPowerButton</include>
 		
 			
-			<animation type="Conditional" condition="ControlGroup(77777).HasFocus">
+			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
                 <effect type="slide" start="0,-0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
 			
@@ -163,7 +163,7 @@
                         <width>149</width>
                         <height>30</height>
                         <texture>basichome_up.png</texture>
-						<visible>!IsEmpty(ListItem.Property(widget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
+						<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(ListItem.Property(widget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
                     </control>
 					<control type="image">
                         <!--widget Arrow DOWN-->
@@ -174,7 +174,7 @@
                         <height>30</height>
                         <texture>basichome_down.png</texture>
 						<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-						<visible>[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1) + !skin.hastheme(classic)] | [!IsEmpty(ListItem.Property(widget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]</visible>
+						<visible>!Skin.HasSetting(EnableTouchSupport) + [IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1) + !skin.hastheme(classic)] | [!IsEmpty(ListItem.Property(widget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]</visible>
 					</control>
 					
                     <control type="image">
