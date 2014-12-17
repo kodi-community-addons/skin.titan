@@ -64,7 +64,7 @@
 			<onclick>Back</onclick>
 			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
 			<onclick>ClearProperty(ShowWidget, Home)</onclick>
-			<visible>!SubString(Window.Property(xmlfile),Dialog)</visible>
+			<visible>!Window.IsActive(Home) | [Window.IsActive(Home) + Player.HasMedia]</visible>
 		</control>
 		<control type="button">
 			<visible>!Window.IsActive(Home)</visible>
@@ -78,7 +78,6 @@
 			<aspectratio>keep</aspectratio>
 			<onclick>ActivateWindow(Home)</onclick>
 			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
-			<visible>!SubString(Window.Property(xmlfile),Dialog)</visible>
 		</control>
 		<control type="button">
 			<label></label>
@@ -92,7 +91,6 @@
 			<onclick>ActivateWindow(111)</onclick>
 			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
 			<visible>Window.IsActive(Home)</visible>
-			<visible>!SubString(Window.Property(xmlfile),Dialog)</visible>
 		</control>
 		<!-- settings button on home -->
 		<control type="button">
@@ -106,7 +104,6 @@
 			<aspectratio aligny="bottom">keep</aspectratio>
 			<onclick>ActivateWindow(settings)</onclick>
 			<visible>Window.IsActive(Home)</visible>
-			<visible>!SubString(Window.Property(xmlfile),Dialog)</visible>
 		</control>
 		<!-- sideblade menu -->
 		<control type="button">
@@ -121,7 +118,6 @@
 			<onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
 			<onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
 			<visible>Control.IsVisible(9000) + !Window.IsActive(settings) + !Window.IsActive(settingscategory.xml) + !Window.IsActive(DialogContextMenu.xml)</visible>
-			<visible>!SubString(Window.Property(xmlfile),Dialog)</visible>
 		</control>
 		<!-- show widget -->
 		<control type="button">
@@ -139,20 +135,6 @@
 			<onclick condition="StringCompare(Window(Home).Property(ShowWidget),show)">ClearProperty(ShowWidget, Home)</onclick>
 			<visible>Window.IsActive(Home)</visible>
 			<visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
-			<visible>!SubString(Window.Property(xmlfile),Dialog)</visible>
-		</control>
-		<!-- close dialog -->
-		<control type="button">
-			<label></label>
-			<include>animation_fade_visible_hidden</include>
-			<width>60</width>
-			<height>60</height>
-			<font>-</font>
-			<texturefocus colordiffuse="white">icon_close.png</texturefocus>
-			<texturenofocus colordiffuse="bbwhite">icon_close.png</texturenofocus>
-			<aspectratio aligny="bottom">keep</aspectratio>
-			<onclick>Dialog.Close(all,true)</onclick>
-			<visible>SubString(Window.Property(xmlfile),Dialog)</visible>
 		</control>
 	</control>
 
@@ -216,10 +198,20 @@
 			<height>1080</height>
 			<pagecontrol>-</pagecontrol>
 			<orientation>vertical</orientation>
+			<itemlayout width="1920" height="1080">
+			</itemlayout>
+			<focusedlayout width="1920" height="1080">
+			</focusedlayout>
 			<content>
 				<item id="1">
 					<label></label>
 					<thumb>-</thumb>
+					<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
+					<onclick>ClearProperty(ShowWidget, Home)</onclick>
+					<onclick>ClearProperty(ShowWidget, Home)</onclick>
+					<onclick condition="SubString(Window.Property(xmlfile),Dialog)">Dialog.Close(all,true)</onclick>
+					<onclick condition="SubString(Window.Property(xmlfile),Lyrics)">back</onclick>
+					<onclick>XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,HIDE)</onclick>
 				</item>
 			</content>
 		</control>
@@ -235,10 +227,19 @@
 			<onfocus>ClearProperty(ShowViewSubMenu, Home)</onfocus>
 			<onfocus>ClearProperty(ShowWidget, Home)</onfocus>
 			<orientation>horizontal</orientation>
+			<itemlayout width="1920" height="1080">
+			</itemlayout>
+			<focusedlayout width="1920" height="1080">
+			</focusedlayout>
 			<content>
 				<item id="1">
 					<label></label>
 					<thumb>-</thumb>
+					<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
+					<onclick>ClearProperty(ShowWidget, Home)</onclick>
+					<onclick condition="SubString(Window.Property(xmlfile),Dialog)">Dialog.Close(all,true)</onclick>
+					<onclick condition="SubString(Window.Property(xmlfile),Lyrics)">back</onclick>
+					<onclick>XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,HIDE)</onclick>
 				</item>
 			</content>
 		</control>
