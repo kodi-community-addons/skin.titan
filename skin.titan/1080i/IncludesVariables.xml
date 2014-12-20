@@ -26,6 +26,7 @@
         <value condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c)">[UPPERCASE]$LOCALIZE[31091][/UPPERCASE]</value>
         <value condition="![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(genres)] + Window.IsActive(MyVideoNav.xml)">[UPPERCASE]$LOCALIZE[157]- $LOCALIZE[1214][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyMusicNav.xml)">[UPPERCASE]$LOCALIZE[2][/UPPERCASE]</value>
+		<value condition="Window.IsActive(MyVideoNav.xml)">[UPPERCASE]$LOCALIZE[3][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyWeather.xml)">[UPPERCASE]$LOCALIZE[8][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyPics.xml)">[UPPERCASE]$LOCALIZE[1213][/UPPERCASE]</value>
         <value condition="Window.IsActive(AddonBrowser.xml)">[UPPERCASE]$LOCALIZE[10040][/UPPERCASE]</value>
@@ -52,6 +53,7 @@
         <value condition="Container.Content(genres)">icons/icon_movies.png</value>
         <value condition="![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(genres)] + Window.IsActive(MyVideoNav.xml)">icons/icon_movies.png</value>
         <value condition="Window.IsActive(MyMusicNav.xml)">icons/icon_music.png</value>
+		<value condition="Window.IsActive(MyVideoNav.xml)">icons/icon_videos.png</value>
         <value condition="Window.IsActive(MyWeather.xml)">icons/icon_weather.png</value>
         <value condition="Window.IsActive(MyPics.xml)">icons/icon_pictures.png</value>
         <value condition="Window.IsActive(AddonBrowser.xml)">icons/icon_addons.png</value>
@@ -204,13 +206,18 @@
 		<value>home/music.png</value>
     </variable>
     <variable name="WeatherButtonThumb">
-        <value condition="Weather.IsFetched + !IsEmpty(Weather.FanartCode)">special://skin/extras/weather/$INFO[Weather.FanartCode]/weather.jpg</value>
+        <value condition="Weather.IsFetched + !IsEmpty(Weather.FanartCode)">$VAR[WeatherFanArtPath]/$INFO[Weather.FanartCode]/weather.jpg</value>
 		<value>home/weather.png</value>
     </variable>
     <variable name="PicturesButtonThumb">
 		<value condition="!IsEmpty(Window(Home).Property(MB3.Background.Photos.FanArt.small))">$INFO[Window(Home).Property(MB3.Background.Photos.FanArt.small)]</value>
         <value>home/pictures.png</value>
     </variable>
+	
+	<variable name="WeatherFanArtPath">
+		<value condition="Skin.String(CustomWeatherFanArtPath)">$INFO[Skin.String(CustomWeatherFanArtPath)]</value>
+        <value>special://skin/extras/weather/</value>
+	</variable>
 
 	<variable name="Custom0Thumb">
         <value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.0.background.small))">$INFO[Window(Home).Property(MediaBrowser.usr.0.background.small)]</value>
@@ -689,22 +696,22 @@
 	<variable name="ListItemClearLogo">
 		<value condition="!IsEmpty(Container.ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
 		<value condition="!IsEmpty(Container.ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Art(clearlogo))">$INFO[Container(200).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(201) + !IsEmpty(Container(201).ListItem.Property(Art(clearlogo))">$INFO[Container(201).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(202) + !IsEmpty(Container(202).ListItem.Property(Art(clearlogo))">$INFO[Container(202).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(203) + !IsEmpty(Container(203).ListItem.Property(Art(clearlogo))">$INFO[Container(203).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(204) + !IsEmpty(Container(204).ListItem.Property(Art(clearlogo))">$INFO[Container(204).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(205) + !IsEmpty(Container(205).ListItem.Property(Art(clearlogo))">$INFO[Container(205).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(206) + !IsEmpty(Container(206).ListItem.Property(Art(clearlogo))">$INFO[Container(206).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(207) + !IsEmpty(Container(207).ListItem.Property(Art(clearlogo))">$INFO[Container(207).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(208) + !IsEmpty(Container(208).ListItem.Property(Art(clearlogo))">$INFO[Container(208).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(209) + !IsEmpty(Container(209).ListItem.Property(Art(clearlogo))">$INFO[Container(209).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(210) + !IsEmpty(Container(210).ListItem.Property(Art(clearlogo))">$INFO[Container(210).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(211) + !IsEmpty(Container(211).ListItem.Property(Art(clearlogo))">$INFO[Container(211).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(212) + !IsEmpty(Container(212).ListItem.Property(Art(clearlogo))">$INFO[Container(212).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(213) + !IsEmpty(Container(213).ListItem.Property(Art(clearlogo))">$INFO[Container(213).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Art(clearlogo))">$INFO[Container(214).ListItem.Property(Art(clearlogo)]</value>
-		<value condition="Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Art(clearlogo))">$INFO[Container(215).ListItem.Property(Art(clearlogo)]</value>
+		<value condition="Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Art(clearlogo)))">$INFO[Container(200).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(201) + !IsEmpty(Container(201).ListItem.Property(Art(clearlogo)))">$INFO[Container(201).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(202) + !IsEmpty(Container(202).ListItem.Property(Art(clearlogo)))">$INFO[Container(202).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(203) + !IsEmpty(Container(203).ListItem.Property(Art(clearlogo)))">$INFO[Container(203).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(204) + !IsEmpty(Container(204).ListItem.Property(Art(clearlogo)))">$INFO[Container(204).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(205) + !IsEmpty(Container(205).ListItem.Property(Art(clearlogo)))">$INFO[Container(205).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(206) + !IsEmpty(Container(206).ListItem.Property(Art(clearlogo)))">$INFO[Container(206).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(207) + !IsEmpty(Container(207).ListItem.Property(Art(clearlogo)))">$INFO[Container(207).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(208) + !IsEmpty(Container(208).ListItem.Property(Art(clearlogo)))">$INFO[Container(208).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(209) + !IsEmpty(Container(209).ListItem.Property(Art(clearlogo)))">$INFO[Container(209).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(210) + !IsEmpty(Container(210).ListItem.Property(Art(clearlogo)))">$INFO[Container(210).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(211) + !IsEmpty(Container(211).ListItem.Property(Art(clearlogo)))">$INFO[Container(211).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(212) + !IsEmpty(Container(212).ListItem.Property(Art(clearlogo)))">$INFO[Container(212).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(213) + !IsEmpty(Container(213).ListItem.Property(Art(clearlogo)))">$INFO[Container(213).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Art(clearlogo)))">$INFO[Container(214).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Art(clearlogo)))">$INFO[Container(215).ListItem.Property(Art(clearlogo))]</value>
 	</variable>
 	
 	
@@ -1082,7 +1089,7 @@
 		<!-- fanart background -->
 		<value condition="Skin.String(CustomBackgroundSetting, fanart)">$VAR[globalFanartBackground]</value>
 		<!-- weather background -->
-		<value condition="Skin.String(CustomBackgroundSetting, weather)">special://skin/extras/weather/$INFO[Weather.FanartCode]</value>
+		<value condition="Skin.String(CustomBackgroundSetting, weather)">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]</value>
 		<!-- default backgrounds -->
 		<value condition="skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
 		<value>special://skin/extras/backgrounds/global_blue.jpg</value>
@@ -1090,7 +1097,7 @@
    
    <variable name="itemFanartBackground">
 		<value condition="!IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
-		<value condition="Window.IsActive(MyWeather.xml)">special://skin/extras/weather/$INFO[Weather.FanartCode]/weather.jpg</value>
+		<value condition="Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]/weather.jpg</value>
 		<value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
 		<value condition="Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Fanart))">$INFO[Container(200).ListItem.Property(Fanart)]</value>
@@ -1110,8 +1117,6 @@
 		<value condition="Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Fanart))">$INFO[Container(214).ListItem.Property(Fanart)]</value>
 		<value condition="Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Fanart))">$INFO[Container(215).ListItem.Property(Fanart)]</value>
    </variable>
-   
-   
    
    <variable name="globalFanartBackground">
 		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window(Home).Property(MB3.Background.Global.FanArt))">$INFO[Window(Home).Property(MB3.Background.Global.FanArt)]</value>
@@ -1168,7 +1173,7 @@
 	</variable>
 	
 	<variable name="itemExtraFanartBackground">
-		<value condition="Window.IsActive(MyWeather.xml)">special://skin/extras/weather/$INFO[Weather.FanartCode]</value>
+		<value condition="Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]/$INFO[Weather.FanartCode]</value>
 		<value condition="!Container.Content(episodes)">$INFO[ListItem.Path,,extrafanart/]</value>
 		<value condition="Container.Content(episodes)">$INFO[ListItem.Path,,../extrafanart/]</value>
 	</variable>
@@ -1205,7 +1210,7 @@
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),music) + StringCompare(Container(300).ListItem.Property(Background),fanart)">$VAR[musicFanartBackground]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),radio) + StringCompare(Container(300).ListItem.Property(Background),fanart)">$VAR[musicFanartBackground]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),plugin.video.netflixbmc) + StringCompare(Container(300).ListItem.Property(Background),fanart)">special://userdata/addon_data/plugin.video.netflixbmc/cache/fanart</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),weather) + StringCompare(Container(300).ListItem.Property(Background),fanart)">special://skin/extras/weather/$INFO[Weather.FanartCode]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),weather) + StringCompare(Container(300).ListItem.Property(Background),fanart)">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),programs) + StringCompare(Container(300).ListItem.Property(Background),fanart)">$VAR[addonsFanartBackground]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),addons) + StringCompare(Container(300).ListItem.Property(Background),fanart)">$VAR[addonsFanartBackground]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[10040]) + StringCompare(Container(300).ListItem.Property(Background),fanart)">$VAR[addonsFanartBackground]</value>
