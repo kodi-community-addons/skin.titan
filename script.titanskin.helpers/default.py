@@ -135,7 +135,7 @@ def showInfoPanel():
 def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
-    time.sleep(0.8)
+    time.sleep(1)
     xbmc.executebuiltin('SendClick(401)')
 
 
