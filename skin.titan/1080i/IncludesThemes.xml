@@ -86,26 +86,17 @@
 		</control>
 		
 		<!-- header -->
-		<control type="image">
-            <include>animation_fade_visible_hidden</include>
-            <posx>60</posx>
-            <posy>40</posy>
-            <height>64</height>
-            <width>64</width>
-            <aligny>center</aligny>
-            <colordiffuse>white</colordiffuse>
-            <texture>$VAR[value_header_icon]</texture>
-        </control>
         <control type="label">
             <include>animation_fade_visible_hidden</include>
-            <posx>155</posx>
-            <posy>30</posy>
+            <posx>61</posx>
+            <posy>10</posy>
             <width min="80" max="1100">auto</width>
             <height>100</height>
             <font>Bold45</font>
             <align>left</align>
             <textcolor>white</textcolor>
-            <label>$LOCALIZE[33061]</label>
+            <label>[UPPERCASE]$LOCALIZE[33061][/UPPERCASE]</label>
+			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
         </control>
             <!--Label Menu: -->
             <control type="image">
@@ -188,26 +179,17 @@
 			<aspectratio>stretch</aspectratio>
 		</control>
 		<!-- header -->
-		<control type="image">
-            <include>animation_fade_visible_hidden</include>
-            <posx>60</posx>
-            <posy>40</posy>
-            <height>64</height>
-            <width>64</width>
-            <aligny>center</aligny>
-            <colordiffuse>white</colordiffuse>
-            <texture>$VAR[value_header_icon]</texture>
-        </control>
         <control type="label">
             <include>animation_fade_visible_hidden</include>
-            <posx>155</posx>
-            <posy>30</posy>
+            <posx>61</posx>
+            <posy>10</posy>
             <width min="80" max="1100">auto</width>
             <height>100</height>
             <font>Bold45</font>
             <align>left</align>
             <textcolor>white</textcolor>
-            <label>$LOCALIZE[33063]</label>
+            <label>[UPPERCASE]$LOCALIZE[33063][/UPPERCASE]</label>
+			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
         </control>
 		<control type="image">
 			<!--Seperator-->
@@ -1955,7 +1937,7 @@
 			<!-- subtitle selection -->
 			<control type="group" id="1410">
 				<visible>![Window.IsVisible(SliderDialog) | Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(VideoBookmarks)]</visible>
-				<visible>Control.HasFocus(104) | ControlGroup(400).HasFocus | StringCompare(Window.Property(subtitlemenu), show)</visible>
+				<visible>StringCompare(Window.Property(subtitlemenu), show)</visible>
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 				<animation effect="fade" time="200">VisibleChange</animation>
 				<left>350</left>
@@ -1975,6 +1957,8 @@
 					<onright>400</onright>
 					<onup>104</onup>
 					<ondown>104</ondown>
+					<ondown>Control.Focus(200)</ondown>
+					<onback>Control.Focus(200)</onback>
 					<control type="button" id="401">
 						<description>Download with Subtitles script</description>
 						<width>359</width>
@@ -2224,13 +2208,14 @@
                     <height>97</height>
                     <label>287</label>
                     <font>-</font>
-					<onup>Control.SetFocus(401)</onup>
+					<onup>Control.SetFocus(400)</onup>
+					<onup>SetProperty(subtitlemenu,show)</onup>
                     <texturefocus>modernosd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>modernosd/OSDSubtitlesNF.png</texturenofocus>
-                    <onclick>ActivateWindow(SubtitleSearch)</onclick>
 					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">SetProperty(subtitlemenu,show)</onclick>
 					<onclick condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onclick>
 					<onback condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onback>
+					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">Control.SetFocus(400)</onclick>
 					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>Player.HasVideo</visible>
                 </control>
