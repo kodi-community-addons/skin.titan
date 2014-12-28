@@ -14,6 +14,9 @@
         <value condition="Window.IsActive(Home.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile)">[UPPERCASE]$LOCALIZE[10000][/UPPERCASE]</value>
         <value condition="substring(Container.FolderPath,Radio)">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
         
+		<value condition="Container.Content(movies) + !IsEmpty(ListItem.Title) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[ListItem.Title,> ,]</value>
+		<value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Title) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.Title,> ,]</value>
+		
 		<value condition="Container.Content(movies)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[Container.FolderName,> ,]</value>
 		<value condition="Container.Content(tvshows)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[Container.FolderName,> ,]</value>
 		
@@ -689,7 +692,7 @@
 		<value condition="!IsEmpty(ListItem.Property(EpisodeThumb))">$INFO[ListItem.Property(EpisodeThumb)]</value>
 		<value condition="!IsEmpty(ListItem.Property(SeriesThumb))">$INFO[ListItem.Property(SeriesThumb)]</value>
 		<value condition="!IsEmpty(ListItem.Property(small_fanartimage))">$INFO[ListItem.Property(small_fanartimage)]</value>
-        <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+        <value condition="!IsEmpty(ListItem.Art(fanart)) + !StringCompare(Window(Home).Property(activewidget),youtube)">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
@@ -813,9 +816,9 @@
 	
 	
 	<variable name="HomeMenuWidgetInfoRating">
-		<value condition="!IsEmpty(Container(510).ListItem.Rating) + !skin.hastheme(classic)">$INFO[Container(510).ListItem.Rating,rating/10stars_blue/,.png]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.Rating) + !skin.hastheme(classic)">$INFO[Container(510).ListItem.Rating,flags_new/rating/,.png]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Rating) + skin.hastheme(classic)">$INFO[Container(510).ListItem.Rating,rating/10stars_black/,.png]</value>
-		<value condition="IsEmpty(Container(510).ListItem.Rating) + !skin.hastheme(classic)">$INFO[Container(510).ListItem.Property(VideoRating),rating/10stars_blue/,.png]</value>
+		<value condition="IsEmpty(Container(510).ListItem.Rating) + !skin.hastheme(classic)">$INFO[Container(510).ListItem.Property(VideoRating),flags_new/rating/,.png]</value>
 		<value condition="IsEmpty(Container(510).ListItem.Rating) + skin.hastheme(classic)">$INFO[Container(510).ListItem.Property(VideoRating),rating/10stars_black/,.png]</value>
     </variable>
 	
@@ -941,10 +944,8 @@
 		<value condition="StringCompare(Window(Home).Property(activewidget),netflix) + Skin.String(NetflixWidget, random)">$LOCALIZE[31101]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),netflix) + Skin.String(NetflixWidget, inprogresstvshows)">$LOCALIZE[31046]</value>
 		
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, top100trailers)">YouTube Top100 Trailers</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, mostdiscussed)">Most discussed videos</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, trending)">Trending videos</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, mostviewed)">Most viewed</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, spotlight)">YouTube Spotlight</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, popular)">Popular on YouTube</value>
 		
 		<!-- custom items -->
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(labelID),$LOCALIZE[31036])">$LOCALIZE[31036]</value>
@@ -986,10 +987,8 @@
 		<value condition="StringCompare(Window(Home).Property(activewidget),netflix) + Skin.String(NetflixWidget, random)">Skin.SetString(NetflixWidget, inprogressmovies)</value>
 		
 		<!-- youtube -->
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, top100trailers)">Skin.SetString(YoutubeWidget, mostdiscussed)</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, mostdiscussed)">Skin.SetString(YoutubeWidget, trending)</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, trending)">Skin.SetString(YoutubeWidget, mostviewed)</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, mostviewed)">Skin.SetString(YoutubeWidget, top100trailers)</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, spotlight)">Skin.SetString(YoutubeWidget, popular)</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, popular)">Skin.SetString(YoutubeWidget, spotlight)</value>
 
 		<!-- weather -->
 		<value condition="StringCompare(Window(Home).Property(activewidget),weather)">ActivateWindow(weather)</value>
@@ -1030,19 +1029,11 @@
 	 
 	 
 	 <variable name="YouTubeWidgetContent">
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),top100trailers)">plugin://plugin.video.youtube/?contact=trailers&amp;external=true&amp;feed=uploads&amp;login=false&amp;path=%2froot%2fexplore%2ftrailers</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),mostdiscussed)">plugin://plugin.video.youtube/?feed=feed_discussed&amp;login=false&amp;path=%2froot%2fexplore%2ffeeds%2fdiscussed</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),trending)">plugin://plugin.video.youtube/?feed=feed_trending&amp;login=false&amp;path=%2froot%2fexplore%2ffeeds%2ftrending</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),mostviewed)">plugin://plugin.video.youtube/?feed=feed_viewed&amp;login=false&amp;path=%2froot%2fexplore%2ffeeds%2fviewed</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),spotlight)">plugin://plugin.video.youtube/channel/UCBR8-60-B28hp2BmDPdntcQ/</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + StringCompare(skin.string(YoutubeWidget),popular)">plugin://plugin.video.youtube/channel/UCF0pVplsI8R5kcAqgtoRqoA/playlists/</value>
 		<value>videodb://recentlyaddedmusicvideos/</value>
 	 </variable>
-	 
-	 <value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, top100trailers)">YouTube Top100 Trailers</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, mostdiscussed)">Most discussed videos</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, trending)">Trending videos</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),youtube) + Skin.String(YoutubeWidget, mostviewed)">Most viewed</value>
-		
-	 
+	  
 	 <variable name="NetflixWidgetContentMovies">
 		<value condition="StringCompare(skin.string(MoviesWidget),newmovies)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson</value>
 		<value condition="StringCompare(skin.string(MoviesWidget),randommovies)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=movie&amp;url=slider_3</value>
@@ -1265,8 +1256,8 @@
 	
 	<variable name="itemExtraFanartBackground">
 		<value condition="Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]/$INFO[Weather.FanartCode]</value>
-		<value condition="!Container.Content(episodes)">$INFO[ListItem.Path,,extrafanart/]</value>
-		<value condition="Container.Content(episodes)">$INFO[ListItem.Path,,../extrafanart/]</value>
+		<value condition="!Container.Content(episodes) + !SubString(Container.FolderPath,plugin)">$INFO[ListItem.Path,,extrafanart/]</value>
+		<value condition="Container.Content(episodes) + !SubString(Container.FolderPath,plugin)">$INFO[ListItem.Path,,../extrafanart/]</value>
 	</variable>
    
 

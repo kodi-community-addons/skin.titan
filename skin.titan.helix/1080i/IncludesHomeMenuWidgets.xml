@@ -58,6 +58,7 @@
 			<shadowcolor>black</shadowcolor>
             <label>$VAR[HomeMenuWidgetInfoLabel]</label>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+			<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Window(Home).Property(activewidget),weather)">Conditional</animation>
         </control>
 		<control type="fadelabel">
             <posx>0</posx>
@@ -88,6 +89,7 @@
 			<align>justify</align>
 			<font>Light32</font>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+			<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Window(Home).Property(activewidget),weather)">Conditional</animation>
 		</control>
 		<control type="image">
 			<left>50</left>
@@ -110,12 +112,12 @@
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
-			<left>50</left>
+			<right>50</right>
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
 			<texture fallback="DefaultAddonWeather.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
-			<aspectratio align="left" aligny="top">keep</aspectratio>
+			<aspectratio align="right" aligny="top">keep</aspectratio>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
@@ -239,6 +241,7 @@
 				<texture>$VAR[HomeMenuWidgetInfoRating]</texture>
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
+				<visible>skin.hastheme(classic)</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
 			</control>
 			<control type="label">
@@ -252,7 +255,35 @@
 				<label>$VAR[HomeMenuWidgetInfoRatingLabel]</label>
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
+				<visible>skin.hastheme(classic)</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
+			</control>
+			
+			<control type="group">
+				<width>330</width>
+				<posx>35</posx>
+				<posy>10</posy>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
+				<visible>!skin.hastheme(classic)</visible>
+				<visible>!StringCompare(Container(510).ListItem.Rating,None) + !StringCompare(Container(510).ListItem.Property(VideoRating),None)</visible>
+				<include>animation_fade_visible_hidden_delayed</include>
+				<control type="image">
+					<posx>-4</posx>
+					<posy>-5</posy>
+					<width>220</width>
+					<height>45</height>
+					<texture fallback="flags_new/rating/0.0.png">$VAR[HomeMenuWidgetInfoRating]</texture>
+				</control>
+				<control type="label">
+					<!--Rating modern-->
+					<posx>230</posx>
+					<posy>-12</posy>
+					<width>100</width>
+					<font>Reg36</font>
+					<textcolor>white</textcolor>
+					<label>$VAR[HomeMenuWidgetInfoRatingLabel]</label>
+				</control>
 			</control>
 			
 			<include condition="![Skin.HasSetting(HomeMenuUseMBforMovies) | Skin.HasSetting(HomeMenuUseNetflixforMovies)]">normalMoviesWidgets</include>
