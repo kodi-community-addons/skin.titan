@@ -2,8 +2,14 @@
 <!--Titan-->
 <window>
     <defaultcontrol always="true">100</defaultcontrol>
-	<onunload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onunload>
 	<onunload>SetProperty(powermenu, notactive, Home)</onunload>
+	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.Reset(HomeMenuUseMBforMovies)</onload>
+	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforTVseries)</onload>
+	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforMusic)</onload>
+	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforPictures)</onload>
+	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforMusicVideos)</onload>
+	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(MB3ModeDetectDone)</onload>
+		
     <allowoverlay>yes</allowoverlay>
     <include>defaultskinsettings</include>
 	
@@ -246,6 +252,7 @@
 					<top>50</top>
 					<align>center</align>
 					<onclick>RunScript(script.skinshortcuts,type=resetall)</onclick>
+					<onclick>Skin.Reset(WidgetDefaults)</onclick>
 					<label>$ADDON[script.skinshortcuts 32028]</label>
 					<focusedcolor>black</focusedcolor>
 					<font>Reg28</font>
@@ -745,7 +752,7 @@
                     <onclick>Skin.ToggleSetting(HomeMenuUseMBforMusic)</onclick>
 					<onclick>Skin.Reset(HomeMenuUsePlexforMusic)</onclick>
                     <selected>Skin.HasSetting(HomeMenuUseMBforMusic)</selected>
-                    <visible>System.HasAddon(plugin.video.xbmb3c)</visible>
+                    <visible>!IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))</visible>
                 </control>
                 <control type="radiobutton" id="7003">
                     <!--Movies-->
@@ -760,7 +767,7 @@
                     <onclick>Skin.Reset(HomeMenuUseNetflixforMovies)</onclick>
 					<onclick>Skin.Reset(HomeMenuUsePlexforMovies)</onclick>
                     <selected>Skin.HasSetting(HomeMenuUseMBforMovies)</selected>
-                    <visible>System.HasAddon(plugin.video.xbmb3c)</visible>
+                    <visible>!IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))</visible>
                 </control>
                 <control type="radiobutton" id="7005">
                     <!--TV Series-->
@@ -775,7 +782,7 @@
                     <onclick>Skin.Reset(HomeMenuUseNetflixforTVseries)</onclick>
 					<onclick>Skin.Reset(HomeMenuUsePlexforTVseries)</onclick>
                     <selected>Skin.HasSetting(HomeMenuUseMBforTVseries)</selected>
-                    <visible>System.HasAddon(plugin.video.xbmb3c)</visible>
+                    <visible>!IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))</visible>
                 </control>
                 <control type="radiobutton" id="7007">
                     <!--Pictures-->
@@ -789,7 +796,7 @@
                     <onclick>Skin.ToggleSetting(HomeMenuUseMBforPictures)</onclick>
                     <selected>Skin.HasSetting(HomeMenuUseMBforPictures)</selected>
 					<onclick>Skin.Reset(HomeMenuUsePlexforPictures)</onclick>
-                    <visible>System.HasAddon(plugin.video.xbmb3c)</visible>
+                    <visible>!IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))</visible>
                 </control>
                 <control type="radiobutton" id="71008">
                     <!--MusicVideos-->
@@ -802,7 +809,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(HomeMenuUseMBforMusicVideos)</onclick>
                     <selected>Skin.HasSetting(HomeMenuUseMBforMusicVideos)</selected>
-                    <visible>System.HasAddon(plugin.video.xbmb3c)</visible>
+                    <visible>!IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))</visible>
                 </control>
 				<control type="label" id="5601">
                     <width>1230</width>
@@ -813,7 +820,7 @@
                     <shadowcolor>black</shadowcolor>
                     <align>left</align>
                     <aligny>center</aligny>
-					<visible>!System.HasAddon(plugin.video.xbmb3c)</visible>
+					<visible>IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))</visible>
                 </control>
 				
 				<!-- netflix mode -->
