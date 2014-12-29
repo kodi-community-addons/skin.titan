@@ -22,16 +22,50 @@ def sendClick(controlId):
 
 def showWidget():
     win = xbmcgui.Window( 10000 )
-    controlId = "77777"
     linkCount = 0
-    while linkCount !=10 and xbmc.getCondVisibility("Control(77777).HasFocus") == False:
+    xbmc.executebuiltin('Control.SetFocus(77777,0)')
+    while linkCount !=10 and not xbmc.getCondVisibility("ControlGroup(77777).HasFocus"):
         time.sleep(0.1)
         if not xbmc.getCondVisibility("ControlGroup(77777).HasFocus"):
-            xbmc.executebuiltin('Control.SetFocus('+ controlId +',0)')
+            xbmc.executebuiltin('Control.SetFocus(77777,0)')
         linkCount += 1
-
     
+def setWidget(skinString):
+    win = xbmcgui.Window( 10000 )
+    win.clearProperty("activewidget")
+    win.clearProperty("customwidgetcontent")
+    
+    customWidget = False
+    skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+    
+    if skinStringContent != None:
+ 
+        if "$INFO" in skinStringContent:
+            skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
+            skinStringContent = skinStringContent.replace(")]", "")
+            skinStringContent = win.getProperty(skinStringContent)
+            customWidget = True
+        if "Activate" in skinStringContent:
+            skinStringContent = skinStringContent.split(",",1)[1]
+            skinStringContent = skinStringContent.replace(",return","")
+            skinStringContent = skinStringContent.replace(")","")
+            skinStringContent = skinStringContent.replace("\"","")
+            customWidget = True
+        if ":" in skinStringContent:
+            customWidget = True
+            
+        if customWidget:
+             win.setProperty("customwidgetcontent", skinStringContent)
+             win.setProperty("activewidget","custom")
+        else:
+            win.clearProperty("customwidgetcontent")
+            win.setProperty("activewidget",skinStringContent)
+
+    else:
+        win.clearProperty("activewidget")
+
 def setCustomContent(skinString):
+    #legacy
     win = xbmcgui.Window( 10000 )
     skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
 
@@ -49,7 +83,7 @@ def setCustomContent(skinString):
         xbmc.executebuiltin("Skin.SetString(" + skinString + ','+ skinStringContent + ')')         
 
     win.setProperty("customwidgetcontent", skinStringContent)
-
+        
 def updatePlexlinks():
     win = xbmcgui.Window( 10000 )
     logMsg("update plexlinks started...")
@@ -122,9 +156,7 @@ def updatePlexBackgrounds():
             logMsg(plexstring + ".background --> " + randomimage)            
 
         linkCount += 1
-        
-
-        
+               
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
     time.sleep(2)
@@ -135,7 +167,7 @@ def showInfoPanel():
 def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
-    time.sleep(1)
+    time.sleep(0.8)
     xbmc.executebuiltin('SendClick(401)')
 
 
@@ -253,13 +285,15 @@ elif action == "SHOWSUBMENU":
     showSubmenu(argument1,argument2)
 elif action == "SHOWINFO":
     showInfoPanel()
-elif action == "SETCUSTOM":
-    setCustomContent(argument1)
+elif action == "SETWIDGET":
+    setWidget(argument1)
 elif action == "UPDATEPLEXLINKS":   
     updatePlexlinks()
 elif action == "UPDATEPLEXBACKGROUNDS":     
     updatePlexBackgrounds()
 elif action == "SHOWWIDGET":   
-    showWidget()       
+    showWidget()
+elif action == "SETCUSTOM":
+    setCustomContent(argument1)    
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 
