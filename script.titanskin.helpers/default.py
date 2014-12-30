@@ -30,13 +30,17 @@ def showWidget():
             xbmc.executebuiltin('Control.SetFocus(77777,0)')
         linkCount += 1
     
-def setWidget(skinString):
+def setWidget(skinString,method):
     win = xbmcgui.Window( 10000 )
     win.clearProperty("activewidget")
     win.clearProperty("customwidgetcontent")
     
     customWidget = False
-    skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+    
+    if method = "old":
+        skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
+    else:
+        skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
     
     if skinStringContent != None:
  
@@ -167,7 +171,10 @@ def showInfoPanel():
 def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
-    time.sleep(0.8)
+    if xbmc.getCondVisibility("System.Platform.Windows"):
+        time.sleep(1)
+    else:
+        time.sleep(2)
     xbmc.executebuiltin('SendClick(401)')
 
 
@@ -286,7 +293,7 @@ elif action == "SHOWSUBMENU":
 elif action == "SHOWINFO":
     showInfoPanel()
 elif action == "SETWIDGET":
-    setWidget(argument1)
+    setWidget(argument1, argument2)
 elif action == "UPDATEPLEXLINKS":   
     updatePlexlinks()
 elif action == "UPDATEPLEXBACKGROUNDS":     
