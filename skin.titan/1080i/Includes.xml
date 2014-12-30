@@ -370,7 +370,7 @@
             <height>64</height>
             <width>64</width>
             <aligny>center</aligny>
-            <colordiffuse>$VAR[Views_ShadowColorColor]</colordiffuse>
+            <colordiffuse>$INFO[Skin.String(HeaderTextShadowColor)]</colordiffuse>
             <texture>$VAR[value_header_icon]</texture>
         </control>
 		<control type="image">
@@ -381,7 +381,7 @@
             <height>64</height>
             <width>64</width>
             <aligny>center</aligny>
-            <colordiffuse>$VAR[HeaderTextColor]</colordiffuse>
+            <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
             <texture>$VAR[value_header_icon]</texture>
         </control> -->
         <control type="label">
@@ -393,9 +393,9 @@
             <height>100</height>
             <font>Bold45</font>
             <align>left</align>
-            <textcolor>$VAR[HeaderTextColor]</textcolor>
+            <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
             <label>$VAR[value_header]</label>
-			<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
         </control>
 		 <control type="label">
 			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
@@ -405,16 +405,28 @@
 			<height>50</height>
 			<label>$VAR[value_subheader]</label>
 			<font>Reg30</font>
-			<textcolor>$VAR[HeaderTextColor]</textcolor>
-			<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+			<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 			<include>animation_fade_visible_hidden</include>
 		</control>
     </include>
     
 	<include name="TimeInfo">
+		<!--clearlogo if touch active-->
+		<control type="image">
+			<right>60</right>
+			<top>20</top>
+			<width>650</width>
+			<height>140</height>
+			<fadetime>600</fadetime>
+			<aspectratio align="right" aligny="center">keep</aspectratio>
+			<texture>$VAR[ListItemClearLogo]</texture>
+			<visible>Skin.HasSetting(EnableTouchSupport) + [!IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) | !IsEmpty(Container.ListItem.Art(clearlogo))]</visible>
+		</control>
         <control type="group">
             <include>animation_fade_visible_hidden</include>
             <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+			<visible>[Skin.HasSetting(EnableTouchSupport) + IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) + IsEmpty(Container.ListItem.Art(clearlogo))] | !Skin.HasSetting(EnableTouchSupport)</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml)">
                 <effect type="slide" start="0,0" end="-100,0" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
@@ -435,8 +447,8 @@
                     <height>100</height>
                     <info>System.Time(hh:mm)</info>
                     <font>Bold55</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <!--AM-->
@@ -445,8 +457,8 @@
                     <height>100</height>
                     <label>378</label>
                     <font>Bold55</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <!--PM-->
@@ -455,8 +467,8 @@
                     <height>100</height>
                     <label>379</label>
                     <font>Bold55</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
             </control>
             <control type="grouplist">
@@ -477,16 +489,16 @@
                     <height>50</height>
                     <info>System.Date(DDD)</info>
                     <font>Reg30</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <width min="0" max="400">auto</width>
                     <height>50</height>
                     <label>, </label>
                     <font>Reg30</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <!--Date-->
@@ -494,8 +506,8 @@
                     <height>50</height>
                     <info>System.Date(d)</info>
                     <font>Reg30</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <visible>SubString(System.Language,German)</visible>
@@ -503,8 +515,8 @@
                     <height>50</height>
                     <label>. </label>
                     <font>Reg30</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <label></label>
@@ -512,8 +524,8 @@
                     <width min="0" max="400">auto</width>
                     <height>50</height>
                     <font>Reg</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 </control>
                 <control type="label">
                     <!--Month-->
@@ -521,8 +533,8 @@
                     <height>50</height>
                     <info>System.Date(MMM)</info>
                     <font>Reg30</font>
-                    <textcolor>$VAR[HeaderTextColor]</textcolor>
-					<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 					
                 </control>
             </control>
@@ -569,8 +581,8 @@
 				<label>$VAR[ProfileLabel]</label>
 				<align>center</align>
 				<font>Light30</font>
-				<textcolor>$VAR[HeaderTextColor]</textcolor>
-				<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+				<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 			</control>
 		</control>
 	</include>
@@ -601,11 +613,11 @@
                 <posx>130</posx>
                 <posy>25</posy>
                 <font>Bold38</font>
-                <textcolor>$VAR[HeaderTextColor]</textcolor>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
                 <align>left</align>
                 <label>$INFO[Weather.Temperature]</label>
                 <visible>Weather.IsFetched</visible>
-				<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
             </control>
             <control type="label">
                 <!--Temp-->
@@ -614,8 +626,8 @@
                 <posx>130</posx>
                 <posy>70</posy>
                 <font>Reg28</font>
-                <textcolor>$VAR[HeaderTextColor]</textcolor>
-				<shadowcolor>$VAR[Views_ShadowColorColor]</shadowcolor>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 <align>left</align>
                 <label>$INFO[Window(Weather).Property(Day1.HighTemp)] $INFO[System.TemperatureUnits][COLOR=mainblue] / $INFO[Window(Weather).Property(Day1.LowTemp)] $INFO[System.TemperatureUnits] [/COLOR]</label>
                 <visible>Weather.IsFetched</visible>
@@ -1248,6 +1260,14 @@
 		<onload condition="!IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path)) + !Skin.HasSetting(HomeMenuDefaults11)">XBMC.RunScript(plugin.video.xbmb3c,SETRECOMMENDEDMB3SETTINGS,titan)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults11)">Skin.SetString(YoutubeWidget, popular)</onload>
 		
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(HeaderTextColor, white)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(HeaderTextShadowColor, black)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsTextColor, white)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsTextShadowColor, black)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsPanelOpacity, 40)</onload>
+		
+		
+		
 		<!-- enable MB3 mode if MB3 addon is present and active -->
 		<onload condition="!Skin.HasSetting(MB3ModeDetectDone) + !IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.SetBool(HomeMenuUseMBforMovies)</onload>
 		<onload condition="!Skin.HasSetting(MB3ModeDetectDone) + !IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.SetBool(HomeMenuUseMBforTVseries)</onload>
@@ -1255,18 +1275,18 @@
 		
 		<!-- default widget assignments -->
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-movies, movies)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-$LOCALIZE[31050], movies)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31050, movies)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-tvshows, tvshows)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-$LOCALIZE[31051], tvshows)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31051, tvshows)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-musicvideos, custom)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-$LOCALIZE[31018], netflix)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31018, netflix)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-plugin.video.netflixbmc, netflix)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-plugin.video.youtube, youtube)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-music, music)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-weather, weather)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-$LOCALIZE[19019], custom)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-$LOCALIZE[31036], custom)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-$LOCALIZE[31157], custom)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-19019, custom)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31036, custom)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31157, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-mediabrowser-usr-0-title, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-mediabrowser-usr-1-title, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-mediabrowser-usr-2-title, custom)</onload>

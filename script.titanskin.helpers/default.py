@@ -30,17 +30,27 @@ def showWidget():
             xbmc.executebuiltin('Control.SetFocus(77777,0)')
         linkCount += 1
     
-def setWidget(skinString,method):
+def setWidget(containerID):
     win = xbmcgui.Window( 10000 )
     win.clearProperty("activewidget")
     win.clearProperty("customwidgetcontent")
     
     customWidget = False
     
-    if method == "old":
-        skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
-    else:
+    # workaround for numeric labels (get translated by xbmc)
+    skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
+    skinString = skinString.replace("num-","")
+    skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+    
+    # normal method by getting the defaultID
+    if skinStringContent == "":
+        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
         skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+    
+    # Last resort:  try legacy method    
+    if skinStringContent == "":
+        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(customcontent)")
+        skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
     
     if skinStringContent != None:
  
@@ -293,7 +303,7 @@ elif action == "SHOWSUBMENU":
 elif action == "SHOWINFO":
     showInfoPanel()
 elif action == "SETWIDGET":
-    setWidget(argument1, argument2)
+    setWidget(argument1)
 elif action == "UPDATEPLEXLINKS":   
     updatePlexlinks()
 elif action == "UPDATEPLEXBACKGROUNDS":     
