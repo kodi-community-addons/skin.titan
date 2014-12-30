@@ -37,7 +37,7 @@ def setWidget(skinString,method):
     
     customWidget = False
     
-    if method = "old":
+    if method == "old":
         skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
     else:
         skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
