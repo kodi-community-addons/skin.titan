@@ -93,21 +93,32 @@
         <value condition="!Container.Content(albums)">$INFO[ListItem.Label]</value>
         <value condition="Container.Content(albums)">$INFO[ListItem.Label2] - $INFO[ListItem.Label]</value>
     </variable>
+	
+	<variable name="ViewDetailsFocusColor">
+        <value condition="skin.string(ViewDetailsFocusColor, blue)">blue</value>
+		<value condition="skin.string(ViewDetailsFocusColor, white)">white</value>
+		<value condition="skin.string(ViewDetailsFocusColor, mainblue)">mainblue</value>
+		<value condition="skin.string(ViewDetailsFocusColor, green)">green</value>
+		<value condition="skin.string(ViewDetailsFocusColor, orange)">orange</value>
+		<value condition="skin.string(ViewDetailsFocusColor, bluegrey)">bluegrey</value>
+		<value>white</value>
+    </variable>
+	
     <variable name="value_list_label_2">
-        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + ![SubString(ListItem.Duration,min) | SubString(ListItem.Path,videodb://1/7,left)]">[COLOR=list_label_2_first]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min - [COLOR=list_label_2_first]$LOCALIZE[20339]: [/COLOR] $INFO[ListItem.Director]</value>
-        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + SubString(ListItem.Duration,min) + !SubString(ListItem.Path,videodb://1/7,left)">[COLOR=list_label_2_first]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] - [COLOR=list_label_2_first]$LOCALIZE[20339]: [/COLOR] $INFO[ListItem.Director]</value>
-        <value condition="SubString(ListItem.Path,videodb://1/7,left)">[COLOR=list_label_2_first]$LOCALIZE[20457][/COLOR]</value>
+        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + ![SubString(ListItem.Duration,min) | SubString(ListItem.Path,videodb://1/7,left)]">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20339]: [/COLOR] $INFO[ListItem.Director]</value>
+        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + SubString(ListItem.Duration,min) + !SubString(ListItem.Path,videodb://1/7,left)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20339]: [/COLOR] $INFO[ListItem.Director]</value>
+        <value condition="SubString(ListItem.Path,videodb://1/7,left)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20457][/COLOR]</value>
         <!-- Movie Sets -->
-        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">[COLOR=list_label_2_first]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Episode]  - [COLOR=list_label_2_first]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">[COLOR=list_label_2_first]$INFO[ListItem.TVShowTitle][/COLOR] - [COLOR=list_label_2_first]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)] - [COLOR=list_label_2_first]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="Container.Content(episodes) + !SubString(ListItem.Duration,min)">[COLOR=list_label_2_first]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min - [COLOR=list_label_2_first]$INFO[ListItem.TVShowTitle][/COLOR]</value>
-        <value condition="Container.Content(episodes) + SubString(ListItem.Duration,min)">[COLOR=list_label_2_first]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] - [COLOR=list_label_2_first]$INFO[ListItem.TVShowTitle][/COLOR]</value>
-        <value condition="Container.Content(artists)">[COLOR=list_label_2_first]$LOCALIZE[21898]: [/COLOR]$INFO[ListItem.Property(Artist_YearsActive)]</value>
+        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Episode]  - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
+        <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
+        <value condition="Container.Content(episodes) + !SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
+        <value condition="Container.Content(episodes) + SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
+        <value condition="Container.Content(artists)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[21898]: [/COLOR]$INFO[ListItem.Property(Artist_YearsActive)]</value>
         <!-- YearsActive/Artists -->
-        <value condition="Container.Content(songs) + !SubString(ListItem.Duration,min)">[COLOR=list_label_2_first]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min</value>
-        <value condition="Container.Content(songs) + SubString(ListItem.Duration,min)">[COLOR=list_label_2_first]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration]</value>
-        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + IsEmpty(ListItem.Label2)">[COLOR=list_label_2_first]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=list_label_2_first]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)]</value>
-        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + !IsEmpty(ListItem.Label2)">[COLOR=list_label_2_first]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=list_label_2_first]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)] - [COLOR=list_label_2_first]$INFO[ListItem.Label2][/COLOR]</value>
+        <value condition="Container.Content(songs) + !SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min</value>
+        <value condition="Container.Content(songs) + SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration]</value>
+        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + IsEmpty(ListItem.Label2)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)]</value>
+        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + !IsEmpty(ListItem.Label2)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)] - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.Label2][/COLOR]</value>
     </variable>
 	
 	
@@ -565,12 +576,12 @@
 
 	<variable name="InProgressMoviesButtonOnClick">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.2.path)]</value>
-		<value>ActivateWindow(Videos,special://skin/playlists/inprogressmovies.xsp,return)</value>
+		<value>ActivateWindow(Videos,special://skin/extras/widgetplaylists/inprogressmovies.xsp,return)</value>
     </variable>
 	
 	<variable name="UnwatchedMoviesButtonOnClick">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.5.path)]</value>
-		<value>ActivateWindow(Videos,special://skin/playlists/unwatchedmovies.xsp,return)</value>
+		<value>ActivateWindow(Videos,special://skin/extras/widgetplaylists/unwatchedmovies.xsp,return)</value>
     </variable>
 	
 	<variable name="UnwatchedMoviesButtonThumb">
