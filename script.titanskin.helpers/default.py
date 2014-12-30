@@ -34,23 +34,26 @@ def setWidget(containerID):
     win = xbmcgui.Window( 10000 )
     win.clearProperty("activewidget")
     win.clearProperty("customwidgetcontent")
-    
+    skinStringContent = ""
     customWidget = False
     
     # workaround for numeric labels (get translated by xbmc)
     skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
     skinString = skinString.replace("num-","")
-    skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+    if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
+        skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
     
     # normal method by getting the defaultID
     if skinStringContent == "":
         skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
-        skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+        if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
+            skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
     
     # Last resort:  try legacy method    
     if skinStringContent == "":
         skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(customcontent)")
-        skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
+        if xbmc.getCondVisibility("Skin.String(" + skinString + ')'):
+            skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
     
     if skinStringContent != None:
  
