@@ -47,7 +47,7 @@
             <width>500</width>
             <align>right</align>
             <font>Light40</font>
-            <textcolor>$VAR[TextColor_white]</textcolor>
+            <textcolor>white</textcolor>
             <label>Titan MediaBrowser</label>
             <include>animation_fade_visible_hidden</include>
         </control>
@@ -302,19 +302,7 @@
 				<label>$INFO[ListItem.Title]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
 			</control>
-			<control type="label">
-				<!--live tv recordingname-->
-				<visible>IsEmpty(ListItem.Rating) + window.isactive(mypvrrecordings.xml)</visible>
-				<posx>60</posx>
-				<posy>0</posy>
-				<width>800</width>
-				<align>left</align>
-				<font>Reg30</font>
-				<textcolor>white</textcolor>
-				<label>$INFO[ListItem.Title]</label>
-				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
-				<animation effect="slide" end="20" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-			</control>
+
 			<control type="label">
 				<!--Album, Songs-->
 				<visible>IsEmpty(ListItem.Rating)</visible>
@@ -362,8 +350,8 @@
 			<visible>Pvr.IsRecording + window.isactive(home)</visible>
 		</control>
 		
-<!--         <control type="image">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+        <control type="image">
+            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>61</posx>
             <posy>41</posy>
@@ -374,7 +362,7 @@
             <texture>$VAR[value_header_icon]</texture>
         </control>
 		<control type="image">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
             <include>animation_fade_visible_hidden</include>
             <posx>60</posx>
             <posy>40</posy>
@@ -383,7 +371,7 @@
             <aligny>center</aligny>
             <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
             <texture>$VAR[value_header_icon]</texture>
-        </control> -->
+        </control>
         <control type="label">
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
             <include>animation_fade_visible_hidden</include>
@@ -396,9 +384,10 @@
             <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
             <label>$VAR[value_header]</label>
 			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+			<animation effect="slide" end="80,15" time="0" condition="skin.hastheme(classic)">Conditional</animation>
         </control>
 		 <control type="label">
-			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+			<visible>!skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
 			<posy>85</posy>
 			<posx>61</posx>
 			<width min="0" max="1100">auto</width>
@@ -1218,7 +1207,11 @@
                 <height>790</height>
                 <texture>views/view_50_list_panel_episodes1.png</texture>
 				<visible>!skin.hastheme(classic)</visible>
-				<animation effect="fade" end="50" time="0" condition="!Skin.String(ColorTheme, white)">Conditional</animation>
+				<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
             </control>
 	</include>
 	
@@ -1258,16 +1251,21 @@
 		<onload condition="!IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path)) + !Skin.HasSetting(HomeMenuDefaults11)">XBMC.RunScript(plugin.video.xbmb3c,SETRECOMMENDEDMB3SETTINGS,titan)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults11)">Skin.SetString(YoutubeWidget, popular)</onload>
 		
-		
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(HeaderTextColor, white)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(HeaderTextShadowColor, black)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsTextColor, white)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsTextShadowColor, black)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsPanelOpacity, 60)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsFocusColor, mainblue)</onload>
+		<!-- default color settings -->
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsFocusShadowColor, black)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(ViewDetailsFocusColor, mainblue)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults12)">Skin.SetString(HomeViewDetailsFocusColor, mainblue)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(HeaderTextColor, black)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(HeaderTextShadowColor, none)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(HeaderTextColor, white)</onload>
+		<onload condition="!StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(HeaderTextShadowColor, black)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsTextColor, black)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsTextShadowColor, none)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsPanelOpacity, 20)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsFocusColor, darkblue)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsTextColor, white)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsTextShadowColor, black)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsPanelOpacity, 60)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults12) + StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsFocusColor, mainblue)</onload>
 		
 		<!-- enable MB3 mode if MB3 addon is present and active -->
 		<onload condition="!Skin.HasSetting(MB3ModeDetectDone) + !IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.SetBool(HomeMenuUseMBforMovies)</onload>
@@ -1285,7 +1283,6 @@
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-plugin.video.youtube, youtube)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-music, music)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-weather, weather)</onload>
-		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-19019, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31036, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-31157, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-mediabrowser-usr-0-title, custom)</onload>

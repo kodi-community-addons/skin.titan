@@ -109,6 +109,11 @@
                     <label>31022</label>
                     <onclick>noop</onclick>
                 </item>
+				<item id="13">
+                    <!--appearance settings-->
+                    <label>$LOCALIZE[480]</label>
+                    <onclick>noop</onclick>
+                </item>
 				<item id="6">
                     <!--skin settings ID=5000-->
                     <label>31005</label>
@@ -119,16 +124,7 @@
                     <label>31004</label>
                     <onclick>noop</onclick>
                 </item>
-				<item id="13">
-                    <!--appearance settings-->
-                    <label>$LOCALIZE[480]</label>
-                    <onclick>noop</onclick>
-                </item>
-				<item id="11">
-                    <!--theme settings-->
-                    <label>$LOCALIZE[15111]: [LOWERCASE]$INFO[Skin.CurrentTheme][/LOWERCASE]</label>
-                    <onclick>Skin.Theme(-1)</onclick>
-                </item>
+				
             </content>
         </control>
         <!--Group 1000 Right Area-->
@@ -137,44 +133,7 @@
             <posy>170</posy>
             <include>animation_window_open_close</include>
             
-			
-			<!-- skin theme -->
-			<control type="grouplist" id="12000">
-                <description>Control Area</description>
-                <width>1230</width>
-                <height>720</height>
-                <itemgap>3</itemgap>
-                <onup>8000</onup>
-                <ondown>8000</ondown>
-                <onleft>100</onleft>
-                <onright>noop</onright>
-                <orientation>vertical</orientation>
-                <visible>Container(100).Hasfocus(11)</visible>
-                
-				<control type="label" id="4001">
-                    <width>1230</width>
-                    <height>50</height>
-                    <font>Bold38</font>
-                    <label>15111</label>
-                    <textcolor>white</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                </control>
-				
-				<control type="textbox" id="2311">
-                    <width>1100</width>
-                    <height min="50">auto</height>
-                    <font>Reg25</font>
-                    <posy>60</posy>
-                    <label>31399</label>
-                    <textcolor>white</textcolor>
-                    <shadowcolor>black</shadowcolor>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                </control>
-			</control>
-			
+
 			<!-- appearance -->
 			<control type="grouplist" id="13000">
                 <description>Control Area</description>
@@ -213,12 +172,14 @@
 					<onclick condition="StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(HeaderTextShadowColor, none)</onclick>
 					<onclick condition="!StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(HeaderTextColor, white)</onclick>
 					<onclick condition="!StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(HeaderTextShadowColor, black)</onclick>
-					
 					<onclick condition="StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsTextColor, black)</onclick>
 					<onclick condition="StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsTextShadowColor, none)</onclick>
 					<onclick condition="StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsPanelOpacity, 20)</onclick>
+					<onclick condition="StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsFocusColor, darkblue)</onclick>
 					<onclick condition="!StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsTextColor, white)</onclick>
 					<onclick condition="!StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsTextShadowColor, black)</onclick>
+					<onclick condition="!StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsPanelOpacity, 60)</onclick>
+					<onclick condition="!StringCompare(Skin.String(ColorTheme),winter2)">Skin.SetString(ViewDetailsFocusColor, mainblue)</onclick>
                 </control>
 				<control type="button" id="14009">
                     <!--custom overlay-->
@@ -232,15 +193,7 @@
                     <onclick>Skin.SetImage(CustomColorTheme)</onclick>
 					<visible>Skin.String(ColorTheme, custom)</visible>
                 </control>
-				<control type="image" id="14010">
-                    <!--Seperator-->
-                    <width>1200</width>
-					<posx>-60</posx>
-                    <height>20</height>
-                    <align>left</align>
-                    <texture>blankspace.png</texture>
-                </control>
-				
+
 				<control type="label" id="13001">
                     <width>1230</width>
                     <height>50</height>
@@ -412,7 +365,8 @@
 					<onclick condition="skin.string(ViewDetailsFocusColor, mainblue)">Skin.SetString(ViewDetailsFocusColor, green)</onclick>
 					<onclick condition="skin.string(ViewDetailsFocusColor, green)">Skin.SetString(ViewDetailsFocusColor, orange)</onclick>
 					<onclick condition="skin.string(ViewDetailsFocusColor, orange)">Skin.SetString(ViewDetailsFocusColor, bluegrey)</onclick>
-					<onclick condition="skin.string(ViewDetailsFocusColor, bluegrey)">Skin.SetString(ViewDetailsFocusColor, blue)</onclick>
+					<onclick condition="skin.string(ViewDetailsFocusColor, bluegrey)">Skin.SetString(ViewDetailsFocusColor, darkblue)</onclick>
+					<onclick condition="skin.string(ViewDetailsFocusColor, darkblue)">Skin.SetString(ViewDetailsFocusColor, blue)</onclick>
                 </control>
 				
 				<control type="button" id="13024">
@@ -462,8 +416,8 @@
                     <selected>Skin.HasSetting(DisableLandscapeThumbs)</selected>
                 </control>
 				
-				<!-- prefer fanart in landscaped views -->
-				<control type="radiobutton" id="13025">
+				<!-- alternative logo location -->
+				<control type="radiobutton" id="13027">
                     <description></description>
                     <width>1230</width>
                     <align>left</align>
@@ -473,6 +427,28 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(ShowLogoAltLocation)</onclick>
                     <selected>Skin.HasSetting(ShowLogoAltLocation)</selected>
+                </control>
+				
+				<control type="label" id="13030">
+                    <width>1230</width>
+                    <height>50</height>
+                    <font>Bold32</font>
+                    <label>15111</label>
+                    <textcolor>white</textcolor>
+                    <shadowcolor>black</shadowcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                </control>
+
+				<control type="button" id="13032">
+                    <width>1230</width>
+                    <align>left</align>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+					<shadowcolor>black</shadowcolor>
+                    <font>Reg28</font>
+					<label>$LOCALIZE[15111]: [LOWERCASE]$INFO[Skin.CurrentTheme][/LOWERCASE]</label>
+                    <onclick>Skin.Theme(-1)</onclick>
                 </control>
 				
 				

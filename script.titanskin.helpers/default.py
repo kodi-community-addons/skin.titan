@@ -55,7 +55,7 @@ def setWidget(containerID):
         if xbmc.getCondVisibility("Skin.String(" + skinString + ')'):
             skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
     
-    if skinStringContent != None:
+    if skinStringContent != "":
  
         if "$INFO" in skinStringContent:
             skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
