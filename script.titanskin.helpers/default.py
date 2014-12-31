@@ -48,13 +48,7 @@ def setWidget(containerID):
         skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
         if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
             skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
-    
-    # Last resort:  try legacy method    
-    if skinStringContent == "":
-        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(customcontent)")
-        if xbmc.getCondVisibility("Skin.String(" + skinString + ')'):
-            skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
-    
+       
     if skinStringContent != "":
  
         if "$INFO" in skinStringContent:
@@ -176,9 +170,9 @@ def updatePlexBackgrounds():
                
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
-    time.sleep(2)
+    time.sleep(0.5)
     xbmc.executebuiltin('Action(info)')
-    time.sleep(8)
+    time.sleep(6)
     xbmc.executebuiltin('Action(info)')
 
 def addShortcutWorkAround():
