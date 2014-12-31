@@ -5,26 +5,13 @@
     <allowoverlay>no</allowoverlay>
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
 	<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>
+	<onload condition="!IsEmpty(ListItem.Cast)">RunScript(script.metadata.actors,dialogbackend)</onload>
     <controls>
 		<control type="group">
 			<visible>!Window.IsVisible(FileBrowser)</visible>
 			<!--Dialog Overlay-->
 			<visible>Window.IsActive(DialogVideoInfo.xml)</visible>
 			<include>GlobalBackground</include>
-			<control type="image">
-				<animation effect="fade" time="800" start="0" end="100">WindowOpen</animation>
-				<animation effect="fade" time="800" start="100" end="0">WindowClose</animation>
-				<include>DimensionsFullscreen</include>
-				<colordiffuse>FFFFFFFF</colordiffuse>
-				<texture background="true">$INFO[ListItem.Property(Fanart_Image)]</texture>
-			</control>
-			<control type="image">
-				<animation effect="fade" time="800" start="0" end="100">WindowOpen</animation>
-				<animation effect="fade" time="800" start="100" end="0">WindowClose</animation>
-				<include>DimensionsFullscreen</include>
-				<colordiffuse>FFFFFFFF</colordiffuse>
-				<texture background="true">$INFO[ListItem.Art(characterart)]</texture>
-			</control>
 			<include>DialogOverlay</include>
 			<include>nowplayingbackground</include>
 		</control>
@@ -526,8 +513,36 @@
 							<width>1150</width>
 							<posy>920</posy>
 							<include>mediaflagsnew</include>
+							<visible>!skin.hastheme(classic)</visible>
 						</control>
-						
+						<control type="group">
+							<height>50</height>
+							<width>1150</width>
+							<posy>920</posy>
+							<include>mediaflags</include>
+							<visible>skin.hastheme(classic)</visible>
+						</control>
+					</control>
+					<!-- MPAA rating -->
+					<control type="image">
+						<right>660</right>
+						<bottom>190</bottom>
+						<width>200</width>
+						<height>140</height>
+						<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+						<aspectratio align="right" aligny="bottom">keep</aspectratio>
+						<texture>$VAR[RatingFlagVar]</texture>
+						<visible>!SubString(ListItem.mpaa,Germany) + !SubString(ListItem.mpaa,ab) + !SubString(ListItem.mpaa,FSK)</visible>
+					</control>
+					<control type="image">
+						<right>700</right>
+						<bottom>220</bottom>
+						<width>160</width>
+						<height>140</height>
+						<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+						<aspectratio align="right" aligny="bottom">keep</aspectratio>
+						<texture>$VAR[RatingFlagVar]</texture>
+						<visible>SubString(ListItem.mpaa,Germany) | SubString(ListItem.mpaa,ab) | SubString(ListItem.mpaa,FSK)</visible>
 					</control>
 				</control>
 				<!--Cast Stuff-->
@@ -603,11 +618,11 @@
 						<!--Actor Image-->
 						<description>Actor image</description>
 						<right>60</right>
-						<posy>246</posy>
-						<width>500</width>
-						<height>620</height>
+						<posy>210</posy>
+						<width>450</width>
+						<height>680</height>
 						<aspectratio align="right" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container(50).ListItem.Thumb]</texture>
+						<texture background="true">$VAR[actorImage]</texture>
 						<fadetime>300</fadetime>
 						<aspectratio>scale</aspectratio>
 					</control>
