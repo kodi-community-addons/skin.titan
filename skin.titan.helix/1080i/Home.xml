@@ -10,6 +10,7 @@
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
 	<onload>SetProperty(SkinWidgets_RandomItems_Update,true)</onload>
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
+	<onunload>ClearProperty(activewidget)</onunload>
 	<onload>300</onload>
     <controls>
 	
@@ -71,10 +72,10 @@
 			<visible>!Skin.String(GadgetRows, enhanced)</visible>
             <posx>38</posx>
             <width>1845</width>
-            <include condition="Skin.String(GadgetRows, 1) + !Skin.HasSetting(DisablePowerMenu)">Gadget1Row</include>
-            <include condition="!Skin.String(GadgetRows, 1) + !Skin.HasSetting(DisablePowerMenu)">Gadget2Row</include>
-			<include condition="Skin.String(GadgetRows, 1) + Skin.HasSetting(DisablePowerMenu)">Gadget1RowNoPowerButton</include>
-            <include condition="!Skin.String(GadgetRows, 1) + Skin.HasSetting(DisablePowerMenu)">Gadget2RowNoPowerButton</include>
+            <include condition="Skin.String(GadgetRows, 1) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget1Row</include>
+            <include condition="!Skin.String(GadgetRows, 1) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget2Row</include>
+			<include condition="Skin.String(GadgetRows, 1) + Skin.HasSetting(UseSmallHomeTiles)">Gadget1RowSmall</include>
+            <include condition="!Skin.String(GadgetRows, 1) + Skin.HasSetting(UseSmallHomeTiles)">Gadget2RowSmall</include>
 		
 			
 			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
@@ -83,6 +84,10 @@
 			
 			<animation type="Conditional" condition="SubString(Window(Home).Property(HomeLoaded),loaded)">
                 <effect type="slide" start="0,800" end="0,0" time="450" delay="600" tween="cubic" easing="inout" />
+            </animation>
+			
+			<animation type="Conditional" condition="Skin.HasSetting(DisablePowerMenu)">
+                <effect type="slide" start="0,40" end="0,0" time="450" delay="600" tween="cubic" easing="inout" />
             </animation>
 			
 			<animation type="Conditional" condition="[Skin.String(GadgetRows, 1) | Skin.HasSetting(DisablePowerMenu)] + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show) + !skin.hastheme(classic)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)]]">
@@ -95,8 +100,9 @@
 			
 			<animation effect="slide" end="0,40" time="0" condition="!system.getbool(lookandfeel.enablerssfeeds) + !skin.hastheme(classic)">Conditional</animation>
 			
-			<onfocus>SetProperty(CurrentContainer,300,Home</onfocus>
-			<onunfocus condition="skin.hastheme(classic)">SetProperty(submenu,hide,Home)</onunfocus>
+			<!-- <onfocus>SetProperty(CurrentContainer,300,Home</onfocus> -->
+			<!-- <onunfocus condition="skin.hastheme(classic)">SetProperty(submenu,hide,Home)</onunfocus>
+			 -->
 			<onup>$VAR[HomeButtonUpAction]</onup>
 			<ondown>$VAR[HomeButtonDownAction]</ondown>
             <onleft></onleft>
@@ -105,7 +111,7 @@
             <focusposition>-</focusposition>
             <scrolltime tween="cubic" easing="inout">500</scrolltime>
 			<pagecontrol>60</pagecontrol>
-            <itemlayout width="612" height="265">
+            <itemlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles)">
 				<control type="group">
 				<posy>20></posy>
 					<control type="image">
@@ -179,10 +185,9 @@
                     </control>
 				</control>
             </itemlayout>
-            <focusedlayout width="612" height="265">
+            <focusedlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles)">
                 <control type="group">
 					<posy>20></posy>
-					
 					<control type="image">
                         <!--widget Arrow UP-->
 						<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
@@ -275,7 +280,21 @@
 					</control>
                 </control>
             </focusedlayout>
-            <content>
+			<itemlayout width="365" height="195" condition="Skin.HasSetting(UseSmallHomeTiles)">
+				<control type="group">
+				<posy>20></posy>
+				<posx>20></posx>
+				<include>EnhancedHomeMainLayout</include>
+				</control>
+			</itemlayout>
+			<focusedlayout width="365" height="195" condition="Skin.HasSetting(UseSmallHomeTiles)">
+				<control type="group">
+					<posy>20></posy>
+					<posx>20></posx>
+					<include>EnhancedHomeMainLayoutFocus</include>
+				</control>
+			</focusedlayout>
+			<content>
 				<include>skinshortcuts-mainmenu</include>
             </content>
         </control>
