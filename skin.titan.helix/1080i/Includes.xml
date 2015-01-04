@@ -67,12 +67,12 @@
         <posy>340</posy>
     </include>
 	<include name="Gadget1RowSmall">
-        <height>210</height>
+        <height>230</height>
         <posy>650</posy>
     </include>
     <include name="Gadget2RowSmall">
-        <height>420</height>
-        <posy>480</posy>
+        <height>440</height>
+        <posy>460</posy>
     </include>
 	
 
@@ -144,6 +144,7 @@
 			<!--Progress (PVR)-->
 			<control type="group">
 				<visible>[Window.IsActive(tvchannels) | Window.IsActive(radiochannels) | [Window.IsActive(mypvr.xml) + Control.IsVisible(11)]] + !Skin.HasSetting(EnableTouchSupport)</visible>
+				<visible>IsEmpty(ListItem.VideoResolution)</visible>
 				<include>animation_view_change_pvr</include>
 				<animation effect="slide" end="-30,15" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
 				<posy>985</posy>
@@ -191,15 +192,15 @@
 			<posy>1015</posy>
 			<posx>60</posx>
 			<include>mediaflagsnew</include>
-			<visible>!skin.hastheme(classic)</visible>
-			<animation effect="slide" end="650" time="0" condition="Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+			<visible>!skin.hastheme(classic) + ![Skin.HasSetting(EnableTouchSupport) + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml) | Control.IsVisible(88888)]]</visible>
+			<animation effect="slide" end="3,-910" time="0" condition="Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
 			</control>
 			<control type="group">
 			<posy>1005</posy>
 			<posx>80</posx>
 			<include>mediaflagssmall</include>
 			<visible>skin.hastheme(classic) + !IsEmpty(ListItem.VideoResolution)</visible>
-			<animation effect="slide" end="650" time="0" condition="Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 			</control>
 			
 			<control type="group">
@@ -226,7 +227,7 @@
 					<posy>24</posy>
 					<width>220</width>
 					<height>45</height>
-					<texture fallback="flags_new/rating/0.0.png">$INFO[ListItem.Rating,flags_new/rating/,.png]</texture>
+					<texture fallback="rating/0.0.png">$INFO[ListItem.Rating,rating/,.png]</texture>
 				</control>
 				<control type="label">
 					<!--Rating classic-->
@@ -234,7 +235,7 @@
 					<posx>340</posx>
 					<posy>0</posy>
 					<width>100</width>
-					<font>Reg30</font>
+					<font>Bold30</font>
 					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 					<label>$INFO[ListItem.Rating]</label>
 				</control>
@@ -252,7 +253,7 @@
 			
 			<control type="group">
 			<!--Title-->
-			<visible>!Window.IsActive(DialogVideoInfo.xml) + !Window.IsVisible(DialogFavourites.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
+			<visible>!Window.IsActive(DialogVideoInfo.xml) + !Window.IsVisible(DialogFavourites.xml)</visible>
 			<include>animation_view_change</include>
 			
 			<posy>985</posy>
@@ -263,7 +264,7 @@
 				<posy>0</posy>
 				<width>800</width>
 				<align>center</align>
-				<font>Reg30</font>
+				<font>Bold30</font>
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.Label]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
@@ -276,7 +277,7 @@
 				<posy>0</posy>
 				<width>800</width>
 				<align>center</align>
-				<font>Reg30</font>
+				<font>Bold30</font>
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.Artist]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
@@ -288,7 +289,7 @@
 				<posy>0</posy>
 				<width>800</width>
 				<align>right</align>
-				<font>Reg30</font>
+				<font>Bold30</font>
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.ChannelName]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
@@ -301,7 +302,7 @@
 				<posy>0</posy>
 				<width>800</width>
 				<align>center</align>
-				<font>Reg30</font>
+				<font>Bold30</font>
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.Title]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
@@ -314,16 +315,16 @@
 				<align>right</align>
 				<posy>0</posy>
 				<width>600</width>
-				<font>Reg30</font>
+				<font>Bold30</font>
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.Album]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
 			</control>
 			<control type="image">
 				<!--logo-->
-				<posx>735</posx>
+				<posx>810</posx>
 				<posy>10</posy>
-				<width>500</width>
+				<width>350</width>
 				<height>80</height>
 				<align>center</align>
 				<valign>center</valign>
@@ -401,6 +402,7 @@
 			<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 			<include>animation_fade_visible_hidden</include>
+			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 		</control>
     </include>
     
@@ -991,7 +993,8 @@
         <include>Key</include>
     </include>
 	<include name="ExtraSmallKey">
-        <width>110</width>
+        <width>90</width>
+		<height>90</height>
         <include>Key</include>
     </include>
     <include name="BigKey">
@@ -1206,14 +1209,12 @@
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded) + Skin.String(AutoStartPlayList)">AlarmClock(playliststart,$ESCINFO[Skin.String(AutoStartPlayList)],00:06,silent)</onload>	
 		<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXLINKS)</onload>
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded)">Skin.SetBool(enable.smartish.widgets)</onload>
-		
-		<!-- build menu -->
-		<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
-        
+
 		<!-- (optional) automatic run of the artwork downloader on startup -->
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded) + Skin.HasSetting(EnableArtworkDownloader)">XBMC.runscript(script.artwork.downloader, silent=true)</onload>
 		
 		<!-- various default settings  -->
+		<onclick condition="!Skin.HasSetting(HomeMenuDefaults1)">RunScript(script.skinshortcuts,type=resetall&amp;warning=false)</onclick>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(CustomBackgroundSetting, default)</onload>
         <onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(GadgetRows, 2)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(MoviesWidget, newmovies)</onload>
@@ -1236,6 +1237,11 @@
 		<onload condition="skin.hastheme(classic) + Skin.String(GadgetRows, enhanced)">Skin.SetString(GadgetRows, 2)</onload>
 		<onload condition="!IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path)) + !Skin.HasSetting(HomeMenuDefaults13)">XBMC.RunScript(plugin.video.xbmb3c,SETRECOMMENDEDMB3SETTINGS,titan)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetString(YoutubeWidget, popular)</onload>
+		
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults14) + !Skin.HasSetting(HideOSDAtPlayBackStart)">Skin.SetString(ShowInfoAtPlaybackStart, 6)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults14) + Skin.HasSetting(HideOSDAtPlayBackStart)">Skin.SetString(ShowInfoAtPlaybackStart, 0)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults15)">XBMC.RunScript(script.titanskin.helpers,DEFAULTSETTINGS)</onload>
+		
 		
 		<!-- default color settings -->
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetString(ViewDetailsFocusShadowColor, black)</onload>
@@ -1297,9 +1303,14 @@
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-plexbmc-8-title, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-plexbmc-9-title, custom)</onload>
 		
+		<!-- build menu -->
+		<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
+        
+		
 		<!-- finish default settings -->
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetBool(HomeMenuDefaults1)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetBool(HomeMenuDefaults13)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults14)">Skin.SetBool(HomeMenuDefaults14)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetBool(WidgetDefaults)</onload>
 		
 		<!-- correct music widgets on MB3 mode -->
@@ -1309,8 +1320,10 @@
 		<onload condition="Skin.HasSetting(HomeMenuUseMBforMusic) + Skin.String(MusicWidget, library)">Skin.SetString(MusicWidget, latestalbum)</onload>
 		<onload condition="Skin.HasSetting(HomeMenuUseMBforMusic) + Skin.String(MusicWidget, randomartist)">Skin.SetString(MusicWidget, latestalbum)</onload>
 		
+		<!-- small home icons and enhanced home not available for classic theme-->
+		<onload condition="Skin.HasSetting(UseSmallHomeTiles) + skin.hastheme(classic)">Skin.Reset(UseSmallHomeTiles)</onload>
+		<onload condition="Skin.String(GadgetRows, enhanced) + skin.hastheme(classic)">Skin.SetString(GadgetRows, 2)</onload>
 		
-
 		<onload condition="!SubString(Window(Home).Property(BackGroundWorkersLoaded),loaded)">SetProperty(BackGroundWorkersLoaded,loaded,Home)</onload>
 		
 		

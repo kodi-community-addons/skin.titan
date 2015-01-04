@@ -280,17 +280,38 @@
 					</control>
                 </control>
             </focusedlayout>
-			<itemlayout width="365" height="195" condition="Skin.HasSetting(UseSmallHomeTiles)">
+			<itemlayout width="365" height="205" condition="Skin.HasSetting(UseSmallHomeTiles)">
 				<control type="group">
-				<posy>20></posy>
-				<posx>20></posx>
+				<posy>25</posy>
+				<posx>20</posx>
 				<include>EnhancedHomeMainLayout</include>
 				</control>
 			</itemlayout>
-			<focusedlayout width="365" height="195" condition="Skin.HasSetting(UseSmallHomeTiles)">
+			<focusedlayout width="365" height="215" condition="Skin.HasSetting(UseSmallHomeTiles)">
 				<control type="group">
-					<posy>20></posy>
-					<posx>20></posx>
+					<posy>25</posy>
+					<posx>20</posx>
+					<control type="image">
+                        <!--widget Arrow UP-->
+						<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
+                        <posx>94</posx>
+                        <posy>-26</posy>
+                        <width>149</width>
+                        <height>30</height>
+                        <texture>basichome_up.png</texture>
+						<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
+                    </control>
+					<control type="image">
+                        <!--widget Arrow DOWN-->
+						<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
+                        <posx>94</posx>
+                        <posy>178</posy>
+                        <width>149</width>
+                        <height>30</height>
+                        <texture>basichome_down.png</texture>
+						<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
+						<visible>!Skin.HasSetting(EnableTouchSupport) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1) + !skin.hastheme(classic)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
+					</control>
 					<include>EnhancedHomeMainLayoutFocus</include>
 				</control>
 			</focusedlayout>
