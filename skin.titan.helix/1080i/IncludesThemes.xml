@@ -45,6 +45,23 @@
                     <description>Buttons</description>
                     <include>SubMenuButton</include>
                 </control>
+				<control type="button" id="9325">
+				<include>SubMenuButton</include>
+				<label>$INFO[System.AddonTitle(script.artwork.downloader)]</label>
+				<onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.artwork.downloader, mediatype=tvshow, dbid=$INFO[ListItem.DBID])</onclick>
+				<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
+				<onclick condition="Container.Content(musicvideos)">XBMC.RunScript(script.artwork.downloader, mediatype=musicvideos, dbid=$INFO[ListItem.DBID])</onclick>
+				<onclick>SetFocus(51)</onclick>
+				<visible>System.HasAddon(script.artwork.downloader) + [Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
+				</control>
+				<control type="button" id="1033">
+				<include>SubMenuButton</include>
+				<onleft>Dialog.Close(106)</onleft>
+				<onright>Dialog.Close(106)</onright>
+				<onclick>RunScript(script.trakt,action=contextmenu)</onclick>
+				<label>$INFO[System.AddonTitle(script.trakt)]</label>
+				<visible>System.HasAddon(script.trakt)</visible>
+				</control>
             </control>
         </control>
 	</include>
@@ -805,7 +822,7 @@
 					<visible>!Control.IsVisible(1410)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Light45</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
@@ -817,7 +834,7 @@
 					<visible>Control.IsVisible(1410)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Light45</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
@@ -827,7 +844,7 @@
 				<control type="label">
 					<posx>400</posx>
 					<posy>880</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Light35</font>
 					<textcolor>mainblue</textcolor>
@@ -843,7 +860,7 @@
 					<visible>!Control.IsVisible(1410)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Light45</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
@@ -855,7 +872,7 @@
 					<visible>!Control.IsVisible(1410)</visible>
 					<posx>400</posx>
 					<posy>880</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Reg42</font>
 					<textcolor>mainblue</textcolor>
@@ -868,7 +885,7 @@
 					<visible>!Control.IsVisible(1410)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Light45</font>
 					<textcolor>white</textcolor>
@@ -881,7 +898,7 @@
 					<visible>!Control.IsVisible(1410)</visible>
 					<posx>400</posx>
 					<posy>870</posy>
-					<width>1300</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Reg42</font>
 					<textcolor>mainblue</textcolor>
@@ -895,7 +912,7 @@
 					<control type="label">
 						<posx>400</posx>
 						<posy>820</posy>
-						<width>1300</width>
+						<width>1100</width>
 						<align>left</align>
 						<font>Light45</font>
 						<textcolor>white</textcolor>
@@ -905,7 +922,7 @@
 					<control type="label">
 						<posx>400</posx>
 						<posy>820</posy>
-						<width>1300</width>
+						<width>1100</width>
 						<align>left</align>
 						<font>Light45</font>
 						<textcolor>white</textcolor>
@@ -915,7 +932,7 @@
 					<control type="label">
 						<posx>400</posx>
 						<posy>820</posy>
-						<width>1300</width>
+						<width>1100</width>
 						<align>left</align>
 						<font>Light45</font>
 						<textcolor>white</textcolor>
@@ -1177,6 +1194,23 @@
 				<visible>!IsEmpty(Player.FinishTime)</visible>
 				<visible>!Control.IsVisible(1410)</visible>
 			</control>
+			
+			<!--Buffer-->
+		   <control type="label">
+				<!--End Time DialogFullscreenInfo-->
+				<animation type="Conditional" condition="player.paused">
+					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+				</animation>
+				<posx>1850</posx>
+				<posy>930</posy>
+				<width>890</width>
+				<align>right</align>
+				<font>Light30</font>
+				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+				<label>$LOCALIZE[15107] $INFO[Player.CacheLevel]%</label>
+				<visible>!IsEmpty(Player.CacheLevel) + !StringCompare(Player.CacheLevel,100)</visible>
+				<visible>!Control.IsVisible(1410)</visible>
+			</control>
 
 			
 			
@@ -1202,7 +1236,7 @@
 			<!--Clock-->
 			<control type="grouplist">
 				<posx>1450</posx>
-				<posy>820</posy>
+				<posy>810</posy>
 				<width>400</width>
 				<height>100</height>
 				<align>right</align>

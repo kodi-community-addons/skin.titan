@@ -126,7 +126,7 @@
 					<posy>1002</posy>
 					<width>1760</width>
 					<height>50</height>
-					<font>Reg28</font>
+					<font>rss</font>
 					<urlset>1</urlset>
 					<titlecolor>$VAR[ThemeFontColorBlack]</titlecolor>
 					<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
@@ -192,7 +192,7 @@
 			<posy>1015</posy>
 			<posx>60</posx>
 			<include>mediaflagsnew</include>
-			<visible>!skin.hastheme(classic) + ![Skin.HasSetting(EnableTouchSupport) + [Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml) | Control.IsVisible(88888)]]</visible>
+			<visible>!skin.hastheme(classic) + ![Skin.HasSetting(EnableTouchSupport) + [[Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] | [Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] | Control.IsVisible(88888)]]</visible>
 			<animation effect="slide" end="3,-910" time="0" condition="Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
 			</control>
 			<control type="group">
@@ -417,11 +417,12 @@
 			<aspectratio align="right" aligny="center">keep</aspectratio>
 			<texture>$VAR[ListItemClearLogo]</texture>
 			<visible>Skin.HasSetting(ShowLogoAltLocation) + [!IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) | !IsEmpty(Container.ListItem.Art(clearlogo))]</visible>
+			<visible>![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
 		</control>
         <control type="group">
             <include>animation_fade_visible_hidden</include>
             <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
-			<visible>[Skin.HasSetting(ShowLogoAltLocation) + IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) + IsEmpty(Container.ListItem.Art(clearlogo))] | !Skin.HasSetting(ShowLogoAltLocation)</visible>
+			<visible>[[Skin.HasSetting(ShowLogoAltLocation) + IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) + IsEmpty(Container.ListItem.Art(clearlogo))] | !Skin.HasSetting(ShowLogoAltLocation)]</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml)">
                 <effect type="slide" start="0,0" end="-100,0" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
@@ -534,7 +535,8 @@
                 </control>
             </control>
         </control>
-    </include>
+    
+	</include>
     
 	<include name="ProfileInfo">
 	<control type="group" id="891">
@@ -542,7 +544,7 @@
 			<defaultcontrol>890</defaultcontrol>
 			<posx>35</posx>
 			<posy>30</posy>
-			<visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
+			<visible>![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
 			<width>150</width>
 				<height>80</height>
 				<control type="image" id="888">	
@@ -591,7 +593,7 @@
             <height>300</height>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
-            <visible>!Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Window.IsActive(DialogKaiToast.xml) + !Control.IsVisible(88888)</visible>
+            <visible>![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
@@ -624,7 +626,7 @@
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 <align>left</align>
-                <label>$INFO[Window(Weather).Property(Day1.HighTemp)] $INFO[System.TemperatureUnits][COLOR=mainblue] / $INFO[Window(Weather).Property(Day1.LowTemp)] $INFO[System.TemperatureUnits] [/COLOR]</label>
+                <label>$INFO[Window(Weather).Property(Day1.HighTemp)] $INFO[System.TemperatureUnits] / $INFO[Window(Weather).Property(Day1.LowTemp)] $INFO[System.TemperatureUnits]</label>
                 <visible>Weather.IsFetched</visible>
             </control>
         </control>
@@ -1217,10 +1219,6 @@
 		<onclick condition="!Skin.HasSetting(HomeMenuDefaults1)">RunScript(script.skinshortcuts,type=resetall&amp;warning=false)</onclick>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(CustomBackgroundSetting, default)</onload>
         <onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(GadgetRows, 2)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(MoviesWidget, newmovies)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(TvShowsWidget, latest)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(MusicWidget, latestalbum)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(NetflixWidget, inprogresstvshows)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetBool(UseSectionBackground)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetBool(ShowFanartBackground)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetString(CustomBackgroundSetting, default)</onload>
@@ -1240,7 +1238,7 @@
 		
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults14) + !Skin.HasSetting(HideOSDAtPlayBackStart)">Skin.SetString(ShowInfoAtPlaybackStart, 6)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults14) + Skin.HasSetting(HideOSDAtPlayBackStart)">Skin.SetString(ShowInfoAtPlaybackStart, 0)</onload>
-		<onload condition="!Skin.HasSetting(HomeMenuDefaults14)">XBMC.RunScript(script.titanskin.helpers,DEFAULTSETTINGS)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults15)">XBMC.RunScript(script.titanskin.helpers,DEFAULTSETTINGS)</onload>
 		
 		
 		<!-- default color settings -->
@@ -1258,6 +1256,7 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsTextShadowColor, black)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsPanelOpacity, 60)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsFocusColor, mainblue)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults15)">Skin.SetString(ButtonFocusColor, mainblue)</onload>
 		
 		<!-- enable MB3 mode if MB3 addon is present and active -->
 		<onload condition="!Skin.HasSetting(MB3ModeDetectDone) + !IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.SetBool(HomeMenuUseMBforMovies)</onload>
@@ -1303,15 +1302,36 @@
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-plexbmc-8-title, custom)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(widget-info-window-home-property-plexbmc-9-title, custom)</onload>
 		
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(MoviesWidget, newmovies)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(TvShowsWidget, latest)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(MusicWidget, latestalbum)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetString(NetflixWidget, inprogresstvshows)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget0),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget1),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget2),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget3),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget4),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget5),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget6),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget7),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget8),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget9),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget10),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget11),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget12),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget13),recent)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">skin.SetString(collectionwidget14),recent)</onload>
+		
 		<!-- build menu -->
 		<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
-        
 		
 		<!-- finish default settings -->
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults1)">Skin.SetBool(HomeMenuDefaults1)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetBool(HomeMenuDefaults13)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults14)">Skin.SetBool(HomeMenuDefaults14)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults15)">Skin.SetBool(HomeMenuDefaults15)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetBool(WidgetDefaults)</onload>
+		<onload condition="!Skin.HasSetting(WidgetDefaults2)">Skin.SetBool(WidgetDefaults)</onload>
 		
 		<!-- correct music widgets on MB3 mode -->
 		<onload condition="Skin.HasSetting(HomeMenuUseMBforMusic) + Skin.String(MusicWidget, randomalbum)">Skin.SetString(MusicWidget, latestalbum)</onload>

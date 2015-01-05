@@ -157,7 +157,7 @@
 	  <width>595</width>
 	  <height>327</height>
 	  <texture background="true" diffuse="home/home_matte2.png">$VAR[DetailsFanArtImage]</texture>
-	  <aspectratio aligny="bottom" scalediffuse="false">stretch</aspectratio>
+	  <aspectratio aligny="center" scalediffuse="false">scale</aspectratio>
 	  <visible>skin.hastheme(classic)</visible>
 	</control>
 	<control type="image">
@@ -166,7 +166,7 @@
 	  <width>585</width>
 	  <height>320</height>
 	  <texture background="true" diffuse="home/home_matte2.png">$VAR[DetailsFanArtImage]</texture>
-	  <aspectratio aligny="bottom">stretch</aspectratio>
+	  <aspectratio aligny="center">scale</aspectratio>
 	  <visible>!skin.hastheme(classic)</visible>
 	</control>
   </include>
@@ -181,7 +181,7 @@
 		  <control type="image">
 			<posy>55</posy>
 			<posx>-30</posx>
-			<width>700</width>
+			<width>680</width>
 			<height>870</height>
 			<texture>views/filemanager_panel1.png</texture>
 			<visible>!Skin.HasSetting(DetailsLeftHidepanel)</visible>
@@ -191,25 +191,34 @@
 			<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
 			<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 		</control>
-          <control type="label">
+		<control type="label">
             <posy>113</posy>
+            <height>33</height>
+            <width>630</width>
+            <font>Bold30</font>
+			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+            <label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
+        </control>
+		<control type="label">
+            <posy>148</posy>
+            <height>33</height>
+            <width>630</width>
+            <font>Bold30</font>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+            <label>[UPPERCASE]$INFO[ListItem.Artist][/UPPERCASE]</label>
+			<visible>container.content(songs)</visible>
+        </control>
+        <control type="label">
+            <posy>153</posy>
             <height>33</height>
             <width>630</width>
             <font>Reg31</font>
 			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <label>$VAR[Details]</label>
-          </control>
-          <control type="label">
-            <posy>153</posy>
-            <height>33</height>
-            <width>630</width>
-            <scroll>false</scroll>
-            <font>Reg31</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-            <label>$INFO[ListItem.Genre]</label>
-			<visible>!Container.Content(addons)</visible>
+			<animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
           </control>
 		<control type="label">
             <visible>Container.Content(addons)</visible>
@@ -230,6 +239,7 @@
 			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <label>$VAR[Plots]</label>
+			<animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
           </control>
 
         </control>
@@ -252,36 +262,35 @@
 				<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 			</control>
 			<include>FanartThumb</include>
-            <control type="label">
-              <posy>385</posy>
-              <height>33</height>
-              <width>580</width>
-              <font>Reg31</font>
-			  <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-			  <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-              <label>$VAR[Details]</label>
-            </control>
 			<control type="label">
-            <posy>430</posy>
-            <height>33</height>
-            <width>580</width>
-            <scroll>false</scroll>
-            <font>Reg31</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-            <label>$INFO[ListItem.Genre]</label>
-			<visible>!Container.Content(addons)</visible>
-          </control>
-		<control type="label">
-            <visible>Container.Content(addons)</visible>
-            <posy>430</posy>
-            <height>33</height>
-            <width>580</width>
-            <font>Reg31</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-            <label>$INFO[ListItem.Label2,$LOCALIZE[19114] : ]</label>
-          </control>
+				<posy>380</posy>
+				<height>33</height>
+				<width>600</width>
+				<font>Bold30</font>
+				<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+				<label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
+			</control>
+			<control type="label">
+				<posy>425</posy>
+				<height>33</height>
+				<width>580</width>
+				<font>Bold30</font>
+				<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+				<label>[UPPERCASE]$INFO[ListItem.Artist][/UPPERCASE]</label>
+				<visible>container.content(songs)</visible>
+			</control>
+			<control type="label">
+				  <posy>430</posy>
+				  <height>33</height>
+				  <width>580</width>
+				  <font>Reg31</font>
+				  <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+				  <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+				  <label>$VAR[Details]</label>
+				  <animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
+            </control>
 			<control type="textbox">
               <posx>0</posx>
               <posy>480</posy>
@@ -291,6 +300,7 @@
 			  <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			  <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
               <label>$VAR[Plots]</label>
+			  <animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
             </control>
           </control>
          </control>
@@ -1952,7 +1962,6 @@
 				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
 			</control>
 			
-			
 			<!-- mpaa rating -->
 			<control type="group">
 				<width>155</width>
@@ -1976,6 +1985,40 @@
 					<height>36</height>
 				</control>
 			</control>
+			
+			<control type="group">
+				<width>12</width>
+				<height>36</height>
+				<visible>!IsEmpty(ListItem.MPAA)</visible>
+			</control>
+			
+			<control type="group">
+				<!--Rating-->
+				<visible>Window.IsActive(dialogvideoinfo.xml)</visible>
+				<width>220</width>
+				<height>36</height>
+				<control type="image">
+					<!--Stars modern-->
+					<visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+					<posx>0</posx>
+					<posy>-6</posy>
+					<width>220</width>
+					<height>45</height>
+					<texture fallback="rating/0.0.png">$INFO[ListItem.Rating,rating/,.png]</texture>
+				</control>
+				<control type="label">
+					<!--Rating modern-->
+					<visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+					<posx>220</posx>
+					<posy>-13</posy>
+					<width>100</width>
+					<font>Reg36</font>
+					<textcolor>white</textcolor>
+					<label>$INFO[ListItem.Rating]</label>
+				</control>
+			</control>
+			
+			
 			
 		</control>
     </include>
@@ -2007,6 +2050,21 @@
                 <width>1200</width>
                 <height>700</height>
                 <orientation>vertical</orientation>
+				<!-- title -->
+				<control type="group">
+					 <height>40</height>
+					<control type="label">
+						<posx>7</posx>
+						<posy>0</posy>
+						<width>1000</width>
+						<align>left</align>
+						<label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+						<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+						<scroll>false</scroll>
+						<font>Bold30</font>
+					</control>
+				</control>
                 <control type="group">
                     <!--Year: Movies-->
                     <width>800</width>
@@ -2024,7 +2082,6 @@
                         <posx>60</posx>
                         <posy>0</posy>
                         <width>600</width>
-                        
                         <align>left</align>
                         <label>$INFO[ListItem.Year]</label>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
