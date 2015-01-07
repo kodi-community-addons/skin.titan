@@ -43,7 +43,7 @@
 					<effect type="fade" start="100" end="10" delay="2000" time="400" />
 				</animation>
 
-				<itemlayout width="1312" height="138" condition="!Skin.HasSetting(BigListViewShowInfo)">		
+				<itemlayout width="1312" height="138" condition="!Skin.HasSetting(BigListViewShowInfo) | [Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]">		
 					<control type="group">
 						<posy>3</posy>
 						<!--background image-->
@@ -127,7 +127,7 @@
 					</control>
 
 				</itemlayout>
-				<focusedlayout width="1312" height="138" condition="!Skin.HasSetting(BigListViewShowInfo)">
+				<focusedlayout width="1312" height="138" condition="!Skin.HasSetting(BigListViewShowInfo) | [Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]">
 					<control type="group">
 						<posy>3</posy>
 						<control type="image">
@@ -221,7 +221,7 @@
 
 				</focusedlayout>
 				
-				<itemlayout width="962" height="138" condition="Skin.HasSetting(BigListViewShowInfo)">		
+				<itemlayout width="962" height="138" condition="Skin.HasSetting(BigListViewShowInfo) + ![Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]">		
 					<control type="group">
 						<posy>3</posy>
 						<!--background image-->
@@ -305,7 +305,7 @@
 					</control>
 
 				</itemlayout>
-				<focusedlayout width="962" height="138" condition="Skin.HasSetting(BigListViewShowInfo)">
+				<focusedlayout width="962" height="138" condition="Skin.HasSetting(BigListViewShowInfo) + ![Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]">
 					<control type="group">
 						<posy>3</posy>
 						<control type="image">
@@ -400,9 +400,61 @@
 
 			</control>
 			
-			<!--info-->
+			<!--pvr info-->
+			<control type="group">
+				<visible>[Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]</visible>
+				<control type="image">
+					<right>40</right>
+					<posy>193</posy>
+					<width>490</width>
+					<height>797</height>
+					<texture>views/filemanager_panel1.png</texture>
+					<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+				</control>
+				<control type="image">
+					<right>65</right>
+					<posy>240</posy>
+					<width>440</width>
+					<height>280</height>
+					<border>5</border>
+					<texture>$INFO[ListItem.Thumb]</texture>
+					<aspectratio align="center" aligny="center">keep</aspectratio>
+					<visible>Window.IsActive(tvrecordings)</visible>
+				</control>
+				<control type="textbox">
+					<right>65</right>
+					<posy>510</posy>
+					<width>430</width>
+					<height>400</height>
+					<label>$VAR[Plots]</label>
+					<font>Light30</font>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+					<aligny>top</aligny>
+					<visible>Window.IsActive(tvrecordings)</visible>
+				</control>
+				<control type="textbox">
+					<right>65</right>
+					<posy>250</posy>
+					<width>430</width>
+					<height>660</height>
+					<label>$VAR[Plots]</label>
+					<font>Light30</font>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+					<aligny>top</aligny>
+					<visible>!Window.IsActive(tvrecordings)</visible>
+				</control>
+			</control>
+			
+			<!--normal info-->
 			<control type="group">
 				<animation effect="slide" start="0,0" end="500,0" tween="cubic" easing="inout" time="250" delay="0" condition="!Skin.HasSetting(BigListViewShowInfo)">"Conditional</animation>
+				<visible>![Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]</visible>
 				<control type="image">
 					<right>40</right>
 					<posy>193</posy>
@@ -430,6 +482,7 @@
 		
 			<!--large poster-->
 			<control type="group">
+				<visible>![Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]</visible>
 				<animation effect="slide" start="0,0" end="-350,0" tween="cubic" easing="inout" time="250" delay="0" condition="Skin.HasSetting(BigListViewShowInfo)">"Conditional</animation>
 				<control type="image">
 					<right>45</right>
