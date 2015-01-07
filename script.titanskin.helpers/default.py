@@ -25,10 +25,12 @@ def defaultSettings():
     if xbmc.getCondVisibility("System.HasAddon(script.artistslideshow)"):
         __settings__ = xbmcaddon.Addon(id='script.artistslideshow')
         __settings__.setSetting('transparent', "true")
-        __settings__.setSetting('theaudiodb', "true")
-        __settings__.setSetting('htbackdrops', "true")       
+      
+def musicSearch():
+    xbmc.executebuiltin( "ActivateWindow(MusicLibrary)" )
+    xbmc.executebuiltin( "SendClick(8)" )
+
         
-    
 def showWidget():
     win = xbmcgui.Window( 10000 )
     linkCount = 0
@@ -327,6 +329,8 @@ elif action == "SHOWWIDGET":
 elif action == "SETCUSTOM":
     setCustomContent(argument1)
 elif action == "DEFAULTSETTINGS":
-    defaultSettings()      
+    defaultSettings()
+elif action == "MUSICSEARCH":
+    musicSearch()     
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 
