@@ -182,6 +182,7 @@ def updatePlexBackgrounds():
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
     tryCount = 0
+    secondsToDisplay = "4"
     secondsToDisplay = xbmc.getInfoLabel("Skin.String(ShowInfoAtPlaybackStart)")
     while tryCount !=50 and not xbmc.getCondVisibility("Window.IsActive(fullscreeninfo)"):
         time.sleep(0.1)
