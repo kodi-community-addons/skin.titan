@@ -20,7 +20,7 @@
 		<include condition="!skin.hassetting(nofooterbar)">Footer</include>
 		
         <!--PVR Views-->
-		<control type="group" id="50">
+		<control type="group" id="5000">
 		<include>animation_window_open_close</include>
 		<include>View_51_BigList</include>
 		<include>ViewExtendedList</include>
@@ -52,7 +52,7 @@
 						<width>300</width>
 						<height>188</height>
 						<texture>$INFO[ListItem.Thumb]</texture>
-						<!--<visible>!Player.HasVideo</visible>-->
+						<visible>!IsEmpty(ListItem.Thumb)</visible>
 					</control>
 				</control>
 				<control type="group">
@@ -61,11 +61,13 @@
 					<visible>!IsEmpty(ListItem.StartDate)</visible>
 					<include>animation_view_change_pvr</include>
 					<animation effect="slide" end="-60,0" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
+					<animation effect="slide" end="-331,0" time="0" condition="IsEmpty(ListItem.Thumb)">Conditional</animation>
 					<posx>450</posx>
 					<posy>330</posy>
 					<control type="group">
 						<!-- Ground 1 -->
 						<posy>0</posy>
+						<visible>!IsEmpty(Container(15).ListItem.Title)</visible>
 						<control type="label">
 							<posx>0</posx>
 							<posy>0</posy>
@@ -84,6 +86,7 @@
 					<control type="group">
 						<!-- Ground 2 -->
 						<posy>50</posy>
+						<visible>!IsEmpty(Container(15).ListItem.ChannelName)</visible>
 						<control type="label">
 							<posx>0</posx>
 							<posy>0</posy>
