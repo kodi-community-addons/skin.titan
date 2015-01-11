@@ -6,6 +6,7 @@
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
 	<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>
 	<onload condition="!IsEmpty(ListItem.Cast)">RunScript(script.metadata.actors,dialogbackend)</onload>
+	<onload>ClearProperty(ShowCast)</onload>
     <controls>
 		<control type="group">
 			<visible>!Window.IsVisible(FileBrowser)</visible>
@@ -71,7 +72,7 @@
 						<include>animation_fade_visible_hidden</include>
 					</control>
 				<control type="group">
-					<visible>!ControlGroup(9002).HasFocus</visible>
+					<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
 					<animation type="Visible">
 						<effect type="slide" start="-1920" end="0" time="400" delay="0" tween="sine" easing="inout" />
 					</animation>
@@ -89,7 +90,8 @@
 						<itemgap>20</itemgap>
 						<onup>noop</onup>
 						<ondown>noop</ondown>
-						<onright condition="!Skin.HasSetting(EnableTouchSupport)">SetFocus(9001)</onright>
+						<onright>SetProperty(ShowCast, show)</onright>
+						<onright>SetFocus(9002)</onright>
 						<onleft>noop</onleft>
 						<orientation>horizontal</orientation>
 						<control type="button" id="8">
@@ -188,6 +190,17 @@
 							<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
 						</control>
 						
+						<control type="button" id="114">
+							<!--Cast Button-->
+							<label>206</label>
+							<width>300</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<onclick>SetProperty(ShowCast, show)</onclick>
+							<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+						</control>
+						
 						<control type="button" id="6">
 							<!--Refresh-->
 							<label>184</label>
@@ -261,7 +274,7 @@
 						<width>50</width>
 						<height>50</height>
 						<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
-						<texturenofocus colordiffuse="white">touchcontrols/icon_close.png</texturenofocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_close.png</texturenofocus>
 						<aspectratio>keep</aspectratio>
 						<onclick>back</onclick>
 						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
@@ -541,31 +554,10 @@
 							<visible>skin.hastheme(classic)</visible>
 						</control>
 					</control>
-					<!-- MPAA rating -->
-					<control type="image">
-						<right>660</right>
-						<bottom>190</bottom>
-						<width>200</width>
-						<height>140</height>
-						<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-						<aspectratio align="right" aligny="bottom">keep</aspectratio>
-						<texture>$VAR[RatingFlagVar]</texture>
-						<visible>!SubString(ListItem.mpaa,Germany) + !SubString(ListItem.mpaa,ab) + !SubString(ListItem.mpaa,FSK)</visible>
-					</control>
-					<control type="image">
-						<right>700</right>
-						<bottom>220</bottom>
-						<width>160</width>
-						<height>140</height>
-						<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-						<aspectratio align="right" aligny="bottom">keep</aspectratio>
-						<texture>$VAR[RatingFlagVar]</texture>
-						<visible>SubString(ListItem.mpaa,Germany) | SubString(ListItem.mpaa,ab) | SubString(ListItem.mpaa,FSK)</visible>
-					</control>
 				</control>
 				<!--Cast Stuff-->
 				<control type="group" id="9002">
-					<visible allowhiddenfocus="true">Control.HasFocus(9001) | Control.HasFocus(50)</visible>
+					<visible allowhiddenfocus="true">StringCompare(Window.Property(ShowCast),show)</visible>
 					<animation type="Visible">
 						<effect type="slide" start="1920" end="0" time="400" delay="0" tween="sine" easing="inout" />
 					</animation>
@@ -596,6 +588,7 @@
 						<height>660</height>
 						<onup>noop</onup>
 						<ondown>noop</ondown>
+						<onleft>ClearProperty(ShowCast)</onleft>
 						<onleft>SetFocus(9000)</onleft>
 						<scrolltime>200</scrolltime>
 						<orientation>vertical</orientation>
@@ -643,6 +636,30 @@
 						<texture background="true">$VAR[actorImage]</texture>
 						<fadetime>300</fadetime>
 						<aspectratio>scale</aspectratio>
+					</control>
+					<!-- close dialog button -->
+					<control type="button">
+						<right>60</right>
+						<posy>1015</posy>
+						<width>50</width>
+						<height>50</height>
+						<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_close.png</texturenofocus>
+						<aspectratio>keep</aspectratio>
+						<onclick>back</onclick>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+					</control>
+					<!-- back to info button -->
+					<control type="button">
+						<right>130</right>
+						<posy>1015</posy>
+						<width>50</width>
+						<height>50</height>
+						<texturefocus colordiffuse="white">touchcontrols/icon_back.png</texturefocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_back.png</texturenofocus>
+						<aspectratio>keep</aspectratio>
+						<onclick>ClearProperty(ShowCast)</onclick>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 					</control>
 				</control>
 			</control>
