@@ -9,6 +9,9 @@
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
 		<value condition="window.isactive(mypvrrecordings.xml)">[UPPERCASE]$LOCALIZE[19017][/UPPERCASE]</value>
 		
+		<value condition="Window.IsActive(DialogSelect.xml) + StringCompare(Window(Home).Property(customWidget), active)">$ADDON[script.skinshortcuts 32044]</value>
+		<value condition="Window.IsActive(DialogSelect.xml) + !IsEmpty(Control.GetLabel(1))">$INFO[Control.GetLabel(1)]</value>
+		<value condition="Window.IsActive(script-skinshortcuts.xml) + !IsEmpty(Control.GetLabel(500))">$INFO[Control.GetLabel(500)]</value>
 		<value condition="Window.IsActive(script-skinshortcuts.xml)">$LOCALIZE[31014]</value>
 		<value condition="Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)">$INFO[System.AddonTitle(script.tv.show.next.aired)]</value>
         <value condition="Window.IsActive(Home.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile)">[UPPERCASE]$LOCALIZE[10000][/UPPERCASE]</value>
@@ -309,11 +312,13 @@
         <value condition="Container.Content(episodes) + !SubString(ListItem.Duration,min)">$INFO[ListItem.Duration] min</value>
         <value condition="Container.Content(episodes) + SubString(ListItem.Duration,min)">$INFO[ListItem.Duration]</value>
     </variable>
+	
     <variable name="MusicButtonThumb">
 		<value condition="Skin.HasSetting(HomeMenuUseMBforMusic) + !IsEmpty(Window.Property(MB3.Background.Music.FanArt.small))">$INFO[Window.Property(MB3.Background.Music.FanArt.small)]</value>
         <value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.Music.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.Music.FanArt)]</value>
         <value>home/music.png</value>
     </variable>
+	
     <variable name="MoviesButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window.Property(MB3.Background.Movie.FanArt.small))">$INFO[Window.Property(MB3.Background.Movie.FanArt.small)]</value>
         <value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.Movie.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.Movie.FanArt)]</value>
@@ -325,12 +330,21 @@
         <value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.TV.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.TV.FanArt)]</value>
         <value>home/tvseries.png</value>
     </variable>
+	
     <variable name="MusicVideosButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMusicVideos) + !IsEmpty(Window(Home).Property(MB3.Background.MusicVideos.FanArt.small))">$INFO[Window(Home).Property(MB3.Background.MusicVideos.FanArt.small)]</value>
         <value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.1.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.1.Fanart)]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.2.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.2.Fanart)]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.3.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.3.Fanart)]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.4.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.4.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.5.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.5.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.6.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.6.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.7.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.7.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomMusicVideo.8.Fanart))">$INFO[Window(Home).Property(RandomMusicVideo.8.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.4.Fanart))">$INFO[Window(Home).Property(RandomAlbum.4.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.3.Fanart))">$INFO[Window(Home).Property(RandomAlbum.3.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.2.Fanart))">$INFO[Window(Home).Property(RandomAlbum.2.Fanart)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.1.Fanart))">$INFO[Window(Home).Property(RandomAlbum.1.Fanart)]</value>
 		<value>home/music.png</value>
     </variable>
     <variable name="WeatherButtonThumb">
@@ -708,7 +722,6 @@
         <value condition="!Skin.HasSetting(HomeMenuUseMBforMusicVideos)">ActivateWindow(Video,MusicVideoTitles ,return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window.Property(MediaBrowser.std.music.3.path)]</value>
     </variable>
-	
 
     <variable name="LiveTVButtonOnClick">
 		<value condition="!Control.HasFocus(4444) + Skin.String(GadgetRows, 2) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + [IntegerGreaterThan(Container(4444).NumItems,0) | IntegerGreaterThan(Container(4445).NumItems,0)]">XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</value>
@@ -784,6 +797,7 @@
     </variable>
 
 	<variable name="HomeMenuWidgetLabel">
+		<value condition="StringCompare(Window(Home).Property(activewidget), youtube)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
 		<value condition="!IsEmpty(ListItem.Property(SeasonNumber))">$INFO[ListItem.label2] - [UPPERCASE]S$INFO[ListItem.Property(SeasonNumber)]E$INFO[ListItem.Property(EpisodeNumber)][/UPPERCASE][CR]$INFO[ListItem.label]</value>
 		<value condition="!IsEmpty(ListItem.Property(EpisodeNumber))">$INFO[ListItem.label2] - [UPPERCASE]$INFO[ListItem.Property(EpisodeNumber)][/UPPERCASE][CR]$INFO[ListItem.label]</value>
 		<value condition="!IsEmpty(ListItem.Episode)">$INFO[ListItem.TvShowTitle] - [UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE][CR]$INFO[ListItem.Title]</value>
@@ -797,6 +811,7 @@
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoLabel">
+		<value condition="StringCompare(Window(Home).Property(activewidget), youtube)">$INFO[Container(510).ListItem.label][CR]$INFO[Container(510).ListItem.label2]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget), smart-pvr) + StringCompare(Container(510).ListItem.Property(type),livechannel)">$INFO[Container(510).ListItem.Property(title)]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget), smart-pvr) + StringCompare(Container(510).ListItem.Property(type),recorded)">$INFO[Container(510).ListItem.label]</value>
 		

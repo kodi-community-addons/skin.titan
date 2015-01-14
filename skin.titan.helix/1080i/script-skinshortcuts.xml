@@ -19,6 +19,17 @@
         <!--Header-->
         <include>Header</include>
 		
+		<!--header label-->
+		<control type="label" id="500"> 
+			<left>20</left>
+			<width>460</width>
+			<label>-</label>
+			<textcolor>black</textcolor>
+			<font>Reg26</font>
+			<scroll>false</scroll>
+			<visible>false</visible>
+		</control>
+		
 		<control type="group">
 		<include>animation_window_open_close</include>
 			<posy>30</posy>
@@ -148,6 +159,17 @@
 					
 				</control>
 				
+				<!--fake list -->
+				<control type="list" id="111"> 
+					<visible>false</visible>
+					<orientation>vertical</orientation>
+					<selectedcolor>FF00b8ff</selectedcolor>
+					<itemlayout width="1000" height="65">
+					</itemlayout>
+					<focusedlayout width="1000" height="65">			
+					</focusedlayout>
+				</control>
+				
 				<control type="group">
 					
 					<control type="scrollbar" id="260"> <!--scrollbar-->
@@ -178,12 +200,14 @@
 					<align>center</align>
 					<onclick>noop</onclick>
 					<visible>false</visible>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 				</control>
 				
 				<control type="button" id="301"> <!--new shortcut-->
 					<width>465</width>
 					<align>center</align>
 					<label>$ADDON[script.skinshortcuts 32000]</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>false</visible>
 				</control>
 				
@@ -193,6 +217,7 @@
 					<onclick>XBMC.RunScript(script.titanskin.helpers,ADDSHORTCUT)</onclick>
 					<onclick>ClearProperty(customWidget, Home)</onclick>
 					<label>$ADDON[script.skinshortcuts 32000]</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 				</control>
 				
 				
@@ -222,26 +247,30 @@
 					<align>center</align>
 					<onclick>SetProperty(shortcutDialog, label, Home)</onclick>
 					<label>$ADDON[script.skinshortcuts 32025]</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>!SubString(Container(211).ListItem.Property(labelID),MediaBrowser.usr)</visible>
 				</control>
 				
-				<!--edit thumbnail-->
+				<!--edit thumbnail without selection-->
 				<control type="button" id="306"> 
 					<width>465</width>
 					<align>center</align>
 					<onclick>noop</onclick>
 					<label>31011</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
+					<visible>false</visible>
 					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages) | StringCompare(Window.Property(groupname),powermenu)</visible>
 				</control>
 				
-				<!--edit thumbnail with selection (not working)
+				<!--edit thumbnail with selection (not working)-->
 				<control type="button" id="311"> 
 					<width>465</width>
 					<align>center</align>
 					<onclick>noop</onclick>
 					<label>31011</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages) | StringCompare(Window.Property(groupname),powermenu)</visible>
-				</control>-->
+				</control>
 				
 				<!-- disable label -->
 				<control type="radiobutton" id="1404"> 
@@ -253,6 +282,7 @@
 					<onclick condition="StringCompare(Container(211).ListItem.Property(disableLabel), disable)">SetProperty(customProperty, disableLabel)</onclick>
 					<onclick condition="StringCompare(Container(211).ListItem.Property(disableLabel), disable)">SetProperty(customValue, "")</onclick>
 					<onclick>SendClick(404)</onclick>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<selected>StringCompare(Container(211).ListItem.Property(disableLabel), disable)</selected>
 					<visible>[StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages)] + !StringCompare(Window(Home).Property(powermenu), active)</visible>
 				</control>
@@ -277,6 +307,7 @@
 					<align>center</align>
 					<onclick>SetProperty(shortcutDialog, background, Home)</onclick>
 					<label>31169</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>StringCompare(Window.Property(groupname),mainmenu) + Skin.HasSetting(UseSectionBackground)</visible>
 				</control>
 
@@ -284,6 +315,7 @@
 					<width>465</width>
 					<align>center</align>
 					<onclick>noop</onclick>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<label>$ADDON[script.skinshortcuts 32072]</label>
 					<visible>StringCompare(Window.Property(groupname),mainmenu)</visible>
 				</control>
@@ -293,6 +325,7 @@
 					<width>465</width>
 					<align>center</align>
 					<onclick>noop</onclick>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<label>$ADDON[script.skinshortcuts 32027]</label>
 					<visible>false</visible>
 				</control>
@@ -304,7 +337,18 @@
 					<onclick>SetProperty(shortcutDialog, change, Home)</onclick>
 					<onclick>ClearProperty(customWidget, Home)</onclick>
 					<label>31175</label>
+					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>!SubString(Container(211).ListItem.Property(labelID),MediaBrowser.usr)</visible>
+				</control>
+				
+				<!--fake buttons-->
+				<control type="button" id="308"> 
+					<label>-</label>
+					<visible>false</visible>
+				</control>
+				<control type="button" id="309"> 
+					<label>-</label>
+					<visible>false</visible>
 				</control>
 				
 				<control type="button" id="1308"> <!--reset-->
