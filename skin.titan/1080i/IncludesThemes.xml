@@ -177,7 +177,9 @@
 				<onclick>RunScript(script.trakt,action=contextmenu)</onclick>
 				<label>$INFO[System.AddonTitle(script.trakt)]</label>
 				<visible>System.HasAddon(script.trakt)</visible>
+				<visible>[Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
 				</control>
+
             </control>
         </control>
 	</include>	
@@ -734,6 +736,11 @@
 				<width>2040</width>
 				<height>400</height>
 				<texture background="true">views/filemanager_panel1.png</texture>
+				<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
 			</control>
 
 			<!-- cd cover -->
@@ -1038,7 +1045,7 @@
 			<!-- media flags -->
 			<control type="grouplist">
 			<orientation>horizontal</orientation>
-			<right>45</right>
+			<right>36</right>
 			<width>550</width>
 			<posy>1000</posy>
 			
@@ -1131,7 +1138,7 @@
 			</control>
 			
 			<control type="group">
-				<width>10</width>
+				<width>5</width>
 				<height>36</height>
 			</control>
 			
@@ -1209,7 +1216,7 @@
 				<font>Light30</font>
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$LOCALIZE[15107] $INFO[Player.CacheLevel]%</label>
-				<visible>!IsEmpty(Player.CacheLevel) + !StringCompare(Player.CacheLevel,100)</visible>
+				<visible>!IsEmpty(Player.CacheLevel) + Skin.HasSetting(ShowCacheLevelOSD)</visible>
 				<visible>!Control.IsVisible(1410)</visible>
 			</control>
 

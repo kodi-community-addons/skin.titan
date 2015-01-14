@@ -346,206 +346,423 @@
     <include name="EPGTimelineView">
         <!--EPG: Timeline View ID=10-->
         <control type="group">
-		<posy>35</posy>
-		<posx>10</posx>
+			<include>animation_window_open_close</include>
+			<posx>10</posx>
+			<posy>-30</posy>
+			<animation effect="slide" end="0,-155" time="0" condition="Skin.HasSetting(GuideShowInfo) + skin.hastheme(classic) + Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+			<animation effect="slide" end="0,-165" time="0" condition="Skin.HasSetting(GuideShowInfo) + !skin.hastheme(classic) + Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+			<animation effect="slide" end="0,-75" time="0" condition="Skin.HasSetting(GuideShowInfo) + !Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
             <control type="group">
                 <!--Panel-->
-                <visible>Control.IsVisible(10)</visible>
                 <include>animation_view_change_pvr</include>
-                
-                <control type="image">
-                    <!--Panel Button-->
-                    <posx>0</posx>
-                    <posy>430</posy>
-                    <width>1907</width>
-                    <height>633</height>
-                    <texture>pvr/pvr_epg_panel.png</texture>
-                </control>
-                <control type="image">
-                    <!--Panel Top-->
-                    <posx>0</posx>
-                    <posy>120</posy>
-                    <width>1907</width>
-                    <height>341</height>
-                    <texture>pvr/pvr_epg_info.png</texture>
-                </control>
-            </control>
-			<!--Video Window
-            <control type="group">
-                <visible>Control.IsVisible(10)</visible>
-                <include>animation_view_change_pvr</include>
-                
-                <posx>80</posx>
-                <posy>190</posy>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>350</width>
-                    <height>200</height>
-                    <texture background="true" diffuse="home/home_matte.png">home/livetv.png</texture>
-                </control>
-                <control type="videowindow">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>350</width>
-                    <height>200</height>
-                    <visible>Player.HasVideo</visible>
-                    <animation effect="slide" start="0,0" end="-4500,0" time="0">WindowClose</animation>
-                </control>
-            </control>-->
-            <control type="label">
-                <!--Title-->
-                <visible>Control.IsVisible(10)</visible>
-                <include>animation_view_change_pvr</include>
-                
-                <posx>150</posx>
-                <posy>190</posy>
-                <width>600</width>
-                <height>50</height>
-                <font>Bold38</font>
-                <textcolor>mainblue</textcolor>
-                <label>$INFO[ListItem.Label]</label>
-            </control>
-            <control type="group">
-                <!--Start, End, Duration-->
-                <visible>Control.IsVisible(10)</visible>
-                <include>animation_view_change_pvr</include>
-                
-                <posx>150</posx>
-                <posy>245</posy>
-                <control type="group">
-                    <!-- Ground 1 -->
-                    <posy>0</posy>
-                    <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>180</width>
-                        <textcolor>mainblue</textcolor>
-                        <label>$LOCALIZE[142]</label>
-                    </control>
-                    <control type="label">
-                        <posx>160</posx>
-                        <posy>0</posy>
-                        <width>300</width>
-                        <textcolor>white</textcolor>
-                        <label>$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</label>
-                    </control>
-                </control>
-                <control type="group">
-                    <!-- Ground 2 -->
-                    <posy>40</posy>
-                    <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>180</width>
-                        <textcolor>mainblue</textcolor>
-                        <label>$LOCALIZE[180]:</label>
-                    </control>
-                    <control type="label">
-                        <posx>160</posx>
-                        <posy>0</posy>
-                        <width>300</width>
-                        <textcolor>white</textcolor>
-                        <label>$INFO[ListItem.Duration]</label>
-                    </control>
-                </control>
-                <control type="group">
-                    <!-- Ground 3 -->
-                    <posy>80</posy>
-                    <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>180</width>
-                        <textcolor>mainblue</textcolor>
-                        <label>$LOCALIZE[19148]:</label>
-                    </control>
-                    <control type="label">
-                        <posx>160</posx>
-                        <posy>0</posy>
-                        <width>300</width>
-                        <textcolor>white</textcolor>
-                        <label>$INFO[ListItem.ChannelName]</label>
-                    </control>
-                </control>
-            </control>
-            <control type="textbox">
-                <!--Info Plot-->
-                <visible>Control.IsVisible(10)</visible>
-                <include>animation_view_change_pvr</include>
-                
-                <posx>950</posx>
-                <posy>190</posy>
-                <width>850</width>
-                <height>190</height>
-                <textcolor>white</textcolor>
-                <label fallback="161">$INFO[ListItem.Plot]</label>
-                <autoscroll time="2000" delay="8000" repeat="5000">true</autoscroll>
-            </control>
-            <control type="epggrid" id="10">
-                <description>EPG Grid</description>
-                <include>animation_view_change_pvr</include>
-                
-                <left>80</left>
-                <top>445</top>
-                <width>1750</width>
-                <height>560</height>
-                <pagecontrol>10</pagecontrol>
-                <scrolltime>350</scrolltime>
-                <timeblocks>40</timeblocks>
-                <rulerunit>6</rulerunit>
-                <progresstexture border="5">pvr/PVR-EpgProgressIndicator.png</progresstexture>
-                <onleft>31</onleft>
-                <onright>31</onright>
-                <onup>10</onup>
-                <ondown>10</ondown>
-                <onback>9000</onback>
-                <rulerlayout height="80" width="60">
-                    <!--Date, Time Top Line-->
-                    <control type="image" id="1">
-                        <!--Background-->
-                        <width>60</width>
-                        <height>44</height>
-                        <texture>-</texture>
-                    </control>
-                    <control type="label" id="2">
-                        <!--Date, Time-->
-                        <posx>0</posx>
-                        <width>60</width>
-                        <height>44</height>
-                        <align>left</align>
-                        <font>Reg30</font>
-                        <textcolor>white</textcolor>
-                        <label>$INFO[ListItem.Label]</label>
-                    </control>
-                </rulerlayout>
-                <channellayout height="80" width="510">
+				
+                <!-- panel -->
+				<control type="image">
+					<posy>270</posy>
+					<posx>0</posx>
+					<width>1900</width>
+					<height>805</height>
+					<texture border="0">views/filemanager_panel1.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+					<visible>!Skin.HasSetting(GuideShowInfo) + skin.hastheme(classic)</visible>
+				</control>
+				<control type="image">
+					<posy>270</posy>
+					<posx>-65</posx>
+					<width>2100</width>
+					<height>805</height>
+					<texture border="0">views/filemanager_panel1.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+					<visible>!Skin.HasSetting(GuideShowInfo) + !skin.hastheme(classic)</visible>
+				</control>
+				<control type="image">
+					<posy>270</posy>
+					<posx>0</posx>
+					<width>1900</width>
+					<height>1012</height>
+					<texture border="0">views/filemanager_panel1.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+					<visible>Skin.HasSetting(GuideShowInfo) + skin.hastheme(classic)</visible>
+				</control>
+				<control type="image">
+					<posy>270</posy>
+					<posx>-65</posx>
+					<width>2100</width>
+					<height>996</height>
+					<texture border="0">views/filemanager_panel1.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+					<visible>Skin.HasSetting(GuideShowInfo) + !skin.hastheme(classic)</visible>
+				</control>
+				
+				<control type="image">
+					<posy>373</posy>
+					<posx>50</posx>
+					<width>350</width>
+					<height>632</height>
+					<texture border="0">guide_diffuse.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>skin.string(GuideRows, 10) + control.isvisible(10)</visible>
+				</control>
+				
+				<control type="image">
+					<posy>373</posy>
+					<posx>50</posx>
+					<width>450</width>
+					<height>632</height>
+					<texture border="0">guide_diffuse.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>!skin.string(GuideRows, 10) + control.isvisible(10)</visible>
+				</control>
+				
+				
+				<control type="image">
+					<!--Seperator-->
+					<posy>372</posy>
+					<posx>-68</posx>
+					<width>2040</width>
+					<height>10</height>
+					<align>left</align>
+					<texture border="10">common/menu-separator.png</texture>
+				</control>
+				<control type="image">
+					<!--Seperator-->
+					<posy>1007</posy>
+					<posx>-68</posx>
+					<width>2040</width>
+					<height>10</height>
+					<align>left</align>
+					<texture border="10">common/menu-separator.png</texture>
+				</control>
+				
+				<!-- info panel -->
+				<control type="group">
+					<posx>60</posx>
+					<posy>1020</posy>
+					<visible>Skin.HasSetting(GuideShowInfo)</visible>
+					<control type="image">
+						<!--Icon-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>160</width>
+						<height>160</height>
+						<texture fallback="DefaultAddonTvInfo.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<!--title-->
+						<posx>180</posx>
+						<posy>0</posy>
+						<width>1600</width>
+						<height>80</height>
+						<font>Reg28</font>
+						<textcolor>mainblue</textcolor>
+						<info>ListItem.Label</info>
+						<aligny>top</aligny>
+					</control>
+					<control type="label">
+						<!--time,duration,genre-->
+						<posx>180</posx>
+						<posy>40</posy>
+						<width>1600</width>
+						<height>80</height>
+						<font>Reg26</font>
+						<textcolor>white</textcolor>
+						<label>[COLOR=mainblue]$LOCALIZE[142][/COLOR] $INFO[ListItem.StartTime] - $INFO[ListItem.EndTime] - [COLOR=mainblue]$LOCALIZE[180]:[/COLOR] $INFO[ListItem.Duration] - [COLOR=mainblue]$LOCALIZE[515]:[/COLOR] $INFO[ListItem.Genre]</label>
+						<aligny>top</aligny>
+					</control>
+					<control type="textbox">
+						<!--Info Plot-->
+						<posx>180</posx>
+						<posy>70</posy>
+						<height>85</height>
+						<width>1620</width>
+						<font>Reg24</font>
+						<textcolor>white</textcolor>
+						<label fallback="161">$INFO[ListItem.Plot]</label>
+						<autoscroll time="2000" delay="8000" repeat="5000">true</autoscroll>
+					</control>
+				</control>
+			</control>
+            
+			<control type="group">
+			<!-- timeline view ID=10-->
+				<control type="epggrid" id="10">
+				<viewtype label="19032">list</viewtype>
+				<description>EPG Grid</description>
+				<include>animation_view_change_pvr</include>
+				<top>340</top>
+				<height>668</height>
+				<left>50</left>
+				<width>1800</width>
+				<pagecontrol>10</pagecontrol>
+				<scrolltime>350</scrolltime>
+				<timeblocks>40</timeblocks>
+				<rulerunit>6</rulerunit>
+				<onleft>9000</onleft>
+				<include condition="!Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorNormal</include>
+				<include condition="Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorAlt</include>
+				<onleft>31</onleft>
+				<onright>31</onright>
+				<onup>10</onup>
+				<ondown>10</ondown>
+				<onback>9000</onback>
+				<rulerlayout height="44" width="60">
+					<!--Date, Time Top Line-->
+					<control type="label" id="2">
+						<!--Date, Time-->
+						<posx>0</posx>
+						<width>60</width>
+						<height>44</height>
+						<align>left</align>
+						<posy>-10</posy>
+						<font>Reg24</font>
+						<textcolor>white</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</rulerlayout>
+				<channellayout height="62" width="350" condition="skin.string(GuideRows, 10)">
+					<!--Channel left side UNFOCUS-->
+					<animation effect="fade" end="80" time="200">UnFocus</animation>
+					<control type="image" id="201">
+						<!--Seperator-->
+						<posy>2</posy>
+						<posx>-40</posx>
+						<width>420</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+					<control type="label">
+						<!--Channel Nummber-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>80</width>
+						<height>55</height>
+						<font>Reg26</font>
+						<align>center</align>
+						<textcolor>lightgrey</textcolor>
+						<selectedcolor>lightgrey</selectedcolor>
+						<info>ListItem.ChannelNumberLabel</info>
+					</control>
+					<control type="label" id="1">
+						<!--Channel Name-->
+						<posx>85</posx>
+						<posy>0</posy>
+						<width>270</width>
+						<height>55</height>
+						<font>Reg26</font>
+						<textcolor>lightgrey</textcolor>
+						<selectedcolor>lightgrey</selectedcolor>
+						<label>$INFO[ListItem.ChannelName]</label>
+					</control>
+					<control type="image" id="202">
+						<!--Seperator-->
+						<posy>52</posy>
+						<posx>-40</posx>
+						<width>420</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+				</channellayout>
+				<focusedchannellayout height="62" width="350" condition="skin.string(GuideRows, 10)">
+					<!--Channel left side FOCUS-->
+					<animation effect="fade" end="80" time="200">OnFocus</animation>
+					<animation effect="fade" end="80" time="200">UnFocus</animation>
+					<control type="image" id="201">
+						<!--Seperator-->
+						<posy>2</posy>
+						<posx>-40</posx>
+						<width>420</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+					<control type="label">
+						<!--Channel Nummber-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>80</width>
+						<height>55</height>
+						<font>Reg26</font>
+						<align>center</align>
+						<textcolor>white</textcolor>
+						<selectedcolor>white</selectedcolor>
+						<info>ListItem.ChannelNumberLabel</info>
+					</control>
+					<control type="label" id="1">
+						<!--Channel Name-->
+						<posx>85</posx>
+						<posy>0</posy>
+						<width>270</width>
+						<height>55</height>
+						<font>Reg26</font>
+						<textcolor>white</textcolor>
+						<selectedcolor>white</selectedcolor>
+						<label>$INFO[ListItem.ChannelName]</label>
+					</control>
+					<control type="image" id="202">
+						<!--Seperator-->
+						<posy>52</posy>
+						<posx>-40</posx>
+						<width>420</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+				</focusedchannellayout>
+				<itemlayout height="62" width="60" condition="skin.string(GuideRows, 10)">
+					<!--EPG UNFOCUS-->
+					<control type="image" id="14">
+						<!--Button NF-->
+						<posx>1</posx>
+						<posy>0</posy>
+						<width>50</width>
+						<height>55</height>
+						<texture>common/button-nf.png</texture>
+						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
+					</control>
+					<control type="image" id="14">
+						<!--Button NF-->
+						<posx>1</posx>
+						<posy>0</posy>
+						<width>50</width>
+						<height>55</height>
+						<visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
+						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
+					</control>
+					<control type="label" id="1">
+						<!--Channel Now Playing-->
+						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
+						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>0</width>
+						<height>55</height>
+						<font>Reg24</font>
+						<aligny>center</aligny>
+						<textoffsetx>0</textoffsetx>
+						<textcolor>white</textcolor>
+						<selectedcolor>white</selectedcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<control type="image">
+						<!--Icon PVR Recording-->
+						<posx>5</posx>
+						<posy>15</posy>
+						<width>50</width>
+						<height>50</height>
+						<texture>pvr/icons/pvr_record.png</texture>
+						<visible>ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+					</control>
+					<control type="image">
+						<!--Icon PVR Timer-->
+						<posx>5</posx>
+						<posy>15</posy>
+						<width>50</width>
+						<height>50</height>
+						<texture>pvr/icons/pvr_record.png</texture>
+						<visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+					</control>
+				</itemlayout>
+				<focusedlayout height="62" width="60" condition="skin.string(GuideRows, 10)">
+					<!--EPG FOCUS-->
+					<control type="image" id="14">
+						<!--Button FO-->
+						<posx>1</posx>
+						<posy>0</posy>
+						<width>50</width>
+						<height>55</height>
+						<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
+					</control>
+					<control type="fadelabel" id="1">
+						<!--Channel Now Playing-->
+						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
+						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>0</width>
+						<height>55</height>
+						<font>Reg24</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<control type="image">
+						<!--Icon PVR Recording-->
+						<posx>5</posx>
+						<posy>15</posy>
+						<width>50</width>
+						<height>55</height>
+						<texture>pvr/icons/pvr_record.png</texture>
+						<visible>ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+					</control>
+					<control type="image">
+						<!--Icon PVR Timer-->
+						<posx>5</posx>
+						<posy>15</posy>
+						<width>50</width>
+						<height>55</height>
+						<texture>pvr/icons/pvr_timer.png</texture>
+						<visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+					</control>
+				</focusedlayout>
+			
+				<channellayout height="89" width="450" condition="skin.string(GuideRows, 7)">
                     <!--Channel left side UNFOCUS-->
-                    <animation effect="fade" start="110" time="200">UnFocus</animation>
-
-					<control type="image" id="1">
-                        <!--Button-->
-                        <posx>65</posx>
-                        <posy>2</posy>
-                        <width>430</width>
-                        <height>76</height>
-                        <texture>pvr/tv_channel_bg.png</texture>
-                    </control>
-                    <control type="label">
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image" id="201">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+					
+					<control type="label">
                         <!--Channel Nummber-->
-                        <posx>0</posx>
+                        <posx>5</posx>
                         <posy>0</posy>
-                        <width>100</width>
+                        <width>65</width>
                         <height>80</height>
-                        <font>Reg30</font>
-                        <textcolor>white</textcolor>
-                        <selectedcolor>white</selectedcolor>
-                        <info>ListItem.ChannelNumber</info>
+                        <font>Reg26</font>
+						<align>center</align>
+                        <textcolor>lightgrey</textcolor>
+                        <selectedcolor>lightgrey</selectedcolor>
+                        <info>ListItem.ChannelNumberLabel</info>
                     </control>
                     <control type="image">
                         <!--Channel Icon-->
                         <posx>65</posx>
                         <posy>10</posy>
-                        <width>90</width>
+                        <width>100</width>
                         <height>60</height>
                         <texture>$INFO[ListItem.Icon]</texture>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
@@ -554,42 +771,54 @@
                         <!--Channel Name-->
                         <posx>170</posx>
                         <posy>0</posy>
-                        <width>310</width>
+                        <width>275</width>
                         <height>80</height>
                         <font>Reg29</font>
-                        <textcolor>white</textcolor>
-                        <selectedcolor>white</selectedcolor>
+                        <textcolor>lightgrey</textcolor>
+                        <selectedcolor>lightgrey</selectedcolor>
                         <label>$INFO[ListItem.ChannelName]</label>
                     </control>
+					<control type="image" id="202">
+						<!--Seperator-->
+						<posy>80</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
                 </channellayout>
-                <focusedchannellayout height="80" width="510">
+                <focusedchannellayout height="89" width="450" condition="skin.string(GuideRows, 7)">
                     <!--Channel left side FOCUS-->
-                    <animation effect="fade" start="110" time="200">OnFocus</animation>
-                    <control type="image" id="1">
-                        <!--Button-->
-                        <posx>65</posx>
-                        <posy>2</posy>
-                        <width>430</width>
-                        <height>76</height>
-                        <texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
-                    </control>
-                    <control type="label">
+                    <animation effect="fade" end="80" time="200">OnFocus</animation>
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image" id="201">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+					<control type="label">
                         <!--Channel Nummber-->
-                        <posx>0</posx>
+                        <posx>5</posx>
                         <posy>0</posy>
-                        <width>100</width>
-                        <height>80</height>
-                        <font>Reg30</font>
+                        <width>65</width>
+                        <height>70</height>
+                        <font>Reg26</font>
+						<align>center</align>
                         <textcolor>white</textcolor>
                         <selectedcolor>white</selectedcolor>
-                        <info>ListItem.ChannelNumber</info>
+                        <info>ListItem.ChannelNumberLabel</info>
                     </control>
                     <control type="image">
                         <!--Channel Icon-->
                         <posx>65</posx>
                         <posy>10</posy>
-                        <width>90</width>
-                        <height>60</height>
+                        <width>100</width>
+                        <height>50</height>
                         <texture>$INFO[ListItem.Icon]</texture>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
@@ -597,23 +826,42 @@
                         <!--Channel Name-->
                         <posx>170</posx>
                         <posy>0</posy>
-                        <width>310</width>
-                        <height>80</height>
+                        <width>275</width>
+                        <height>70</height>
                         <font>Reg29</font>
-                        <textcolor>black</textcolor>
-                        <selectedcolor>black</selectedcolor>
+                        <textcolor>white</textcolor>
+                        <selectedcolor>white</selectedcolor>
                         <label>$INFO[ListItem.ChannelName]</label>
                     </control>
+					<control type="image" id="202">
+						<!--Seperator-->
+						<posy>70</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
                 </focusedchannellayout>
-                <itemlayout height="80" width="60">
+                <itemlayout height="89" width="60" condition="skin.string(GuideRows, 7)">
                     <!--EPG UNFOCUS-->
                     <control type="image" id="14">
                         <!--Button NF-->
-                        <posx>0</posx>
-                        <posy>2</posy>
-                        <width>56</width>
-                        <height>76</height>
-                        <texture>pvr/tv_channel_bg.png</texture>
+                        <posx>1</posx>
+                        <posy>0</posy>
+                        <width>50</width>
+                        <height>80</height>
+                        <texture>common/button-nf.png</texture>
+						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
+                    </control>
+					<control type="image" id="14">
+                        <!--Button NF-->
+                        <posx>1</posx>
+                        <posy>0</posy>
+                        <width>50</width>
+                        <height>80</height>
+                        <visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
+						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
                     </control>
                     <control type="label" id="1">
                         <!--Channel Now Playing-->
@@ -623,7 +871,7 @@
                         <posy>0</posy>
                         <width>0</width>
                         <height>80</height>
-                        <font>Light28</font>
+                        <font>Reg26</font>
                         <aligny>center</aligny>
                         <textoffsetx>0</textoffsetx>
                         <textcolor>white</textcolor>
@@ -638,6 +886,7 @@
                         <height>50</height>
                         <texture>pvr/icons/pvr_record.png</texture>
                         <visible>ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                     <control type="image">
                         <!--Icon PVR Timer-->
@@ -647,16 +896,17 @@
                         <height>50</height>
                         <texture>pvr/icons/pvr_record.png</texture>
                         <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                 </itemlayout>
-                <focusedlayout height="80" width="60">
+                <focusedlayout height="89" width="60" condition="skin.string(GuideRows, 7)">
                     <!--EPG FOCUS-->
                     <control type="image" id="14">
                         <!--Button FO-->
-                        <posx>0</posx>
-                        <posy>2</posy>
-                        <width>56</width>
-                        <height>76</height>
+                        <posx>1</posx>
+                        <posy>0</posy>
+                        <width>50</width>
+                        <height>80</height>
                         <texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
                     </control>
                     <control type="fadelabel" id="1">
@@ -667,7 +917,7 @@
                         <posy>0</posy>
                         <width>0</width>
                         <height>80</height>
-                        <font>Light28</font>
+                        <font>Reg26</font>
                         <aligny>center</aligny>
                         <textcolor>black</textcolor>
                         <selectedcolor>black</selectedcolor>
@@ -694,9 +944,221 @@
 						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                 </focusedlayout>
-            </control>
-        </control>
-    </include>
+            
+				<channellayout height="70" width="450" condition="skin.string(GuideRows, 9)">
+                    <!--Channel left side UNFOCUS-->
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image" id="201">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+					
+					<control type="label">
+                        <!--Channel Nummber-->
+                        <posx>5</posx>
+                        <posy>0</posy>
+                        <width>65</width>
+                        <height>65</height>
+                        <font>Reg26</font>
+						<align>center</align>
+                        <textcolor>lightgrey</textcolor>
+                        <selectedcolor>lightgrey</selectedcolor>
+                        <info>ListItem.ChannelNumberLabel</info>
+                    </control>
+                    <control type="image">
+                        <!--Channel Icon-->
+                        <posx>65</posx>
+                        <posy>10</posy>
+                        <width>100</width>
+                        <height>50</height>
+                        <texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="label" id="1">
+                        <!--Channel Name-->
+                        <posx>170</posx>
+                        <posy>0</posy>
+                        <width>275</width>
+                        <height>65</height>
+                        <font>Reg27</font>
+                        <textcolor>lightgrey</textcolor>
+                        <selectedcolor>lightgrey</selectedcolor>
+                        <label>$INFO[ListItem.ChannelName]</label>
+                    </control>
+					<control type="image" id="202">
+						<!--Seperator-->
+						<posy>65</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+                </channellayout>
+                <focusedchannellayout height="70" width="450" condition="skin.string(GuideRows, 9)">
+                    <!--Channel left side FOCUS-->
+                    <animation effect="fade" end="80" time="200">OnFocus</animation>
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image" id="201">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+					<control type="label">
+                        <!--Channel Nummber-->
+                        <posx>5</posx>
+                        <posy>0</posy>
+                        <width>65</width>
+                        <height>65</height>
+                        <font>Reg26</font>
+						<align>center</align>
+                        <textcolor>white</textcolor>
+                        <selectedcolor>white</selectedcolor>
+                        <info>ListItem.ChannelNumberLabel</info>
+                    </control>
+                    <control type="image">
+                        <!--Channel Icon-->
+                        <posx>65</posx>
+                        <posy>10</posy>
+                        <width>100</width>
+                        <height>50</height>
+                        <texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="label" id="1">
+                        <!--Channel Name-->
+                        <posx>170</posx>
+                        <posy>0</posy>
+                        <width>275</width>
+                        <height>65</height>
+                        <font>Reg27</font>
+                        <textcolor>white</textcolor>
+                        <selectedcolor>white</selectedcolor>
+                        <label>$INFO[ListItem.ChannelName]</label>
+                    </control>
+					<control type="image" id="202">
+						<!--Seperator-->
+						<posy>65</posy>
+						<posx>-40</posx>
+						<width>550</width>
+						<height>10</height>
+						<align>left</align>
+						<texture>common/menu-separator.png</texture>
+					</control>
+                </focusedchannellayout>
+                <itemlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
+                    <!--EPG UNFOCUS-->
+                    <control type="image" id="14">
+                        <!--Button NF-->
+                        <posx>1</posx>
+                        <posy>0</posy>
+                        <width>50</width>
+                        <height>65</height>
+                        <texture>common/button-nf.png</texture>
+						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
+                    </control>
+					<control type="image" id="14">
+                        <!--Button NF-->
+                        <posx>1</posx>
+                        <posy>0</posy>
+                        <width>50</width>
+                        <height>65</height>
+                        <visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
+						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
+                    </control>
+                    <control type="label" id="1">
+                        <!--Channel Now Playing-->
+                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
+                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
+                        <posx>20</posx>
+                        <posy>0</posy>
+                        <width>0</width>
+                        <height>65</height>
+                        <font>Reg24</font>
+                        <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
+                        <textcolor>white</textcolor>
+                        <selectedcolor>white</selectedcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="image">
+                        <!--Icon PVR Recording-->
+                        <posx>5</posx>
+                        <posy>15</posy>
+                        <width>50</width>
+                        <height>50</height>
+                        <texture>pvr/icons/pvr_record.png</texture>
+                        <visible>ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--Icon PVR Timer-->
+                        <posx>5</posx>
+                        <posy>15</posy>
+                        <width>50</width>
+                        <height>50</height>
+                        <texture>pvr/icons/pvr_record.png</texture>
+                        <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
+                    <!--EPG FOCUS-->
+                    <control type="image" id="14">
+                        <!--Button FO-->
+                        <posx>1</posx>
+                        <posy>0</posy>
+                        <width>50</width>
+                        <height>65</height>
+                        <texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
+                    </control>
+                    <control type="fadelabel" id="1">
+                        <!--Channel Now Playing-->
+                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
+                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
+                        <posx>20</posx>
+                        <posy>0</posy>
+                        <width>0</width>
+                        <height>65</height>
+                        <font>Reg24</font>
+                        <aligny>center</aligny>
+                        <textcolor>black</textcolor>
+                        <selectedcolor>black</selectedcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="image">
+                        <!--Icon PVR Recording-->
+                        <posx>5</posx>
+                        <posy>15</posy>
+                        <width>50</width>
+                        <height>50</height>
+                        <texture>pvr/icons/pvr_record.png</texture>
+                        <visible>ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--Icon PVR Timer-->
+                        <posx>5</posx>
+                        <posy>15</posy>
+                        <width>50</width>
+                        <height>50</height>
+                        <texture>pvr/icons/pvr_timer.png</texture>
+                        <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                </focusedlayout>		
+			</control>
+		</control>
+	</include>
     <include name="LiveTVGuideNowNextView">
         <!--EPG: LiveTVGuideNowNextView ID=16-->
         <control type="group">
@@ -2873,4 +3335,6 @@
             </control>
         </control>
     </include>
+
+
 </includes>

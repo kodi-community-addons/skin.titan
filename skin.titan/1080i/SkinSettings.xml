@@ -152,7 +152,7 @@
                     <width>1230</width>
                     <height>50</height>
                     <font>Bold32</font>
-                    <label>31151</label>
+                    <label>$LOCALIZE[480] - $LOCALIZE[31151]</label>
                     <textcolor>white</textcolor>
                     <shadowcolor>black</shadowcolor>
                     <align>left</align>
@@ -194,7 +194,22 @@
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(BackgroundOverlayMediaViewOnly)</onclick>
+					<onclick condition="Skin.HasSetting(BackgroundOverlayHomeOnly)">Skin.Reset(BackgroundOverlayHomeOnly)</onclick>
                     <selected>Skin.HasSetting(BackgroundOverlayMediaViewOnly)</selected>
+                </control>
+				
+				<!--overlay on home only-->
+				<control type="radiobutton" id="14011">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31241</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(BackgroundOverlayHomeOnly)</onclick>
+					<onclick condition="Skin.HasSetting(BackgroundOverlayMediaViewOnly)">Skin.Reset(BackgroundOverlayMediaViewOnly)</onclick>
+                    <selected>Skin.HasSetting(BackgroundOverlayHomeOnly)</selected>
                 </control>
 
 				<control type="label" id="13001">
@@ -394,6 +409,19 @@
 					<onclick condition="!skin.string(ButtonFocusColor)">Skin.SetString(ButtonFocusColor, blue)</onclick>
                 </control>
 				
+				<!--no footer-->
+				<control type="radiobutton" id="13015">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31029</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(NoFooterBar)</onclick>
+                    <selected>Skin.HasSetting(NoFooterBar)</selected>
+                </control>
+				
 				
 				<control type="label" id="13020">
                     <width>1230</width>
@@ -582,11 +610,24 @@
                     <selected>Skin.HasSetting(ShowMovieTitleHeader)</selected>
                 </control>
 				
+				<control type="radiobutton" id="13029">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31218</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(HideWatchedCounts)</onclick>
+                    <selected>Skin.HasSetting(HideWatchedCounts)</selected>
+                </control>
+				
+				<!-- PVR appearance settings -->
 				<control type="label" id="13030">
                     <width>1230</width>
                     <height>50</height>
                     <font>Bold32</font>
-                    <label>36201</label>
+                    <label>$LOCALIZE[480] - $LOCALIZE[31088]</label>
                     <textcolor>white</textcolor>
                     <shadowcolor>black</shadowcolor>
                     <align>left</align>
@@ -607,20 +648,22 @@
 					<visible>System.GetBool(pvrmanager.enabled)</visible>
                 </control>
 				
-				<control type="radiobutton" id="13033">
-                    <description></description>
+				<!-- number of rows guide -->
+				<control type="button" id="13033">
                     <width>1230</width>
                     <align>left</align>
-                    <label>31238</label>
+                    <label>$LOCALIZE[31245]: $INFO[Skin.String(GuideRows)]</label>
                     <height>50</height>
                     <focusedcolor>black</focusedcolor>
+					<shadowcolor>black</shadowcolor>
                     <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(EnlargedEpgView)</onclick>
-                    <selected>Skin.HasSetting(EnlargedEpgView)</selected>
+					<onclick condition="skin.string(GuideRows, 7)">Skin.SetString(GuideRows, 9)</onclick>
+					<onclick condition="skin.string(GuideRows, 9)">Skin.SetString(GuideRows, 10)</onclick>
+					<onclick condition="skin.string(GuideRows, 10)">Skin.SetString(GuideRows, 7)</onclick>
 					<visible>System.GetBool(pvrmanager.enabled)</visible>
                 </control>
 				
-				<control type="radiobutton" id="13034">
+				<control type="radiobutton" id="13035">
                     <description></description>
                     <width>1230</width>
                     <align>left</align>
@@ -633,19 +676,113 @@
 					<visible>System.GetBool(pvrmanager.enabled)</visible>
                 </control>
 				
-				
-				<control type="label" id="13040">
+				<!-- OSD -->
+                <control type="label" id="13040">
                     <width>1230</width>
                     <height>50</height>
                     <font>Bold32</font>
-                    <label>15111</label>
+                    <label>$LOCALIZE[480] - $LOCALIZE[478]</label>
+                    <textcolor>white</textcolor>
+                    <shadowcolor>black</shadowcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                </control>
+				
+				<!--osd panel opacity-->
+				<control type="button" id="13041">
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>$LOCALIZE[31242] $INFO[Skin.String(OSDPanelOpacity)]</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+					<shadowcolor>black</shadowcolor>
+                    <font>Reg28</font>
+					<onclick condition="skin.string(OSDPanelOpacity, 100)">Skin.SetString(OSDPanelOpacity, 80)</onclick>
+					<onclick condition="skin.string(OSDPanelOpacity, 80)">Skin.SetString(OSDPanelOpacity, 60)</onclick>
+					<onclick condition="skin.string(OSDPanelOpacity, 60)">Skin.SetString(OSDPanelOpacity, 40)</onclick>
+					<onclick condition="skin.string(OSDPanelOpacity, 40)">Skin.SetString(OSDPanelOpacity, 20)</onclick>
+					<onclick condition="skin.string(OSDPanelOpacity, 20)">Skin.SetString(OSDPanelOpacity, 0)</onclick>
+					<onclick condition="skin.string(OSDPanelOpacity, 0)">Skin.SetString(OSDPanelOpacity, 100)</onclick>
+					<visible>!skin.hastheme(classic)</visible>
+                </control>
+				
+				<control type="radiobutton" id="13042">
+                    <description></description>
+                    <!--enable info on osd-->
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31133</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(EnableOSDInfo)</onclick>
+                    <selected>Skin.HasSetting(EnableOSDInfo)</selected>
+                </control>
+				
+				<control type="radiobutton" id="13043">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31243</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(ShowCacheLevelOSD)</onclick>
+                    <selected>Skin.HasSetting(ShowCacheLevelOSD)</selected>
+					<visible>!skin.hastheme(classic)</visible>
+                </control>
+				
+				<control type="button" id="13044">
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>$LOCALIZE[31230]: $INFO[skin.string(ShowInfoAtPlaybackStart)] $LOCALIZE[31231]</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>			
+					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 0)">Skin.SetString(ShowInfoAtPlaybackStart, 2)</onclick>
+					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 2)">Skin.SetString(ShowInfoAtPlaybackStart, 4)</onclick>
+					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 4)">Skin.SetString(ShowInfoAtPlaybackStart, 6)</onclick>
+					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 6)">Skin.SetString(ShowInfoAtPlaybackStart, 8)</onclick>
+					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 8)">Skin.SetString(ShowInfoAtPlaybackStart, 10)</onclick>
+					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 10)">Skin.SetString(ShowInfoAtPlaybackStart, 0)</onclick>
+                </control>
+				
+				<control type="radiobutton" id="13045">
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>$LOCALIZE[31232]</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(AlwaysShowMusicInfo)</onclick>
+					<selected>Skin.HasSetting(AlwaysShowMusicInfo)</selected>
+                </control>
+				
+				<control type="radiobutton" id="13046">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31217</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(OSDSubtitleButtonFocus)</onclick>
+                    <selected>Skin.HasSetting(OSDSubtitleButtonFocus)</selected>
+                </control>
+				
+				<!-- skin theme -->
+				<control type="label" id="13050">
+                    <width>1230</width>
+                    <height>50</height>
+                    <font>Bold32</font>
+                    <label>$LOCALIZE[480] - $LOCALIZE[15111]</label>
                     <textcolor>white</textcolor>
                     <shadowcolor>black</shadowcolor>
                     <align>left</align>
                     <aligny>center</aligny>
                 </control>
 
-				<control type="button" id="13042">
+				<control type="button" id="13051">
                     <width>1230</width>
                     <align>left</align>
                     <height>50</height>
@@ -1411,18 +1548,7 @@
                     <align>left</align>
                     <aligny>center</aligny>
                 </control>
-                <control type="radiobutton" id="5137">
-                    <description></description>
-                    <!--no blue bar-->
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31029</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(NoFooterBar)</onclick>
-                    <selected>Skin.HasSetting(NoFooterBar)</selected>
-                </control>
+                
 				<control type="radiobutton" id="5147">
                     <width>1230</width>
                     <align>left</align>
@@ -1456,18 +1582,7 @@
                     <onclick>Skin.ToggleSetting(EnableArtworkDownloader)</onclick>
                     <selected>Skin.HasSetting(EnableArtworkDownloader)</selected>
                 </control>
-				<control type="radiobutton" id="5140">
-                    <description></description>
-                    <!--enable info on osd-->
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31133</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(EnableOSDInfo)</onclick>
-                    <selected>Skin.HasSetting(EnableOSDInfo)</selected>
-                </control>
+				
 				<control type="radiobutton" id="5141">
                     <description></description>
                     <!--disable now playing background-->
@@ -1515,31 +1630,7 @@
 					<onclick condition="Skin.String(AutoStartPlayList)">Skin.Reset(AutoStartPlayList)</onclick>
                     <selected>Skin.String(AutoStartPlayList)</selected>
                 </control>
-				<control type="button" id="5145">
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>$LOCALIZE[31230]: $INFO[skin.string(ShowInfoAtPlaybackStart)] $LOCALIZE[31231]</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>			
-					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 0)">Skin.SetString(ShowInfoAtPlaybackStart, 2)</onclick>
-					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 2)">Skin.SetString(ShowInfoAtPlaybackStart, 4)</onclick>
-					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 4)">Skin.SetString(ShowInfoAtPlaybackStart, 6)</onclick>
-					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 6)">Skin.SetString(ShowInfoAtPlaybackStart, 8)</onclick>
-					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 8)">Skin.SetString(ShowInfoAtPlaybackStart, 10)</onclick>
-					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 10)">Skin.SetString(ShowInfoAtPlaybackStart, 0)</onclick>
-                </control>
 				
-				<control type="radiobutton" id="5150">
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>$LOCALIZE[31232]</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(AlwaysShowMusicInfo)</onclick>
-					<selected>Skin.HasSetting(AlwaysShowMusicInfo)</selected>
-                </control>
 				
 				<control type="radiobutton" id="5151">
                     <width>1230</width>
@@ -1589,27 +1680,17 @@
 					<onclick condition="Skin.String(CustomWeatherFanArtPath)">Skin.Reset(CustomWeatherFanArtPath)</onclick>
                     <selected>Skin.String(CustomWeatherFanArtPath)</selected>
                 </control>
-				<control type="radiobutton" id="5155">
+				
+				<control type="radiobutton" id="5157">
                     <description></description>
                     <width>1230</width>
                     <align>left</align>
-                    <label>31217</label>
+                    <label>31244</label>
                     <height>50</height>
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(OSDSubtitleButtonFocus)</onclick>
-                    <selected>Skin.HasSetting(OSDSubtitleButtonFocus)</selected>
-                </control>
-				<control type="radiobutton" id="5156">
-                    <description></description>
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31218</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(HideWatchedCounts)</onclick>
-                    <selected>Skin.HasSetting(HideWatchedCounts)</selected>
+                    <onclick>Skin.ToggleSetting(DisableSubtitles)</onclick>
+                    <selected>Skin.HasSetting(DisableSubtitles)</selected>
                 </control>
             </control>
         </control>
