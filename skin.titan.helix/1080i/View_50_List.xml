@@ -90,7 +90,7 @@
                 <height>168</height>
                 <!--1,78-->
                 <fadetime>600</fadetime>
-                <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+                <texture background="true" fallback="defaulticonswide/DefaultVideo.png">$INFO[ListItem.Icon]</texture>
                 <bordertexture border="-2">common/black.png</bordertexture>
             </control>
             <control type="image">
@@ -444,7 +444,7 @@
                     </control>
                 </focusedlayout>
                 <!-- Music-Videos, Movies, TV-Shows, seasons x=1165 w=580 -->
-                <itemlayout condition="Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)" width="1900" height="60">
+                <itemlayout condition="[Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)] + ![Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)]" width="1900" height="60">
                     <control type="label">
                         <!--Label 1-->
                         <posx>1225</posx>
@@ -474,7 +474,7 @@
                         <texture>common/separator.png</texture>
                     </control>
                 </itemlayout>
-                <focusedlayout condition="Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)" width="1900" height="90">
+                <focusedlayout condition="[Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)] + ![Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)]" width="1900" height="90">
                     <control type="image">
                         <!--Slider-->
                         <posx>1165</posx>
@@ -525,7 +525,47 @@
                         <texture>common/separator.png</texture>
                     </control>
                 </focusedlayout>
-                <!-- Seasons, Episodes x=980 w=765 -->
+                
+				<!-- banner layout tv shows -->
+				<itemlayout height="142" width="610" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
+					<control type="group">
+						<posy>10</posy>
+						<posx>1210</posx>
+						<control type="image">
+							<width>590</width>
+							<height>120</height>
+							<bordersize>-5</bordersize>
+							<texture>colors/color_white.png</texture>
+							<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+							<aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+							<visible>Skin.HasSetting(EnableTouchSupport) + StringCompare(Container(56).ListItem.Label, ListItem.Label)</visible>
+						</control>
+						<control type="image">
+							<width>604</width>
+							<height>126</height>
+							<texture>home/home_shadow.png</texture>
+						</control>
+						<include>BannerPlexlayout</include>
+					</control>
+                </itemlayout>
+                <focusedlayout height="142" width="610" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
+                    <control type="group">
+						<posy>10</posy>
+						<posx>1210</posx>
+						<control type="image">
+							<width>590</width>
+							<height>120</height>
+							<bordersize>-5</bordersize>
+							<texture>colors/color_white.png</texture>
+							<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+							<aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+						</control>
+						<include>BannerPlexlayout</include>
+                    </control>
+                </focusedlayout>
+            
+				
+				<!-- Seasons, Episodes x=980 w=765 -->
                 <itemlayout condition="Container.Content(episodes)" width="1900" height="60">
                     <control type="label">
                         <!--Label 1-->
