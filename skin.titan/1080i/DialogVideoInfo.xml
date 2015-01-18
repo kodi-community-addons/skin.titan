@@ -6,6 +6,7 @@
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
 	<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>
 	<onload condition="!IsEmpty(ListItem.Cast)">RunScript(script.metadata.actors,dialogbackend)</onload>
+	
 	<onload>ClearProperty(ShowCast)</onload>
     <controls>
 		<control type="group">
@@ -13,42 +14,46 @@
 			<!--Dialog Overlay-->
 			<visible>Window.IsActive(DialogVideoInfo.xml)</visible>
 			<include>GlobalBackground</include>
-			<include>DialogOverlay</include>
 		</control>
+		
 		<!-- Header -->
-        <control type="label">
-            <include>animation_fade_visible_hidden</include>
-            <posx>61</posx>
-            <posy>10</posy>
-            <width min="80" max="1400">auto</width>
-            <height>100</height>
-            <font>Bold45</font>
-            <align>left</align>
-            <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
-            <label>$VAR[value_header]</label>
-			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-        </control>
-		 <control type="label">
-			<posy>85</posy>
-			<posx>61</posx>
-			<width min="0" max="1100">auto</width>
-			<height>50</height>
-			<label>$VAR[value_subheader]</label>
-			<font>Reg30</font>
-			<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-			<include>animation_fade_visible_hidden</include>
+		<control type="group">
+			<control type="label">
+				<include>animation_fade_visible_hidden</include>
+				<posx>61</posx>
+				<posy>10</posy>
+				<width min="80" max="1400">auto</width>
+				<height>100</height>
+				<font>Bold45</font>
+				<align>left</align>
+				<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<label>$VAR[value_header]</label>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+			</control>
+			 <control type="label">
+				<posy>85</posy>
+				<posx>61</posx>
+				<width min="0" max="1100">auto</width>
+				<height>50</height>
+				<label>$VAR[value_subheader]</label>
+				<font>Reg30</font>
+				<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+				<include>animation_fade_visible_hidden</include>
+			</control>
 		</control>
+		
 		<!--Time & Weather-->
         <include>TimeInfo</include>
 			
 		<control type="group">
 			<visible>!Window.IsVisible(FileBrowser)</visible>
+
 			<include>animation_window_open_close</include>
 			<!-- panel background -->
 			<control type="image">
 				<posx>-80</posx>
-				<width>2400</width>
+				<width>2260</width>
 				<posy>160</posy>
 				<height>800</height>
 				<texture>views/view_50_list_panel1.png</texture>
@@ -73,15 +78,15 @@
 					</control>
 				<control type="group">
 					<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
-					<animation type="Visible">
+					<visible>!Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + !Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)</visible>
+					<animation type="Visible" condition="!System.HasAddon(script.extendedinfo)">
 						<effect type="slide" start="-1920" end="0" time="400" delay="0" tween="sine" easing="inout" />
 					</animation>
-					<animation type="Hidden">
+					<animation type="Hidden" condition="!System.HasAddon(script.extendedinfo)">
 						<effect type="zoom" start="100" end="75" center="640,540" time="300" tween="sine" easing="inout" />
 						<effect type="slide" start="0" end="-2320" time="400" delay="0" tween="sine" easing="inout" />
 					</animation>
-					<!--Butons 9000-->
-					
+					<!--Butons 9000-->			
 					<control type="grouplist" id="9000">
 						<posx>60</posx>
 						<posy>1005</posy>
@@ -90,8 +95,11 @@
 						<itemgap>20</itemgap>
 						<onup>noop</onup>
 						<ondown>noop</ondown>
-						<onright>SetProperty(ShowCast, show)</onright>
-						<onright>SetFocus(9002)</onright>
+						<onright condition="!System.HasAddon(script.extendedinfo)">SetProperty(ShowCast, show)</onright>
+						<onright condition="!System.HasAddon(script.extendedinfo)">SetFocus(9002)</onright>
+						<onright condition="System.HasAddon(script.extendedinfo) + IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onright>
+						<onright condition="System.HasAddon(script.extendedinfo) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onright>
+						<onright condition="System.HasAddon(script.extendedinfo) + !IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onright>
 						<onleft>noop</onleft>
 						<orientation>horizontal</orientation>
 						<control type="button" id="8">
@@ -197,8 +205,11 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
-							<onclick>SetProperty(ShowCast, show)</onclick>
-							<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+							<onclick condition="!System.HasAddon(script.extendedinfo)">SetProperty(ShowCast, show)</onclick>
+							<onclick condition="!System.HasAddon(script.extendedinfo)">SetFocus(9002)</onclick>
+							<onclick condition="System.HasAddon(script.extendedinfo) + IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onclick>
+							<onclick condition="System.HasAddon(script.extendedinfo) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onclick>
+							<onclick condition="System.HasAddon(script.extendedinfo) + !IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onclick>
 						</control>
 						
 						<control type="button" id="6">
@@ -223,6 +234,7 @@
 						<animation effect="fade" start="0" end="100" delay="0" time="2400" pulse="false">WindowOpen</animation>
 						<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
 						<animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+						<visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(ListItem.Property(TVShowThumb))</visible>
 					</control>
 					<control type="image">
 						<!--poster-->
@@ -580,6 +592,7 @@
 						<texturefocus>-</texturefocus>
 						<texturenofocus>-</texturenofocus>
 					</control>
+
 					<control type="list" id="50">
 						<!--List 50 Cast-->
 						<posx>63</posx>

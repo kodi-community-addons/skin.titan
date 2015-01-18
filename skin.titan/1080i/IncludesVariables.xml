@@ -5,6 +5,8 @@
     <!-- Header -->
     <!-- ====== -->
     <variable name="value_header">
+		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml) + !IsEmpty(Window(Home).Property(actor.title))">$INFO[Window(Home).Property(actor.title)]</value>
+		
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.TvShowTitle)">$INFO[ListItem.TvShowTitle]</value>
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
 		<value condition="window.isactive(mypvrrecordings.xml)">[UPPERCASE]$LOCALIZE[19017][/UPPERCASE]</value>
@@ -20,6 +22,11 @@
 		<value condition="[Container.Content(movies) | Container.Content(tvshows) | Container.Content(sets)] + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[ListItem.Title,> ,]</value>
 		<value condition="Container.Content(movies) + StringCompare(Container.FolderName,$LOCALIZE[369])">[UPPERCASE]$LOCALIZE[342][/UPPERCASE]</value>
 		<value condition="Container.Content(tvshows) + StringCompare(Container.FolderName,$LOCALIZE[369])">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE]</value>
+		
+		<value condition="Container.Content(movies) + stringcompare(Container.FolderPath,special://skin/extras/widgetplaylists/recentmovies.xsp)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] > $LOCALIZE[20386]</value>
+		<value condition="Container.Content(movies) + stringcompare(Container.FolderPath,special://skin/extras/widgetplaylists/inprogressmovies.xsp)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] > $LOCALIZE[31035]</value>
+		<value condition="Container.Content(movies) + stringcompare(Container.FolderPath,special://skin/extras/widgetplaylists/unwatchedmovies.xsp)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] > $LOCALIZE[16101]</value>
+		<value condition="Container.Content(episodes) + stringcompare(Container.FolderPath,special://skin/extras/widgetplaylists/recentepisodes.xsp)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] > $LOCALIZE[20387]</value>
 		
 		<value condition="Container.Content(movies)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[Container.FolderName,> ,]</value>
 		<value condition="Container.Content(seasons)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.TvShowTitle,> ]</value>
@@ -53,12 +60,13 @@
         <value condition="Window.IsActive(SkinSettings.xml)">SKIN [UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
         <value condition="Window.IsActive(SettingsCategory.xml)">[UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
         <value condition="Window.IsActive(SettingsSystemInfo.xml)">[UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
-        <value condition="Window.IsActive(MyPVR.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)">[UPPERCASE]$LOCALIZE[31088][/UPPERCASE]</value>
+        <value condition="Window.IsActive(MyPVR.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)">[UPPERCASE]$LOCALIZE[31088][/UPPERCASE] $INFO[ListItem.ChannelGroup,> ]</value>
         <value condition="Window.IsActive(MyMusicPlaylistEditor.xml)">[UPPERCASE]$LOCALIZE[10503][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyMusicPlaylistEditor.xml)">[UPPERCASE]$LOCALIZE[10503][/UPPERCASE]</value>
 	</variable>
 	
 	<variable name="value_subheader">
+	<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)">[CR]</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml) | window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml) | window.isactive(mypvr.xml)] + !IsEmpty(Pvr.NowRecordingTitle)">$INFO[Pvr.NowRecordingTitle,$LOCALIZE[19158]: ] ($INFO[Pvr.NowRecordingChannel])</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml) | window.isactive(mypvrguide.xml) | window.isactive(mypvr.xml)] + !IsEmpty(Pvr.NextRecordingTitle)">$INFO[Pvr.NextRecordingTitle,$LOCALIZE[19025]: ] ($INFO[Pvr.NextRecordingDateTime])</value>
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Season)">$LOCALIZE[20373] $INFO[ListItem.Season] $LOCALIZE[20452] $INFO[ListItem.Episode]: $INFO[ListItem.Title]</value>
@@ -321,9 +329,16 @@
 	
     <variable name="MoviesButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window.Property(MB3.Background.Movie.FanArt.small))">$INFO[Window.Property(MB3.Background.Movie.FanArt.small)]</value>
-        <value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.Movie.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.Movie.FanArt)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(script.grab.fanart.Movie.FanArt))">$INFO[Window(Home).Property(script.grab.fanart.Movie.FanArt)]</value>
         <value>home/movies.png</value>
     </variable>
+	
+	<variable name="MoviesGenresButtonThumb">
+        <value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window.Property(MB3.Background.Movie.FanArt.small))">$INFO[Window.Property(MB3.Background.Movie.FanArt.small)]</value>
+        <value>defaulticonswide/defaultgenre.png</value>
+    </variable>
+	
+	
     <variable name="TvseriesButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + !IsEmpty(Window(Home).Property(MB3.Background.TV.FanArt.small))">$INFO[Window.Property(MB3.Background.TV.FanArt.small)]</value>
 		<value condition="Skin.HasSetting(HomeMenuUsePlexforTVseries) + !IsEmpty(Window(Home).Property(Window(Home).Property(plexbmc.2.icon)))">$INFO[Window(Home).Property(Window(Home).Property(plexbmc.2.icon))]</value>
@@ -345,7 +360,7 @@
 		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.3.Fanart))">$INFO[Window(Home).Property(RandomAlbum.3.Fanart)]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.2.Fanart))">$INFO[Window(Home).Property(RandomAlbum.2.Fanart)]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RandomAlbum.1.Fanart))">$INFO[Window(Home).Property(RandomAlbum.1.Fanart)]</value>
-		<value>home/music.png</value>
+		<value>special://skin/extras/backgrounds/hover_my music.jpg</value>
     </variable>
     <variable name="WeatherButtonThumb">
         <value condition="Weather.IsFetched + !IsEmpty(Weather.FanartCode)">$VAR[WeatherFanArtPath]/$INFO[Weather.FanartCode]/weather.jpg</value>
@@ -513,7 +528,7 @@
 	<variable name="NextAiredThumb">
         <value condition="!IsEmpty(Window(Home).Property(NextAired.0.Art(fanart)))">$INFO[Window(Home).Property(NextAired.0.Art(fanart))]</value>
 		<value condition="!IsEmpty(Window(Home).Property(NextAired.1.Art(fanart)))">$INFO[Window(Home).Property(NextAired.1.Art(fanart))]</value>
-        <value>home/tvseries.png</value>
+        <value>defaulticonswide/defaultaddontvinfo.png</value>
     </variable>
 	
 	<variable name="CustomCollectionClick">
@@ -612,19 +627,22 @@
 	<variable name="RecentMoviesButtonOnClick">
         <value condition="Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson",return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.1.path)]</value>
-		<value>ActivateWindow(Videos,RecentlyAddedMovies ,return)</value>
+		<value>ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</value>
     </variable>
 	
 	<variable name="RecentMoviesButtonThumb">
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window(Home).Property(LatestMovieMB3.1.Art(fanart)))">$INFO[Window(Home).Property(LatestMovieMB3.1.Art(fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.5.Art(fanart)))">$INFO[Window(Home).Property(RecentMovie.5.Art(fanart))]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.1.Art(fanart)))">$INFO[Window(Home).Property(RecentMovie.1.Art(fanart))]</value>
-		<value>special://skin/extras/backgrounds/hover_moving pictures.jpg</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.2.Art(fanart)))">$INFO[Window(Home).Property(RecentMovie.2.Art(fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.3.Art(fanart)))">$INFO[Window(Home).Property(RecentMovie.3.Art(fanart))]</value>
+		<value>defaulticonswide/defaultrecentlyaddedepisodes.png</value>
     </variable>
 	
 	<variable name="InProgressMoviesButtonThumb">
 		<value condition="!IsEmpty(Window(Home).Property(InProgressMovieMB3.2.Art(fanart)))">$INFO[Window(Home).Property(InProgressMovieMB3.2.Art(fanart))]</value>
         <value condition="!IsEmpty(Window(Home).Property(InProgressMovieMB3.1.Art(fanart)))">$INFO[Window(Home).Property(InProgressMovieMB3.1.Art(fanart))]</value>
-		<value>special://skin/extras/backgrounds/hover_moving pictures.jpg</value>
+		<value>defaulticonswide/defaultaddonmovieinfo.png</value>
     </variable>
 
 	<variable name="InProgressMoviesButtonOnClick">
@@ -641,7 +659,11 @@
 		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window(Home).Property(LatestUnplayedMovieMB3.2.Art(fanart)))">$INFO[Window(Home).Property(LatestUnplayedMovieMB3.2.Art(fanart))]</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window(Home).Property(LatestUnplayedMovieMB3.1.Art(fanart)))">$INFO[Window(Home).Property(LatestUnplayedMovieMB3.1.Art(fanart))]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.2.Art(fanart))) + !Window(Home).Property(RecentMovie.2.Watched)">$INFO[Window(Home).Property(RecentMovie.2.Art(fanart))]</value>
-		<value>special://skin/extras/backgrounds/hover_moving pictures.jpg</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.4.Art(fanart))) + !Window(Home).Property(RecentMovie.4.Watched)">$INFO[Window(Home).Property(RecentMovie.4.Art(fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.5.Art(fanart))) + !Window(Home).Property(RecentMovie.5.Watched)">$INFO[Window(Home).Property(RecentMovie.5.Art(fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.6.Art(fanart))) + !Window(Home).Property(RecentMovie.6.Watched)">$INFO[Window(Home).Property(RecentMovie.6.Art(fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentMovie.8.Art(fanart))) + !Window(Home).Property(RecentMovie.8.Watched)">$INFO[Window(Home).Property(RecentMovie.8.Art(fanart))]</value>
+		<value>defaulticonswide/defaultaddonmovieinfo.png</value>
     </variable>
 	
 	
@@ -661,13 +683,18 @@
 	<variable name="RecentTVseriesButtonOnClick">
         <value condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson",return)</value>
 		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window.Property(MediaBrowser.std.tvshows.1.path)]</value>
-        <value>ActivateWindow(Videos,RecentlyAddedEpisodes,return)</value>
+        <value>ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</value>
     </variable>
 	
 	<variable name="RecentTVseriesButtonThumb">
 		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + !IsEmpty(Window(Home).Property(LatestEpisodeMB3.1.Art(tvshow.fanart)))">$INFO[Window(Home).Property(LatestEpisodeMB3.1.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentEpisode.5.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RecentEpisode.5.Art(tvshow.fanart))]</value>
 		<value condition="!IsEmpty(Window(Home).Property(RecentEpisode.1.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RecentEpisode.1.Art(tvshow.fanart))]</value>
-		<value>home/tvseries.png</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentEpisode.2.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RecentEpisode.2.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentEpisode.3.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RecentEpisode.3.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentEpisode.4.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RecentEpisode.4.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecentEpisode.6.Art(tvshow.fanart)))">$INFO[Window(Home).Property(RecentEpisode.6.Art(tvshow.fanart))]</value>
+		<value>defaulticonswide/defaultrecentlyaddedepisodes.png</value>
     </variable>
 	
 	<variable name="InprogressTVseriesButtonOnClick">
@@ -678,8 +705,11 @@
 	
 	<variable name="InprogressTVseriesButtonThumb">
 		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + !IsEmpty(Window(Home).Property(InProgresstEpisodeMB3.2.Art(tvshow.fanart)))">$INFO[Window(Home).Property(LatestEpisodeMB3.2.Art(tvshow.fanart))]</value>
-		<value condition="!IsEmpty(Window(Home).Property(RecommendedEpisode.2.Art(tvshow.fanart))) + !Window(Home).Property(RecommendedEpisode.2.Resume)">$INFO[Window(Home).Property(RecommendedEpisode.2.Art(tvshow.fanart))]</value>
-		<value>home/tvseries.png</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecommendedEpisode.2.Art(tvshow.fanart))) + StringCompare(Window(Home).Property(RecommendedEpisode.2.Resume),True)">$INFO[Window(Home).Property(RecommendedEpisode.2.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecommendedEpisode.3.Art(tvshow.fanart))) + StringCompare(Window(Home).Property(RecommendedEpisode.3.Resume),True)">$INFO[Window(Home).Property(RecommendedEpisode.3.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecommendedEpisode.5.Art(tvshow.fanart))) + StringCompare(Window(Home).Property(RecommendedEpisode.5.Resume),True)">$INFO[Window(Home).Property(RecommendedEpisode.5.Art(tvshow.fanart))]</value>
+		<value condition="!IsEmpty(Window(Home).Property(RecommendedEpisode.6.Art(tvshow.fanart))) + StringCompare(Window(Home).Property(RecommendedEpisode.6.Resume),True)">$INFO[Window(Home).Property(RecommendedEpisode.6.Art(tvshow.fanart))]</value>
+		<value>defaulticonswide/defaultaddonvideo.png</value>
     </variable>
 	
 	<variable name="TVseriesGenresButtonOnClick">
@@ -1543,35 +1573,35 @@
    
    
    <variable name="ColorOverlay">
-	<value condition="Skin.String(ColorTheme, white)">bgoverlays/bgoverlay_white.png</value>
-	<value condition="Skin.String(ColorTheme, light)">bgoverlays/bgoverlay_light.png</value>
-	<value condition="Skin.String(ColorTheme, default)">bgoverlays/bgoverlay_default.png</value>
-	<value condition="Skin.String(ColorTheme, dark)">bgoverlays/bgoverlay_dark.png</value>
-	<value condition="Skin.String(ColorTheme, grey)">bgoverlays/bgoverlay_grey.png</value>
-	<value condition="Skin.String(ColorTheme, blue)">bgoverlays/bgoverlay_blue.png</value>
-	<value condition="Skin.String(ColorTheme, winter1)">bgoverlays/bgoverlay_winter1.png</value>
-	<value condition="Skin.String(ColorTheme, winter2)">bgoverlays/bgoverlay_winter2.png</value>
+	<value condition="!Skin.String(ColorTheme, none) + !Skin.String(ColorTheme, custom)">$INFO[Skin.String(ColorTheme),bgoverlays/,.png]</value>
 	<value condition="Skin.String(ColorTheme, custom)">$INFO[Skin.String(CustomColorTheme)]</value>
    </variable>
      
    <variable name="ColorOverlayClick">
-	<value condition="Skin.String(ColorTheme, white)">Skin.SetString(ColorTheme, light)</value>
-	<value condition="Skin.String(ColorTheme, light)">Skin.SetString(ColorTheme, default)</value>
-	<value condition="Skin.String(ColorTheme, default)">Skin.SetString(ColorTheme, dark)</value>
-	<value condition="Skin.String(ColorTheme, dark)">Skin.SetString(ColorTheme, grey)</value>
-	<value condition="Skin.String(ColorTheme, grey)">Skin.SetString(ColorTheme, blue)</value>
-	<value condition="Skin.String(ColorTheme, blue)">Skin.SetString(ColorTheme, custom)</value>
-	<value condition="Skin.String(ColorTheme, custom)">Skin.SetString(ColorTheme, none)</value>
-	<value condition="Skin.String(ColorTheme, none)">Skin.SetString(ColorTheme, winter1)</value>
-	<value condition="Skin.String(ColorTheme, winter1)">Skin.SetString(ColorTheme, winter2)</value>
-	<value condition="Skin.String(ColorTheme, winter2)">Skin.SetString(ColorTheme, white)</value>
+		<value condition="Skin.String(ColorTheme, Aquamarine)">Skin.SetString(ColorTheme, Black)</value>
+		<value condition="Skin.String(ColorTheme, Black)">Skin.SetString(ColorTheme, Blue)</value>
+		<value condition="Skin.String(ColorTheme, Blue)">Skin.SetString(ColorTheme, Brown)</value>
+		<value condition="Skin.String(ColorTheme, Brown)">Skin.SetString(ColorTheme, DarkBlue)</value>
+		<value condition="Skin.String(ColorTheme, DarkBlue)">Skin.SetString(ColorTheme, Default)</value>
+		<value condition="Skin.String(ColorTheme, Default)">Skin.SetString(ColorTheme, Green)</value>
+		<value condition="Skin.String(ColorTheme, Green)">Skin.SetString(ColorTheme, Grey)</value>
+		<value condition="Skin.String(ColorTheme, Grey)">Skin.SetString(ColorTheme, Light)</value>
+		<value condition="Skin.String(ColorTheme, Light)">Skin.SetString(ColorTheme, OceanBlue)</value>
+		<value condition="Skin.String(ColorTheme, OceanBlue)">Skin.SetString(ColorTheme, Olive)</value>
+		<value condition="Skin.String(ColorTheme, Olive)">Skin.SetString(ColorTheme, Pink)</value>
+		<value condition="Skin.String(ColorTheme, Pink)">Skin.SetString(ColorTheme, Purple)</value>
+		<value condition="Skin.String(ColorTheme, Purple)">Skin.SetString(ColorTheme, Red)</value>
+		<value condition="Skin.String(ColorTheme, Red)">Skin.SetString(ColorTheme, SkyBlue)</value>
+		<value condition="Skin.String(ColorTheme, SkyBlue)">Skin.SetString(ColorTheme, Tangerine)</value>
+		<value condition="Skin.String(ColorTheme, Tangerine)">Skin.SetString(ColorTheme, Violet)</value>
+		<value condition="Skin.String(ColorTheme, Violet)">Skin.SetString(ColorTheme, White)</value>
+		<value condition="Skin.String(ColorTheme, White)">Skin.SetString(ColorTheme, Winter1)</value>
+		<value condition="Skin.String(ColorTheme, Winter1)">Skin.SetString(ColorTheme, Winter2)</value>
+		<value condition="Skin.String(ColorTheme, Winter2)">Skin.SetString(ColorTheme, Custom)</value>
+		<value condition="Skin.String(ColorTheme, Custom)">Skin.SetString(ColorTheme, None)</value>
+		<value condition="Skin.String(ColorTheme, None)">Skin.SetString(ColorTheme, Aquamarine)</value>
    </variable>
-   
-   <variable name="ColorOverlayExtra">
-	<value condition="Skin.String(ColorTheme, white)">bgoverlays/bgoverlay_white.png</value>
-	<value>bgoverlays/bgoverlay_dark.png</value>
-   </variable>
-   
+     
    <variable name="TextColor_aawhite">
 	<value condition="Skin.String(ColorTheme, white)">darkgrey</value>
 	<value>aawhite</value>

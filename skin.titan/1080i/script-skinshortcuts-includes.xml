@@ -245,7 +245,7 @@
 			<label>$ADDON[script.skinshortcuts 32022]</label>
 			<label2>Live TV</label2>
 			<icon>home/livetv.png</icon>
-			<thumb>home/weather.png</thumb>
+			<thumb />
 			<property name="labelID">livetv</property>
 			<property name="defaultID">livetv</property>
 			<visible>System.GetBool(pvrmanager.enabled)</visible>
@@ -257,20 +257,18 @@
 			<property name="hasSubmenu">True</property>
 		</item>
 		<item id="18">
-			<label>goede films</label>
-			<label2>Video Playlist</label2>
-			<icon>DefaultPlaylist.png</icon>
-			<thumb>$VAR[MoviesButtonThumb]</thumb>
-			<property name="labelID">goedefilms</property>
-			<property name="defaultID">goedefilms</property>
+			<label>$LOCALIZE[342]</label>
+			<label2>Movies</label2>
+			<icon>$VAR[MoviesButtonThumb]</icon>
+			<thumb />
+			<property name="labelID">movies</property>
+			<property name="defaultID">movies</property>
 			<visible>!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
-			<onclick>ActivateWindow(VideoLibrary,special://profile/playlists/video/goede films.xsp,return)</onclick>
-			<property name="path">ActivateWindow(VideoLibrary,special://profile/playlists/video/goede films.xsp,return)</property>
+			<onclick>$VAR[MoviesButtonOnClick]</onclick>
+			<property name="path">$VAR[MoviesButtonOnClick]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">goedefilms</property>
+			<property name="submenuVisibility">movies</property>
 			<property name="group">mainmenu</property>
-			<property name="background">fanart</property>
-			<property name="backgroundName">Use random fanart background</property>
 			<property name="hasSubmenu">True</property>
 		</item>
 		<item id="19">
@@ -434,34 +432,6 @@
 			<property name="submenuVisibility">settings</property>
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
-		</item>
-		<item id="30">
-			<label>TvTunes</label>
-			<label2>Video Add-On</label2>
-			<icon>DefaultAddon.png</icon>
-			<thumb>image://C%3a%5cUsers%5cMarcel%5cAppData%5cRoaming%5cKodi%5caddons%5cscript.tvtunes%5cicon.png/</thumb>
-			<property name="labelID">script.tvtunes</property>
-			<property name="defaultID">script.tvtunes</property>
-			<onclick>RunAddOn(script.tvtunes)</onclick>
-			<property name="path">RunAddOn(script.tvtunes)</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">script-tvtunes</property>
-			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">False</property>
-		</item>
-		<item id="31">
-			<label>goede films</label>
-			<label2>Video Playlist</label2>
-			<icon>DefaultPlaylist.png</icon>
-			<thumb />
-			<property name="labelID">goedefilms--0</property>
-			<property name="defaultID">goedefilms</property>
-			<onclick>ActivateWindow(VideoLibrary,special://profile/playlists/video/goede films.xsp,return)</onclick>
-			<property name="path">ActivateWindow(VideoLibrary,special://profile/playlists/video/goede films.xsp,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">goedefilms-0</property>
-			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">False</property>
 			<property name="hasSubmenu">True</property>
 		</item>
 	</include>
@@ -1391,9 +1361,9 @@
 			<property name="defaultID">135</property>
 			<onclick>$VAR[MoviesTitlesButtonOnClick]</onclick>
 			<property name="path">$VAR[MoviesTitlesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="2">
 			<label>$LOCALIZE[31127]</label>
@@ -1404,24 +1374,11 @@
 			<property name="defaultID">135</property>
 			<onclick>$VAR[RecentMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[RecentMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="3">
-			<label>$LOCALIZE[135]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
-			<thumb />
-			<property name="labelID">135</property>
-			<property name="defaultID">135</property>
-			<onclick>$VAR[MovieGenresButtonOnClick]</onclick>
-			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),goedefilms)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
-		</item>
-		<item id="4">
 			<label>$LOCALIZE[31035]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[InProgressMoviesButtonThumb]</icon>
@@ -1430,11 +1387,11 @@
 			<property name="defaultID">135</property>
 			<onclick>$VAR[InProgressMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[InProgressMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
-		<item id="5">
+		<item id="4">
 			<label>$LOCALIZE[31036]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[MB3FavoritesThumb]</icon>
@@ -1444,11 +1401,11 @@
 			<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
 			<onclick>$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</onclick>
 			<property name="path">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
-		<item id="6">
+		<item id="5">
 			<label>$LOCALIZE[16101]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[UnwatchedMoviesButtonThumb]</icon>
@@ -1458,9 +1415,22 @@
 			<visible>!Skin.HasSetting(HomeMenuUseNetflixforTVseries)</visible>
 			<onclick>$VAR[UnwatchedMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[UnwatchedMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
+		</item>
+		<item id="6">
+			<label>$LOCALIZE[135]</label>
+			<label2>Movies</label2>
+			<icon>$VAR[MoviesGenresButtonThumb]</icon>
+			<thumb />
+			<property name="labelID">135</property>
+			<property name="defaultID">135</property>
+			<onclick>$VAR[MovieGenresButtonOnClick]</onclick>
+			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="1">
 			<label>$LOCALIZE[31050]</label>
@@ -1584,25 +1554,12 @@
 		<item id="4">
 			<label>$LOCALIZE[135]</label>
 			<label2>TV shows</label2>
-			<icon>home/tvseries.png</icon>
+			<icon>defaulticonswide/defaultgenre.png</icon>
 			<thumb />
 			<property name="labelID">135</property>
 			<property name="defaultID">135</property>
 			<onclick>$VAR[TVseriesGenresButtonOnClick]</onclick>
 			<property name="path">$VAR[TVseriesGenresButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">tvshows</property>
-		</item>
-		<item id="5">
-			<label>$ADDON[script.skinshortcuts 32055]</label>
-			<label2 />
-			<icon>common/clean-video.png</icon>
-			<thumb />
-			<property name="labelID">32055</property>
-			<property name="defaultID">32055</property>
-			<onclick>CleanLibrary(video)</onclick>
-			<property name="path">CleanLibrary(video)</property>
 			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)]</visible>
 			<property name="isSubmenu">True</property>
 			<property name="group">tvshows</property>
@@ -1689,7 +1646,7 @@
 		<item id="3">
 			<label>$LOCALIZE[517]</label>
 			<label2>Music</label2>
-			<icon>home/music.png</icon>
+			<icon>defaulticonswide/defaultmusicplugins.png</icon>
 			<thumb />
 			<property name="labelID">517</property>
 			<property name="defaultID">517</property>
@@ -1702,7 +1659,7 @@
 		<item id="4">
 			<label>$LOCALIZE[359]</label>
 			<label2>Music</label2>
-			<icon>home/music.png</icon>
+			<icon>defaulticonswide/defaultmusicrecentlyplayed.png</icon>
 			<thumb />
 			<property name="labelID">359</property>
 			<property name="defaultID">359</property>
@@ -1715,7 +1672,7 @@
 		<item id="5">
 			<label>$LOCALIZE[20389]</label>
 			<label2>$LOCALIZE[20389]</label2>
-			<icon>home/music.png</icon>
+			<icon>$VAR[MusicVideosButtonThumb]</icon>
 			<thumb />
 			<property name="labelID">musicvideos</property>
 			<property name="defaultID">musicvideos</property>
@@ -3802,7 +3759,7 @@
 			<property name="group">livetv</property>
 		</item>
 	</include>
-	<include name="skinshortcuts-group-goedefilms">
+	<include name="skinshortcuts-group-movies">
 		<item id="1">
 			<label>$LOCALIZE[31050]</label>
 			<label2>Movies</label2>
@@ -3813,7 +3770,7 @@
 			<onclick>$VAR[MoviesTitlesButtonOnClick]</onclick>
 			<property name="path">$VAR[MoviesTitlesButtonOnClick]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="2">
 			<label>$LOCALIZE[31127]</label>
@@ -3825,21 +3782,9 @@
 			<onclick>$VAR[RecentMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[RecentMoviesButtonOnClick]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="3">
-			<label>$LOCALIZE[135]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
-			<thumb />
-			<property name="labelID">135</property>
-			<property name="defaultID">135</property>
-			<onclick>$VAR[MovieGenresButtonOnClick]</onclick>
-			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">goedefilms</property>
-		</item>
-		<item id="4">
 			<label>$LOCALIZE[31035]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[InProgressMoviesButtonThumb]</icon>
@@ -3849,9 +3794,9 @@
 			<onclick>$VAR[InProgressMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[InProgressMoviesButtonOnClick]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
-		<item id="5">
+		<item id="4">
 			<label>$LOCALIZE[31036]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[MB3FavoritesThumb]</icon>
@@ -3862,9 +3807,9 @@
 			<onclick>$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</onclick>
 			<property name="path">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
-		<item id="6">
+		<item id="5">
 			<label>$LOCALIZE[16101]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[UnwatchedMoviesButtonThumb]</icon>
@@ -3875,10 +3820,22 @@
 			<onclick>$VAR[UnwatchedMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[UnwatchedMoviesButtonOnClick]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
+		</item>
+		<item id="6">
+			<label>$LOCALIZE[135]</label>
+			<label2>Movies</label2>
+			<icon>$VAR[MoviesGenresButtonThumb]</icon>
+			<thumb />
+			<property name="labelID">135</property>
+			<property name="defaultID">135</property>
+			<onclick>$VAR[MovieGenresButtonOnClick]</onclick>
+			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">movies</property>
 		</item>
 	</include>
-	<include name="skinshortcuts-group-alt-goedefilms">
+	<include name="skinshortcuts-group-alt-movies">
 		<item id="1">
 			<label>$LOCALIZE[31050]</label>
 			<label2>Movies</label2>
@@ -3888,9 +3845,9 @@
 			<property name="defaultID">135</property>
 			<onclick>$VAR[MoviesTitlesButtonOnClick]</onclick>
 			<property name="path">$VAR[MoviesTitlesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="2">
 			<label>$LOCALIZE[31127]</label>
@@ -3901,24 +3858,11 @@
 			<property name="defaultID">135</property>
 			<onclick>$VAR[RecentMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[RecentMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
 		<item id="3">
-			<label>$LOCALIZE[135]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
-			<thumb />
-			<property name="labelID">135</property>
-			<property name="defaultID">135</property>
-			<onclick>$VAR[MovieGenresButtonOnClick]</onclick>
-			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),goedefilms)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
-		</item>
-		<item id="4">
 			<label>$LOCALIZE[31035]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[InProgressMoviesButtonThumb]</icon>
@@ -3927,11 +3871,11 @@
 			<property name="defaultID">135</property>
 			<onclick>$VAR[InProgressMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[InProgressMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
-		<item id="5">
+		<item id="4">
 			<label>$LOCALIZE[31036]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[MB3FavoritesThumb]</icon>
@@ -3941,11 +3885,11 @@
 			<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
 			<onclick>$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</onclick>
 			<property name="path">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
 		</item>
-		<item id="6">
+		<item id="5">
 			<label>$LOCALIZE[16101]</label>
 			<label2>Movies</label2>
 			<icon>$VAR[UnwatchedMoviesButtonThumb]</icon>
@@ -3955,9 +3899,22 @@
 			<visible>!Skin.HasSetting(HomeMenuUseNetflixforTVseries)</visible>
 			<onclick>$VAR[UnwatchedMoviesButtonOnClick]</onclick>
 			<property name="path">$VAR[UnwatchedMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),goedefilms)]</visible>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">goedefilms</property>
+			<property name="group">movies</property>
+		</item>
+		<item id="6">
+			<label>$LOCALIZE[135]</label>
+			<label2>Movies</label2>
+			<icon>$VAR[MoviesGenresButtonThumb]</icon>
+			<thumb />
+			<property name="labelID">135</property>
+			<property name="defaultID">135</property>
+			<onclick>$VAR[MovieGenresButtonOnClick]</onclick>
+			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">movies</property>
 		</item>
 	</include>
 	<include name="skinshortcuts-group-31050">
@@ -4158,24 +4115,12 @@
 		<item id="4">
 			<label>$LOCALIZE[135]</label>
 			<label2>TV shows</label2>
-			<icon>home/tvseries.png</icon>
+			<icon>defaulticonswide/defaultgenre.png</icon>
 			<thumb />
 			<property name="labelID">135</property>
 			<property name="defaultID">135</property>
 			<onclick>$VAR[TVseriesGenresButtonOnClick]</onclick>
 			<property name="path">$VAR[TVseriesGenresButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">tvshows</property>
-		</item>
-		<item id="5">
-			<label>$ADDON[script.skinshortcuts 32055]</label>
-			<label2 />
-			<icon>common/clean-video.png</icon>
-			<thumb />
-			<property name="labelID">32055</property>
-			<property name="defaultID">32055</property>
-			<onclick>CleanLibrary(video)</onclick>
-			<property name="path">CleanLibrary(video)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">tvshows</property>
 		</item>
@@ -4223,25 +4168,12 @@
 		<item id="4">
 			<label>$LOCALIZE[135]</label>
 			<label2>TV shows</label2>
-			<icon>home/tvseries.png</icon>
+			<icon>defaulticonswide/defaultgenre.png</icon>
 			<thumb />
 			<property name="labelID">135</property>
 			<property name="defaultID">135</property>
 			<onclick>$VAR[TVseriesGenresButtonOnClick]</onclick>
 			<property name="path">$VAR[TVseriesGenresButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),tvshows)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">tvshows</property>
-		</item>
-		<item id="5">
-			<label>$ADDON[script.skinshortcuts 32055]</label>
-			<label2 />
-			<icon>common/clean-video.png</icon>
-			<thumb />
-			<property name="labelID">32055</property>
-			<property name="defaultID">32055</property>
-			<onclick>CleanLibrary(video)</onclick>
-			<property name="path">CleanLibrary(video)</property>
 			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),tvshows)]</visible>
 			<property name="isSubmenu">True</property>
 			<property name="group">tvshows</property>
@@ -4380,7 +4312,7 @@
 		<item id="3">
 			<label>$LOCALIZE[517]</label>
 			<label2>Music</label2>
-			<icon>home/music.png</icon>
+			<icon>defaulticonswide/defaultmusicplugins.png</icon>
 			<thumb />
 			<property name="labelID">517</property>
 			<property name="defaultID">517</property>
@@ -4392,7 +4324,7 @@
 		<item id="4">
 			<label>$LOCALIZE[359]</label>
 			<label2>Music</label2>
-			<icon>home/music.png</icon>
+			<icon>defaulticonswide/defaultmusicrecentlyplayed.png</icon>
 			<thumb />
 			<property name="labelID">359</property>
 			<property name="defaultID">359</property>
@@ -4404,7 +4336,7 @@
 		<item id="5">
 			<label>$LOCALIZE[20389]</label>
 			<label2>$LOCALIZE[20389]</label2>
-			<icon>home/music.png</icon>
+			<icon>$VAR[MusicVideosButtonThumb]</icon>
 			<thumb />
 			<property name="labelID">musicvideos</property>
 			<property name="defaultID">musicvideos</property>
@@ -4445,7 +4377,7 @@
 		<item id="3">
 			<label>$LOCALIZE[517]</label>
 			<label2>Music</label2>
-			<icon>home/music.png</icon>
+			<icon>defaulticonswide/defaultmusicplugins.png</icon>
 			<thumb />
 			<property name="labelID">517</property>
 			<property name="defaultID">517</property>
@@ -4458,7 +4390,7 @@
 		<item id="4">
 			<label>$LOCALIZE[359]</label>
 			<label2>Music</label2>
-			<icon>home/music.png</icon>
+			<icon>defaulticonswide/defaultmusicrecentlyplayed.png</icon>
 			<thumb />
 			<property name="labelID">359</property>
 			<property name="defaultID">359</property>
@@ -4471,7 +4403,7 @@
 		<item id="5">
 			<label>$LOCALIZE[20389]</label>
 			<label2>$LOCALIZE[20389]</label2>
-			<icon>home/music.png</icon>
+			<icon>$VAR[MusicVideosButtonThumb]</icon>
 			<thumb />
 			<property name="labelID">musicvideos</property>
 			<property name="defaultID">musicvideos</property>
@@ -4854,10 +4786,6 @@
 			<property name="group">settings</property>
 		</item>
 	</include>
-	<include name="skinshortcuts-group-script-tvtunes" />
-	<include name="skinshortcuts-group-alt-script-tvtunes" />
-	<include name="skinshortcuts-group-goedefilms-0" />
-	<include name="skinshortcuts-group-alt-goedefilms-0" />
 	<include name="skinshortcuts-group-powermenu">
 		<item id="1">
 			<label>$LOCALIZE[20126]</label>
