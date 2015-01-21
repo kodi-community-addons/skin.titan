@@ -120,8 +120,13 @@
 					<texture background="true">views/filemanager_panel1.png</texture>
 					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar)</visible>
 					<include>animation_fade_visible_hidden</include>
+					<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),0)">Conditional</animation>
 				</control>
-				<!--RSS Text-->			
+				<!--RSS Text without touch classic-->			
 				<control type="rss">	
 					<description>RSS Feed</description>
 					<posx>80</posx>
@@ -133,10 +138,47 @@
 					<titlecolor>$VAR[ThemeFontColorBlack]</titlecolor>
 					<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
 					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
-					<scrollspeed>40</scrollspeed>
+					<visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
+					<visible>skin.hastheme(classic)</visible>
+					<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+					<animation time="1500" effect="fade" delay="1500">Visible</animation>
+					<animation time="200" effect="fade">Hidden</animation>	
+				</control>
+				<!--RSS Text without touch normal-->
+				<control type="rss">	
+					<description>RSS Feed</description>
+					<posx>50</posx>
+					<posy>1002</posy>
+					<width>1820</width>
+					<height>50</height>
+					<font>rss</font>
+					<urlset>1</urlset>
+					<titlecolor>$VAR[ThemeFontColorBlack]</titlecolor>
+					<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
+					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
+					<visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
+					<visible>!skin.hastheme(classic)</visible>
 					<visible>Window.IsVisible(Home) + ![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)] + !Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
 					<animation time="1500" effect="fade" delay="1500">Visible</animation>
 					<animation time="200" effect="fade">Hidden</animation>	
+				</control>
+				<!--RSS Text with touch-->
+				<control type="rss">	
+					<description>RSS Feed</description>
+					<posx>295</posx>
+					<posy>1015</posy>
+					<width>1420</width>
+					<height>50</height>
+					<font>rss</font>
+					<urlset>1</urlset>
+					<titlecolor>$VAR[ThemeFontColorBlack]</titlecolor>
+					<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
+					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
+					<visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
+					<visible>Window.IsVisible(Home) + ![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)] + !Window.IsVisible(DialogButtonMenu.xml) + Skin.HasSetting(EnableTouchSupport)</visible>
+					<animation time="1500" effect="fade" delay="1500">Visible</animation>
+					<animation time="200" effect="fade">Hidden</animation>
+					<animation effect="slide" start="0,0" end="-15,-15" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 				</control>
 			</control>
 			
@@ -1134,7 +1176,7 @@
             <visible>!IsEmpty(VideoPlayer.Plot)</visible>
 			<visible>!Window.IsActive(dialogslider.xml)</visible>
 			<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
-			
+			<visible>!Window.IsActive(DialogKaiToast.xml)</visible>
 			<!-- blue background -->
 			<control type="image">
 				<posx>-60</posx>
@@ -1142,6 +1184,11 @@
 				<width>2040</width>
 				<height>330</height>
 				<texture background="true">views/filemanager_panel1.png</texture>
+				<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
 			</control>
             <!-- Plot -->
             <control type="group">
@@ -1166,7 +1213,7 @@
                     <posy>0</posy>
                     <width>1500</width>
                     <height>160</height>
-                    <label>$INFO[VideoPlayer.Plot]</label>
+                    <label>[B][COLOR=white]$INFO[VideoPlayer.Year,, • ]$INFO[VideoPlayer.Duration,, min.]$INFO[VideoPlayer.MPAA, • , • ]$INFO[VideoPlayer.RatingAndVotes,, • ][/COLOR][/B][CR]$INFO[VideoPlayer.Plot]</label>
                     <textcolor>bbwhite</textcolor>
                     <align>justify</align>
                     <font>Light32</font>
@@ -1177,7 +1224,7 @@
                     <posy>0</posy>
                     <width>1790</width>
                     <height>160</height>
-                    <label>$INFO[VideoPlayer.Plot]</label>
+                    <label>[B][COLOR=white]$INFO[VideoPlayer.Year,, • ]$INFO[VideoPlayer.Duration,, min.]$INFO[VideoPlayer.MPAA, • , • ]$INFO[VideoPlayer.RatingAndVotes,, • ][/COLOR][/B][CR]$INFO[VideoPlayer.Plot]</label>
                     <textcolor>bbwhite</textcolor>
                     <align>justify</align>
                     <font>Light32</font>
@@ -1327,8 +1374,6 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults16)">Skin.SetString(GuideRows, 9)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults16)">Skin.SetBool(GuideShowInfo)</onload>
 		
-<!-- 		<onload>Skin.Reset(HomeMenuDefaults16)</onload> -->
-		
 		<!-- default color settings -->
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetString(ViewDetailsFocusShadowColor, black)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetString(HomeViewDetailsFocusColor, mainblue)</onload>
@@ -1345,6 +1390,8 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsPanelOpacity, 60)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13) + !StringCompare(Skin.String(ColorTheme),white)">Skin.SetString(ViewDetailsFocusColor, mainblue)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults15)">Skin.SetString(ButtonFocusColor, mainblue)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults17)">Skin.SetString(FooterOpacity, 80)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults17)">Skin.SetString(RSSScrollSpeed, 40)</onload>
 		
 		<!-- enable MB3 mode if MB3 addon is present and active -->
 		<onload condition="!Skin.HasSetting(MB3ModeDetectDone) + !IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.SetBool(HomeMenuUseMBforMovies)</onload>
@@ -1418,6 +1465,7 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults13)">Skin.SetBool(HomeMenuDefaults13)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults14)">Skin.SetBool(HomeMenuDefaults14)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults16)">Skin.SetBool(HomeMenuDefaults16)</onload>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults17)">Skin.SetBool(HomeMenuDefaults17)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults)">Skin.SetBool(WidgetDefaults)</onload>
 		<onload condition="!Skin.HasSetting(WidgetDefaults3)">Skin.SetBool(WidgetDefaults3)</onload>
 		

@@ -292,6 +292,7 @@
 			<include condition="System.HasAddon(plugin.video.netflixbmc)">NetflixWidgetMovies</include>
 			<include condition="System.HasAddon(plugin.video.netflixbmc)">NetflixWidgetTvShows</include>
 			<include>weatherWidget</include>
+			<include>systemWidgetContent</include>
 
 		</control>
 	</control>
@@ -347,6 +348,40 @@
 		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 		<content target="video">$VAR[NetflixWidgetContentTvShows]</content>
 		<visible>Skin.HasSetting(HomeMenuUseNetflixforTVseries) + StringCompare(Window(Home).Property(activewidget),tvshows)</visible>
+		</control>
+	</include>
+	
+	
+	<include name="systemWidgetContent">
+	<control type="panel" id="510">
+		<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
+		<visible>StringCompare(Window(Home).Property(activewidget),systeminfo)</visible>
+			<content>
+				<item>
+					<label>$INFO[System.TotalSpace] - $INFO[System.FreeSpacePercent]</label>
+					<label2>$INFO[System.HddTemperature]</label2>
+					<thumb>defaulticonswide/defaultaddonrepository.png</thumb>
+					<property name="poster"></property>
+					<property name="plot"></property>
+					<onclick>ActivateWindow(systeminfo)</onclick>
+				</item>
+				<item>
+					<label>CPU: $INFO[System.CpuUsage] - MEM: $INFO[System.Memory(used)] ($INFO[System.Memory(used.percent)])</label>
+					<label2>TEMP: $INFO[System.CPUTemperature] - FAN:$INFO[System.FanSpeed]</label2>
+					<thumb>defaulticonswide/defaultaddonscreensaver.png</thumb>
+					<property name="poster"></property>
+					<property name="plot"></property>
+					<onclick>ActivateWindow(systeminfo)</onclick>
+				</item>
+				<item>
+					<label>$INFO[System.ScreenWidth] x $INFO[System.ScreenHeight]</label>
+					<label2>FPS: $INFO[System.FPS] - GPUTEMP: $INFO[System.GPUTemperature]</label2>
+					<thumb>defaulticonswide/defaultaddonskin.png</thumb>
+					<property name="poster"></property>
+					<property name="plot"></property>
+					<onclick>ActivateWindow(systeminfo)</onclick>
+				</item>
+			</content>
 		</control>
 	</include>
 	
