@@ -9,7 +9,6 @@
 		
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.TvShowTitle)">$INFO[ListItem.TvShowTitle]</value>
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
-		<value condition="window.isactive(mypvrrecordings.xml)">[UPPERCASE]$LOCALIZE[19017][/UPPERCASE]</value>
 		
 		<value condition="Window.IsActive(DialogSelect.xml) + StringCompare(Window(Home).Property(customWidget), active)">$ADDON[script.skinshortcuts 32044]</value>
 		<value condition="Window.IsActive(DialogSelect.xml) + !IsEmpty(Control.GetLabel(1))">$INFO[Control.GetLabel(1)]</value>
@@ -33,6 +32,13 @@
 		<value condition="Container.Content(tvshows)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[Container.FolderName,> ,]</value>
 		<value condition="Container.Content(episodes)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.TvShowTitle,> ] $INFO[ListItem.Season,> $LOCALIZE[20373] ,]</value>
 		
+		
+		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + !IsEmpty(Window.Property(IsRadio))">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
+		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVGuide)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] > $LOCALIZE[22020] $INFO[Control.GetLabel(30),> ]</value>
+		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVChannels)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] > $LOCALIZE[19019] $INFO[Control.GetLabel(29),> ]</value>
+		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVRecordings)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] > $LOCALIZE[19017]</value>
+		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVTimers)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] > $LOCALIZE[19040]</value>
+		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVSearch)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] > $LOCALIZE[137]</value>
 		
 		<value condition="Window.IsActive(MyMusicNav.xml)">[UPPERCASE]$LOCALIZE[2][/UPPERCASE] $INFO[Container.FolderName,> ,]</value>
         
@@ -1281,10 +1287,10 @@
 	
 	<variable name="Details">
     <value condition="!Container.content(Addons) + Window.IsActive(MyPics.xml)">$INFO[ListItem.Date,, • ]$INFO[ListItem.Size]</value>
-    <value condition="Container.content(Albums)">$INFO[ListItem.Artist]</value>
+    <value condition="Container.content(Albums)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Artist]</value>
     <value condition="Container.Content(Episodes)">$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration, ,min.]</value>
     <value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
-    <value condition="Container.Content(songs) + !IsEmpty(ListItem.Album)">[COLOR=mainblue]$LOCALIZE[558]:[/COLOR] $INFO[ListItem.Album]</value>
+    <value condition="Container.Content(songs)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre,, • ]$INFO[ListItem.Album]</value>
     <value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),[COLOR=mainblue]$LOCALIZE[515]: [/COLOR]]</value>
     <value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),[COLOR=mainblue]$LOCALIZE[176]: [/COLOR]]</value>
     <value condition="Container.Content(MusicVideos)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,, min.]</value>
@@ -1578,21 +1584,27 @@
    </variable>
      
    <variable name="ColorOverlayClick">
-		<value condition="Skin.String(ColorTheme, Aquamarine)">Skin.SetString(ColorTheme, Black)</value>
+		<value condition="Skin.String(ColorTheme, Aquamarine)">Skin.SetString(ColorTheme, Ash)</value>
+		<value condition="Skin.String(ColorTheme, Ash)">Skin.SetString(ColorTheme, BigRed)</value>
+		<value condition="Skin.String(ColorTheme, BigRed)">Skin.SetString(ColorTheme, Black)</value>
 		<value condition="Skin.String(ColorTheme, Black)">Skin.SetString(ColorTheme, Blue)</value>
 		<value condition="Skin.String(ColorTheme, Blue)">Skin.SetString(ColorTheme, Brown)</value>
-		<value condition="Skin.String(ColorTheme, Brown)">Skin.SetString(ColorTheme, DarkBlue)</value>
+		<value condition="Skin.String(ColorTheme, Brown)">Skin.SetString(ColorTheme, Carbon)</value>
+		<value condition="Skin.String(ColorTheme, Carbon)">Skin.SetString(ColorTheme, DarkBlue)</value>
 		<value condition="Skin.String(ColorTheme, DarkBlue)">Skin.SetString(ColorTheme, Default)</value>
-		<value condition="Skin.String(ColorTheme, Default)">Skin.SetString(ColorTheme, Green)</value>
+		<value condition="Skin.String(ColorTheme, Default)">Skin.SetString(ColorTheme, Frost)</value>
+		<value condition="Skin.String(ColorTheme, Frost)">Skin.SetString(ColorTheme, Green)</value>
 		<value condition="Skin.String(ColorTheme, Green)">Skin.SetString(ColorTheme, Grey)</value>
-		<value condition="Skin.String(ColorTheme, Grey)">Skin.SetString(ColorTheme, Light)</value>
+		<value condition="Skin.String(ColorTheme, Grey)">Skin.SetString(ColorTheme, Lemon)</value>
+		<value condition="Skin.String(ColorTheme, Lemon)">Skin.SetString(ColorTheme, Light)</value>
 		<value condition="Skin.String(ColorTheme, Light)">Skin.SetString(ColorTheme, OceanBlue)</value>
 		<value condition="Skin.String(ColorTheme, OceanBlue)">Skin.SetString(ColorTheme, Olive)</value>
 		<value condition="Skin.String(ColorTheme, Olive)">Skin.SetString(ColorTheme, Pink)</value>
 		<value condition="Skin.String(ColorTheme, Pink)">Skin.SetString(ColorTheme, Purple)</value>
 		<value condition="Skin.String(ColorTheme, Purple)">Skin.SetString(ColorTheme, Red)</value>
 		<value condition="Skin.String(ColorTheme, Red)">Skin.SetString(ColorTheme, SkyBlue)</value>
-		<value condition="Skin.String(ColorTheme, SkyBlue)">Skin.SetString(ColorTheme, Tangerine)</value>
+		<value condition="Skin.String(ColorTheme, SkyBlue)">Skin.SetString(ColorTheme, Spearmint)</value>
+		<value condition="Skin.String(ColorTheme, Spearmint)">Skin.SetString(ColorTheme, Tangerine)</value>
 		<value condition="Skin.String(ColorTheme, Tangerine)">Skin.SetString(ColorTheme, Violet)</value>
 		<value condition="Skin.String(ColorTheme, Violet)">Skin.SetString(ColorTheme, White)</value>
 		<value condition="Skin.String(ColorTheme, White)">Skin.SetString(ColorTheme, Winter1)</value>
@@ -1688,5 +1700,39 @@
 		<value>$INFO[ListItem.Label]</value>
 	 </variable>
 	 
+	 <variable name="PlayerActionLabel">
+		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
+		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
+		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
+		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
+		<value condition="player.forwarding8x">[B]$LOCALIZE[31253][/B] x8</value>
+		<value condition="player.forwarding16x">[B]$LOCALIZE[31253][/B] x16</value>
+		<value condition="player.forwarding32x">[B]$LOCALIZE[31253][/B] x32</value>
+		<value condition="player.rewinding2x">[B]$LOCALIZE[31254][/B] x2</value>
+		<value condition="player.rewinding4x">[B]$LOCALIZE[31254][/B] x4</value>
+		<value condition="player.rewinding8x">[B]$LOCALIZE[31254][/B] x8</value>
+		<value condition="player.rewinding16x">[B]$LOCALIZE[31254][/B] x16</value>
+		<value condition="player.rewinding32x">[B]$LOCALIZE[31254][/B] x32</value>
+		<value condition="!IsEmpty(player.FinishTime)">$LOCALIZE[31112] $INFO[Player.FinishTime]</value>
+	 </variable>
+	 
+	 <variable name="PlayerActionLabelLarge">
+		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
+		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
+		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
+		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
+		<value condition="player.forwarding8x">[B]$LOCALIZE[31253][/B] x8</value>
+		<value condition="player.forwarding16x">[B]$LOCALIZE[31253][/B] x16</value>
+		<value condition="player.forwarding32x">[B]$LOCALIZE[31253][/B] x32</value>
+		<value condition="player.rewinding2x">[B]$LOCALIZE[31254][/B] x2</value>
+		<value condition="player.rewinding4x">[B]$LOCALIZE[31254][/B] x4</value>
+		<value condition="player.rewinding8x">[B]$LOCALIZE[31254][/B] x8</value>
+		<value condition="player.rewinding16x">[B]$LOCALIZE[31254][/B] x16</value>
+		<value condition="player.rewinding32x">[B]$LOCALIZE[31254][/B] x32</value>
+		<value condition="player.paused">[B]$LOCALIZE[31251][/B]</value>
+	 </variable>
+
 	
 </includes>
