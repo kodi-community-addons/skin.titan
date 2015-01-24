@@ -6,8 +6,7 @@
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
 	<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>
 	<onload condition="!IsEmpty(ListItem.Cast)">RunScript(script.metadata.actors,dialogbackend)</onload>
-	
-	<onload>ClearProperty(ShowCast)</onload>
+	<onunload>ClearProperty(ShowCast)</onunload>
     <controls>
 		<control type="group">
 			<visible>!Window.IsVisible(FileBrowser)</visible>
@@ -15,7 +14,7 @@
 			<visible>Window.IsActive(DialogVideoInfo.xml)</visible>
 			<include>GlobalBackground</include>
 		</control>
-		
+		<include>nowplayingbackground</include>
 		<!-- Header -->
 		<control type="group">
 			<control type="label">
@@ -90,22 +89,28 @@
 					<control type="grouplist" id="9000">
 						<posx>60</posx>
 						<posy>1005</posy>
-						<width>1600</width>
+						<width>1800</width>
 						<height>450</height>
-						<itemgap>20</itemgap>
+						<itemgap>15</itemgap>
 						<onup>noop</onup>
 						<ondown>noop</ondown>
-						<onright condition="!System.HasAddon(script.extendedinfo)">SetProperty(ShowCast, show)</onright>
-						<onright condition="!System.HasAddon(script.extendedinfo)">SetFocus(9002)</onright>
-						<onright condition="System.HasAddon(script.extendedinfo) + IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onright>
-						<onright condition="System.HasAddon(script.extendedinfo) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onright>
-						<onright condition="System.HasAddon(script.extendedinfo) + !IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onright>
-						<onleft>noop</onleft>
 						<orientation>horizontal</orientation>
+						
+						<control type="button" id="208">
+							<!--Close-->
+							<label>208</label>
+							<width>285</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<onclick>back</onclick>
+							<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+						</control>
+						
 						<control type="button" id="8">
 							<!--Play-->
 							<label>208</label>
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -116,7 +121,7 @@
 						<control type="button" id="1008">
 							<!--Play-->
 							<label>208</label>
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -129,7 +134,7 @@
 						<control type="button" id="9">
 							<!--Resume-->
 							<label>13404</label>
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -138,7 +143,7 @@
 						
 						<control type="button" id="103">
 							<!-- Local Trailer-->
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -148,7 +153,7 @@
 						</control>
 						<control type="button" id="104">
 							<!--MB3 Local Trailer-->
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -159,7 +164,7 @@
 						</control>
 						<control type="button" id="100">
 							<!--Search Trailer on Youtube-->
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -169,39 +174,10 @@
 							<onclick condition="SubString(System.AddonVersion(plugin.video.youtube),5,left)">ActivateWindow(videos,plugin://plugin.video.youtube/kodion/search/query/?q=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
 							<visible>Container.Content(movies) | stringcompare(ListItem.Property(ItemType),Movie)</visible>
 						</control>
-						<control type="button" id="113">
-							<width>300</width>
-							<description>Home Theatre</description>
-							<label>$INFO[System.AddonTitle(script.cinema.experience)]</label>
-							<onclick>Playlist.Clear</onclick>
-							<onclick>Dialog.Close(MovieInformation)</onclick>
-							<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
-							<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !SubString(Container.FolderPath,plugin)</visible>
-						</control>
-						<control type="button" id="102">
-							<!--Get video extras-->
-							<width>300</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<label>$INFO[System.AddonTitle(script.videoextras)]</label>
-							<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
-							<visible>!substring(Container.FolderPath,plugin://plugin.video) + System.HasAddon(script.videoextras) + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
-						</control>
-						<control type="button" id="101">
-							<!--Get Thumb Artwork Downloader-->
-							<label>13511</label>
-							<width>300</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
-						</control>
-						
 						<control type="button" id="114">
 							<!--Cast Button-->
 							<label>206</label>
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
@@ -211,15 +187,70 @@
 							<onclick condition="System.HasAddon(script.extendedinfo) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onclick>
 							<onclick condition="System.HasAddon(script.extendedinfo) + !IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onclick>
 						</control>
-						
+						<control type="button" id="113">
+							<width>285</width>
+							<description>Home Theatre</description>
+							<label>$INFO[System.AddonTitle(script.cinema.experience)]</label>
+							<onclick>Playlist.Clear</onclick>
+							<onclick>Dialog.Close(MovieInformation)</onclick>
+							<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
+							<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !SubString(Container.FolderPath,plugin)</visible>
+						</control>
+						<control type="button" id="102">
+							<!--Get video extras-->
+							<width>285</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<label>$INFO[System.AddonTitle(script.videoextras)]</label>
+							<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
+							<visible>System.HasAddon(script.videoextras) + !IsEmpty(ListItem.FilenameAndPath)</visible>
+						</control>
+						<control type="button" id="101">
+							<!--Get Thumb Artwork Downloader-->
+							<label>13511</label>
+							<width>285</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
+						</control>
 						<control type="button" id="6">
 							<!--Refresh-->
 							<label>184</label>
-							<width>300</width>
+							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
 						</control>
+					</control>
+					
+					<!--Arrow-->
+					<control type="image">
+						<animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
+						<left>1880</left>
+						<posy>1005</posy>
+						<posy>50</posy>
+						<width>20</width>
+						<height>60</height>
+						<aspectratio>keep</aspectratio>
+						<texture>dialogs/videoinfo/arrow.png</texture>
+						<visible>!Control.HasFocus(50)</visible>
+						<colordiffuse>white</colordiffuse>
+						<visible>Container(9000).HasNext</visible>
+					</control>
+					<control type="image">
+						<animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
+						<left>35</left>
+						<posy>1005</posy>
+						<posy>50</posy>
+						<width>20</width>
+						<height>60</height>
+						<aspectratio>keep</aspectratio>
+						<texture flipx="true">dialogs/videoinfo/arrow.png</texture>
+						<visible>!Control.HasFocus(50)</visible>
+						<colordiffuse>white</colordiffuse>
+						<visible>Container(9000).HasPrevious</visible>
 					</control>
 					
 					<control type="image">
@@ -244,52 +275,6 @@
 						<height>620</height>
 						<aspectratio align="right" aligny="center">keep</aspectratio>
 						<texture background="true">$VAR[VideoInfoPosterImage]</texture>
-					</control>
-
-					
-					<!--Arrow-->
-					<control type="group">
-						<width>340</width>
-						<right>60</right>
-						<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
-						<!-- Cast Label -->
-						<control type="label">
-							<left>0</left>
-							<posy>1005</posy>
-							<height>60</height>
-							<width>300</width>
-							<label>$LOCALIZE[206]</label>
-							<font>Reg45</font>
-							<textcolor>white</textcolor>
-							<align>right</align>
-							<scroll>false</scroll>
-						</control>
-						<!--Arrow-->
-						<control type="image">
-							<animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
-							<left>320</left>
-							<posy>1005</posy>
-							<posy>50</posy>
-							<width>20</width>
-							<height>60</height>
-							<aspectratio>keep</aspectratio>
-							<texture>dialogs/videoinfo/arrow.png</texture>
-							<visible>!Control.HasFocus(50)</visible>
-							<colordiffuse>white</colordiffuse>
-						</control>
-					</control>
-					
-					<!-- close dialog button -->
-					<control type="button">
-						<right>60</right>
-						<posy>1015</posy>
-						<width>50</width>
-						<height>50</height>
-						<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
-						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_close.png</texturenofocus>
-						<aspectratio>keep</aspectratio>
-						<onclick>back</onclick>
-						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 					</control>
 
 					<!--Info-->
@@ -602,6 +587,7 @@
 						<onup>noop</onup>
 						<ondown>noop</ondown>
 						<onleft>ClearProperty(ShowCast)</onleft>
+						<onback>ClearProperty(ShowCast)</onback>
 						<onleft>SetFocus(9000)</onleft>
 						<scrolltime>200</scrolltime>
 						<orientation>vertical</orientation>
@@ -646,7 +632,7 @@
 						<width>450</width>
 						<height>680</height>
 						<aspectratio align="right" aligny="center">keep</aspectratio>
-						<texture background="true">$VAR[actorImage]</texture>
+						<texture background="true" fallback="DefaultActor.png">$VAR[actorImage]</texture>
 						<fadetime>300</fadetime>
 						<aspectratio>scale</aspectratio>
 					</control>

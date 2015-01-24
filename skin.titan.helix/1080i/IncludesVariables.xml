@@ -633,7 +633,8 @@
 	<variable name="RecentMoviesButtonOnClick">
         <value condition="Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson",return)</value>
         <value condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.1.path)]</value>
-		<value>ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</value>
+		<value condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</value>
+		<value>ActivateWindow(Videos,videodb://recentlyaddedmovies/ ,return)</value>
     </variable>
 	
 	<variable name="RecentMoviesButtonThumb">
@@ -689,7 +690,8 @@
 	<variable name="RecentTVseriesButtonOnClick">
         <value condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson",return)</value>
 		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window.Property(MediaBrowser.std.tvshows.1.path)]</value>
-        <value>ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</value>
+		<value condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</value>
+		<value>ActivateWindow(Videos,videodb://recentlyaddedepisodes/ ,return)</value>
     </variable>
 	
 	<variable name="RecentTVseriesButtonThumb">
@@ -833,7 +835,7 @@
     </variable>
 
 	<variable name="HomeMenuWidgetLabel">
-		<value condition="StringCompare(Window(Home).Property(activewidget), youtube)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget), youtube) | StringCompare(Window(Home).Property(activewidget), music)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
 		<value condition="!IsEmpty(ListItem.Property(SeasonNumber))">$INFO[ListItem.label2] - [UPPERCASE]S$INFO[ListItem.Property(SeasonNumber)]E$INFO[ListItem.Property(EpisodeNumber)][/UPPERCASE][CR]$INFO[ListItem.label]</value>
 		<value condition="!IsEmpty(ListItem.Property(EpisodeNumber))">$INFO[ListItem.label2] - [UPPERCASE]$INFO[ListItem.Property(EpisodeNumber)][/UPPERCASE][CR]$INFO[ListItem.label]</value>
 		<value condition="!IsEmpty(ListItem.Episode)">$INFO[ListItem.TvShowTitle] - [UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE][CR]$INFO[ListItem.Title]</value>

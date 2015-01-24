@@ -16,8 +16,7 @@
 			</animation>
 			
 			<visible>!IsEmpty(Window(Home).Property(activewidget))</visible>
-				
-			
+
 				<animation time="400" effect="fade">Visible</animation>
 				<animation time="200" effect="fade">Hidden</animation>
 				
@@ -176,7 +175,7 @@
 			
 			<!-- widget type selector -->
 			<control type="group">		
-				<visible>!StringCompare(Window(Home).Property(activewidget),submenuaswidget) + !SubString(Window(Home).Property(activewidget),smart-) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]</visible>
+				<visible>!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + !SubString(Window(Home).Property(activewidget),smart-) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]</visible>
 				<control type="image">
 					<height>70</height>
 					<width>60</width>
@@ -222,7 +221,7 @@
 				<texturenofocus>-</texturenofocus>
 				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<include>animation_fade_visible_hidden_delayed</include>
-				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
+				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
 			</control>
 
 			<control type="image">
@@ -358,27 +357,53 @@
 		<visible>StringCompare(Window(Home).Property(activewidget),systeminfo)</visible>
 			<content>
 				<item>
-					<label>$INFO[System.TotalSpace] - $INFO[System.FreeSpacePercent]</label>
-					<label2>$INFO[System.HddTemperature]</label2>
-					<thumb>defaulticonswide/defaultaddonrepository.png</thumb>
-					<property name="poster"></property>
-					<property name="plot"></property>
+					<label>[B]$LOCALIZE[155]:[/B] $INFO[System.UsedSpacePercent][B]</label>
+					<label2></label2>
+					<thumb>defaulticonswide/disk.png</thumb>
+					<property name="episodethumb">defaulticonswide/disk2.png</property>
+					<property name="poster">defaulticonswide/disk.png</property>
+					<property name="fanart">special://skin/extras/backgrounds/settings.jpg</property>
+					<property name="plot">[CR]$INFO[System.TotalSpace] • $INFO[System.UsedSpace][CR]$INFO[System.HddTemperature]</property>
 					<onclick>ActivateWindow(systeminfo)</onclick>
 				</item>
 				<item>
-					<label>CPU: $INFO[System.CpuUsage] - MEM: $INFO[System.Memory(used)] ($INFO[System.Memory(used.percent)])</label>
-					<label2>TEMP: $INFO[System.CPUTemperature] - FAN:$INFO[System.FanSpeed]</label2>
-					<thumb>defaulticonswide/defaultaddonscreensaver.png</thumb>
-					<property name="poster"></property>
-					<property name="plot"></property>
+					<label>[B]$LOCALIZE[13271][/B] $INFO[System.CpuUsage] • $INFO[System.CpuFrequency][B]</label>
+					<label2></label2>
+					<thumb>defaulticonswide/cpu.png</thumb>
+					<property name="poster">defaulticonswide/cpu.png</property>
+					<property name="episodethumb">defaulticonswide/cpu2.png</property>
+					<property name="fanart">special://skin/extras/backgrounds/system.jpg</property>
+					<property name="plot">[CR]$LOCALIZE[401]: $INFO[System.CPUTemperature] • $LOCALIZE[13300]: $INFO[System.FanSpeed][CR]$LOCALIZE[12390]: $INFO[System.Uptime]</property>
 					<onclick>ActivateWindow(systeminfo)</onclick>
 				</item>
 				<item>
-					<label>$INFO[System.ScreenWidth] x $INFO[System.ScreenHeight]</label>
-					<label2>FPS: $INFO[System.FPS] - GPUTEMP: $INFO[System.GPUTemperature]</label2>
-					<thumb>defaulticonswide/defaultaddonskin.png</thumb>
-					<property name="poster"></property>
-					<property name="plot"></property>
+					<label>[B]$LOCALIZE[31257]:[/B] $INFO[System.Memory(used.percent)][B]</label>
+					<label2></label2>
+					<thumb>defaulticonswide/memory.png</thumb>
+					<property name="poster">defaulticonswide/memory.png</property>
+					<property name="episodethumb">defaulticonswide/memory2.png</property>
+					<property name="fanart">special://skin/extras/backgrounds/addons.jpg</property>
+					<property name="plot">[CR]$LOCALIZE[22012]: $INFO[System.Memory(total)] • $LOCALIZE[158]: $INFO[System.Memory(free)]</property>
+					<onclick>ActivateWindow(systeminfo)</onclick>
+				</item>
+				<item>
+					<label>[B]IP:[/B] $INFO[Network.IPAddress][B]</label>
+					<label2></label2>
+					<thumb>defaulticonswide/network.png</thumb>
+					<property name="poster">defaulticonswide/network.png</property>
+					<property name="episodethumb">defaulticonswide/network2.png</property>
+					<property name="fanart">special://skin/extras/backgrounds/network.jpg</property>
+					<property name="plot">$INFO[Network.LinkState][CR]$LOCALIZE[443]: $INFO[System.InternetState]</property>
+					<onclick>ActivateWindow(systeminfo)</onclick>
+				</item>
+				<item>
+					<label>[B]$LOCALIZE[131]:[/B] $INFO[System.ScreenWidth]x$INFO[System.ScreenHeight][B]</label>
+					<label2></label2>
+					<thumb>defaulticonswide/display.png</thumb>
+					<property name="poster">defaulticonswide/display.png</property>
+					<property name="episodethumb">defaulticonswide/display2.png</property>
+					<property name="fanart">special://skin/extras/backgrounds/hover_tetris.jpg</property>
+					<property name="plot">[CR]$INFO[System.ScreenResolution]</property>
 					<onclick>ActivateWindow(systeminfo)</onclick>
 				</item>
 			</content>
@@ -5107,11 +5132,11 @@
         </control>
         <control type="label">
             <!--Label-->
-            <posx>10</posx>
+            <centerleft>174</centerleft>
             <posy>117</posy>
             <width>340</width>
             <height>100</height>
-            <align>left</align>
+            <align>center</align>
             <label>$VAR[HomeMenuWidgetLabel]</label>
             <font>Light25</font>
             <textcolor>lightgrey</textcolor>
@@ -5130,11 +5155,11 @@
             <animation type="UnFocus">
                 <effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
             </animation>
-            <posx>10</posx>
+            <centerleft>174</centerleft>
             <posy>117</posy>
             <width>340</width>
             <height>100</height>
-            <align>left</align>
+            <align>center</align>
             <label>$VAR[HomeMenuWidgetLabel]</label>
             <font>Light25</font>
             <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
