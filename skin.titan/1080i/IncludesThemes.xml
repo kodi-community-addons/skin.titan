@@ -55,12 +55,23 @@
 				<visible>System.HasAddon(script.artwork.downloader) + [Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
 				</control>
 				<control type="button" id="1033">
-				<include>SubMenuButton</include>
-				<onleft>Dialog.Close(106)</onleft>
-				<onright>Dialog.Close(106)</onright>
-				<onclick>RunScript(script.trakt,action=contextmenu)</onclick>
-				<label>$INFO[System.AddonTitle(script.trakt)]</label>
-				<visible>System.HasAddon(script.trakt)</visible>
+					<include>SubMenuButton</include>
+					<onleft>Dialog.Close(106)</onleft>
+					<onright>Dialog.Close(106)</onright>
+					<onclick>RunScript(script.trakt,action=contextmenu)</onclick>
+					<label>$INFO[System.AddonTitle(script.trakt)]</label>
+					<visible>System.HasAddon(script.trakt)</visible>
+				</control>
+				<control type="button" id="115">
+					<!--Extended Info Button-->
+					<label>Extended Info</label>
+					<include>SubMenuButton</include>
+					<onleft>Dialog.Close(106)</onleft>
+					<onright>Dialog.Close(106)</onright>
+					<onclick condition="!System.HasAddon(script.extendedinfo)">ActivateWindow(Videos,plugin://script.extendedinfo)</onclick>
+					<onclick condition="IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onclick>
+					<onclick condition="Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onclick>
+					<onclick condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onclick>
 				</control>
             </control>
         </control>

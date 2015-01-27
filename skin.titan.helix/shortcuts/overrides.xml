@@ -76,8 +76,10 @@
 		<!-- movies -->
 		<node label="20342" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
 			<shortcut label="31050" grouping="32029" icon="$VAR[MoviesButtonThumb]" condition="!StringCompare(Window(Home).Property(customWidget), active)">$VAR[MoviesButtonOnClick]</shortcut>
+			<shortcut label="All Movies FAST TEST" grouping="32029" icon="$VAR[MoviesButtonThumb]" condition="!StringCompare(Window(Home).Property(customWidget), active) + Skin.HasSetting(HomeMenuUseMBforMovies)">fastmovies</shortcut>
 			<shortcut label="31036" grouping="20342" type="20342" icon="$VAR[MB3FavoritesThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">$VAR[CustomCollectionClick]</shortcut>
 			<shortcut label="19019" grouping="1047" type="1037" icon="$VAR[MB3ChannelsThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">$VAR[CustomCollectionClick]</shortcut>
+			
 			<!-- mb3 movie items -->
 			<shortcut label="20386" grouping="20342" type="20342" icon="$VAR[RecentMoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.1.path)]</shortcut>
 			<shortcut label="31035" grouping="20342" type="20342" icon="$VAR[InProgressMoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.2.path)]</shortcut>
@@ -610,6 +612,14 @@
 		<condition>true</condition>
 		<action>XBMC.RunScript(script.titanskin.helpers,SHOWSUBMENU,SHOW,4444)</action>
 	</override>
+	
+	<override action="fastmovies">
+		<condition>true</condition>
+		<action>SetProperty(ShowFastAllMovies, show, Home)</action>
+		<action>SetFocus(57)</action>
+	</override>
+	
+	<checkforshortcut property="MB3FastMoviesWorkAround">SetProperty(ShowFastAllMovies, show, Home)</checkforshortcut>
 			
 </overrides>
 
