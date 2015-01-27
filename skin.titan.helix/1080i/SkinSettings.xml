@@ -2,6 +2,7 @@
 <!--Titan-->
 <window>
     <defaultcontrol always="true">100</defaultcontrol>
+	<backgroundcolor>0</backgroundcolor>
 	<onunload>SetProperty(powermenu, notactive, Home)</onunload>
 	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.Reset(HomeMenuUseMBforMovies)</onload>
 	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforTVseries)</onload>
@@ -15,7 +16,7 @@
 	
     <controls>
         <!--Global Background-->
-        <include>GlobalBackground</include>
+        <include condition="Skin.HasSetting(UseSectionBackground)">SectionBackground</include><include condition="!Skin.HasSetting(UseSectionBackground)">GlobalBackground</include>
         <!--Time & Weather-->
         <include>TimeInfo</include>
 		<!-- Now playing -->
@@ -440,6 +441,7 @@
 					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar)</visible>
                 </control>
 				
+				<!-- media library views -->
 				<control type="label" id="13020">
                     <width>1230</width>
                     <height>50</height>
@@ -449,6 +451,30 @@
                     <shadowcolor>black</shadowcolor>
                     <align>left</align>
                     <aligny>center</aligny>
+                </control>
+				
+				<control type="radiobutton" id="320">
+                    <!--Show Fanart Background-->
+                    <width>1230</width>
+                    <align>left</align>
+					<height>50</height>
+                    <label>31141</label>
+					<focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(ShowFanartBackground)</onclick>
+                    <selected>Skin.HasSetting(ShowFanartBackground)</selected>
+                </control>
+				<control type="radiobutton" id="338">
+                    <!--Show extra Fanart Background-->
+                     <width>1230</width>
+                    <align>left</align>
+					<height>50</height>
+                    <label>31207</label>
+					<focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(EnableExtraFanart)</onclick>
+                    <selected>Skin.HasSetting(EnableExtraFanart)</selected>
+					<visible>Skin.HasSetting(ShowFanartBackground)</visible>
                 </control>
 				
 				<!--viewdetails text color-->
@@ -774,6 +800,18 @@
 					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 6)">Skin.SetString(ShowInfoAtPlaybackStart, 8)</onclick>
 					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 8)">Skin.SetString(ShowInfoAtPlaybackStart, 10)</onclick>
 					<onclick condition="skin.string(ShowInfoAtPlaybackStart, 10)">Skin.SetString(ShowInfoAtPlaybackStart, 0)</onclick>
+                </control>
+				
+				<control type="radiobutton" id="13058">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31259</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(OSDShowInfoOnPause)</onclick>
+                    <selected>Skin.HasSetting(OSDShowInfoOnPause)</selected>
                 </control>
 				
 				<control type="radiobutton" id="13055">
