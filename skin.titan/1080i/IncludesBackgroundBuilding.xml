@@ -20,6 +20,11 @@
         </control>
     </include>
 	
+	<variable name="panel_color">
+		<value condition="Skin.String(PanelColor)">$INFO[Skin.String(PanelColor)]</value>
+		<value>darkblue</value>
+   </variable>
+	
 	<variable name="ColorOverlay">
 		<value condition="!Skin.String(ColorTheme, none) + !Skin.String(ColorTheme, custom)">$INFO[Skin.String(ColorTheme),special://skin/extras/bgoverlays/,.png]</value>
 		<value condition="Skin.String(ColorTheme, custom)">$INFO[Skin.String(CustomColorTheme)]</value>
@@ -27,191 +32,61 @@
 	
 	<include name="DialogOverlayExtra">
 		<control type="image">
-			<animation effect="fade" time="300" start="0" end="100" reversible="true">WindowOpen</animation>
 			<include>DimensionsFullscreen</include>
 			<texture>bgoverlay_default.png</texture>
 			<colordiffuse>FF4d86a6</colordiffuse>
+			<visible>Skin.String(ColorTheme, none) | Skin.String(ColorTheme, Default)</visible>
+		</control>
+		<control type="image">
+			<include>DimensionsFullscreen</include>
+			<texture>$VAR[ColorOverlay]</texture>
+			<visible>![Skin.String(ColorTheme, none) | Skin.String(ColorTheme, Default)]</visible>
 		</control>
     </include>
 	
-	<include name="FanArtBackground">
-		<!-- listItem fanart -->
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-            <fadetime>1000</fadetime>
-            <texture background="true">$VAR[itemFanartBackground]</texture>
-        </control>
-	</include>
-	
-	<include name="ExtraFanArtBackground">
-		<!-- extra fanart background -->
-        <control type="multiimage">
-            <include>DimensionsFullscreen</include>
-            <imagepath background="true">$VAR[itemExtraFanartBackground]</imagepath>
-            <aspectratio>stretch</aspectratio>
-            <timeperimage>10000</timeperimage>
-            <fadetime>800</fadetime>
-            <randomize>true</randomize>
-            <include>backgroundfade</include>
-			<visible>IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt))</visible>
-        </control>
-	</include>
-	
+	<!--Home Background -->
 	<include name="HomeBackground">
-		
-		<!-- single image background -->
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-			<aspectratio>stretch</aspectratio>
-            <texture background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$VAR[homeBackground]</texture>
-            <fadetime>800</fadetime>
-			<visible>!substring(Skin.String(SectionBackground),\,right)</visible>
-        </control>
-		
-		<!-- multi image background -->
-        <control type="multiimage">
-            <posx>0</posx>
-            <posy>0</posy>
-            <width>1920</width>
-            <height>1080</height>
-            <imagepath background="true">$INFO[Container(300).ListItem.Property(Background)]</imagepath>
-            <aspectratio>stretch</aspectratio>
-            <timeperimage>25000</timeperimage>
-            <fadetime>800</fadetime>
-            <randomize>true</randomize>
-            <include>backgroundfade</include>
-			<visible>!IsEmpty(Container(300).ListItem.Property(Background)) + substring(Container(300).ListItem.Property(Background),\,right)</visible>
-        </control>
-		
-		<!-- Widgets background -->
-		<control type="image">
-            <include>DimensionsFullscreen</include>
-            <fadetime>1000</fadetime>
-            <texture background="true">$VAR[HomeMenuWidgetBackground]</texture>
-			<aspectratio>stretch</aspectratio>
-            <visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-			<include>backgroundfade</include>
-        </control>
-		
-		<include>DialogOverlay</include>
-	</include>
-	
-	<include name="NextAiredFanArtBackground">
-		<!-- Widgets background -->
-		<control type="image">
-            <include>DimensionsFullscreen</include>
-            <fadetime>1000</fadetime>
-            <texture background="true">$VAR[NextAiredFanartBackground]</texture>
-			<aspectratio>stretch</aspectratio>
-			<include>backgroundfade</include>
-        </control>
-	</include>
-	
-	
-	<!--Section Background - all other windows except home-->
-    <include name="SectionBackground">
-		
-		<!-- single image background -->
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-            <texture background="true">$INFO[Skin.String(SectionBackground)]</texture>
-            <fadetime>800</fadetime>
-			<aspectratio>stretch</aspectratio>
-			<visible>!substring(Skin.String(SectionBackground),\,right)</visible>
-        </control>
-		
-		<!-- multi image background -->
-        <control type="multiimage">
-            <posx>0</posx>
-            <posy>0</posy>
-            <width>1920</width>
-            <height>1080</height>
-            <imagepath background="true">$VAR[sectionBackground]</imagepath>
-            <aspectratio>stretch</aspectratio>
-            <timeperimage>25000</timeperimage>
-            <fadetime>800</fadetime>
-            <randomize>true</randomize>
-            <include>backgroundfade</include>
-			<visible>substring(Skin.String(SectionBackground),\,right)</visible>
-        </control>
 
-		
-		<include condition="Skin.HasSetting(ShowFanartBackground)">FanArtBackground</include>
-		<include condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart)">ExtraFanArtBackground</include>
-		<include condition="Window.IsActive(MyWeather.xml)">WeatherBackground</include>
-		<include>DialogOverlay</include>
-		
-    </include>
-	
-	
-	<include name="WeatherBackground">
-		<!-- single image background -->
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-            <texture background="true" fallback="special://skin/extras/backgrounds/weather.jpg">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]/weather.jpg</texture>
-            <fadetime>800</fadetime>
-        </control>
-		
-		<!-- multi image background -->
         <control type="multiimage">
             <posx>0</posx>
             <posy>0</posy>
             <width>1920</width>
             <height>1080</height>
-            <imagepath background="true">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]</imagepath>
+            <imagepath background="true">$VAR[homeBackground]</imagepath>
             <aspectratio>stretch</aspectratio>
-            <timeperimage>25000</timeperimage>
-            <fadetime>800</fadetime>
+            <timeperimage>8000</timeperimage>
+            <fadetime>250</fadetime>
             <randomize>true</randomize>
-            <include>backgroundfade</include>
-			<visible>Skin.HasSetting(EnableExtraFanart)</visible>
         </control>
+	
+		<include>DialogOverlay</include>
 	</include>
 	
 	
-	
-	
-	<!--Global Background-->
+	<!--Global Background - all other windows except home-->
     <include name="GlobalBackground">
-		
-		<!-- single image background -->
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-			<aspectratio>stretch</aspectratio>
-            <texture background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$VAR[globalBackground]</texture>
-            <fadetime>800</fadetime>
+			
+		<!-- multi image background -->
+        <control type="multiimage">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <imagepath background="true">$VAR[globalBackground]</imagepath>
+            <aspectratio>stretch</aspectratio>
+            <timeperimage>8000</timeperimage>
+            <fadetime>250</fadetime>
+            <randomize>true</randomize>
         </control>
-		
-		<include condition="Window.IsActive(MyWeather.xml) | Skin.String(CustomBackgroundSetting, weather)">WeatherBackground</include>
-		<include condition="Skin.HasSetting(ShowFanartBackground)">FanArtBackground</include>
-		<include condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart)">ExtraFanArtBackground</include>
 
 		<include>DialogOverlay</include>
 		
     </include>
 	
-	<variable name="globalBackground">
-		<!-- user custom background -->
-		<value condition="!Skin.String(CustomBackgroundSetting, default) + !Skin.String(CustomBackgroundSetting, blue) + !Skin.String(CustomBackgroundSetting, weather) + !Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Skin.String(CustomBackgroundSetting))">$INFO[Skin.String(CustomBackgroundSetting)]</value>
-		<!-- fanart background -->
-		<value condition="Skin.String(CustomBackgroundSetting, fanart)">$VAR[globalFanartBackground]</value>
-		<!-- default backgrounds -->
-		<value condition="skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
-		<value>special://skin/extras/backgrounds/global_blue.jpg</value>
-   </variable>
    
-   <variable name="itemFanartBackground">
-		<value condition="!IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
-		<value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-		<value condition="!IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
-   </variable>
+   <variable name="globalBackground">
    
-   <variable name="NextAiredFanartBackground">
+		<!--nextaired script backgrounds -->
 		<value condition="Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Fanart))">$INFO[Container(200).ListItem.Property(Fanart)]</value>
 		<value condition="Control.IsVisible(201) + !IsEmpty(Container(201).ListItem.Property(Fanart))">$INFO[Container(201).ListItem.Property(Fanart)]</value>
 		<value condition="Control.IsVisible(202) + !IsEmpty(Container(202).ListItem.Property(Fanart))">$INFO[Container(202).ListItem.Property(Fanart)]</value>
@@ -228,7 +103,26 @@
    		<value condition="Control.IsVisible(213) + !IsEmpty(Container(213).ListItem.Property(Fanart))">$INFO[Container(213).ListItem.Property(Fanart)]</value>
 		<value condition="Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Fanart))">$INFO[Container(214).ListItem.Property(Fanart)]</value>
 		<value condition="Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Fanart))">$INFO[Container(215).ListItem.Property(Fanart)]</value>
+   
+		<!-- fanart backgrounds -->
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
+		<value condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(listitem.art(fanart)) + !Container.Content(episodes) + !SubString(Container.FolderPath,plugin) + !SubString(Container.FolderPath,sources) + !SubString(Container.FolderPath,upnp) + !ListItem.IsFolder + !SubString(ListItem.Path,theme) + !SubString(ListItem.Path,intro)">$INFO[ListItem.Path,,extrafanart/]</value>
+		<value condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(listitem.art(fanart)) + Container.Content(episodes) + !SubString(Container.FolderPath,plugin) + !SubString(Container.FolderPath,sources) + !SubString(Container.FolderPath,upnp) + !ListItem.IsFolder + !SubString(ListItem.Path,theme) + !SubString(ListItem.Path,intro)">$INFO[ListItem.Path,,../extrafanart/]</value>
+		<value condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(listitem.art(fanart)) + !SubString(Container.FolderPath,plugin)">$INFO[ListItem.Path,,extrafanart/]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<!-- section background -->
+		<value condition="Skin.HasSetting(UseSectionBackground) + Skin.String(SectionBackground)">$INFO[Skin.String(SectionBackground)]</value>
+		<!-- global background custom-->
+		<value condition="!Skin.String(CustomBackgroundSetting, default) + !Skin.String(CustomBackgroundSetting, blue) + !Skin.String(CustomBackgroundSetting, weather) + !Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Skin.String(CustomBackgroundSetting))">$INFO[Skin.String(CustomBackgroundSetting)]</value>
+		<!-- global fanart background -->
+		<value condition="Skin.String(CustomBackgroundSetting, fanart)">$VAR[globalFanartBackground]</value>
+		<!-- default backgrounds -->
+		<value condition="skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
+		<value>special://skin/extras/backgrounds/global_blue.jpg</value>
    </variable>
+   
    
    <variable name="globalFanartBackground">
 		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !IsEmpty(Window(Home).Property(MB3.Background.Global.FanArt))">$INFO[Window(Home).Property(MB3.Background.Global.FanArt)]</value>
@@ -282,13 +176,12 @@
 		<value>special://skin/extras/backgrounds/hover_extensions.jpg</value>
 	</variable>
 	
-	<variable name="itemExtraFanartBackground">
-		<value condition="!IsEmpty(listitem.art(fanart)) + !Container.Content(episodes) + !SubString(Container.FolderPath,plugin) + !SubString(Container.FolderPath,sources) + !SubString(Container.FolderPath,upnp) + !ListItem.IsFolder + !SubString(ListItem.Path,theme) + !SubString(ListItem.Path,intro)">$INFO[ListItem.Path,,extrafanart/]</value>
-		<value condition="!IsEmpty(listitem.art(fanart)) + Container.Content(episodes) + !SubString(Container.FolderPath,plugin) + !SubString(Container.FolderPath,sources) + !SubString(Container.FolderPath,upnp) + !ListItem.IsFolder + !SubString(ListItem.Path,theme) + !SubString(ListItem.Path,intro)">$INFO[ListItem.Path,,../extrafanart/]</value>
-		<value condition="!IsEmpty(listitem.art(fanart)) + !SubString(Container.FolderPath,plugin)">$INFO[ListItem.Path,,extrafanart/]</value>
-	</variable>
 
    <variable name="homeBackground">
+		
+		<!--widgets -->
+		<value condition="Control.HasFocus(510) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(510).ListItem.Art(fanart))">$INFO[Container(510).ListItem.Art(fanart)]</value>
+		<value condition="Control.HasFocus(510) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(510).ListItem.Property(fanart))">$INFO[Container(510).ListItem.Property(fanart)]</value>
 		
 		<!-- live tv -->
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),livetv) + [StringCompare(Container(300).ListItem.Property(Background),default) | IsEmpty(Container(300).ListItem.Property(Background))]">special://skin/extras/backgrounds/hover_my tv.jpg</value>
@@ -358,43 +251,51 @@
 		<value condition="!IsEmpty(Container(300).ListItem.Property(Background)) + ![StringCompare(Container(300).ListItem.Property(Background),fanart) | StringCompare(Container(300).ListItem.Property(Background),global) | [StringCompare(Container(300).ListItem.Property(Background),default)]]">$INFO[Container(300).ListItem.Property(Background)]</value>
 	</variable>
     
-	<variable name="HomeMenuWidgetBackground">
-        <value condition="!IsEmpty(Container(510).ListItem.Art(fanart))">$INFO[Container(510).ListItem.Art(fanart)]</value>
-		<value condition="!IsEmpty(Container(510).ListItem.Property(fanart))">$INFO[Container(510).ListItem.Property(fanart)]</value>
-    </variable>
 	
 	<include name="PVRpanelBackground">
 		<control type="image">
 			<!--Panel-->
-			<include>animation_view_change_pvr</include>
-			
 			<posx>8</posx>
 			<posy>210</posy>
 			<width>1902</width>
 			<height>790</height>
-			<texture background="true">views/view_50_list_panel_episodes1.png</texture>
+			<texture>views/view_50_list_panel_episodes1.png</texture>
 			<visible>skin.hastheme(classic)</visible>
-			<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
-			<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
-			<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
-			<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
-			<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 		</control>
+		<!-- Background Panel-->
 		<control type="image">
-			<!--Panel-->
-			<include>animation_view_change_pvr</include>
-			
-			<posx>-60</posx>
-			<posy>210</posy>
-			<width>2050</width>
-			<height>790</height>
-			<texture background="true">views/view_50_list_panel_episodes1.png</texture>
+			<posx>60</posx>
+			<posy>320</posy>
+			<width>1800</width>
+			<height>610</height>
+			<texture>colors/color_white.png</texture>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
 			<visible>!skin.hastheme(classic)</visible>
-			<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
-			<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
-			<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
-			<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
-			<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+		</control>
+		
+		<control type="image">
+			<posx>982</posx>
+			<posy>320</posy>
+			<width>875</width>
+			<height>610</height>
+			<texture>colors/color_white.png</texture>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+			<visible>!skin.hastheme(classic)</visible>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
 		</control>
 	</include>
 	

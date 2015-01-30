@@ -34,6 +34,7 @@
 	<include file="IncludesThemes.xml" />
 	<include file="IncludesPlexbmc.xml" />
 	<include file="IncludesHome.xml" />
+	<include file="IncludesSimpleHome.xml" />
 	<include file="IncludesTouchSupport.xml" />
 	<include file="IncludesDefaultSkinSettings.xml" />
 	<include file="IncludesBackgroundBuilding.xml" />
@@ -53,7 +54,6 @@
             <font>Light40</font>
             <textcolor>$VAR[ThemeFontColorBlack]</textcolor>
             <label>Titan MediaBrowser</label>
-            <include>animation_fade_visible_hidden</include>
         </control>
     </include>
     
@@ -114,21 +114,20 @@
 					<height>84</height>
 					<texture>home/home_rss.png</texture>
 					<visible>[!Skin.HasSetting(NoFooterBar) + skin.hastheme(classic)]</visible>	
-					<include>animation_fade_visible_hidden</include>				
+			
 				</control>
 				<control type="image">
-					<posx>-60</posx>
-					<posy>970</posy>
-					<width>2040</width>
-					<height>180</height>
-					<texture background="true">views/filemanager_panel1.png</texture>
-					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar)</visible>
-					<include>animation_fade_visible_hidden</include>
+					<posx>0</posx>
+					<posy>982</posy>
+					<width>1920</width>
+					<height>110</height>
+					<texture>colors/color_white.png</texture>
+					<colordiffuse>$VAR[panel_color]</colordiffuse>
+					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar) + !StringCompare(Skin.String(FooterOpacity),0)</visible>
 					<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),80)">Conditional</animation>
 					<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),60)">Conditional</animation>
 					<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),40)">Conditional</animation>
 					<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),20)">Conditional</animation>
-					<animation effect="fade" end="0" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),0)">Conditional</animation>
 				</control>
 				<!--RSS Text without touch classic-->			
 				<control type="rss">	
@@ -145,9 +144,6 @@
 					<visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
 					<visible>skin.hastheme(classic)</visible>
 					<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
-					<animation time="1500" effect="fade" delay="1500">Visible</animation>
-					<animation time="200" effect="fade">Hidden</animation>
-					<visible>!StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
 				</control>
 				<!--RSS Text without touch normal-->
 				<control type="rss">	
@@ -163,10 +159,8 @@
 					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 					<visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
 					<visible>!skin.hastheme(classic)</visible>
-					<visible>!StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
-					<visible>Window.IsVisible(Home) + ![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)] + !Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
-					<animation time="1500" effect="fade" delay="1500">Visible</animation>
-					<animation time="200" effect="fade">Hidden</animation>	
+					<visible>![Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) + Control.IsVisible(4444)]</visible>
+					<visible>Window.IsVisible(Home) + !Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
 				</control>
 				<!--RSS Text with touch-->
 				<control type="rss">	
@@ -182,9 +176,8 @@
 					<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 					<visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
 					<visible>!StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
-					<visible>Window.IsVisible(Home) + ![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)] + !Window.IsVisible(DialogButtonMenu.xml) + Skin.HasSetting(EnableTouchSupport)</visible>
-					<animation time="1500" effect="fade" delay="1500">Visible</animation>
-					<animation time="200" effect="fade">Hidden</animation>
+					<visible>![Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) + Control.IsVisible(4444)]</visible>
+					<visible>Window.IsVisible(Home) + !Window.IsVisible(DialogButtonMenu.xml) + Skin.HasSetting(EnableTouchSupport)</visible>
 					<animation effect="slide" start="0,0" end="-15,-15" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 				</control>
 			</control>
@@ -196,7 +189,6 @@
 			<control type="group">
 				<visible>[Window.IsActive(tvguide) | Window.IsActive(tvchannels) | Window.IsActive(radiochannels) | [Window.IsActive(mypvr.xml) + Control.IsVisible(11)]] + !Skin.HasSetting(EnableTouchSupport)</visible>
 				<visible>IsEmpty(ListItem.VideoResolution)</visible>
-				<include>animation_view_change_pvr</include>
 				<animation effect="slide" end="-30,15" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
 				<posy>985</posy>
 				<control type="label">
@@ -259,8 +251,6 @@
 				<visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
 				<visible>!Control.IsVisible(58) + !Control.IsVisible(508)</visible>
 				<visible>Window.IsActive(myvideonav.xml) | StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
-
-				<include>animation_view_change</include>
 				<posy>985</posy>
 				<posx>1450</posx>
 				<control type="image">
@@ -306,7 +296,6 @@
 			<control type="group">
 			<!--Title-->
 			<visible>!Window.IsActive(DialogVideoInfo.xml) + !Window.IsVisible(DialogFavourites.xml)</visible>
-			<include>animation_view_change</include>
 			
 			<posy>985</posy>
 			<control type="label">
@@ -453,8 +442,7 @@
 		
         <control type="image">
             <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
-            <include>animation_fade_visible_hidden</include>
-            <posx>61</posx>
+			<posx>61</posx>
             <posy>41</posy>
             <height>64</height>
             <width>64</width>
@@ -464,7 +452,6 @@
         </control>
 		<control type="image">
             <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
-            <include>animation_fade_visible_hidden</include>
             <posx>60</posx>
             <posy>40</posy>
             <height>64</height>
@@ -475,7 +462,6 @@
         </control>
         <control type="label">
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
-            <include>animation_fade_visible_hidden</include>
             <posx>61</posx>
             <posy>10</posy>
             <width min="80" max="1400">auto</width>
@@ -497,7 +483,6 @@
 			<font>Reg30</font>
 			<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-			<include>animation_fade_visible_hidden</include>
 			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 		</control>
     </include>
@@ -516,7 +501,6 @@
 			<visible>![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
 		</control>
         <control type="group">
-            <include>animation_fade_visible_hidden</include>
             <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
 			<visible>[[Skin.HasSetting(ShowLogoAltLocation) + IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) + IsEmpty(Container.ListItem.Art(clearlogo))] | !Skin.HasSetting(ShowLogoAltLocation)]</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml)">
@@ -524,7 +508,6 @@
             </animation>
             <control type="grouplist">
                 <!--Time Grouplist Line 1-->
-                <!--animation effect="slide" start="0" end="-130" time="200" condition="Weather.IsFetched" >Conditional</animation-->
                 <posx>1260</posx>
                 <posy>10</posy>
                 <width>600</width>
@@ -565,7 +548,6 @@
             </control>
             <control type="grouplist">
                 <!--Date Grouplist Line 2-->
-                <!--animation effect="slide" start="0" end="-130" time="200" condition="Weather.IsFetched" >Conditional</animation-->
                 <posx>1260</posx>
                 <posy>85</posy>
                 <width>600</width>
@@ -636,12 +618,11 @@
     
 	<include name="ProfileInfo">
 	<control type="group" id="891">
-			<include>animation_fade_visible_hidden</include>
 			<defaultcontrol>890</defaultcontrol>
 			<posx>35</posx>
 			<posy>30</posy>
-			<visible>![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
-			<width>150</width>
+			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
+            <width>150</width>
 				<height>80</height>
 				<control type="image" id="888">	
 				<width>150</width>
@@ -689,7 +670,7 @@
             <height>300</height>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
-            <visible>![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
@@ -734,13 +715,14 @@
         <!--Sub Menu Button-->
         <width>458</width>
         <align>left</align>
+		<font>Reg26</font>
         <textcolor>$VAR[ThemeFontColorBlack]</textcolor>
         <focusedcolor>black</focusedcolor>
         <disabledcolor>77585858</disabledcolor>
         <pulseonselect>false</pulseonselect>
         <texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturefocus>
         <texturenofocus>-</texturenofocus>
-		<font>Reg26</font>
+		
     </include>
     <include name="SubMenuTabLeft">
         <!--Sub Menu Tab Left-->
@@ -781,8 +763,6 @@
         <control type="group">
             <visible>Control.IsVisible(500) | Control.IsVisible(52) | Control.IsVisible(501) | Control.IsVisible(502) | Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514)</visible>
 			<control type="image">
-				<include>animation_fade_visible_hidden</include>
-				<include>animation_window_open_close</include>
 				<posx>860</posx>
 				<posy>0</posy>
 				<width>199</width>
@@ -1002,16 +982,17 @@
 			<visible>!Window.IsActive(DialogKaiToast.xml)</visible>
 			<!-- blue background -->
 			<control type="image">
-				<posx>-60</posx>
-				<posy>-60</posy>
-				<width>2040</width>
-				<height>330</height>
-				<texture background="true">views/filemanager_panel1.png</texture>
-				<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
-				<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
-				<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
-				<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
-				<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1920</width>
+				<height>230</height>
+				<texture>colors/color_white.png</texture>
+				<colordiffuse>$VAR[panel_color]</colordiffuse>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
 			</control>
             <!-- Plot -->
             <control type="group">

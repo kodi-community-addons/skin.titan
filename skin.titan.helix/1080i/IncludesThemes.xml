@@ -5,7 +5,6 @@
         <control type="group">
             <posx>710</posx>
             <posy>200</posy>
-            <include>animation_dialog</include>
             <!--Panel-->
             <control type="image">
                 <width>500</width>
@@ -88,35 +87,20 @@
 			<animation type="WindowClose">
 				<effect type="slide" start="660" end="0" time="250" tween="cubic" easing="inout" />
 			</animation>
-			<!--Panel-->
-			<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>515</width>
-			<height>1750</height>
-			<texture border="0">views/filemanager_panel1.png</texture>
-			<aspectratio>stretch</aspectratio>
-		</control>
+		<!--Panel-->
 		<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>515</width>
-			<height>1750</height>
-			<texture border="0">views/filemanager_panel1.png</texture>
+			<posy>0</posy>
+			<posx>0</posx>
+			<width>485</width>
+			<height>1080</height>
+			<texture>colors/color_white.png</texture>
+			<animation effect="fade" end="99" time="0" condition="true">Conditional</animation>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
 			<aspectratio>stretch</aspectratio>
 		</control>
-		<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>515</width>
-			<height>1750</height>
-			<texture border="0">views/filemanager_panel1.png</texture>
-			<aspectratio>stretch</aspectratio>
-		</control>
-		
+	
 		<!-- header -->
         <control type="label">
-            <include>animation_fade_visible_hidden</include>
             <posx>61</posx>
             <posy>10</posy>
             <width min="80" max="1100">auto</width>
@@ -216,25 +200,12 @@
 			<posx>-20</posx>
 			<width>515</width>
 			<height>1750</height>
-			<texture border="0">views/filemanager_panel1.png</texture>
+			<texture>colors/color_white.png</texture>
+			<animation effect="fade" end="99" time="0" condition="true">Conditional</animation>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
 			<aspectratio>stretch</aspectratio>
 		</control>
-		<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>515</width>
-			<height>1750</height>
-			<texture border="0">views/filemanager_panel1.png</texture>
-			<aspectratio>stretch</aspectratio>
-		</control>
-		<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>515</width>
-			<height>1750</height>
-			<texture border="0">views/filemanager_panel1.png</texture>
-			<aspectratio>stretch</aspectratio>
-		</control>
+
 		<!-- header -->
         <control type="label">
             <include>animation_fade_visible_hidden</include>
@@ -269,7 +240,6 @@
 		<!-- close dialog -->
 		<control type="button">
 			<label></label>
-			<include>animation_fade_visible_hidden</include>
 			<width>60</width>
 			<height>60</height>
 			<posx>60</posx>
@@ -618,16 +588,17 @@
 	<control type="group">
 			<!--Panel-->
 			<control type="image">
-				<posx>-60</posx>
-				<posy>760</posy>
-				<width>2040</width>
-				<height>400</height>
-				<texture background="true">views/filemanager_panel1.png</texture>
-				<animation effect="fade" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
-				<animation effect="fade" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
-				<animation effect="fade" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
-				<animation effect="fade" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
-				<animation effect="fade" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
+				<posx>0</posx>
+				<posy>800</posy>
+				<width>1920</width>
+				<height>330</height>
+				<texture>colors/color_white.png</texture>
+				<colordiffuse>$VAR[panel_color]</colordiffuse>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
 			</control>
 
 			<!-- cd cover -->
@@ -1826,71 +1797,63 @@
             <visible>!Window.IsActive(sliderdialog)</visible>
 			
 			<!-- subtitle selection -->
-			<control type="group" id="1410">
-				<visible>![Window.IsVisible(SliderDialog) | Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(VideoBookmarks)]</visible>
-				<visible>StringCompare(Window.Property(subtitlemenu), show)</visible>
-				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
+			<control type="grouplist" id="1410">
+				<visible allowhiddenfocus="true">StringCompare(Window.Property(subtitlemenu), show)</visible>
+				<description>Header</description>
 				<animation effect="fade" time="200">VisibleChange</animation>
 				<left>350</left>
 				<bottom>100</bottom>
 				<width>1920</width>
-				<height>80</height>
-
+				<height>60</height>
 				<orientation>horizontal</orientation>
-				
-				<control type="grouplist" id="400">
-					<description>Header</description>
-					<width>1920</width>
-					<height>60</height>
-					<orientation>horizontal</orientation>
-					<itemgap>20</itemgap>
-					<onleft>400</onleft>
-					<onright>400</onright>
-					<onup>104</onup>
-					<ondown>104</ondown>
-					<ondown>Control.Focus(200)</ondown>
-					<onback>Control.Focus(200)</onback>
-					<control type="button" id="401">
-						<description>Download with Subtitles script</description>
-						<width>359</width>
-						<font>Reg24</font>
-						<textoffsetx>10</textoffsetx>
-						<label>33003</label>
-						<aligny>center</aligny>
-						<onclick>ActivateWindow(SubtitleSearch)</onclick>
-					</control>
-					<control type="button" id="402">
-						<width>359</width>
-						<font>Reg24</font>
-						<textoffsetx>10</textoffsetx>
-						<aligny>center</aligny>
-						<pulseonselect>false</pulseonselect>
-						<label>22006</label>
-						<onclick>SubtitleDelay</onclick>
-						<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
-					</control>
-					<control type="button" id="403">
-						<width>359</width>
-						<font>Reg24</font>
-						<textoffsetx>10</textoffsetx>
-						<aligny>center</aligny>
-						<label>209</label>
-						<onclick>NextSubtitle</onclick>
-						<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
-					</control>
-					<control type="radiobutton" id="404">
-						<width>359</width>
-						<font>Reg24</font>
-						<textoffsetx>10</textoffsetx>
-						<aligny>center</aligny>
-						<label>449</label>
-						<onclick>ShowSubtitles</onclick>
-						<selected>VideoPlayer.SubtitlesEnabled</selected>
-						<visible>VideoPlayer.HasSubtitles</visible>
-						<pulseonselect>false</pulseonselect>
-					</control>
+				<itemgap>20</itemgap>
+				<onleft>400</onleft>
+				<onright>400</onright>
+				<onup>104</onup>
+				<ondown>104</ondown>
+				<ondown>Control.Focus(200)</ondown>
+				<onback>Control.Focus(200)</onback>
+				<control type="button" id="401">
+					<description>Download with Subtitles script</description>
+					<width>359</width>
+					<font>Reg24</font>
+					<textoffsetx>10</textoffsetx>
+					<label>33003</label>
+					<aligny>center</aligny>
+					<onclick>ActivateWindow(SubtitleSearch)</onclick>
+				</control>
+				<control type="button" id="402">
+					<width>359</width>
+					<font>Reg24</font>
+					<textoffsetx>10</textoffsetx>
+					<aligny>center</aligny>
+					<pulseonselect>false</pulseonselect>
+					<label>22006</label>
+					<onclick>SubtitleDelay</onclick>
+					<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
+				</control>
+				<control type="button" id="403">
+					<width>359</width>
+					<font>Reg24</font>
+					<textoffsetx>10</textoffsetx>
+					<aligny>center</aligny>
+					<label>209</label>
+					<onclick>NextSubtitle</onclick>
+					<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
+				</control>
+				<control type="radiobutton" id="404">
+					<width>359</width>
+					<font>Reg24</font>
+					<textoffsetx>10</textoffsetx>
+					<aligny>center</aligny>
+					<label>449</label>
+					<onclick>ShowSubtitles</onclick>
+					<selected>VideoPlayer.SubtitlesEnabled</selected>
+					<visible>VideoPlayer.HasSubtitles</visible>
+					<pulseonselect>false</pulseonselect>
 				</control>
 			</control>
+
 	
             <control type="grouplist" id="200">
                 <!--OSD-->
@@ -2100,14 +2063,14 @@
                     <height>97</height>
                     <label>287</label>
                     <font>-</font>
-					<onup>Control.SetFocus(400)</onup>
+					<onup>Control.SetFocus(1410)</onup>
 					<onup>SetProperty(subtitlemenu,show)</onup>
                     <texturefocus>osd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>osd/OSDSubtitlesNF.png</texturenofocus>
 					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">SetProperty(subtitlemenu,show)</onclick>
 					<onclick condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onclick>
 					<onback condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onback>
-					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">Control.SetFocus(400)</onclick>
+					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">Control.SetFocus(1410)</onclick>
 					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>Player.HasVideo</visible>
                 </control>
