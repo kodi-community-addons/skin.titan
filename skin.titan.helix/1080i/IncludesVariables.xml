@@ -9,7 +9,7 @@
 		
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.TvShowTitle)">$INFO[ListItem.TvShowTitle]</value>
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
-		
+		<value condition="Window.IsActive(ProfileSettings.xml) | Window.IsActive(SettingsProfile.xml)">$LOCALIZE[10130]</value>
 		<value condition="Window.IsActive(DialogSelect.xml) + StringCompare(Window(Home).Property(customWidget), active)">$ADDON[script.skinshortcuts 32044]</value>
 		<value condition="Window.IsActive(DialogSelect.xml) + !IsEmpty(Control.GetLabel(1))">$INFO[Control.GetLabel(1)]</value>
 		<value condition="Window.IsActive(script-skinshortcuts.xml) + !IsEmpty(Control.GetLabel(500))">$INFO[Control.GetLabel(500)]</value>
@@ -798,17 +798,6 @@
         <value>$INFO[ListItem.Thumb]</value>
     </variable>
 	
-	
-	<variable name="LargeFanArtImage">
-		<value condition="!IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt))">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
-        <value condition="Container.Content(Seasons) + !IsEmpty(ListItem.Art(season.fanart)) + !substring(Container.FolderPath,plugin://plugin.video)">$INFO[ListItem.Art(season.fanart)]</value>
-		<value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
-		<value condition="!IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
-        <value>$INFO[ListItem.Thumb]</value>
-    </variable>
-	
-	
     <variable name="BannerLandscapeImage">
 		<value condition="!IsEmpty(ListItem.Thumb) + Container.Content(Episodes) + !IsEmpty(ListItem.Episode) + !Window.IsActive(dialogvideoinfo.xml)">$INFO[ListItem.Thumb]</value>
 		<value condition="!IsEmpty(ListItem.Property(medium_landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Property(medium_landscape)]</value>
@@ -938,12 +927,20 @@
 	
 
 	<variable name="WatchedImage">
-		<value condition="container.content(albums)">-</value>
-		<value condition="!Skin.HasTheme(classic) + !Control.IsVisible(50) + SubString(ListItem.label,*)">overlays/big/OverlayUnWatched.png</value>
-		<value condition="Skin.HasTheme(classic) + !Control.IsVisible(50) + SubString(ListItem.label,*)">overlays/rounded/OverlayUnWatched.png</value>
-        <value condition="!Skin.HasTheme(classic) + !Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/big/$INFO[ListItem.Overlay]</value>
-		<value condition="Skin.HasTheme(classic) + !Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/rounded/$INFO[ListItem.Overlay]</value>
-		<value condition="Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/small/$INFO[ListItem.Overlay]</value>
+		<value condition="!Skin.HasTheme(classic) + Control.IsVisible(510) + StringCompare(ListItem.Overlay,OverlayWatched.png)">overlays/big/OverlayWatched.png</value>
+		<value condition="Skin.HasTheme(classic) + Control.IsVisible(510) + StringCompare(ListItem.Overlay,OverlayWatched.png)">overlays/rounded/OverlayWatched.png</value>
+		<value condition="!Skin.HasTheme(classic) + Control.IsVisible(510) + [ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)]">overlays/big/OverlayUnWatched.png</value>
+		<value condition="Skin.HasTheme(classic) + Control.IsVisible(510) + [ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)]">overlays/rounded/OverlayUnWatched.png</value>
+		
+
+		
+		<value condition="!Control.IsVisible(510) + container.content(albums)">-</value>
+		<value condition="!Control.IsVisible(510) + !Skin.HasTheme(classic) + !Control.IsVisible(50) + SubString(ListItem.label,*)">overlays/big/OverlayUnWatched.png</value>
+		<value condition="!Control.IsVisible(510) + Skin.HasTheme(classic) + !Control.IsVisible(50) + SubString(ListItem.label,*)">overlays/rounded/OverlayUnWatched.png</value>
+        <value condition="!Control.IsVisible(510) + !Skin.HasTheme(classic) + !Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/big/OverlayWatched.png</value>
+		<value condition="!Control.IsVisible(510) + Skin.HasTheme(classic) + !Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/rounded/OverlayWatched.png</value>
+		<value condition="!Control.IsVisible(510) + Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/small/$INFO[ListItem.Overlay]</value>
+		
     </variable>
 	
 	<variable name="WatchedImageBanner">

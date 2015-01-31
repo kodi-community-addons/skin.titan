@@ -3,11 +3,14 @@
 
   <include name="simplehome_horizontal">
 		<control type="group" description="HORIZONTAL HOME">
-	
+		
+		<animation type="Conditional" condition="!system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)">
+            <effect type="slide" start="0" end="0,120" time="300" delay="0" tween="cubic" easing="inout" />
+        </animation>
 		
 	
 		  <control type="group">
-			<posy>60</posy>
+			<posy>45</posy>
 			<control type="group">
 			 
 			 <control type="image" description="home back panel">
@@ -30,7 +33,7 @@
 				<colordiffuse>$VAR[panel_color]</colordiffuse>
 			  </control>
 			</control>
-			<control type="wraplist" id="300" description="Main Bar">
+			<control type="fixedlist" id="300" description="Main Bar">
 			  <animation effect="fade" time="200" start="100" end="25" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
 			  <posx>-338</posx>
 			  <width>3069</width>
@@ -94,7 +97,7 @@
 			  <animation effect="fade" time="200" start="100" end="100" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
 			  <visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 			  <include>VisibleFadeEffect</include>
-			  <posx>-260</posx>
+			  <posx>-290</posx>
 			  <width>3000</width>
 			  <posy>803</posy>
 			  <height>50</height>
@@ -107,7 +110,7 @@
 			  <onup>300</onup>
 			  <itemgap>6</itemgap>
 			  <onback>SetFocus(300)</onback>
-			  <ondown>700</ondown>
+			  <ondown>2</ondown>
 			  <itemlayout width="350" height="50">
 				<control type="label">
 				  <posx>3</posx>
@@ -186,7 +189,10 @@
 		<control type="group">
 			<posy>420</posy>
 			<posx>12</posx>
+			
 			<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
+			
+			
 			<control type="button" id="511">
 				<right>-20</right>
 				<posy>300</posy>
@@ -215,62 +221,164 @@
 
   
    <include name="simplehome_vertical">
+	
+	<!-- submenu -->
+	<control type="group">
+		<posx>445</posx>
+		<posy>0</posy>
+		<animation type="Conditional" condition="SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)">
+            <effect type="fade" start="0" end="100" time="250" delay="0" />
+        </animation>
+		<animation type="Conditional" condition="![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]">
+            <effect type="fade" start="100" end="0" time="250" delay="0" />
+        </animation>
 
+		<!--Panel-->
+		<control type="image">
+			<posy>470</posy>
+			<posx>-30</posx>
+			<width>400</width>
+			<height>495</height>
+			<texture diffuse="poster_matte.png">colors/color_white.png</texture>
+			<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),80)">Conditional</animation>
+			<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),60)">Conditional</animation>
+			<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),40)">Conditional</animation>
+			<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),20)">Conditional</animation>
+			<bordertexture border="20" colordiffuse="black">thumb_shadow.png</bordertexture>
+			<bordersize>20</bordersize>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		
+		<control type="list" id="4444">
+			<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)</visible>
+			<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
+			<width>320</width>
+			<posx>20</posx>
+			<posy>490</posy>
+			<height>440</height>
+			<itemgap>3</itemgap>
+			<onleft>300</onleft>
+			<onright>510</onright>
+			<onup>4444</onup>
+			<ondown>4444</ondown>
+			<onback>300</onback>
+			<focusposition>0</focusposition>
+			<movement>3</movement>
+			<itemlayout width="320" height="65">
+
+			<control type="label" description="Main Label">
+				<posx>0</posx>
+				<width>315</width>
+				<align>left</align>
+				<font>Reg26</font>
+				<height>60</height>
+				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
+			  <label>$INFO[ListItem.Label]</label>
+			</control>
+			</itemlayout>
+			<focusedlayout width="320" height="65">
+			<control type="label" description="Main Label">
+			  <posx>0</posx>
+				<width>315</width>
+				<align>left</align>
+				<font>Reg26</font>
+				<height>60</height>
+			  <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
+			  <label>$INFO[ListItem.Label]</label>
+			</control>
+			</focusedlayout>
+			<content>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
+			</content>
+			</control>
+
+	</control>
+
+	
     <control type="group">
+	
+	<!--Panel-->
+	<control type="image">
+		<posy>-60</posy>
+		<posx>-60</posx>
+		<width>515</width>
+		<height>1200</height>
+		<texture diffuse="poster_matte.png">colors/color_white.png</texture>
+		<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),80)">Conditional</animation>
+		<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),60)">Conditional</animation>
+		<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),40)">Conditional</animation>
+		<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),20)">Conditional</animation>
+		<bordertexture border="20" colordiffuse="black">thumb_shadow.png</bordertexture>
+		<bordersize>20</bordersize>
+		<colordiffuse>$VAR[panel_color]</colordiffuse>
+		<aspectratio>stretch</aspectratio>
+	</control>
+	
+	<!-- kodi logo -->
+	<control type="image">
+		<posx>105</posx>
+		<posy>10</posy>
+		<height>120</height>
+		<aspectratio align="left">keep</aspectratio>
+		<texture>kodi_logo_light.png</texture>
+	</control>
 
-      <control type="wraplist" id="300" description="Main Bar">
-        <animation effect="fade" time="200" start="100" end="20" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
+    <control type="fixedlist" id="300" description="Main Bar">
+        <animation effect="fade" time="200" start="100" end="80" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
         <posx>35</posx>
         <posy>160</posy>
         <width>650</width>
         <height>880</height>
         <onup>300</onup>
         <ondown>300</ondown>
-        <onleft>4444</onleft>
-        <onright>510</onright>
-        <onback>4444</onback>
+        <onleft>2</onleft>
+        <onright condition="IntegerGreaterThan(Container(4444).NumItems,0)">4444</onright>
+		<onright condition="!IntegerGreaterThan(Container(4444).NumItems,0)">510</onright>
         <pagecontrol>-</pagecontrol>
-        <focusposition>5</focusposition>
+        <focusposition>4</focusposition>
         <movement>0</movement>
-				<!--<defaultcontrol always="true">1</defaultcontrol>-->
         <preloaditems>4</preloaditems>
-        <itemlayout height="80" width="650">
+        <itemlayout height="80" width="370">
           <control type="label">
-            <posx>35</posx>
+            <right>0</right>
             <posy>0</posy>
-            <width>650</width>
+            <width>350</width>
             <height>80</height>
-            <align>left</align>
+            <align>right</align>
             <aligny>center</aligny>
             <textcolor>grey</textcolor>
             <shadowcolor>black</shadowcolor>
-             <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
-              <font>Reg50</font>
+             <label>$INFO[ListItem.Label]</label>
+              <font>Reg42</font>
 			<scroll>false</scroll>
           </control>
         </itemlayout>
-        <focusedlayout height="80" width="650">
+        <focusedlayout height="80" width="370">
 			<!-- submenu indicator -->
 			<control type="image">
 				<animation effect="fade" start="0" end="50" tween="sine" easing="inout" time="1200" pulse="true" reversible="false" condition="true">Conditional</animation>
+				<right>0</right>
+				<top>3</top>
 				<width>20</width>
 				<height>80</height>
 				<aspectratio>keep</aspectratio>
-				<texture flipx="true">dialogs/videoinfo/arrow.png</texture>
-				<visible>IntegerGreaterThan(Container(4444).NumItems,0)</visible>
+				<texture>dialogs/videoinfo/arrow.png</texture>
+				<visible>IntegerGreaterThan(Container(4444).NumItems,0) + Control.HasFocus(300)</visible>
 				<colordiffuse>white</colordiffuse>
 			</control>
 			<!-- menu label -->
 			<control type="label">
-				<posx>35</posx>
-				<width>615</width>
+				<animation effect="slide" start="0" end="-35" time="0" reversible="false" condition="IntegerGreaterThan(Container(4444).NumItems,0) + Control.HasFocus(300)">Conditional</animation>
+				<right>0</right>
+				<width>350</width>
 				<height>80</height>
-				<align>left</align>
+				<align>right</align>
 				<aligny>center</aligny>
-				<textcolor>mainblue</textcolor>
+				<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
 				<shadowcolor>black</shadowcolor>
-				<label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
-				<font>Bold55</font>
+				<label>[B]$INFO[ListItem.Label][/B]</label>
+				<font>Reg42</font>
 			</control>
 		  <control type="button">
 				<visible>false</visible>
@@ -290,9 +398,49 @@
 	
 	<!-- widgets -->
 	<control type="group">
-		<posy>130</posy>
-		<posx>1100</posx>
-		<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
+		<posy>620</posy>
+		<posx>530</posx>
+		<animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + IntegerGreaterThan(Container(510).NumItems,4)">
+            <effect type="slide" start="0" end="310" time="300" delay="0" tween="cubic" easing="inout" />
+        </animation>
+		
+		<control type="group">
+
+				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,4)">Conditional</animation>
+				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
+				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
+				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
+				<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
+			</control>
+
+
+		<control type="image">
+			<posx>50</posx>
+			<posy>-400</posy>
+			<width>1280</width>
+			<texture>colors/color_white.png</texture>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
+			<aspectratio>stretch</aspectratio>
+			<height>380</height>
+			<visible>Control.HasFocus(510)</visible>
+		</control>
+		<control type="textbox">
+			<posx>60</posx>
+			<posy>-390</posy>
+			<width>1260</width>
+			<height>350</height>
+			<label fallback="19055">[B][COLOR=white]$INFO[Container(510).ListItem.Label][/COLOR][/B][CR]$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+			<textcolor>bbwhite</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<align>justify</align>
+			<font>Light32</font>
+			<visible>Control.HasFocus(510)</visible>
+		</control>
 		
 		<control type="button" id="511">
 			<right>-20</right>
@@ -314,113 +462,11 @@
 			<texturenofocus>-</texturenofocus>
 			<onclick>$VAR[HomeWidgetClickActions]</onclick>
 			<include>animation_fade_visible_hidden_delayed</include>
+			<visible>![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]</visible>
 			<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
 		</control>
 	</control>
 	
-	<!-- submenu -->
-	<control type="group">
-		<posx>-660</posx>
-		<posy>0</posy>
-		<animation type="Conditional" condition="Control.HasFocus(4444)">
-            <effect type="slide" start="0" end="660" time="300" delay="0" tween="cubic" easing="inout" />
-        </animation>
-
-		<!--Panel-->
-		<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>515</width>
-			<height>1750</height>
-			<texture>colors/color_white.png</texture>
-			<animation effect="fade" end="99" time="0" condition="true">Conditional</animation>
-			<colordiffuse>$VAR[panel_color]</colordiffuse>
-			<aspectratio>stretch</aspectratio>
-		</control>
-		<!-- header -->
-        <control type="label">
-            <include>animation_fade_visible_hidden</include>
-            <posx>61</posx>
-            <posy>10</posy>
-            <width min="80" max="1100">auto</width>
-            <height>100</height>
-            <font>Bold45</font>
-            <align>left</align>
-            <textcolor>white</textcolor>
-            <label>Submenu</label>
-			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
-        </control>
-		<control type="image">
-			<!--Seperator-->
-			<posx>21</posx>
-			<posy>160</posy>
-			<width>458</width>
-			<height>20</height>
-			<align>left</align>
-			<texture>common/menu-separator.png</texture>
-		</control>
-
-		
-		
-		<control type="fixedlist" id="4444">
-			<visible allowhiddenfocus="true">Control.HasFocus(4444)</visible>
-			<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
-			<width>458</width>
-			<posx>21</posx>
-			<posy>180</posy>
-			<height>850</height>
-			<itemgap>3</itemgap>
-			<onleft>300</onleft>
-			<onright>300</onright>
-			<onup>4444</onup>
-			<ondown>4444</ondown>
-			<onback>300</onback>
-			<focusposition>3</focusposition>
-			<movement>3</movement>
-			<itemlayout width="400" height="65">
-
-			<control type="label" description="Main Label">
-				<posx>30</posx>
-				<width>458</width>
-				<align>left</align>
-				<font>Reg26</font>
-				<height>60</height>
-				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
-			  <label>$INFO[ListItem.Label]</label>
-			</control>
-			</itemlayout>
-			<focusedlayout width="400" height="65">
-			<control type="image">
-			  <width>458</width>
-			<height>60</height>
-			  <texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
-			</control>
-			<control type="label" description="Main Label">
-			  <posx>30</posx>
-				<width>458</width>
-				<align>left</align>
-				<font>Reg26</font>
-				<height>60</height>
-			  <textcolor>black</textcolor>
-			  <label>$INFO[ListItem.Label]</label>
-			</control>
-			</focusedlayout>
-			<content>
-			<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
-			</content>
-			</control>
- 
-		<control type="image">
-			<!--Seperator-->
-			<posx>21</posx>
-			<posy>980</posy>
-			<width>458</width>
-			<height>20</height>
-			<align>left</align>
-			<texture>common/menu-separator.png</texture>
-		</control>
-	</control>
-
     
  </include>
 </includes>

@@ -618,6 +618,7 @@
     
 	<include name="ProfileInfo">
 	<control type="group" id="891">
+			<animation effect="slide" end="440" time="0" condition="Skin.String(GadgetRows, simplever)">Conditional</animation>
 			<defaultcontrol>890</defaultcontrol>
 			<posx>35</posx>
 			<posy>30</posy>
@@ -664,7 +665,8 @@
 	<include name="WeatherInfo">
         <!-- weather info -->
         <control type="group">
-            <posx>35</posx>
+			<animation effect="slide" end="440" time="0" condition="Skin.String(GadgetRows, simplever)">Conditional</animation>
+            <posx>30</posx>
             <posy>15</posy>
             <width>350</width>
             <height>300</height>
@@ -674,17 +676,16 @@
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
-                <texture>$INFO[Weather.Conditions]</texture>
-                <align>left</align>
+                <texture>$INFO[Window(Weather).Property(Day0.fanartCode),weather/icons/,.png]</texture>
                 <width>125</width>
                 <height>125</height>
-                <aspectratio scalediffuse="true">scale</aspectratio>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
             </control>
             <control type="label">
                 <!--Temp-->
                 <width>160</width>
                 <height>40</height>
-                <posx>130</posx>
+                <posx>140</posx>
                 <posy>25</posy>
                 <font>Bold38</font>
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
@@ -697,13 +698,13 @@
                 <!--Temp-->
                 <width>220</width>
                 <height>40</height>
-                <posx>130</posx>
+                <posx>140</posx>
                 <posy>70</posy>
                 <font>Reg28</font>
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 <align>left</align>
-                <label>$INFO[Window(Weather).Property(Day1.HighTemp)] $INFO[System.TemperatureUnits] / $INFO[Window(Weather).Property(Day1.LowTemp)] $INFO[System.TemperatureUnits]</label>
+                <label>$INFO[Window(Weather).Property(Day0.HighTemp)] $INFO[System.TemperatureUnits] / $INFO[Window(Weather).Property(Day0.LowTemp)] $INFO[System.TemperatureUnits]</label>
                 <visible>Weather.IsFetched</visible>
             </control>
         </control>
@@ -810,7 +811,7 @@
         <!--Dialog Button-->
         <font>Reg28</font>
         <textcolor>FFfffeff</textcolor>
-        <focusedcolor>FFfffeff</focusedcolor>
+        <focusedcolor>black</focusedcolor>
         <disabledcolor>FF585858</disabledcolor>
     </include>
     <include name="DialogButtonAlt">
@@ -833,7 +834,7 @@
         <!--Dialog Button Small-->
         <font>Reg26</font>
         <textcolor>white</textcolor>
-        <focusedcolor>eewhite</focusedcolor>
+        <focusedcolor>black</focusedcolor>
         <disabledcolor>77585858</disabledcolor>
         <shadowcolor>20FFFFFF</shadowcolor>
     </include>
@@ -876,14 +877,49 @@
         <disabledcolor>FFfffeff</disabledcolor>
         <shadowcolor>20FFFFFF</shadowcolor>
     </include>
-    <include name="DialogButtonOKCancel">
+	
+	
+    <include name="DialogButtonOK">
         <!--Dialog Button OK Cancel-->
         <font>Reg28</font>
-        <textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
-        <focusedcolor>$VAR[ThemeFontColorDarkGrey]</focusedcolor>
+        <textcolor>black</textcolor>
+        <focusedcolor>black</focusedcolor>
         <disabledcolor>lightgrey</disabledcolor>
         <pulseonselect>false</pulseonselect>
+		<texturefocus border="20">dialogs/keyboard/donefocus.png</texturefocus>
+		<texturenofocus border="20">dialogs/keyboard/key-nf.png</texturenofocus>
+		<height>80</height>
+		<width>350</width>
     </include>
+	
+	<include name="DialogButtonCancel">
+        <!--Dialog Button OK Cancel-->
+        <font>Reg28</font>
+        <textcolor>black</textcolor>
+        <focusedcolor>white</focusedcolor>
+        <disabledcolor>lightgrey</disabledcolor>
+        <pulseonselect>false</pulseonselect>
+		<texturefocus border="20">dialogs/keyboard/cancelfocus.png</texturefocus>
+		<texturenofocus border="20">dialogs/keyboard/key-nf.png</texturenofocus>
+		<height>80</height>
+		<width>350</width>
+    </include>
+	
+	<include name="DialogButtonOther">
+        <!--Dialog Button OK Cancel-->
+        <font>Reg28</font>
+        <textcolor>black</textcolor>
+        <focusedcolor>black</focusedcolor>
+        <disabledcolor>lightgrey</disabledcolor>
+        <pulseonselect>false</pulseonselect>
+		<texturefocus border="20" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">dialogs/keyboard/key-nf.png</texturefocus>
+		<texturenofocus border="20">dialogs/keyboard/key-nf.png</texturenofocus>
+		<height>80</height>
+		<width>350</width>
+    </include>
+	
+
+	
     <include name="DialogButtonBrowseAdd">
         <!--Dialog Button Browse Add-->
         <font>Reg28</font>

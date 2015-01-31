@@ -145,6 +145,8 @@
 				<onclick>Dialog.Close(all,true)</onclick>
 				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 			</control>
+			
+			
             <control type="grouplist" id="996">
                 <width>458</width>
                 <posx>21</posx>
@@ -250,6 +252,24 @@
 			<aspectratio aligny="bottom">keep</aspectratio>
 			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
 			<visible>StringCompare(Window(Home).Property(ShowViewSubMenu),show)</visible>
+		</control>
+		
+		<!-- back -->
+		<control type="button">
+			<label></label>
+			<include>animation_fade_visible_hidden</include>
+			<width>60</width>
+			<height>60</height>
+			<posx>130</posx>
+			<posy>1005</posy>
+			<font>-</font>
+			<texturefocus colordiffuse="white">touchcontrols/icon_back.png</texturefocus>
+			<texturenofocus colordiffuse="bbwhite">touchcontrols/icon_back.png</texturenofocus>
+			<aspectratio aligny="bottom">keep</aspectratio>
+			<onclick>back</onclick>
+			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
+			<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+			<visible>Window.IsActive(MyPVRGuide.xml)</visible>
 		</control>
 	</include>
 	
@@ -706,7 +726,7 @@
 				<control type="label">
 					<visible>IsEmpty(VideoPlayer.Episode)</visible>
 					<visible>!VideoPlayer.Content(livetv)</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
 					<width>1100</width>
@@ -718,7 +738,7 @@
 				</control>
 				<!--Label subitile dialog-->
 				<control type="label">
-					<visible>Control.IsVisible(1410)</visible>
+					<visible>StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
 					<width>1100</width>
@@ -739,12 +759,12 @@
 					<scroll>false</scroll>
 					<visible>IsEmpty(VideoPlayer.Episode)</visible>
 					<visible>!VideoPlayer.Content(livetv)</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<!-- Label Episode-->
 				<control type="label">
 					<visible>!IsEmpty(VideoPlayer.Episode)</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
 					<width>1100</width>
@@ -756,7 +776,7 @@
 				</control>
 				<control type="label">
 					<visible>!IsEmpty(VideoPlayer.Episode)</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>880</posy>
 					<width>1100</width>
@@ -769,7 +789,7 @@
 				<!--Label liveTV-->
 				<control type="label">
 					<visible>VideoPlayer.Content(livetv)</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
 					<width>1100</width>
@@ -782,7 +802,7 @@
 				<!--Label Ohter-->
 				<control type="label">
 					<visible>VideoPlayer.Content(livetv)</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>870</posy>
 					<width>1100</width>
@@ -849,7 +869,7 @@
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 					<label>$INFO[Player.Time]</label>
 					<visible>Player.HasDuration</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<control type="label">
 					<!--Play Time-->
@@ -861,7 +881,7 @@
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 					<label>$INFO[Player.TimeRemaining]</label>
 					<visible>Player.HasDuration</visible>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<control type="progress" id="1">
 					<description>ProgressbarCache</description>
@@ -871,7 +891,7 @@
 					<width>700</width>
 					<info>Player.ProgressCache</info>
 					<midtexture border="6" colordiffuse="ccmainblue">osd/ProgressMid.png</midtexture>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<control type="progress" id="23">
 					<description>Progress Bar</description>
@@ -881,18 +901,7 @@
 					<width>700</width>
 					<info>Player.Progress</info>
 					<visible>Player.HasDuration</visible>
-					<visible>!Control.IsVisible(1410)</visible>
-				</control>
-				<control type="slider" id="401">
-					<description>Seekbar</description>
-					<posx>515</posx>
-					<posy>960</posy>
-					<height>20</height>
-					<width>700</width>
-					<visible>Window.IsActive(VideoOSD.xml)</visible>
-					<visible>Player.HasDuration</visible>
-					<action>seek</action>
-					<visible>!Control.IsVisible(1410)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 			
 				<!-- next program -->
@@ -1104,7 +1113,7 @@
 				<font>Reg30</font>
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$VAR[PlayerActionLabel]</label>
-				<visible>!Control.IsVisible(1410)</visible>
+				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
 			
 			<control type="image">
@@ -1152,7 +1161,7 @@
 				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
 				<label>$LOCALIZE[15107] $INFO[Player.CacheLevel]%</label>
 				<visible>!IsEmpty(Player.CacheLevel) + Skin.HasSetting(ShowCacheLevelOSD)</visible>
-				<visible>!Control.IsVisible(1410)</visible>
+				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
 
 			
@@ -1798,32 +1807,34 @@
 			
 			<!-- subtitle selection -->
 			<control type="grouplist" id="1410">
-				<visible allowhiddenfocus="true">StringCompare(Window.Property(subtitlemenu), show)</visible>
+				<visible>StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				<description>Header</description>
 				<animation effect="fade" time="200">VisibleChange</animation>
-				<left>350</left>
-				<bottom>100</bottom>
+				<left>340</left>
+				<bottom>110</bottom>
 				<width>1920</width>
-				<height>60</height>
+				<height>80</height>
 				<orientation>horizontal</orientation>
-				<itemgap>20</itemgap>
+				<itemgap>30</itemgap>
 				<onleft>400</onleft>
 				<onright>400</onright>
 				<onup>104</onup>
 				<ondown>104</ondown>
 				<ondown>Control.Focus(200)</ondown>
 				<onback>Control.Focus(200)</onback>
-				<control type="button" id="401">
+				<control type="button" id="1401">
 					<description>Download with Subtitles script</description>
 					<width>359</width>
+					<include>DialogButtonOther</include>
 					<font>Reg24</font>
 					<textoffsetx>10</textoffsetx>
 					<label>33003</label>
 					<aligny>center</aligny>
 					<onclick>ActivateWindow(SubtitleSearch)</onclick>
 				</control>
-				<control type="button" id="402">
+				<control type="button" id="1402">
 					<width>359</width>
+					<include>DialogButtonOther</include>
 					<font>Reg24</font>
 					<textoffsetx>10</textoffsetx>
 					<aligny>center</aligny>
@@ -1832,8 +1843,9 @@
 					<onclick>SubtitleDelay</onclick>
 					<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
 				</control>
-				<control type="button" id="403">
+				<control type="button" id="1403">
 					<width>359</width>
+					<include>DialogButtonOther</include>
 					<font>Reg24</font>
 					<textoffsetx>10</textoffsetx>
 					<aligny>center</aligny>
@@ -1841,8 +1853,10 @@
 					<onclick>NextSubtitle</onclick>
 					<visible>VideoPlayer.HasSubtitles + VideoPlayer.SubtitlesEnabled</visible>
 				</control>
-				<control type="radiobutton" id="404">
+				<control type="radiobutton" id="1404">
 					<width>359</width>
+					<textoffsetx>0</textoffsetx>
+					<include>DialogButtonOther</include>
 					<font>Reg24</font>
 					<textoffsetx>10</textoffsetx>
 					<aligny>center</aligny>
@@ -1852,6 +1866,19 @@
 					<visible>VideoPlayer.HasSubtitles</visible>
 					<pulseonselect>false</pulseonselect>
 				</control>
+			</control>
+			
+			<control type="slider" id="401">
+				<description>Seekbar</description>
+				<posx>515</posx>
+				<posy>960</posy>
+				<height>20</height>
+				<width>700</width>
+				<visible>Window.IsActive(VideoOSD.xml)</visible>
+				<visible>Player.HasDuration</visible>
+				<action>seek</action>
+				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
 			</control>
 
 	
@@ -2054,7 +2081,7 @@
                     <texturenofocus>osd/OSDVideoNF.png</texturenofocus>
                     <onclick>ActivateWindow(123)</onclick>
 					<visible>Player.HasVideo</visible>
-					<onfocus condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onfocus>
+					<onfocus condition="StringCompare(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,home)</onfocus>
                 </control>
                 <control type="button" id="104">
                     <!--Subtitles-->
@@ -2063,14 +2090,16 @@
                     <height>97</height>
                     <label>287</label>
                     <font>-</font>
-					<onup>Control.SetFocus(1410)</onup>
-					<onup>SetProperty(subtitlemenu,show)</onup>
+					
+					<onup>SetProperty(subtitlemenu,show,Home)</onup>
+					<onup>Control.SetFocus(1401)</onup>
+					<onup>Control.SetFocus(1401)</onup>
                     <texturefocus>osd/OSDSubtitlesFO.png</texturefocus>
                     <texturenofocus>osd/OSDSubtitlesNF.png</texturenofocus>
-					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">SetProperty(subtitlemenu,show)</onclick>
-					<onclick condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onclick>
-					<onback condition="StringCompare(Window.Property(subtitlemenu), show)">ClearProperty(subtitlemenu)</onback>
-					<onclick condition="!StringCompare(Window.Property(subtitlemenu), show)">Control.SetFocus(1410)</onclick>
+					<onclick condition="!StringCompare(Window(Home).Property(subtitlemenu), show)">SetProperty(subtitlemenu,show,Home)</onclick>
+					<onclick condition="StringCompare(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,Home)</onclick>
+					<onback condition="StringCompare(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,Home)</onback>
+					<onclick condition="!StringCompare(Window(Home).Property(subtitlemenu), show)">Control.SetFocus(1401)</onclick>
 					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>Player.HasVideo</visible>
                 </control>
