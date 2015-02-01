@@ -60,4 +60,6 @@ elif action == "SETCUSTOM":
 elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
-    MainModule.musicSearch()     
+    MainModule.musicSearch()
+elif action == "UPDATEBACKGROUNDS":
+    MainModule.UpdateBackgrounds()       

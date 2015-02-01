@@ -9,6 +9,7 @@ import os
 import time
 import urllib
 import xml.etree.ElementTree as etree
+import json
 import random
 
 doDebugLog = False
@@ -206,6 +207,75 @@ def addShortcutWorkAround():
     xbmc.executebuiltin('SendClick(401)')
 
 
+def UpdateBackgrounds():
+    win = xbmcgui.Window( 10000 )
+    print("processing backgrounds...")
+    #get in progress movies
+    media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
+    if(media_array != None and media_array.has_key('movies')):
+        inprogressMovies = list()
+        for aMovie in media_array['movies']:
+            if aMovie['art']['fanart'] != None:
+                inprogressMovies.append(aMovie['art']['fanart'])
+        
+        random.shuffle(inprogressMovies)
+        win.setProperty("InProgressMovieBackground",inprogressMovies[0])
+
+    #get recent and unwatched movies
+    media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
+    if(media_array != None and media_array.has_key('movies')):
+        recentMovies = list()
+        unwatchedMovies = list()
+        for aMovie in media_array['movies']:
+           
+            if aMovie['art']['fanart'] != None:
+                recentMovies.append(aMovie['art']['fanart'])
+                if aMovie['playcount'] == 0:
+                    unwatchedMovies.append(aMovie['art']['fanart'])
+
+        random.shuffle(recentMovies)
+        win.setProperty("RecentMovieBackground",recentMovies[0])
+        random.shuffle(unwatchedMovies)
+        win.setProperty("UnwatchedMovieBackground",unwatchedMovies[0])
+        
+    #get in progress tvshows    
+    media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
+    if(media_array != None and media_array.has_key('tvshows')):
+        inprogressShows = list()    
+        for aShow in media_array['tvshows']:
+            if aShow['art']['fanart'] != None:
+                inprogressShows.append(aShow['art']['fanart'])
+    
+        random.shuffle(inprogressShows)
+        win.setProperty("InProgressShowsBackground",inprogressShows[0])
+
+    #get recent episodes
+    media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
+    if(media_array != None and media_array.has_key('episodes')):
+        recentEpisodes = list()
+        for aShow in media_array['episodes']:
+           
+            if aShow['art']['tvshow.fanart'] != None:
+                recentEpisodes.append(aMovie['art']['fanart'])
+
+        random.shuffle(recentEpisodes)
+        win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
+
+        
+                
+def getJSON(method,params):
+    json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
+
+    jsonobject = json.loads(json_response.decode('utf-8','replace'))
+   
+    if(jsonobject.has_key('result')):
+        return jsonobject['result']
+    else:
+        utils.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
+        return None
+
+
+    
 def setView(containerType,viewId):
 
     if viewId=="00":
