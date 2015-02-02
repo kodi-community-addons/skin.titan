@@ -209,58 +209,104 @@ def addShortcutWorkAround():
 
 def UpdateBackgrounds():
     win = xbmcgui.Window( 10000 )
-    print("processing backgrounds...")
     #get in progress movies
-    media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
-    if(media_array != None and media_array.has_key('movies')):
-        inprogressMovies = list()
-        for aMovie in media_array['movies']:
-            if aMovie['art']['fanart'] != None:
-                inprogressMovies.append(aMovie['art']['fanart'])
-        
-        random.shuffle(inprogressMovies)
-        win.setProperty("InProgressMovieBackground",inprogressMovies[0])
+    try:
+        media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
+        if(media_array != None and media_array.has_key('movies')):
+            inprogressMovies = list()
+            for aMovie in media_array['movies']:
+                if aMovie.has_key('art'):
+                    if aMovie['art'].has_key('fanart'):
+                        inprogressMovies.append(aMovie['art']['fanart'])
+            
+            random.shuffle(inprogressMovies)
+            win.setProperty("InProgressMovieBackground",inprogressMovies[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning inprogress movies background")
 
     #get recent and unwatched movies
-    media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
-    if(media_array != None and media_array.has_key('movies')):
-        recentMovies = list()
-        unwatchedMovies = list()
-        for aMovie in media_array['movies']:
-           
-            if aMovie['art']['fanart'] != None:
-                recentMovies.append(aMovie['art']['fanart'])
-                if aMovie['playcount'] == 0:
-                    unwatchedMovies.append(aMovie['art']['fanart'])
+    try:
+        media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
+        if(media_array != None and media_array.has_key('movies')):
+            recentMovies = list()
+            unwatchedMovies = list()
+            for aMovie in media_array['movies']:
+               
+                if aMovie.has_key('art'): 
+                    if aMovie['art'].has_key('fanart'):
+                        recentMovies.append(aMovie['art']['fanart'])
+                        if aMovie['playcount'] == 0:
+                            unwatchedMovies.append(aMovie['art']['fanart'])
 
-        random.shuffle(recentMovies)
-        win.setProperty("RecentMovieBackground",recentMovies[0])
-        random.shuffle(unwatchedMovies)
-        win.setProperty("UnwatchedMovieBackground",unwatchedMovies[0])
+            random.shuffle(recentMovies)
+            win.setProperty("RecentMovieBackground",recentMovies[0])
+            random.shuffle(unwatchedMovies)
+            win.setProperty("UnwatchedMovieBackground",unwatchedMovies[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning recent movies background")
+
         
-    #get in progress tvshows    
-    media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
-    if(media_array != None and media_array.has_key('tvshows')):
-        inprogressShows = list()    
-        for aShow in media_array['tvshows']:
-            if aShow['art']['fanart'] != None:
-                inprogressShows.append(aShow['art']['fanart'])
-    
-        random.shuffle(inprogressShows)
-        win.setProperty("InProgressShowsBackground",inprogressShows[0])
+    #get in progress tvshows
+    try:
+        media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
+        if(media_array != None and media_array.has_key('tvshows')):
+            inprogressShows = list()    
+            for aShow in media_array['tvshows']:
+                if aShow.has_key('art'):
+                    if aShow['art'].has_key('fanart'):
+                        inprogressShows.append(aShow['art']['fanart'])
+        
+            random.shuffle(inprogressShows)
+            win.setProperty("InProgressShowsBackground",inprogressShows[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning inprogress tvshows background")
+
 
     #get recent episodes
-    media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
-    if(media_array != None and media_array.has_key('episodes')):
-        recentEpisodes = list()
-        for aShow in media_array['episodes']:
-           
-            if aShow['art']['tvshow.fanart'] != None:
-                recentEpisodes.append(aMovie['art']['fanart'])
+    try:
+        media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
+        if(media_array != None and media_array.has_key('episodes')):
+            recentEpisodes = list()
+            for aShow in media_array['episodes']:
+               
+                if aShow.has_key('art'):
+                    if aShow['art'].has_key('tvshow.fanart'):
+                        recentEpisodes.append(aMovie['art']['fanart'])
 
-        random.shuffle(recentEpisodes)
-        win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
+            random.shuffle(recentEpisodes)
+            win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
 
+def checkExtraFanArt():
+    
+    try:
+        efaPath = None
+        efaFound = False
+        win = xbmcgui.Window( 10000 )
+        
+        liPath = xbmc.getInfoLabel("ListItem.Path")
+        
+        if xbmcvfs.exists(liPath + "extrafanart/"):
+            efaPath = liPath + "extrafanart/"
+        else:
+            pPath = liPath.rpartition("/")[0]
+            pPath = pPath.rpartition("/")[0]
+            if xbmcvfs.exists(pPath + "/extrafanart/"):
+                efaPath = pPath + "/extrafanart/"
+            
+        if xbmcvfs.exists(efaPath):
+            dirs, files = xbmcvfs.listdir(efaPath)
+            if files.count > 1:
+                efaFound = True
+                
+        if (efaPath != None and efaFound == True):
+            win.setProperty("ExtraFanArtPath",efaPath)
+        else:
+             win.clearProperty("ExtraFanArtPath")
+        
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
         
                 
 def getJSON(method,params):

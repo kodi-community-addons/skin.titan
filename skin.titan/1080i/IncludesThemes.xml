@@ -621,7 +621,7 @@
 				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
 			</control>
 
-			<!-- cd cover -->
+			<!-- cd art -->
 			<control type="image">
 				<posx>140</posx>
 				<posy>820</posy>
@@ -632,8 +632,22 @@
 				<fadetime>300</fadetime>
 				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
 				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.FolderPath]cdart.png</texture>
-				<visible>Player.HasAudio</visible>
+				<visible>Player.HasAudio + !IsEmpty(Player.Art(thumb))</visible>
 			</control>
+			
+			<control type="image">
+				<posx>60</posx>
+				<posy>820</posy>
+				<width>240</width>
+				<height>240</height>
+				<aligny>center</aligny>
+				<aspectratio align="left">keep</aspectratio>
+				<fadetime>300</fadetime>
+				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.FolderPath]cdart.png</texture>
+				<visible>Player.HasAudio + IsEmpty(Player.Art(thumb))</visible>
+			</control>
+
 			<control type="image">
 				<!--Music-->
 				<posx>60</posx>
@@ -641,29 +655,7 @@
 				<width>240</width>
 				<height>240</height>
 				<fadetime>200</fadetime>
-				<texture background="true" diffuse="matte_cdart.png">DefaultAlbumCover.png</texture>
-				<aspectratio align="left" aligny="top">stretch</aspectratio>
-				<visible>Player.HasAudio</visible>
-			</control>
-			<control type="image">
-				<!--Music-->
-				<posx>60</posx>
-				<posy>820</posy>
-				<width>240</width>
-				<height>240</height>
-				<fadetime>200</fadetime>
-				<texture background="true" diffuse="matte_cdart.png">DefaultAlbumCover.png</texture>
-				<aspectratio align="left" aligny="top">stretch</aspectratio>
-				<visible>Player.HasAudio</visible>
-			</control>
-			<control type="image">
-				<!--Music-->
-				<posx>60</posx>
-				<posy>820</posy>
-				<width>240</width>
-				<height>240</height>
-				<fadetime>200</fadetime>
-				<texture background="true" diffuse="matte_cdart.png" fallback="DefaultAlbumCover.png">$INFO[Player.Art(thumb)]</texture>
+				<texture background="true" diffuse="matte_cdart.png">$INFO[Player.Art(thumb)]</texture>
 				<aspectratio align="left" aligny="top">stretch</aspectratio>
 				<visible>Player.HasAudio</visible>
 			</control>
@@ -1147,25 +1139,7 @@
 				<texture flipx="true">osd/ff.png</texture>
 			</control>
 			
-			<!--Buffer-->
-		   <control type="label">
-				<!--End Time DialogFullscreenInfo-->
-				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
-					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
-				</animation>
-				<posx>1850</posx>
-				<posy>930</posy>
-				<width>890</width>
-				<align>right</align>
-				<font>Light30</font>
-				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-				<label>$LOCALIZE[15107] $INFO[Player.CacheLevel]%</label>
-				<visible>!IsEmpty(Player.CacheLevel) + Skin.HasSetting(ShowCacheLevelOSD)</visible>
-				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-			</control>
-
-			
-			
+	
 			<!-- close dialog button -->
 			<control type="button">
 				<right>70</right>
@@ -2159,43 +2133,6 @@
 				<texturenofocus colordiffuse="aawhite">touchcontrols/icon_close.png</texturenofocus>
 				<aspectratio>keep</aspectratio>
 				<onclick>back</onclick>
-				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
-				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
-				<visible>!Window.IsActive(DialogSlider.xml)</visible>
-				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
-					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
-				</animation>
-			</control>
-			<!-- back button -->
-			<control type="button">
-				<right>160</right>
-				<posx>1450</posx>
-				<posy>835</posy>
-				<width>50</width>
-				<height>50</height>
-				<texturefocus colordiffuse="white">touchcontrols/icon_back.png</texturefocus>
-				<texturenofocus colordiffuse="aawhite">touchcontrols/icon_back.png</texturenofocus>
-				<aspectratio>keep</aspectratio>
-				<onclick>back</onclick>
-				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
-				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
-				<visible>!Window.IsActive(DialogSlider.xml)</visible>
-				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
-					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
-				</animation>
-			</control>
-			
-			<!--home button -->
-			<control type="button">
-				<right>140</right>
-				<posx>1450</posx>
-				<posy>835</posy>
-				<width>50</width>
-				<height>50</height>
-				<texturefocus colordiffuse="white">touchcontrols/icon_home.png</texturefocus>
-				<texturenofocus colordiffuse="aawhite">touchcontrols/icon_home.png</texturenofocus>
-				<aspectratio>keep</aspectratio>
-				<onclick>ActivateWindow(Home)</onclick>
 				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 				<visible>!Window.IsActive(DialogSlider.xml)</visible>

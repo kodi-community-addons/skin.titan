@@ -6,12 +6,14 @@
 	<backgroundcolor>0</backgroundcolor>
     <include>defaultskinsettings</include>
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXLINKS)</onload>
-	<onload condition="System.HasAddon(plugin.video.plexbmc)">AlarmClock(updatexplexbg,XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXBACKGROUNDS),00:40,silent,loop)</onload>
+	<onload>XBMC.RunScript(script.titanskin.helpers,UPDATEBACKGROUNDS)</onload>
+	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXBACKGROUNDS)</onload>
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
 	<onunload>SetProperty(ShowFastAllMovies, hide, Home)</onunload>
 	<onunload>ClearProperty(submenu, Home)</onunload>
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
 	<onunload>ClearProperty(activewidget)</onunload>
+	<onload>ClearProperty(ExtraFanArtPath, Home)</onload>
 	<onload>300</onload>
     <controls>
 	
@@ -30,9 +32,9 @@
 		
 		<!--Footer-->
 		<control type="group">
-
 			<include condition="[!skin.hassetting(nofooterbar) + !Skin.String(GadgetRows, enhanced) + !Skin.String(GadgetRows, simplever)] + ![Skin.String(GadgetRows, simplehor) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)]">Footer</include>
 		</control>
+		
 		<!--Time-->
 		<control type="group">
 			<animation effect="slide" end="-20" time="0" condition="Skin.HasSetting(HideWidgetPanelBackground) + Skin.String(GadgetRows, enhanced)">Conditional</animation>
@@ -84,8 +86,7 @@
 			<include condition="Skin.String(GadgetRows, simplever)">simplehome_vertical</include>
 		
 
-			<!-- touchscreen support -->
-			<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsHome</include>
+			
 			
 			<control type="scrollbar" id="60">
 				<posx>1835</posx>

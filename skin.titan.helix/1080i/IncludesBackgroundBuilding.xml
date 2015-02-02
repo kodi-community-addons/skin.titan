@@ -84,12 +84,20 @@
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
         </control>
-
-		<include>DialogOverlay</include>
 		
+		<include>DialogOverlay</include>
     </include>
 	
-   
+	<include name="extraFanArtMod">
+		<control type="button">
+			<visible>false</visible>
+			<onfocus>XBMC.RunScript(script.titanskin.helpers,CHECKEXTRAFANART)</onfocus>
+		</control>
+	 </include>
+	
+	
+	
+
    <variable name="globalBackground">
    
 		<!--nextaired script backgrounds -->
@@ -134,20 +142,21 @@
 		<value condition="Control.IsVisible(513) + Skin.HasSetting(View513_DisableFanArt)">$INFO[Skin.String(SectionBackground)]</value>
 		<value condition="Control.IsVisible(514) + Skin.HasSetting(View514_DisableFanArt)">$INFO[Skin.String(SectionBackground)]</value>
 		<value condition="Control.IsVisible(515) + Skin.HasSetting(View515_DisableFanArt)">$INFO[Skin.String(SectionBackground)]</value>
-		
-		
-		<!-- fanart backgrounds -->
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]</value>
+
+		<!-- extra fanart backgrounds -->
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Day0.fanartCode)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(Window(Home).Property(ExtraFanArtPath))">$INFO[Window(Home).Property(ExtraFanArtPath)]</value>
+		
+		<!-- normal fanart backgrounds -->
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
-		<value condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(listitem.art(fanart)) + !Container.Content(episodes) + !SubString(Container.FolderPath,plugin) + !SubString(Container.FolderPath,sources) + !SubString(Container.FolderPath,upnp) + !ListItem.IsFolder + !SubString(ListItem.Path,theme) + !SubString(ListItem.Path,intro)">$INFO[ListItem.Path,,extrafanart/]</value>
-		<value condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(listitem.art(fanart)) + Container.Content(episodes) + !SubString(Container.FolderPath,plugin) + !SubString(Container.FolderPath,sources) + !SubString(Container.FolderPath,upnp) + !ListItem.IsFolder + !SubString(ListItem.Path,theme) + !SubString(ListItem.Path,intro)">$INFO[ListItem.Path,,../extrafanart/]</value>
-		<value condition="[window.isactive(mymusicnav.xml) | window.isactive(myvideonav.xml) | window.isactive(mymusicsongs.xml)] + Skin.HasSetting(ShowFanartBackground)  + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(listitem.art(fanart)) + !SubString(Container.FolderPath,plugin)">$INFO[ListItem.Path,,extrafanart/]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<!-- section background -->
 		<value condition="Skin.HasSetting(UseSectionBackground) + Skin.String(SectionBackground)">$INFO[Skin.String(SectionBackground)]</value>
 		<!-- global background custom-->
 		<value condition="!Skin.String(CustomBackgroundSetting, default) + !Skin.String(CustomBackgroundSetting, blue) + !Skin.String(CustomBackgroundSetting, weather) + !Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Skin.String(CustomBackgroundSetting))">$INFO[Skin.String(CustomBackgroundSetting)]</value>
+		<!-- global weather background -->
+		<value condition="Skin.String(CustomBackgroundSetting, weather)">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Day0.fanartCode)]</value>
 		<!-- global fanart background -->
 		<value condition="Skin.String(CustomBackgroundSetting, fanart)">$VAR[globalFanartBackground]</value>
 		<!-- default backgrounds -->
@@ -232,7 +241,7 @@
 		<!-- musicvideos -->
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),musicvideos) + [StringCompare(Container(300).ListItem.Property(Background),default) | IsEmpty(Container(300).ListItem.Property(Background)) | StringCompare(Container(300).ListItem.Property(Background),fanart)]">$VAR[musicVideoFanartBackground]</value>
 		<!-- weather -->
-		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),weather) + [StringCompare(Container(300).ListItem.Property(Background),default) | IsEmpty(Container(300).ListItem.Property(Background)) | StringCompare(Container(300).ListItem.Property(Background),fanart)]">$VAR[WeatherFanArtPath]$INFO[Weather.FanartCode]/weather.jpg</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),weather) + [StringCompare(Container(300).ListItem.Property(Background),default) | IsEmpty(Container(300).ListItem.Property(Background)) | StringCompare(Container(300).ListItem.Property(Background),fanart)]">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Day0.fanartCode)]</value>
 		<!--MB3 collections-->
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-0-title) + [StringCompare(Container(300).ListItem.Property(Background),default) | IsEmpty(Container(300).ListItem.Property(Background)) | StringCompare(Container(300).ListItem.Property(Background),fanart)]">$INFO[Window(Home).Property(MediaBrowser.usr.0.background)]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-1-title) + [StringCompare(Container(300).ListItem.Property(Background),default) | IsEmpty(Container(300).ListItem.Property(Background)) | StringCompare(Container(300).ListItem.Property(Background),fanart)]">$INFO[Window(Home).Property(MediaBrowser.usr.1.background)]</value>

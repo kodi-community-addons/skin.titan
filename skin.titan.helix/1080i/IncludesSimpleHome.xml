@@ -38,8 +38,7 @@
 			  <posx>-338</posx>
 			  <width>3069</width>
 			  <posy>725</posy>
-			  
-			  <height>225</height>
+			  <height>72</height>
 			  <onleft>300</onleft>
 			  <onright>300</onright>
 			  <ondown>4444</ondown>
@@ -96,7 +95,6 @@
 			<control type="wraplist" id="4444" description="Submenu Bar">
 			  <animation effect="fade" time="200" start="100" end="100" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
 			  <visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
-			  <include>VisibleFadeEffect</include>
 			  <posx>-290</posx>
 			  <width>3000</width>
 			  <posy>803</posy>
@@ -195,7 +193,7 @@
 			
 			<control type="button" id="511">
 				<right>-20</right>
-				<posy>300</posy>
+				<posy>285</posy>
 				<width>1000</width>
 				<height>60</height>
 				<align>right</align>
@@ -225,17 +223,33 @@
 	<!-- submenu -->
 	<control type="group">
 		<posx>445</posx>
-		<posy>0</posy>
+		<posy>160</posy>
 		<animation type="Conditional" condition="SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)">
             <effect type="fade" start="0" end="100" time="250" delay="0" />
         </animation>
 		<animation type="Conditional" condition="![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]">
             <effect type="fade" start="100" end="0" time="250" delay="0" />
         </animation>
+		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,0)">
+            <effect type="slide" end="0,80" time="0" delay="0" />
+        </animation>
+		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,1)">
+            <effect type="slide" end="0,80" time="0" delay="0" />
+        </animation>
+		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,2)">
+            <effect type="slide" end="0,80" time="0" delay="0" />
+        </animation>
+		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,3)">
+            <effect type="slide" end="0,80" time="0" delay="0" />
+        </animation>
+		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,4)">
+            <effect type="slide" end="0,80" time="0" delay="0" />
+        </animation>
 
+		
 		<!--Panel-->
 		<control type="image">
-			<posy>470</posy>
+			<posy>0</posy>
 			<posx>-30</posx>
 			<width>400</width>
 			<height>495</height>
@@ -255,14 +269,16 @@
 			<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 			<width>320</width>
 			<posx>20</posx>
-			<posy>490</posy>
+			<posy>20</posy>
 			<height>440</height>
 			<itemgap>3</itemgap>
 			<onleft>300</onleft>
+			<onleft>ClearProperty(submenu,home)</onleft>
 			<onright>510</onright>
 			<onup>4444</onup>
 			<ondown>4444</ondown>
 			<onback>300</onback>
+			<onback>ClearProperty(submenu,home)</onback>
 			<focusposition>0</focusposition>
 			<movement>3</movement>
 			<itemlayout width="320" height="65">
@@ -324,12 +340,12 @@
 		<texture>kodi_logo_light.png</texture>
 	</control>
 
-    <control type="fixedlist" id="300" description="Main Bar">
+    <control type="list" id="300" description="Main Bar">
         <animation effect="fade" time="200" start="100" end="80" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
         <posx>35</posx>
         <posy>160</posy>
-        <width>650</width>
-        <height>880</height>
+        <width>370</width>
+        <height>800</height>
         <onup>300</onup>
         <ondown>300</ondown>
         <onleft>2</onleft>
@@ -385,8 +401,10 @@
 				<onfocus condition="Skin.HasSetting(UseSectionBackground) + !Player.HasMedia">Skin.SetString(SectionBackground,$VAR[homeBackground])</onfocus>
 				<onfocus condition="!Skin.HasSetting(UseSectionBackground) + Skin.String(SectionBackground)">Skin.Reset(SectionBackground)</onfocus>
 				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
-				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">SetFocus(4444)</onfocus>
-				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">SetProperty(submenu,show,home)</onfocus>
+				
+				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,show,home)</onfocus>
+				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,hide,home)</onfocus>
+				
 				<onfocus condition="!Skin.HasSetting(DisableAllWidgets)">XBMC.RunScript(script.titanskin.helpers,SETWIDGET,300)</onfocus>
 			</control>
         </focusedlayout>
@@ -467,6 +485,8 @@
 		</control>
 	</control>
 	
+	<!-- touchscreen support -->
+	<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsFooter</include>
     
  </include>
 </includes>
