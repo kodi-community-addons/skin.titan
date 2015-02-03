@@ -279,34 +279,59 @@ def UpdateBackgrounds():
         xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
 
 def checkExtraFanArt():
-    
-    try:
-        efaPath = None
-        efaFound = False
-        win = xbmcgui.Window( 10000 )
-        
-        liPath = xbmc.getInfoLabel("ListItem.Path")
-        
-        if xbmcvfs.exists(liPath + "extrafanart/"):
-            efaPath = liPath + "extrafanart/"
-        else:
-            pPath = liPath.rpartition("/")[0]
-            pPath = pPath.rpartition("/")[0]
-            if xbmcvfs.exists(pPath + "/extrafanart/"):
-                efaPath = pPath + "/extrafanart/"
-            
-        if xbmcvfs.exists(efaPath):
-            dirs, files = xbmcvfs.listdir(efaPath)
-            if files.count > 1:
-                efaFound = True
+    from datetime import datetime, timedelta, time
+    efaPath = None
+    efaFound = False
+    liArt = None
+    lastPath = None
                 
-        if (efaPath != None and efaFound == True):
-            win.setProperty("ExtraFanArtPath",efaPath)
-        else:
-             win.clearProperty("ExtraFanArtPath")
+    while (xbmc.abortRequested == False and xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and not xbmc.Player().isPlaying()):
+
+        try:
+            efaPath = None
+            efaFound = False
+            liArt = None
+            win = xbmcgui.Window( 10000 )
+            
+            liPath = xbmc.getInfoLabel("ListItem.Path")
+            liArt = xbmc.getInfoLabel("ListItem.Art(fanart)")
+            if liArt == None:
+                liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
+            
+            if (not "plugin" in liPath and liArt != None and not "plugin" in xbmc.getInfoLabel("Container.FolderPath") and not "addons:" in xbmc.getInfoLabel("Container.FolderPath") and not not "addons:" in liPath):
+                
+                if xbmcvfs.exists(liPath + "extrafanart/"):
+                    efaPath = liPath + "extrafanart/"
+                else:
+                    pPath = liPath.rpartition("/")[0]
+                    pPath = pPath.rpartition("/")[0]
+                    if xbmcvfs.exists(pPath + "/extrafanart/"):
+                        efaPath = pPath + "/extrafanart/"
+                    
+                if xbmcvfs.exists(efaPath):
+                    dirs, files = xbmcvfs.listdir(efaPath)
+                    if files.count > 1:
+                        efaFound = True
+                        
+                if (efaPath != None and efaFound == True):
+                    if lastPath != efaPath:
+                        win.setProperty("ExtraFanArtPath",efaPath)
+                        lastPath = efaPath
+                else:
+                    win.clearProperty("ExtraFanArtPath")
+            else:
+                win.clearProperty("ExtraFanArtPath")
         
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
+        except:
+            xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
+            
+        xbmc.sleep(1000)
+    
+    win.clearProperty("ExtraFanArtPath")    
+
+    
+    
+    
         
                 
 def getJSON(method,params):
