@@ -298,7 +298,7 @@ def checkExtraFanArt():
             if liArt == None:
                 liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
             
-            if (not "plugin" in liPath and liArt != None and not "plugin" in xbmc.getInfoLabel("Container.FolderPath") and not "addons:" in xbmc.getInfoLabel("Container.FolderPath") and not not "addons:" in liPath):
+            if (not "plugin" in liPath and liArt != None and not "plugin" in xbmc.getInfoLabel("Container.FolderPath") and not "addons:" in xbmc.getInfoLabel("Container.FolderPath") and not "addons:" in liPath):
                 
                 if xbmcvfs.exists(liPath + "extrafanart/"):
                     efaPath = liPath + "extrafanart/"
