@@ -280,9 +280,7 @@ def UpdateBackgrounds():
 
 def checkExtraFanArt():
     from datetime import datetime, timedelta, time
-    efaPath = None
-    efaFound = False
-    liArt = None
+    win = xbmcgui.Window( 10000 )
     lastPath = None
                 
     while (xbmc.abortRequested == False and xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and not xbmc.Player().isPlaying()):
@@ -291,15 +289,12 @@ def checkExtraFanArt():
             efaPath = None
             efaFound = False
             liArt = None
-            win = xbmcgui.Window( 10000 )
             
             liPath = xbmc.getInfoLabel("ListItem.Path")
             liArt = xbmc.getInfoLabel("ListItem.Art(fanart)")
             if liArt == None:
                 liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
-            
-            if (not "plugin" in liPath and liArt != None and not "plugin" in xbmc.getInfoLabel("Container.FolderPath") and not "addons:" in xbmc.getInfoLabel("Container.FolderPath") and not "addons:" in liPath):
-                
+            if ((not "plugin" in liPath) and (liArt != None) and (not "plugin" in xbmc.getInfoLabel("Container.FolderPath")) and (not "addons:" in xbmc.getInfoLabel("Container.FolderPath")) and (not "addons:" in liPath)):
                 if xbmcvfs.exists(liPath + "extrafanart/"):
                     efaPath = liPath + "extrafanart/"
                 else:
@@ -307,7 +302,7 @@ def checkExtraFanArt():
                     pPath = pPath.rpartition("/")[0]
                     if xbmcvfs.exists(pPath + "/extrafanart/"):
                         efaPath = pPath + "/extrafanart/"
-                    
+                        
                 if xbmcvfs.exists(efaPath):
                     dirs, files = xbmcvfs.listdir(efaPath)
                     if files.count > 1:
@@ -317,10 +312,13 @@ def checkExtraFanArt():
                     if lastPath != efaPath:
                         win.setProperty("ExtraFanArtPath",efaPath)
                         lastPath = efaPath
+                        
                 else:
                     win.clearProperty("ExtraFanArtPath")
+                    lastPath = None
             else:
                 win.clearProperty("ExtraFanArtPath")
+                lastPath = None
         
         except:
             xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
