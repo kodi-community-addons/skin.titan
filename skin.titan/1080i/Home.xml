@@ -8,7 +8,14 @@
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXLINKS)</onload>
 	<onload>XBMC.RunScript(script.titanskin.helpers,UPDATEBACKGROUNDS)</onload>
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXBACKGROUNDS)</onload>
+	
+	<onload condition="System.HasAddon(plugin.video.plexbmc)">AlarmClock(UPDATEPLEXBACKGROUNDS,XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXBACKGROUNDS),00:60,silent,loop)</onload>
+	<onload>AlarmClock(UPDATEBACKGROUNDS,XBMC.RunScript(script.titanskin.helpers,UPDATEBACKGROUNDS),00:60,silent,loop)</onload>
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
+	<onload condition="Skin.String(GadgetRows, enhanced)">AlarmClock(SpotlightMove,Control.Move(1508,1),00:08,silent,loop)</onload>
+	<onunload>CancelAlarm(SpotlightMove,true)</onunload>
+	<onunload>CancelAlarm(UPDATEPLEXBACKGROUNDS,true)</onunload>
+	<onunload>CancelAlarm(UPDATEBACKGROUNDS,true)</onunload>
 	<onunload>SetProperty(ShowFastAllMovies, hide, Home)</onunload>
 	<onunload>ClearProperty(submenu, Home)</onunload>
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
@@ -18,7 +25,7 @@
     <controls>
 	
 	<!--Global Background-->
-	<include condition="Skin.HasSetting(UseSectionBackground)">HomeBackground</include><include condition="!Skin.HasSetting(UseSectionBackground)">GlobalBackground</include>
+	<include>GlobalBackground</include>
 		
 		<!--NowPlaying-->
 		<include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
