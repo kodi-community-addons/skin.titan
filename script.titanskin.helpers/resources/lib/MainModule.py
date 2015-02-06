@@ -209,6 +209,7 @@ def addShortcutWorkAround():
 
 def UpdateBackgrounds():
     win = xbmcgui.Window( 10000 )
+    media_array = None
     #get in progress movies
     try:
         media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
@@ -223,7 +224,8 @@ def UpdateBackgrounds():
             win.setProperty("InProgressMovieBackground",inprogressMovies[0])
     except:
         xbmc.log("Titan skin helper: error occurred in assigning inprogress movies background")
-
+    
+    media_array = None
     #get recent and unwatched movies
     try:
         media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
@@ -245,7 +247,7 @@ def UpdateBackgrounds():
     except:
         xbmc.log("Titan skin helper: error occurred in assigning recent movies background")
 
-        
+    media_array = None    
     #get in progress tvshows
     try:
         media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
@@ -261,22 +263,22 @@ def UpdateBackgrounds():
     except:
         xbmc.log("Titan skin helper: error occurred in assigning inprogress tvshows background")
 
-
+    media_array = None
     #get recent episodes
     try:
         media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
         if(media_array != None and media_array.has_key('episodes')):
             recentEpisodes = list()
             for aShow in media_array['episodes']:
-               
                 if aShow.has_key('art'):
                     if aShow['art'].has_key('tvshow.fanart'):
-                        recentEpisodes.append(aMovie['art']['fanart'])
+                        recentEpisodes.append(aShow['art']['tvshow.fanart'])
 
             random.shuffle(recentEpisodes)
             win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
-    except:
+    except Exception, msg:
         xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
+        xbmc.log(str(msg))
 
 def checkExtraFanArt():
     from datetime import datetime, timedelta, time
