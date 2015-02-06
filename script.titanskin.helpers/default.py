@@ -7,7 +7,7 @@ BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'li
 sys.path.append(BASE_RESOURCE_PATH)
 
 import MainModule
-
+import BackupRestore
 
 #script init
 action = ""
@@ -65,3 +65,9 @@ elif action == "UPDATEBACKGROUNDS":
     MainModule.UpdateBackgrounds()
 elif action == "CHECKEXTRAFANART":
     MainModule.checkExtraFanArt()
+elif action == "BACKUP":
+    BackupRestore.backup()
+elif action == "RESTORE":
+    BackupRestore.restore()
+elif action == "RESET":
+    BackupRestore.reset()
