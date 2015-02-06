@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
-    <defaultcontrol always="true">4000</defaultcontrol>
+    <defaultcontrol always="true">1000</defaultcontrol>
 	<zorder>6</zorder>
 	<backgroundcolor>0</backgroundcolor>
     <controls>
@@ -78,19 +78,7 @@
 					<onleft>back</onleft>
                     <width>2100</width>
                     <height>800</height>
-                    <control type="group" id="140">
-                        <height>220</height>
-                        <visible>false</visible>
-                        <control type="radiobutton" id="132">
-                        </control>
-                        <control type="textbox" id="800">
-                        </control>
-                    </control>
-                    <control type="group" id="50000">
-                        <height>120</height>
-						<visible>false</visible>
-					</control>
-                    
+                                       
 					<!-- rating stuff -->
 					<control type="group">
 						<height>130</height>
@@ -102,14 +90,14 @@
 							<control type="image">
 								<posx>-13</posx>
 								<posy>0</posy>
-								<width>1600</width>
+								<width>1560</width>
 								<height>1</height>
 								<texture>info/infopanel_line.png</texture>
 							</control>
 							<control type="image">
 								<posx>-13</posx>
 								<posy>82</posy>
-								<width>1600</width>
+								<width>1560</width>
 								<height>1</height>
 								<texture>info/infopanel_line.png</texture>
 							</control>
@@ -259,20 +247,50 @@
 								</control>
 								<control type="label" id="800">
 									<posy>5</posy>
-									<width>950</width>
+									<width>750</width>
 									<height>65</height>
 									<align>left</align>
 									<aligny>center</aligny>
 									<wrapmultiline>true</wrapmultiline>
 									<label>$INFO[Window.Property(movie.omdb.Awards),,[CR]]$INFO[Window.Property(movie.omdb.tomatoConsensus),,[CR]]</label>
 									<font>Reg22</font>
-									<autoscroll delay="10000" time="800" repeat="10000">true</autoscroll>
 								</control>
 							
 							</control>
 						</control>
 					</control>
 				
+					<!-- normal info -->
+                    <control type="group" id="140">
+						<visible>!IsEmpty(Window.Property(movie.Plot))</visible>
+						<height>260</height>
+						<control type="radiobutton" id="132">
+						<visible>false</visible>
+                        </control>
+						<control type="textbox" id="800">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>1440</width>
+							<height>300</height>
+							<label>$INFO[Window.Property(movie.Plot)]</label>
+							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+							<align>justify</align>
+							<font>Light32</font>
+						</control>
+						<control type="image">
+							<posx>1460</posx>
+							<posy>-144</posy>
+							<width>360</width>
+							<height>360</height>
+							<aspectratio align="right" aligny="top">keep</aspectratio>
+							<texture diffuse="poster_matte.png" fallback="DefaultVideo.png">$INFO[Window.Property(movie.Poster)]</texture>
+							<bordertexture border="20" colordiffuse="black">thumb_shadow.png</bordertexture>
+							<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+							<bordersize>20</bordersize>
+						</control>
+					</control>
+                    				
 					<!-- cast panel -->
                     <control type="group" id="50111">
                         <visible>IntegerGreaterThan(Container(1000).NumItems,0)</visible>
@@ -418,6 +436,22 @@
 						</control>
                     </control>
                     
+					
+					<!-- arrow down -->
+                    <control type="group">
+						<height>80</height>
+						<visible>[Control.HasFocus(1000) | !ControlGroup(4000).HasFocus]</visible>
+						<control type="image">
+							<posx>25</posx>
+							<posy>-18</posy>
+							<width>150</width>
+							<height>35</height>
+							<texture>arrowdown.png</texture>
+							<animation effect="fade" start="0" end="100" tween="sine" easing="inout" time="1200" pulse="true" reversible="false" condition="true">Conditional</animation>
+						</control>
+					</control>
+					
+					
 					<!-- crew panel -->
 					<control type="group" id="54111">
                         <visible>IntegerGreaterThan(Container(750).NumItems,0)</visible>
@@ -561,8 +595,7 @@
                             </focusedlayout>
 						</control>
                     </control>
-                    
-					
+                    				
 					<!-- recommended by TMDB -->
 					<control type="group" id="50112">
                         <visible>IntegerGreaterThan(Container(150).NumItems,0)</visible>

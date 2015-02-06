@@ -273,8 +273,11 @@
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
 						<label>$INFO[System.AddonTitle(script.videoextras)]</label>
-						<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
-						<visible>System.HasAddon(script.videoextras) + !IsEmpty(ListItem.FilenameAndPath)</visible>
+						<onclick>XBMC.RunScript(script.videoextras,display,"$INFO[ListItem.FilenameAndPath]")</onclick>
+						<visible>System.HasAddon(script.videoextras)
+						 + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows)
+						 | Container.Content(musicvideos)]
+						 + IsEmpty(Window(movieinformation).Property("HideVideoExtrasButton"))</visible>
 					</control>
 					<control type="button" id="101">
 						<!--Get Thumb Artwork Downloader-->
@@ -626,6 +629,8 @@
 							<visible>skin.hastheme(classic)</visible>
 						</control>
 					</control>
+				
+				
 				</control>
 				<!--Cast Stuff-->
 				<control type="group" id="9002">
