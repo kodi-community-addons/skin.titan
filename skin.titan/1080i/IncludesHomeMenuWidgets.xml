@@ -462,8 +462,12 @@
 
 	<variable name="DynamicWidgetContent">
 		
-		<!-- empty widgets when player active -->
-		<value condition="StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<!-- empty widgets when home not active -->
+		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<!-- refresh widgets when using custom widgets -->
+		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(Window(Home).Property(activewidget),tvshows) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<!-- smartish widgets -->
 		<value condition="StringCompare(Window(Home).Property(activewidget),smart-movies)">plugin://service.smartish.widgets?type=movies&amp;reload=$INFO[Window.Property(smartish.movies)]</value>

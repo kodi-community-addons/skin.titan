@@ -21,6 +21,16 @@
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
 	<onunload>ClearProperty(activewidget)</onunload>
 	<onload>ClearProperty(ExtraFanArtPath, Home)</onload>
+	
+	<!-- unload widgets from memory when home not active -->
+	<onunload>SetProperty(refreshwidgets,hide,home)</onunload>
+	<onload>ClearProperty(refreshwidgets,home)</onload>
+	
+	<!-- refresh widgets after 5 seconds -->
+	<onload>AlarmClock(refreshwidgets1,SetProperty(refreshwidgets,refresh,home),00:05,silent)</onload>
+	<onload>AlarmClock(refreshwidgets2,ClearProperty(refreshwidgets,home),00:06,silent)</onload>
+	
+	
 	<onload>300</onload>
     <controls>
 	
@@ -52,7 +62,7 @@
 		<!-- Home Screen -->
 		<control type="group">
 			<include>animation_window_open_close</include>
-		
+			<visible>Window.IsActive(home)</visible>
 			<include>WeatherInfo</include>
 			<include>ProfileInfo</include>
 			

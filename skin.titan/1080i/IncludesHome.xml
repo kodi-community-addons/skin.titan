@@ -2,6 +2,13 @@
 
 
 	<variable name="SpotLightWidgetContent">
+		<!-- empty widgets when home not active -->
+		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<!-- refresh widgets when using custom widgets -->
+		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(Window(Home).Property(activewidget),tvshows) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
+		
 		<value condition="StringCompare(Window(Home).Property(activewidget),movies) + Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.3.content)]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.HasSetting(HomeMenuUseMBforTvSeries)">$INFO[Window.Property(MediaBrowser.std.tvshows.4.content)]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),music) + Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(MediaBrowser.std.music.2.content)]</value>
