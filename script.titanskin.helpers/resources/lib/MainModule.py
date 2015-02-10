@@ -292,32 +292,38 @@ def checkExtraFanArt():
             efaFound = False
             liArt = None
             
-            liPath = xbmc.getInfoLabel("ListItem.Path")
-            liArt = xbmc.getInfoLabel("ListItem.Art(fanart)")
-            if liArt == None:
-                liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
-            if ((not "plugin" in liPath) and (liArt != None) and (not "plugin" in xbmc.getInfoLabel("Container.FolderPath")) and (not "addons:" in xbmc.getInfoLabel("Container.FolderPath")) and (not "addons:" in liPath)):
-                if xbmcvfs.exists(liPath + "extrafanart/"):
-                    efaPath = liPath + "extrafanart/"
-                else:
-                    pPath = liPath.rpartition("/")[0]
-                    pPath = pPath.rpartition("/")[0]
-                    if xbmcvfs.exists(pPath + "/extrafanart/"):
-                        efaPath = pPath + "/extrafanart/"
-                        
-                if xbmcvfs.exists(efaPath):
-                    dirs, files = xbmcvfs.listdir(efaPath)
-                    if files.count > 1:
-                        efaFound = True
-                        
-                if (efaPath != None and efaFound == True):
-                    if lastPath != efaPath:
-                        win.setProperty("ExtraFanArtPath",efaPath)
-                        lastPath = efaPath
-                        
-                else:
+            if (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")):
+                
+                liPath = xbmc.getInfoLabel("ListItem.Path")
+                if xbmc.getCondVisibility("Container.Content(episodes)"):
+                    liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
+                    
+                if ("plugin://" in liPath or "addon://" in liPath or "sources" in liPath):
                     win.clearProperty("ExtraFanArtPath")
                     lastPath = None
+                else:
+
+                    if xbmcvfs.exists(liPath + "extrafanart/"):
+                        efaPath = liPath + "extrafanart/"
+                    else:
+                        pPath = liPath.rpartition("/")[0]
+                        pPath = pPath.rpartition("/")[0]
+                        if xbmcvfs.exists(pPath + "/extrafanart/"):
+                            efaPath = pPath + "/extrafanart/"
+                            
+                    if xbmcvfs.exists(efaPath):
+                        dirs, files = xbmcvfs.listdir(efaPath)
+                        if files.count > 1:
+                            efaFound = True
+                            
+                    if (efaPath != None and efaFound == True):
+                        if lastPath != efaPath:
+                            win.setProperty("ExtraFanArtPath",efaPath)
+                            lastPath = efaPath
+                            
+                    else:
+                        win.clearProperty("ExtraFanArtPath")
+                        lastPath = None
             else:
                 win.clearProperty("ExtraFanArtPath")
                 lastPath = None

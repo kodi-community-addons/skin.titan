@@ -61,15 +61,15 @@ def backup():
                     
                 #get skinshortcuts preferences
                 skinshortcuts_path_source = xbmc.translatePath('special://profile/addon_data/script.skinshortcuts/').decode("utf-8")
-                print(skinshortcuts_path_source)
+                logMsg(skinshortcuts_path_source)
                 if xbmcvfs.exists(skinshortcuts_path_source):
                     dirs, files = xbmcvfs.listdir(skinshortcuts_path_source)
                     for file in files:
                         if ".xml" in file:
                             sourcefile = skinshortcuts_path_source + file
                             destfile = skinshortcuts_path + file
-                            print("source --> " + sourcefile)
-                            print("destination --> " + destfile)
+                            logMsg("source --> " + sourcefile)
+                            logMsg("destination --> " + destfile)
                             xbmcvfs.copy(sourcefile,destfile)    
                 
                 #save guisettings
@@ -95,7 +95,7 @@ def backup():
     
     except:
         xbmcgui.Dialog().ok(__language__(31272), __language__(31279))
-        logMsg("exception in creating skin backup")
+        xbmc.log("exception in creating skin backup")
 
 
         
@@ -106,7 +106,7 @@ def restore():
         zip_path = get_browse_dialog(dlg_type=1,heading=__language__(31282),mask=".zip")
         
         if zip_path != None and zip_path != "":
-            print("zip_path " + zip_path)
+            logMsg("zip_path " + zip_path)
             progressDialog = xbmcgui.DialogProgress(__language__(31273))
             progressDialog.create(__language__(31273))
             progressDialog.update(0, "unpacking backup...")
@@ -138,8 +138,8 @@ def restore():
                     if ".xml" in file:
                         sourcefile = skinshortcuts_path_source + file
                         destfile = skinshortcuts_path_dest + file
-                        print("source --> " + sourcefile)
-                        print("destination --> " + destfile)
+                        logMsg("source --> " + sourcefile)
+                        logMsg("destination --> " + destfile)
                         xbmcvfs.copy(sourcefile,destfile)    
             
             #read guisettings
@@ -174,7 +174,7 @@ def restore():
     
     except:
         xbmcgui.Dialog().ok(__language__(31272), __language__(31281))
-        logMsg("exception in creating skin backup")
+        xbmc.log("exception in creating skin backup")
 
 
 
@@ -230,7 +230,7 @@ def read_from_file(path=""):
         return False
 
         
-def get_browse_dialog(default="", heading="Browse", dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
+def get_browse_dialog(default=None, heading="Browse", dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
     dialog = xbmcgui.Dialog()
     value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
     return value
