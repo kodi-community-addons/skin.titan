@@ -392,7 +392,21 @@ def setView(containerType,viewId):
         else:
             __settings__.setSetting('viewIdActivity', viewId) 
 
-
+def checkNotifications(notificationType):
+    
+    if notificationType == "weather":
+        win = xbmcgui.Window(12600)
+        if (win.getProperty("Alerts.RSS") != "" and win.getProperty("Current.Condition") != ""):
+            dialog = xbmcgui.Dialog()
+            dialog.notification(xbmc.getLocalizedString(31294), win.getProperty("Alerts"), xbmcgui.NOTIFICATION_WARNING, 8000)
+    
+    if notificationType == "nextaired":
+        win = xbmcgui.Window(10000)
+        if (win.getProperty("NextAired.TodayShow") != ""):
+            dialog = xbmcgui.Dialog()
+            dialog.notification(xbmc.getLocalizedString(31295), win.getProperty("NextAired.TodayShow"), xbmcgui.NOTIFICATION_WARNING, 8000)    
+            
+            
 def showSubmenu(showOrHide,doFocus):
 
     win = xbmcgui.Window( 10000 )

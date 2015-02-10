@@ -71,3 +71,5 @@ elif action == "RESTORE":
     BackupRestore.restore()
 elif action == "RESET":
     BackupRestore.reset()
+elif action == "CHECKNOTIFICATIONS":
+    MainModule.checkNotifications(argument1)
