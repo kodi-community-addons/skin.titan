@@ -291,10 +291,10 @@ def checkExtraFanArt():
             efaPath = None
             efaFound = False
             liArt = None
+            liPath = xbmc.getInfoLabel("ListItem.Path")
             
-            if (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")):
+            if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and not "videodb:" in liPath):
                 
-                liPath = xbmc.getInfoLabel("ListItem.Path")
                 if xbmc.getCondVisibility("Container.Content(episodes)"):
                     liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
                     
