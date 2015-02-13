@@ -51,8 +51,6 @@ elif action == "SETWIDGET":
     MainModule.setWidget(argument1)
 elif action == "UPDATEPLEXLINKS":   
     MainModule.updatePlexlinks()
-elif action == "UPDATEPLEXBACKGROUNDS":     
-    MainModule.updatePlexBackgrounds()
 elif action == "SHOWWIDGET":   
     MainModule.showWidget()
 elif action == "SETCUSTOM":
@@ -61,10 +59,6 @@ elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
     MainModule.musicSearch()
-elif action == "UPDATEBACKGROUNDS":
-    MainModule.UpdateBackgrounds()
-elif action == "CHECKEXTRAFANART":
-    MainModule.checkExtraFanArt()
 elif action == "BACKUP":
     BackupRestore.backup()
 elif action == "RESTORE":

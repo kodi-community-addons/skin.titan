@@ -7,15 +7,11 @@
     <include>defaultskinsettings</include>
 	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXLINKS)</onload>
 	
-	<onload condition="System.HasAddon(plugin.video.plexbmc)">XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXBACKGROUNDS)</onload>
-	
-	<onload condition="System.HasAddon(plugin.video.plexbmc)">AlarmClock(UPDATEPLEXBACKGROUNDS,XBMC.RunScript(script.titanskin.helpers,UPDATEPLEXBACKGROUNDS),00:60,silent,loop)</onload>
-	<onload>AlarmClock(UPDATEBACKGROUNDS,XBMC.RunScript(script.titanskin.helpers,UPDATEBACKGROUNDS),00:60,silent,loop)</onload>
+	<onload condition="Skin.HasSetting(EnableWeatherNotifications)">XBMC.RunScript(script.titanskin.helpers,CHECKNOTIFICATIONS,weather)</onload>
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
 	<onload condition="Skin.String(GadgetRows, enhanced)">AlarmClock(SpotlightMove,Control.Move(1508,1),00:08,silent,loop)</onload>
 	<onunload>CancelAlarm(SpotlightMove,true)</onunload>
-	<onunload>CancelAlarm(UPDATEPLEXBACKGROUNDS,true)</onunload>
-	<onunload>CancelAlarm(UPDATEBACKGROUNDS,true)</onunload>
+
 	<onunload>SetProperty(ShowFastAllMovies, hide, Home)</onunload>
 	<onunload>ClearProperty(submenu, Home)</onunload>
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
@@ -29,7 +25,6 @@
 	<!-- refresh widgets after 5 seconds -->
 	<onload condition="Skin.HasSetting(HomeMenuUseMBforMovies)">AlarmClock(refreshwidgets1,SetProperty(refreshwidgets,refresh,home),00:06,silent)</onload>
 	<onload condition="Skin.HasSetting(HomeMenuUseMBforMovies)">AlarmClock(refreshwidgets2,ClearProperty(refreshwidgets,home),00:06,silent)</onload>
-	
 	
 	<onload>300</onload>
     <controls>

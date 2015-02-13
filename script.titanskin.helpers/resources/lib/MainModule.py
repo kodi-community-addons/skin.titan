@@ -201,11 +201,92 @@ def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
     if xbmc.getCondVisibility("System.Platform.Windows"):
-        time.sleep(1)
+        xbmc.sleep(1000)
     else:
-        time.sleep(2)
+        xbmc.sleep(2000)
     xbmc.executebuiltin('SendClick(401)')
 
+def checkExtraFanArt():
+        
+    lastPath = None
+    win = xbmcgui.Window( 10000 )
+    
+    try:
+        efaPath = None
+        efaFound = False
+        liArt = None
+        liPath = xbmc.getInfoLabel("ListItem.Path")
+        containerPath = xbmc.getInfoLabel("Container.FolderPath")
+        
+        if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and not "videodb:" in liPath):
+                           
+            if xbmc.getCondVisibility("Container.Content(episodes)"):
+                liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
+            
+            # do not set extra fanart for virtuals
+            if (("plugin://" in liPath) or ("addon://" in liPath) or ("sources" in liPath) or ("plugin://" in containerPath) or ("sources://" in containerPath) or ("plugin://" in containerPath)):
+                win.clearProperty("ExtraFanArtPath")
+                lastPath = None
+            else:
+
+                if xbmcvfs.exists(liPath + "extrafanart/"):
+                    efaPath = liPath + "extrafanart/"
+                else:
+                    pPath = liPath.rpartition("/")[0]
+                    pPath = pPath.rpartition("/")[0]
+                    if xbmcvfs.exists(pPath + "/extrafanart/"):
+                        efaPath = pPath + "/extrafanart/"
+                        
+                if xbmcvfs.exists(efaPath):
+                    dirs, files = xbmcvfs.listdir(efaPath)
+                    if files.count > 1:
+                        efaFound = True
+                        
+                if (efaPath != None and efaFound == True):
+                    if lastPath != efaPath:
+                        win.setProperty("ExtraFanArtPath",efaPath)
+                        lastPath = efaPath
+                        
+                else:
+                    win.clearProperty("ExtraFanArtPath")
+                    lastPath = None
+        else:
+            win.clearProperty("ExtraFanArtPath")
+            lastPath = None
+    
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
+          
+def focusEpisode():
+
+    totalItems = 10
+    curView = xbmc.getInfoLabel("Container.Viewmode") 
+    viewId = int(getViewId(curView))
+    
+    wid = xbmcgui.getCurrentWindowId()
+    window = xbmcgui.Window( wid )        
+    control = window.getControl(int(viewId))
+    totalItems = int(xbmc.getInfoLabel("Container.NumItems"))
+    curItem = 0
+
+    while (xbmc.getCondVisibility("Container.Content(episodes)") and (xbmc.getInfoLabel("ListItem.Overlay") == "OverlayWatched.png" or xbmc.getInfoLabel("ListItem.Label") == "..") and totalItems >= curItem):
+        curItem += 1
+        control.selectItem(curItem)
+        xbmc.sleep(80)
+
+        
+def getViewId(viewString):
+    # get all views from views-file
+    viewId = None
+    skin_view_file = os.path.join(xbmc.translatePath('special://skin/extras'), "views.xml")
+    tree = etree.parse(skin_view_file)
+    root = tree.getroot()
+    for view in root.findall('view'):
+        if viewString == view.attrib['id']:
+            viewId=view.attrib['value']
+    
+    return viewId
+    
 
 def UpdateBackgrounds():
     win = xbmcgui.Window( 10000 )
@@ -280,65 +361,6 @@ def UpdateBackgrounds():
         xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
         xbmc.log(str(msg))
 
-def checkExtraFanArt():
-    from datetime import datetime, timedelta, time
-    win = xbmcgui.Window( 10000 )
-    lastPath = None
-                
-    while (xbmc.abortRequested == False and xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and not xbmc.Player().isPlaying()):
-
-        try:
-            efaPath = None
-            efaFound = False
-            liArt = None
-            liPath = xbmc.getInfoLabel("ListItem.Path")
-            
-            if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and not "videodb:" in liPath):
-                
-                if xbmc.getCondVisibility("Container.Content(episodes)"):
-                    liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
-                    
-                if ("plugin://" in liPath or "addon://" in liPath or "sources" in liPath):
-                    win.clearProperty("ExtraFanArtPath")
-                    lastPath = None
-                else:
-
-                    if xbmcvfs.exists(liPath + "extrafanart/"):
-                        efaPath = liPath + "extrafanart/"
-                    else:
-                        pPath = liPath.rpartition("/")[0]
-                        pPath = pPath.rpartition("/")[0]
-                        if xbmcvfs.exists(pPath + "/extrafanart/"):
-                            efaPath = pPath + "/extrafanart/"
-                            
-                    if xbmcvfs.exists(efaPath):
-                        dirs, files = xbmcvfs.listdir(efaPath)
-                        if files.count > 1:
-                            efaFound = True
-                            
-                    if (efaPath != None and efaFound == True):
-                        if lastPath != efaPath:
-                            win.setProperty("ExtraFanArtPath",efaPath)
-                            lastPath = efaPath
-                            
-                    else:
-                        win.clearProperty("ExtraFanArtPath")
-                        lastPath = None
-            else:
-                win.clearProperty("ExtraFanArtPath")
-                lastPath = None
-        
-        except:
-            xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
-            
-        xbmc.sleep(1000)
-    
-    win.clearProperty("ExtraFanArtPath")    
-
-    
-    
-    
-        
                 
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
@@ -351,7 +373,6 @@ def getJSON(method,params):
         utils.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
         return None
 
-
     
 def setView(containerType,viewId):
 
@@ -359,22 +380,8 @@ def setView(containerType,viewId):
         win = xbmcgui.Window( 10000 )
 
         curView = xbmc.getInfoLabel("Container.Viewmode")
+        viewId = getViewId(curView)
         
-        # get all views from views-file
-        skin_view_file = os.path.join(xbmc.translatePath('special://skin'), "views.xml")
-        skin_view_file_alt = os.path.join(xbmc.translatePath('special://skin/extras'), "views.xml")
-        if xbmcvfs.exists(skin_view_file_alt):
-            skin_view_file = skin_view_file_alt
-        try:
-            tree = etree.parse(skin_view_file)
-        except:           
-            sys.exit()
-        
-        root = tree.getroot()
-        
-        for view in root.findall('view'):
-            if curView == view.attrib['id']:
-                viewId=view.attrib['value']
     else:
         viewId=viewId    
 

@@ -146,8 +146,7 @@
 				</control>
 				<control type="label">
 					<!--Label-->
-					<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">HomeTileLabelPosGotham</include>
-					<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">HomeTileLabelPosHelix</include>
+					<centerleft>315</centerleft>
 					<posy>170</posy>
 					<width>600</width>
 					<height>100</height>
@@ -160,8 +159,7 @@
 				</control>
 				<control type="label">
 					<!--Label Grey-->
-					<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">HomeTileLabelPosGotham</include>
-					<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">HomeTileLabelPosHelix</include>
+					<centerleft>315</centerleft>
 					<posy>170</posy>
 					<width>600</width>
 					<height>100</height>
@@ -232,8 +230,7 @@
 				</control>
 				<control type="label">
 					<!--Label Grey-->
-					<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">HomeTileLabelPosGotham</include>
-					<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">HomeTileLabelPosHelix</include>
+					<centerleft>315</centerleft>
 					<posy>170</posy>
 					<width>600</width>
 					<height>100</height>
@@ -914,6 +911,7 @@
             <colordiffuse>ccFFFFFF</colordiffuse>
             <texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
 			<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))] + !IsEmpty(ListItem.Label)</visible>
+			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
         </control>
         <control type="label">
             <!--Label-->
@@ -927,7 +925,29 @@
             <textcolor>lightgrey</textcolor>
 			<shadowcolor>black</shadowcolor>
 			<visible>IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
+			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
         </control>
+		<control type="image">
+				<!--Watched Overlay-->
+				<right>13</right>
+				<posy>0</posy>
+				<width>60</width>
+				<height>60</height>
+				<colordiffuse>ccFFFFFF</colordiffuse>
+				<texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
+				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+			</control>
+			<control type="label">
+				<!--watched label-->
+				<width>100</width>
+				<centerright>30</centerright>
+				<posy>-17</posy>
+				<align>center</align>
+				<label>$VAR[WatchedLabel]</label>
+				<font>Light20</font>
+				<textcolor>white</textcolor>
+				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+			</control>
     </include>
     
 	
@@ -952,6 +972,7 @@
             <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
 			<shadowcolor>black</shadowcolor>
 			<visible>IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + [Control.HasFocus(4444) | Control.HasFocus(510)]</visible>
+			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
         </control>
         <control type="image">
             <!--Panel Focus-->
@@ -1006,6 +1027,7 @@
             <colordiffuse>ccFFFFFF</colordiffuse>
             <texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
 			<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
         </control>
         <control type="label">
             <!--Label-->
