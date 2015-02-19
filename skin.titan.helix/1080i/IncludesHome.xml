@@ -4,28 +4,22 @@
 	<variable name="SpotLightWidgetContent">
 		<!-- empty widgets when home not active -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<!-- refresh widgets when using custom widgets -->
-		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(Window(Home).Property(activewidget),tvshows) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
-		<value condition="StringCompare(Window(Home).Property(activewidget),movies) + Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.3.content)]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.HasSetting(HomeMenuUseMBforTvSeries)">$INFO[Window.Property(MediaBrowser.std.tvshows.4.content)]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),music) + Skin.HasSetting(HomeMenuUseMBforMusic)">$INFO[Window.Property(MediaBrowser.std.music.2.content)]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),musicvideos) + Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window.Property(MediaBrowser.std.music.3.content)]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),movies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies) + !Skin.HasSetting(HomeMenuUsePlexforMovies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + !Skin.HasSetting(HomeMenuUseNetflixforTvSeries) + !Skin.HasSetting(HomeMenuUsePlexforTvSeries)">special://skin/extras/widgetplaylists/recommendedtvshows.xsp</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),music) + !Skin.HasSetting(HomeMenuUseNetflixforMusic) + !Skin.HasSetting(HomeMenuUsePlexforMusic)">musicdb://top100/songs/</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),musicvideos) + !Skin.HasSetting(HomeMenuUseNetflixforMusicVideos) + !Skin.HasSetting(HomeMenuUsePlexforMusicVideos)">videodb://recentlyaddedmusicvideos/</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),netflix)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=both&amp;url=slider_3</value>
+		<value condition="StringCompare(Window(Home).Property(spotlightwidgetcontent),movies) + Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.3.content)]</value>
+		<value condition="StringCompare(Window(Home).Property(spotlightwidgetcontent),tvshows) + Skin.HasSetting(HomeMenuUseMBforTvSeries)">$INFO[Window.Property(MediaBrowser.std.tvshows.4.content)]</value>
+		<value condition="StringCompare(Window(Home).Property(spotlightwidgetcontent),movies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</value>
+		<value condition="StringCompare(Window(Home).Property(spotlightwidgetcontent),tvshows)">special://skin/extras/widgetplaylists/recommendedtvshows.xsp</value>
+		<value condition="!IsEmpty(Window(Home).Property(spotlightwidgetcontent))">$INFO[Window(Home).Property(spotlightwidgetcontent)]</value>
 		<value>special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 	 </variable>
 	 
 	 <variable name="SpotLightWidgetImage">
         <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="!IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Art(fanart)) + !StringCompare(Window(Home).Property(activewidget),youtube)">$INFO[Container(510).ListItem.Art(fanart)]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.fanart))">$INFO[Container(510).ListItem.Art(tvshow.fanart)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Property(fanart))">$INFO[Container(510).ListItem.Property(fanart)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Icon)">$INFO[Container(510).ListItem.Icon]</value>
     </variable>
@@ -182,7 +176,7 @@
 					<posy>-16</posy>
 					<width>149</width>
 					<height>30</height>
-					<texture colordiffuse=$INFO[Skin.String(ButtonFocusColor)]>basichome_up.png</texture>
+					<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_up.png</texture>
 					<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
 				</control>
 				<control type="image">
@@ -192,7 +186,7 @@
 					<posy>263</posy>
 					<width>149</width>
 					<height>30</height>
-					<texture colordiffuse=$INFO[Skin.String(ButtonFocusColor)]>basichome_down.png</texture>
+					<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_down.png</texture>
 					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
 					<visible>!Skin.HasSetting(EnableTouchSupport) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
 				</control>
@@ -280,7 +274,7 @@
 					<posy>-26</posy>
 					<width>149</width>
 					<height>30</height>
-					<texture colordiffuse=$INFO[Skin.String(ButtonFocusColor)]>basichome_up.png</texture>
+					<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_up.png</texture>
 					<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
 				</control>
 				<control type="image">
@@ -290,7 +284,7 @@
 					<posy>178</posy>
 					<width>149</width>
 					<height>30</height>
-					<texture colordiffuse=$INFO[Skin.String(ButtonFocusColor)]>basichome_down.png</texture>
+					<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_down.png</texture>
 					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
 					<visible>!Skin.HasSetting(EnableTouchSupport) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
 				</control>
@@ -658,7 +652,7 @@
 						<texture>home/home_focus.png</texture>
 					</control>
 				</focusedlayout>
-				<content>$VAR[SpotLightWidgetContent]</content>
+				<content target="$VAR[WidgetTarget]">$VAR[SpotLightWidgetContent]</content>
 			</control>
 			
 			<!-- alt widget info submenu present-->

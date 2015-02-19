@@ -810,8 +810,9 @@
 	<variable name="PosterThumb">
 		<value condition="!IsEmpty(ListItem.Property(medium_poster)) + [Control.IsVisible(57) | Control.IsVisible(59) | Control.IsVisible(508) | Control.IsVisible(52) | Control.IsVisible(53)]">$INFO[ListItem.Property(medium_poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(small_poster)) + Control.IsVisible(54)">$INFO[ListItem.Property(small_poster)]</value>
-		<value condition="!IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Art(season.poster))">$INFO[ListItem.Art(season.poster)]</value>
+		<value condition="!IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="!IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(poster))">$INFO[ListItem.Property(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(tvshow.poster))">$INFO[ListItem.Property(poster)]</value>
@@ -920,7 +921,7 @@
 		<value condition="Window.IsActive(Home) + Control.IsVisible(510) + StringCompare(ListItem.Overlay,OverlayWatched.png)">overlays/big/OverlayWatched.png</value>
 		<value condition="Window.IsActive(Home) + Control.IsVisible(510) + [ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)]">overlays/big/OverlayUnWatched.png</value>
 
-
+		<value condition="container.content(seasons) + StringCompare(ListItem.Property(UnWatchedEpisodes),0)">overlays/big/OverlayWatched.png</value>
 		<value condition="!Window.IsActive(Home) + container.content(albums)">-</value>
 		<value condition="!Window.IsActive(Home) + !Control.IsVisible(50) + SubString(ListItem.label,*)">overlays/big/OverlayUnWatched.png</value>
         <value condition="!Window.IsActive(Home) + !Control.IsVisible(50) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/big/$INFO[ListItem.Overlay]</value>
@@ -929,6 +930,7 @@
     </variable>
 	
 	<variable name="WatchedImageBanner">
+		<value condition="container.content(seasons) + StringCompare(ListItem.Property(UnWatchedEpisodes),0)">overlays/big/OverlayWatched.png</value>
 		<value condition="SubString(ListItem.label,*)">overlays/big/OverlayUnWatched.png</value>
         <value condition="[StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/big/$INFO[ListItem.Overlay]</value>
     </variable>
