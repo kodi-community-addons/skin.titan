@@ -87,7 +87,47 @@ def setWidget(containerID):
 
     else:
         win.clearProperty("activewidget")
+    
+    #also set spotlightwidget for enhancedhomescreen
+    if xbmc.getCondVisibility("Skin.String(GadgetRows, enhanced)"):
+        setSpotlightWidget(containerID)
 
+def setSpotlightWidget(containerID):
+    win = xbmcgui.Window( 10000 )
+    win.clearProperty("spotlightwidgetcontent")
+    skinStringContent = ""
+    customWidget = False
+    
+    # workaround for numeric labels (get translated by xbmc)
+    skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
+    skinString = skinString.replace("num-","")
+    if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
+        skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
+    
+    # normal method by getting the defaultID
+    if skinStringContent == "":
+        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
+        if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
+            skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
+       
+    if skinStringContent != "":
+ 
+        if "$INFO" in skinStringContent:
+            skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
+            skinStringContent = skinStringContent.replace(")]", "")
+            skinStringContent = win.getProperty(skinStringContent)
+        if "Activate" in skinStringContent:
+            skinStringContent = skinStringContent.split(",",1)[1]
+            skinStringContent = skinStringContent.replace(",return","")
+            skinStringContent = skinStringContent.replace(")","")
+            skinStringContent = skinStringContent.replace("\"","")
+
+        win.setProperty("spotlightwidgetcontent", skinStringContent)
+
+    else:
+        win.clearProperty("spotlightwidgetcontent")        
+        
+        
 def setCustomContent(skinString):
     #legacy
     win = xbmcgui.Window( 10000 )
