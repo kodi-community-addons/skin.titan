@@ -70,11 +70,17 @@ class Main:
                     
                     #store unwatched episodes
                     if ((xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and xbmc.getCondVisibility("!IsEmpty(ListItem.Property(UnWatchedEpisodes))")):
-                        unwatched = int(xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)"))
+                        try:
+                            unwatched = int(xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)"))
+                        except: pass
                     
                     if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and xbmc.getCondVisibility("Container.Content(episodes)")):
                         if (xbmc.getInfoLabel("Container.FolderPath") != lastEpPath and unwatched != 0):
-                            MainModule.focusEpisode()
+                            try:
+                                MainModule.focusEpisode()
+                            except: 
+                                xbmc.log("Titanskin Helper: Exception while trying to focus episode")
+                                pass
                                 
                     lastEpPath = xbmc.getInfoLabel("Container.FolderPath")       
 

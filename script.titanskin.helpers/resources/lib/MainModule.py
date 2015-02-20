@@ -14,6 +14,8 @@ import random
 
 doDebugLog = False
 
+__language__ = xbmc.getLocalizedString
+
 def logMsg(msg, level = 1):
     if doDebugLog == True:
         xbmc.log(msg)
@@ -298,8 +300,8 @@ def checkExtraFanArt():
         xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
           
 def focusEpisode():
-
-    totalItems = 10
+    
+    totalItems = 0
     curView = xbmc.getInfoLabel("Container.Viewmode") 
     viewId = int(getViewId(curView))
     
@@ -307,14 +309,32 @@ def focusEpisode():
     window = xbmcgui.Window( wid )        
     control = window.getControl(int(viewId))
     totalItems = int(xbmc.getInfoLabel("Container.NumItems"))
-    curItem = 0
-
-    while (xbmc.getCondVisibility("Container.Content(episodes)") and (xbmc.getInfoLabel("ListItem.Overlay") == "OverlayWatched.png" or xbmc.getInfoLabel("ListItem.Label") == "..") and totalItems >= curItem):
-        curItem += 1
-        control.selectItem(curItem)
-        xbmc.sleep(80)
-
         
+    if (xbmc.getCondVisibility("Container.SortDirection(ascending)")):
+        curItem = 1
+        control.selectItem(0)
+        xbmc.sleep(250)
+        while (xbmc.getCondVisibility("Container.Content(episodes)") and totalItems >= curItem):
+            if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png" and xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label") != ".."):
+                if curItem != 0:
+                    control.selectItem(curItem)
+                break
+            else:
+                curItem += 1
+    
+    elif (xbmc.getCondVisibility("Container.SortDirection(descending)")):
+        curItem = totalItems
+        control.selectItem(totalItems)
+        xbmc.sleep(250)
+        while (xbmc.getCondVisibility("Container.Content(episodes)") and curItem != 0):
+            
+            if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png"):
+                control.selectItem(curItem-1)
+                break
+            else:    
+                curItem -= 1
+            
+
 def getViewId(viewString):
     # get all views from views-file
     viewId = None
@@ -322,7 +342,7 @@ def getViewId(viewString):
     tree = etree.parse(skin_view_file)
     root = tree.getroot()
     for view in root.findall('view'):
-        if viewString == view.attrib['id']:
+        if viewString == __language__(int(view.attrib['languageid'])):
             viewId=view.attrib['value']
     
     return viewId
@@ -437,7 +457,12 @@ def setView(containerType,viewId):
         elif containerType=="EPISODES":
             __settings__.setSetting('viewIdEpisodesNew', viewId)
         else:
-            __settings__.setSetting('viewIdActivity', viewId) 
+            __settings__.setSetting('viewIdActivity', viewId)
+            
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
+        __settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
+        if __settings__.getSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType) != "disabled":
+            __settings__.setSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType, viewId)
 
 def checkNotifications(notificationType):
     
