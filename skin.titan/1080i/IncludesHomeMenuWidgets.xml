@@ -175,6 +175,7 @@
 				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 			</control>
 			
+			<!--change widget button default theme -->
 			<control type="button" id="511">
 				<right>35</right>
 				<width>370</width>
@@ -189,6 +190,58 @@
 				<texturenofocus>dialogs/default/separator.png</texturenofocus>
 				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<include>animation_fade_visible_hidden_delayed</include>
+				<visible>!skin.hastheme(classic)</visible>
+				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
+			</control>
+			
+			<!-- widget type selector classic theme -->
+			<control type="group">		
+				<visible>skin.hastheme(classic)</visible>
+				<visible>!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + !SubString(Window(Home).Property(activewidget),smart-) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]</visible>
+				<control type="image">
+					<height>70</height>
+					<width>60</width>
+					<posy>-5</posy>
+					<right>70</right>
+					<texture>common/spinctrl/arrow-down-nf.png</texture>
+					<aspectratio aligny="center" align="center">keep</aspectratio>
+					<visible>!Control.HasFocus(511)</visible>
+				</control>
+				<control type="image">
+					<height>70</height>
+					<width>60</width>
+					<posy>-5</posy>
+					<right>70</right>
+					<texture>common/spinctrl/arrow-down-fo.png</texture>
+					<aspectratio aligny="center" align="center">keep</aspectratio>
+					<visible>Control.HasFocus(511)</visible>
+				</control>					
+				<control type="image">
+					<right>19</right>
+					<height>70</height>
+					<width>60</width>
+					<posy>-5</posy>
+					<texture>common/spinctrl/arrow-up-nf.png</texture>
+					<aspectratio aligny="center" align="center">keep</aspectratio>
+				</control>
+			</control>
+			<control type="button" id="511">
+				<right>30</right>
+				<width>1000</width>
+				<height>60</height>
+				<align>right</align>
+				<textcolor>darkgrey</textcolor>
+				<font>Bold32</font>
+				<onup>Skin.Reset(ShowWidgets)</onup>
+				<onup>300</onup>
+				<ondown>510</ondown>
+				<textoffsetx>80</textoffsetx>
+				<label>$VAR[HomeWidgetLabel]</label>
+				<texturefocus>-</texturefocus>
+				<texturenofocus>-</texturenofocus>
+				<onclick>$VAR[HomeWidgetClickActions]</onclick>
+				<include>animation_fade_visible_hidden_delayed</include>
+				<visible>skin.hastheme(classic)</visible>
 				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
 			</control>
 
@@ -206,7 +259,7 @@
 			</control>
 			<control type="label">
 				<!--Rating-->
-				<posx>430</posx>
+				<posx>380</posx>
 				<posy>-8</posy>
 				<width>600</width>
 				<font>Reg30</font>
@@ -1576,7 +1629,7 @@
             <width>355</width>
             <height>200</height>
             <texture background="true" diffuse="home/home_matte2.png" fallback="banner_default.png">$VAR[HomeMenuWidgetImage]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
         <control type="image">
             <!--Panel Ovelay-->
