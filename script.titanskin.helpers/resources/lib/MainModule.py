@@ -128,7 +128,13 @@ def setSpotlightWidget(containerID):
 
     else:
         win.clearProperty("spotlightwidgetcontent")        
-        
+
+def setSkinVersion():
+    skin = xbmc.getSkinDir()
+    skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
+    skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
+    win = xbmcgui.Window( 10000 )
+    win.setProperty("skinTitle",skinLabel + " (v" + skinVersion + ")")
         
 def setCustomContent(skinString):
     #legacy

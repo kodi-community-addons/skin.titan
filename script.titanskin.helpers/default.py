@@ -67,3 +67,5 @@ elif action == "RESET":
     BackupRestore.reset()
 elif action == "CHECKNOTIFICATIONS":
     MainModule.checkNotifications(argument1)
+elif action == "SETSKINVERSION":
+    MainModule.setSkinVersion()
