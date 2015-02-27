@@ -52,47 +52,49 @@ def setWidget(containerID):
     skinStringContent = ""
     customWidget = False
     
-    # workaround for numeric labels (get translated by xbmc)
-    skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
-    skinString = skinString.replace("num-","")
-    if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
-        skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
-    
-    # normal method by getting the defaultID
-    if skinStringContent == "":
-        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
+    try:
+        # workaround for numeric labels (get translated by xbmc)
+        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
+        skinString = skinString.replace("num-","")
         if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
             skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
-       
-    if skinStringContent != "":
- 
-        if "$INFO" in skinStringContent:
-            skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
-            skinStringContent = skinStringContent.replace(")]", "")
-            skinStringContent = win.getProperty(skinStringContent)
-            customWidget = True
-        if "Activate" in skinStringContent:
-            skinStringContent = skinStringContent.split(",",1)[1]
-            skinStringContent = skinStringContent.replace(",return","")
-            skinStringContent = skinStringContent.replace(")","")
-            skinStringContent = skinStringContent.replace("\"","")
-            customWidget = True
-        if ":" in skinStringContent:
-            customWidget = True
-            
-        if customWidget:
-             win.setProperty("customwidgetcontent", skinStringContent)
-             win.setProperty("activewidget","custom")
-        else:
-            win.clearProperty("customwidgetcontent")
-            win.setProperty("activewidget",skinStringContent)
+        
+        # normal method by getting the defaultID
+        if skinStringContent == "":
+            skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
+            if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
+                skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
+           
+        if skinStringContent != "":
+     
+            if "$INFO" in skinStringContent:
+                skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
+                skinStringContent = skinStringContent.replace(")]", "")
+                skinStringContent = win.getProperty(skinStringContent)
+                customWidget = True
+            if "Activate" in skinStringContent:
+                skinStringContent = skinStringContent.split(",",1)[1]
+                skinStringContent = skinStringContent.replace(",return","")
+                skinStringContent = skinStringContent.replace(")","")
+                skinStringContent = skinStringContent.replace("\"","")
+                customWidget = True
+            if ":" in skinStringContent:
+                customWidget = True
+                
+            if customWidget:
+                 win.setProperty("customwidgetcontent", skinStringContent)
+                 win.setProperty("activewidget","custom")
+            else:
+                win.clearProperty("customwidgetcontent")
+                win.setProperty("activewidget",skinStringContent)
 
-    else:
-        win.clearProperty("activewidget")
-    
-    #also set spotlightwidget for enhancedhomescreen
-    if xbmc.getCondVisibility("Skin.String(GadgetRows, enhanced)"):
-        setSpotlightWidget(containerID)
+        else:
+            win.clearProperty("activewidget")
+        
+        #also set spotlightwidget for enhancedhomescreen
+        if xbmc.getCondVisibility("Skin.String(GadgetRows, enhanced)"):
+            setSpotlightWidget(containerID)
+    except: pass
 
 def setSpotlightWidget(containerID):
     win = xbmcgui.Window( 10000 )
