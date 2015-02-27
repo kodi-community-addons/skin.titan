@@ -122,22 +122,49 @@
 			<posy>600</posy>
 			<defaultcontrol always="true">510</defaultcontrol>
 			<animation effect="slide" end="0,25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-			<control type="button">
-				<!--widget Arrow DOWN-->
-				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
-				<posx>872</posx>
-				<posy>311</posy>
-				<width>149</width>
-				<height>30</height>
-				<onclick>ClearProperty(ShowWidget, Home)</onclick>
-				<texturefocus colordiffuse="white">basichome_down.png</texturefocus>
-				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_down.png</texturenofocus>
+
+			<!--widget Arrow DOWN-->
+			<control type="group">
+				<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !skin.hastheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
+				<control type="button">
+					<!--widget Arrow DOWN-->
+					<posx>872</posx>
+					<posy>311</posy>
+					<width>149</width>
+					<height>30</height>
+					<onclick>ClearProperty(ShowWidget, Home)</onclick>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+				</control>
+				<control type="image">
+					<posx>872</posx>
+					<posy>311</posy>
+					<width>149</width>
+					<height>30</height>
+					<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
+					<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+				</control>
+				<control type="image">
+					<posx>872</posx>
+					<posy>311</posy>
+					<width>149</width>
+					<height>34</height>
+					<texture>arrowright.png</texture>
+					<colordiffuse>white</colordiffuse>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="-90" center="auto" time="0" loop="false" reversible="false" condition="true">Conditional</animation>
+				</control>
 			</control>
 			
 			<control type="button">
-				<!--widget Arrow DOWN-->
+				<!--widget Arrow DOWN classic-->
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<posx>872</posx>
 				<posy>301</posy>
@@ -665,6 +692,7 @@
 			<onclick>ActivateWindow(weather)</onclick>
 			<visible>!IsEmpty(Window(Weather).Property(Day5.Title))</visible>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
+			<visible>!Skin.String(GadgetRows, simplever)</visible>
 		</item>
 		<item>
 			<label>[UPPERCASE]$INFO[Window(Weather).Property(Day6.Title)][/UPPERCASE]</label>
@@ -676,6 +704,7 @@
 			<onclick>ActivateWindow(weather)</onclick>
 			<visible>!IsEmpty(Window(Weather).Property(Day6.Title))</visible>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
+			<visible>!Skin.String(GadgetRows, simplever)</visible>
 		</item>
 		<!--rom collection browser -->
 		<item>
@@ -1510,8 +1539,9 @@
 	
 
 	<include name="panel_layout_vertical">
-		<width>1300</width>
-		<height>400</height>
+		<width>1320</width>
+		<height>760</height>
+		<orientation>vertical</orientation>
 	</include>
 	
 	<include name="panel_layout">
@@ -1523,7 +1553,7 @@
 		<onleft></onleft>
 		<onleft condition="Skin.String(GadgetRows, simplever)">300</onleft>
 		
-		<ondown condition="Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)">300</ondown>
+		<ondown condition="Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)">300</ondown>
 		<ondown condition="Skin.String(GadgetRows, enhanced)">510</ondown>
 		<ondown condition="Skin.String(GadgetRows, simplehor)">511</ondown>
 		<ondown condition="Skin.String(GadgetRows, simplever)">511</ondown>
@@ -1533,7 +1563,7 @@
 		<focusposition>-</focusposition>
 		
 		<animation effect="slide" end="0,10" time="0" condition="skin.hastheme(classic) + StringCompare(Window(Home).Property(activewidget),music)">Conditional</animation>
-		<animation effect="slide" end="0,100" time="0" condition="Skin.String(GadgetRows, simplever) + StringCompare(Window(Home).Property(activewidget),music)">Conditional</animation>
+		
 		<animation type="Conditional" condition="!StringCompare(Window(Home).Property(activewidget),music) + !Skin.String(GadgetRows, simplever)">
 			<effect type="slide" start="0,0" end="0,20" time="0" tween="cubic" easing="inout" delay="0" reversible="false"/>
 		</animation>
@@ -1546,7 +1576,7 @@
 				<include>HomeMenuWidgetFocuslayout</include>
 			</control>
 		</focusedlayout>
-		<itemlayout height="275" width="262" condition="StringCompare(Window(Home).Property(activewidget),music)">
+		<itemlayout height="265" width="262" condition="StringCompare(Window(Home).Property(activewidget),music)">
           <control type="group">
 		  <animation effect="zoom" end="93" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 		  <posx>-8</posx>
@@ -1582,7 +1612,7 @@
 				</control>
 			</control>
         </itemlayout>
-        <focusedlayout height="275" width="262" condition="StringCompare(Window(Home).Property(activewidget),music)">
+        <focusedlayout height="265" width="262" condition="StringCompare(Window(Home).Property(activewidget),music)">
           <control type="group">
 		  <animation effect="zoom" end="93" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 		  <posx>-8</posx>

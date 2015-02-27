@@ -458,6 +458,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(HideWidgetPanelBackground)</onclick>
                     <selected>Skin.HasSetting(HideWidgetPanelBackground)</selected>
+					<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)</visible>
                 </control>
 				
 				<!--prefer tv show art for episodes-->
@@ -471,6 +472,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(PreferTvShowThumbWidget)</onclick>
                     <selected>Skin.HasSetting(PreferTvShowThumbWidget)</selected>
+					<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)</visible>
                 </control>
 							
 				<control type="label" id="13010">
@@ -1239,6 +1241,18 @@
                     <onclick>Skin.SetString(GadgetRows, 2)</onclick>
                     <selected>Skin.String(GadgetRows, 2) | !Skin.String(GadgetRows)</selected>
                 </control>
+				<control type="radiobutton" id="23030">
+                    <description></description>
+                    <!--gadget rows-->
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31032</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.SetString(GadgetRows, 3)</onclick>
+                    <selected>Skin.String(GadgetRows, 3)</selected>
+                </control>
 				<control type="radiobutton" id="23005">
                     <description></description>
                     <!--enhanced home-->
@@ -1304,7 +1318,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(UseSmallHomeTiles)</onclick>
                     <selected>Skin.HasSetting(UseSmallHomeTiles)</selected>
-					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)] + !skin.hastheme(classic)</visible>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)] + !skin.hastheme(classic)</visible>
                 </control>
 				
 				<!-- auto show widgets-->
@@ -1332,7 +1346,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(AutoShowSubmenu)</onclick>
                     <selected>Skin.HasSetting(AutoShowSubmenu)</selected>
-					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, simplever)]</visible>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3) | Skin.String(GadgetRows, simplever)]</visible>
                 </control>
 				
 				<!--enable tiles for submenus-->
@@ -1373,7 +1387,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(DisableAllWidgets)</onclick>
                     <selected>Skin.HasSetting(DisableAllWidgets)</selected>
-					<visible>!Skin.String(GadgetRows, enhanced)</visible>
+					<visible>!Skin.String(GadgetRows, enhanced) + !Skin.String(GadgetRows, 3)</visible>
                 </control>
 				
 				<!--disable all submenus-->
@@ -1400,7 +1414,7 @@
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
                     <onclick>Addon.OpenSettings(service.library.data.provider)</onclick>
-					<visible>!Skin.HasSetting(DisableAllWidgets)</visible>
+					<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)</visible>
                 </control>
 				
 				<!-- other home settings -->
@@ -1441,8 +1455,23 @@
 					<onclick>Skin.Reset(WeatherOnHome)</onclick>
                     <selected>Skin.HasSetting(ShowProfile)</selected>
                 </control>
+				<control type="radiobutton" id="23023">
+                    <description></description>
+                    <!--custom logo-->
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>Use custom image instead of Kodi logo</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick condition="!Skin.String(CustomLogoImage)">Skin.SetImage(CustomLogoImage)</onclick>
+					<onclick condition="Skin.String(CustomLogoImage)">Skin.Reset(CustomLogoImage)</onclick>
+                    <selected>Skin.String(CustomLogoImage)</selected>
+					<visible>!SubString(System.BuildVersion,13,left)</visible>
+					<visible>![Skin.HasSetting(WeatherOnHome) | Skin.HasSetting(ShowProfile)] | Skin.String(GadgetRows, simplever)</visible>
+                </control>
 				
-				<control type="label" id="23023">
+				<control type="label" id="23024">
                     <description></description>
                     <!--hide power warning-->
                     <width>1230</width>
@@ -1455,7 +1484,7 @@
 					<visible>Skin.HasSetting(DisablePowerMenu)</visible>
                 </control>
 				
-				<control type="radiobutton" id="23024">
+				<control type="radiobutton" id="23025">
                     <description></description>
                     <!--hide power-->
                     <width>1230</width>
@@ -1468,7 +1497,7 @@
                     <selected>Skin.HasSetting(DisablePowerMenu)</selected>
                 </control>
 				
-				<control type="button" id="23025">
+				<control type="button" id="23026">
                     <description></description>
                     <!--change power-->
                     <width>1230</width>
