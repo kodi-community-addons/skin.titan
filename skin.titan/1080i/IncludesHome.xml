@@ -34,7 +34,7 @@
 	
 	<include name="HomeLayoutFixedFocus">
 		<!-- home menu Widgets -->
-		<include condition="!Skin.HasSetting(DisableAllWidgets)">HomeMenuWidget</include>
+		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">HomeMenuWidget</include>
 		
 		<control type="wraplist" id="300">
 			<visible>!Skin.String(GadgetRows, enhanced)</visible>
@@ -80,16 +80,14 @@
 		<animation type="Conditional" condition="SubString(Window(Home).Property(HomeLoaded),loaded)">
 			<effect type="slide" start="0,800" end="0,0" time="450" delay="600" tween="cubic" easing="inout" />
 		</animation>
-		
-		<animation type="Conditional" condition="[Skin.String(GadgetRows, 1) | Skin.HasSetting(DisablePowerMenu)] + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu)]]">
-			<effect type="slide" start="0,-0" end="0,-70" time="300" tween="cubic" easing="inout" />
+
+		<animation type="Conditional" condition="Control.IsVisible(4444) + Skin.String(SubmenuLayout, tiles)">
+			<effect type="slide" start="0,0" end="0,-60" time="200" tween="cubic" easing="inout" delay="0" />
 		</animation>
 		
-		<animation type="Conditional" condition="!Skin.String(GadgetRows, 1) + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu)]] + !Skin.HasSetting(DisablePowerMenu)">
-			<effect type="slide" start="0,-0" end="0,-80" time="300" tween="cubic" easing="inout" />
+		<animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)">
+			<effect type="slide" start="0,0" end="0,1000" time="0" delay="0" />
 		</animation>
-		
-		<animation effect="slide" end="0,40" time="0" condition="!system.getbool(lookandfeel.enablerssfeeds)">Conditional</animation>
 
 		<onup>$VAR[HomeButtonUpAction]</onup>
 		<ondown>$VAR[HomeButtonDownAction]</ondown>
@@ -98,219 +96,8 @@
 		<orientation>horizontal</orientation>
 
 		<pagecontrol>60</pagecontrol>
-		<itemlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles) + skin.hastheme(classic)">
-			<control type="group">
-			<posy>20</posy>
-				<control type="image">
-					<!--Panel Shadow-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>623</width>
-					<height>271</height>
-					<texture>home/home_shadow.png</texture>
-					<visible>!Skin.HasSetting(NoShadowOnHomeMenuTiles)</visible>
-				</control>
-				<control type="image">
-					<!--focus image-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>600</width>
-					<height>250</height>
-					<bordersize>-4</bordersize>
-					<texture>home/home_matte2.png</texture>
-					<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-					<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
-				</control>
-				<control type="image">
-					<!--Panel Normal-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>600</width>
-					<height>250</height>
-					<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/hometiles/addons.png">$INFO[ListItem.Icon]</texture>
-					<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-					<fadetime>800</fadetime>
-					<include>backgroundfade</include>
-				</control>
-				<control type="image">
-					<!--Panel Ovelay-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>600</width>
-					<height>250</height>
-					<colordiffuse>ccFFFFFF</colordiffuse>
-					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="label">
-					<!--Label-->
-					<centerleft>315</centerleft>
-					<posy>170</posy>
-					<width>600</width>
-					<height>100</height>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<font>Reg45</font>
-					<textcolor>aawhite</textcolor>
-					<shadowcolor>black</shadowcolor>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="label">
-					<!--Label Grey-->
-					<centerleft>315</centerleft>
-					<posy>170</posy>
-					<width>600</width>
-					<height>100</height>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<font>Reg45</font>
-					<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
-					<shadowcolor>black</shadowcolor>
-					<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label) + ![Skin.HasSetting(NoTitleOnHomeMenuTiles) | StringCompare(ListItem.Property(disableLabel), disable)]</visible>
-				</control>
-			</control>
-		</itemlayout>
-		<focusedlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles) + skin.hastheme(classic)">
-			<control type="group">
-				<posy>20</posy>
-				
-				<!--widget Arrow UP-->
-				<control type="group">
-					<!-- show arrow up button if widget available -->
-					<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<control type="image">
-						<posx>233</posx>
-						<posy>-16</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
-						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>233</posx>
-						<posy>-22</posy>
-						<width>149</width>
-						<height>34</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowright.png</texture>
-						<aspectratio>keep</aspectratio>
-						<animation effect="rotate" end="90" center="auto" time="0" loop="false" reversible="false" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>233</posx>
-						<posy>-16</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">basichome_up.png</texture>
-						<visible>skin.hastheme(classic)</visible>
-					</control>
-				</control>
-				
-				
-				<!--widget Arrow DOWN-->
-				<control type="group">
-					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-					<visible>!Skin.HasSetting(EnableTouchSupport) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<control type="image">
-						<posx>236</posx>
-						<posy>263</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
-						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>236</posx>
-						<posy>263</posy>
-						<width>149</width>
-						<height>34</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowright.png</texture>
-						<aspectratio>keep</aspectratio>
-						<animation effect="rotate" end="-90" center="auto" time="0" loop="false" reversible="false" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>236</posx>
-						<posy>263</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">basichome_down.png</texture>
-						<visible>skin.hastheme(classic)</visible>
-					</control>
-				</control>
-				
-				<control type="image">
-					<!--focus image-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>600</width>
-					<height>250</height>
-					<bordersize>-6</bordersize>
-					<texture>home/home_matte2.png</texture>
-					<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-				</control>
-				<control type="image">
-					<!--Panel Normal-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>600</width>
-					<height>250</height>
-					<texture background="true" fallback="special://skin/extras/hometiles/addons.png" diffuse="home/home_matte2.png">$INFO[ListItem.Icon]</texture>
-					<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-					<fadetime>800</fadetime>
-					<include>backgroundfade</include>
-				</control>
-				<control type="image">
-					<!--Panel Ovelay-->
-				   <posx>11</posx>
-					<posy>13</posy>
-					<width>600</width>
-					<height>250</height>
-					<colordiffuse>ccFFFFFF</colordiffuse>
-					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="label">
-					<!--Label Grey-->
-					<centerleft>315</centerleft>
-					<posy>170</posy>
-					<width>600</width>
-					<height>100</height>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<font>Reg45</font>
-					<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
-					<shadowcolor>black</shadowcolor>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="button">
-					<left>150</left>
-					<top>0</top>
-					<width>1</width>
-					<height>60</height>
-					<font>Reg28</font>
-					<textcolor>blue</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<label>-</label>
-					<visible>false</visible>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
-					<onfocus condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
-					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
-					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>	
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + skin.hastheme(classic)">SetProperty(submenupos,$INFO[Container(300).Position],Home)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">SetFocus(4444)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">SetProperty(submenu,show,home)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllWidgets)">XBMC.RunScript(script.titanskin.helpers,SETWIDGET,300)</onfocus>
-				</control>
-			</control>
-		</focusedlayout>
-		
-		<itemlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles) + !skin.hastheme(classic)">
+
+		<itemlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles)">
 			<control type="group">
 			<posy>20</posy>
 				<control type="image">
@@ -382,7 +169,7 @@
 				</control>
 			</control>
 		</itemlayout>
-		<focusedlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles) + !skin.hastheme(classic)">
+		<focusedlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles)">
 			<control type="group">
 				<posy>20</posy>
 				
@@ -392,26 +179,34 @@
 					<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
 					<control type="image">
-						<posx>233</posx>
+						<posx>236</posx>
 						<posy>-16</posy>
 						<width>149</width>
-						<height>30</height>
+						<height>33</height>
 						<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
 						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
 						<visible>!skin.hastheme(classic)</visible>
 					</control>
 					<control type="image">
-						<posx>233</posx>
-						<posy>-22</posy>
+						<posx>236</posx>
+						<posy>-15</posy>
 						<width>149</width>
-						<height>34</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowright.png</texture>
+						<height>20</height>
+						<texture flipy="true" colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
 						<aspectratio>keep</aspectratio>
-						<animation effect="rotate" end="90" center="auto" time="0" loop="false" reversible="false" condition="true">Conditional</animation>
 						<visible>!skin.hastheme(classic)</visible>
 					</control>
 					<control type="image">
-						<posx>233</posx>
+						<posx>236</posx>
+						<posy>-15</posy>
+						<width>149</width>
+						<height>20</height>
+						<texture flipy="true" colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>236</posx>
 						<posy>-16</posy>
 						<width>149</width>
 						<height>30</height>
@@ -428,26 +223,34 @@
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
 					<control type="image">
 						<posx>236</posx>
-						<posy>263</posy>
+						<posy>253</posy>
 						<width>149</width>
-						<height>30</height>
+						<height>33</height>
 						<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
 						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
 						<visible>!skin.hastheme(classic)</visible>
 					</control>
 					<control type="image">
 						<posx>236</posx>
-						<posy>263</posy>
+						<posy>262</posy>
 						<width>149</width>
-						<height>34</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowright.png</texture>
+						<height>20</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
 						<aspectratio>keep</aspectratio>
-						<animation effect="rotate" end="-90" center="auto" time="0" loop="false" reversible="false" condition="true">Conditional</animation>
 						<visible>!skin.hastheme(classic)</visible>
 					</control>
 					<control type="image">
 						<posx>236</posx>
-						<posy>263</posy>
+						<posy>262</posy>
+						<width>149</width>
+						<height>20</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>236</posx>
+						<posy>253</posy>
 						<width>149</width>
 						<height>30</height>
 						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">basichome_down.png</texture>
@@ -514,10 +317,10 @@
 					<onfocus condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>	
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + skin.hastheme(classic)">SetProperty(submenupos,$INFO[Container(300).Position],Home)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">SetFocus(4444)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">SetProperty(submenu,show,home)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllWidgets)">XBMC.RunScript(script.titanskin.helpers,SETWIDGET,300)</onfocus>
+					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(submenupos,$INFO[Container(300).Position],Home)</onfocus>
+					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + Skin.String(SubmenuLayout, vertical)">SetFocus(4444)</onfocus>
+					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !Skin.String(SubmenuLayout, vertical)">SetProperty(submenu,show,home)</onfocus>
+					<onfocus condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">XBMC.RunScript(script.titanskin.helpers,SETWIDGET,300)</onfocus>
 				</control>
 			</control>
 		</focusedlayout>
@@ -534,27 +337,92 @@
 			<control type="group">
 				<posy>25</posy>
 				<posx>20</posx>
-				<control type="image">
-					<!--widget Arrow UP-->
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<posx>94</posx>
-					<posy>-26</posy>
-					<width>149</width>
-					<height>30</height>
-					<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_up.png</texture>
+				
+				<!--widget Arrow UP-->
+				<control type="group">
+					<!-- show arrow up button if widget available -->
 					<visible>!Skin.HasSetting(EnableTouchSupport) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
-				</control>
-				<control type="image">
-					<!--widget Arrow DOWN-->
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<posx>94</posx>
-					<posy>178</posy>
-					<width>149</width>
-					<height>30</height>
-					<texture colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_down.png</texture>
+					<control type="image">
+						<posx>94</posx>
+						<posy>-22</posy>
+						<width>149</width>
+						<height>23</height>
+						<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
+						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>94</posx>
+						<posy>-22</posy>
+						<width>149</width>
+						<height>20</height>
+						<texture flipy="true" colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>94</posx>
+						<posy>-22</posy>
+						<width>149</width>
+						<height>20</height>
+						<texture flipy="true" colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>94</posx>
+						<posy>-28</posy>
+						<width>149</width>
+						<height>30</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">basichome_up.png</texture>
+						<visible>skin.hastheme(classic)</visible>
+					</control>
+				</control>
+				
+				
+				<!--widget Arrow DOWN-->
+				<control type="group">
 					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
 					<visible>!Skin.HasSetting(EnableTouchSupport) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
+					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
+					<control type="image">
+						<posx>94</posx>
+						<posy>178</posy>
+						<width>149</width>
+						<height>23</height>
+						<texture colordiffuse="$VAR[panel_color]">colors/color_white.png</texture>
+						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>94</posx>
+						<posy>178</posy>
+						<width>149</width>
+						<height>20</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>94</posx>
+						<posy>178</posy>
+						<width>149</width>
+						<height>20</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">arrowdown.png</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>!skin.hastheme(classic)</visible>
+					</control>
+					<control type="image">
+						<posx>94</posx>
+						<posy>172</posy>
+						<width>149</width>
+						<height>30</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">basichome_down.png</texture>
+						<visible>skin.hastheme(classic)</visible>
+					</control>
 				</control>
+				
 				<include>EnhancedHomeMainLayoutFocus</include>
 			</control>
 		</focusedlayout>
@@ -580,6 +448,28 @@
 			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 			<colordiffuse>$VAR[panel_color]</colordiffuse>
 			<aspectratio>stretch</aspectratio>
+			<visible>!skin.hastheme(classic)</visible>
+			<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+			<animation type="Conditional" condition="Control.IsVisible(4445)">
+                <effect type="slide" start="0,0" end="0,510" time="200" tween="cubic" easing="inout" delay="0" />
+            </animation>
+		</control>
+		
+		<control type="image">
+			<!--Panel Shadow-->
+			<posx>0</posx>
+			<posy>130</posy>
+			<width>1920</width>
+			<height>1000</height>
+			<texture>views/filemanager_panel1.png</texture>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
+			<aspectratio>stretch</aspectratio>
+			<visible>skin.hastheme(classic)</visible>
 			<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 			<animation type="Conditional" condition="Control.IsVisible(4445)">
                 <effect type="slide" start="0,0" end="0,510" time="200" tween="cubic" easing="inout" delay="0" />
@@ -637,7 +527,7 @@
 				<align>left</align>
 				<aligny>center</aligny>
 				<textoffsetx>0</textoffsetx>
-				<textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
+				<textcolor>white</textcolor>
 				<texturenofocus>-</texturenofocus>
 				<texturefocus>-</texturefocus>
 				<focusedcolor>$VAR[ThemeFontColorDarkGrey]</focusedcolor>
@@ -782,7 +672,7 @@
 				<align>left</align>
 				<aligny>center</aligny>
 				<textoffsetx>0</textoffsetx>
-				<textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
+				<textcolor>white</textcolor>
 				<texturenofocus>-</texturenofocus>
 				<texturefocus>-</texturefocus>
 				<focusedcolor>$VAR[ThemeFontColorDarkGrey]</focusedcolor>
@@ -817,8 +707,8 @@
 					<control type="image">
 						<width>1068</width>
 						<height>550</height>
-						<texture background="true">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio>scale</aspectratio>
+						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
+						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 					<!--info Overlay-->
 					 <control type="image">
@@ -872,8 +762,8 @@
 					<control type="image">
 						<width>1068</width>
 						<height>550</height>
-						<texture background="true">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio>scale</aspectratio>
+						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
+						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 					<!--info Overlay-->
 					 <control type="image">
@@ -950,8 +840,8 @@
 					<control type="image">
 						<width>1068</width>
 						<height>550</height>
-						<texture background="true">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio>scale</aspectratio>
+						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
+						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 					<!--info Overlay-->
 					 <control type="image">
@@ -1021,8 +911,8 @@
 					<control type="image">
 						<width>1422</width>
 						<height>550</height>
-						<texture background="true">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio aligny="center">scale</aspectratio>
+						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
+						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 					<!--info Overlay-->
 					 <control type="image">
@@ -1100,7 +990,7 @@
 				<align>left</align>
 				<aligny>center</aligny>
 				<textoffsetx>0</textoffsetx>
-				<textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
+				<textcolor>white</textcolor>
 				<texturenofocus>-</texturenofocus>
 				<focusedcolor>black</focusedcolor>
 				<label>$VAR[HomeWidgetLabel]</label>
@@ -1118,9 +1008,6 @@
 		
 		</control>
 		
-		
-			
-			
 		</control>
 		
 		
@@ -1133,9 +1020,9 @@
 			<height>50</height>
 			<font>Reg28</font>
 			<urlset>1</urlset>
-			<titlecolor>$VAR[ThemeFontColorBlack]</titlecolor>
-			<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
-			<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
+			<titlecolor>white</titlecolor>
+			<headlinecolor>white</headlinecolor>
+			<textcolor>white</textcolor>
 			<scrollspeed>40</scrollspeed>
 			<visible>!Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
 			<animation time="1500" effect="fade" delay="1500">Visible</animation>
@@ -1150,9 +1037,9 @@
 			<height>50</height>
 			<font>Reg28</font>
 			<urlset>1</urlset>
-			<titlecolor>$VAR[ThemeFontColorBlack]</titlecolor>
-			<headlinecolor>$VAR[ThemeFontColorBlack]</headlinecolor>
-			<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
+			<titlecolor>white</titlecolor>
+			<headlinecolor>white</headlinecolor>
+			<textcolor>white</textcolor>
 			<scrollspeed>40</scrollspeed>
 			<visible>!Window.IsVisible(DialogButtonMenu.xml) + Skin.HasSetting(EnableTouchSupport)</visible>
 			<animation time="1500" effect="fade" delay="1500">Visible</animation>
@@ -1200,7 +1087,7 @@
             <width>337</width>
 			<height>175</height>
             <texture background="true" diffuse="home/home_matte2.png" fallback="banner_default.png">$VAR[HomeMenuWidgetImage]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
         <control type="image">
             <!--Panel Overlay-->
@@ -1316,7 +1203,7 @@
             <width>337</width>
 			<height>175</height>
             <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/hometiles/addons.png">$INFO[ListItem.Icon]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
         <control type="image">
             <!--Panel Ovelay-->
@@ -1420,7 +1307,7 @@
 			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
 			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">SetFocus(4444)</onfocus>
 			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">SetProperty(submenu,show,home)</onfocus>
-			<onfocus condition="!Skin.HasSetting(DisableAllWidgets)">XBMC.RunScript(script.titanskin.helpers,SETWIDGET,300)</onfocus>
+			<onfocus condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">XBMC.RunScript(script.titanskin.helpers,SETWIDGET,300)</onfocus>
 		</control>
     </include>
 	

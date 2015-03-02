@@ -61,14 +61,15 @@
 			<visible>Window.IsActive(home)</visible>
 			<include>WeatherInfo</include>
 			<include>ProfileInfo</include>
-			
+					
 			<!-- Kodi Logo image -->
 			<control type="image">
 				<posx>35</posx>
 				<posy>10</posy>
-				<height>120</height>
+				<height>110</height>
 				<aspectratio align="left">keep</aspectratio>
 				<texture>$VAR[LogoImage]</texture>
+				<visible>![[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)]</visible>
 				<visible>!SubString(System.BuildVersion,13,left)</visible>
 				<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
 				<visible>!Skin.String(GadgetRows, simplever)</visible>
@@ -85,9 +86,7 @@
 			<include condition="Skin.String(GadgetRows, simplehor)">simplehome_horizontal</include>
 			<include condition="Skin.String(GadgetRows, simplever)">simplehome_vertical</include>
 		
-
-			
-			
+		
 			<control type="scrollbar" id="60">
 				<posx>1835</posx>
 				<posy>390</posy>
@@ -99,18 +98,24 @@
 			
 	
 			<!-- submenu -->
-			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasTheme(classic) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)]">HomeMenuSubMenuVertical</include>
-			<include condition="!Skin.HasSetting(DisableAllSubmenus) + !Skin.HasTheme(classic) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuHorizontal</include>
-		
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, vertical) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)]">HomeMenuSubMenuVertical</include>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, horizontal) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuHorizontal</include>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, tiles) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuSmallTiles</include>
+			
 			<!-- experimental feature for MediaBrowser support -->
 			<include condition="Skin.HasSetting(MB3FastMoviesWorkAround)">fastMoviesTest</include>
+			<!-- subpages submenu -->
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, subpage) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuPage</include>
+
 
 		</control>
+		
+		
 		
 		<control type="button" id="2">
 			<description>powerbutton</description>
 			<posx>930</posx>
-			<posy>910</posy>
+			<posy>920</posy>
 			<width>60</width>
 			<height>60</height>
 			<onup>300</onup>
@@ -124,23 +129,15 @@
 			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 			<visible>!Skin.HasSetting(DisablePowerMenu)</visible>
 			<include>animation_fade_visible_hidden</include>
-			<visible allowhiddenfocus="true">![Skin.String(GadgetRows, enhanced) + system.getbool(lookandfeel.enablerssfeeds)]</visible>
-			<visible allowhiddenfocus="true">![!skin.hastheme(classic) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)] + Control.IsVisible(4444)]</visible>
+			<visible allowhiddenfocus="true">![[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)] + Control.IsVisible(4444) + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]]</visible>
 
 			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)]">
 				<effect type="slide" start="0,0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
 			</animation>
-			
-			<animation type="Conditional" condition="Skin.String(GadgetRows, simplehor) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)">
-				<effect type="slide" start="0" end="0,200" time="300" delay="0" tween="cubic" easing="inout" />
-			</animation>
-			
-			<animation type="Conditional" condition="Skin.String(GadgetRows, 3) + system.getbool(lookandfeel.enablerssfeeds)">
-				<effect type="slide" start="0" end="0,13" time="300" delay="0" tween="cubic" easing="inout" />
-			</animation>
-			
+
 			<animation effect="slide" end="0,90" time="0" condition="!system.getbool(lookandfeel.enablerssfeeds) + !skin.hastheme(classic)">Conditional</animation>
 			<animation effect="slide" end="0,75" time="0" condition="!system.getbool(lookandfeel.enablerssfeeds) + skin.hastheme(classic)">Conditional</animation>
+		
 		
 		</control>
 		

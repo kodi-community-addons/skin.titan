@@ -3,6 +3,21 @@
 <includes>
 
 	<include name="HomeMenuSubMenuHorizontal">
+		
+		<control type="image">
+			<!--Panel Shadow-->
+			<posx>0</posx>
+			<bottom>-320</bottom>
+			<width>1923</width>
+			<height>260</height>
+			<texture>pvr/pvr_epg_info.png</texture>
+			<colordiffuse>$VAR[panel_color]</colordiffuse>
+			<aspectratio>stretch</aspectratio>
+			<visible>skin.hastheme(classic)</visible>
+			<visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !ControlGroup(77777).HasFocus + !Control.HasFocus(2)</visible>
+			<animation effect="slide" start="0,0" end="0,-200" time="250">VisibleChange</animation>
+		</control>
+		
 		<control type="list" id="4444">
 				<posx>48</posx>
 				<posy>1080</posy>
@@ -19,7 +34,7 @@
 				<onup condition="!Skin.HasSetting(AutoShowSubmenu)">ClearProperty(submenu, Home)</onup>
 				<ondown>ActivateWindow(111)</ondown>
 				<visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !ControlGroup(77777).HasFocus + !Control.HasFocus(2)</visible>    
-				<animation effect="slide" start="0,0" end="0,-200" time="250">VisibleChange</animation>
+				<animation effect="slide" start="0,0" end="0,-190" time="250">VisibleChange</animation>
 				
 				<itemlayout width="367" height="185" condition="Skin.HasSetting(UseSubmenuImages)">
 					<include>EnhancedHomeSubLayout</include>
@@ -123,17 +138,7 @@
                 <effect type="slide" start="0,-0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
 			
-			<animation type="Conditional" condition="[Skin.String(GadgetRows, 1) | Skin.HasSetting(DisablePowerMenu)] + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu)]]">
-                <effect type="slide" start="0,-0" end="0,-70" time="300" tween="cubic" easing="inout" />
-            </animation>
-			
-			<animation type="Conditional" condition="!Skin.String(GadgetRows, 1) + [[Skin.HasSetting(UseSubmenuImages) + SubString(Window(Home).Property(submenu),show)] | [Skin.HasSetting(UseSubmenuImages) + Skin.HasSetting(AutoShowSubmenu)]] + !Skin.HasSetting(DisablePowerMenu)">
-                <effect type="slide" start="0,-0" end="0,-40" time="300" tween="cubic" easing="inout" />
-            </animation>
-			
-			<animation effect="slide" end="0,40" time="0" condition="!system.getbool(lookandfeel.enablerssfeeds)">Conditional</animation>
-			
-			
+		
 			<posy>31</posy>
 			<posx>-4</posx>
 			
@@ -279,6 +284,89 @@
 		</control>
 	</include>
 	
+	
+	<include name="HomeMenuSubMenuSmallTiles">
+		<control type="list" id="4444">
+				<posx>45</posx>
+				<posy>1090</posy>
+				<width>1840</width>
+				<height>185</height>
+				<orientation>horizontal</orientation>
+				<onleft>4444</onleft>
+				<onright>4444</onright>
+				<itemgap>0</itemgap>
+				<onback>SetFocus(300)</onback>
+				<onup>SetFocus(300)</onup>
+				<onfocus>SetProperty(submenu,show,home)</onfocus>
+				<onback condition="!Skin.HasSetting(AutoShowSubmenu)">ClearProperty(submenu, Home)</onback>
+				<onup condition="!Skin.HasSetting(AutoShowSubmenu)">ClearProperty(submenu, Home)</onup>
+				<ondown>ActivateWindow(111)</ondown>
+				<visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !ControlGroup(77777).HasFocus + !Control.HasFocus(2)</visible>    
+				<animation effect="slide" start="0,0" end="0,-200" time="150">VisibleChange</animation>
+				
+				<itemlayout width="367" height="185">
+					<include>EnhancedHomeSubLayout</include>
+				</itemlayout>
+				<focusedlayout width="367" height="185">
+					<control type="group">
+						<include>EnhancedHomeSubLayoutFocus</include>
+					</control>
+				</focusedlayout>		
+				<content><include>skinshortcuts-submenu</include></content>
+			</control>
+		
+	</include>
+
+	<include name="HomeMenuSubMenuPage">
+	
+		<control type="group">
+			<posy>-1000</posy>
+			<animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)">
+				<effect type="slide" start="0,0" end="0,1000" time="0" delay="0" />
+			</animation>
+			<!-- Header -->
+			<control type="group">
+				<control type="label">
+					<posx>61</posx>
+					<posy>10</posy>
+					<width min="80" max="1400">auto</width>
+					<height>100</height>
+					<font>Bold45</font>
+					<align>left</align>
+					<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<label>$VAR[value_header]</label>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+				</control>
+			</control>
+			<include condition="Skin.HasSetting(EnableTouchSupport) + !SubString(System.BuildVersion,13,left)">TouchScreenWorkaround</include>
+			
+	
+			<!--submenu panel -->
+			<control type="panel" id="4444">
+				<orientation>vertical</orientation>
+				<height>620</height>
+				<posy>280</posy>
+				<posx>38</posx>
+				<width>1845</width>
+				<onback>SetFocus(300)</onback>
+				<onfocus>SetProperty(submenu,show,home)</onfocus>
+				<onback>ClearProperty(submenu, Home)</onback>
+				<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)</visible>
+				<itemlayout width="367" height="200">
+					<include>EnhancedHomeSubLayout</include>
+				</itemlayout>
+				<focusedlayout width="367" height="200">
+					<control type="group">
+						<include>EnhancedHomeSubLayoutFocus</include>
+					</control>
+				</focusedlayout>		
+				<content><include>skinshortcuts-submenu</include></content>
+			</control>
+			
+
+		</control>
+	</include>
+	
 	<include name="SubMenuLayoutVertical">
 	<control type="list" id="4444">
 		<posx>50</posx>
@@ -343,39 +431,25 @@
 	
 	<include name="HomeMenuSubMenuRight">
 			<control type="image">
-				<posx>0</posx>
-				<posy>-24</posy>
-				<width>720</width>
-				<height>341</height>
-				<texture background="true">home_submenu_right.png</texture>
+				<posx>-545</posx>
+				<posy>18</posy>
+				<width>1223</width>
+				<height>260</height>
+				<texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
 				<aspectratio scalediffuse="false" align="center" aligny="top">stretch</aspectratio>
-			</control>
-			<control type="image">
-				<posx>0</posx>
-				<posy>-24</posy>
-				<width>720</width>
-				<height>341</height>
-				<texture background="true">home_submenu_right.png</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="top">stretch</aspectratio>
+				<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
 			</control>
 	</include>
 	
 	<include name="HomeMenuSubMenuLeft">
 	<control type="image">
-				<posx>-3</posx>
-				<posy>-22</posy>
-				<width>725</width>
-				<height>341</height>
-				<texture background="true">home_submenu_left.png</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="top">stretch</aspectratio>
-			</control>
-			<control type="image">
-				<posx>-3</posx>
-				<posy>-22</posy>
-				<width>725</width>
-				<height>341</height>
-				<texture background="true">home_submenu_left.png</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="top">stretch</aspectratio>
+				<posx>50</posx>
+				<posy>18</posy>
+				<width>1223</width>
+				<height>260</height>
+				<texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+				<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
+				<aspectratio>stretch</aspectratio>
 			</control>
 	</include>
 	
@@ -414,16 +488,9 @@
                         <align>center</align>
                         <label>$INFO[Container(300).ListItem.Label]</label>
                         <font>Reg45</font>
-                        <textcolor>$VAR[homeMenuFocusLabelColor]</textcolor>
+                        <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
 						<shadowcolor>black</shadowcolor>
                         <visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-                    </control>
-                    <control type="image">
-                        <posx>1</posx>
-                        <posy>3</posy>
-                        <width>622</width>
-                        <height>271</height>
-                        <texture>home/home_focus.png</texture>
                     </control>
 				</control>
 		</include>
@@ -469,7 +536,7 @@
             <width>354</width>
 			<height>175</height>
             <texture background="true" diffuse="home/home_matte2.png" fallback="banner_default.png">$INFO[ListItem.Icon]</texture>
-            <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
+            <aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
         </control>
         <control type="image">
             <!--Panel Ovelay-->

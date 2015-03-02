@@ -1219,39 +1219,59 @@
 
 				<control type="radiobutton" id="23003">
                     <description></description>
-                    <!-- 1 rows-->
+                    <!-- Titan Tiles-->
                     <width>1230</width>
                     <align>left</align>
-                    <label>31033</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.SetString(GadgetRows, 1)</onclick>
-                    <selected>Skin.String(GadgetRows, 1)</selected>
-                </control>
-				<control type="radiobutton" id="23004">
-                    <description></description>
-                    <!--gadget rows-->
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31031</label>
+                    <label>Titan tiles (default)</label>
                     <height>50</height>
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
                     <onclick>Skin.SetString(GadgetRows, 2)</onclick>
-                    <selected>Skin.String(GadgetRows, 2) | !Skin.String(GadgetRows)</selected>
+                    <selected>Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)</selected>
                 </control>
-				<control type="radiobutton" id="23030">
+				<control type="button" id="23004">
                     <description></description>
                     <!--gadget rows-->
                     <width>1230</width>
                     <align>left</align>
-                    <label>31032</label>
+                    <label>Number of rows with tiles: $INFO[Skin.String(GadgetRows]</label>
                     <height>50</height>
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
-                    <onclick>Skin.SetString(GadgetRows, 3)</onclick>
-                    <selected>Skin.String(GadgetRows, 3)</selected>
+					<textoffsetx>100</textoffsetx>
+                    <onclick condition="Skin.String(GadgetRows, 1)">Skin.SetString(GadgetRows, 2)</onclick>
+					<onclick condition="Skin.String(GadgetRows, 2)">Skin.SetString(GadgetRows, 3)</onclick>
+					<onclick condition="Skin.String(GadgetRows, 3)">Skin.SetString(GadgetRows, 1)</onclick>
+					<visible>Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)</visible>
+                </control>
+				<!--use small home tiles-->
+				<control type="radiobutton" id="23006">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31263</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+					<textoffsetx>100</textoffsetx>
+                    <onclick>Skin.ToggleSetting(UseSmallHomeTiles)</onclick>
+					<onclick condition="Skin.String(SubmenuLayout, vertical)">Skin.SetString(SubmenuLayout, horizontal)</onclick>
+                    <selected>Skin.HasSetting(UseSmallHomeTiles)</selected>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]</visible>
+                </control>
+				<!--fixed focus home panel-->
+				<control type="radiobutton" id="23018">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31240</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+					<textoffsetx>100</textoffsetx>
+                    <onclick>Skin.ToggleSetting(UseFixedHomeFocus)</onclick>
+                    <selected>Skin.HasSetting(UseFixedHomeFocus)</selected>
+					<visible>Skin.String(GadgetRows, 1)</visible>
                 </control>
 				<control type="radiobutton" id="23005">
                     <description></description>
@@ -1268,7 +1288,6 @@
 					<onclick>Skin.Reset(DisableAllSubmenus)</onclick>
 					<onclick>Skin.Reset(DisableAllWidgets)</onclick>
                     <selected>Skin.String(GadgetRows, enhanced)</selected>
-					<visible>!Skin.HasTheme(classic)</visible>
                 </control>
 				<control type="radiobutton" id="23007">
                     <description></description>
@@ -1296,6 +1315,71 @@
                     <selected>Skin.String(GadgetRows, simplever)</selected>
                 </control>
 				
+				<!-- submenu layout -->
+				<control type="label" id="23060">
+                    <width>1230</width>
+                    <height>60</height>
+                    <font>Bold38</font>
+                    <label>Submenu layout</label>
+                    <textcolor>white</textcolor>
+                    <shadowcolor>black</shadowcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]</visible>
+                </control>
+				
+				<control type="radiobutton" id="23061">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>Use vertical submenu</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.SetString(SubmenuLayout, vertical)</onclick>
+                    <selected>Skin.String(SubmenuLayout, vertical)</selected>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)] + !Skin.HasSetting(UseSmallHomeTiles)</visible>
+                </control>
+				
+				<control type="radiobutton" id="23062">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>Use horizontal submenu - textbased</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.SetString(SubmenuLayout, horizontal)</onclick>
+                    <selected>Skin.String(SubmenuLayout, horizontal)</selected>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]</visible>
+                </control>
+				
+				<control type="radiobutton" id="23063">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>Use horizontal submenu - small tiles</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.SetString(SubmenuLayout, tiles)</onclick>
+                    <selected>Skin.String(SubmenuLayout, tiles)</selected>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]</visible>
+                </control>
+				
+				<control type="radiobutton" id="23064">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>Use subpage with tiles for submenu</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.SetString(SubmenuLayout, subpage)</onclick>
+                    <selected>Skin.String(SubmenuLayout, subpage)</selected>
+					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]</visible>
+                </control>
+				
                 <control type="label" id="23011">
                     <width>1230</width>
                     <height>60</height>
@@ -1307,19 +1391,6 @@
                     <aligny>center</aligny>
                 </control>
 				
-				<!--use small home tiles-->
-				<control type="radiobutton" id="23006">
-                    <description></description>
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31263</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(UseSmallHomeTiles)</onclick>
-                    <selected>Skin.HasSetting(UseSmallHomeTiles)</selected>
-					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)] + !skin.hastheme(classic)</visible>
-                </control>
 				
 				<!-- auto show widgets-->
 				<control type="radiobutton" id="23013">
@@ -1349,33 +1420,8 @@
 					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3) | Skin.String(GadgetRows, simplever)]</visible>
                 </control>
 				
-				<!--enable tiles for submenus-->
-				<control type="radiobutton" id="23015">
-                    <description></description>
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31197</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(UseSubmenuImages)</onclick>
-                    <selected>Skin.HasSetting(UseSubmenuImages)</selected>
-					<visible>[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)] + !skin.hastheme(classic)</visible>
-                </control>
-				<!--fixed focus home panel-->
-				<control type="radiobutton" id="23018">
-                    <description></description>
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31240</label>
-                    <height>50</height>
-                    <focusedcolor>black</focusedcolor>
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(UseFixedHomeFocus)</onclick>
-                    <selected>Skin.HasSetting(UseFixedHomeFocus)</selected>
-					<visible>Skin.String(GadgetRows, 1)</visible>
-                </control>
-				
+
+			
 				<!--disable all widgets-->
 				<control type="radiobutton" id="23016">
                     <description></description>
