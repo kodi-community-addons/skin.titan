@@ -42,7 +42,6 @@ class Main:
         count = 120
         unwatched = 1
         lastEpPath = ""
-        unwatched = None
         PlexEnabled = xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)")
          
         while (not xbmc.abortRequested):

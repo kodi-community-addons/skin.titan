@@ -253,7 +253,9 @@ def addShortcutWorkAround():
     if xbmc.getCondVisibility("System.Platform.Windows"):
         xbmc.sleep(1000)
     else:
-        xbmc.sleep(2000)
+        xbmc.sleep(2500)
+        if xbmc.getCondVisibility("System.Platform.Linux.RaspberryPi "):
+            xbmc.sleep(1000)
     xbmc.executebuiltin('SendClick(401)')
 
 def checkExtraFanArt():
