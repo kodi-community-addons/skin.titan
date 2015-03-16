@@ -321,7 +321,7 @@ def focusEpisode():
     totalItems = int(xbmc.getInfoLabel("Container.NumItems"))
         
     if (xbmc.getCondVisibility("Container.SortDirection(ascending)")):
-        curItem = 1
+        curItem = 0
         control.selectItem(0)
         xbmc.sleep(250)
         while (xbmc.getCondVisibility("Container.Content(episodes)") and totalItems >= curItem):
