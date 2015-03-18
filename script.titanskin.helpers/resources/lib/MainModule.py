@@ -319,30 +319,32 @@ def focusEpisode():
     window = xbmcgui.Window( wid )        
     control = window.getControl(int(viewId))
     totalItems = int(xbmc.getInfoLabel("Container.NumItems"))
-        
-    if (xbmc.getCondVisibility("Container.SortDirection(ascending)")):
-        curItem = 0
-        control.selectItem(0)
-        xbmc.sleep(250)
-        while (xbmc.getCondVisibility("Container.Content(episodes)") and totalItems >= curItem):
-            if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png" and xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label") != ".."):
-                if curItem != 0:
-                    control.selectItem(curItem)
-                break
-            else:
-                curItem += 1
     
-    elif (xbmc.getCondVisibility("Container.SortDirection(descending)")):
-        curItem = totalItems
-        control.selectItem(totalItems)
-        xbmc.sleep(250)
-        while (xbmc.getCondVisibility("Container.Content(episodes)") and curItem != 0):
-            
-            if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png"):
-                control.selectItem(curItem-1)
-                break
-            else:    
-                curItem -= 1
+    #only do a focus if we're on top of the list, else skip to prevent bouncing of the list
+    if not int(xbmc.getInfoLabel("Container.Position")) > 1:
+        if (xbmc.getCondVisibility("Container.SortDirection(ascending)")):
+            curItem = 0
+            control.selectItem(0)
+            xbmc.sleep(250)
+            while ((xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(seasons)")) and totalItems >= curItem):
+                if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png" and xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label") != ".." and not xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label").startswith("*")):
+                    if curItem != 0:
+                        control.selectItem(curItem)
+                    break
+                else:
+                    curItem += 1
+        
+        elif (xbmc.getCondVisibility("Container.SortDirection(descending)")):
+            curItem = totalItems
+            control.selectItem(totalItems)
+            xbmc.sleep(250)
+            while ((xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(seasons)")) and curItem != 0):
+                
+                if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png"):
+                    control.selectItem(curItem-1)
+                    break
+                else:    
+                    curItem -= 1
             
 
 def getViewId(viewString):

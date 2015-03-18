@@ -73,7 +73,7 @@ class Main:
                             unwatched = int(xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)"))
                         except: pass
                     
-                    if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and xbmc.getCondVisibility("Container.Content(episodes)")):
+                    if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and (xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(seasons)"))):
                         if (xbmc.getInfoLabel("Container.FolderPath") != lastEpPath and unwatched != 0):
                             try:
                                 MainModule.focusEpisode()
