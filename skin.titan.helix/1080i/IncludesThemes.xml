@@ -40,10 +40,16 @@
                 <height>630</height>
                 <itemgap>3</itemgap>
                 <!--Buttons-->
-                <control type="button" id="1000">
+               <control type="button" id="1000">
                     <description>Buttons</description>
                     <include>SubMenuButton</include>
+					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
+				<control type="button" id="9325">
+					<include>SubMenuButton</include>
+					<label>31319</label>
+					<visible>Skin.HasSetting(KioskMode.Enabled)</visible>
+				</control>
 				<control type="button" id="9325">
 				<include>SubMenuButton</include>
 				<label>31248</label>
@@ -158,7 +164,13 @@
                 <control type="button" id="1000">
                     <description>Buttons</description>
                     <include>SubMenuButton</include>
+					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
+				<control type="button" id="9325">
+					<include>SubMenuButton</include>
+					<label>31319</label>
+					<visible>Skin.HasSetting(KioskMode.Enabled)</visible>
+				</control>
 				<control type="button" id="9325">
 					<include>SubMenuButton</include>
 					<label>31248</label>
@@ -166,6 +178,7 @@
 					<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
 					<onclick condition="Container.Content(musicvideos)">XBMC.RunScript(script.artwork.downloader, mediatype=musicvideos, dbid=$INFO[ListItem.DBID])</onclick>
 					<onclick>SetFocus(51)</onclick>
+					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 					<visible>System.HasAddon(script.artwork.downloader) + [Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
 				</control>
 				<control type="button" id="1033">
@@ -175,6 +188,7 @@
 					<onclick>RunScript(script.trakt,action=contextmenu)</onclick>
 					<label>$INFO[System.AddonTitle(script.trakt)]</label>
 					<visible>System.HasAddon(script.trakt)</visible>
+					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 					<visible>[Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
 				</control>
 				<control type="button" id="102">
@@ -182,6 +196,7 @@
 					<include>SubMenuButton</include>
 					<onleft>Dialog.Close(106)</onleft>
 					<onright>Dialog.Close(106)</onright>
+					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 					<label>$INFO[System.AddonTitle(script.videoextras)]</label>
 					<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
 					<visible>System.HasAddon(script.videoextras) + !IsEmpty(ListItem.FilenameAndPath)</visible>
@@ -192,6 +207,7 @@
 					<include>SubMenuButton</include>
 					<onleft>Dialog.Close(106)</onleft>
 					<label>31300</label>
+					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 					<onclick>RunScript(script.tvtunes,mode=solo)</onclick>
 					<visible>Skin.HasSetting(EnableTVTunes) + System.HasAddon(script.tvtunes) + [Container.Content(TVShows) | Container.Content(movies) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("TvTunes_HideVideoInfoButton"))</visible>
 				</control>
@@ -679,7 +695,7 @@
 				<animation effect="rotate" end="-360" center="auto" time="12000" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
 				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
 				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.Art(discart)]</texture>
-				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))] + !IsEmpty(ListItem.Genre)</visible>
 			</control>
 			
 			<!--Cover movies-->
