@@ -9,6 +9,7 @@ import os
 import time
 import urllib
 import xml.etree.ElementTree as etree
+from xml.dom.minidom import parse
 import json
 import random
 
@@ -359,9 +360,73 @@ def getViewId(viewString):
     
     return viewId
     
+    
+def getImageFromPath(path):
+    win = xbmcgui.Window( 10000 )
+    image = None
+    try:
+        if "$INFO" in path:
+            path = path.replace("$INFO[Window(Home).Property(", "")
+            path = path.replace(")]", "")
+            path = win.getProperty(path)    
 
+        if "Activate" in path:
+            path = path.split(",",1)[1]
+            path = path.replace(",return","")
+            path = path.replace(")","")
+            path = path.replace("\"","")
+        
+        if path.startswith("plugin://"):
+            media_type = "files"
+        else:
+            media_type = "video"
+        media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + path + '", "media": "' + media_type + '", "limits": {"end":1}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
+        if(media_array != None and media_array.has_key('files')):
+            for file in media_array['files']:
+                if file.has_key('art'):
+                    if file['art'].has_key('fanart'):
+                        image =  file['art']['fanart']
+    except: pass    
+    return image
+
+    
 def UpdateBackgrounds():
     win = xbmcgui.Window( 10000 )
+
+    #get all playlists
+    playlistCount = 0
+    path = "special://profile/playlists/video/"
+    dirs, files = xbmcvfs.listdir(path)
+    for file in files:
+        if file.endswith(".xsp"):
+            playlist = path + file
+            label = file.replace(".xsp","")
+            image = getImageFromPath(playlist)
+            if image != None:
+                playlist = "ActivateWindow(Videos," + playlist + ",return)"
+                win.setProperty("playlist." + str(playlistCount) + ".image", image)
+                win.setProperty("playlist." + str(playlistCount) + ".label", label)
+                win.setProperty("playlist." + str(playlistCount) + ".action", playlist)
+                playlistCount += 1
+    
+    #get favorites
+    favoritesCount = 0
+    fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
+    if xbmcvfs.exists( fav_file ):
+        doc = parse( fav_file )
+        listing = doc.documentElement.getElementsByTagName( 'favourite' )
+        
+        for count, favourite in enumerate(listing):
+            name = favourite.attributes[ 'name' ].nodeValue
+            path = favourite.childNodes [ 0 ].nodeValue
+            if path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025"):
+                image = getImageFromPath(path)
+                if image != None:
+                    win.setProperty("favorite." + str(favoritesCount) + ".image", image)
+                    win.setProperty("favorite." + str(favoritesCount) + ".label", name)
+                    win.setProperty("favorite." + str(favoritesCount) + ".action", path)
+                    favoritesCount += 1
+            
     media_array = None
     #get in progress movies
     try:
@@ -433,7 +498,42 @@ def UpdateBackgrounds():
         xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
         xbmc.log(str(msg))
 
-                
+def SelectImage():
+    
+    window = xbmcgui.Window( 10000 )
+    
+    curListItem = xbmc.getInfoLabel("Container(211).ListItem.Property(labelID)")
+    print "current listitem--> " + curListItem
+    
+    #wait for dialogselect to open
+    while not xbmc.getCondVisibility("Window.IsActive(DialogSelect.xml)"):
+        xbmc.sleep(500)
+    
+    #wait for dialogselect to close
+    while xbmc.getCondVisibility("Window.IsActive(DialogSelect.xml)"):
+        xbmc.sleep(500)
+    
+    xbmc.sleep(1000)
+    selectedImage = xbmc.getInfoLabel("Container(211).ListItem.Thumb")
+    if selectedImage == "customimage":
+        print "customimage selected!"
+        xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&amp;skinLabel=label&amp;skinAction=customimageselection)')
+        #wait for dialogselect to open
+        while not xbmc.getCondVisibility("Window.IsActive(DialogSelect.xml)"):
+            xbmc.sleep(500)
+        
+        #wait for dialogselect to close
+        while xbmc.getCondVisibility("Window.IsActive(DialogSelect.xml)"):
+            xbmc.sleep(500)
+        xbmc.sleep(1000)
+        #wait for dialogselect to close
+        while xbmc.getCondVisibility("Window.IsActive(DialogSelect.xml)"):
+            xbmc.sleep(500)
+        selectedimage = xbmc.getInfoLabel("Skin.String(customimageselection)")
+ 
+    print "selectedimage--> " + selectedImage
+   
+        
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
 
@@ -442,7 +542,7 @@ def getJSON(method,params):
     if(jsonobject.has_key('result')):
         return jsonobject['result']
     else:
-        utils.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
+        xbmc.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
         return None
 
     

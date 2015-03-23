@@ -65,6 +65,10 @@ elif action == "RESTORE":
     BackupRestore.restore()
 elif action == "RESET":
     BackupRestore.reset()
+elif action == "BACKGROUNDS":
+    MainModule.UpdateBackgrounds()
+elif action == "SELECTIMAGE":
+    MainModule.SelectImage()
 elif action == "CHECKNOTIFICATIONS":
     MainModule.checkNotifications(argument1)
 elif action == "SETSKINVERSION":
