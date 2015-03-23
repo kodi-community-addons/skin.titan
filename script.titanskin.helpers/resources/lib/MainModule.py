@@ -12,10 +12,20 @@ import xml.etree.ElementTree as etree
 from xml.dom.minidom import parse
 import json
 import random
+import base64
+
+from xml.etree.ElementTree import Element, SubElement, Comment, tostring
+from xml.etree import ElementTree
+from xml.dom import minidom
+import xml.etree.cElementTree as ET
 
 doDebugLog = False
 
 __language__ = xbmc.getLocalizedString
+
+win = xbmcgui.Window( 10000 )
+addon = xbmcaddon.Addon(id='script.titanskin.helpers')
+addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 
 def logMsg(msg, level = 1):
     if doDebugLog == True:
@@ -362,8 +372,8 @@ def getViewId(viewString):
     
     
 def getImageFromPath(path):
-    win = xbmcgui.Window( 10000 )
-    image = None
+    
+    
     try:
         if "$INFO" in path:
             path = path.replace("$INFO[Window(Home).Property(", "")
@@ -376,17 +386,62 @@ def getImageFromPath(path):
             path = path.replace(")","")
             path = path.replace("\"","")
         
+        txtPath = base64.urlsafe_b64encode(path)
+        txtPath = os.path.join(addondir,txtPath + ".txt")
+    
+        if not xbmcvfs.exists(addondir + os.sep):
+            xbmcvfs.mkdir(addondir)
+
+        if xbmcvfs.exists(txtPath):
+            try:
+                txtfile = open(txtPath, 'r')
+                if txtfile.read == "skip":
+                    txtfile.close()
+                    return None
+                if win.getProperty(txtPath) != "loaded" and txtfile.read() != "skip" or txtfile.read() == None:
+                    xbmcvfs.delete(txtPath)
+            except:
+                xbmcvfs.delete(txtPath)
+        
+        txtfile = open(txtPath, 'w')
+        #try to load images from the path
+        images = list()
         if path.startswith("plugin://"):
             media_type = "files"
         else:
             media_type = "video"
-        media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + path + '", "media": "' + media_type + '", "limits": {"end":1}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
+        media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + path + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
         if(media_array != None and media_array.has_key('files')):
-            for file in media_array['files']:
-                if file.has_key('art'):
-                    if file['art'].has_key('fanart'):
-                        image =  file['art']['fanart']
-    except: pass    
+            for media in media_array['files']:
+                if media.has_key('art'):
+                    if media['art'].has_key('fanart'):
+                        images.append(media['art']['fanart'])
+                        txtfile.write(media['art']['fanart'] + '\n')
+                    if media['art'].has_key('tvshow.fanart'):
+                        images.append(media['art']['tvshow.fanart'])
+                        txtfile.write(media['art']['tvshow.fanart'] + '\n')
+        else:
+            #print "media array empty so skipping this path in the future - " + path
+            txtfile.write('skip')
+            txtfile.close()
+            return None
+        
+        #all is fine, we have some images to randomize and return one
+        if images != []:
+            win.setProperty(txtPath,"loaded")
+            txtfile.close()
+            random.shuffle(images)
+            return images[0]
+        else:
+            #print "image array empty so skipping this path in the future - " + path
+            win.setProperty(txtPath,"loaded")
+            txtfile.write('empty')
+            txtfile.close()
+            return None
+        
+    except:
+        pass
+    
     return image
 
     
@@ -431,77 +486,22 @@ def UpdateBackgrounds():
                         favoritesCount += 1
             
     media_array = None
-    #get in progress movies
-    try:
-        media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
-        if(media_array != None and media_array.has_key('movies')):
-            inprogressMovies = list()
-            for aMovie in media_array['movies']:
-                if aMovie.has_key('art'):
-                    if aMovie['art'].has_key('fanart'):
-                        inprogressMovies.append(aMovie['art']['fanart'])
-            
-            random.shuffle(inprogressMovies)
-            win.setProperty("InProgressMovieBackground",inprogressMovies[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning inprogress movies background")
     
-    media_array = None
+    #get in progress movies  
+    win.setProperty("InProgressMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
+
     #get recent and unwatched movies
-    try:
-        media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
-        if(media_array != None and media_array.has_key('movies')):
-            recentMovies = list()
-            unwatchedMovies = list()
-            for aMovie in media_array['movies']:
-               
-                if aMovie.has_key('art'): 
-                    if aMovie['art'].has_key('fanart'):
-                        recentMovies.append(aMovie['art']['fanart'])
-                        if aMovie['playcount'] == 0:
-                            unwatchedMovies.append(aMovie['art']['fanart'])
-
-            random.shuffle(recentMovies)
-            win.setProperty("RecentMovieBackground",recentMovies[0])
-            random.shuffle(unwatchedMovies)
-            win.setProperty("UnwatchedMovieBackground",unwatchedMovies[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning recent movies background")
-
-    media_array = None    
-    #get in progress tvshows
-    try:
-        media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
-        if(media_array != None and media_array.has_key('tvshows')):
-            inprogressShows = list()    
-            for aShow in media_array['tvshows']:
-                if aShow.has_key('art'):
-                    if aShow['art'].has_key('fanart'):
-                        inprogressShows.append(aShow['art']['fanart'])
-        
-            random.shuffle(inprogressShows)
-            win.setProperty("InProgressShowsBackground",inprogressShows[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning inprogress tvshows background")
-
-    media_array = None
-    #get recent episodes
-    try:
-        media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
-        if(media_array != None and media_array.has_key('episodes')):
-            recentEpisodes = list()
-            for aShow in media_array['episodes']:
-                if aShow.has_key('art'):
-                    if aShow['art'].has_key('tvshow.fanart'):
-                        recentEpisodes.append(aShow['art']['tvshow.fanart'])
-
-            random.shuffle(recentEpisodes)
-            win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
-    except Exception, msg:
-        xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
-        xbmc.log(str(msg))
+    win.setProperty("RecentMovieBackground",getImageFromPath("videodb://recentlyaddedmovies/"))
+    
+    #unwatched movies
+    win.setProperty("UnwatchedMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp"))
   
-        
+    #get in progress tvshows
+    win.setProperty("InProgressShowsBackground",getImageFromPath("library://video/inprogressshows.xml"))
+
+    #get recent episodes
+    win.setProperty("RecentEpisodesBackground",getImageFromPath("videodb://recentlyaddedepisodes/"))
+
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
 
