@@ -373,75 +373,100 @@ def getViewId(viewString):
     
 def getImageFromPath(path):
     
-    
-    try:
-        if "$INFO" in path:
-            path = path.replace("$INFO[Window(Home).Property(", "")
-            path = path.replace(")]", "")
-            path = win.getProperty(path)    
+    logMsg("getting images for path " + path)
+    if "$INFO" in path:
+        path = path.replace("$INFO[Window(Home).Property(", "")
+        path = path.replace(")]", "")
+        path = win.getProperty(path)    
 
-        if "Activate" in path:
-            path = path.split(",",1)[1]
-            path = path.replace(",return","")
-            path = path.replace(")","")
-            path = path.replace("\"","")
-        
-        txtPath = base64.urlsafe_b64encode(path)
-        txtPath = os.path.join(addondir,txtPath + ".txt")
+    if "Activate" in path:
+        path = path.split(",",1)[1]
+        path = path.replace(",return","")
+        path = path.replace(")","")
+        path = path.replace("\"","")
     
-        if not xbmcvfs.exists(addondir + os.sep):
-            xbmcvfs.mkdir(addondir)
+    #safety check: does the config directory exist?
+    if not xbmcvfs.exists(addondir + os.sep):
+        xbmcvfs.mkdir(addondir)
+    
+    #first check if this link is blacklisted
+    blacklistPath = os.path.join(addondir,"blacklist.txt")
+    blackListed = False
+    if (xbmcvfs.exists(blacklistPath) and os.path.getsize(blacklistPath) > 0):
+        blfile = open(blacklistPath, 'r')
+        if path in blfile.read():
+            logMsg("path blacklisted - skipping for path " + path)
+            blfile.close()
+            return None
+        logMsg("path is NOT blacklisted (or blacklist file error) - continuing for path " + path)
+        blfile.close()
 
-        if xbmcvfs.exists(txtPath):
-            try:
-                txtfile = open(txtPath, 'r')
-                if txtfile.read == "skip":
-                    txtfile.close()
-                    return None
-                if win.getProperty(txtPath) != "loaded" and txtfile.read() != "skip" or txtfile.read() == None:
-                    xbmcvfs.delete(txtPath)
-            except:
-                xbmcvfs.delete(txtPath)
-        
-        txtfile = open(txtPath, 'w')
-        #try to load images from the path
-        images = list()
+    #no blacklist so read cache and/or path
+    images = list()
+    txtPath = base64.urlsafe_b64encode(path)
+    txtPath = os.path.join(addondir,txtPath + ".txt")
+    
+    #delete existing cache file if cache expired
+    if xbmcvfs.exists(txtPath) and win.getProperty(txtPath) != "loaded":
+        logMsg("cache file outdated, deleting... " + txtPath)
+        xbmcvfs.delete(txtPath)
+    
+    #cache file exists and cache is not expired, load cache file
+    if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and win.getProperty(txtPath) == "loaded":
+        txtfile = open(txtPath, 'r')
+        logMsg("get images from the cache file... " + path)
+        for line in txtfile.readlines():
+            if not "skip" in line:
+                logMsg("found image in cache... " + line)
+                images.append(line)
+        txtfile.close()
+        if images != []:
+            random.shuffle(images)
+            logMsg("loading done setting image from cache... " + images[0])
+            return images[0]
+        else:
+            logMsg("cache file empty...skipping...")
+    else:
+        #no cache file so try to load images from the path
+        logMsg("get images from the path or plugin... " + path)
         if path.startswith("plugin://"):
             media_type = "files"
         else:
             media_type = "video"
+        media_array = None
         media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + path + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
+        
         if(media_array != None and media_array.has_key('files')):
             for media in media_array['files']:
                 if media.has_key('art'):
                     if media['art'].has_key('fanart'):
                         images.append(media['art']['fanart'])
-                        txtfile.write(media['art']['fanart'] + '\n')
                     if media['art'].has_key('tvshow.fanart'):
                         images.append(media['art']['tvshow.fanart'])
-                        txtfile.write(media['art']['tvshow.fanart'] + '\n')
         else:
-            #print "media array empty so skipping this path in the future - " + path
-            txtfile.write('skip')
-            txtfile.close()
+            logMsg("media array empty or error so add this path to blacklist..." + path)
+            blacklistPath = os.path.join(addondir,"blacklist.txt")
+            blfile = open(blacklistPath, 'a')
+            blfile.write(path + '\n')
+            blfile.close()
             return None
-        
-        #all is fine, we have some images to randomize and return one
-        if images != []:
-            win.setProperty(txtPath,"loaded")
-            txtfile.close()
-            random.shuffle(images)
-            return images[0]
-        else:
-            #print "image array empty so skipping this path in the future - " + path
-            win.setProperty(txtPath,"loaded")
-            txtfile.write('empty')
-            txtfile.close()
-            return None
-        
-    except:
-        pass
     
+    #all is fine, we have some images to randomize and return one
+    txtfile = open(txtPath, 'w')
+    image = None
+    if images != []:
+        for image in images:
+            txtfile.write(image + '\n')
+        random.shuffle(images)
+        image = images[0]
+        logMsg("setting random image.... " + image)
+    else:
+        logMsg("image array empty so skipping this path until next restart - " + path)
+        win.setProperty(txtPath,"loaded")
+        txtfile.write('skip')
+    
+    win.setProperty(txtPath,"loaded")
+    txtfile.close()
     return image
 
     
