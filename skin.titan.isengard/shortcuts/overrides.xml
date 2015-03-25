@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+
+	<groupings>
+		<!-- widgets special items -->
+		<shortcut label="31196" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal)">submenuaswidget</shortcut>
+		<shortcut label="31189" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal)">movies</shortcut>
+		<shortcut label="31190" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal)">tvshows</shortcut>
+		<shortcut label="31191" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal) + System.HasAddon(plugin.video.netflixbmc)">netflix</shortcut>
+		<shortcut label="31192" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal) + System.HasAddon(plugin.video.youtube)">youtube</shortcut>
+		<shortcut label="31193" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal)">music</shortcut>
+		<shortcut label="31194" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal)">weather</shortcut>
+		<shortcut label="System Info Widget" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal)">systeminfo</shortcut>
+		<shortcut label="RCB: Most played games" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal) + System.HasAddon(script.games.rom.collection.browser)">romcollection</shortcut>
+		<shortcut label="31195" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal) + [Skin.HasSetting(HomeMenuUsePlexforMovies) | Skin.HasSetting(HomeMenuUseMBforMovies)]">custom</shortcut>
+		
+		<shortcut label="31102" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window.Property(randommovies)]</shortcut>
+		<shortcut label="20386" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://service.library.data.provider?type=recentmovies&amp;reload=$INFO[Window.Property(recentmovies)]</shortcut>
+		<shortcut label="31035" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/inprogressmovies.xsp</shortcut>
+		<shortcut label="31036" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://service.library.data.provider?type=recommendedmovies&amp;reload=$INFO[Window.Property(recommendedmovies)]</shortcut>
+		
+		<shortcut label="31103" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">plugin://service.library.data.provider?type=randomepisodes&amp;reload=$INFO[Window.Property(randomepisodes)]</shortcut>
+		<shortcut label="31105" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">plugin://service.library.data.provider?type=recentepisodes&amp;reload=$INFO[Window.Property(recentepisodes)]</shortcut>
+		<shortcut label="626" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">library://video/inprogressshows.xml</shortcut>
+		<shortcut label="31157" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">plugin://service.library.data.provider?type=favouriteepisodes&amp;reload=$INFO[Window.Property(favouriteepisodes)]</shortcut>
+		
+		<shortcut label="20007" grouping="32029" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.GetBool(pvrmanager.enabled)">pvr://recordings</shortcut>
+		<shortcut label="19023" grouping="32029" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.GetBool(pvrmanager.enabled)">pvr://channels/tv/all channels</shortcut>
+		
+		
+		<node label="32010" condition="!IsEmpty(Window(Home).Property(customWidget))">
+			<shortcut label="1037" type="32014" icon="DefaultAddonVideo.png">ActivateWindow(Videos,addons://sources/video/,return)</shortcut>
+			<content>addon-video</content>
+		</node>
+		<node label="10028" condition="!IsEmpty(Window(Home).Property(customWidget))">
+			<content>playlist-video</content>
+		</node>
+		<node label="10500" condition="!IsEmpty(Window(Home).Property(customWidget))">
+			<content>playlist-audio</content>
+		</node>
+		
+		<node label="Smart shortcuts" condition="[Skin.HasSetting(SmartShortcuts.playlists) + !IsEmpty(Window(Home).Property(playlist.0.label))] | [Skin.HasSetting(SmartShortcuts.favorites) + !IsEmpty(Window(Home).Property(favorite.0.label))]">
+			<shortcut label="$INFO[Window(Home).Property(playlist.0.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.0.label))" icon="$INFO[Window(Home).Property(playlist.0.image)]">$INFO[Window(Home).Property(playlist.0.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.1.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.1.label))" icon="$INFO[Window(Home).Property(playlist.1.image)]">$INFO[Window(Home).Property(playlist.1.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.2.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.2.label))" icon="$INFO[Window(Home).Property(playlist.2.image)]">$INFO[Window(Home).Property(playlist.2.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.3.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.3.label))" icon="$INFO[Window(Home).Property(playlist.3.image)]">$INFO[Window(Home).Property(playlist.3.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.4.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.4.label))" icon="$INFO[Window(Home).Property(playlist.4.image)]">$INFO[Window(Home).Property(playlist.4.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.5.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.5.label))" icon="$INFO[Window(Home).Property(playlist.5.image)]">$INFO[Window(Home).Property(playlist.5.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.6.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.6.label))" icon="$INFO[Window(Home).Property(playlist.6.image)]">$INFO[Window(Home).Property(playlist.6.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.7.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.7.label))" icon="$INFO[Window(Home).Property(playlist.7.image)]">$INFO[Window(Home).Property(playlist.7.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.8.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.8.label))" icon="$INFO[Window(Home).Property(playlist.8.image)]">$INFO[Window(Home).Property(playlist.8.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(playlist.9.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.9.label))" icon="$INFO[Window(Home).Property(playlist.9.image)]">$INFO[Window(Home).Property(playlist.9.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.0.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.0.label))" icon="$INFO[Window(Home).Property(favorite.0.image)]">$INFO[Window(Home).Property(favorite.0.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.1.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.1.label))" icon="$INFO[Window(Home).Property(favorite.1.image)]">$INFO[Window(Home).Property(favorite.1.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.2.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.2.label))" icon="$INFO[Window(Home).Property(favorite.2.image)]">$INFO[Window(Home).Property(favorite.2.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.3.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.3.label))" icon="$INFO[Window(Home).Property(favorite.3.image)]">$INFO[Window(Home).Property(favorite.3.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.4.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.4.label))" icon="$INFO[Window(Home).Property(favorite.4.image)]">$INFO[Window(Home).Property(favorite.4.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.5.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.5.label))" icon="$INFO[Window(Home).Property(favorite.5.image)]">$INFO[Window(Home).Property(favorite.5.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.6.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.6.label))" icon="$INFO[Window(Home).Property(favorite.6.image)]">$INFO[Window(Home).Property(favorite.6.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.7.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.7.label))" icon="$INFO[Window(Home).Property(favorite.7.image)]">$INFO[Window(Home).Property(favorite.7.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.8.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.8.label))" icon="$INFO[Window(Home).Property(favorite.8.image)]">$INFO[Window(Home).Property(favorite.8.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.9.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.9.label))" icon="$INFO[Window(Home).Property(favorite.9.image)]">$INFO[Window(Home).Property(favorite.9.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.10.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.10.label))" icon="$INFO[Window(Home).Property(favorite.10.image)]">$INFO[Window(Home).Property(favorite.10.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.11.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.11.label))" icon="$INFO[Window(Home).Property(favorite.11.image)]">$INFO[Window(Home).Property(favorite.11.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.12.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.12.label))" icon="$INFO[Window(Home).Property(favorite.12.image)]">$INFO[Window(Home).Property(favorite.12.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.13.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.13.label))" icon="$INFO[Window(Home).Property(favorite.13.image)]">$INFO[Window(Home).Property(favorite.13.action)]</shortcut>
+			<shortcut label="$INFO[Window(Home).Property(favorite.14.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(favorite.14.label))" icon="$INFO[Window(Home).Property(favorite.14.image)]">$INFO[Window(Home).Property(favorite.14.action)]</shortcut>
+		</node>
+		
+		<node label="Script Extended Info Widgets" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.HasAddon(script.extendedinfo)">
+			<shortcut label="Rotten Tomatoes - In Theaters" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=intheaters</shortcut>
+			<shortcut label="Rotten Tomatoes - Coming Soon" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=comingsoon</shortcut>
+			<shortcut label="Rotten Tomatoes - Opening" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=Opening</shortcut>
+			<shortcut label="Rotten Tomatoes - Box Office" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=boxoffice</shortcut>
+			<shortcut label="Rotten Tomatoes - Top Rentals" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=toprentals</shortcut>
+			<shortcut label="Rotten Tomatoes - Current DVD Releases" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=currentdvdreleases</shortcut>
+			<shortcut label="Rotten Tomatoes - New DVD Releases" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=newdvdreleases</shortcut>
+			<shortcut label="Rotten Tomatoes - Upcoming DVD Releases" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=upcomingdvds</shortcut>
+			
+			<shortcut label="The MovieDB - Movies In Cinemas" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=incinemas</shortcut>
+			<shortcut label="The MovieDB - Upcoming Movies" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=upcoming</shortcut>
+			<shortcut label="The MovieDB - Popular Movies" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=popularmovies</shortcut>
+			<shortcut label="The MovieDB - Top rated Movies" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=topratedmovies</shortcut>
+			
+			<shortcut label="The MovieDB - Popular TV Shows" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=populartvshows</shortcut>
+			<shortcut label="The MovieDB - Top rated TV Shows" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=topratedtvshows</shortcut>
+			<shortcut label="The MovieDB - TV Shows On Air" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=onairtvshows</shortcut>
+			<shortcut label="The MovieDB - TV Shows Airing today" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=airingtodaytvshows</shortcut>
+			
+			<shortcut label="Trakt.tv - Trending movies" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=trendingmovies</shortcut>
+			<shortcut label="Trakt.tv - Trending Shows" type="32014" icon="DefaultAddonVideo.png">plugin://script.extendedinfo?info=trendingshows</shortcut>
+			
+		</node>
+
+		<!-- common items -->
+		<node label="32029" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
+			<shortcut label="342" grouping="32029" icon="$VAR[MoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies)">ActivateWindow(Videos,videodb://movies/titles/,return)</shortcut>
+			<shortcut label="20343" grouping="32029" icon="$VAR[TvseriesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</shortcut>
+			<shortcut label="10005" grouping="32029" icon="$VAR[MusicButtonThumb]" condition="true">ActivateWindow(Music,musicdb://,return)</shortcut>
+			<shortcut label="20389" grouping="32029" icon="$VAR[MusicVideosButtonThumb]" condition="true">ActivateWindow(Videos,videodb://musicvideos/titles/,return)</shortcut>
+			<shortcut label="12600" grouping="32029" icon="$VAR[WeatherButtonThumb]" condition="true">ActivateWindow(Weather)</shortcut>
+			<shortcut label="10002" grouping="32029" icon="$VAR[PicturesButtonThumb]" condition="true">ActivateWindow(pictures,return)</shortcut>
+			<shortcut label="10006" grouping="32029" icon="special://skin/extras/hometiles/videos.png" condition="true">ActivateWindow(Videos,videodb://,return)</shortcut>
+			<shortcut label="10004" grouping="32029" icon="special://skin/extras/hometiles/settings.png" condition="true">ActivateWindow(Settings)</shortcut>
+			<shortcut label="1037" grouping="32029" icon="special://skin/extras/hometiles/videoaddons.png" condition="true">ActivateWindow(Video,addons://sources/video/,return)</shortcut>
+			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
+			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="true">ActivateWindow(radiochannels,return)</shortcut>
+			<shortcut label="7" grouping="32029" icon="special://skin/extras/hometiles/filemanager.png" condition="true">ActivateWindow(filemanager)</shortcut>
+			<shortcut label="10040" grouping="32029" icon="special://skin/extras/hometiles/addons.png" condition="true">ActivateWindow(Programs,Addons,return)</shortcut>
+			<shortcut label="20244" grouping="32029" icon="special://skin/extras/hometiles/programs.png" condition="System.Platform.Android">ActivateWindow(10001,androidapp://sources/apps/,return)</shortcut>
+			<shortcut label="10134" grouping="32029" icon="special://skin/extras/hometiles/favourites.png" condition="true">ActivateWindow(favourites)</shortcut>
+			<shortcut label="31018" grouping="32029" type="netflix" icon="special://skin/extras/hometiles/netflix.png" condition="System.HasAddon(plugin.video.netflixbmc)">ActivateWindow(Videos,plugin://plugin.video.netflixbmc,return)</shortcut>
+			<shortcut label="31062" grouping="32029" type="youtube" icon="special://skin/extras/hometiles/youtube.png" condition="System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube,return)</shortcut>
+			<shortcut label="32032" type="playdvd" grouping="32029" icon="special://skin/extras/hometiles/videos.png" condition="true">XBMC.PlayDVD()</shortcut>
+			<shortcut label="31229" grouping="32029" icon="special://skin/extras/hometiles/mediabrowser.png" condition="System.HasAddon(plugin.video.xbmb3c)">RunPlugin(plugin://plugin.video.xbmb3c?mode=18)</shortcut>
+		</node>
+
+		<!-- movies -->
+		<node label="20342" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + Window.IsActive(script-skinshortcuts.xml)">
+			<shortcut label="31050" grouping="32029" icon="$VAR[MoviesButtonThumb]">ActivateWindow(Videos,videodb://movies/titles/,return)</shortcut>
+			<shortcut label="31036" grouping="20342" type="20342" icon="$VAR[MB3FavoritesThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$VAR[CustomCollectionClick]</shortcut>
+			<shortcut label="19019" grouping="1047" type="1037" icon="$VAR[MB3ChannelsThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$VAR[CustomCollectionClick]</shortcut>
+			
+			<!-- mb3 movie items -->
+			<shortcut label="20386" grouping="20342" type="20342" icon="$VAR[RecentMoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.1.path)]</shortcut>
+			<shortcut label="31035" grouping="20342" type="20342" icon="$VAR[InProgressMoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.2.path)]</shortcut>
+			<shortcut label="31036" grouping="20342" type="20342" icon="$VAR[MB3FavoritesThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.3.path)]</shortcut>
+			<shortcut label="20434" grouping="20342" type="20342" icon="$VAR[MoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.4.path)]</shortcut>
+			<shortcut label="16101" grouping="20342" type="20342" icon="$VAR[UnwatchedMoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.5.path)]</shortcut>
+			<shortcut label="135" grouping="20342" type="20342" icon="$VAR[MoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.6.path)]</shortcut>
+			<shortcut label="20388" grouping="20342" type="20342" icon="$VAR[MoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.7.path)]</shortcut>
+			<shortcut label="344" grouping="20342" type="20342" icon="$VAR[MoviesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.8.path)]</shortcut>
+			<!-- netflix movie items -->
+			<shortcut label="31130" grouping="customvideonode" type="31018" icon="special://skin/extras/hometiles/netflix.png" condition="Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall",return)</shortcut>
+			<shortcut label="31131" grouping="customvideonode" type="31018" icon="special://skin/extras/hometiles/netflix.png" condition="Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,"plugin://plugin.video.netflixbmc/?mode=wiHome&amp;thumb&amp;type=movie&amp;url",return)</shortcut>
+			<shortcut label="31048" grouping="customvideonode" type="31018" icon="special://skin/extras/hometiles/netflix.png" condition="Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson",return)</shortcut>
+			<!-- xbmc movie items -->
+			<shortcut label="20386" grouping="20342" type="20342" icon="$VAR[RecentMoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</shortcut>
+			<shortcut label="31035" grouping="20342" type="20342" icon="$VAR[InProgressMoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,special://skin/extras/widgetplaylists/inprogressmovies.xsp,return)</shortcut>
+			<shortcut label="31036" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/tags/,return)</shortcut>
+			<shortcut label="20434" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/sets/,return)</shortcut>
+			<shortcut label="16101" grouping="20342" type="20342" icon="$VAR[UnwatchedMoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,special://skin/extras/widgetplaylists/unwatchedmovies.xsp,return)</shortcut>
+			<shortcut label="135" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/genres/,return)</shortcut>
+			<shortcut label="20388" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/studios/,return)</shortcut>
+			<shortcut label="344" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/actors/,return)</shortcut>
+			<shortcut label="344" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</shortcut>
+		</node>
+		
+		<!-- tvshows -->
+		<node label="20343" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries) + Window.IsActive(script-skinshortcuts.xml)">
+			<shortcut label="31051" grouping="32029" icon="$VAR[TvseriesButtonThumb]">ActivateWindow(Videos,videodb://tvshows/titles/,return)</shortcut>
+			<shortcut label="31157" grouping="20343" type="20343" icon="$VAR[MB3FavoriteTvShowsThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">$VAR[CustomCollectionClick]</shortcut>
+			<shortcut label="$INFO[System.AddonTitle(script.tv.show.next.aired)]" grouping="20343" type="20343" icon="$VAR[NextAiredThumb]" condition="System.HasAddon(script.tv.show.next.aired) + !StringCompare(Window(Home).Property(customWidget), active)">RunScript(script.tv.show.next.aired)</shortcut>
+			<!-- MB3 tvshows items -->
+			<shortcut label="20387" grouping="20343" type="20343" icon="$VAR[RecentTVseriesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.1.path)]</shortcut>
+			<shortcut label="31104" grouping="20343" type="20343" icon="$VAR[InprogressTVseriesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.2.path)]</shortcut>
+			<shortcut label="31156" grouping="20343" type="20343" icon="$VAR[InprogressTVseriesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.3.path)]</shortcut>
+			<shortcut label="31157" grouping="20343" type="20343" icon="$VAR[MB3FavoriteTvShowsThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.4.path)]</shortcut>
+			<shortcut label="31159" grouping="20343" type="20343" icon="$VAR[MB3FavoriteTvShowsThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.6.path)]</shortcut>
+			<shortcut label="31092" grouping="20343" type="20343" icon="$VAR[TvseriesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.7.path)]</shortcut>
+			<shortcut label="135" grouping="20343" type="20343" icon="$VAR[TvseriesButtonThumb]" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.8.path)]</shortcut>
+			<shortcut label="31160" grouping="20343" type="20343" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.9.path)]</shortcut>
+			<shortcut label="344" grouping="20343" type="20343" condition="Skin.HasSetting(HomeMenuUseMBforTVseries)">$INFO[Window(Home).Property(mediabrowser.std.tvshows.10.path)]</shortcut>
+			<!-- Netflix tvshows items -->
+			<shortcut label="31129" grouping="customvideonode" type="31018" icon="special://skin/extras/hometiles/netflix.png" condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall",return)</shortcut>
+			<shortcut label="31131" grouping="customvideonode" type="31018" icon="special://skin/extras/hometiles/netflix.png" condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,"plugin://plugin.video.netflixbmc/?mode=wiHome&amp;thumb&amp;type=tv&amp;url",return)</shortcut>
+			<shortcut label="31049" grouping="customvideonode" type="31018" icon="special://skin/extras/hometiles/netflix.png" condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,"plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson",return)</shortcut>
+			<!-- XBMC tvshows items -->
+			<shortcut label="20387" grouping="customvideonode" type="31018" icon="$VAR[RecentTVseriesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</shortcut>
+			<shortcut label="135" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,videodb://tvshows/genres/,return)</shortcut>
+			<shortcut label="572" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,videodb://tvshows/studios/,return)</shortcut>
+			<shortcut label="626" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,library://video/inprogressshows.xml,return)</shortcut>
+		</node>
+		
+		<!-- music -->
+		<node label="1211" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !Skin.HasSetting(HomeMenuUsePlexforMusic)">
+			<shortcut label="10005" grouping="32029" icon="$VAR[MusicButtonThumb]" condition="!StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Music,musicdb://,return)</shortcut>
+			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="IsEmpty(Window(Home).Property(customWidget))">ActivateWindow(radiochannels,return)</shortcut>
+			<shortcut label="1038" grouping="32029" condition="true">ActivateWindow(Music,addons://sources/audio/,return)</shortcut>
+			<!-- MB3 music items -->
+			<node label="31116" condition="Skin.HasSetting(HomeMenuUseMBforMusic)">
+				<shortcut label="134" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">$INFO[Window(Home).Property(mediabrowser.std.music.4.path)]</shortcut>
+				<shortcut label="359" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">$INFO[Window(Home).Property(mediabrowser.std.music.1.path)]</shortcut>
+				<shortcut label="517" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">$INFO[Window(Home).Property(mediabrowser.std.music.2.path)]</shortcut>
+				<shortcut label="132" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">$INFO[Window(Home).Property(mediabrowser.std.music.5.path)]</shortcut>
+				<shortcut label="133" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">$INFO[Window(Home).Property(mediabrowser.std.music.7.path)]</shortcut>
+				<shortcut label="135" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">$INFO[Window(Home).Property(mediabrowser.std.music.8.path)]</shortcut>
+			</node>
+			<!-- XBMC music items -->
+			<node label="31116" condition="!Skin.HasSetting(HomeMenuUseMBforMusic) + !Skin.HasSetting(HomeMenuUsePlexforMusic)">
+				<shortcut label="10502" grouping="1211" type="1211" icon="$VAR[MusicButtonThumb]">ActivateWindow(Music,musicdb://,return)</shortcut>
+				<shortcut label="135" grouping="1211" type="1211">ActivateWindow(Music,musicdb://genres/,return)</shortcut>
+				<shortcut label="133" grouping="1211" type="1211">ActivateWindow(Music,musicdb://artists/,return)</shortcut>
+				<shortcut label="132" grouping="1211" type="1211">ActivateWindow(Music,musicdb://albums/,return)</shortcut>
+				<shortcut label="134" grouping="1211" type="1211">ActivateWindow(Music,musicdb://songs/,return)</shortcut>
+				<shortcut label="271" grouping="1211" type="1211">ActivateWindow(Music,musicdb://top100/,return)</shortcut>
+				<shortcut label="359" grouping="1211" type="1211">ActivateWindow(Music,musicdb://recentlyaddedalbums/,return)</shortcut>
+				<shortcut label="521" grouping="1211" type="1211">ActivateWindow(Music,musicdb://compilations/,return)</shortcut>
+				<shortcut label="652" grouping="1211" type="1211">ActivateWindow(Music,musicdb://years/,return)</shortcut>
+				<shortcut label="1050" grouping="1211" type="1211">ActivateWindow(Music,musicdb://singles/,return)</shortcut>
+				<shortcut label="136" grouping="1211" type="1211">ActivateWindow(Music,special://musicplaylists/,return)</shortcut>
+				<shortcut label="1038" grouping="1211" type="1211">ActivateWindow(Music,addons://sources/audio/,return)</shortcut>
+				<node label="32075">
+					<content>musicsources</content>
+					<content>upnp-music</content>
+				</node>
+			</node>
+			<node label="32040">
+				<content>playlist-audio</content>
+			</node>
+			
+		</node>
+		
+		<!-- Live TV Gotham -->
+		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window(Home).Property(powermenu), active)" version="13">
+			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
+			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
+			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(radiochannels,return)</shortcut>
+			<node label="31116">
+				<content>pvr</content>
+				<node label="19023">
+					<content>pvr-tv</content>
+				</node>
+				<node label="19024">
+					<content>pvr-radio</content>
+				</node>
+			</node>
+		</node>
+		
+		<!-- Live TV Helix -->
+		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window(Home).Property(powermenu), active)" version="14">
+			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
+			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
+			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(radiochannels,return)</shortcut>
+			<node label="32017" condition="PVR.HasTVChannels">
+				<content>pvr</content>
+				<node label="19023">
+					<content>pvr-tv</content>
+				</node>
+			</node>
+			<!-- Live Radio Helix -->
+			<node label="32087" condition="PVR.HasRadioChannels">
+				<content>radio</content>
+				<node label="19024">
+					<content>pvr-radio</content>
+				</node>
+			</node>
+		</node>
+		
+		<!-- MB3 collections -->
+		<node label="31161" condition="System.HasAddon(plugin.video.xbmb3c) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + !IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.0.title)]" icon="$VAR[Custom0Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.0.title)]" grouping="32029" type="1037" icon="$VAR[Custom0Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.0.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.0.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.0.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.0.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.0.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.1.title)]" icon="$VAR[Custom1Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.1.title)]" grouping="32029" type="1037" icon="$VAR[Custom1Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.1.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.1.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.1.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.1.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.1.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.1.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.2.title)]" icon="$VAR[Custom2Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.2.title)]" grouping="32029" type="1037" icon="$VAR[Custom2Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.2.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.2.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.2.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.2.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.2.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.2.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.3.title)]" icon="$VAR[Custom3Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.3.title)]" grouping="32029" type="1037" icon="$VAR[Custom3Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.3.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.3.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.3.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.3.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.3.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.3.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.4.title)]" icon="$VAR[Custom4Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.4.title)]" grouping="32029" type="1037" icon="$VAR[Custom4Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.4.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.4.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.4.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.4.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.4.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.4.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.5.title)]" icon="$VAR[Custom5Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.5.title)]" grouping="32029" type="1037" icon="$VAR[Custom5Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.5.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.5.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.5.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.5.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.5.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.5.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.6.title)]" icon="$VAR[Custom6Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.6.title)]" grouping="32029" type="1037" icon="$VAR[Custom6Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.6.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.6.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.6.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.6.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.6.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.6.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.7.title)]" icon="$VAR[Custom7Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.7.title)]" grouping="32029" type="1037" icon="$VAR[Custom7Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.7.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.7.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.7.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.7.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.7.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.7.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.8.title)]" icon="$VAR[Custom8Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.8.title)]" grouping="32029" type="1037" icon="$VAR[Custom8Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.8.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.8.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.8.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.8.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.8.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.8.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.9.title)]" icon="$VAR[Custom9Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.9.title)]" grouping="32029" type="1037" icon="$VAR[Custom9Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.9.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.9.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.9.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.9.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.9.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.9.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.10.title)]" icon="$VAR[Custom10Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.10.title)]" grouping="32029" type="1037" icon="$VAR[Custom10Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.10.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.10.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.10.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.10.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.10.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.10.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.11.title)]" icon="$VAR[Custom11Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.11.title)]" grouping="32029" type="1037" icon="$VAR[Custom11Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.11.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.11.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.11.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.11.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.11.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.11.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.12.title)]" icon="$VAR[Custom12Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.12.title)]" grouping="32029" type="1037" icon="$VAR[Custom12Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.12.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.12.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.12.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.12.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.12.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.12.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.13.title)]" icon="$VAR[Custom13Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.13.title)]" grouping="32029" type="1037" icon="$VAR[Custom13Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.13.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.13.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.13.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.13.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.13.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.13.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(mediabrowser.usr.14.title)]" icon="$VAR[Custom14Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.path))">
+				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.14.title)]" grouping="32029" type="1037" icon="$VAR[Custom14Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.path))">$VAR[CustomCollectionClick]</shortcut>
+				<node label="31116">
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.recent.path))">$INFO[Window(Home).Property(mediabrowser.usr.14.recent.path)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.unwatched.path))">$INFO[Window(Home).Property(mediabrowser.usr.14.unwatched.path)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.inprogress.path))">$INFO[Window(Home).Property(mediabrowser.usr.14.inprogress.path)]</shortcut>
+					<shortcut label="135" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.genre.path))">$INFO[Window(Home).Property(mediabrowser.usr.14.genre.path)]</shortcut>
+					<shortcut label="31228" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.14.nextepisodes.path))">$INFO[Window(Home).Property(mediabrowser.usr.14.nextepisodes.path)]</shortcut>
+				</node>
+			</node>
+		</node>
+		
+		<!-- Plex collections -->
+		<node label="PleXBMC Collections" condition="System.HasAddon(plugin.video.plexbmc) + !IsEmpty(Window(Home).Property(plexbmc.0.path)) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
+			<node label="$INFO[Window(Home).Property(plexbmc.0.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.0.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb0]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.path))">$INFO[Window(Home).Property(plexbmc.0.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.0.title)]" grouping="32029" icon="$VAR[PlexCustomThumb0]" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.0.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.0.recent))">$INFO[Window(Home).Property(plexbmc.0.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.0.viewed))">$INFO[Window(Home).Property(plexbmc.0.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.0.ondeck))">$INFO[Window(Home).Property(plexbmc.0.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.1.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.1.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.1.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb1]" condition="!IsEmpty(Window(Home).Property(plexbmc.1.path))">$INFO[Window(Home).Property(plexbmc.1.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.1.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb1]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.1.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.1.recent))">$INFO[Window(Home).Property(plexbmc.1.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.1.viewed))">$INFO[Window(Home).Property(plexbmc.1.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.1.ondeck))">$INFO[Window(Home).Property(plexbmc.1.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.2.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.2.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.2.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb2]" condition="!IsEmpty(Window(Home).Property(plexbmc.2.path))">$INFO[Window(Home).Property(plexbmc.2.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.2.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb2]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.2.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.2.recent))">$INFO[Window(Home).Property(plexbmc.2.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.2.viewed))">$INFO[Window(Home).Property(plexbmc.2.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.2.ondeck))">$INFO[Window(Home).Property(plexbmc.2.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.3.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.3.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.3.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb3]" condition="!IsEmpty(Window(Home).Property(plexbmc.3.path))">$INFO[Window(Home).Property(plexbmc.3.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.3.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb3]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.3.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.3.recent))">$INFO[Window(Home).Property(plexbmc.3.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.3.viewed))">$INFO[Window(Home).Property(plexbmc.3.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.3.ondeck))">$INFO[Window(Home).Property(plexbmc.3.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.4.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.4.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.4.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb4]" condition="!IsEmpty(Window(Home).Property(plexbmc.4.path))">$INFO[Window(Home).Property(plexbmc.4.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.4.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb4]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.4.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.4.recent))">$INFO[Window(Home).Property(plexbmc.4.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.4.viewed))">$INFO[Window(Home).Property(plexbmc.4.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.4.ondeck))">$INFO[Window(Home).Property(plexbmc.4.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.5.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.5.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.5.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb5]" condition="!IsEmpty(Window(Home).Property(plexbmc.5.path))">$INFO[Window(Home).Property(plexbmc.5.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.5.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb5]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.5.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.5.recent))">$INFO[Window(Home).Property(plexbmc.5.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.5.viewed))">$INFO[Window(Home).Property(plexbmc.5.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.5.ondeck))">$INFO[Window(Home).Property(plexbmc.5.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.6.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.6.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.6.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb6]" condition="!IsEmpty(Window(Home).Property(plexbmc.6.path))">$INFO[Window(Home).Property(plexbmc.6.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.6.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb6]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.6.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.6.recent))">$INFO[Window(Home).Property(plexbmc.6.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.6.viewed))">$INFO[Window(Home).Property(plexbmc.6.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.6.ondeck))">$INFO[Window(Home).Property(plexbmc.6.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.7.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.7.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.7.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb7]" condition="!IsEmpty(Window(Home).Property(plexbmc.7.path))">$INFO[Window(Home).Property(plexbmc.7.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.7.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb7]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.7.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.7.recent))">$INFO[Window(Home).Property(plexbmc.7.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.7.viewed))">$INFO[Window(Home).Property(plexbmc.7.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.7.ondeck))">$INFO[Window(Home).Property(plexbmc.7.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.8.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.8.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.8.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb8]" condition="!IsEmpty(Window(Home).Property(plexbmc.8.path))">$INFO[Window(Home).Property(plexbmc.8.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.8.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb8]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.8.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.8.recent))">$INFO[Window(Home).Property(plexbmc.8.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.8.viewed))">$INFO[Window(Home).Property(plexbmc.8.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.8.ondeck))">$INFO[Window(Home).Property(plexbmc.8.ondeck)]</shortcut>
+				</node>
+			</node>
+			<node label="$INFO[Window(Home).Property(plexbmc.9.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.9.path))">
+				<shortcut label="$INFO[Window(Home).Property(plexbmc.9.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb9]" condition="!IsEmpty(Window(Home).Property(plexbmc.9.path))">$INFO[Window(Home).Property(plexbmc.9.path)]</shortcut>
+				<node label="31116">
+					<shortcut label="$INFO[Window(Home).Property(plexbmc.9.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb9]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.all))">$INFO[Window(Home).Property(plexbmc.9.all)]</shortcut>
+					<shortcut label="31127" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.9.recent))">$INFO[Window(Home).Property(plexbmc.9.recent)]</shortcut>
+					<shortcut label="16101" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.9.viewed))">$INFO[Window(Home).Property(plexbmc.9.viewed)]</shortcut>
+					<shortcut label="575" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(plexbmc.9.ondeck))">$INFO[Window(Home).Property(plexbmc.9.ondeck)]</shortcut>
+				</node>
+			</node>
+		</node>
+		
+		<!-- music videos -->
+		<node label="20389" condition="Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
+			<shortcut label="20389" grouping="32029" icon="$VAR[MusicVideosButtonThumb]" condition="true">ActivateWindow(Videos,videodb://musicvideos/titles/,return)</shortcut>
+			<!-- XBMC musicvideo items -->
+			<node label="31116" condition="!Skin.HasSetting(HomeMenuUseMBforMusicVideos)">
+				<shortcut label="20389" grouping="1211" type="1211" icon="$VAR[MusicVideosButtonThumb]">videodb://musicvideos/</shortcut>
+				<shortcut label="135" grouping="1211" type="1211">videodb://musicvideos/genres/</shortcut>
+				<shortcut label="134" grouping="1211" type="1211">videodb://musicvideos/titles/</shortcut>
+				<shortcut label="133" grouping="1211" type="1211">videodb://musicvideos/artists/</shortcut>
+				<shortcut label="20390" grouping="1211" type="1211">videodb://recentlyaddedmusicvideos/ </shortcut>
+			</node>
+		</node>
+			
+		<node label="32020" condition="!Skin.HasSetting(HomeMenuUseMBforPictures) + !Skin.HasSetting(HomeMenuUsePlexforPictures) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window(Home).Property(powermenu), active)">
+			<shortcut label="10002" grouping="32029" icon="$VAR[PicturesButtonThumb]" condition="true">ActivateWindow(pictures,return)</shortcut>
+			<shortcut label="1039" grouping="32029" condition="true">ActivateWindow(Pictures,Addons,return)</shortcut>
+			<content>picturesources</content>
+		</node>
+		
+		<!-- playlist video - for startup playlist selection only -->
+		<node label="10028" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + IsEmpty(Window(Home).Property(customWidget))">
+				<content>playlist-video</content>
+		</node>	
+		
+		<!-- playlist audio - for startup playlist selection only -->
+		<node label="10500" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + IsEmpty(Window(Home).Property(customWidget))">
+			<content>playlist-audio</content>
+		</node>
+		
+		<!-- video library-->
+		<node label="32030" condition="Window.IsActive(script-skinshortcuts.xml)">
+			<node label="32030">
+				<shortcut label="10006" grouping="32029" icon="special://skin/extras/hometiles/videos.png" condition="!StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://,return)</shortcut>
+				<shortcut label="744" grouping="32029" icon="special://skin/extras/hometiles/videos.png" condition="!StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,Files,return)</shortcut>
+				<shortcut label="342" grouping="32029" icon="$VAR[MoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://movies/titles/,return)</shortcut>
+				<shortcut label="20343" grouping="32029" icon="$VAR[TvseriesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries) + !StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</shortcut>
+				<shortcut label="20389" grouping="32029" icon="$VAR[MusicVideosButtonThumb]" condition="!StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://musicvideos/titles/,return)</shortcut>
+			</node>
+			<node label="32040">
+				<content>playlist-video</content>
+			</node>
+			
+			<node label="32010">
+				<shortcut label="1037" type="32014" icon="DefaultAddonVideo.png">ActivateWindow(Videos,addons://sources/video/,return)</shortcut>
+				<content>addon-video</content>
+			</node>
+			<node label="32075">
+				<content>videosources</content>
+				<content>upnp-video</content>
+			</node>
+		</node>
+		
+		<!-- addons -->
+		<node label="32007" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+			<node label="32009">
+				<shortcut label="10001" grouping="32029" icon="special://skin/extras/hometiles/addons.png" condition="true">ActivateWindow(Programs,addons://sources/executable/,return)</shortcut>
+				<content>addon-program</content>
+			</node>
+			<node label="32010">
+				<shortcut label="1037" grouping="32029" icon="special://skin/extras/hometiles/videoaddons.png" condition="true">ActivateWindow(Video,addons://sources/video/,return)</shortcut>
+				<content>addon-video</content>
+			</node>
+			<node label="32011">
+				<shortcut label="1038" grouping="32029" condition="true">ActivateWindow(Music,addons://sources/audio/,return)</shortcut>
+				<content>addon-audio</content>
+			</node>
+			<node label="32012">
+				<shortcut label="1039" grouping="32029" condition="true">ActivateWindow(Pictures,Addons,return)</shortcut>
+				<content>addon-image</content>
+			</node>
+			<shortcut label="20244" grouping="32029" icon="special://skin/extras/hometiles/programs.png" condition="System.Platform.Android">ActivateWindow(10001,androidapp://sources/apps/,return)</shortcut>
+		</node>
+		
+		<!-- other -->
+		<node label="1047" condition="System.HasAddon(plugin.video.xbmb3c) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window(Home).Property(powermenu), active)">
+			<shortcut label="136" grouping="1047" type="1037" icon="special://skin/extras/hometiles/mediabrowser.png">$INFO[Window(Home).Property(mediabrowser.std.playlists.0.path)]</shortcut>
+			<shortcut label="137" grouping="1047" type="1037" icon="special://skin/extras/hometiles/mediabrowser.png">$INFO[Window(Home).Property(mediabrowser.std.search.0.path)]</shortcut>
+			<shortcut label="31229" grouping="32029" icon="special://skin/extras/hometiles/mediabrowser.png">RunPlugin(plugin://plugin.video.xbmb3c?mode=18)</shortcut>
+		</node>
+			
+		<!-- favourites-->	
+		<node label="32006" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+			<content>favourite</content>
+		</node>
+		
+		<!-- settings -->
+		<node label="10004" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+			<shortcut label="7" grouping="32029" icon="special://skin/extras/hometiles/filemanager.png" condition="true">ActivateWindow(filemanager)</shortcut>
+			<content>settings</content>
+		</node>
+		
+		<!-- xbmc commands -->
+		<node label="32054" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+			<shortcut label="20126" icon="common/lock.png">System.LogOff </shortcut>
+			<shortcut label="13009" icon="common/exit1.png">Quit</shortcut>
+			<shortcut label="13005" icon="common/shutdown1.png">Shutdown</shortcut>
+			<shortcut label="13013" icon="common/reboot1.png">Reset</shortcut>
+			<shortcut label="13010" icon="common/shutdown1.png">Hibernate</shortcut>
+			<shortcut label="20045" icon="common/mastermode.png">Mastermode</shortcut>
+			<shortcut label="13016" icon="common/shutdown1.png">Powerdown</shortcut>
+			<shortcut label="13011" icon="common/shutdown1.png">Suspend</shortcut>
+			<shortcut label="600" icon="common/rip-cd.png">RipCD</shortcut>
+			<shortcut label="360" icon="common/screensaver.png">ActivateScreensaver</shortcut>
+			<shortcut label="13014" icon="common/minimize.png">Minimize</shortcut>
+			<shortcut label="32046" icon="common/update-video.png">UpdateLibrary(video)</shortcut>
+			<shortcut label="32047" icon="common/update-audio.png">UpdateLibrary(music)</shortcut>
+			<shortcut label="32055" icon="common/clean-video.png">CleanLibrary(video)</shortcut>
+			<shortcut label="32056" icon="common/clean-audio.png">CleanLibrary(music)</shortcut>
+			<shortcut label="20150" icon="common/shutdown-timer.png">XBMC.AlarmClock(shutdowntimer,XBMC.Shutdown())</shortcut>
+			<shortcut label="20151" icon="common/cancel-timer.png">XBMC.CancelAlarm(shutdowntimer)</shortcut>
+			<shortcut label="14092" icon="common/toggle-debug.png">ToggleDebug</shortcut>
+		</node>
+		
+	
+		<!-- widgets special items (smart widgets) -->
+		<shortcut label="smart widget movies" grouping="32029" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.HasAddon(service.smartish.widgets)">smart-movies</shortcut>
+		<shortcut label="smart widget episodes" grouping="32029" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.HasAddon(service.smartish.widgets)">smart-episodes</shortcut>
+		<shortcut label="smart widget albums" grouping="32029" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.HasAddon(service.smartish.widgets)">smart-albums</shortcut>
+		<shortcut label="smart widget pvr" grouping="32029" condition="!IsEmpty(Window(Home).Property(customWidget)) + System.HasAddon(service.smartish.widgets)">smart-pvr</shortcut>
+
+	</groupings>
+	
+	
+	<!-- available icons -->
+	<thumbnail label="31109">$VAR[MusicButtonThumb]</thumbnail>
+	<thumbnail label="31102">$VAR[MoviesButtonThumb]</thumbnail>
+	<thumbnail label="20386">$VAR[RecentMoviesButtonThumb]</thumbnail>
+	<thumbnail label="31035">$VAR[InProgressMoviesButtonThumb]</thumbnail>
+	<thumbnail label="31297">$VAR[UnwatchedMoviesButtonThumb]</thumbnail>
+	<thumbnail label="31103">$VAR[TvseriesButtonThumb]</thumbnail>
+	<thumbnail label="20387">$VAR[RecentTVseriesButtonThumb]</thumbnail>
+	<thumbnail label="626">$VAR[InprogressTVseriesButtonThumb]</thumbnail>
+	<thumbnail label="20389">$VAR[MusicVideosButtonThumb]</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/music.png</thumbnail>	
+	<thumbnail label="31246">special://skin/extras/hometiles/movies.png</thumbnail>	
+	<thumbnail label="31246">special://skin/extras/hometiles/tvseries.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/youtube.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/settings.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/pictures.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/weather.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/radio.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/shutdown.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/tvrecordings.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/videoaddons.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/videos.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/programs.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/addons.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/favourites.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/filemanager.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/netflix.png</thumbnail>
+	<thumbnail label="31246">special://skin/extras/hometiles/livetv.png</thumbnail>
+	
+	<!-- available backgrounds -->
+	<background label="31177">global</background>
+	<background label="31299">fanart</background>
+	
+	<background label="31102">$VAR[defaultMoviesBackground]</background>
+	<background label="20386">$VAR[RecentMoviesBackground]</background>
+	<background label="31035">$VAR[InProgressMoviesBackground]</background>
+	<background label="31297">$VAR[UnwatchedMoviesBackground]</background>
+	
+	<background label="31103">$VAR[defaultTvShowsBackground]</background>
+	<background label="20387">$VAR[RecentTVseriesButtonThumb]</background>
+	<background label="626">$VAR[InprogressTVseriesButtonThumb]</background>
+	
+	
+	<background label="20389">$VAR[musicVideoFanartBackground]</background>
+	<background label="31109">$VAR[defaultMusicBackground]</background>
+	<background label="31298">special://skin/extras/backgrounds/addons.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/appearance.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/curtains.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/filemanager.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/globalsettings.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_extensions.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_moving pictures.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my music.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my pictures.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my plugins.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my radio.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my tv series.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my tv.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my videos.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_mynumberplace.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_my weather.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_netflix.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_OnlineVideos.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_play disc.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/globalsettings.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_radiotime.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_search music.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_settings.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_tetris.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_trakt.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/hover_wikipedia.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/music.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/network.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/pictures.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/programs.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/pvr.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/settings.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/system.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/systeminfo.jpg</background>
+	<background label="31298">special://skin/extras/backgrounds/videos.jpg</background>
+	<backgroundBrowse default="protocol://">True</backgroundBrowse>
+	
+	<override action="submenu">
+		<condition>true</condition>
+		<action>SetFocus(4444)</action>
+	</override>
+	
+	<override action="fastmovies">
+		<condition>true</condition>
+		<action>SetProperty(ShowFastAllMovies, show, Home)</action>
+		<action>SetFocus(57)</action>
+	</override>
+	
+	<override action="ActivateWindow(Weather)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[WeatherButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Weather)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(TVGuide)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[LiveTVButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(TVGuide)" version="13">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+	<action>ActivateWindowAndFocus(MyPVR, 31,0, 10,0)</action>
+</override>
+<override action="ActivateWindow(TVGuide)" version="14">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://movies/titles/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[MoviesButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://movies/titles/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://tvshows/titles/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[TVseriesButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://tvshows/titles/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Music,musicdb://,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[MusicButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Music,musicdb://,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://musicvideos/titles/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[MusicVideosButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://musicvideos/titles/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,plugin://plugin.video.netflixbmc,return)">
+	<condition>Skin.HasSetting(IsTitanSkin) + System.HasAddon(plugin.video.netflixbmc)</condition>
+	<action>$VAR[NetflixButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,plugin://plugin.video.netflixbmc,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(pictures,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[PicturesButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(pictures,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Programs,Addons,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[AddonsButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Programs,Addons,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Settings)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[SettingsButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Settings)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[VideosButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+
+<override action="ActivateWindow(TVRecordings,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[RecordingsButtonClick]</action>
+</override>
+<override action="ActivateWindow(TVRecordings,return)" version="13">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+	<action>ActivateWindowAndFocus(MyPVR, 34,0, 13,0)</action>
+</override>
+<override action="ActivateWindow(TVRecordings,return)" version="14">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(radiochannels,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[RadioButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(radiochannels,return)" version="13">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+	<action>ActivateWindowAndFocus(MyPVR, 33,0, 10,0)</action>
+</override>
+<override action="ActivateWindow(radiochannels,return)" version="14">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Programs,Addons,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[AddonsButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Programs,Addons,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,library://video/inprogressshows.xml,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[InprogressTVseriesButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,library://video/inprogressshows.xml,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://recentlyaddedepisodes/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[RecentTVseriesButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://recentlyaddedepisodes/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://tvshows/genres/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[TVseriesGenresButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://tvshows/genres/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Videos,videodb://recentlyaddedmovies/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[RecentMoviesButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://recentlyaddedmovies/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+
+<override action="ActivateWindow(Videos,videodb://movies/genres/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[MovieGenresButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Videos,videodb://movies/genres/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+
+<override action="ActivateWindow(Music,musicdb://recentlyplayedalbums/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[MusicRecentPlayedButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Music,musicdb://recentlyplayedalbums/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+<override action="ActivateWindow(Music,musicdb://recentlyaddedalbums/,return)">
+	<condition>Skin.HasSetting(IsTitanSkin)</condition>
+	<action>$VAR[MusicRecentAddedButtonOnClick]</action>
+</override>
+<override action="ActivateWindow(Music,musicdb://recentlyaddedalbums/,return)">
+	<condition>!Skin.HasSetting(IsTitanSkin)</condition>
+</override>
+
+
+	<checkforshortcut property="NetFlixExists">ActivateWindow(Videos,plugin://plugin.video.netflixbmc,return)</checkforshortcut>
+			
+</overrides>
+
+

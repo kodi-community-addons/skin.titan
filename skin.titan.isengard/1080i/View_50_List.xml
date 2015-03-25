@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Titan-->
+<includes>
+    <include name="View_50_List">
+        <!--Panel-->
+		
+        <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+            <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
+            <include>animation_view_change</include>
+
+			<!-- Background Panel-->
+			<control type="image">
+				<posx>60</posx>
+				<posy>320</posy>
+				<width>1800</width>
+				<height>630</height>
+				<texture>colors/color_white.png</texture>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+				<colordiffuse>$VAR[panel_color]</colordiffuse>
+				<visible>!skin.hastheme(classic)</visible>
+			</control>
+			
+			<control type="image">
+				<posx>60</posx>
+				<posy>320</posy>
+				<width>500</width>
+				<height>630</height>
+				<texture>colors/color_white.png</texture>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+				<visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>!skin.hastheme(classic)</visible>
+				<colordiffuse>$VAR[panel_color]</colordiffuse>
+			</control>
+			
+			<control type="image">
+				<posx>1165</posx>
+				<posy>320</posy>
+				<width>695</width>
+				<height>630</height>
+				<texture>colors/color_white.png</texture>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+				<visible>[Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>!skin.hastheme(classic)</visible>
+				<colordiffuse>$VAR[panel_color]</colordiffuse>
+			</control>
+			
+			<control type="image">
+				<posx>982</posx>
+				<posy>320</posy>
+				<width>875</width>
+				<height>633</height>
+				<texture>colors/color_white.png</texture>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+				<visible>Container.Content(episodes) + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>!skin.hastheme(classic)</visible>
+				<colordiffuse>$VAR[panel_color]</colordiffuse>
+			</control>
+            
+			<include condition="skin.hastheme(classic)">ClassicListDetailsPanels</include>
+			
+			
+			<!--Poster,Cover,Thumb-->
+        <control type="group">
+            <control type="image">
+                <!--Poster-->
+                <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(genres)</visible>
+                <posx>80</posx>
+                <posy>350</posy>
+                <width>395</width>
+                <height>540</height>
+                <!--1,407-->
+                <fadetime>600</fadetime>
+				<texture diffuse="poster_matte.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
+				<bordertexture border="20" colordiffuse="black">thumb_shadow.png</bordertexture>
+				<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+				<bordersize>20</bordersize>
+            </control>
+            <control type="image">
+                <!--Episodes Thumb-->
+                <visible>Container.Content(episodes)</visible>
+                <posx>112</posx>
+                <posy>370</posy>
+                <width>300</width>
+                <height>168</height>
+                <!--1,78-->
+                <fadetime>600</fadetime>
+                <texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$INFO[ListItem.Icon]</texture>
+                <bordertexture border="-2">common/black.png</bordertexture>
+            </control>
+            <control type="image">
+                <!--Music Cover-->
+                <visible>Container.Content(songs) | Container.Content(artists) |  Container.Content(albums)</visible>
+                <posx>130</posx>
+                <posy>440</posy>
+                <width>360</width>
+                <height>360</height>
+                <fadetime>600</fadetime>
+                <texture fallback="DefaultMusicSongs.png">$INFO[ListItem.Icon]</texture>
+                <aspectratio align="center" aligny="center">stretch</aspectratio>
+            </control>
+            <control type="image">
+                <!--Others-->
+                <visible>!Container.Content(movies) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(episodes) + !Container.Content(songs) + !Container.Content(artists) + !Container.Content(albums) + !Container.Content(genres)</visible>
+                <posx>130</posx>
+                <posy>450</posy>
+                <width>360</width>
+                <height>360</height>
+                <fadetime>600</fadetime>
+                <texture background="true">$INFO[ListItem.Icon]</texture>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+            </control>
+        </control>
+        <!--View 50-->
+        <control type="group">
+            <visible>Control.IsVisible(50)</visible>
+            <visible>![Window.IsActive(DialogVideoInfo.xml)]</visible>
+			
+			 <!--Info-->
+        <control type="grouplist">
+            <!--Regie, Duration... Movies, TV-Shows, Sesaons, Music-Videos-->
+            <visible>Container.Content(MusicVideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)</visible>
+            
+            <itemgap>0</itemgap>
+            <onup>500</onup>
+            <ondown>500</ondown>
+            <onleft>100</onleft>
+            <onright>noop</onright>
+            <orientation>vertical</orientation>
+            <posx>510</posx>
+            <posy>360</posy>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground1_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground1_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5301))</visible>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground2_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground2_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5302))</visible>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground3_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground3_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5303))</visible>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground4_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground4_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5304))</visible>
+            </control>
+        </control>
+        <control type="grouplist">
+            <!--Regie, Duration... Episodes-->
+            <visible>Container.content(episodes)</visible>
+            
+            <posx>490</posx>
+            <posy>360</posy>
+            <itemgap>0</itemgap>
+            <onup>500</onup>
+            <ondown>500</ondown>
+            <onleft>100</onleft>
+            <onright>noop</onright>
+            <orientation>vertical</orientation>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground1_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground1_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5301))</visible>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground2_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground2_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5302))</visible>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground3_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground3_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5303))</visible>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>600</width>
+                <height>40</height>
+                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground4_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground4_value][/COLOR]</label>
+                <visible>!IsEmpty(Control.GetLabel(5304))</visible>
+            </control>
+        </control>
+        <control type="group">
+            <posx>510</posx>
+            <posy>540</posy>
+            <width>600</width>
+            <height>318</height>
+            <!--Info Plot: Movies, TV-Shows, Music-Videos-->
+            <visible>Container.Content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | container.content(seasons)</visible>
+            <control type="textbox">
+                <posx>0</posx>
+                <posy>0</posy>
+                <label>$VAR[Plots]</label>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <align>justify</align>
+                <font>Light32</font>
+            </control>
+        </control>
+        <control type="group">
+            <posx>110</posx>
+            <posy>550</posy>
+            <width>800</width>
+            <height>310</height>
+            <!--Info Plot: Movies, TV-Shows, Music-Videos-->
+            <visible>Container.Content(episodes)</visible>
+            
+            <control type="textbox">
+                <posx>0</posx>
+                <posy>0</posy>
+                <label>$VAR[Plots]</label>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <align>justify</align>
+                <font>Light32</font>
+            </control>
+        </control>
+     
+            
+		<!--Control Tags-->
+        <control type="grouplist">
+            <control type="label" id="5101">
+                <include>HiddenButton</include>
+                <label>$VAR[value_list_label_2]</label>
+            </control>
+            <control type="label" id="5201">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground1_label]</label>
+            </control>
+            <control type="label" id="5202">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground2_label]</label>
+            </control>
+            <control type="label" id="5203">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground3_label]</label>
+            </control>
+            <control type="label" id="5204">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground4_label]</label>
+            </control>
+            <control type="label" id="5301">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground1_value]</label>
+            </control>
+            <control type="label" id="5302">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground2_value]</label>
+            </control>
+            <control type="label" id="5303">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground3_value]</label>
+            </control>
+            <control type="label" id="5304">
+                <include>HiddenButton</include>
+                <label>$VAR[value_ground4_value]</label>
+            </control>
+        </control>
+			
+			
+		<!-- ID="50" -->
+		<control type="list" id="50">
+                <posy>350</posy>
+                <width>1880</width>
+                <height>590</height>
+                <onleft>9000</onleft>
+                <onright>60</onright>
+                <onup>50</onup>
+                <ondown>50</ondown>
+                <pagecontrol>60</pagecontrol>
+                <viewtype label="31443">list</viewtype>
+                <scrolltime>300</scrolltime>
+                <onunfocus condition="SubString(ListItem.FileExtension,strm) + [ListItem.IsSelected | ListItem.IsPlaying] + substring(Container.FolderPath,Radio)">SetProperty(streamtitle, $INFO[ListItem.Label], Home)</onunfocus>
+                <onback condition="SubString(ListItem.FileExtension,strm) + [ListItem.IsSelected | ListItem.IsPlaying] + substring(Container.FolderPath,Radio)">SetProperty(streamtitle, $INFO[ListItem.Label], Home)</onback>
+                <!-- All Other x=570 w=1180 -->
+                <itemlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes)]" width="1900" height="62">
+                    <control type="label">
+                        <!--Label 1-->
+                        <posx>630</posx>
+                        <width>1100</width>
+                        <font>Reg28</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <selectedcolor>list_label_1_select</selectedcolor>
+                        <label>$VAR[value_list_label_1]</label>
+                    </control>
+                    <control type="image">
+                        <!--Watched Overlay-->
+                        <visible>true</visible>
+                        <posx>1745</posx>
+                        <posy>0</posy>
+                        <width>60</width>
+                        <height>55</height>
+                        <texture>$VAR[WatchedImage]</texture>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>615</posx>
+                        <posy>56</posy>
+                        <width>1200</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+                    <control type="button">
+                        <label></label>
+                        <posx>615</posx>
+                        <posy>56</posy>
+                        <width>1200</width>
+                        <height>20</height>
+                        <font>Reg28</font>
+                        <textcolor>blue</textcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <visible>false</visible>
+                        <onunfocus condition="SubString(ListItem.FileExtension,strm) + [ListItem.IsSelected | ListItem.IsPlaying] + substring(Container.FolderPath,Radio)">SetProperty(streamtitle, $INFO[ListItem.Label], Home)</onunfocus>
+                        <onfocus condition="SubString(ListItem.FileExtension,strm) + [ListItem.IsSelected | ListItem.IsPlaying] + substring(Container.FolderPath,Radio)">SetProperty(streamtitle, $INFO[ListItem.Label], Home)</onfocus>
+                    </control>
+                </itemlayout>
+                <focusedlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes)]" width="1900" height="90">
+                    <control type="image">
+                        <!--Slider-->
+                        <posx>570</posx>
+                        <width>1245</width>
+                        <height>86</height>
+                        <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <texture>views/view_50_slider_big.png</texture>
+                    </control>
+                    <control type="label">
+                        <!--Label 1-->
+                        <posx>630</posx>
+                        <width>1100</width>
+                        <height>55</height>
+                        <font>Reg36</font>
+						<scroll>true</scroll>
+                        <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</selectedcolor>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+                        <label>$VAR[value_list_label_1]</label>
+                    </control>
+                    <control type="image">
+                        <!--Watched Overlay-->
+                        <visible>true</visible>
+                        <posx>1745</posx>
+                        <posy>0</posy>
+                        <width>60</width>
+                        <height>60</height>
+                        <texture>$VAR[WatchedImage]</texture>
+                    </control>
+                    <control type="label">
+                        <!--Label 2-->
+                        <posx>630</posx>
+                        <posy>52</posy>
+                        <width>1100</width>
+                        <height>30</height>
+                        <font>Light28</font>
+						<scroll>true</scroll>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <label>$VAR[value_list_label_2]</label>
+                        <visible>!StringCompare(ListItem.Label,..)</visible>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>615</posx>
+                        <posy>86</posy>
+                        <width>1200</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+					
+                </focusedlayout>
+                <!-- Music-Videos, Movies, TV-Shows, seasons x=1165 w=580 -->
+                <itemlayout condition="[Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)] + ![Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)]" width="1900" height="60">
+                    <control type="label">
+                        <!--Label 1-->
+                        <posx>1225</posx>
+                        <width>520</width>
+                        <font>Reg28</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <label>$VAR[value_list_label_1]</label>
+                    </control>
+                    <control type="image">
+                        <!--Watched Overlay-->
+                        <visible>true</visible>
+                        <posx>1745</posx>
+                        <posy>0</posy>
+                        <width>60</width>
+                        <height>55</height>
+                        <texture>$VAR[WatchedImage]</texture>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>1205</posx>
+                        <posy>56</posy>
+                        <width>600</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+                </itemlayout>
+                <focusedlayout condition="[Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)] + ![Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)]" width="1900" height="90">
+                    <control type="image">
+                        <!--Slider-->
+                        <posx>1165</posx>
+                        <width>640</width>
+                        <height>86</height>
+						<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <texture>views/view_50_slider_big.png</texture>
+                    </control>
+                    <control type="image">
+                        <!--Watched Overlay-->
+                        <visible>true</visible>
+                        <posx>1745</posx>
+                        <posy>0</posy>
+                        <width>60</width>
+                        <height>60</height>
+                        <texture>$VAR[WatchedImage]</texture>
+                    </control>
+                    <control type="label">
+                        <!--Label 1-->
+                        <posx>1225</posx>
+                        <width>520</width>
+                        <height>55</height>
+                        <font>Reg36</font>
+						<scroll>true</scroll>
+                        <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                        <selectedcolor>mainblue</selectedcolor>
+                        <label>$VAR[value_list_label_1]</label>
+                    </control>
+                    <control type="label">
+                        <!--Label 2-->
+                        <posx>1225</posx>
+                        <posy>52</posy>
+                        <width>520</width>
+                        <height>30</height>
+                        <font>Light28</font>
+						<scroll>true</scroll>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <label>$VAR[value_list_label_2]</label>
+                        <visible>!StringCompare(ListItem.Label,..)</visible>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>1205</posx>
+                        <posy>86</posy>
+                        <width>600</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+					
+                </focusedlayout>
+                
+				<!-- banner layout tv shows -->
+				<itemlayout height="142" width="1900" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
+					<control type="group">
+						<posy>10</posy>
+						<posx>1210</posx>
+						<control type="image">
+							<width>590</width>
+							<height>120</height>
+							<bordersize>-5</bordersize>
+							<texture>colors/color_white.png</texture>
+							<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+							<aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+							<visible>Skin.HasSetting(EnableTouchSupport) + StringCompare(Container(56).ListItem.Label, ListItem.Label)</visible>
+						</control>
+						<control type="image">
+							<width>604</width>
+							<height>126</height>
+							<texture>home/home_shadow.png</texture>
+						</control>
+						<include>BannerPlexlayout</include>
+					</control>
+                </itemlayout>
+                <focusedlayout height="142" width="1900" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
+                    <control type="group">
+						<posy>10</posy>
+						<posx>1210</posx>
+						<control type="image">
+							<width>590</width>
+							<height>120</height>
+							<bordersize>-5</bordersize>
+							<texture>colors/color_white.png</texture>
+							<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+							<aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+						</control>
+						<include>BannerPlexlayout</include>
+                    </control>
+					
+                </focusedlayout>
+            
+				
+				<!-- Seasons, Episodes x=980 w=765 -->
+                <itemlayout condition="Container.Content(episodes)" width="1900" height="60">
+                    <control type="label">
+                        <!--Label 1-->
+                        <posx>1040</posx>
+                        <width>650</width>
+                        <font>Reg28</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <label>$VAR[value_list_label_1]</label>
+                    </control>
+                    <control type="image">
+                        <!--Watched Overlay-->
+                        <visible>Container.Content(episodes)</visible>
+                        <posx>1745</posx>
+                        <posy>0</posy>
+                        <width>60</width>
+                        <height>55</height>
+                        <texture>$VAR[WatchedImage]</texture>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>1020</posx>
+                        <posy>56</posy>
+                        <width>785</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+                </itemlayout>
+                <focusedlayout condition="Container.Content(episodes)" width="1900" height="90">
+                    <control type="image">
+                        <!--Slider-->
+                        <posx>980</posx>
+                        <width>825</width>
+                        <height>86</height>
+                       <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <texture>views/view_50_slider_big.png</texture>
+                    </control>
+                    <control type="label">
+                        <!--Label 1-->
+                        <posx>1040</posx>
+                        <width>650</width>
+                        <height>55</height>
+                        <font>Reg36</font>
+						<scroll>true</scroll>
+                        <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                        <selectedcolor>mainblue</selectedcolor>
+                        <label>$VAR[value_list_label_1]</label>
+                    </control>
+                    <control type="label">
+                        <!--Label 2-->
+                        <posx>1040</posx>
+                        <posy>52</posy>
+                        <width>650</width>
+                        <height>30</height>
+                        <font>Light28</font>
+						<scroll>true</scroll>
+                        <textcolor>list_label_2_second</textcolor>
+                        <selectedcolor>list_label_2_second</selectedcolor>
+                        <label>$VAR[value_list_label_2]</label>
+                        <visible>!StringCompare(ListItem.Label,..)</visible>
+                    </control>
+                    <control type="image">
+                        <!--Watched Overlay-->
+                        <visible>Container.Content(episodes)</visible>
+                        <posx>1745</posx>
+                        <posy>0</posy>
+                        <width>60</width>
+                        <height>60</height>
+                        <texture>$VAR[WatchedImage]</texture>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>1020</posx>
+                        <posy>86</posy>
+                        <width>785</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+					
+                </focusedlayout>
+            </control>
+        </control>
+       
+	   	<!--vertical Scollbar-->
+		<control type="scrollbar" id="60">
+			<visible>Control.IsVisible(50)</visible>
+			<right>15</right>
+			<posy>320</posy>
+			<width>25</width>
+			<height>630</height>
+			<onup>60</onup>
+			<ondown>60</ondown>
+			<onleft>510</onleft>
+			<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling">Conditional</animation>
+			<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling]">Conditional</animation>
+		</control>
+	             
+        </control>
+        
+	</include>
+</includes>
