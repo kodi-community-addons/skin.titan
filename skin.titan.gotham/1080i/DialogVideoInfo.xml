@@ -220,10 +220,9 @@
 						<textoffsetx>0</textoffsetx>
 						<label>YouTube $LOCALIZE[20410]</label>
 						<onclick>Dialog.Close(MovieInformation)</onclick>
-						<onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
 						<onclick condition="SubString(System.AddonVersion(plugin.video.youtube),4,left)">ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
 						<onclick condition="SubString(System.AddonVersion(plugin.video.youtube),5,left)">ActivateWindow(videos,plugin://plugin.video.youtube/kodion/search/query/?q=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
-						<visible>Container.Content(movies) | Container.Content(tvshows) | stringcompare(ListItem.Property(ItemType),Movie)</visible>
+						<visible>Container.Content(movies) | stringcompare(ListItem.Property(ItemType),Movie)</visible>
 					</control>
 					<control type="button" id="114">
 						<!--Cast Button-->
@@ -238,7 +237,7 @@
 					</control>
 					<control type="button" id="116">
 						<!--Info Button-->
-						<label>19033</label>
+						<label>Info</label>
 						<width>285</width>
 						<height>60</height>
 						<align>center</align>
@@ -280,17 +279,6 @@
 						 | Container.Content(musicvideos)]
 						 + IsEmpty(Window(movieinformation).Property("HideVideoExtrasButton"))</visible>
 					</control>
-					<control type="button" id="211">
-						<description>Fetch TvTunes stuff</description>
-						<width>285</width>
-						<height>60</height>
-						<align>center</align>
-						<textoffsetx>0</textoffsetx>
-						<label>31300</label>
-						<onclick>RunScript(script.tvtunes,mode=solo)</onclick>
-						<enable>!Skin.HasSetting(KioskMode.Enabled)</enable>
-						<visible>Skin.HasSetting(EnableTVTunes) + System.HasAddon(script.tvtunes) + [Container.Content(TVShows) | Container.Content(movies) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("TvTunes_HideVideoInfoButton"))</visible>
-					</control>
 					<control type="button" id="101">
 						<!--Get Thumb Artwork Downloader-->
 						<label>13511</label>
@@ -298,7 +286,6 @@
 						<height>60</height>
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
-						<enable>!Skin.HasSetting(KioskMode.Enabled)</enable>
 						<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
 					</control>
 					<control type="button" id="6">
@@ -308,7 +295,6 @@
 						<height>60</height>
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
-						<enable>!Skin.HasSetting(KioskMode.Enabled)</enable>
 					</control>
 				</control>
 				
@@ -541,12 +527,27 @@
 								<scroll>false</scroll>
 							</control>
 						</control>
-						
 						<control type="group">
-							<!--Studio textbased-->
+							<!--filename-->
 							<width>1150</width>
 							<height>40</height>
-							<visible>!IsEmpty(ListItem.Studio) + IsEmpty(Control.GetLabel(800011))</visible>
+							<visible>!IsEmpty(ListItem.FileName)</visible>
+							<control type="label">
+								<posy>0</posy>
+								<width>1150</width>
+								<font>Reg28</font>
+								<align>left</align>
+								<label>$INFO[ListItem.FileName,[B]$LOCALIZE[21800]: [/B]]</label>
+								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+								<scroll>false</scroll>
+							</control>
+						</control>
+						<control type="group">
+							<!--Studio-->
+							<width>1150</width>
+							<height>40</height>
+							<visible>!IsEmpty(ListItem.Studio)</visible>
 							<control type="label">
 								<posy>0</posy>
 								<width>1150</width>
@@ -556,24 +557,6 @@
 								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<scroll>false</scroll>
-							</control>
-						</control>
-						<control type="group">
-							<!--Studio imagebased-->
-							<width>1150</width>
-							<height>5</height>
-							<visible>true</visible>
-							<control type="image" id="800011">
-								<colordiffuse>white</colordiffuse>
-								<right>-40</right>
-								<top>0</top>
-								<width>161</width>
-								<height>109</height>
-								<aspectratio aligny="bottom" align="right">keep</aspectratio>
-								<fadetime>250</fadetime>
-								<colordiffuse>white</colordiffuse>
-								<bordersize>2</bordersize>
-								<texture>$INFO[ListItem.Studio,special://skin/extras/flags/studios/,.png]</texture>
 							</control>
 						</control>
 						<control type="group">
@@ -644,23 +627,6 @@
 							<posy>920</posy>
 							<include>mediaflags</include>
 							<visible>skin.hastheme(classic)</visible>
-						</control>
-						<control type="group">
-							<!--filename-->
-							<width>1150</width>
-							<height>40</height>
-							<visible>!IsEmpty(ListItem.FileName)</visible>
-							<control type="label">
-								<posy>0</posy>
-								<width>1150</width>
-								<font>Reg20</font>
-								<align>left</align>
-								<scroll>true</scroll>
-								<label>$INFO[ListItem.FileNameAndPath,[B]$LOCALIZE[21800]: [/B]]</label>
-								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-								<scroll>false</scroll>
-							</control>
 						</control>
 					</control>
 				
@@ -743,6 +709,30 @@
 						<texture background="true" fallback="DefaultActor.png">$VAR[actorImage]</texture>
 						<fadetime>300</fadetime>
 						<aspectratio>scale</aspectratio>
+					</control>
+					<!-- close dialog button -->
+					<control type="button">
+						<right>60</right>
+						<posy>1015</posy>
+						<width>50</width>
+						<height>50</height>
+						<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_close.png</texturenofocus>
+						<aspectratio>keep</aspectratio>
+						<onclick>back</onclick>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+					</control>
+					<!-- back to info button -->
+					<control type="button">
+						<right>130</right>
+						<posy>1015</posy>
+						<width>50</width>
+						<height>50</height>
+						<texturefocus colordiffuse="white">touchcontrols/icon_back.png</texturefocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_back.png</texturenofocus>
+						<aspectratio>keep</aspectratio>
+						<onclick>ClearProperty(ShowCast)</onclick>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 					</control>
 				</control>
 			</control>

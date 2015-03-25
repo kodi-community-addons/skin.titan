@@ -4,31 +4,31 @@
     <defaultcontrol always="true">50</defaultcontrol>
     <allowoverlay>yes</allowoverlay>
 	<backgroundcolor>0</backgroundcolor>
-    <views>50,51,52,500,501,502,503,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515</views>
+    <views>50,51,52,500,501,502,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515</views>
 	<onload condition="System.HasAddon(script.tvtunes) + Skin.HasSetting(EnableTVTunes)">XBMC.RunScript(script.tvtunes,backend=True)</onload>
 	<onload condition="System.HasAddon(script.tv.show.next.aired)">RunScript(script.tv.show.next.aired,backend=True)</onload>
-	<onload condition="[Container.Content(TVShows) | Container.Content(Seasons) | Container.Content(Episodes)] + System.HasAddon(script.tv.show.next.aired) + Skin.HasSetting(EnableNextAiredNotifications)">XBMC.RunScript(script.titanskin.helpers,CHECKNOTIFICATIONS,nextaired)</onload>
-	
 	<onload>ClearProperty(ShowViewSubMenu, Home)</onload>
 	<onunload>ClearProperty(ShowViewSubMenu, Home)</onunload>
 	<onunload>ClearProperty(ExtraFanArtPath, Home)</onunload>
-
+	<onload condition="Skin.HasSetting(EnableExtraFanart)">XBMC.RunScript(script.titanskin.helpers,CHECKEXTRAFANART)</onload>
+	
     <controls>
         <!-- Video Background -->
         <include>GlobalBackground</include>
-		<!--Header-->
-        <include>Header</include>
 
 		<!--NowPlaying-->
+        <include condition="Skin.HasTheme(classic) + !System.Platform.Linux.RaspberryPi">NowPlayingMusicClassic</include>
+        <include condition="Skin.HasTheme(classic) + !System.Platform.Linux.RaspberryPi">NowPlayingVideoClassic</include>
 		<include condition="!Skin.HasTheme(classic) + !System.Platform.Linux.RaspberryPi">NowPlayingModern</include>
         
-        
+        <!--Header-->
+        <include>Header</include>
 		<!--Time & Weather-->
         <include>TimeInfo</include>
 		
 		<!-- footer bar -->
 		<control type="group">
-			<visible>!Control.IsVisible(514)</visible>
+			<visible>![Control.IsVisible(514) + StringCompare(Window(Home).Property(showinfopanel),show)]</visible>
 			<include condition="!skin.hassetting(nofooterbar)">Footer</include>
 		</control>
 		
@@ -53,7 +53,6 @@
 			
 			<include>View_501_Landscape</include>
 			<include>View_502_LandscapeSingle</include>
-			<include>View_503_Logos</include>
 			<include>View_505_LandscapeDetails</include>
 			<include>View_507_FanArt</include>
 			<include>View_508_SinglePoster</include>
@@ -106,18 +105,11 @@
 				<animation effect="fade" start="100" end="0" time="400" delay="150">Hidden</animation>
 			</control>
 			
-			
 		</control>
         <!--Sub Menu Tab Left-->
         <include>SubMenuTabLeft</include>
         <!--Sub Menu Tab Top-->
         <include>SubMenuTabTop</include>
-		
-		<!-- footer bar -->
-		<control type="group">
-			<visible>Control.IsVisible(514)</visible>
-			<include condition="!skin.hassetting(nofooterbar)">Footer</include>
-		</control>
 		
         <!--Sub Menu-->
         <control type="group">
@@ -133,7 +125,6 @@
                 <itemgap>3</itemgap>
                 <onleft>50</onleft>
                 <onright>50</onright>
-				<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 				<onright>ClearProperty(ShowViewSubMenu, Home)</onright>
 				<onleft>ClearProperty(ShowViewSubMenu, Home)</onleft>
 				<onback>ClearProperty(ShowViewSubMenu, Home)</onback>
@@ -301,13 +292,13 @@
 				 <control type="button" id="400">
                     <!--Set View-->
                     <include>SubMenuButton</include>
-                    <label>$LOCALIZE[31305] $INFO[Container.Viewmode]</label>
+                    <label>View: $INFO[Container.Viewmode]</label>
                     <onclick>Container.NextViewMode</onclick>
-					<onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(Movies)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,MOVIES,00)</onclick>
-                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(seasons)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,SEASONS,00)</onclick>
-                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(TVShows)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,SERIES,00)</onclick>
-                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(Episodes)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,EPISODES,00)</onclick>
-                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(Sets)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,BOXSETS,00)</onclick>
+					<onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(Movies)">XBMC.RunScript(plugin.video.xbmb3c,SETVIEW,MOVIES,00)</onclick>
+                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(seasons)">XBMC.RunScript(plugin.video.xbmb3c,SETVIEW,SEASONS,00)</onclick>
+                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(TVShows)">XBMC.RunScript(plugin.video.xbmb3c,SETVIEW,SERIES,00)</onclick>
+                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(Episodes)">XBMC.RunScript(plugin.video.xbmb3c,SETVIEW,EPISODES,00)</onclick>
+                    <onclick condition="substring(Container.FolderPath,plugin://plugin.video.xbmb3c) + Container.Content(Sets)">XBMC.RunScript(plugin.video.xbmb3c,SETVIEW,BOXSETS,00)</onclick>
 				
 					<onclick condition="substring(Container.FolderPath,plugin://plugin.video.netflixbmc) + Container.Content(Movies)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,MOVIES,00)</onclick>
                     <onclick condition="substring(Container.FolderPath,plugin://plugin.video.netflixbmc) + Container.Content(seasons)">XBMC.RunScript(script.titanskin.helpers,SETVIEW,SEASONS,00)</onclick>
@@ -328,22 +319,9 @@
 					<onclick>SetFocus(51)</onclick>
 					<visible>System.HasAddon(script.artwork.downloader) + [Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
 				</control>
-				
-				<control type="radiobutton" id="11">
-					<description>Unlock Shares</description>
-					<include>SubMenuButton</include>
-					<label>20336</label>
-					<onclick>mastermode</onclick>
-					<selected>system.ismaster</selected>
-					<visible>system.haslocks</visible>
-				</control>
 
             </control>
         </control>
-		
-		<!--NowPlaying-->
-        <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
-        <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
     
 	
 	</controls>

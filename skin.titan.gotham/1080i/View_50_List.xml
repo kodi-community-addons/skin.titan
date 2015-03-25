@@ -78,6 +78,7 @@
 			
 			<!--Poster,Cover,Thumb-->
         <control type="group">
+            <include>animation_view_change</include>
             <control type="image">
                 <!--Poster-->
                 <visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(genres)</visible>
@@ -131,11 +132,13 @@
         <control type="group">
             <visible>Control.IsVisible(50)</visible>
             <visible>![Window.IsActive(DialogVideoInfo.xml)]</visible>
+            <include>animation_view_change</include>
 			
 			 <!--Info-->
         <control type="grouplist">
             <!--Regie, Duration... Movies, TV-Shows, Sesaons, Music-Videos-->
             <visible>Container.Content(MusicVideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)</visible>
+            <include>animation_view_change</include>
             
             <itemgap>0</itemgap>
             <onup>500</onup>
@@ -188,6 +191,7 @@
         <control type="grouplist">
             <!--Regie, Duration... Episodes-->
             <visible>Container.content(episodes)</visible>
+            <include>animation_view_change</include>
             
             <posx>490</posx>
             <posy>360</posy>
@@ -245,6 +249,10 @@
             <height>318</height>
             <!--Info Plot: Movies, TV-Shows, Music-Videos-->
             <visible>Container.Content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | container.content(seasons)</visible>
+            <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="0" easing="in">WindowClose</animation>
+            <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
             <control type="textbox">
                 <posx>0</posx>
                 <posy>0</posy>
@@ -253,6 +261,12 @@
 				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                 <align>justify</align>
                 <font>Light32</font>
+                <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="300" easing="in">WindowClose</animation>
+                <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
+                <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
+                <include>animation_view_change</include>
+                
             </control>
         </control>
         <control type="group">
@@ -262,6 +276,7 @@
             <height>310</height>
             <!--Info Plot: Movies, TV-Shows, Music-Videos-->
             <visible>Container.Content(episodes)</visible>
+            <include>animation_view_change</include>
             
             <control type="textbox">
                 <posx>0</posx>
@@ -271,6 +286,10 @@
 				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                 <align>justify</align>
                 <font>Light32</font>
+                <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="0" easing="in">WindowClose</animation>
+                <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
+                <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
             </control>
         </control>
      
@@ -320,13 +339,13 @@
 		<control type="list" id="50">
                 <posy>350</posy>
                 <width>1880</width>
-                <height>590</height>
+                <height>570</height>
                 <onleft>9000</onleft>
                 <onright>60</onright>
                 <onup>50</onup>
                 <ondown>50</ondown>
                 <pagecontrol>60</pagecontrol>
-                <viewtype label="31443">list</viewtype>
+                <viewtype label="List">list</viewtype>
                 <scrolltime>300</scrolltime>
                 <onunfocus condition="SubString(ListItem.FileExtension,strm) + [ListItem.IsSelected | ListItem.IsPlaying] + substring(Container.FolderPath,Radio)">SetProperty(streamtitle, $INFO[ListItem.Label], Home)</onunfocus>
                 <onback condition="SubString(ListItem.FileExtension,strm) + [ListItem.IsSelected | ListItem.IsPlaying] + substring(Container.FolderPath,Radio)">SetProperty(streamtitle, $INFO[ListItem.Label], Home)</onback>
@@ -347,8 +366,8 @@
                         <posx>1745</posx>
                         <posy>0</posy>
                         <width>60</width>
-                        <height>55</height>
-                        <texture>$VAR[WatchedImage]</texture>
+                        <height>60</height>
+                        <texture>$INFO[ListItem.Overlay,overlays/list/,]</texture>
                     </control>
                     <control type="image">
                         <!--Separator-->
@@ -381,7 +400,7 @@
                         <posx>570</posx>
                         <width>1245</width>
                         <height>86</height>
-                        <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <colordiffuse>88ffffff</colordiffuse>
                         <texture>views/view_50_slider_big.png</texture>
                     </control>
                     <control type="label">
@@ -390,7 +409,6 @@
                         <width>1100</width>
                         <height>55</height>
                         <font>Reg36</font>
-						<scroll>true</scroll>
                         <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
                         <selectedcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</selectedcolor>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
@@ -403,7 +421,7 @@
                         <posy>0</posy>
                         <width>60</width>
                         <height>60</height>
-                        <texture>$VAR[WatchedImage]</texture>
+                        <texture>$INFO[ListItem.Overlay,overlays/list/,]</texture>
                     </control>
                     <control type="label">
                         <!--Label 2-->
@@ -412,7 +430,6 @@
                         <width>1100</width>
                         <height>30</height>
                         <font>Light28</font>
-						<scroll>true</scroll>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
                         <label>$VAR[value_list_label_2]</label>
@@ -447,8 +464,8 @@
                         <posx>1745</posx>
                         <posy>0</posy>
                         <width>60</width>
-                        <height>55</height>
-                        <texture>$VAR[WatchedImage]</texture>
+                        <height>60</height>
+                        <texture>$INFO[ListItem.Overlay,overlays/list/,]</texture>
                     </control>
                     <control type="image">
                         <!--Separator-->
@@ -467,7 +484,7 @@
                         <posx>1165</posx>
                         <width>640</width>
                         <height>86</height>
-						<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <colordiffuse>88ffffff</colordiffuse>
                         <texture>views/view_50_slider_big.png</texture>
                     </control>
                     <control type="image">
@@ -477,7 +494,7 @@
                         <posy>0</posy>
                         <width>60</width>
                         <height>60</height>
-                        <texture>$VAR[WatchedImage]</texture>
+                        <texture>$INFO[ListItem.Overlay,overlays/list/,]</texture>
                     </control>
                     <control type="label">
                         <!--Label 1-->
@@ -485,7 +502,6 @@
                         <width>520</width>
                         <height>55</height>
                         <font>Reg36</font>
-						<scroll>true</scroll>
                         <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
                         <selectedcolor>mainblue</selectedcolor>
                         <label>$VAR[value_list_label_1]</label>
@@ -497,7 +513,6 @@
                         <width>520</width>
                         <height>30</height>
                         <font>Light28</font>
-						<scroll>true</scroll>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
                         <label>$VAR[value_list_label_2]</label>
@@ -517,7 +532,7 @@
                 </focusedlayout>
                 
 				<!-- banner layout tv shows -->
-				<itemlayout height="142" width="1900" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
+				<itemlayout height="142" width="610" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
 					<control type="group">
 						<posy>10</posy>
 						<posx>1210</posx>
@@ -538,7 +553,7 @@
 						<include>BannerPlexlayout</include>
 					</control>
                 </itemlayout>
-                <focusedlayout height="142" width="1900" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
+                <focusedlayout height="142" width="610" condition="Skin.HasSetting(ListViewShowBanners) + container.content(tvshows)">
                     <control type="group">
 						<posy>10</posy>
 						<posx>1210</posx>
@@ -573,8 +588,8 @@
                         <posx>1745</posx>
                         <posy>0</posy>
                         <width>60</width>
-                        <height>55</height>
-                        <texture>$VAR[WatchedImage]</texture>
+                        <height>60</height>
+                        <texture>$INFO[ListItem.Overlay,overlays/list/,]</texture>
                     </control>
                     <control type="image">
                         <!--Separator-->
@@ -593,7 +608,7 @@
                         <posx>980</posx>
                         <width>825</width>
                         <height>86</height>
-                       <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <colordiffuse>88ffffff</colordiffuse>
                         <texture>views/view_50_slider_big.png</texture>
                     </control>
                     <control type="label">
@@ -602,7 +617,6 @@
                         <width>650</width>
                         <height>55</height>
                         <font>Reg36</font>
-						<scroll>true</scroll>
                         <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
                         <selectedcolor>mainblue</selectedcolor>
                         <label>$VAR[value_list_label_1]</label>
@@ -614,7 +628,6 @@
                         <width>650</width>
                         <height>30</height>
                         <font>Light28</font>
-						<scroll>true</scroll>
                         <textcolor>list_label_2_second</textcolor>
                         <selectedcolor>list_label_2_second</selectedcolor>
                         <label>$VAR[value_list_label_2]</label>
@@ -627,7 +640,7 @@
                         <posy>0</posy>
                         <width>60</width>
                         <height>60</height>
-                        <texture>$VAR[WatchedImage]</texture>
+                        <texture>$INFO[ListItem.Overlay,overlays/list/,]</texture>
                     </control>
                     <control type="image">
                         <!--Separator-->
@@ -644,20 +657,31 @@
             </control>
         </control>
        
-	   	<!--vertical Scollbar-->
-		<control type="scrollbar" id="60">
-			<visible>Control.IsVisible(50)</visible>
-			<right>15</right>
-			<posy>320</posy>
-			<width>25</width>
-			<height>630</height>
-			<onup>60</onup>
-			<ondown>60</ondown>
-			<onleft>510</onleft>
-			<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling">Conditional</animation>
-			<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling]">Conditional</animation>
-		</control>
-	             
+        <!--vertical Scollbar-->
+        <control type="group">
+			<visible>IntegerGreaterThan(Container.NumItems,8)</visible>
+			<control type="scrollbar" id="60">
+				<visible>Control.IsVisible(50)</visible>
+				<right>0</right>
+				<posy>350</posy>
+				<width>60</width>
+				<height>570</height>
+				<onup>60</onup>
+				<ondown>60</ondown>
+				<onleft>50</onleft>
+				<texturesliderbackground border="0,14,0,14">scrollbar/ScrollBarV.png</texturesliderbackground>
+				<texturesliderbar border="0,14,0,14">scrollbar/ScrollBarV_bar.png</texturesliderbar>
+				<texturesliderbarfocus border="0,14,0,14" colordiffuse="mainblue">scrollbar/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+				<textureslidernib>scrollbar/ScrollBarNib.png</textureslidernib>
+				<textureslidernibfocus>scrollbar/ScrollBarNib.png</textureslidernibfocus>
+				<showonepage>false</showonepage>
+				<orientation>vertical</orientation>
+				<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+				<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport)]">Conditional</animation>
+			</control>
+        </control>
+    
+           
         </control>
         
 	</include>

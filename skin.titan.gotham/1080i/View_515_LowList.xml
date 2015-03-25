@@ -21,7 +21,7 @@
 				<ondown>515</ondown>
 				<onleft>9000</onleft>
 				<onright>60</onright>
-				<viewtype label="31442">list</viewtype>
+				<viewtype label="Low List">list</viewtype>
 				<orientation>vertical</orientation>
 				<pagecontrol>60</pagecontrol>
 				<scrolltime tween="cubic" easing="out">600</scrolltime>
@@ -78,6 +78,7 @@
 							<height>80</height>
 							<colordiffuse>ccFFFFFF</colordiffuse>
 							<texture>$VAR[WatchedImage]</texture>
+							<visible>![[container.content(tvshows) | container.content(seasons)] + !StringCompare(ListItem.Property(UnWatchedEpisodes),0)]</visible>
 						</control>
 						<control type="label">
 							<!--watched label helix-->
@@ -88,7 +89,8 @@
 							<label>$VAR[WatchedLabel]</label>
 							<font>Light22</font>
 							<textcolor>white</textcolor>
-							<visible>!SubString(System.BuildVersion,13,left)</visible>
+							<visible>![[container.content(tvshows) | container.content(seasons)] + !StringCompare(ListItem.Property(UnWatchedEpisodes),0)]</visible>
+							<visible>SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)</visible>
 						</control>
 						<control type="label">
 							<!--watched label Gotham-->
@@ -99,6 +101,7 @@
 							<label>$VAR[WatchedLabel]</label>
 							<font>Light20</font>
 							<textcolor>white</textcolor>
+							<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
 							<visible>SubString(System.BuildVersion,13,left)</visible>
 						</control>
 					</control>
@@ -127,7 +130,6 @@
 							<posx>0</posx>
 							<width>945</width>
 							<height>86</height>
-							<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
 							<texture>views/view_50_slider_big.png</texture>
 						</control>
 						
@@ -137,7 +139,6 @@
 							<posy>0</posy>
 							<height>60</height>
 							<align>left</align>
-							<scroll>true</scroll>
 							<label>$INFO[ListItem.Label]</label>
 							<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
@@ -149,7 +150,6 @@
 							<posy>30</posy>
 							<height>60</height>
 							<align>left</align>
-							<scroll>true</scroll>
 							<label>$VAR[Details]</label>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<font>Light28</font>
@@ -161,6 +161,7 @@
 							<height>80</height>
 							<colordiffuse>ccFFFFFF</colordiffuse>
 							<texture>$VAR[WatchedImage]</texture>
+							<visible>![[container.content(tvshows) | container.content(seasons)] + !StringCompare(ListItem.Property(UnWatchedEpisodes),0)]</visible>
 						</control>
 						<control type="label">
 							<!--watched label helix-->
@@ -171,7 +172,8 @@
 							<label>$VAR[WatchedLabel]</label>
 							<font>Light22</font>
 							<textcolor>white</textcolor>
-							<visible>!SubString(System.BuildVersion,13,left)</visible>
+							<visible>![[container.content(tvshows) | container.content(seasons)] + !StringCompare(ListItem.Property(UnWatchedEpisodes),0)]</visible>
+							<visible>SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)</visible>
 						</control>
 						<control type="label">
 							<!--watched label Gotham-->
@@ -182,8 +184,10 @@
 							<label>$VAR[WatchedLabel]</label>
 							<font>Light20</font>
 							<textcolor>white</textcolor>
+							<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
 							<visible>SubString(System.BuildVersion,13,left)</visible>
 						</control>
+						
 					</control>
 				</focusedlayout>
 				
@@ -254,12 +258,12 @@
 					</control>
 					<control type="label">
 						<!--watched label-->
-						<centerright>35</centerright>
-						<posy>-7</posy>
+						<right>10</right>
+						<posy>0</posy>
 						<width>50</width>
 						<height>60</height>
 						<font>Reg24</font>
-						<align>center</align>
+						<align>right</align>
 						<label>$VAR[WatchedLabel]</label>
 						<textcolor>white</textcolor>
 						<visible>!Skin.HasSetting(HideWatchedOverlayBanner)</visible>
@@ -341,12 +345,12 @@
 					</control>
 					<control type="label">
 						<!--watched label-->
-						<centerright>35</centerright>
-						<posy>-7</posy>
+						<right>10</right>
+						<posy>0</posy>
 						<width>50</width>
 						<height>60</height>
 						<font>Reg24</font>
-						<align>center</align>
+						<align>right</align>
 						<label>$VAR[WatchedLabel]</label>
 						<textcolor>white</textcolor>
 						<visible>!Skin.HasSetting(HideWatchedOverlayBanner)</visible>
@@ -427,20 +431,33 @@
 				</control>
 			</control>
 			
-			<!--vertical Scollbar-->
+		<!--vertical Scollbar-->
+        <control type="group">
+            <visible>Control.IsVisible(515)</visible>
+            <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
+			<visible>IntegerGreaterThan(Container.NumItems,8)</visible>
 			<control type="scrollbar" id="60">
 				<visible>Control.IsVisible(515)</visible>
-				<right>15</right>
+				<right>10</right>
 				<posy>600</posy>
-				<width>25</width>
+				<width>60</width>
 				<height>365</height>
 				<onup>60</onup>
 				<ondown>60</ondown>
 				<onleft>515</onleft>
-				<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling">Conditional</animation>
-				<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling]">Conditional</animation>
+				<texturesliderbackground border="0,14,0,14">scrollbar/ScrollBarV.png</texturesliderbackground>
+				<texturesliderbar border="0,14,0,14">scrollbar/ScrollBarV_bar.png</texturesliderbar>
+				<texturesliderbarfocus border="0,14,0,14" colordiffuse="mainblue">scrollbar/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+				<textureslidernib>scrollbar/ScrollBarNib.png</textureslidernib>
+				<textureslidernibfocus>scrollbar/ScrollBarNib.png</textureslidernibfocus>
+				<showonepage>false</showonepage>
+				<orientation>vertical</orientation>
+				<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+				<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport)]">Conditional</animation>
 			</control>
-
+            
+        </control>
+    
 		</control>
 		
 	</include>

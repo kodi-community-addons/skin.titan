@@ -648,7 +648,8 @@
 			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner))</visible>
 		</control>
 		<control type="label">
-			<centerleft>290</centerleft>
+			<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerPlexLabelPosGotham</include>
+			<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerPlexLabelPosHelix</include>
 			<top>8</top>
 			<width>580</width>
 			<height>105</height>
@@ -670,7 +671,8 @@
 		</control>
 		<control type="label">
 			<!--watched label-->
-			<centerleft>560</centerleft>
+			<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerPlexWatchedLabelPosGotham</include>
+			<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerPlexWatchedLabelPosHelix</include>
 			<posy>-10</posy>
 			<width>50</width>
 			<height>60</height>
@@ -684,21 +686,16 @@
     <include name="SmallPosterViewWatchedImage">
 		<control type="image">
             <!--Watched Overlay-->
-			<posx>80</posx>
-			<posy>0</posy>
-			<width>70</width>
-			<height>70</height>
+            <include condition="Skin.HasTheme(classic)">BannerViewWatchedImageSizeClassicPoster</include>
+			<include condition="!Skin.HasTheme(classic)">BannerViewWatchedImageSizeNormalPoster</include>
             <colordiffuse>ccFFFFFF</colordiffuse>
             <texture>$VAR[WatchedImage]</texture>
 			<visible>!Skin.HasSetting(HideWatchedOverlayPoster)</visible>
         </control>
 		<control type="label">
             <!--watched label-->
-			<centerleft>129</centerleft>
-			<posy>-4</posy>
-			<width>60</width>
-			<height>40</height>
-			<font>Reg20</font>
+            <include condition="!Skin.HasTheme(classic)">BannerViewWatchedLabelNormalPoster</include>
+			 <include condition="Skin.HasTheme(classic)">BannerViewWatchedLabelClassicPoster</include>
             <align>center</align>
             <label>$VAR[WatchedLabel]</label>
             <textcolor>white</textcolor>
@@ -737,69 +734,29 @@
         </control>
         <control type="label">
             <!--Label with title-->
-            <centerleft>287</centerleft>
-			<posy>222</posy>
-			<width>530</width>
-			<height>100</height>
-			<font>Reg42</font>
+            <include>BannerViewWithOverlayLabelSizeNormal</include>
             <align>center</align>
             <info>ListItem.Label</info>
-			<animation effect="fade" time="0" end="0" delay="0">Focus</animation>
 			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <include>ShowTitleOverlay</include>
         </control>
         <control type="image">
             <!--Watched Overlay-->
-            <posx>466</posx>
-			<posy>15</posy>
-			<width>95</width>
-			<height>95</height>
+            <include condition="Skin.HasTheme(classic)">BannerViewWatchedImageSizeClassic</include>
+			<include condition="!Skin.HasTheme(classic)">BannerViewWatchedImageSizeNormal</include>
             <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
+            <texture>$VAR[WatchedImage]</texture>
 			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="1,0" time="0"  />
-			</animation>
-        </control>
-		<control type="image">
-            <!--Watched Overlay-->
-            <posx>466</posx>
-			<posy>15</posy>
-			<width>95</width>
-			<height>95</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-			<visible>skin.hastheme(classic)</visible>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="1,0" time="0"  />
-			</animation>
-        </control>
-		<control type="image">
-            <!--Watched Overlay-->
-            <posx>466</posx>
-			<posy>15</posy>
-			<width>95</width>
-			<height>95</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-			<visible>skin.hastheme(classic)</visible>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="1,0" time="0"  />
-			</animation>
         </control>
 		<control type="label">
             <!--watched label-->
-            <centerleft>532</centerleft>
-			<posy>5</posy>
-			<width>60</width>
-			<height>60</height>
-			<font>Reg26</font>
+            <include condition="!Skin.HasTheme(classic)">BannerViewWatchedLabelNormal</include>
+			 <include condition="Skin.HasTheme(classic)">BannerViewWatchedLabelClassic</include>
             <align>center</align>
             <label>$VAR[WatchedLabel]</label>
             <textcolor>white</textcolor>
+			<shadowcolor>black</shadowcolor>
 			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
         </control>
     </include>
@@ -813,20 +770,6 @@
 				<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
 			</control>
 			<include>BannerViewImagesNormal</include>
-			<control type="label">
-				<!--Label with title-->
-				<centerleft>287</centerleft>
-				<posy>222</posy>
-				<width>530</width>
-				<height>100</height>
-				<font>Reg42</font>
-				<align>center</align>
-				<scroll>true</scroll>
-				<info>ListItem.Label</info>
-				<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-				<include>ShowTitleOverlay</include>
-			</control>
 		 </control>
     </include>
 
@@ -905,14 +848,6 @@
 			<onclick>Skin.ToggleSetting(LandscapeViewShowInfo)</onclick>
 			<selected>Skin.HasSetting(LandscapeViewShowInfo)</selected>
 			<visible>Control.IsVisible(502)</visible>
-		</control>
-		<control type="radiobutton" id="701">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(LogoViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(LogoViewShowInfo)</selected>
-			<visible>Control.IsVisible(503)</visible>
 		</control>
 		<control type="radiobutton" id="342">
 			<!--Show info-->
@@ -1242,8 +1177,70 @@
         <height>340</height>
     </include>
 
+	<include name="BannerViewWatchedImageSizeNormal">
+        <posx>466</posx>
+        <posy>15</posy>
+        <width>95</width>
+        <height>95</height>
+    </include>
+	<include name="BannerViewWatchedImageSizeClassic">
+        <posx>493</posx>
+        <posy>25</posy>
+        <width>60</width>
+        <height>60</height>
+    </include>
+	
 
-	<include name="BigPanelWatchedImage">
+	<include name="BannerViewWatchedImageSizeNormalPoster">
+        <posx>80</posx>
+        <posy>0</posy>
+        <width>70</width>
+        <height>70</height>
+    </include>
+	<include name="BannerViewWatchedImageSizeClassicPoster">
+        <posx>95</posx>
+        <posy>5</posy>
+        <width>50</width>
+        <height>50</height>
+    </include>
+	
+    <include name="BannerViewWithOverlayLabelSizeNormal">
+        <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerViewLabelPosGotham</include>
+		<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerViewLabelPosHelix</include>
+        <posy>222</posy>
+        <width>530</width>
+        <height>100</height>
+        <font>Reg42</font>
+    </include>
+	<include name="BannerViewWatchedLabelNormal">
+        <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelNormalPosGotham</include>
+		<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelNormalPosHelix</include>
+        <posy>10</posy>
+        <width>60</width>
+        <height>60</height>
+        <font>Reg28</font>
+    </include>
+	
+	
+	
+	<include name="BannerViewWatchedLabelNormalPoster">
+        <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelNormalPosterPosGotham</include>
+		<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelNormalPosterPosHelix</include>
+        <posy>-4</posy>
+        <width>60</width>
+        <height>40</height>
+        <font>Reg20</font>
+    </include>
+	<include name="BannerViewWatchedLabelClassicPoster">
+        <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelClassicPosterPosGotham</include>
+		<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelClassicPosterPosHelix</include>
+        <posy>-2</posy>
+        <width>60</width>
+        <height>60</height>
+        <font>Reg20</font>
+    </include>
+	
+	<include name="BigPanelWatchedImageModern">
 			<control type="image">
 				<!--Watched Overlay-->
 				<posx>182</posx>
@@ -1251,25 +1248,51 @@
 				<width>70</width>
 				<height>70</height>
 				<colordiffuse>ccFFFFFF</colordiffuse>
-				<texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
+				<texture>$VAR[WatchedImage]</texture>
 				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
-				<animation type="Conditional" condition="skin.hastheme(classic)">
-					<effect type="slide" end="3,-3" time="0"  />
-				</animation>
 			</control>
 			<control type="label">
 				<!--watched label-->
-				<centerleft>229</centerleft>
+				<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BigPanelWatchedLabelPosModernGotham</include>
+				<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BigPanelWatchedlabelPosModernHelix</include>
 				<posy>-10</posy>
 				<width>50</width>
-				<align>center</align>
+				<align>right</align>
 				<label>$VAR[WatchedLabel]</label>
 				<textcolor>white</textcolor>
 				<font>Reg20</font>
 				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
 			</control>
 	</include>
-
+	
+	<include name="BigPanelWatchedImageClassic">
+			<control type="image">
+				<!--Watched Overlay-->
+				<posx>185</posx>
+				<posy>14</posy>
+				<width>60</width>
+				<height>60</height>
+				<colordiffuse>ccFFFFFF</colordiffuse>
+				<texture>$VAR[WatchedImage]</texture>
+				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+			</control>
+			<control type="label">
+				<!--watched label-->
+				<include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BigPanelWatchedLabelPosClassicGotham</include>
+				<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BigPanelWatchedlabelPosClassicHelix</include>
+				<posy>10</posy>
+				<width>50</width>
+				<align>right</align>
+				<label>$VAR[WatchedLabel]</label>
+				<textcolor>white</textcolor>
+				<font>Reg20</font>
+				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+			</control>
+	</include>
+	
+	
+	
+	
 		
 	<include name="ExtendedViewWatchedLabelNormal">
         <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">ExtendedViewWatchedLabelNormalPosGotham</include>
@@ -1280,6 +1303,15 @@
         <font>Reg24</font>
     </include>
 
+	
+	<include name="BannerViewWatchedLabelClassic">
+        <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelClassicPosGotham</include>
+		<include condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">BannerViewWatchedLabelClassicPosHelix</include>
+        <posy>23</posy>
+        <width>60</width>
+        <height>60</height>
+        <font>Light26</font>
+    </include>
 
     <!-- Movie Showcase Variables: Main thumbs -->
     <include name="MovieShowcaseThumb">
@@ -1295,15 +1327,12 @@
     </include>
     <include name="MovieShowcaseWatched">
         <posx>273</posx>
-        <posy>9</posy>
+        <posy>13</posy>
         <width>60</width>
         <height>60</height>
         <align>center</align>
         <aspectratio scalediffuse="true">stretch</aspectratio>
 		<visible>!Skin.HasSetting(HideWatchedOverlayShowCase)</visible>
-		<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="4,-3" time="0"  />
-		</animation>
     </include>
     <include name="MovieShowcaseThumbMain">
          <posx>54</posx>
@@ -1361,7 +1390,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-7).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-7).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1380,7 +1409,6 @@
                         <visible>Control.IsVisible(500)</visible>
                     </control>
                     <include>MovieShowcaseWatched</include>
-					 <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
                 </control>
             </control>
             <control type="group">
@@ -1399,7 +1427,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1419,7 +1447,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1453,7 +1481,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1474,7 +1502,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1492,7 +1520,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1510,7 +1538,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1528,7 +1556,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1546,7 +1574,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1564,7 +1592,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1587,7 +1615,7 @@
                         </control>
                         <control type="image">
                             <include>MovieShowcaseWatched</include>
-                            <texture diffuse="watched_icon_matte.png">$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
+                            <texture>$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
                         </control>
                     </control>
                 </control>
@@ -1606,7 +1634,7 @@
                         </control>
                         <control type="image">
                             <include>MovieShowcaseWatched</include>
-                            <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
+                            <texture>$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
                         </control>
                     </control>
                 </control>
@@ -1635,7 +1663,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(7).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(7).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1653,7 +1681,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1671,7 +1699,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1689,7 +1717,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1707,7 +1735,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1725,7 +1753,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1746,7 +1774,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1764,7 +1792,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1782,7 +1810,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1800,7 +1828,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-3).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-3).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1818,7 +1846,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1836,7 +1864,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1859,7 +1887,7 @@
                         </control>
                         <control type="image">
                             <include>MovieShowcaseWatched</include>
-                            <texture diffuse="watched_icon_matte.png">$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
+                            <texture>$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
                         </control>
                     </control>
                 </control>
@@ -1878,7 +1906,7 @@
                         </control>
                         <control type="image">
                             <include>MovieShowcaseWatched</include>
-                            <texture diffuse="watched_icon_matte.png">$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
+                            <texture>$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
                         </control>
                     </control>
                 </control>
@@ -1938,7 +1966,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1961,7 +1989,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -1984,7 +2012,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2007,7 +2035,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-3).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-3).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2030,7 +2058,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2054,7 +2082,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2077,7 +2105,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2100,7 +2128,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2123,7 +2151,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2146,7 +2174,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2169,7 +2197,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2193,7 +2221,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2211,7 +2239,7 @@
                     </control>
                     <control type="image">
                         <include>MovieShowcaseWatched</include>
-                        <texture diffuse="watched_icon_matte.png">$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
+                        <texture>$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
                     </control>
                 </control>
             </control>
@@ -2277,7 +2305,7 @@
 		<!-- mpaa rating -->
 		<control type="group">
 			<posx>270</posx>
-			<width>145</width>
+			<width>130</width>
 			<height>32</height>
 			<animation effect="slide" start="0,0" end="84" center="auto" easing="out" tween="back" time="0" condition="ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)">Conditional</animation>
 			<visible>!IsEmpty(ListItem.MPAA)</visible>
@@ -2291,7 +2319,7 @@
 			<control type="label">
 				<font>flags_classic</font>
 				<posx>-6</posx>
-				<width>115</width>
+				<width>103</width>
 				<right>0</right>
 				<posy>-2</posy>
 				<textcolor>black</textcolor>
@@ -2363,7 +2391,7 @@
 			
 			<!-- mpaa rating -->
 			<control type="group">
-				<width>170</width>
+				<width>160</width>
 				<height>45</height>
 				<visible>!IsEmpty(ListItem.MPAA)</visible>
 				<visible>!IsEmpty(ListItem.MPAA)</visible>
@@ -2376,7 +2404,7 @@
 				<control type="label">
 					<font>flags</font>
 					<posy>3</posy>
-					<width>133</width>
+					<width>123</width>
 					<right>0</right>
 					<label>$VAR[RatingFlagVar]</label>
 					<align>center</align>
@@ -2543,7 +2571,7 @@
 			
 			<!-- mpaa rating -->
 			<control type="group">
-				<width>170</width>
+				<width>155</width>
 				<height>36</height>
 				<visible>!IsEmpty(ListItem.MPAA)</visible>
 				<visible>!IsEmpty(ListItem.MPAA)</visible>
@@ -2556,7 +2584,7 @@
 				<control type="label">
 					<font>flags</font>
 					<posx>-6</posx>
-					<width>135</width>
+					<width>118</width>
 					<right>0</right>
 					<label>$VAR[RatingFlagVar]</label>
 					<align>center</align>
