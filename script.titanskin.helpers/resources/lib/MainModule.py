@@ -45,7 +45,11 @@ def defaultSettings():
 def musicSearch():
     xbmc.executebuiltin( "ActivateWindow(MusicLibrary)" )
     xbmc.executebuiltin( "SendClick(8)" )
-        
+
+def videoSearch():
+    xbmc.executebuiltin( "ActivateWindow(VideoLibrary)" )
+    xbmc.executebuiltin( "SendClick(8)" )    
+    
 def showWidget():
     win = xbmcgui.Window( 10000 )
     linkCount = 0

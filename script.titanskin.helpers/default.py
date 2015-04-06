@@ -59,6 +59,8 @@ elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
     MainModule.musicSearch()
+elif action == "VIDEOSEARCH":
+    MainModule.videoSearch()
 elif action == "BACKUP":
     BackupRestore.backup()
 elif action == "RESTORE":
