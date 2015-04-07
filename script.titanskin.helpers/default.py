@@ -8,6 +8,7 @@ sys.path.append(BASE_RESOURCE_PATH)
 
 import MainModule
 import BackupRestore
+from SearchDialog import SearchDialog
 
 #script init
 action = ""
@@ -60,7 +61,11 @@ elif action == "DEFAULTSETTINGS":
 elif action == "MUSICSEARCH":
     MainModule.musicSearch()
 elif action == "VIDEOSEARCH":
-    MainModule.videoSearch()
+    #MainModule.videoSearch()
+    searchDialog = SearchDialog("CustomSearch.xml", __cwd__, "default", "1080i")
+    searchDialog.doModal()
+    del searchDialog
+    
 elif action == "BACKUP":
     BackupRestore.backup()
 elif action == "RESTORE":
