@@ -2,10 +2,7 @@ import sys
 import xbmc
 import xbmcgui
 import xbmcaddon
-if sys.version_info < (2, 7):
-    import simplejson as json
-else:
-    import json as json
+import json as json
 import urllib
 import threading
 import InfoDialog
@@ -32,8 +29,7 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         pass
         
     def onAction(self, action):
-        #xbmc.log("onAction : " + str(action.getId()) + " " + str(action.getButtonCode()) + " " + str(action))
-        
+
         ACTION_CANCEL_DIALOG = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
         ACTION_SHOW_INFO = ( 11, )
         ACTION_SELECT_ITEM = 7
@@ -143,25 +139,19 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif(controlID == 3010):
             searchTerm = self.getControl(3010).getText()
             self.searchThread.setSearch(searchTerm)
-        elif(controlID == 3110):
-        
-            #xbmc.executebuiltin("Dialog.Close(all,true)")
+        elif(controlID == 3110):       
             itemList = self.getControl(3110)
             item = itemList.getSelectedItem()
             path = item.getProperty("path")
             self.closeDialog()
             xbmc.Player().play( path )
         elif(controlID == 3111):
-        
-            #xbmc.executebuiltin("Dialog.Close(all,true)")
             itemList = self.getControl(3111)
             item = itemList.getSelectedItem()
             path = item.getProperty("path")
             self.closeDialog()
             xbmc.executebuiltin('ActivateWindow(Videos,' + path + ',return)')     
         elif(controlID == 3112):
-        
-            #xbmc.executebuiltin("Dialog.Close(all,true)")
             itemList = self.getControl(3112)
             item = itemList.getSelectedItem()
             path = item.getProperty("path")
@@ -232,8 +222,7 @@ class BackgroundSearchThread(threading.Thread):
     def setDialog(self, searchDialog):
         self.searchDialog = searchDialog
         
-    def run(self):
-        xbmc.log("BackgroundSearchThread Started")     
+    def run(self):   
         
         lastSearchString = ""
         
@@ -245,25 +234,20 @@ class BackgroundSearchThread(threading.Thread):
 
             xbmc.sleep(2000)
 
-        xbmc.log("BackgroundSearchThread Exited")
         
     def doSearch(self, searchTerm):
 
         movieResultsList = self.searchDialog.getControl(3110)
         while(movieResultsList.size() > 0):
             movieResultsList.removeItem(0)
-        #movieResultsList.reset()
-    
-    
+        
         seriesResultsList = self.searchDialog.getControl(3111)
         while(seriesResultsList.size() > 0):
             seriesResultsList.removeItem(0)
-        #seriesResultsList.reset()
 
         episodeResultsList = self.searchDialog.getControl(3112)
         while(episodeResultsList.size() > 0):
             episodeResultsList.removeItem(0)
-        #episodeResultsList.reset()
        
         if(len(searchTerm) == 0):
             return
@@ -271,7 +255,7 @@ class BackgroundSearchThread(threading.Thread):
         search = urllib.quote(searchTerm)        
         
         # Process movies
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "streamdetails", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer", "art"], "sort": { "method": "label" }, "filter": {"field":"title","operator":"contains","value":"%s"} }, "id": 1}' % search)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["title", "genre", "studio", "year", "tagline", "plot", "plotoutline", "runtime", "fanart", "thumbnail", "file", "trailer", "playcount", "rating", "mpaa", "director", "writer", "art"], "limits": {"end":50}, "sort": { "method": "label" }, "filter": {"field":"title","operator":"contains","value":"%s"} }, "id": 1}' % search)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
@@ -294,43 +278,6 @@ class BackgroundSearchThread(threading.Thread):
                 thumb = item['thumbnail']
                 trailer = item['trailer']
                 year = str(item['year'])
-                if item['streamdetails']['audio'] != []:
-                    audiochannels = str(item['streamdetails']['audio'][0]['channels'])
-                    audiocodec = str(item['streamdetails']['audio'][0]['codec'])
-                else:
-                    audiochannels = ''
-                    audiocodec = ''
-                if item['streamdetails']['video'] != []:
-                    videocodec = str(item['streamdetails']['video'][0]['codec'])
-                    videoaspect = float(item['streamdetails']['video'][0]['aspect'])
-                    if videoaspect <= 1.4859:
-                        videoaspect = '1.33'
-                    elif videoaspect <= 1.7190:
-                        videoaspect = '1.66'
-                    elif videoaspect <= 1.8147:
-                        videoaspect = '1.78'
-                    elif videoaspect <= 2.0174:
-                        videoaspect = '1.85'
-                    elif videoaspect <= 2.2738:
-                        videoaspect = '2.20'
-                    else:
-                        videoaspect = '2.35'
-                    videowidth = item['streamdetails']['video'][0]['width']
-                    videoheight = item['streamdetails']['video'][0]['height']
-                    if videowidth <= 720 and videoheight <= 480:
-                        videoresolution = '480'
-                    elif videowidth <= 768 and videoheight <= 576:
-                        videoresolution = '576'
-                    elif videowidth <= 960 and videoheight <= 544:
-                        videoresolution = '540'
-                    elif videowidth <= 1280 and videoheight <= 720:
-                        videoresolution = '720'
-                    else:
-                        videoresolution = '1080'
-                else:
-                    videocodec = ''
-                    videoaspect = ''
-                    videoresolution = ''
                 listitem = xbmcgui.ListItem(label=movie, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
                 listitem.setProperty( "fanart", fanart )
@@ -348,16 +295,11 @@ class BackgroundSearchThread(threading.Thread):
                 listitem.setProperty( "mpaa", mpaa )
                 listitem.setProperty( "writer", writer )
                 listitem.setProperty( "director", director )
-                listitem.setProperty( "videoresolution", videoresolution )
-                listitem.setProperty( "videocodec", videocodec )
-                listitem.setProperty( "videoaspect", videoaspect )
-                listitem.setProperty( "audiocodec", audiocodec )
-                listitem.setProperty( "audiochannels", audiochannels )
                 listitem.setProperty( "path", path )
                 movieResultsList.addItem(listitem)
 
         # Process TV Shows
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating", "art"], "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % search)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"properties": ["title", "genre", "studio", "premiered", "plot", "fanart", "thumbnail", "playcount", "year", "mpaa", "episode", "rating", "art"], "limits": {"end":50}, "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % search)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('tvshows')):
@@ -399,7 +341,7 @@ class BackgroundSearchThread(threading.Thread):
                 seriesResultsList.addItem(listitem)
 
         # Process episodes
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "streamdetails", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating", "art"], "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % search)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "properties": ["title", "plot", "firstaired", "runtime", "season", "episode", "showtitle", "thumbnail", "fanart", "file", "playcount", "director", "rating", "art"], "limits": {"end":50}, "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }, "id": 1}' % search)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = json.loads(json_query)
         if (json_response['result'] != None) and (json_response['result'].has_key('episodes')):
@@ -420,43 +362,6 @@ class BackgroundSearchThread(threading.Thread):
                 thumb = item['thumbnail']
                 fanart = item['fanart']
                 poster = item['art']['tvshow.poster']
-                if item['streamdetails']['audio'] != []:
-                    audiochannels = str(item['streamdetails']['audio'][0]['channels'])
-                    audiocodec = str(item['streamdetails']['audio'][0]['codec'])
-                else:
-                    audiochannels = ''
-                    audiocodec = ''
-                if item['streamdetails']['video'] != []:
-                    videocodec = str(item['streamdetails']['video'][0]['codec'])
-                    videoaspect = float(item['streamdetails']['video'][0]['aspect'])
-                    if videoaspect <= 1.4859:
-                        videoaspect = '1.33'
-                    elif videoaspect <= 1.7190:
-                        videoaspect = '1.66'
-                    elif videoaspect <= 1.8147:
-                        videoaspect = '1.78'
-                    elif videoaspect <= 2.0174:
-                        videoaspect = '1.85'
-                    elif videoaspect <= 2.2738:
-                        videoaspect = '2.20'
-                    else:
-                        videoaspect = '2.35'
-                    videowidth = item['streamdetails']['video'][0]['width']
-                    videoheight = item['streamdetails']['video'][0]['height']
-                    if videowidth <= 720 and videoheight <= 480:
-                        videoresolution = '480'
-                    elif videowidth <= 768 and videoheight <= 576:
-                        videoresolution = '576'
-                    elif videowidth <= 960 and videoheight <= 544:
-                        videoresolution = '540'
-                    elif videowidth <= 1280 and videoheight <= 720:
-                        videoresolution = '720'
-                    else:
-                        videoresolution = '1080'
-                else:
-                    videocodec = ''
-                    videoaspect = ''
-                    videoresolution = ''
                 listitem = xbmcgui.ListItem(label=episode, iconImage='DefaultVideo.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
                 listitem.setProperty( "poster", poster )
@@ -471,11 +376,6 @@ class BackgroundSearchThread(threading.Thread):
                 listitem.setProperty( "tvshowtitle", tvshowname )
                 listitem.setProperty( "premiered", premiered )
                 listitem.setProperty( "playcount", playcount )
-                listitem.setProperty( "videoresolution", videoresolution )
-                listitem.setProperty( "videocodec", videocodec )
-                listitem.setProperty( "videoaspect", videoaspect )
-                listitem.setProperty( "audiocodec", audiocodec )
-                listitem.setProperty( "audiochannels", audiochannels )
                 listitem.setProperty( "path", path )
                 episodeResultsList.addItem(listitem)
                 
