@@ -34,9 +34,9 @@
 		<value condition="Container.Content(episodes) + stringcompare(Container.FolderPath,special://skin/extras/widgetplaylists/recentepisodes.xsp)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] • $LOCALIZE[20387]</value>
 		
 		<value condition="Container.Content(movies)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[Container.FolderName,• ,]</value>
-		<value condition="Container.Content(seasons)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.TvShowTitle,• ]</value>
+		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.TVShowTitle)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.TvShowTitle,• ]</value>
 		<value condition="Container.Content(tvshows)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[Container.FolderName,• ,]</value>
-		<value condition="Container.Content(episodes)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.TvShowTitle,• ] $INFO[ListItem.Season,• $LOCALIZE[20373] ,]</value>
+		<value condition="Container.Content(episodes) + !IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TvShowTitle] $INFO[ListItem.Season,• $LOCALIZE[20373] ,]</value>
 		
 		
 		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + !IsEmpty(Window.Property(IsRadio))">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
@@ -48,7 +48,7 @@
 		
 		<value condition="Window.IsActive(MyMusicNav.xml)">[UPPERCASE]$LOCALIZE[2][/UPPERCASE] $INFO[Container.FolderName,• ,]</value>
         
-		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.TVShowTitle)">[UPPERCASE]$LOCALIZE[20343] $INFO[ListItem.TVShowTitle,• ,] > $LOCALIZE[33054][/UPPERCASE]</value>
+		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TVShowTitle] > $LOCALIZE[33054][/UPPERCASE]</value>
 
         <value condition="substring(Container.FolderPath,plugin://plugin.video.netflixbmc)">[UPPERCASE]$LOCALIZE[31018][/UPPERCASE]</value>
         <value condition="substring(Container.FolderPath,plugin://plugin.video.youtube)">[UPPERCASE]$LOCALIZE[31062][/UPPERCASE]</value>
@@ -1267,6 +1267,19 @@
 		<value condition="player.rewinding16x">[B]$LOCALIZE[31254][/B] x16</value>
 		<value condition="player.rewinding32x">[B]$LOCALIZE[31254][/B] x32</value>
 		<value condition="player.paused">[B]$LOCALIZE[31251][/B]</value>
+	 </variable>
+	 
+	 <variable name="ClearLogoLocation">
+		<value condition="Skin.String(ClearLogoLocation, footer)">$LOCALIZE[31328]</value>
+		<value condition="Skin.String(ClearLogoLocation, topleft)">$LOCALIZE[31329]</value>
+		<value condition="Skin.String(ClearLogoLocation, topcenter)">$LOCALIZE[31330]</value>
+		<value condition="Skin.String(ClearLogoLocation, topright)">$LOCALIZE[31331]</value>
+		<value condition="!Skin.String(ClearLogoLocation)">$LOCALIZE[1223]</value>
+	 </variable>
+	 
+	 <variable name="SubtitleButton">
+		<value condition="!VideoPlayer.SubtitlesEnabled">$LOCALIZE[24022]</value>
+		<value>$LOCALIZE[209]</value>
 	 </variable>
 	 
 </includes>
