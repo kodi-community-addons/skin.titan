@@ -585,7 +585,7 @@
 	<variable name="RecordingsButtonClick">
 		<value condition="StringCompare(Window(Home).Property(menu),300) + [Skin.String(GadgetRows, 2) | Skin.String(GadgetRows,3)] + SubString(Container(300).ListItem.Property(hasSubmenu), True) + [IntegerGreaterThan(Container(4444).NumItems,0) | IntegerGreaterThan(Container(4445).NumItems,0)]">SetFocus(4444)</value>
         
-        <value condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">ActivateWindow(TVRecordings,return)</value>
+        <value condition="!SubString(System.BuildVersion,13,left)">ActivateWindow(TVRecordings,return)</value>
 		<value>ActivateWindowAndFocus(MyPVR, 34,0, 13,0)</value>
 	</variable>
 	
@@ -730,7 +730,7 @@
 		<value condition="StringCompare(Window(Home).Property(menu),300) + [Skin.String(GadgetRows, 2) | Skin.String(GadgetRows,3)] + SubString(Container(300).ListItem.Property(hasSubmenu), True) + [IntegerGreaterThan(Container(4444).NumItems,0) | IntegerGreaterThan(Container(4445).NumItems,0)]">SetFocus(4444)</value>
         
         <value condition="Skin.String(HomeMenuUseRadioCollection)">ActivateWindow(Music,$INFO[Skin.String(HomeMenuUseRadioCollection)],return)</value>
-		<value condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">ActivateWindow(radiochannels,return)</value>
+		<value condition="!SubString(System.BuildVersion,13,left)">ActivateWindow(radiochannels,return)</value>
         <value>ActivateWindowAndFocus(MyPVR, 33,0, 10,0)</value>
     </variable>
 	
@@ -770,7 +770,7 @@
     <variable name="LiveTVButtonOnClick">
 		<value condition="StringCompare(Window(Home).Property(menu),300) + [Skin.String(GadgetRows, 2) | Skin.String(GadgetRows,3)] + SubString(Container(300).ListItem.Property(hasSubmenu), True) + [IntegerGreaterThan(Container(4444).NumItems,0) | IntegerGreaterThan(Container(4445).NumItems,0)]">SetFocus(4444)</value>
         
-        <value condition="SubString(System.BuildVersion,14,left) | SubString(System.BuildVersion,15,left)">ActivateWindow(TVGuide)</value>
+        <value condition="!SubString(System.BuildVersion,13,left)">ActivateWindow(TVGuide)</value>
         <value>ActivateWindowAndFocus(MyPVR, 31,0, 10,0)</value>
     </variable>
 
@@ -825,6 +825,7 @@
 		<value condition="Container.Content(seasons) + SubString(ListItem.Label,*,left)">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+		<value condition="Container.Content(episodes) + !IsEmpty(Container.Art(season.poster))">$INFO[Container.Art(season.poster)]</value>
 		<value condition="Container.Content(episodes) + !IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(poster))">$INFO[ListItem.Property(poster)]</value>
@@ -1237,6 +1238,7 @@
 	 
 	 <variable name="PlayerActionLabel">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
+		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31046][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
@@ -1254,6 +1256,7 @@
 	 
 	 <variable name="PlayerActionLabelLarge">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
+		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31046][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
