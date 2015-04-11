@@ -268,6 +268,7 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(AutoFocusUnwatchedEpisode)</onclick>
                     <selected>Skin.HasSetting(AutoFocusUnwatchedEpisode)</selected>
+					<visible>!SubString(System.BuildVersion,15,left)</visible>
                 </control>
 				
 				<control type="radiobutton" id="8014">
@@ -748,6 +749,7 @@
                     <onclick>Skin.ToggleSetting(EnableExtraFanart)</onclick>
                     <selected>Skin.HasSetting(EnableExtraFanart)</selected>
 					<visible>Skin.HasSetting(ShowFanartBackground)</visible>
+					<visible>!Skin.HasSetting(LowPerformanceMode)</visible>
                 </control>
 				<control type="button" id="339">
                     <!-- extra Fanart Background transistion time-->
@@ -916,15 +918,21 @@
                 </control>
 				
 				<!-- alternative logo location -->
-				<control type="radiobutton" id="13027">
+				<control type="button" id="13027">
                     <description></description>
                     <width>1230</width>
                     <align>left</align>
-                    <label>31225</label>
+                    <label>$LOCALIZE[31327]: $VAR[ClearLogoLocation]</label>
                     <height>50</height>
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(ShowLogoAltLocation)</onclick>
+                    <onclick condition="!Skin.String(ClearLogoLocation)">Skin.SetString(ClearLogoLocation, topleft)</onclick>
+					<onclick condition="Skin.String(ClearLogoLocation, topleft) + !Skin.HasSetting(ShowMovieTitleHeader)">Skin.SetString(ClearLogoLocation, topcenter)</onclick>
+					<onclick condition="Skin.String(ClearLogoLocation, topleft) + Skin.HasSetting(ShowMovieTitleHeader)">Skin.SetString(ClearLogoLocation, topright)</onclick>
+					<onclick condition="Skin.String(ClearLogoLocation, topcenter)">Skin.SetString(ClearLogoLocation, topright)</onclick>
+					<onclick condition="Skin.String(ClearLogoLocation, topright) + !skin.hastheme(classic)">Skin.SetString(ClearLogoLocation, footer)</onclick>
+					<onclick condition="Skin.String(ClearLogoLocation, topright) + skin.hastheme(classic)">Skin.Reset(ClearLogoLocation)</onclick>
+					<onclick condition="Skin.String(ClearLogoLocation, footer)">Skin.Reset(ClearLogoLocation)</onclick>
                     <selected>Skin.HasSetting(ShowLogoAltLocation)</selected>
                 </control>
 				
@@ -1016,6 +1024,19 @@
                     <font>Reg28</font>
                     <onclick>Skin.ToggleSetting(UseAltEpgProgress)</onclick>
                     <selected>Skin.HasSetting(UseAltEpgProgress)</selected>
+					<visible>System.GetBool(pvrmanager.enabled)</visible>
+                </control>
+				
+				<control type="radiobutton" id="13046">
+                    <description>no channel names in guide</description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31333</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(HideChannelNamesInGuide)</onclick>
+                    <selected>Skin.HasSetting(HideChannelNamesInGuide)</selected>
 					<visible>System.GetBool(pvrmanager.enabled)</visible>
                 </control>
 				
@@ -2172,6 +2193,18 @@
                     <selected>Skin.HasSetting(showlyrics)</selected>
 					<enable>System.HasAddon(script.cu.lrclyrics)</enable>
                 </control>
+				<control type="radiobutton" id="5161">
+                    <description>disable backgroundoverlay lyrics dialog</description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>--- $LOCALIZE[31332]</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(DisableLyricsOverlay)</onclick>
+                    <selected>Skin.HasSetting(DisableLyricsOverlay)</selected>
+					<visible>Skin.HasSetting(showlyrics)</visible>
+                </control>
 				
 				<control type="radiobutton" id="5158">
                     <description></description>
@@ -2199,15 +2232,16 @@
                 </control>
 				
 				<control type="radiobutton" id="5160">
-                    <description>Viewtype for favourites dialog</description>
+                    <description>Low performance systems</description>
                     <width>1230</width>
                     <align>left</align>
-                    <label>31324</label>
+                    <label>31326</label>
                     <height>50</height>
                     <focusedcolor>black</focusedcolor>
                     <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(favorites.usethumbs)</onclick>
-                    <selected>Skin.HasSetting(favorites.usethumbs)</selected>
+                    <onclick>Skin.ToggleSetting(LowPerformanceMode)</onclick>
+					<onclick>Skin.Reset(EnableExtraFanart)</onclick>
+                    <selected>Skin.HasSetting(LowPerformanceMode)</selected>
                 </control>
             </control>
         	

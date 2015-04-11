@@ -6,22 +6,22 @@
 		<control type="group">
 			
 			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(AutoShowWidgets)">
-                <effect type="slide" start="0,0" end="0,1000" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,900" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
 			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + Skin.HasSetting(AutoShowWidgets)">
-                <effect type="slide" start="0,0" end="0,510" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,420" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
 			<animation type="Conditional" condition="Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
-                 <effect type="slide" start="0,0" end="0,495" time="400" tween="cubic" easing="inout" delay="0"/>
+                 <effect type="slide" start="0,0" end="0,480" time="400" tween="cubic" easing="inout" delay="0"/>
 			</animation>
 			
-			<visible>!IsEmpty(Window(Home).Property(activewidget))</visible>
+			<visible allowhiddenfocus="true">!IsEmpty(Window(Home).Property(activewidget))</visible>
 
 				<animation time="400" effect="fade">Visible</animation>
 				<animation time="200" effect="fade">Hidden</animation>
 				
 			<height>560</height>
-			<posy>-1100</posy>
+			<posy>-1000</posy>
 			
 			<control type="image">
 				<posx>0</posx>
@@ -37,6 +37,8 @@
 				<height>912</height>
 				<visible>!Skin.HasTheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+				<include>animation_fade_visible_hidden_delayed</include>
             </control>
 			
 			<include condition="skin.hastheme(classic)">ClassicWidgetPanel</include>
@@ -126,7 +128,7 @@
 			<!--widget Arrow DOWN-->
 			<control type="group">
 				<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !skin.hastheme(classic)</visible>
+				<visible>ControlGroup(77777).HasFocus + !skin.hastheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<control type="button">
@@ -173,7 +175,7 @@
 				<onclick>ClearProperty(ShowWidget, Home)</onclick>
 				<texturefocus colordiffuse="white">basichome_down.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">basichome_down.png</texturenofocus>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + skin.hastheme(classic)</visible>
+				<visible>ControlGroup(77777).HasFocus + skin.hastheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 			</control>
 
@@ -186,6 +188,7 @@
 				<height>340</height>
 				<visible>skin.hastheme(classic)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			</control>
 			
 			<!-- clearlogo -->
@@ -218,12 +221,14 @@
 				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<include>animation_fade_visible_hidden_delayed</include>
 				<visible>!skin.hastheme(classic)</visible>
+				<visible allowhiddenfocus="true">[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
 			</control>
 			
 			<!-- widget type selector classic theme -->
 			<control type="group">		
 				<visible>skin.hastheme(classic)</visible>
+				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<visible>!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + !SubString(Window(Home).Property(activewidget),smart-) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]</visible>
 				<control type="image">
 					<height>70</height>
@@ -512,7 +517,7 @@
 				
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				<content target="$VAR[WidgetTarget]">$VAR[MoviesWidgetContent]</content> 
-				 <visible>!IsEmpty(Window(Home).Property(activewidget)) + StringCompare(Window(Home).Property(activewidget),movies)</visible>
+				 <visible>StringCompare(Window(Home).Property(activewidget),movies)</visible>
 			</control>
 			
 			<!--TVSHOWS widget-->
@@ -520,7 +525,7 @@
 				
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				<content target="$VAR[WidgetTarget]">$VAR[TvShowsWidgetContent]</content> 
-				 <visible>!IsEmpty(Window(Home).Property(activewidget)) + StringCompare(Window(Home).Property(activewidget),tvshows)</visible>
+				 <visible>StringCompare(Window(Home).Property(activewidget),tvshows)</visible>
 			</control>
 			
 			<include condition="System.HasAddon(plugin.video.netflixbmc) + Skin.HasSetting(NetFlixExists)">netflixWidget</include>
@@ -533,7 +538,7 @@
 				
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				<content target="$VAR[WidgetTarget]">$VAR[MusicWidgetContent]</content> 
-				 <visible>!IsEmpty(Window(Home).Property(activewidget)) + StringCompare(Window(Home).Property(activewidget),music)</visible>
+				 <visible>StringCompare(Window(Home).Property(activewidget),music)</visible>
 			</control>
 			
 			<!--custom widgets for all other-->
@@ -541,7 +546,7 @@
 				
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				<content target="$VAR[WidgetTarget]">$VAR[CustomWidgetContent]</content> 
-				<visible>!IsEmpty(Window(Home).Property(activewidget)) + StringCompare(Window(Home).Property(activewidget),custom)</visible>
+				<visible>StringCompare(Window(Home).Property(activewidget),custom)</visible>
 				<visible>![SubString(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-) | SubString(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-)]</visible>
 			</control>
 
@@ -550,7 +555,7 @@
 				
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				 <content><include>StaticWidgetContent</include></content> 
-				 <visible>!IsEmpty(Window(Home).Property(activewidget)) + [StringCompare(Window(Home).Property(activewidget),systeminfo) | StringCompare(Window(Home).Property(activewidget),weather) | StringCompare(Window(Home).Property(activewidget),romcollection)]</visible>
+				 <visible>StringCompare(Window(Home).Property(activewidget),systeminfo) | StringCompare(Window(Home).Property(activewidget),weather) | StringCompare(Window(Home).Property(activewidget),romcollection)</visible>
 			</control>
 			
 			<!-- submenu as widget -->
@@ -558,7 +563,7 @@
 				
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				 <content><include>skinshortcuts-submenu</include></content> 
-				 <visible>!IsEmpty(Window(Home).Property(activewidget)) + StringCompare(Window(Home).Property(activewidget),submenuaswidget)</visible>
+				 <visible>StringCompare(Window(Home).Property(activewidget),submenuaswidget)</visible>
 			</control>
 		</control>
 	</include>

@@ -41,12 +41,11 @@
 	<include file="IncludesBackgroundBuilding.xml" />
 	<include file="IncludesAnimations.xml" />
 	<include file="IncludesWeather.xml" />
-	<include file="IncludesFavourites.xml" />
 	
 	<include file="script-skinshortcuts-includes.xml"/>
     <!--PVR-->
-    <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)" file="MyPVR.xml" />
-    <include condition="!SubString(System.BuildVersion,14,left) + !SubString(System.BuildVersion,15,left)" file="ViewsPVR.xml" />
+    <include condition="SubString(System.BuildVersion,13,left)" file="MyPVR.xml" />
+    <include condition="SubString(System.BuildVersion,13,left)" file="ViewsPVR.xml" />
 	<!--Titan Version-->
     <include name="TitanVersion">
         <control type="label">
@@ -68,7 +67,7 @@
     </include>
     <include name="Gadget2Row">
         <height>605</height>
-        <posy>380</posy>
+        <posy>400</posy>
     </include>
 	<include name="Gadget2Row">
         <height>605</height>
@@ -122,7 +121,7 @@
 			<control type="group">						
 				<control type="image">	
 					<posx>50</posx>
-					<posy>965</posy>
+					<posy>960</posy>
 					<width>1820</width>
 					<height>84</height>
 					<texture>home/home_rss.png</texture>
@@ -325,7 +324,8 @@
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.label]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
-				<visible>skin.hastheme(classic) | [!skin.hastheme(classic) + IsEmpty(ListItem.VideoResolution) + IsEmpty(Container.Listitem.Art(clearlogo)) + IsEmpty(Container.Listitem.Art(tvshow.clearlogo))]</visible>
+				<visible>!Control.IsVisible(884)</visible>
+				<visible>skin.hastheme(classic) | [!skin.hastheme(classic) + IsEmpty(ListItem.VideoResolution)]</visible>
 			</control>
 			<control type="label">
 				<!--songs-->
@@ -338,7 +338,7 @@
 				<textcolor>$VAR[ThemeFontColorBlack]</textcolor>
 				<label>$INFO[ListItem.Title]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
-				<visible>[IsEmpty(Container.Listitem.Art(clearlogo)) + !skin.hastheme(classic)] | skin.hastheme(classic)</visible>
+				<visible>!Control.IsVisible(884)</visible>
 			</control>
 			<control type="label">
 				<visible>Container.Content(songs)</visible>
@@ -433,19 +433,6 @@
 				<label>$INFO[ListItem.Title]</label>
 				<animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
 			</control>
-			<control type="image">
-				<!--logo-->
-				<posx>810</posx>
-				<posy>10</posy>
-				<width>350</width>
-				<height>80</height>
-				<align>center</align>
-				<valign>center</valign>
-				<fadetime>600</fadetime>
-				<aspectratio>keep</aspectratio>
-				<texture>$VAR[ListItemClearLogo]</texture>
-				<visible>!skin.hastheme(classic) + !Skin.HasSetting(ShowLogoAltLocation)</visible>
-			</control>
 
 		</control>
 	
@@ -469,7 +456,7 @@
 		</control>
 		
         <control type="image">
-            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			<posx>61</posx>
             <posy>41</posy>
             <height>64</height>
@@ -477,6 +464,7 @@
             <aligny>center</aligny>
             <colordiffuse>$INFO[Skin.String(HeaderTextShadowColor)]</colordiffuse>
             <texture>$VAR[value_header_icon]</texture>
+			<visible>!Control.IsVisible(882)</visible>
         </control>
 		<control type="image">
             <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
@@ -487,6 +475,7 @@
             <aligny>center</aligny>
             <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
             <texture>$VAR[value_header_icon]</texture>
+			<visible>!Control.IsVisible(882)</visible>
         </control>
         <control type="label">
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
@@ -498,6 +487,7 @@
             <align>left</align>
             <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
             <label>$VAR[value_header]</label>
+			<visible>!Control.IsVisible(882)</visible>
 			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 			<animation effect="slide" end="80,15" time="0" condition="skin.hastheme(classic)">Conditional</animation>
         </control>
@@ -512,25 +502,68 @@
 			<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+			<visible>!Control.IsVisible(882)</visible>
 		</control>
     </include>
     
-	<include name="TimeInfo">
-		<!--clearlogo alt location-->
-		<control type="image">
+	<include name="ClearLogo">
+		<!--clearlogo top right-->
+		<control type="image" id="881">
 			<right>60</right>
 			<top>20</top>
-			<width>650</width>
-			<height>140</height>
+			<width>550</width>
+			<height>110</height>
 			<fadetime>600</fadetime>
 			<aspectratio align="right" aligny="center">keep</aspectratio>
 			<texture>$VAR[ListItemClearLogo]</texture>
-			<visible>Skin.HasSetting(ShowLogoAltLocation) + [!IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) | !IsEmpty(Container.ListItem.Art(clearlogo))]</visible>
-			<visible>![Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] + ![Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+			<visible>!IsEmpty(Control.GetLabel(881)) + Skin.String(ClearLogoLocation, topright)</visible>
 		</control>
+		
+		<!--clearlogo top left-->
+		<control type="image" id="882">
+			<left>60</left>
+			<top>20</top>
+			<width>550</width>
+			<height>110</height>
+			<fadetime>600</fadetime>
+			<aspectratio align="left" aligny="center">keep</aspectratio>
+			<texture>$VAR[ListItemClearLogo]</texture>
+			<visible>!IsEmpty(Control.GetLabel(882)) + Skin.String(ClearLogoLocation, topleft)</visible>
+		</control>
+		
+		<!--clearlogo top center-->
+		<control type="image" id="883">
+			<left>760</left>
+			<top>20</top>
+			<width>400</width>
+			<height>110</height>
+			<fadetime>600</fadetime>
+			<aspectratio align="center" aligny="center">keep</aspectratio>
+			<texture>$VAR[ListItemClearLogo]</texture>
+			<visible>!IsEmpty(Control.GetLabel(883)) + Skin.String(ClearLogoLocation, topcenter) + !Skin.HasSetting(ShowMovieTitleHeader)</visible>
+		</control>
+		
+		<!--clearlogo footer-->
+		<control type="image" id="884">
+			<left>760</left>
+			<bottom>10</bottom>
+			<width>400</width>
+			<height>80</height>
+			<align>center</align>
+			<valign>center</valign>
+			<fadetime>600</fadetime>
+			<aspectratio>keep</aspectratio>
+			<texture>$VAR[ListItemClearLogo]</texture>
+			<visible>!IsEmpty(Control.GetLabel(884)) + Skin.String(ClearLogoLocation, footer) + !skin.hastheme(classic)</visible>
+		</control>
+		
+	</include>
+	
+	<include name="TimeInfo">
+		
         <control type="group">
-            <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
-			<visible>[[Skin.HasSetting(ShowLogoAltLocation) + IsEmpty(Container.ListItem.Art(tvshow.clearlogo)) + IsEmpty(Container.ListItem.Art(clearlogo))] | !Skin.HasSetting(ShowLogoAltLocation)]</visible>
+            <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+			<visible>!Control.IsVisible(881)</visible>
 			<visible>!Control.IsVisible(77551)</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml)">
                 <effect type="slide" start="0,0" end="-100,0" time="400" tween="cubic" easing="inout" delay="0" />
@@ -650,13 +683,14 @@
 	</include>
     
 	<include name="ProfileInfo">
-	<control type="group" id="891">
+		<control type="group" id="891">
 			<animation effect="slide" end="440" time="0" condition="Skin.String(GadgetRows, simplever)">Conditional</animation>
 			<defaultcontrol>890</defaultcontrol>
 			<posx>60</posx>
 			<posy>30</posy>
+			<visible>!Control.IsVisible(882)</visible>
 			<visible>!Control.IsVisible(77551)</visible>
-			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
+			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
             <width>150</width>
 			<height>80</height>
 			<control type="image">
@@ -724,10 +758,11 @@
             <posy>15</posy>
             <width>350</width>
             <height>300</height>
+			<visible>!Control.IsVisible(882)</visible>
 			<visible>!Control.IsVisible(77551)</visible>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))] + !Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
@@ -818,7 +853,8 @@
     <include name="SubMenuTabTop">
         <!--Sub Menu Tab Top-->
         <control type="group">
-		<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+			<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+			<visible>!Control.IsVisible(883)</visible>
             <visible>Control.IsVisible(500) | Control.IsVisible(52) | Control.IsVisible(501) | Control.IsVisible(502) | Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514)</visible>
 			<control type="button" id="99002">
 				<posx>890</posx>

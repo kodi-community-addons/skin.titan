@@ -14,10 +14,10 @@
 		<shortcut label="RCB: Most played games" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal) + System.HasAddon(script.games.rom.collection.browser)">romcollection</shortcut>
 		<shortcut label="31195" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), normal) + [Skin.HasSetting(HomeMenuUsePlexforMovies) | Skin.HasSetting(HomeMenuUseMBforMovies)]">custom</shortcut>
 		
-		<shortcut label="31102" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window.Property(randommovies)]</shortcut>
-		<shortcut label="20386" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://service.library.data.provider?type=recentmovies&amp;reload=$INFO[Window.Property(recentmovies)]</shortcut>
+		<shortcut label="31102" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/randommovies.xsp</shortcut>
+		<shortcut label="20386" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recentmovies.xsp</shortcut>
 		<shortcut label="31035" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/inprogressmovies.xsp</shortcut>
-		<shortcut label="31036" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://service.library.data.provider?type=recommendedmovies&amp;reload=$INFO[Window.Property(recommendedmovies)]</shortcut>
+		<shortcut label="31036" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</shortcut>
 		
 		<shortcut label="31103" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">plugin://service.library.data.provider?type=randomepisodes&amp;reload=$INFO[Window.Property(randomepisodes)]</shortcut>
 		<shortcut label="31105" grouping="32029" condition="StringCompare(Window(Home).Property(customWidget), spotlight) + !Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">plugin://service.library.data.provider?type=recentepisodes&amp;reload=$INFO[Window.Property(recentepisodes)]</shortcut>
@@ -39,7 +39,7 @@
 			<content>playlist-audio</content>
 		</node>
 		
-		<node label="Smart shortcuts" condition="[Skin.HasSetting(SmartShortcuts.playlists) + !IsEmpty(Window(Home).Property(playlist.0.label))] | [Skin.HasSetting(SmartShortcuts.favorites) + !IsEmpty(Window(Home).Property(favorite.0.label))]">
+		<node label="Smart shortcuts" condition="IsEmpty(Window(Home).Property(customWidget)) + [[Skin.HasSetting(SmartShortcuts.playlists) + !IsEmpty(Window(Home).Property(playlist.0.label))] | [Skin.HasSetting(SmartShortcuts.favorites) + !IsEmpty(Window(Home).Property(favorite.0.label))]]">
 			<shortcut label="$INFO[Window(Home).Property(playlist.0.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.0.label))" icon="$INFO[Window(Home).Property(playlist.0.image)]">$INFO[Window(Home).Property(playlist.0.action)]</shortcut>
 			<shortcut label="$INFO[Window(Home).Property(playlist.1.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.1.label))" icon="$INFO[Window(Home).Property(playlist.1.image)]">$INFO[Window(Home).Property(playlist.1.action)]</shortcut>
 			<shortcut label="$INFO[Window(Home).Property(playlist.2.label)]" type="32014" condition="!IsEmpty(Window(Home).Property(playlist.2.label))" icon="$INFO[Window(Home).Property(playlist.2.image)]">$INFO[Window(Home).Property(playlist.2.action)]</shortcut>
@@ -145,6 +145,7 @@
 			<shortcut label="20388" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/studios/,return)</shortcut>
 			<shortcut label="344" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(Videos,videodb://movies/actors/,return)</shortcut>
 			<shortcut label="344" grouping="20342" type="20342" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</shortcut>
+			<shortcut label="19140" grouping="1211" type="1211">RunScript(script.titanskin.helpers,VIDEOSEARCH)</shortcut>
 		</node>
 		
 		<!-- tvshows -->
@@ -171,6 +172,10 @@
 			<shortcut label="135" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,videodb://tvshows/genres/,return)</shortcut>
 			<shortcut label="572" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,videodb://tvshows/studios/,return)</shortcut>
 			<shortcut label="626" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,library://video/inprogressshows.xml,return)</shortcut>
+			<shortcut label="31104" grouping="customvideonode" type="31018" condition="!Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">ActivateWindow(Videos,plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)],return)</shortcut>
+			
+			
+			<shortcut label="19140" grouping="1211" type="1211">RunScript(script.titanskin.helpers,VIDEOSEARCH)</shortcut>
 		</node>
 		
 		<!-- music -->
@@ -201,6 +206,7 @@
 				<shortcut label="1050" grouping="1211" type="1211">ActivateWindow(Music,musicdb://singles/,return)</shortcut>
 				<shortcut label="136" grouping="1211" type="1211">ActivateWindow(Music,special://musicplaylists/,return)</shortcut>
 				<shortcut label="1038" grouping="1211" type="1211">ActivateWindow(Music,addons://sources/audio/,return)</shortcut>
+				<shortcut label="19140" grouping="1211" type="1211">RunScript(script.titanskin.helpers,MUSICSEARCH)</shortcut>
 				<node label="32075">
 					<content>musicsources</content>
 					<content>upnp-music</content>
@@ -533,6 +539,7 @@
 				<shortcut label="342" grouping="32029" icon="$VAR[MoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://movies/titles/,return)</shortcut>
 				<shortcut label="20343" grouping="32029" icon="$VAR[TvseriesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries) + !StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</shortcut>
 				<shortcut label="20389" grouping="32029" icon="$VAR[MusicVideosButtonThumb]" condition="!StringCompare(Window(Home).Property(customWidget), active)">ActivateWindow(Videos,videodb://musicvideos/titles/,return)</shortcut>
+				<shortcut label="19140" grouping="1211" type="1211">RunScript(script.titanskin.helpers,VIDEOSEARCH)</shortcut>
 			</node>
 			<node label="32040">
 				<content>playlist-video</content>
