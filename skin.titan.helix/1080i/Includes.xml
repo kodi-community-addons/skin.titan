@@ -800,6 +800,52 @@
         </control>
     </include>
 
+	<include name="WeatherInfoOSD">
+        <!-- weather info displayed in video OSD and video info -->
+        <control type="group">
+            <posx>60</posx>
+            <posy>620</posy>
+            <width>128</width>
+            <height>128</height>
+            <visible>Weather.IsFetched + Skin.HasSetting(ShowWeatherVideoInfoOSD)</visible>
+			<include>animation_fade_visible_hidden</include>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+            <!--Current Weather-->
+            <control type="image">
+                <!--Current Weather Icon-->
+                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <width>128</width>
+                <height>128</height>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+            </control>
+            <control type="label">
+                <!--Current Temp-->
+                <width>128</width>
+                <height>128</height>
+                <posx>136</posx>
+                <posy>0</posy>
+                <font>Bold30</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)]$INFO[System.TemperatureUnits]</label>
+                <visible>Weather.IsFetched</visible>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+			<!--Current Conditions-->
+			<control type="label">
+                    <width>300</width>
+                    <height>128</height>
+					<posx>0</posx>
+                    <posy>75</posy>
+					<font>Bold30</font>
+					<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<align>left</align>
+					<label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                    <visible>Weather.IsFetched</visible>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+        </control>
+    </include>
     
     <!--Sub Menu-->
     <include name="SubMenuButton">
