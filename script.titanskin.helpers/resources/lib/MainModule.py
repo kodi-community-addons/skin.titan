@@ -393,9 +393,18 @@ def getImageFromPath(path):
     if not xbmcvfs.exists(addondir + os.sep):
         xbmcvfs.mkdir(addondir)
     
-    #first check if this link is blacklisted
+    
+    # Blacklist checks
+    txtb64 = base64.urlsafe_b64encode(path)
+    if len(txtb64) > 30:
+        txtb64 = txtb64[-30:]
+    txtPath = os.path.join(addondir,txtb64 + ".txt")
+    
+    if win.getProperty(txtPath) == "blacklist":
+        logMsg("path blacklisted - skipping for path " + path)
+        return None
+        
     blacklistPath = os.path.join(addondir,"blacklist.txt")
-    blackListed = False
     if (xbmcvfs.exists(blacklistPath) and os.path.getsize(blacklistPath) > 0):
         blfile = open(blacklistPath, 'r')
         if path in blfile.read():
@@ -404,11 +413,9 @@ def getImageFromPath(path):
             return None
         logMsg("path is NOT blacklisted (or blacklist file error) - continuing for path " + path)
         blfile.close()
-
+    
     #no blacklist so read cache and/or path
-    images = list()
-    txtPath = base64.urlsafe_b64encode(path)
-    txtPath = os.path.join(addondir,txtPath + ".txt")
+    images = []
     
     #delete existing cache file if cache expired
     if xbmcvfs.exists(txtPath) and win.getProperty(txtPath) != "loaded":
@@ -449,11 +456,16 @@ def getImageFromPath(path):
                         images.append(media['art']['tvshow.fanart'])
         else:
             logMsg("media array empty or error so add this path to blacklist..." + path)
-            blacklistPath = os.path.join(addondir,"blacklist.txt")
-            blfile = open(blacklistPath, 'a')
-            blfile.write(path + '\n')
-            blfile.close()
-            return None
+            if path.startswith("videodb://") or path.startswith("library://") or path.endswith(".xsp"):
+                win.setProperty(txtPath,"blacklist")
+                return None
+            else:
+                blacklistPath = os.path.join(addondir,"blacklist.txt")
+                blfile = open(blacklistPath, 'a')
+                blfile.write(path + '\n')
+                blfile.close()
+                win.setProperty(txtPath,"blacklist")
+                return None
     
     #all is fine, we have some images to randomize and return one
     txtfile = open(txtPath, 'w')
