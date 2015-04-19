@@ -375,19 +375,19 @@ def getViewId(viewString):
     return viewId
     
     
-def getImageFromPath(path):
+def getImageFromPath(libPath):
     
-    logMsg("getting images for path " + path)
-    if "$INFO" in path:
-        path = path.replace("$INFO[Window(Home).Property(", "")
-        path = path.replace(")]", "")
-        path = win.getProperty(path)    
+    logMsg("getting images for path " + libPath)
+    if "$INFO" in libPath:
+        libPath = libPath.replace("$INFO[Window(Home).Property(", "")
+        libPath = libPath.replace(")]", "")
+        libPath = win.getProperty(libPath)    
 
-    if "Activate" in path:
-        path = path.split(",",1)[1]
-        path = path.replace(",return","")
-        path = path.replace(")","")
-        path = path.replace("\"","")
+    if "Activate" in libPath:
+        libPath = libPath.split(",",1)[1]
+        libPath = libPath.replace(",return","")
+        libPath = libPath.replace(")","")
+        libPath = libPath.replace("\"","")
     
     #safety check: does the config directory exist?
     if not xbmcvfs.exists(addondir + os.sep):
@@ -395,23 +395,23 @@ def getImageFromPath(path):
     
     
     # Blacklist checks
-    txtb64 = base64.urlsafe_b64encode(path)
-    if len(txtb64) > 30:
-        txtb64 = txtb64[-30:]
+    txtb64 = base64.urlsafe_b64encode(libPath)
+    if len(txtb64) > 20:
+        txtb64 = txtb64[-20:]
     txtPath = os.path.join(addondir,txtb64 + ".txt")
     
     if win.getProperty(txtPath) == "blacklist":
-        logMsg("path blacklisted - skipping for path " + path)
+        logMsg("path blacklisted - skipping for path " + libPath)
         return None
         
     blacklistPath = os.path.join(addondir,"blacklist.txt")
     if (xbmcvfs.exists(blacklistPath) and os.path.getsize(blacklistPath) > 0):
         blfile = open(blacklistPath, 'r')
-        if path in blfile.read():
-            logMsg("path blacklisted - skipping for path " + path)
+        if libPath in blfile.read():
+            logMsg("path blacklisted - skipping for path " + libPath)
             blfile.close()
             return None
-        logMsg("path is NOT blacklisted (or blacklist file error) - continuing for path " + path)
+        logMsg("path is NOT blacklisted (or blacklist file error) - continuing for path " + libPath)
         blfile.close()
     
     #no blacklist so read cache and/or path
@@ -425,7 +425,7 @@ def getImageFromPath(path):
     #cache file exists and cache is not expired, load cache file
     if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and win.getProperty(txtPath) == "loaded":
         txtfile = open(txtPath, 'r')
-        logMsg("get images from the cache file... " + path)
+        logMsg("get images from the cache file... " + libPath)
         for line in txtfile.readlines():
             if not "skip" in line:
                 logMsg("found image in cache... " + line)
@@ -439,13 +439,13 @@ def getImageFromPath(path):
             logMsg("cache file empty...skipping...")
     else:
         #no cache file so try to load images from the path
-        logMsg("get images from the path or plugin... " + path)
-        if path.startswith("plugin://"):
+        logMsg("get images from the path or plugin... " + libPath)
+        if libPath.startswith("plugin://"):
             media_type = "files"
         else:
             media_type = "video"
         media_array = None
-        media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + path + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
+        media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + libPath + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
         
         if(media_array != None and media_array.has_key('files')):
             for media in media_array['files']:
@@ -455,14 +455,14 @@ def getImageFromPath(path):
                     if media['art'].has_key('tvshow.fanart'):
                         images.append(media['art']['tvshow.fanart'])
         else:
-            logMsg("media array empty or error so add this path to blacklist..." + path)
-            if path.startswith("videodb://") or path.startswith("library://") or path.endswith(".xsp"):
+            logMsg("media array empty or error so add this path to blacklist..." + libPath)
+            if libPath.startswith("videodb://") or libPath.startswith("library://") or libPath.endswith(".xsp"):
                 win.setProperty(txtPath,"blacklist")
                 return None
             else:
                 blacklistPath = os.path.join(addondir,"blacklist.txt")
                 blfile = open(blacklistPath, 'a')
-                blfile.write(path + '\n')
+                blfile.write(libPath + '\n')
                 blfile.close()
                 win.setProperty(txtPath,"blacklist")
                 return None
@@ -477,7 +477,7 @@ def getImageFromPath(path):
         image = images[0]
         logMsg("setting random image.... " + image)
     else:
-        logMsg("image array empty so skipping this path until next restart - " + path)
+        logMsg("image array empty so skipping this path until next restart - " + libPath)
         win.setProperty(txtPath,"loaded")
         txtfile.write('skip')
     
@@ -491,42 +491,49 @@ def UpdateBackgrounds():
 
     #get all playlists
     if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
-        playlistCount = 0
-        path = "special://profile/playlists/video/"
-        if xbmcvfs.exists( path ):
-            dirs, files = xbmcvfs.listdir(path)
-            for file in files:
-                if file.endswith(".xsp"):
-                    playlist = path + file
-                    label = file.replace(".xsp","")
-                    image = getImageFromPath(playlist)
-                    if image != None:
-                        playlist = "ActivateWindow(Videos," + playlist + ",return)"
-                        win.setProperty("playlist." + str(playlistCount) + ".image", image)
-                        win.setProperty("playlist." + str(playlistCount) + ".label", label)
-                        win.setProperty("playlist." + str(playlistCount) + ".action", playlist)
-                        playlistCount += 1
+        try:
+            playlistCount = 0
+            path = "special://profile/playlists/video/"
+            if xbmcvfs.exists( path ):
+                dirs, files = xbmcvfs.listdir(path)
+                for file in files:
+                    if file.endswith(".xsp"):
+                        playlist = path + file
+                        label = file.replace(".xsp","")
+                        image = getImageFromPath(playlist)
+                        if image != None:
+                            playlist = "ActivateWindow(Videos," + playlist + ",return)"
+                            win.setProperty("playlist." + str(playlistCount) + ".image", image)
+                            win.setProperty("playlist." + str(playlistCount) + ".label", label)
+                            win.setProperty("playlist." + str(playlistCount) + ".action", playlist)
+                            playlistCount += 1
+        except:
+            #something wrong so disable the smartshortcuts for this section for now
+            xbmc.executebuiltin("Skin.Reset(SmartShortcuts.playlists)")
     
     #get favorites
     if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
-        favoritesCount = 0
-        fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
-        if xbmcvfs.exists( fav_file ):
-            doc = parse( fav_file )
-            listing = doc.documentElement.getElementsByTagName( 'favourite' )
-            
-            for count, favourite in enumerate(listing):
-                name = favourite.attributes[ 'name' ].nodeValue
-                path = favourite.childNodes [ 0 ].nodeValue
-                if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025")) and not "script://" in path:
-                    image = getImageFromPath(path)
-                    if image != None:
-                        win.setProperty("favorite." + str(favoritesCount) + ".image", image)
-                        win.setProperty("favorite." + str(favoritesCount) + ".label", name)
-                        win.setProperty("favorite." + str(favoritesCount) + ".action", path)
-                        favoritesCount += 1
-            
-    media_array = None
+        try:
+            favoritesCount = 0
+            fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
+            if xbmcvfs.exists( fav_file ):
+                doc = parse( fav_file )
+                listing = doc.documentElement.getElementsByTagName( 'favourite' )
+                
+                for count, favourite in enumerate(listing):
+                    name = favourite.attributes[ 'name' ].nodeValue
+                    path = favourite.childNodes [ 0 ].nodeValue
+                    if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025")) and not "script://" in path:
+                        image = getImageFromPath(path)
+                        if image != None:
+                            win.setProperty("favorite." + str(favoritesCount) + ".image", image)
+                            win.setProperty("favorite." + str(favoritesCount) + ".label", name)
+                            win.setProperty("favorite." + str(favoritesCount) + ".action", path)
+                            favoritesCount += 1
+        except:
+            #something wrong so disable the smartshortcuts for this section for now
+            xbmc.executebuiltin("Skin.Reset(SmartShortcuts.favorites)")    
+
     
     #get in progress movies  
     win.setProperty("InProgressMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
