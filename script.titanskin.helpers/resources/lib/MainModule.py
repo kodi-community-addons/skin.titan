@@ -61,7 +61,6 @@ def showWidget():
         linkCount += 1
     
 def setWidget(containerID):
-    win = xbmcgui.Window( 10000 )
     win.clearProperty("activewidget")
     win.clearProperty("customwidgetcontent")
     skinStringContent = ""
@@ -112,7 +111,6 @@ def setWidget(containerID):
     except: pass
 
 def setSpotlightWidget(containerID):
-    win = xbmcgui.Window( 10000 )
     win.clearProperty("spotlightwidgetcontent")
     skinStringContent = ""
     customWidget = False
@@ -150,12 +148,10 @@ def setSkinVersion():
     skin = xbmc.getSkinDir()
     skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
     skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
-    win = xbmcgui.Window( 10000 )
     win.setProperty("skinTitle",skinLabel + " (v" + skinVersion + ")")
         
 def setCustomContent(skinString):
     #legacy
-    win = xbmcgui.Window( 10000 )
     skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
 
     if "$INFO" in skinStringContent:
@@ -174,7 +170,6 @@ def setCustomContent(skinString):
     win.setProperty("customwidgetcontent", skinStringContent)
         
 def updatePlexlinks():
-    win = xbmcgui.Window( 10000 )
     logMsg("update plexlinks started...")
     xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
     linkCount = 0
@@ -215,7 +210,6 @@ def updatePlexlinks():
     updatePlexBackgrounds()   
         
 def updatePlexBackgrounds():
-    win = xbmcgui.Window( 10000 )
     logMsg("update plex backgrounds started...")        
     
     #update plex backgrounds
@@ -247,7 +241,6 @@ def updatePlexBackgrounds():
         linkCount += 1
                
 def showInfoPanel():
-    win = xbmcgui.Window( 10000 )
     tryCount = 0
     secondsToDisplay = "4"
     secondsToDisplay = xbmc.getInfoLabel("Skin.String(ShowInfoAtPlaybackStart)")
@@ -263,7 +256,6 @@ def showInfoPanel():
         xbmc.executebuiltin('Action(info)')
 
 def addShortcutWorkAround():
-    win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
     if xbmc.getCondVisibility("System.Platform.Windows"):
         xbmc.sleep(1000)
@@ -276,7 +268,6 @@ def addShortcutWorkAround():
 def checkExtraFanArt():
         
     lastPath = None
-    win = xbmcgui.Window( 10000 )
     
     try:
         efaPath = None
@@ -285,7 +276,7 @@ def checkExtraFanArt():
         liPath = xbmc.getInfoLabel("ListItem.Path")
         containerPath = xbmc.getInfoLabel("Container.FolderPath")
         
-        if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and not "videodb:" in liPath):
+        if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(tvshows)")) and not "videodb:" in liPath):
                            
             if xbmc.getCondVisibility("Container.Content(episodes)"):
                 liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
@@ -341,7 +332,7 @@ def focusEpisode():
             curItem = 0
             control.selectItem(0)
             xbmc.sleep(250)
-            while ((xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(seasons)")) and totalItems >= curItem):
+            while ((xbmc.getCondVisibility("Container.Content(episodes) | Container.Content(seasons)")) and totalItems >= curItem):
                 if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png" and xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label") != ".." and not xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label").startswith("*")):
                     if curItem != 0:
                         control.selectItem(curItem)
@@ -353,7 +344,7 @@ def focusEpisode():
             curItem = totalItems
             control.selectItem(totalItems)
             xbmc.sleep(250)
-            while ((xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(seasons)")) and curItem != 0):
+            while ((xbmc.getCondVisibility("Container.Content(episodes) | Container.Content(seasons)")) and curItem != 0):
                 
                 if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png"):
                     control.selectItem(curItem-1)
@@ -392,7 +383,6 @@ def getImageFromPath(libPath):
     #safety check: does the config directory exist?
     if not xbmcvfs.exists(addondir + os.sep):
         xbmcvfs.mkdir(addondir)
-    
     
     # Blacklist checks
     txtb64 = base64.urlsafe_b64encode(libPath)
@@ -487,7 +477,6 @@ def getImageFromPath(libPath):
 
     
 def UpdateBackgrounds():
-    win = xbmcgui.Window( 10000 )
 
     #get all playlists
     if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
@@ -561,12 +550,91 @@ def getJSON(method,params):
         xbmc.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
         return None
 
+
+def setMovieSetDetails():
+    #get movie set details -- thanks to phil65 - used this idea from his skin info script
+    dbId = xbmc.getInfoLabel("ListItem.DBID")
     
+    win.clearProperty('MovieSet.Title')
+    win.clearProperty('MovieSet.Runtime')
+    win.clearProperty('MovieSet.Writer')
+    win.clearProperty('MovieSet.Director')
+    win.clearProperty('MovieSet.Genre')
+    win.clearProperty('MovieSet.Country')
+    win.clearProperty('MovieSet.Studio')
+    win.clearProperty('MovieSet.Years')
+    win.clearProperty('MovieSet.Year')
+    win.clearProperty('MovieSet.Count')
+    win.clearProperty('MovieSet.Plot')
+            
+    if dbId != "":
+        json_response = getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer","genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
+        #clear_properties()
+        if ("setdetails" in json_response):
+            
+            count = 1
+            runtime = 0
+            writer = []
+            director = []
+            genre = []
+            country = []
+            studio = []
+            years = []
+            plot = ""
+            title_list = ""
+            title_header = "[B]" + str(json_response['setdetails']['limits']['total']) + " " + xbmc.getLocalizedString(20342) + "[/B][CR]"
+            set_fanart = []
+            for item in json_response['setdetails']['movies']:
+                art = item['art']
+                set_fanart.append(art.get('fanart', ''))
+                title_list += "[I]" + item['label'] + " (" + str(item['year']) + ")[/I][CR]"
+                if item['plotoutline']:
+                    plot += "[B]" + item['label'] + " (" + str(item['year']) + ")[/B][CR]" + item['plotoutline'] + "[CR][CR]"
+                else:
+                    plot += "[B]" + item['label'] + " (" + str(item['year']) + ")[/B][CR]" + item['plot'] + "[CR][CR]"
+                runtime += item['runtime']
+                count += 1
+                if item.get("writer"):
+                    writer += [w for w in item["writer"] if w and w not in writer]
+                if item.get("director"):
+                    director += [d for d in item["director"] if d and d not in director]
+                if item.get("genre"):
+                    genre += [g for g in item["genre"] if g and g not in genre]
+                if item.get("country"):
+                    country += [c for c in item["country"] if c and c not in country]
+                if item.get("studio"):
+                    studio += [s for s in item["studio"] if s and s not in studio]
+                years.append(str(item['year']))
+            win.setProperty('MovieSet.Plot', plot)
+            if json_response['setdetails']['limits']['total'] > 1:
+                win.setProperty('MovieSet.ExtendedPlot', title_header + title_list + "[CR]" + plot)
+            else:
+                win.setProperty('MovieSet.ExtendedPlot', plot)
+            win.setProperty('MovieSet.Title', title_list)
+            win.setProperty('MovieSet.Runtime', str(runtime / 60))
+            win.setProperty('MovieSet.Writer', " / ".join(writer))
+            win.setProperty('MovieSet.Director', " / ".join(director))
+            win.setProperty('MovieSet.Genre', " / ".join(genre))
+            win.setProperty('MovieSet.Country', " / ".join(country))
+            win.setProperty('MovieSet.Studio', " / ".join(studio))
+            win.setProperty('MovieSet.Years', " / ".join(years))
+            win.setProperty('MovieSet.Year', years[0] + " - " + years[-1])
+            win.setProperty('MovieSet.Count', str(json_response['setdetails']['limits']['total']))
+            
+            count = 40
+            while dbId == xbmc.getInfoLabel("ListItem.DBID") and set_fanart != []:
+                #rotate fanart from movies in set while listitem is in focus
+                if count == 40:
+                    random.shuffle(set_fanart)
+                    win.setProperty('ExtraFanArtPath', set_fanart[0])
+                    count = 0
+                else:
+                    count += 1
+                xbmc.sleep(125)
+            
 def setView(containerType,viewId):
 
     if viewId=="00":
-        win = xbmcgui.Window( 10000 )
-
         curView = xbmc.getInfoLabel("Container.Viewmode")
         viewId = getViewId(curView)
         
@@ -595,13 +663,12 @@ def setView(containerType,viewId):
 def checkNotifications(notificationType):
     
     if notificationType == "weather":
-        win = xbmcgui.Window(12600)
-        if (win.getProperty("Alerts.RSS") != "" and win.getProperty("Current.Condition") != ""):
+        winw = xbmcgui.Window(12600)
+        if (winw.getProperty("Alerts.RSS") != "" and winw.getProperty("Current.Condition") != ""):
             dialog = xbmcgui.Dialog()
-            dialog.notification(xbmc.getLocalizedString(31294), win.getProperty("Alerts"), xbmcgui.NOTIFICATION_WARNING, 8000)
+            dialog.notification(xbmc.getLocalizedString(31294), winw.getProperty("Alerts"), xbmcgui.NOTIFICATION_WARNING, 8000)
     
     if notificationType == "nextaired":
-        win = xbmcgui.Window(10000)
         if (win.getProperty("NextAired.TodayShow") != ""):
             dialog = xbmcgui.Dialog()
             dialog.notification(xbmc.getLocalizedString(31295), win.getProperty("NextAired.TodayShow"), xbmcgui.NOTIFICATION_WARNING, 8000)    
@@ -609,7 +676,6 @@ def checkNotifications(notificationType):
             
 def showSubmenu(showOrHide,doFocus):
 
-    win = xbmcgui.Window( 10000 )
     submenuTitle = xbmc.getInfoLabel("Container(300).ListItem.Label")
     submenu = win.getProperty("submenutype")
     submenuloading = ""

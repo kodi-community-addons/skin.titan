@@ -45,13 +45,13 @@ class Main:
         PlexEnabled = xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)")
          
         while (not xbmc.abortRequested):
-            xbmc.sleep(500)
+            xbmc.sleep(250)
             
             if not xbmc.Player().isPlayingVideo():
                 
                 # Update home backgrounds every minute
                 count += 1
-                if (count >= 120 and xbmc.getCondVisibility("Window.IsActive(home.xml)")):
+                if (count >= 240 and xbmc.getCondVisibility("Window.IsActive(home.xml)")):
                     MainModule.UpdateBackgrounds()
                     if PlexEnabled:
                         MainModule.updatePlexBackgrounds()
@@ -63,17 +63,34 @@ class Main:
                         MainModule.checkExtraFanArt()
                     else:
                         win.clearProperty("ExtraFanArtPath")
-                   
+                
+                # monitor movie sets
+                if (xbmc.getCondVisibility("Container.Content(movies) | Container.Content(sets)") and not xbmc.getCondVisibility("Container.Scrolling")):
+                    if xbmc.getCondVisibility("SubString(ListItem.Path,videodb://movies/sets/,left)"):
+                        MainModule.setMovieSetDetails()
+                    else:
+                        win.clearProperty('MovieSet.Title')
+                        win.clearProperty('MovieSet.Runtime')
+                        win.clearProperty('MovieSet.Writer')
+                        win.clearProperty('MovieSet.Director')
+                        win.clearProperty('MovieSet.Genre')
+                        win.clearProperty('MovieSet.Country')
+                        win.clearProperty('MovieSet.Studio')
+                        win.clearProperty('MovieSet.Years')
+                        win.clearProperty('MovieSet.Year')
+                        win.clearProperty('MovieSet.Count')
+                        win.clearProperty('MovieSet.Plot')
+                
                 # monitor episodes for auto focus first unwatched
                 if xbmc.getCondVisibility("Skin.HasSetting(AutoFocusUnwatchedEpisode)"):
                     
                     #store unwatched episodes
-                    if ((xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and xbmc.getCondVisibility("!IsEmpty(ListItem.Property(UnWatchedEpisodes))")):
+                    if ((xbmc.getCondVisibility("Container.Content(seasons) | Container.Content(tvshows)")) and xbmc.getCondVisibility("!IsEmpty(ListItem.Property(UnWatchedEpisodes))")):
                         try:
                             unwatched = int(xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)"))
                         except: pass
                     
-                    if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and (xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(seasons)"))):
+                    if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and (xbmc.getCondVisibility("Container.Content(episodes) | Container.Content(seasons)"))):
                         if (xbmc.getInfoLabel("Container.FolderPath") != lastEpPath and unwatched != 0):
                             try:
                                 MainModule.focusEpisode()

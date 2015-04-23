@@ -270,8 +270,8 @@
   <include name="ClassicWidgetPanel">
 		<control type="image">
 			<posx>-5</posx>
-			<posy>75</posy>
-			<width>1912</width>
+			<posy>65</posy>
+			<width>1925</width>
 			<texture border="39">views/filemanager_panel1.png</texture>
 			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
 			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
@@ -279,7 +279,7 @@
 			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
 			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 			<aspectratio>stretch</aspectratio>
-			<height>590</height>
+			<height>595</height>
 			<visible>Skin.HasTheme(classic) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
   </include>
@@ -342,7 +342,7 @@
 		<posy>215</posy>
 		<posx>0</posx>
 		<width>1900</width>
-		<height>865</height>
+		<height>870</height>
 		<texture border="0">views/filemanager_panel1.png</texture>
 		<aspectratio>stretch</aspectratio>
 		<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
@@ -356,7 +356,7 @@
 		<posy>210</posy>
 		<posx>0</posx>
 		<width>1900</width>
-		<height>1035</height>
+		<height>1045</height>
 		<texture border="0">views/filemanager_panel1.png</texture>
 		<aspectratio>stretch</aspectratio>
 		<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
@@ -2843,7 +2843,7 @@
                     <!--Year: Movies-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>Container.Content(Movies) + !IsEmpty(ListItem.Year)</visible>
+                    <visible>[Container.Content(Movies) | Container.Content(sets)] + !IsEmpty(ListItem.Year)</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>3</posy>
@@ -2861,13 +2861,25 @@
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <scroll>false</scroll>
+						<visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+					<control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <width>600</width>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(MovieSet.Years)]</label>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+						<visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                     </control>
                 </control>
                 <control type="group">
                     <!--Premiered: TV-Shows, Episodes-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>[Container.Content(TVShows) | Container.Content(episodes)] + !IsEmpty(ListItem.Premiered)</visible>
+                    <visible>[Container.Content(TVShows) | Container.Content(episodes) | Container.Content(sets)] + !IsEmpty(ListItem.Premiered)</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>3</posy>
@@ -2892,7 +2904,7 @@
                     <!--Runtime: Movie, Episodes-->
                     <width>600</width>
                     <height>40</height>
-                    <visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Duration)</visible>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | Container.Content(sets)] + [!IsEmpty(ListItem.Duration) | !IsEmpty(Window(Home).Property(MovieSet.Runtime))]</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>3</posy>
@@ -2905,19 +2917,30 @@
                         <posx>60</posx>
                         <posy>0</posy>
                         <width>600</width>
-                        
                         <align>left</align>
                         <label>$INFO[ListItem.Duration,, $LOCALIZE[12391]]</label>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <scroll>false</scroll>
+						<visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+					<control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <width>600</width>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(MovieSet.Runtime),, $LOCALIZE[12391]]</label>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+						<visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                     </control>
                 </control>
                 <control type="group">
                     <!--Genre-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>!IsEmpty(ListItem.Genre)</visible>
+                    <visible>!IsEmpty(ListItem.Genre) | !IsEmpty(Window(Home).Property(MovieSet.Genre))</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>3</posy>
@@ -2930,19 +2953,30 @@
                         <posx>60</posx>
                         <posy>0</posy>
                         <width>800</width>
-                        
                         <align>left</align>
                         <label>$INFO[ListItem.Genre]</label>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+						<visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
                         <scroll>false</scroll>
+                    </control>
+					<control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <width>800</width>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(MovieSet.Genre)]</label>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+						<visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                     </control>
                 </control>
                 <control type="group">
                     <!--Director: Movies, Episodes-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Director)</visible>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | Container.Content(sets)] + [!IsEmpty(ListItem.Director) | !IsEmpty(Window(Home).Property(MovieSet.Director))]</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>5</posy>
@@ -2955,19 +2989,30 @@
                         <posx>60</posx>
                         <posy>0</posy>
                         <width>800</width>
-                        
                         <align>left</align>
                         <label>$INFO[ListItem.Director]</label>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <scroll>false</scroll>
+						<visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+					<control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <width>800</width>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(MovieSet.Director)]</label>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+						<visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                     </control>
                 </control>
                 <control type="group">
                     <!--Writer: Movies, Episodes-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Writer)</visible>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | Container.Content(sets)] + [!IsEmpty(ListItem.Writer) | !IsEmpty(Window(Home).Property(MovieSet.Writer))]</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>2</posy>
@@ -2980,12 +3025,23 @@
                         <posx>60</posx>
                         <posy>0</posy>
                         <width>800</width>
-                        
                         <align>left</align>
                         <label>$INFO[ListItem.Writer]</label>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <scroll>false</scroll>
+						<visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+					<control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <width>800</width>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(MovieSet.Writer)]</label>
+						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+						<visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                     </control>
                 </control>
                 <control type="group">
@@ -3071,8 +3127,20 @@
                     <width>780</width>
                     <height>233</height>
                     <label>$INFO[ListItem.Plot]</label>
-                   <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    <align>justify</align>
+                </control>
+				<control type="textbox">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>780</width>
+                    <height>233</height>
+                    <label>$INFO[Window(Home).Property(MovieSet.Plot)]</label>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                     <align>justify</align>
                 </control>
             </control>
