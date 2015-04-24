@@ -1270,17 +1270,6 @@
 			</control>
 	</include>
 
-		
-	<include name="ExtendedViewWatchedLabelNormal">
-        <include condition="SubString(System.BuildVersion,13,left)">ExtendedViewWatchedLabelNormalPosGotham</include>
-		<include condition="!SubString(System.BuildVersion,13,left)">ExtendedViewWatchedLabelNormalPosHelix</include>
-        <posy>7</posy>
-        <width>60</width>
-        <height>60</height>
-        <font>Reg24</font>
-    </include>
-
-
     <!-- Movie Showcase Variables: Main thumbs -->
     <include name="MovieShowcaseThumb">
         <posx>54</posx>
@@ -3146,6 +3135,231 @@
             </control>
         </control>
     </include>
+	
+	<include name="PVRsideblade">
+	    <control type="group">
+            <include condition="skin.hastheme(classic)">SideBladeClassic</include>
+			<include condition="!skin.hastheme(classic)">SideBladeModern</include>
+			<!-- hidden labels for pvr -->
+			<control type="label" id="29">
+				<description>Empty so we can pass the values up one level</description>
+				<visible>False</visible>
+			</control>
+			<control type="label" id="30">
+				<description>Empty so we can pass the values up one level</description>
+				<visible>False</visible>
+			</control>
+			<!--Grouplist 9000-->
+            <control type="grouplist" id="9000">
+                <posx>21</posx>
+                <posy>190</posy>
+                <width>458</width>
+                <height>750</height>
+                <itemgap>3</itemgap>
+                <onleft>5000</onleft>
+                <onright>5000</onright>
+				<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+				<onright>ClearProperty(ShowViewSubMenu, Home)</onright>
+				<onleft>ClearProperty(ShowViewSubMenu, Home)</onleft>
+				<onback>ClearProperty(ShowViewSubMenu, Home)</onback>
+                <onup>9000</onup>
+                <ondown>9000</ondown>
+                <orientation>vertical</orientation>
+                <!--Buttons-->
+                <control type="label" id="200">
+                    <!--Label Menu-->
+                    <width>458</width>
+                    <align>left</align>
+                    <textoffsetx>50</textoffsetx>
+                    <font>Bold40</font>
+                    <textcolor>$VAR[ThemeFontColorBlack]</textcolor>
+                    <label>$LOCALIZE[33061]:</label>
+					<visible>skin.hastheme(classic)</visible>
+                </control>
+                <control type="image" id="201">
+                    <!--Seperator-->
+                    <width>458</width>
+                    <height>10</height>
+                    <align>left</align>
+                    <texture>common/menu-separator.png</texture>
+					<visible>skin.hastheme(classic)</visible>
+                </control>
+                <control type="button" id="100">
+                    <!--Channels-->
+                    <description>Channels</description>
+                    <label>19019</label>
+                    <include>SubMenuButton</include>
+					<onclick condition="Window.IsActive(TVChannels) | Window.IsActive(RadioChannels)">NextChannelGroup</onclick>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVChannels)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio)) + !Skin.String(HomeMenuUseRadioCollection)">ActivateWindow(RadioChannels)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio)) + Skin.String(HomeMenuUseRadioCollection)">ActivateWindow(Music,$INFO[Skin.String(HomeMenuUseRadioCollection)],return)</onclick>
+                </control>
+                <control type="button" id="101">
+					<description>TV Guide</description>
+					<left>0</left>
+					<top>80</top>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					<label>22020</label>
+					<onclick condition="Window.IsActive(TVGuide) | Window.IsActive(RadioGuide)">NextChannelGroup</onclick>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVGuide)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioGuide)</onclick>
+				</control>
+				<control type="button" id="102">
+					<description>Recordings</description>
+					<left>0</left>
+					<top>120</top>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					<label>19163</label>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVRecordings)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioRecordings)</onclick>
+				</control>
+				<control type="button" id="103">
+					<description>Timers</description>
+					<left>0</left>
+					<top>160</top>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					<label>19040</label>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVTimers)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioTimers)</onclick>
+				</control>
+				<control type="button" id="104">
+					<description>Search</description>
+					<left>0</left>
+					<top>200</top>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					<label>137</label>
+					<onclick condition="IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVSearch)</onclick>
+					<onclick condition="!IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioSearch)</onclick>
+				</control>
+				<control type="button" id="28">
+					<description>Channel Groups</description>
+					<left>0</left>
+					<right>40</right>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					<label>-</label>
+				</control>
+				<control type="radiobutton" id="5">
+					<description>Group recording items by folder structure</description>
+					<left>0</left>
+					<right>40</right>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					<label>19270</label>
+					<visible>Window.IsActive(TVRecordings) | Window.IsActive(RadioRecordings)</visible>
+				</control>
+				<control type="button" id="400">
+					<description>View As button</description>
+					<left>0</left>
+					<right>40</right>
+					<textwidth>400</textwidth>
+					<include>SubMenuButton</include>
+					 <label>$LOCALIZE[31305] $INFO[Container.Viewmode]</label>
+					<onclick>Container.NextViewMode</onclick>
+					<onclick>SetFocus(15)</onclick>
+					<onclick>SetFocus(501)</onclick>
+					<onclick>SetFocus(505)</onclick>
+					<onclick>SetFocus(506)</onclick>
+					<!-- <visible>Window.IsActive(TVGuide) | Window.IsActive(RadioGuide)</visible>-->
+				</control>
+				
+				<!-- <control type="button" id="400">
+                    <include>SubMenuButton</include>
+                    <label>View: $INFO[Container.Viewmode]</label>
+                    <onclick>Container.NextViewMode</onclick>
+				</control> -->
+				
+				
+				<control type="button" id="3">
+					<description>Sort by button</description>
+					<include>SubMenuButton</include>
+					<label>103</label>
+				</control>
+				<control type="togglebutton" id="4">
+					<description>Sort asc</description>
+					<include>SubMenuButton</include>
+					<alttexturefocus border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</alttexturefocus>
+					<alttexturenofocus>-</alttexturenofocus>
+					<label>21431</label>
+					<altlabel>21430</altlabel>
+					<usealttexture>Container.SortDirection(Ascending)</usealttexture>
+				</control>
+				<control type="radiobutton" id="6">
+                    <!--Show hidden channels-->
+                    <include>SubMenuButton</include>
+                    <label>19051</label>
+					<visible>Window.IsActive(TVChannels) | Window.IsActive(RadioChannels)</visible>
+					<visible>SubString(System.BuildVersion,15,left)</visible>
+                </control>
+				<control type="radiobutton" id="6">
+                    <!--Show deleted recordings-->
+                    <include>SubMenuButton</include>
+                    <label>19184</label>
+					<visible>Window.IsActive(TVRecordings) | Window.IsActive(RadioRecordings)</visible>
+					<visible>SubString(System.BuildVersion,15,left)</visible>
+                </control>
+				<control type="radiobutton" id="31">
+                    <!--filter-->
+                    <include>SubMenuButton</include>
+                    <label>587</label>
+					<selected>Container.Filtered</selected>
+					<onclick>right</onclick>
+					<visible>Window.IsActive(TVChannels) | Window.IsActive(RadioChannels)</visible>
+					<visible>SubString(System.BuildVersion,15,left)</visible>
+                </control>
+				<control type="radiobutton" id="335">
+                    <!--Show info-->
+                    <include>SubMenuButton</include>
+                    <label>36427</label>
+                    <onclick>Skin.ToggleSetting(LandscapeViewShowInfo)</onclick>
+                    <selected>Skin.HasSetting(LandscapeViewShowInfo)</selected>
+					<visible>Control.IsVisible(502)</visible>
+                </control>
+				<control type="radiobutton" id="328">
+                    <!--Show labels-->
+                    <include>SubMenuButton</include>
+                    <label>20459</label>
+                    <onclick>Skin.ToggleSetting(ShowlabelsLandscape)</onclick>
+                    <selected>Skin.HasSetting(ShowlabelsLandscape)</selected>
+					<visible>Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)</visible>
+					<visible>![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]</visible>
+                </control>
+				<control type="radiobutton" id="339">
+                    <!--Show labels-->
+                    <include>SubMenuButton</include>
+                    <label>20459</label>
+                    <onclick>Skin.ToggleSetting(ShowLabelsSquare)</onclick>
+                    <selected>Skin.HasSetting(ShowLabelsSquare)</selected>
+					<visible>Control.IsVisible(509)</visible>
+                </control>
+				<control type="radiobutton" id="340">
+                    <!--Show labels-->
+                    <include>SubMenuButton</include>
+                    <label>20459</label>
+                    <onclick>Skin.ToggleSetting(ShowLabelsSquareDetails)</onclick>
+                    <selected>Skin.HasSetting(ShowLabelsSquareDetails)</selected>
+					<visible>Control.IsVisible(510)</visible>
+                </control>
+				<control type="radiobutton" id="341">
+                    <!--Show info-->
+                    <include>SubMenuButton</include>
+                    <label>36427</label>
+                    <onclick>Skin.ToggleSetting(GuideShowInfo)</onclick>
+                    <selected>Skin.HasSetting(GuideShowInfo)</selected>
+					<visible>Window.IsActive(MyPVRGuide.xml)</visible>
+                </control>
+				
+            </control>
+        
+        </control>
+		 
+       
+	</include>
+	
 	
 
 </includes>
