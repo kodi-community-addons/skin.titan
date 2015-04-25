@@ -363,9 +363,9 @@
             <label>$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</label>
             <scroll>false</scroll>
         </control>
-        <!--Label Ohter-->
+        <!--Label LiveTV Channel-->
         <control type="label">
-            <visible>!VideoPlayer.Content(Movies) + !VideoPlayer.Content(Episodes)</visible>
+            <visible>VideoPlayer.Content(livetv)</visible>
             <posx>550</posx>
             <posy>770</posy>
             <width>900</width>
@@ -375,9 +375,23 @@
             <label>[B]$INFO[VideoPlayer.ChannelName] [/B]</label>
             <scroll>false</scroll>
         </control>
+        <!--Label LiveTV Program-->
+        <control type="label">
+            <visible>VideoPlayer.Content(livetv)</visible>
+            <visible>!IsEmpty(VideoPlayer.Episode) + !IsEmpty(VideoPlayer.EpisodeName)</visible>
+            <posx>550</posx>
+            <posy>830</posy>
+            <width>900</width>
+            <align>left</align>
+            <font>Light45</font>
+            <textcolor>white</textcolor>
+            <label>[B]$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName][/B]</label>
+            <scroll>false</scroll>
+        </control>
         <!--Label Ohter-->
         <control type="label">
             <visible>!VideoPlayer.Content(Movies) + !VideoPlayer.Content(Episodes)</visible>
+            <visible>IsEmpty(VideoPlayer.Episode) | IsEmpty(VideoPlayer.EpisodeName)</visible>
             <posx>550</posx>
             <posy>830</posy>
             <width>900</width>
@@ -744,6 +758,7 @@
 				<!-- Label Episode-->
 				<control type="label">
 					<visible>!IsEmpty(VideoPlayer.Episode)</visible>
+					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
@@ -756,6 +771,7 @@
 				</control>
 				<control type="label">
 					<visible>!IsEmpty(VideoPlayer.Episode)</visible>
+					<visible>!VideoPlayer.Content(livetv)</visible>
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>880</posy>
@@ -766,7 +782,7 @@
 					<label>$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</label>
 					<scroll>false</scroll>
 				</control>
-				<!--Label liveTV-->
+				<!--Label LiveTV Channel-->
 				<control type="label">
 					<visible>VideoPlayer.Content(livetv)</visible>
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
@@ -779,9 +795,10 @@
 					<label>[B]$INFO[VideoPlayer.ChannelName][/B]</label>
 					<scroll>false</scroll>
 				</control>
-				<!--Label Ohter-->
+				<!--Label LiveTV Program-->
 				<control type="label">
 					<visible>VideoPlayer.Content(livetv)</visible>
+					<visible>IsEmpty(VideoPlayer.Episode) + IsEmpty(VideoPlayer.EpisodeName)</visible>
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>870</posy>
@@ -792,6 +809,19 @@
 					<label>$INFO[VideoPlayer.Title]</label>
 					<scroll>false</scroll>
 				</control>
+                <control type="label">
+                    <visible>VideoPlayer.Content(livetv)</visible>
+                    <visible>!IsEmpty(VideoPlayer.Episode) | !IsEmpty(VideoPlayer.EpisodeName)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<posx>400</posx>
+					<posy>870</posy>
+					<width>1100</width>
+					<align>left</align>
+					<font>Reg42</font>
+					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                    <label>[B]$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName][/B]</label>
+                    <scroll>false</scroll>
+                </control>
 				
 				<!--Labels Music-->
 				<control type="group">
