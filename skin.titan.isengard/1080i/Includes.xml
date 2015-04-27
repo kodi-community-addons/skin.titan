@@ -72,7 +72,7 @@
     </include>
 	<include name="Gadget3Row">
         <height>900</height>
-        <posy>130</posy>
+        <posy>135</posy>
     </include>
 	
 	<include name="Gadget1RowSmall">
@@ -804,6 +804,56 @@
 				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 <align>left</align>
                 <label>$INFO[Window(Weather).Property(Day0.HighTemp)] $INFO[System.TemperatureUnits] / $INFO[Window(Weather).Property(Day0.LowTemp)] $INFO[System.TemperatureUnits]</label>
+                <visible>Weather.IsFetched</visible>
+            </control>
+        </control>
+    </include>
+	
+	<include name="CurrentWeatherInfo">
+        <!-- weather info -->
+        <control type="group">
+			<animation effect="slide" end="440" time="0" condition="Skin.String(GadgetRows, simplever)">Conditional</animation>
+            <posx>30</posx>
+            <posy>15</posy>
+            <width>350</width>
+            <height>300</height>
+			<visible>!Control.IsVisible(882)</visible>
+			<visible>!Control.IsVisible(77551)</visible>
+            <visible>Weather.IsFetched</visible>
+			<include>animation_fade_visible_hidden</include>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
+            <!--Weather Today-->
+            <control type="image">
+                <!--Icon-->
+                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <width>125</width>
+                <height>125</height>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+            </control>
+            <control type="label">
+                <!--Temp-->
+                <width>160</width>
+                <height>40</height>
+                <posx>140</posx>
+                <posy>25</posy>
+                <font>Bold38</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits]</label>
+                <visible>Weather.IsFetched</visible>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+            <control type="label">
+                <!--Temp-->
+                <width>220</width>
+                <height>40</height>
+                <posx>140</posx>
+                <posy>70</posy>
+                <font>Reg28</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
                 <visible>Weather.IsFetched</visible>
             </control>
         </control>
