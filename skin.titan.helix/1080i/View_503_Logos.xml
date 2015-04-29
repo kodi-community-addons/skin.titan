@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Titan-->
 <includes>
+
+	<variable name="503_LogoImage">
+		<value condition="Skin.HasSetting(LogoViewPreferClearArt) + !IsEmpty(ListItem.Art(clearart))">$INFO[ListItem.Art(clearart)]</value>
+		<value condition="!IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
+		<value condition="!IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+		<value condition="StringCompare(ListItem.Label,..)">DefaultFolderBack.png</value>
+		<value>DefaultMovies.png</value>
+	</variable>
+
+
     <include name="View_503_Logos">
 	
 		<control type="group">
@@ -32,14 +43,41 @@
 					<visible>Container.Content(tvshows) | Container.Content(movies)</visible>
 					<orientation>horizontal</orientation>
 					<itemlayout width="495" height="450">
-						<control type="image">
-							<left>52</left>
-							<top>178</top>
-							<width>390</width>
-							<height>164</height>
+						<control type="group">
 							<animation effect="fade" start="0" end="30" time="0" reversible="false" condition="true">Conditional</animation>
-							<aspectratio aligny="center" align="center">keep</aspectratio>
-							<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+							<control type="image">
+								<left>52</left>
+								<top>178</top>
+								<width>390</width>
+								<height>164</height>
+								<aspectratio aligny="center" align="center">keep</aspectratio>
+								<texture background="true">$VAR[503_LogoImage]</texture>
+							</control>
+							<control type="image">
+								<!--Watched Overlay-->
+								<right>50</right>
+								<top>170</top>
+								<width>70</width>
+								<height>70</height>
+								<colordiffuse>ccFFFFFF</colordiffuse>
+								<texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
+								<visible>!Skin.HasSetting(HideWatchedOverlayLogos)</visible>
+								<animation type="Conditional" condition="skin.hastheme(classic)">
+									<effect type="slide" end="1,0" time="0"  />
+								</animation>
+							</control>
+							<control type="label">
+								<!--watched label-->
+								<right>49</right>
+								<top>174</top>
+								<width>70</width>
+								<height>60</height>
+								<font>Reg22</font>
+								<align>center</align>
+								<label>$VAR[WatchedLabel]</label>
+								<textcolor>white</textcolor>
+								<visible>!Skin.HasSetting(HideWatchedOverlayLogos)</visible>
+							</control>
 						</control>
 					</itemlayout>
 					<focusedlayout width="495" height="450">
@@ -53,7 +91,7 @@
 								<height>205</height>
 								<aspectratio aligny="center" align="center">keep</aspectratio>
 								<animation effect="fade" start="0" end="10" time="0" reversible="false" condition="true">Conditional</animation>
-								<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+								<texture background="true">$VAR[503_LogoImage]</texture>
 							</control>
 							<control type="image">
 								<left>52</left>
@@ -61,7 +99,32 @@
 								<width>390</width>
 								<height>164</height>
 								<aspectratio aligny="center" align="center">keep</aspectratio>
-								<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+								<texture background="true">$VAR[503_LogoImage]</texture>
+							</control>
+							<control type="image">
+								<!--Watched Overlay-->
+								<right>50</right>
+								<top>170</top>
+								<width>70</width>
+								<height>70</height>
+								<colordiffuse>ccFFFFFF</colordiffuse>
+								<texture diffuse="watched_icon_matte.png">$VAR[WatchedImage]</texture>
+								<visible>!Skin.HasSetting(HideWatchedOverlayLogos)</visible>
+								<animation type="Conditional" condition="skin.hastheme(classic)">
+									<effect type="slide" end="1,0" time="0"  />
+								</animation>
+							</control>
+							<control type="label">
+								<!--watched label-->
+								<right>49</right>
+								<top>174</top>
+								<width>70</width>
+								<height>60</height>
+								<font>Reg22</font>
+								<align>center</align>
+								<label>$VAR[WatchedLabel]</label>
+								<textcolor>white</textcolor>
+								<visible>!Skin.HasSetting(HideWatchedOverlayLogos)</visible>
 							</control>
 						</control>
 					</focusedlayout>

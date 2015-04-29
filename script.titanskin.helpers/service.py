@@ -43,15 +43,20 @@ class Main:
         unwatched = 1
         lastEpPath = ""
         PlexEnabled = xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)")
+        backgroundDelayStr = xbmc.getInfoLabel("skin.string(extrafanartdelay)")
+        if backgroundDelayStr:
+            backgroundDelay = int(backgroundDelayStr) * 4
+        else:
+            backgroundDelay = 240
          
         while (not xbmc.abortRequested):
             xbmc.sleep(250)
             
             if not xbmc.Player().isPlayingVideo():
                 
-                # Update home backgrounds every minute
+                # Update home backgrounds every interval (default 60 seconds)
                 count += 1
-                if (count >= 240 and xbmc.getCondVisibility("Window.IsActive(home.xml)")):
+                if (count >= backgroundDelay and xbmc.getCondVisibility("Window.IsActive(home.xml)")):
                     MainModule.UpdateBackgrounds()
                     if PlexEnabled:
                         MainModule.updatePlexBackgrounds()

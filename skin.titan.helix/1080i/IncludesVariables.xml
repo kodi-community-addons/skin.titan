@@ -155,7 +155,7 @@
         <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + SubString(ListItem.Duration,min) + !SubString(ListItem.Path,videodb://1/7,left)">$INFO[ListItem.Duration,[B]$LOCALIZE[180]:[/B]]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
         <value condition="SubString(ListItem.Path,videodb://1/7,left)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20457][/COLOR]</value>
         <!-- Movie Sets -->
-        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Episode]  - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
+        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)]  - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
         <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
         <value condition="Container.Content(episodes) + !SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] min - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
         <value condition="Container.Content(episodes) + SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration] - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
@@ -861,6 +861,15 @@
 		<value condition="Control.IsVisible(213) + !IsEmpty(Container(213).ListItem.Property(Art(clearlogo)))">$INFO[Container(213).ListItem.Property(Art(clearlogo))]</value>
 		<value condition="Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Art(clearlogo)))">$INFO[Container(214).ListItem.Property(Art(clearlogo))]</value>
 		<value condition="Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Art(clearlogo)))">$INFO[Container(215).ListItem.Property(Art(clearlogo))]</value>
+		<value condition="!IsEmpty(ListItem.Artist) + Skin.String(CustomMusicLogoPath)">$INFO[Skin.String(CustomMusicLogoPath)]$INFO[ListItem.Artist,,/logo.png]</value>
+		<value condition="!IsEmpty(ListItem.Artist) + !Skin.String(CustomMusicLogoPath)">$INFO[ListItem.Path,,logo.png]</value>
+		<value condition="!IsEmpty(MusicPlayer.Artist) + Skin.String(CustomMusicLogoPath)">$INFO[Skin.String(CustomMusicLogoPath)]$INFO[MusicPlayer.Artist,,/logo.png]</value>
+		<value condition="!IsEmpty(MusicPlayer.Artist) + !Skin.String(CustomMusicLogoPath)">$INFO[MusicPlayer.Path,,logo.png]</value>
+	</variable>
+	
+	<variable name="MusicPlayerClearLogo">
+		<value condition="!IsEmpty(MusicPlayer.Artist) + Skin.String(CustomMusicLogoPath)">$INFO[Skin.String(CustomMusicLogoPath)]$INFO[MusicPlayer.Artist,,/logo.png]</value>
+		<value condition="!IsEmpty(MusicPlayer.Artist) + !Skin.String(CustomMusicLogoPath)">$INFO[Player.FolderPath,,logo.png]</value>
 	</variable>
 	
 	
@@ -920,9 +929,12 @@
 	<variable name="WatchedImage">
 		<value condition="Window.IsActive(Home) + Control.IsVisible(510) + StringCompare(ListItem.Overlay,OverlayWatched.png)">overlays/big/OverlayWatched.png</value>
 		<value condition="Window.IsActive(Home) + Control.IsVisible(510) + [ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)]">overlays/big/OverlayUnWatched.png</value>
+		<value condition="Control.IsVisible(503) + SubString(ListItem.Path,videodb://movies/sets/) + !SubString(ListItem.label,..,left)">overlays/rounded/OverlayBoxSet.png</value>
 		<value condition="SubString(ListItem.Path,videodb://movies/sets/) + !SubString(ListItem.label,..,left)">overlays/big/OverlayBoxSet.png</value>
-		<value condition="container.content(seasons) + StringCompare(ListItem.Property(UnWatchedEpisodes),0)">overlays/big/OverlayWatched.png</value>
+		<value condition="container.content(seasons) + StringCompare(ListItem.Property(UnWatchedEpisodes),0) + !Control.IsVisible(503)">overlays/big/OverlayWatched.png</value>
 		<value condition="!Window.IsActive(Home) + container.content(albums)">-</value>
+		
+		<value condition="Control.IsVisible(503) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/rounded/$INFO[ListItem.Overlay]</value>
 		<value condition="!Window.IsActive(Home) + SubString(ListItem.label,*)">overlays/big/OverlayUnWatched.png</value>
         <value condition="!Window.IsActive(Home) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | [[ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)] + !Skin.HasSetting(HideWatchedCounts)]]">overlays/big/$INFO[ListItem.Overlay]</value>
 		

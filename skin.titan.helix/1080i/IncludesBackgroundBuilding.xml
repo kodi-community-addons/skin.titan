@@ -47,7 +47,9 @@
     </include>
 	
 	
-	
+	<include name="fanartSpeed5">
+		<timeperimage>5000</timeperimage>
+	</include>
 	<include name="fanartSpeed6">
 		<timeperimage>6000</timeperimage>
 	</include>
@@ -63,6 +65,33 @@
 	<include name="fanartSpeed20">
 		<timeperimage>20000</timeperimage>
 	</include>
+	<include name="fanartSpeed30">
+		<timeperimage>30000</timeperimage>
+	</include>
+	<include name="fanartSpeed60">
+		<timeperimage>60000</timeperimage>
+	</include>
+	
+	<include name="extraFanartBackground">
+		<!-- extra fanart background -->
+        <control type="multiimage">
+            <posx>-10</posx>
+            <posy>-10</posy>
+            <width>1940</width>
+            <height>1100</height>
+            <imagepath background="true">$VAR[extraFanartBackground]</imagepath>
+            <aspectratio>scale</aspectratio>
+            <include condition="skin.string(extrafanartdelay, 6)">fanartSpeed6</include>
+			<include condition="skin.string(extrafanartdelay, 8)">fanartSpeed8</include>
+			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
+			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
+			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
+            <fadetime>350</fadetime>
+            <randomize>true</randomize>
+			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
+			<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
+        </control>
+	</include>
 
 	
 	<!--Global Background -->
@@ -76,16 +105,19 @@
             <height>1100</height>
             <imagepath background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$VAR[backgroundVar]</imagepath>
             <aspectratio>scale</aspectratio>
-            <include condition="skin.string(extrafanartdelay, 6)">fanartSpeed6</include>
-			<include condition="skin.string(extrafanartdelay, 8)">fanartSpeed8</include>
-			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
-			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
-			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
+			<include condition="skin.string(randomfanartdelay, 5)">fanartSpeed5</include>
+            <include condition="skin.string(randomfanartdelay, 10)">fanartSpeed10</include>
+			<include condition="skin.string(randomfanartdelay, 15)">fanartSpeed15</include>
+			<include condition="skin.string(randomfanartdelay, 20)">fanartSpeed20</include>
+			<include condition="skin.string(randomfanartdelay, 30)">fanartSpeed30</include>
+			<include condition="skin.string(randomfanartdelay, 60)">fanartSpeed60</include>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
         </control>
+		
+		<include condition="substring(Window.Property(xmlfile),My,left) + Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(EnableExtraFanart)">extraFanartBackground</include>
 		
 		<include>DialogOverlay</include>
     </include>
@@ -255,12 +287,8 @@
 		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(514) + Skin.HasSetting(View514_DisableFanArt)">$VAR[globalBackground]</value>
 		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(515) + Skin.HasSetting(View515_DisableFanArt)">$VAR[globalBackground]</value>
 
-		<!-- extra fanart backgrounds -->
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Day0.fanartCode)]</value>
-		<value condition="substring(Window.Property(xmlfile),My,left) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
-		<value condition="substring(Window.Property(xmlfile),My,left) + Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(Window(Home).Property(ExtraFanArtPath))">$INFO[Window(Home).Property(ExtraFanArtPath)]</value>
-		
 		<!-- normal fanart backgrounds -->
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(MyWeather.xml)">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Day0.fanartCode)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container.Art(tvshow.fanart))">$INFO[Container.Art(tvshow.fanart)]</value>
@@ -269,6 +297,38 @@
 	
 		<!-- fallback to global -->
 		<value>$VAR[globalBackground]</value>
+   </variable>
+   
+   <variable name="extraFanartBackground">
+		<!-- disabled fanart per view -->
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(50) + Skin.HasSetting(View50_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(51) + Skin.HasSetting(View51_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(52) + Skin.HasSetting(View52_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(53) + Skin.HasSetting(View53_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(54) + Skin.HasSetting(View54_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(55) + Skin.HasSetting(View55_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(56) + Skin.HasSetting(View56_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(57) + Skin.HasSetting(View57_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(58) + Skin.HasSetting(View58_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(59) + Skin.HasSetting(View59_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(500) + Skin.HasSetting(View500_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(502) + Skin.HasSetting(View502_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(505) + Skin.HasSetting(View505_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(506) + Skin.HasSetting(View506_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(507) + Skin.HasSetting(View507_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(508) + Skin.HasSetting(View508_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(509) + Skin.HasSetting(View509_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(510) + Skin.HasSetting(View510_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(511) + Skin.HasSetting(View511_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(512) + Skin.HasSetting(View512_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(513) + Skin.HasSetting(View513_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(514) + Skin.HasSetting(View514_DisableFanArt)">-</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Control.IsVisible(515) + Skin.HasSetting(View515_DisableFanArt)">-</value>
+
+		<!-- extra fanart backgrounds -->
+		<value condition="substring(Window.Property(xmlfile),My,left) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(Home).Property(MB3.Background.Item.FanArt)) + Skin.HasSetting(EnableExtraFanart)">$INFO[Window(Home).Property(MB3.Background.Item.FanArt)]</value>
+		<value condition="substring(Window.Property(xmlfile),My,left) + Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(EnableExtraFanart) + !IsEmpty(Window(Home).Property(ExtraFanArtPath))">$INFO[Window(Home).Property(ExtraFanArtPath)]</value>
+		
    </variable>
    
    
