@@ -43,7 +43,7 @@ class Main:
         unwatched = 1
         lastEpPath = ""
         PlexEnabled = xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)")
-        backgroundDelayStr = xbmc.getInfoLabel("skin.string(extrafanartdelay)")
+        backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
         if backgroundDelayStr:
             backgroundDelay = int(backgroundDelayStr) * 4
         else:

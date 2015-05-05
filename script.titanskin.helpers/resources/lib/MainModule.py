@@ -89,6 +89,7 @@ def setWidget(containerID):
             if "Activate" in skinStringContent:
                 skinStringContent = skinStringContent.split(",",1)[1]
                 skinStringContent = skinStringContent.replace(",return","")
+                skinStringContent = skinStringContent.replace(",Return","")
                 skinStringContent = skinStringContent.replace(")","")
                 skinStringContent = skinStringContent.replace("\"","")
                 customWidget = True
