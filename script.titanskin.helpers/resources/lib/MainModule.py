@@ -438,7 +438,6 @@ def getImageFromPath(libPath):
             media_type = "video"
         media_array = None
         media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + libPath + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
-        
         if(media_array != None and media_array.has_key('files')):
             for media in media_array['files']:
                 if media.has_key('art'):
@@ -524,7 +523,21 @@ def UpdateBackgrounds():
         except:
             #something wrong so disable the smartshortcuts for this section for now
             xbmc.executebuiltin("Skin.Reset(SmartShortcuts.favorites)")    
-
+    
+    #get emby nodes
+    if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.emby)"):
+        embyProperty = win.getProperty("Emby.nodes.total")
+        contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
+        if embyProperty:
+            totalNodes = int(embyProperty)
+            for i in range(totalNodes):
+                for contentString in contentStrings:
+                    path = win.getProperty("Emby.nodes.%s%s.content"%(str(i),contentString))
+                    image = getImageFromPath(path)
+                    if image:
+                        win.setProperty("Emby.nodes.%s%s.image"%(str(i),contentString),image)
+        
+    
     
     #get in progress movies  
     win.setProperty("InProgressMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
