@@ -386,24 +386,24 @@
 			<visible>PVR.HasTVChannels</visible>
 			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[LiveTVButtonOnClick]</onclick>
 			<property name="path">$VAR[LiveTVButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(TVGuide)</onclick>
+			<property name="path">ActivateWindow(TVGuide)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="submenuVisibility">livetv</property>
 			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">False</property>
+			<property name="hasSubmenu">True</property>
 		</item>
 		<item id="27">
-			<label>$LOCALIZE[342]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$INFO[Window(Home).Property(emby.nodes.0.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>$INFO[Window(Home).Property(emby.nodes.0.image)]</icon>
 			<thumb />
-			<property name="labelID">movies</property>
-			<property name="defaultID">movies</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[MoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/titles/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/titles/,return)</property>
+			<property name="labelID">info-window-home-property-emby-nodes-0-title</property>
+			<property name="defaultID">info-window-home-property-emby-nodes-0-title</property>
+			<onclick>$VAR[CustomCollectionClick]</onclick>
+			<property name="path">$VAR[CustomCollectionClick]</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">movies</property>
+			<property name="submenuVisibility">info-window-home-property-emby-nodes-0-title</property>
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 		</item>
@@ -549,36 +549,6 @@
 			<property name="path">ActivateWindow(Settings)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="submenuVisibility">settings</property>
-			<property name="group">mainmenu</property>
-			<property name="background">fanart</property>
-			<property name="backgroundName">Global/mixed fanart image</property>
-			<property name="hasSubmenu">True</property>
-		</item>
-		<item id="37">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>$INFO[Window(Home).Property(emby.nodes.1.image)]</icon>
-			<thumb />
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">info-window-home-property-emby-nodes-1-title</property>
-			<onclick>$VAR[CustomCollectionClick]</onclick>
-			<property name="path">$VAR[CustomCollectionClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">info-window-home-property-emby-nodes-1-title</property>
-			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">True</property>
-		</item>
-		<item id="38">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>$INFO[Window(Home).Property(emby.nodes.1.image)]</icon>
-			<thumb />
-			<property name="labelID">info-window-home-property-emby-nodes-1-title--0</property>
-			<property name="defaultID">info-window-home-property-emby-nodes-1-title</property>
-			<onclick>$VAR[CustomCollectionClick]</onclick>
-			<property name="path">$VAR[CustomCollectionClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">info-window-home-property-emby-nodes-1-title-0</property>
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 			<property name="hasSubmenu">True</property>
@@ -1627,92 +1597,174 @@
 			<property name="group">info-window-home-property-plexbmc-9-title</property>
 		</item>
 		<item id="1">
-			<label>$LOCALIZE[31050]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19019]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31050</property>
-			<property name="defaultID">135</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[MoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/titles/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/titles/,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">19019</property>
+			<property name="defaultID">19019</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVChannels)</onclick>
+			<property name="path">ActivateWindow(TVChannels)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="2">
-			<label>$LOCALIZE[31127]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[RecentMoviesButtonThumb]</icon>
+			<label>$LOCALIZE[22020]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31127</property>
-			<property name="defaultID">135</property>
-			<visible>Library.HasContent(Movies)</visible>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[RecentMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[RecentMoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">22020</property>
+			<property name="defaultID">22020</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[LiveTVButtonOnClick]</onclick>
+			<property name="path">$VAR[LiveTVButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(TVGuide)</onclick>
+			<property name="path">ActivateWindow(TVGuide)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="3">
-			<label>$LOCALIZE[135]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19163]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">135</property>
-			<property name="defaultID">135</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MovieGenresButtonOnClick]</onclick>
-			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/genres/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/genres/,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">19163</property>
+			<property name="defaultID">19163</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVRecordings)</onclick>
+			<property name="path">ActivateWindow(TVRecordings)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="4">
-			<label>$LOCALIZE[31035]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[InProgressMoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19040]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31035</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(IsTitanSkin)</visible>
-			<onclick>$VAR[InProgressMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[InProgressMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">19040</property>
+			<property name="defaultID">19040</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVTimers)</onclick>
+			<property name="path">ActivateWindow(TVTimers)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="5">
-			<label>$LOCALIZE[31036]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MB3FavoritesThumb]</icon>
+			<label>$LOCALIZE[137]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31036</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
-			<onclick>$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">137</property>
+			<property name="defaultID">137</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVSearch)</onclick>
+			<property name="path">ActivateWindow(TVSearch)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
+		</item>
+		<item id="1">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.path)) + !StringCompare(Window(Home).Property(emby.nodes.0.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.0.type),favourites)</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="2">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-recentepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.recentepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="3">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-inprogressepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.inprogressepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="4">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-nextepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.nextepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="5">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.recent.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.recent.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-recent-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.recent.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.recent.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
 		</item>
 		<item id="6">
-			<label>$LOCALIZE[16101]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[UnwatchedMoviesButtonThumb]</icon>
-			<thumb />
-			<property name="labelID">16101</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(IsTitanSkin)</visible>
-			<onclick>$VAR[UnwatchedMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[UnwatchedMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)]</visible>
+			<label>$INFO[Window(Home).Property(emby.nodes.0.inprogress.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.inprogress.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-inprogress-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.inprogress.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.inprogress.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.inprogress.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.inprogress.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="7">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.unwatched.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.unwatched.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-unwatched-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.unwatched.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.unwatched.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.unwatched.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.unwatched.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
 		</item>
 		<item id="1">
 			<label>$LOCALIZE[31051]</label>
@@ -1800,6 +1852,8 @@
 			<visible>PVR.HasRadioChannels</visible>
 			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[RadioButtonOnClick]</onclick>
 			<property name="path">$VAR[RadioButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(radiochannels,return)</onclick>
+			<property name="path">ActivateWindow(radiochannels,return)</property>
 			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),music)]</visible>
 			<property name="isSubmenu">True</property>
 			<property name="group">music</property>
@@ -1960,202 +2014,6 @@
 			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)]</visible>
 			<property name="isSubmenu">True</property>
 			<property name="group">settings</property>
-		</item>
-		<item id="1">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.path)) + !StringCompare(Window(Home).Property(emby.nodes.1.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.1.type),favourites)</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="2">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recentepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recentepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="3">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogressepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogressepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="4">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-nextepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.nextepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="5">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recent.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recent-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recent.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="6">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogress.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogress-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogress.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="7">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.unwatched.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-unwatched-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.unwatched.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="1">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.path)) + !StringCompare(Window(Home).Property(emby.nodes.1.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.1.type),favourites)</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="2">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recentepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recentepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="3">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogressepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogressepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="4">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-nextepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.nextepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="5">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recent.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recent-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recent.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="6">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogress.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogress-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogress.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="7">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.unwatched.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-unwatched-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.unwatched.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Container(300).ListItem.Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
 		</item>
 		<item id="1">
 			<label>$LOCALIZE[20126]</label>
@@ -4322,180 +4180,340 @@
 			<property name="group">info-window-home-property-plexbmc-9-title</property>
 		</item>
 	</include>
-	<include name="skinshortcuts-group-livetv" />
-	<include name="skinshortcuts-group-alt-livetv" />
-	<include name="skinshortcuts-group-movies">
+	<include name="skinshortcuts-group-livetv">
 		<item id="1">
-			<label>$LOCALIZE[31050]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19019]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31050</property>
-			<property name="defaultID">135</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[MoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/titles/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/titles/,return)</property>
+			<property name="labelID">19019</property>
+			<property name="defaultID">19019</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVChannels)</onclick>
+			<property name="path">ActivateWindow(TVChannels)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="2">
-			<label>$LOCALIZE[31127]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[RecentMoviesButtonThumb]</icon>
+			<label>$LOCALIZE[22020]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31127</property>
-			<property name="defaultID">135</property>
-			<visible>Library.HasContent(Movies)</visible>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[RecentMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[RecentMoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
+			<property name="labelID">22020</property>
+			<property name="defaultID">22020</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[LiveTVButtonOnClick]</onclick>
+			<property name="path">$VAR[LiveTVButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(TVGuide)</onclick>
+			<property name="path">ActivateWindow(TVGuide)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="3">
-			<label>$LOCALIZE[135]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19163]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">135</property>
-			<property name="defaultID">135</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MovieGenresButtonOnClick]</onclick>
-			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/genres/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/genres/,return)</property>
+			<property name="labelID">19163</property>
+			<property name="defaultID">19163</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVRecordings)</onclick>
+			<property name="path">ActivateWindow(TVRecordings)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="4">
-			<label>$LOCALIZE[31035]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[InProgressMoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19040]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31035</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(IsTitanSkin)</visible>
-			<onclick>$VAR[InProgressMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[InProgressMoviesButtonOnClick]</property>
+			<property name="labelID">19040</property>
+			<property name="defaultID">19040</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVTimers)</onclick>
+			<property name="path">ActivateWindow(TVTimers)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="5">
-			<label>$LOCALIZE[31036]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MB3FavoritesThumb]</icon>
+			<label>$LOCALIZE[137]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31036</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
-			<onclick>$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</property>
+			<property name="labelID">137</property>
+			<property name="defaultID">137</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVSearch)</onclick>
+			<property name="path">ActivateWindow(TVSearch)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
-		</item>
-		<item id="6">
-			<label>$LOCALIZE[16101]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[UnwatchedMoviesButtonThumb]</icon>
-			<thumb />
-			<property name="labelID">16101</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(IsTitanSkin)</visible>
-			<onclick>$VAR[UnwatchedMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[UnwatchedMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 	</include>
-	<include name="skinshortcuts-group-alt-movies">
+	<include name="skinshortcuts-group-alt-livetv">
 		<item id="1">
-			<label>$LOCALIZE[31050]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19019]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31050</property>
-			<property name="defaultID">135</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[MoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/titles/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/titles/,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">19019</property>
+			<property name="defaultID">19019</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVChannels)</onclick>
+			<property name="path">ActivateWindow(TVChannels)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="2">
-			<label>$LOCALIZE[31127]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[RecentMoviesButtonThumb]</icon>
+			<label>$LOCALIZE[22020]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31127</property>
-			<property name="defaultID">135</property>
-			<visible>Library.HasContent(Movies)</visible>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[RecentMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[RecentMoviesButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">22020</property>
+			<property name="defaultID">22020</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[LiveTVButtonOnClick]</onclick>
+			<property name="path">$VAR[LiveTVButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(TVGuide)</onclick>
+			<property name="path">ActivateWindow(TVGuide)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="3">
-			<label>$LOCALIZE[135]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19163]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">135</property>
-			<property name="defaultID">135</property>
-			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[MovieGenresButtonOnClick]</onclick>
-			<property name="path">$VAR[MovieGenresButtonOnClick]</property>
-			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(10025,videodb://movies/genres/,return)</onclick>
-			<property name="path">ActivateWindow(10025,videodb://movies/genres/,return)</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">19163</property>
+			<property name="defaultID">19163</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVRecordings)</onclick>
+			<property name="path">ActivateWindow(TVRecordings)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="4">
-			<label>$LOCALIZE[31035]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[InProgressMoviesButtonThumb]</icon>
+			<label>$LOCALIZE[19040]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31035</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(IsTitanSkin)</visible>
-			<onclick>$VAR[InProgressMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[InProgressMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">19040</property>
+			<property name="defaultID">19040</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVTimers)</onclick>
+			<property name="path">ActivateWindow(TVTimers)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
 		</item>
 		<item id="5">
-			<label>$LOCALIZE[31036]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[MB3FavoritesThumb]</icon>
+			<label>$LOCALIZE[137]</label>
+			<label2>$ADDON[script.skinshortcuts 32017]</label2>
+			<icon>DefaultShortcut.png</icon>
 			<thumb />
-			<property name="labelID">31036</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(HomeMenuUseMBforMovies)</visible>
-			<onclick>$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<property name="labelID">137</property>
+			<property name="defaultID">137</property>
+			<visible>PVR.HasTVChannels</visible>
+			<onclick>ActivateWindow(TVSearch)</onclick>
+			<property name="path">ActivateWindow(TVSearch)</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),livetv)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">livetv</property>
+		</item>
+	</include>
+	<include name="skinshortcuts-group-info-window-home-property-emby-nodes-0-title">
+		<item id="1">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.path)) + !StringCompare(Window(Home).Property(emby.nodes.0.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.0.type),favourites)</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="2">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-recentepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.recentepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="3">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-inprogressepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.inprogressepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="4">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-nextepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.nextepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="5">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.recent.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.recent.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-recent-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.recent.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.recent.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
 		</item>
 		<item id="6">
-			<label>$LOCALIZE[16101]</label>
-			<label2>Movies</label2>
-			<icon>$VAR[UnwatchedMoviesButtonThumb]</icon>
-			<thumb />
-			<property name="labelID">16101</property>
-			<property name="defaultID">135</property>
-			<visible>Skin.HasSetting(IsTitanSkin)</visible>
-			<onclick>$VAR[UnwatchedMoviesButtonOnClick]</onclick>
-			<property name="path">$VAR[UnwatchedMoviesButtonOnClick]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),movies)]</visible>
+			<label>$INFO[Window(Home).Property(emby.nodes.0.inprogress.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.inprogress.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-inprogress-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.inprogress.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.inprogress.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.inprogress.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.inprogress.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="7">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.unwatched.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.unwatched.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-unwatched-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.unwatched.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.unwatched.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.unwatched.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.unwatched.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+	</include>
+	<include name="skinshortcuts-group-alt-info-window-home-property-emby-nodes-0-title">
+		<item id="1">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.path)) + !StringCompare(Window(Home).Property(emby.nodes.0.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.0.type),favourites)</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
 			<property name="isSubmenu">True</property>
-			<property name="group">movies</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="2">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-recentepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.recentepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.recentepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="3">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-inprogressepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.inprogressepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.inprogressepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="4">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-nextepisodes-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.nextepisodes.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.nextepisodes.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="5">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.recent.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.recent.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-recent-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.recent.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.recent.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="6">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.inprogress.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.inprogress.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-inprogress-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.inprogress.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.inprogress.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.inprogress.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.inprogress.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
+		</item>
+		<item id="7">
+			<label>$INFO[Window(Home).Property(emby.nodes.0.unwatched.title)]</label>
+			<label2>Video Add-ons</label2>
+			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
+			<thumb>$INFO[Window(Home).Property(emby.nodes.0.unwatched.image)]</thumb>
+			<property name="labelID">info-window-home-property-emby-nodes-0-unwatched-title</property>
+			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.0.unwatched.title)]</property>
+			<visible>!IsEmpty(Window(Home).Property(emby.nodes.0.unwatched.path))</visible>
+			<onclick>$INFO[Window(Home).Property(emby.nodes.0.unwatched.path)]</onclick>
+			<property name="path">$INFO[Window(Home).Property(emby.nodes.0.unwatched.path)]</property>
+			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-0-title)]</visible>
+			<property name="isSubmenu">True</property>
+			<property name="group">info-window-home-property-emby-nodes-0-title</property>
 		</item>
 	</include>
 	<include name="skinshortcuts-group-tvshows">
@@ -4645,6 +4663,8 @@
 			<visible>PVR.HasRadioChannels</visible>
 			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[RadioButtonOnClick]</onclick>
 			<property name="path">$VAR[RadioButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(radiochannels,return)</onclick>
+			<property name="path">ActivateWindow(radiochannels,return)</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">music</property>
 		</item>
@@ -4729,6 +4749,8 @@
 			<visible>PVR.HasRadioChannels</visible>
 			<onclick condition="Skin.HasSetting(IsTitanSkin)">$VAR[RadioButtonOnClick]</onclick>
 			<property name="path">$VAR[RadioButtonOnClick]</property>
+			<onclick condition="!Skin.HasSetting(IsTitanSkin)">ActivateWindow(radiochannels,return)</onclick>
+			<property name="path">ActivateWindow(radiochannels,return)</property>
 			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),music)]</visible>
 			<property name="isSubmenu">True</property>
 			<property name="group">music</property>
@@ -4999,392 +5021,6 @@
 			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),settings)]</visible>
 			<property name="isSubmenu">True</property>
 			<property name="group">settings</property>
-		</item>
-	</include>
-	<include name="skinshortcuts-group-info-window-home-property-emby-nodes-1-title">
-		<item id="1">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.path)) + !StringCompare(Window(Home).Property(emby.nodes.1.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.1.type),favourites)</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="2">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recentepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recentepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="3">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogressepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogressepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="4">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-nextepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.nextepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="5">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recent.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recent-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recent.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="6">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogress.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogress-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogress.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="7">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.unwatched.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-unwatched-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.unwatched.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-	</include>
-	<include name="skinshortcuts-group-alt-info-window-home-property-emby-nodes-1-title">
-		<item id="1">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.path)) + !StringCompare(Window(Home).Property(emby.nodes.1.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.1.type),favourites)</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="2">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recentepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recentepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="3">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogressepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogressepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="4">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-nextepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.nextepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="5">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recent.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recent-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recent.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="6">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogress.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogress-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogress.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-		<item id="7">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.unwatched.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-unwatched-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.unwatched.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title</property>
-		</item>
-	</include>
-	<include name="skinshortcuts-group-info-window-home-property-emby-nodes-1-title-0">
-		<item id="1">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.path)) + !StringCompare(Window(Home).Property(emby.nodes.1.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.1.type),favourites)</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="2">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recentepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recentepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="3">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogressepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogressepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="4">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-nextepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.nextepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="5">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recent.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recent-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recent.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="6">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogress.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogress-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogress.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="7">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.unwatched.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-unwatched-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.unwatched.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-	</include>
-	<include name="skinshortcuts-group-alt-info-window-home-property-emby-nodes-1-title-0">
-		<item id="1">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.path)) + !StringCompare(Window(Home).Property(emby.nodes.1.type),channels) + !StringCompare(Window(Home).Property(emby.nodes.1.type),favourites)</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="2">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recentepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recentepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recentepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="3">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogressepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogressepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogressepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="4">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-nextepisodes-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.nextepisodes.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.nextepisodes.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="5">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.recent.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-recent-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.recent.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.recent.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.recent.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="6">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.inprogress.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-inprogress-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.inprogress.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.inprogress.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.inprogress.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
-		</item>
-		<item id="7">
-			<label>$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</label>
-			<label2>Video Add-ons</label2>
-			<icon>special://home/addons/plugin.video.emby/icon.png</icon>
-			<thumb>$INFO[Window(Home).Property(emby.nodes.1.unwatched.image)]</thumb>
-			<property name="labelID">info-window-home-property-emby-nodes-1-unwatched-title</property>
-			<property name="defaultID">$INFO[Window(Home).Property(emby.nodes.1.unwatched.title)]</property>
-			<visible>!IsEmpty(Window(Home).Property(emby.nodes.1.unwatched.path))</visible>
-			<onclick>$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</onclick>
-			<property name="path">$INFO[Window(Home).Property(emby.nodes.1.unwatched.path)]</property>
-			<visible>StringCompare(System.ProfileName,Master user) + [StringCompare(Window(10000).Property(submenuVisibility),info-window-home-property-emby-nodes-1-title-0)]</visible>
-			<property name="isSubmenu">True</property>
-			<property name="group">info-window-home-property-emby-nodes-1-title--0</property>
 		</item>
 	</include>
 	<include name="skinshortcuts-group-powermenu">

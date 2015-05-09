@@ -19,7 +19,7 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 import xml.etree.cElementTree as ET
 
-doDebugLog = False
+doDebugLog = True
 
 __language__ = xbmc.getLocalizedString
 
@@ -176,9 +176,14 @@ def updatePlexlinks():
     linkCount = 0
     logMsg("updateplexlinks started...")
     
+    #wait for max 20 seconds untill the plex nodes are available
+    count = 0
+    while (count < 80 and win.getProperty("plexbmc.0.title") == ""):
+        xbmc.sleep(250)
+        count += 1
+    
     #update plex window properties
-    xbmc.sleep(3000)
-    while linkCount !=10:
+    while linkCount !=14:
         plexstring = "plexbmc." + str(linkCount)
         link = win.getProperty(plexstring + ".title")
         logMsg(plexstring + ".title --> " + link)
@@ -206,41 +211,7 @@ def updatePlexlinks():
         logMsg(plexstring + ".viewed --> " + link)
 
         linkCount += 1
-    
-    xbmc.sleep(5000)
-    updatePlexBackgrounds()   
-        
-def updatePlexBackgrounds():
-    logMsg("update plex backgrounds started...")        
-    
-    #update plex backgrounds
-    linkCount = 0
-    xbmc.sleep(5000)
-    while linkCount !=10:
-        plexstring = "plexbmc." + str(linkCount)
-        randomNr = random.randrange(1,10+1)       
-        plexType = win.getProperty(plexstring + ".type")
-        randomimage = ""
-        if plexType == "movie":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
-            win.setProperty("plexfanartbg", randomimage)
-        elif plexType == "artist":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
-            if randomimage == "":
-                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(1).Art(fanart)")
-            if randomimage == "":
-                randomimage = "special://skin/extras/backgrounds/hover_my music.png"                
-        elif plexType == "show":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Property(Fanart_Image)")
-        elif plexType == "photo":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
-
-        if randomimage != "":
-            win.setProperty(plexstring + ".background", randomimage)
-            logMsg(plexstring + ".background --> " + randomimage)            
-
-        linkCount += 1
-               
+                       
 def showInfoPanel():
     tryCount = 0
     secondsToDisplay = "4"
@@ -354,7 +325,6 @@ def focusEpisode():
                 else:    
                     curItem -= 1
             
-
 def getViewId(viewString):
     # get all views from views-file
     viewId = None
@@ -366,9 +336,8 @@ def getViewId(viewString):
             viewId=view.attrib['value']
     
     return viewId
-    
-    
-def getImageFromPath(libPath):
+        
+def getImageFromPath(libPath, firstrun):
     
     logMsg("getting images for path " + libPath)
     if "$INFO" in libPath:
@@ -390,13 +359,13 @@ def getImageFromPath(libPath):
     txtb64 = base64.urlsafe_b64encode(libPath)
     if len(txtb64) > 20:
         txtb64 = txtb64[-20:]
-    txtPath = os.path.join(addondir,txtb64 + ".txt")
+    txtPath = os.path.join(addondir,txtb64 + ".cache")
     
     if win.getProperty(txtPath) == "blacklist":
         logMsg("path blacklisted - skipping for path " + libPath)
         return None
         
-    blacklistPath = os.path.join(addondir,"blacklist.txt")
+    blacklistPath = os.path.join(addondir,"blacklist.cache")
     if (xbmcvfs.exists(blacklistPath) and os.path.getsize(blacklistPath) > 0):
         blfile = open(blacklistPath, 'r')
         if libPath in blfile.read():
@@ -410,23 +379,19 @@ def getImageFromPath(libPath):
     images = []
     
     #delete existing cache file if cache expired
-    if xbmcvfs.exists(txtPath) and win.getProperty(txtPath) != "loaded":
+    if xbmcvfs.exists(txtPath) and (win.getProperty(txtPath) != "loaded" and not firstrun):
         logMsg("cache file outdated, deleting... " + txtPath)
         xbmcvfs.delete(txtPath)
     
     #cache file exists and cache is not expired, load cache file
-    if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and win.getProperty(txtPath) == "loaded":
+    if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and (win.getProperty(txtPath) == "loaded" or firstrun):
         txtfile = open(txtPath, 'r')
-        logMsg("get images from the cache file... " + libPath)
-        for line in txtfile.readlines():
-            if not "skip" in line:
-                logMsg("found image in cache... " + line)
-                images.append(line)
-        txtfile.close()
-        if images != []:
-            random.shuffle(images)
-            logMsg("loading done setting image from cache... " + images[0])
-            return images[0]
+        logMsg("load random image from the cache file... " + libPath)
+        image = None
+        image = random.choice(list(open(txtPath)))
+        if image:
+            logMsg("loading done setting image from cache... " + image)
+            return image
         else:
             logMsg("cache file empty...skipping...")
     else:
@@ -446,12 +411,12 @@ def getImageFromPath(libPath):
                     if media['art'].has_key('tvshow.fanart'):
                         images.append(media['art']['tvshow.fanart'])
         else:
-            logMsg("media array empty or error so add this path to blacklist..." + libPath)
-            if libPath.startswith("videodb://") or libPath.startswith("library://") or libPath.endswith(".xsp"):
+            logMsg("media array empty or error so add this path to temporary blacklist..." + libPath)
+            if libPath.startswith("videodb://") or libPath.startswith("library://") or libPath.endswith(".xsp") or libPath.startswith("plugin://plugin.video.emby"):
                 win.setProperty(txtPath,"blacklist")
                 return None
             else:
-                blacklistPath = os.path.join(addondir,"blacklist.txt")
+                blacklistPath = os.path.join(addondir,"blacklist.cache")
                 blfile = open(blacklistPath, 'a')
                 blfile.write(libPath + '\n')
                 blfile.close()
@@ -468,7 +433,7 @@ def getImageFromPath(libPath):
         image = images[0]
         logMsg("setting random image.... " + image)
     else:
-        logMsg("image array empty so skipping this path until next restart - " + libPath)
+        logMsg("image array or cache empty so skipping this path until next restart - " + libPath)
         win.setProperty(txtPath,"loaded")
         txtfile.write('skip')
     
@@ -476,10 +441,169 @@ def getImageFromPath(libPath):
     txtfile.close()
     return image
 
+def getPicturesBackground(firstrun):
+    print "###### get pictures "
     
-def UpdateBackgrounds():
+    txtPath = os.path.join(addondir,"pictures.cache")
+    
+    try:
+        if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and (win.getProperty(txtPath) == "loaded" or firstrun):
+            #get random image from our global cache file
+            image = None
+            image = random.choice(list(open(txtPath)))
+            if image:
+                logMsg("setting random image.... " + image)
+            return image 
+        else:
+            txtfile = open(txtPath, 'w')
+            images = []
+            
+            media_array = getJSON('Files.GetSources','{"media": "pictures"}')
+            if(media_array != None and media_array.has_key('sources')):
+                print media_array['sources']
+                for source in media_array['sources']:
+                    if source.has_key('file'):
+                        if not "plugin://" in source["file"]:
+                            dirs, files = xbmcvfs.listdir(source["file"])
+                            if dirs:
+                                #pick 10 random dirs
+                                randomdirs = []
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                
+                                #pick 5 images from each dir
+                                for dir in randomdirs:
+                                    subdirs, files = xbmcvfs.listdir(dir)
+                                    count = 0
+                                    for file in files:
+                                        if file.endswith("jpg") and count < 5:
+                                            image = os.path.join(dir,file)
+                                            txtfile.write(image + '\n')
+                                            images.append(image)
+                                            count += 1
+                            if files:
+                                #pick 10 images from root
+                                count = 0
+                                for file in files:
+                                    if file.endswith("jpg") and count > 10:
+                                        image = os.path.join(source["file"],file)
+                                        txtfile.write(image + '\n')
+                                        images.append(image)
+                                        count += 1
+                                
+            txtfile.close()
+            if images != []:
+                random.shuffle(images)
+                image = images[0]
+                logMsg("setting random image.... " + image)
+                return image
+            else:
+                logMsg("image sources array or cache empty so skipping this path until next restart - " + libPath)
+                return None
+    #if something fails, return None
+    except:
+        logMsg("exception occured in getPicturesBackground.... ")
+        return None            
+        
 
-    #get all playlists
+def getGlobalBackground(firstrun):
+    
+    #just get all images from all cache files and just pick a random image
+    if xbmcvfs.exists(addondir + os.sep):
+        
+        txtPath = os.path.join(addondir,"global.cache")
+        
+        if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and (win.getProperty(txtPath) == "loaded" or firstrun):
+            #get random image from our global cache file
+            image = None
+            image = random.choice(list(open(txtPath)))        
+            return image 
+        else:    
+            #at first run we create the global cache file
+            if firstrun:
+                xbmcvfs.delete(txtPath)
+                global_txtfile = open(txtPath, 'w')
+                dirs, files = xbmcvfs.listdir(addondir)
+                images = []
+                for file in files:
+                    if file.endswith(".cache"):
+                        txtfile = open(os.path.join(addondir,file), 'r')
+                        for line in txtfile.readlines():
+                            if not "skip" in line:
+                                images.append(line)
+                                global_txtfile.write(line)
+                        txtfile.close()
+                global_txtfile.close()
+                if images != []:
+                    random.shuffle(images)
+                    image = images[0]
+                    return image
+                else:
+                    return None
+
+    
+def UpdateBackgrounds(firstrun=False):
+    
+    #get all movies  
+    win.setProperty("AllMoviesBackground",getImageFromPath("videodb://movies/titles/",firstrun))
+    
+    #get all tvshows  
+    win.setProperty("AllTvShowsBackground",getImageFromPath("videodb://tvshows/titles/",firstrun))
+    
+    #get all musicvideos  
+    win.setProperty("AllMusicVideosBackground",getImageFromPath("videodb://musicvideos/titles/",firstrun))
+    
+    #get all music  
+    win.setProperty("AllMusicBackground",getImageFromPath("musicdb://artists/",firstrun))
+    
+    #get global fanart background 
+    win.setProperty("GlobalFanartBackground",getGlobalBackground(firstrun))
+    
+    #get in progress movies  
+    win.setProperty("InProgressMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp",firstrun))
+
+    #get recent and unwatched movies
+    win.setProperty("RecentMovieBackground",getImageFromPath("videodb://recentlyaddedmovies/",firstrun))
+    
+    #unwatched movies
+    win.setProperty("UnwatchedMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp",firstrun))
+  
+    #get in progress tvshows
+    win.setProperty("InProgressShowsBackground",getImageFromPath("library://video/inprogressshows.xml",firstrun))
+
+    #get recent episodes
+    win.setProperty("RecentEpisodesBackground",getImageFromPath("videodb://recentlyaddedepisodes/",firstrun))
+
+    #smart shortcuts --> emby nodes
+    if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.emby)"):
+        
+        #wait for max 20 seconds untill the emby nodes are available
+        count = 0
+        while (count < 80 and win.getProperty("Emby.nodes.total") == ""):
+            xbmc.sleep(250)
+            count += 1
+        
+        embyProperty = win.getProperty("Emby.nodes.total")
+        contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
+        if embyProperty:
+            totalNodes = int(embyProperty)
+            for i in range(totalNodes):
+                for contentString in contentStrings:
+                    path = win.getProperty("Emby.nodes.%s%s.content"%(str(i),contentString))
+                    if path:
+                        image = getImageFromPath(path,firstrun)
+                        if image:
+                            win.setProperty("Emby.nodes.%s%s.image"%(str(i),contentString),image)
+        
+    #smart shortcuts --> playlists
     if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
         try:
             playlistCount = 0
@@ -490,7 +614,7 @@ def UpdateBackgrounds():
                     if file.endswith(".xsp"):
                         playlist = path + file
                         label = file.replace(".xsp","")
-                        image = getImageFromPath(playlist)
+                        image = getImageFromPath(playlist,firstrun)
                         if image != None:
                             playlist = "ActivateWindow(Videos," + playlist + ",return)"
                             win.setProperty("playlist." + str(playlistCount) + ".image", image)
@@ -501,7 +625,7 @@ def UpdateBackgrounds():
             #something wrong so disable the smartshortcuts for this section for now
             xbmc.executebuiltin("Skin.Reset(SmartShortcuts.playlists)")
     
-    #get favorites
+    #smart shortcuts --> favorites
     if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
         try:
             favoritesCount = 0
@@ -513,8 +637,8 @@ def UpdateBackgrounds():
                 for count, favourite in enumerate(listing):
                     name = favourite.attributes[ 'name' ].nodeValue
                     path = favourite.childNodes [ 0 ].nodeValue
-                    if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025")) and not "script://" in path:
-                        image = getImageFromPath(path)
+                    if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025") or path.startswith("ActivateWindow(videos") or path.startswith("ActivateWindow(Music") or path.startswith("ActivateWindow(10502")) and not "script://" in path:
+                        image = getImageFromPath(path,firstrun)
                         if image != None:
                             win.setProperty("favorite." + str(favoritesCount) + ".image", image)
                             win.setProperty("favorite." + str(favoritesCount) + ".label", name)
@@ -524,35 +648,25 @@ def UpdateBackgrounds():
             #something wrong so disable the smartshortcuts for this section for now
             xbmc.executebuiltin("Skin.Reset(SmartShortcuts.favorites)")    
     
-    #get emby nodes
-    if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.emby)"):
-        embyProperty = win.getProperty("Emby.nodes.total")
-        contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
-        if embyProperty:
-            totalNodes = int(embyProperty)
-            for i in range(totalNodes):
-                for contentString in contentStrings:
-                    path = win.getProperty("Emby.nodes.%s%s.content"%(str(i),contentString))
-                    image = getImageFromPath(path)
-                    if image:
-                        win.setProperty("Emby.nodes.%s%s.image"%(str(i),contentString),image)
+    #get plex nodes
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
         
-    
-    
-    #get in progress movies  
-    win.setProperty("InProgressMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
+        if firstrun:
+            updatePlexlinks()
+        
+        totalNodes = 14
+        for i in range(totalNodes):
+            if win.getProperty("plexbmc.%s.title" %str(i)):
+                plexcontent = win.getProperty("plexbmc.%s.content" %str(i))
+                plextype = win.getProperty("plexbmc.%s.type" %str(i))
+                image = getImageFromPath(plexcontent,firstrun)
+                if image:
+                    win.setProperty("plexbmc.%s.background" %str(i),image)
+                    if plextype == "movie":
+                        win.setProperty("plexfanartbg", image)
 
-    #get recent and unwatched movies
-    win.setProperty("RecentMovieBackground",getImageFromPath("videodb://recentlyaddedmovies/"))
-    
-    #unwatched movies
-    win.setProperty("UnwatchedMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp"))
-  
-    #get in progress tvshows
-    win.setProperty("InProgressShowsBackground",getImageFromPath("library://video/inprogressshows.xml"))
-
-    #get recent episodes
-    win.setProperty("RecentEpisodesBackground",getImageFromPath("videodb://recentlyaddedepisodes/"))
+    #get pictures background
+    win.setProperty("PicturesBackground", getPicturesBackground(firstrun))
 
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')

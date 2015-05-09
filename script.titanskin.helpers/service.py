@@ -39,15 +39,13 @@ class Main:
     
     def __init__(self):
         
-        count = 120
+        count = 0
         unwatched = 1
         lastEpPath = ""
-        PlexEnabled = xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)")
-        backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
-        if backgroundDelayStr:
-            backgroundDelay = int(backgroundDelayStr) * 4
-        else:
-            backgroundDelay = 240
+        backgroundDelay = 240
+            
+        #first run get backgrounds immediately from cache
+        MainModule.UpdateBackgrounds(True)
          
         while (not xbmc.abortRequested):
             xbmc.sleep(250)
@@ -55,12 +53,15 @@ class Main:
             if not xbmc.Player().isPlayingVideo():
                 
                 # Update home backgrounds every interval (default 60 seconds)
-                count += 1
                 if (count >= backgroundDelay and xbmc.getCondVisibility("Window.IsActive(home.xml)")):
+                    backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
+                    if backgroundDelayStr:
+                        backgroundDelay = int(backgroundDelayStr) * 4
+
                     MainModule.UpdateBackgrounds()
-                    if PlexEnabled:
-                        MainModule.updatePlexBackgrounds()
                     count = 0
+                else:
+                    count += 1
                                
                 # monitor extra fanart
                 if xbmc.getCondVisibility("Skin.HasSetting(EnableExtraFanart)"):
