@@ -19,7 +19,7 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 import xml.etree.cElementTree as ET
 
-doDebugLog = True
+doDebugLog = False
 
 __language__ = xbmc.getLocalizedString
 
@@ -442,7 +442,6 @@ def getImageFromPath(libPath, firstrun):
     return image
 
 def getPicturesBackground(firstrun):
-    print "###### get pictures "
     
     txtPath = os.path.join(addondir,"pictures.cache")
     
