@@ -12,7 +12,7 @@
 	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(MB3ModeDetectDone)</onload>
 	<onload>XBMC.RunScript(script.titanskin.helpers,SETSKINVERSION)</onload>
     <allowoverlay>yes</allowoverlay>
-    <include condition="!StringCompare(Window(Home).Property(BackGroundWorkersLoaded),loaded)">defaultskinsettings</include>
+    <include>defaultskinsettings</include>
     <controls>
         <!--Global Background-->
         <include>GlobalBackground</include>
@@ -165,8 +165,9 @@
                 <onup>8000</onup>
                 <ondown>noop</ondown>
                 <onleft>100</onleft>
-                <onright>noop</onright>
+                <onright>313</onright>
                 <orientation>vertical</orientation>
+				<pagecontrol>313</pagecontrol>
                 <visible>Container(100).Hasfocus(14)</visible>
                 
 				<!-- backup and restore -->
@@ -2095,8 +2096,9 @@
                 <onup>500</onup>
                 <ondown>500</ondown>
                 <onleft>100</onleft>
-                <onright>noop</onright>
+                <onright>312</onright>
                 <orientation>vertical</orientation>
+				<pagecontrol>312</pagecontrol>
                 <visible>Container(100).Hasfocus(6)</visible>
 
                 <!-- general -->
@@ -2304,6 +2306,17 @@
                     <selected>Skin.HasSetting(enableArtistSlideshow)</selected>
 					<visible>System.HasAddon(script.artistslideshow)</visible>
                 </control>
+				<control type="radiobutton" id="5162">
+                    <description>show scrollbars</description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31344</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(alwaysShowScrollbars)</onclick>
+                    <selected>Skin.HasSetting(alwaysShowScrollbars)</selected>
+                </control>
             </control>
         	
 			<!--scrollbar for appearance-->
@@ -2313,7 +2326,7 @@
 				<height>800</height>
 				<onleft>14000</onleft>
 				<showonepage>false</showonepage>
-				<visible>Container(100).Hasfocus(13) + Skin.HasSetting(EnableTouchSupport)</visible>
+				<visible>Container(100).Hasfocus(13) + [Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
 			</control>
 
 			<!--scrollbar for homescreen layout-->
@@ -2323,8 +2336,26 @@
 				<height>800</height>
 				<onleft>23000</onleft>
 				<showonepage>false</showonepage>
-				<visible>Container(100).Hasfocus(12) + Skin.HasSetting(EnableTouchSupport)</visible>
-			</control>					
+				<visible>Container(100).Hasfocus(12) + [Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
+			</control>
+			<!--scrollbar for general settings-->
+			<control type="scrollbar" id="312"> 
+				<right>15</right>
+				<top>-20</top>
+				<height>800</height>
+				<onleft>23000</onleft>
+				<showonepage>false</showonepage>
+				<visible>Container(100).Hasfocus(6) + [Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
+			</control>
+			<!--scrollbar for advanced settings-->
+			<control type="scrollbar" id="313"> 
+				<right>15</right>
+				<top>-20</top>
+				<height>800</height>
+				<onleft>23000</onleft>
+				<showonepage>false</showonepage>
+				<visible>Container(100).Hasfocus(14) + [Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
+			</control>				
 			
 			
 		</control>
