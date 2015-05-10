@@ -104,10 +104,19 @@ class Main:
                                 xbmc.log("Titanskin Helper: Exception while trying to focus episode")
                                 pass
                                 
-                    lastEpPath = xbmc.getInfoLabel("Container.FolderPath")       
+                    lastEpPath = xbmc.getInfoLabel("Container.FolderPath")
+                
+                # set addon name as property
+                if not xbmc.Player().isPlayingAudio():
+                    if ((xbmc.getCondVisibility("Container.Content(plugins)")) or xbmc.getCondVisibility("!IsEmpty(Container.PluginName)")):
+                        AddonName = xbmc.getInfoLabel('Container.PluginName')
+                        AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('name')
+                        xbmcgui.Window(10142).setProperty("Player.AddonName", AddonName)
+                    else:
+                        xbmcgui.Window(10142).clearProperty("Player.AddonName")
 
-      
-   
+
+
 xbmc.log('titan helper version %s started' % __addonversion__)
 Main()
 xbmc.log('titan helper version %s stopped' % __addonversion__)
