@@ -12,7 +12,7 @@
 	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(MB3ModeDetectDone)</onload>
 	<onload>XBMC.RunScript(script.titanskin.helpers,SETSKINVERSION)</onload>
     <allowoverlay>yes</allowoverlay>
-    <include>defaultskinsettings</include>
+    <include condition="!StringCompare(Window(Home).Property(BackGroundWorkersLoaded),loaded)">defaultskinsettings</include>
     <controls>
         <!--Global Background-->
         <include>GlobalBackground</include>
@@ -212,6 +212,7 @@
 					<focusedcolor>black</focusedcolor>
 					<font>Reg28</font>
 					<onclick>XBMC.RunScript(script.titanskin.helpers,RESET)</onclick>
+					<onclick>ClearProperty(BackGroundWorkersLoaded,Home)</onclick>
 				</control>
 				
 				<!-- spacing -->
@@ -320,6 +321,18 @@
 					<onclick condition="Skin.String(CustomMusicLogoPath)">Skin.Reset(CustomMusicLogoPath)</onclick>
                     <selected>Skin.String(CustomMusicLogoPath)</selected>
                 </control>
+				<control type="radiobutton" id="8018">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31343</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick condition="!Skin.String(CustomPicturesBackgroundPath)">Skin.SetPath(CustomPicturesBackgroundPath)</onclick>
+					<onclick condition="Skin.String(CustomPicturesBackgroundPath)">Skin.Reset(CustomPicturesBackgroundPath)</onclick>
+                    <selected>Skin.String(CustomPicturesBackgroundPath)</selected>
+                </control>
 				
 				
 				
@@ -394,9 +407,7 @@
                     <selected>Skin.HasSetting(SmartShortcuts.emby)</selected>
 					<visible>System.HasAddon(plugin.video.emby)</visible>
                 </control>
-				
-				
-				
+
 			</control>
 
 			<!-- appearance -->
@@ -2279,6 +2290,19 @@
                     <onclick>Skin.ToggleSetting(LowPerformanceMode)</onclick>
 					<onclick>Skin.Reset(EnableExtraFanart)</onclick>
                     <selected>Skin.HasSetting(LowPerformanceMode)</selected>
+                </control>
+				<control type="radiobutton" id="5161">
+                    <description>Artist Slideshow</description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31341</label>
+                    <height>50</height>
+                    <focusedcolor>black</focusedcolor>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(enableArtistSlideshow)</onclick>
+					<onclick>ClearProperty(BackGroundWorkersLoaded,Home)</onclick>
+                    <selected>Skin.HasSetting(enableArtistSlideshow)</selected>
+					<visible>System.HasAddon(script.artistslideshow)</visible>
                 </control>
             </control>
         	

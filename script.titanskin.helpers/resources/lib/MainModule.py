@@ -442,9 +442,17 @@ def getImageFromPath(libPath, firstrun):
     return image
 
 def getPicturesBackground(firstrun):
-    
+
     txtPath = os.path.join(addondir,"pictures.cache")
     
+    customPath = xbmc.getInfoLabel("skin.string(CustomPicturesBackgroundPath)")
+    oldcustomPath = win.getProperty("CustomPicturesBackgroundPath")
+    customPath = xbmc.getInfoLabel("skin.string(CustomPicturesBackgroundPath)")
+    if (oldcustomPath != customPath and not firstrun):
+        win.clearProperty(txtPath)
+        
+    win.setProperty("CustomPicturesBackgroundPath",customPath)
+
     try:
         if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and (win.getProperty(txtPath) == "loaded" or firstrun):
             #get random image from our global cache file
@@ -454,48 +462,60 @@ def getPicturesBackground(firstrun):
                 logMsg("setting random image.... " + image)
             return image 
         else:
+            #load the pictures from the custom path or from all picture sources
             txtfile = open(txtPath, 'w')
             images = []
             
-            media_array = getJSON('Files.GetSources','{"media": "pictures"}')
-            if(media_array != None and media_array.has_key('sources')):
-                for source in media_array['sources']:
-                    if source.has_key('file'):
-                        if not "plugin://" in source["file"]:
-                            dirs, files = xbmcvfs.listdir(source["file"])
-                            if dirs:
-                                #pick 10 random dirs
-                                randomdirs = []
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
-                                
-                                #pick 5 images from each dir
-                                for dir in randomdirs:
-                                    subdirs, files = xbmcvfs.listdir(dir)
+            if customPath:
+                #load images from custom path
+                dirs, files = xbmcvfs.listdir(customPath)
+                #pick all images from path
+                for file in files:
+                    if file.endswith(".jpg") or file.endswith(".png") or file.endswith(".JPG") or file.endswith(".PNG"):
+                        image = os.path.join(customPath,file)
+                        txtfile.write(image + '\n')
+                        images.append(image)
+            else:
+                #load picture sources
+                media_array = getJSON('Files.GetSources','{"media": "pictures"}')
+                if(media_array != None and media_array.has_key('sources')):
+                    for source in media_array['sources']:
+                        if source.has_key('file'):
+                            if not "plugin://" in source["file"]:
+                                dirs, files = xbmcvfs.listdir(source["file"])
+                                if dirs:
+                                    #pick 10 random dirs
+                                    randomdirs = []
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    randomdirs.append(os.path.join(source["file"],random.choice(dirs)))
+                                    
+                                    #pick 5 images from each dir
+                                    for dir in randomdirs:
+                                        subdirs, files = xbmcvfs.listdir(dir)
+                                        count = 0
+                                        for file in files:
+                                            if ((file.endswith(".jpg") or file.endswith(".png") or file.endswith(".JPG") or file.endswith(".PNG")) and count < 5):
+                                                image = os.path.join(dir,file)
+                                                txtfile.write(image + '\n')
+                                                images.append(image)
+                                                count += 1
+                                if files:
+                                    #pick 10 images from root
                                     count = 0
                                     for file in files:
-                                        if file.endswith("jpg") and count < 5:
-                                            image = os.path.join(dir,file)
+                                        if ((file.endswith(".jpg") or file.endswith(".png") or file.endswith(".JPG") or file.endswith(".PNG")) and count < 10):
+                                            image = os.path.join(source["file"],file)
                                             txtfile.write(image + '\n')
                                             images.append(image)
                                             count += 1
-                            if files:
-                                #pick 10 images from root
-                                count = 0
-                                for file in files:
-                                    if file.endswith("jpg") and count > 10:
-                                        image = os.path.join(source["file"],file)
-                                        txtfile.write(image + '\n')
-                                        images.append(image)
-                                        count += 1
                                 
             txtfile.close()
             if images != []:
