@@ -459,7 +459,6 @@ def getPicturesBackground(firstrun):
             
             media_array = getJSON('Files.GetSources','{"media": "pictures"}')
             if(media_array != None and media_array.has_key('sources')):
-                print media_array['sources']
                 for source in media_array['sources']:
                     if source.has_key('file'):
                         if not "plugin://" in source["file"]:
