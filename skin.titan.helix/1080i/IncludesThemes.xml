@@ -284,7 +284,7 @@
 	</include>	
 		
     <include name="OSDPanelClassic">
-        <!--OSD Panel-->
+
         <!--Panel-->
         <control type="image">
             <posx>210</posx>
@@ -317,90 +317,30 @@
             <aspectratio align="left" aligny="top">stretch</aspectratio>
             <visible>VideoPlayer.Content(Movies)</visible>
         </control>
-        <!--Label Movie-->
+
+        <!-- OSDLabel1 -->
         <control type="label">
-            <visible>VideoPlayer.Content(Movies)</visible>
             <posx>550</posx>
             <posy>770</posy>
             <width>900</width>
             <align>left</align>
             <font>Light45</font>
             <textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-            <label>[B]$INFO[VideoPlayer.Title][/B]</label>
+            <label>$VAR[OSDLabel1]</label>
             <scroll>false</scroll>
         </control>
+        <!-- OSDLabel2 -->
         <control type="label">
-            <visible>VideoPlayer.Content(Movies)</visible>
             <posx>550</posx>
             <posy>820</posy>
             <width>900</width>
             <align>left</align>
-            <font>Light35</font>
+            <font>Light45</font>
             <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-            <label>$INFO[VideoPlayer.Genre]</label>
+            <label>[B]$VAR[OSDLabel2][/B]</label>
             <scroll>false</scroll>
         </control>
-        <!-- Label Episode-->
-        <control type="label">
-            <visible>VideoPlayer.Content(Episodes)</visible>
-            <posx>550</posx>
-            <posy>770</posy>
-            <width>900</width>
-            <align>left</align>
-            <font>Light45</font>
-            <textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-            <label>[B]$INFO[VideoPlayer.Episode]. $INFO[VideoPlayer.Title][/B]</label>
-            <scroll>false</scroll>
-        </control>
-        <control type="label">
-            <visible>VideoPlayer.Content(Episodes)</visible>
-            <posx>550</posx>
-            <posy>820</posy>
-            <width>900</width>
-            <align>left</align>
-            <font>Light35</font>
-            <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-            <label>$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</label>
-            <scroll>false</scroll>
-        </control>
-        <!--Label LiveTV Channel-->
-        <control type="label">
-            <visible>VideoPlayer.Content(livetv)</visible>
-            <posx>550</posx>
-            <posy>770</posy>
-            <width>900</width>
-            <align>left</align>
-            <font>Light45</font>
-            <textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-            <label>[B]$INFO[VideoPlayer.ChannelName] [/B]</label>
-            <scroll>false</scroll>
-        </control>
-        <!--Label LiveTV Program-->
-        <control type="label">
-            <visible>VideoPlayer.Content(livetv)</visible>
-            <visible>!IsEmpty(VideoPlayer.Episode) + !IsEmpty(VideoPlayer.EpisodeName)</visible>
-            <posx>550</posx>
-            <posy>830</posy>
-            <width>900</width>
-            <align>left</align>
-            <font>Light45</font>
-            <textcolor>white</textcolor>
-            <label>[B]$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName][/B]</label>
-            <scroll>false</scroll>
-        </control>
-        <!--Label Ohter-->
-        <control type="label">
-            <visible>!VideoPlayer.Content(Movies) + !VideoPlayer.Content(Episodes)</visible>
-            <visible>IsEmpty(VideoPlayer.Episode) | IsEmpty(VideoPlayer.EpisodeName)</visible>
-            <posx>550</posx>
-            <posy>830</posy>
-            <width>900</width>
-            <align>left</align>
-            <font>Light45</font>
-            <textcolor>white</textcolor>
-            <label>[B]$INFO[VideoPlayer.Title][/B]</label>
-            <scroll>false</scroll>
-        </control>
+
         <!--Flags-->
         <control type="group">
             <!--Flags Video-->
@@ -478,6 +418,7 @@
                 <texture fallback="flags/audiochannels/default.png">$INFO[VideoPlayer.AudioChannels,flags/audiochannels/,.png]</texture>
             </control>
         </control>
+        
         <!--Time-->
         <control type="label">
             <!--Left Play Time-->
@@ -491,7 +432,7 @@
         </control>
         <control type="label">
             <!--Right Time Remaining-->
-            <posx>1665</posx>
+            <posx>1662</posx>
             <posy>880</posy>
             <width>200</width>
             <align>right</align>
@@ -500,12 +441,8 @@
             <label>- $INFO[Player.TimeRemaining]</label>
         </control>
         <control type="label">
-            <!--End Time DialogFullscreenInfo-->
-            <visible>Window.IsActive(DialogFullscreenInfo.xml) + !Window.IsActive(VideoOSD.xml)</visible>
-            <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
-            <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
-            <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
-            <animation effect="slide" start="0" end="160" time="0" condition="Window.IsActive(DialogSeekbar.xml)">Conditional</animation>
+            <!--End Time-->
+            <visible>[Window.IsActive(DialogSeekbar.xml) | Window.IsActive(DialogFullscreenInfo.xml)] + !Window.IsActive(VideoOSD.xml)</visible>
             <posx>1665</posx>
             <posy>955</posy>
             <width>300</width>
@@ -514,21 +451,8 @@
             <textcolor>black</textcolor>
             <label>[B]$LOCALIZE[31112] $INFO[Player.FinishTime][/B]</label>
         </control>
-        <control type="label">
-            <!--End Time DialogSeekbar-->
-            <visible>Window.IsActive(DialogSeekbar.xml) + !Window.IsActive(VideoOSD.xml)</visible>
-            <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
-            <animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
-            <animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
-            <posx>1665</posx>
-            <posy>955</posy>
-            <width>300</width>
-            <align>right</align>
-            <font>Reg28</font>
-            <textcolor>black</textcolor>
-            <label>[B]$LOCALIZE[31112] $INFO[Player.FinishTime][/B]</label>
-        </control>
-		<!-- next program -->
+
+        <!-- OSDLabel3 -->
 		<control type="label">
 			<!--Play Time-->
 			<posx>550</posx>
@@ -537,16 +461,16 @@
 			<align>left</align>
 			<font>Reg28</font>
 			<textcolor>black</textcolor>
-			<label>[B]$LOCALIZE[19031]:[/B] $INFO[VideoPlayer.NextTitle]</label>
-			<visible>VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)</visible>
+			<label>$VAR[OSDLabel3]</label>
 		</control>
+
         <control type="grouplist">
             <!--Clock-->
-            <posx>1395</posx>
+            <posx>1265</posx>
             <posy>770</posy>
             <width>400</width>
             <height>100</height>
-            <align>center</align>
+            <align>right</align>
             <itemgap>4</itemgap>
             <orientation>horizontal</orientation>
             <usecontrolcoords>true</usecontrolcoords>
@@ -577,6 +501,7 @@
                 <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
             </control>
         </control>
+        
         <!--Process/Seekbar-->
 		<control type="progress" id="1">
 			<description>ProgressbarCache</description>
@@ -604,10 +529,8 @@
     </include>
     
 	<include name="OSDPanelModern">
-
-		
-	<!-- osd panel -->
-	<control type="group">
+		<control type="group">
+			
 			<!--Panel-->
 			<control type="image">
 				<posx>0</posx>
@@ -700,7 +623,6 @@
 				<aspectratio align="center" aligny="center">keep</aspectratio>
 				<visible>Player.HasVideo + VideoPlayer.Content(livetv)</visible>
 			</control>
-			
 
 			<control type="image">
 				<!--record icon-->
@@ -715,159 +637,30 @@
 			</control>
 			
 			<control type="group">
-			<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
-				<!--Label Movie-->
+				<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
+				<!-- OSDLabel1 -->
 				<control type="label">
-					<visible>IsEmpty(VideoPlayer.Episode)</visible>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 					<posx>400</posx>
 					<posy>820</posy>
 					<width>1100</width>
 					<align>left</align>
 					<font>Light45</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-					<label>[B]$INFO[VideoPlayer.Title][/B]</label>
+					<label>$VAR[OSDLabel1]</label>
 					<scroll>false</scroll>
 				</control>
-				<!--Label subitile dialog-->
-				<control type="label">
-					<visible>StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-					<posx>400</posx>
-					<posy>820</posy>
-					<width>1100</width>
-					<align>left</align>
-					<font>Light45</font>
-					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-					<label>[B]$LOCALIZE[287][/B]</label>
-					<scroll>false</scroll>
-				</control>
+                <!-- OSDLabel2 -->
 				<control type="label">
 					<posx>400</posx>
 					<posy>880</posy>
 					<width>1100</width>
 					<align>left</align>
-					<font>Light35</font>
-					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-					<label>$INFO[VideoPlayer.Genre]</label>
-					<scroll>false</scroll>
-					<visible>IsEmpty(VideoPlayer.Episode)</visible>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-				</control>
-				<!-- Label Episode-->
-				<control type="label">
-					<visible>!IsEmpty(VideoPlayer.Episode)</visible>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-					<posx>400</posx>
-					<posy>820</posy>
-					<width>1100</width>
-					<align>left</align>
 					<font>Light45</font>
-					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-					<label>[B]$INFO[VideoPlayer.Episode]. $INFO[VideoPlayer.Title][/B]</label>
-					<scroll>false</scroll>
-				</control>
-				<control type="label">
-					<visible>!IsEmpty(VideoPlayer.Episode)</visible>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-					<posx>400</posx>
-					<posy>880</posy>
-					<width>1100</width>
-					<align>left</align>
-					<font>Reg42</font>
 					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-					<label>$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</label>
+					<label>[B]$VAR[OSDLabel2][/B]</label>
 					<scroll>false</scroll>
 				</control>
-				<!--Label LiveTV Channel-->
-				<control type="label">
-					<visible>VideoPlayer.Content(livetv)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-					<posx>400</posx>
-					<posy>820</posy>
-					<width>1100</width>
-					<align>left</align>
-					<font>Light45</font>
-					<textcolor>white</textcolor>
-					<label>[B]$INFO[VideoPlayer.ChannelName][/B]</label>
-					<scroll>false</scroll>
-				</control>
-				<!--Label LiveTV Program-->
-				<control type="label">
-					<visible>VideoPlayer.Content(livetv)</visible>
-					<visible>IsEmpty(VideoPlayer.Episode) | IsEmpty(VideoPlayer.EpisodeName)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-					<posx>400</posx>
-					<posy>870</posy>
-					<width>1100</width>
-					<align>left</align>
-					<font>Reg42</font>
-					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-					<label>$INFO[VideoPlayer.Title]</label>
-					<scroll>false</scroll>
-				</control>
-                <control type="label">
-                    <visible>VideoPlayer.Content(livetv)</visible>
-                    <visible>!IsEmpty(VideoPlayer.Episode) + !IsEmpty(VideoPlayer.EpisodeName)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-					<posx>400</posx>
-					<posy>870</posy>
-					<width>1100</width>
-					<align>left</align>
-					<font>Reg42</font>
-					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-                    <label>[B]$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName][/B]</label>
-                    <scroll>false</scroll>
-                </control>
-				
-				<!--Labels Music-->
-				<control type="group">
-					<visible>Player.HasAudio</visible>
-					<control type="label">
-						<posx>400</posx>
-						<posy>820</posy>
-						<width>1100</width>
-						<align>left</align>
-						<font>Light45</font>
-						<textcolor>white</textcolor>
-						<label>[B]$INFO[MusicPlayer.Artist][/B]</label>
-						<scroll>false</scroll>
-					</control>
-					<control type="label">
-						<posx>400</posx>
-						<posy>820</posy>
-						<width>1100</width>
-						<align>left</align>
-						<font>Light45</font>
-						<textcolor>white</textcolor>
-						<label>[B]$INFO[MusicPlayer.ChannelName][/B]</label>
-						<scroll>false</scroll>
-					</control>
-					<control type="label">
-						<posx>400</posx>
-						<posy>820</posy>
-						<width>1100</width>
-						<align>left</align>
-						<font>Light45</font>
-						<textcolor>white</textcolor>
-						<label>[B]$INFO[Window(Home).Property(streamtitle)][/B]</label>
-						<scroll>false</scroll>
-						<visible>IsEmpty(MusicPlayer.Artist) + IsEmpty(MusicPlayer.ChannelName)</visible>
-					</control>
-					<control type="label">
-						<posx>400</posx>
-						<posy>870</posy>
-						<width>1100</width>
-						<align>left</align>
-						<font>Reg42</font>
-						<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-						<label>$INFO[MusicPlayer.Title]</label>
-						<scroll>false</scroll>
-					</control>
-				</control>
+
 				<!--Process/Seekbar-->
 				<control type="label">
 					<!--Play Time-->
@@ -915,46 +708,18 @@
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 			
-				<!-- next program -->
+				<!-- OSDLabel3 -->
 				<control type="label">
-					<!--Play Time-->
 					<posx>400</posx>
 					<posy>1000</posy>
-					<width>800</width>
+					<width>1100</width>
 					<align>left</align>
 					<font>Light34</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-					<label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[VideoPlayer.NextTitle]</label>
-					<visible>Player.HasVideo + VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)</visible>
-				</control>
-				
-				<!-- chapter -->
-				<control type="label">
-					<!--Play Time-->
-					<posx>400</posx>
-					<posy>1000</posy>
-					<width>800</width>
-					<align>left</align>
-					<font>Light34</font>
-					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-					<label>$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]</label>
-					<visible>Player.HasVideo + !VideoPlayer.Content(livetv) + IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD) + !IsEmpty(player.chaptercount) + !StringCompare(player.chaptercount,00)</visible>
-				</control>
-				
-				<!-- next program -->
-				<control type="label">
-					<!--Play Time-->
-					<posx>400</posx>
-					<posy>1000</posy>
-					<width>1050</width>
-					<align>left</align>
-					<font>Light34</font>
-					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
-					<label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[554]:[/COLOR] $INFO[MusicPlayer.PlaylistPosition]/$INFO[MusicPlayer.PlaylistLength] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</label>
-					<visible>Player.HasAudio + !IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)</visible>
+					<label>$VAR[OSDLabel3]</label>
 				</control>
 			</control>
-			
+
 			<control type="image">
 				<!--Stars music-->
 				<visible>Window.IsActive(MusicVisualisation.xml)</visible>
@@ -965,7 +730,6 @@
 				<aspectratio aligny="top" align="right">keep</aspectratio>
 				<texture fallback="leftrating/rating0.png">$INFO[Player.StarRating,leftrating/]</texture>
 			</control>
-			
 		
 			<!-- media flags -->
 			<control type="grouplist">
@@ -1111,8 +875,8 @@
 				
 		</control>
 			
-		   <!--Time-->
-		   <control type="label">
+		    <!--Time-->
+		    <control type="label">
 				<!--End Time DialogFullscreenInfo-->
 				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
 					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
@@ -1157,7 +921,6 @@
 				<height>120</height>
 				<texture flipx="true">osd/ff.png</texture>
 			</control>
-			
 	
 			<!-- close dialog button -->
 			<control type="button">
@@ -1219,15 +982,13 @@
 					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
 				</control>
 			</control>
-			
-		
-		</control>
 
-   </include>
+		</control>
+    </include>
 	
 	<include name="MusicOSDClassic">
-
 		<include>animation_fade_visible_hidden</include>
+		
 		<!--Panel-->
 		<control type="image">
 			<posx>210</posx>
@@ -1236,7 +997,8 @@
 			<height>376</height>
 			<texture>osd/osd_panel.png</texture>
 		</control>
-		<!--Pause-->
+		
+		<!--Player States-->
 		<control type="image">
 			<visible>player.paused</visible>
 			<animation delay="300" time="400" effect="fade">Visible</animation>
@@ -1248,7 +1010,6 @@
 			<height>400</height>
 			<texture>osd/osd_pause.png</texture>
 		</control>
-		<!--FF/RW-->
 		<control type="label">
 			<posx>0</posx>
 			<posy>0</posy>
@@ -1369,6 +1130,7 @@
 			<label>RWx32</label>
 			<visible>player.rewinding32x</visible>
 		</control>
+		
 		<!--Cover-->
 		<control type="image">
 			<!--No Movie-->
@@ -1381,48 +1143,30 @@
 			<aspectratio align="left" aligny="top">stretch</aspectratio>
 			<visible>!IsEmpty(MusicPlayer.Cover)</visible>
 		</control>
-		<!--Label-->
-		<control type="label">
-			<posx>550</posx>
-			<posy>770</posy>
-			<width>900</width>
-			<align>left</align>
-			<font>Light45</font>
-			<textcolor>white</textcolor>
-			<label>[B]$INFO[MusicPlayer.Artist][/B]</label>
-			<scroll>false</scroll>
-		</control>
-		<control type="label">
-			<posx>550</posx>
-			<posy>770</posy>
-			<width>900</width>
-			<align>left</align>
-			<font>Light45</font>
-			<textcolor>white</textcolor>
-			<label>[B]$INFO[MusicPlayer.ChannelName][/B]</label>
-			<scroll>false</scroll>
-		</control>
-		<control type="label">
-			<posx>550</posx>
-			<posy>770</posy>
-			<width>900</width>
-			<align>left</align>
-			<font>Light45</font>
-			<textcolor>white</textcolor>
-			<label>[B]$INFO[Window(Home).Property(streamtitle)][/B]</label>
-			<scroll>false</scroll>
-			<visible>IsEmpty(MusicPlayer.Artist) + IsEmpty(MusicPlayer.ChannelName)</visible>
-		</control>
-		<control type="label">
-			<posx>550</posx>
-			<posy>820</posy>
-			<width>900</width>
-			<align>left</align>
-			<font>Light35</font>
-			<textcolor>mainblue</textcolor>
-			<label>$INFO[MusicPlayer.Title]</label>
-			<scroll>false</scroll>
-		</control>
+
+        <!-- OSDLabel1 -->
+        <control type="label">
+            <posx>550</posx>
+            <posy>770</posy>
+            <width>900</width>
+            <align>left</align>
+            <font>Light45</font>
+            <textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+            <label>$VAR[OSDLabel1]</label>
+            <scroll>false</scroll>
+        </control>
+        <!-- OSDLabel2 -->
+        <control type="label">
+            <posx>550</posx>
+            <posy>820</posy>
+            <width>900</width>
+            <align>left</align>
+            <font>Light45</font>
+            <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+            <label>[B]$VAR[OSDLabel2][/B]</label>
+            <scroll>false</scroll>
+        </control>
+
 		<!--Time-->
 		<control type="label">
 			<!--Left Play Time-->
@@ -1436,7 +1180,7 @@
 		</control>
 		<control type="label">
 			<!--Right Time Remaining-->
-			<posx>1660</posx>
+			<posx>1662</posx>
 			<posy>880</posy>
 			<width>200</width>
 			<align>right</align>
@@ -1446,21 +1190,22 @@
 		</control>
 		<control type="label">
 			<!--End Time-->
-			<posx>550</posx>
-			<posy>952</posy>
+			<posx>1665</posx>
+			<posy>955</posy>
 			<width>300</width>
-			<align>left</align>
+			<align>right</align>
 			<font>Light32</font>
 			<textcolor>$VAR[ThemeFontColorDarkGrey]</textcolor>
 			<label>$LOCALIZE[31000] $INFO[Player.FinishTime]</label>
 		</control>
+		
 		<control type="grouplist">
 			<!--Clock-->
-			<posx>1400</posx>
+			<posx>1265</posx>
 			<posy>770</posy>
 			<width>400</width>
 			<height>100</height>
-			<align>center</align>
+			<align>right</align>
 			<itemgap>4</itemgap>
 			<orientation>horizontal</orientation>
 			<usecontrolcoords>true</usecontrolcoords>
@@ -1492,6 +1237,7 @@
 				<textcolor>mainblue</textcolor>
 			</control>
 		</control>
+		
 		<control type="grouplist" id="200">
 			<!--OSD-->
 			<posx>757</posx>
@@ -1606,6 +1352,7 @@
 				<onclick>XBMC.PlayerControl(Random)</onclick>
 			</control>
 		</control>
+		
 		<!--Process/Seekbar-->
 		<control type="progress" id="23">
 			<description>Progress Bar</description>

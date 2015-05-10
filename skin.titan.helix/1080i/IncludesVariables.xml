@@ -1134,6 +1134,32 @@
         <value condition="!IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
 		<value condition="!IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
 	 </variable>
+
+	 <variable name="OSDLabel1">
+        <value condition="Player.HasVideo + StringCompare(Window(Home).Property(subtitlemenu), show)">$LOCALIZE[287]</value>
+        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv)">$INFO[VideoPlayer.ChannelName]</value>
+		<value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + Player.IsInternetStream + !IsEmpty(Window(10142).Property(Player.AddonName)) + IsEmpty(VideoPlayer.TvShowTitle)">$INFO[Window(10142).Property(Player.AddonName)]</value>
+        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(episodes) + !IsEmpty(VideoPlayer.TvShowTitle)">$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</value>
+        <value condition="Player.HasAudio + !IsEmpty(MusicPlayer.Artist)">$INFO[MusicPlayer.Artist]</value>
+        <value condition="Player.HasAudio + IsEmpty(MusicPlayer.Artist) + !IsEmpty(MusicPlayer.ChannelName)">$INFO[MusicPlayer.ChannelName]</value>
+        <value condition="Player.HasAudio + IsEmpty(MusicPlayer.Artist) + IsEmpty(MusicPlayer.ChannelName) + !IsEmpty(Window(Home).Property(streamtitle))">$INFO[Window(Home).Property(streamtitle)]</value>
+        <value condition="Player.HasAudio + IsEmpty(MusicPlayer.Artist) + IsEmpty(MusicPlayer.ChannelName) + IsEmpty(Window(Home).Property(streamtitle))">$INFO[Window(10142).Property(Player.AddonName)]</value>
+        <value>$LOCALIZE[31040]</value>
+	 </variable>
+     
+	 <variable name="OSDLabel2">
+        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(Episodes)">$INFO[VideoPlayer.Episode]. $INFO[VideoPlayer.Title]</value>
+        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv) + [!IsEmpty(VideoPlayer.Episode) + !IsEmpty(VideoPlayer.EpisodeName)]">$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName]</value>
+        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show)">$INFO[VideoPlayer.Title]</value>
+        <value condition="Player.HasAudio">$INFO[MusicPlayer.Title]</value>
+	 </variable>
+     
+	 <variable name="OSDLabel3">
+        <value condition="Player.HasVideo + VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[VideoPlayer.NextTitle]</value>
+        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD) + !IsEmpty(player.chaptercount) + !StringCompare(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]</value>
+        <value condition="Player.HasAudio + !IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[554]:[/COLOR] $INFO[MusicPlayer.PlaylistPosition]/$INFO[MusicPlayer.PlaylistLength] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</value>
+        <value condition="!IsEmpty(VideoPlayer.Genre) + !Window.IsActive(VideoOSD)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[515]:[/COLOR] $INFO[VideoPlayer.Genre]</value>
+	 </variable>
 	 
 	 <variable name="NextAiredLabel">
 		<value condition="StringCompare(System.Date(ddd),ListItem.Property(day))">$INFO[ListItem.Label] *</value>
@@ -1142,8 +1168,8 @@
 	 
 	 <variable name="PlayerActionLabel">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
-		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
-		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
+		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding] + !IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
 		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
@@ -1160,8 +1186,8 @@
 	 
 	 <variable name="PlayerActionLabelLarge">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
-		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
-		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding]">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
+		<value condition="Player.DisplayAfterSeek + ![player.forwarding | player.rewinding] + !IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
 		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
