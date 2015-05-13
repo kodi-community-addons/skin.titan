@@ -1,4 +1,5 @@
 import xbmcaddon
+import xbmcplugin
 import os
 
 __settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
@@ -24,12 +25,12 @@ except:
 
 try:
     argument1 = str(sys.argv[2])
-except: 
+except:
     pass
 
 try:
     argument2 = str(sys.argv[3])
-except: 
+except:
     pass
 
 try:
@@ -78,3 +79,10 @@ elif action == "CHECKNOTIFICATIONS":
     MainModule.checkNotifications(argument1)
 elif action == "SETSKINVERSION":
     MainModule.setSkinVersion()
+elif argument1 == "?FAVOURITES":
+    MainModule.getFavourites()
+elif "?LAUNCHAPP" in argument1:
+    try:
+        app = argument1.split("&&&")[-1]
+        xbmc.executebuiltin(app)
+    except: pass

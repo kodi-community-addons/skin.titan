@@ -5,7 +5,7 @@ import xbmcaddon
 import shutil
 import xbmcaddon
 import xbmcvfs
-import os
+import os, sys
 import time
 import urllib
 import xml.etree.ElementTree as etree
@@ -856,3 +856,30 @@ def showSubmenu(showOrHide,doFocus):
             win.setProperty("submenuloading", "loading")
             win.setProperty("submenu", "hide")
             
+def getFavourites():
+    try:
+        xbmcplugin.setContent(int(sys.argv[1]), 'files')
+        favoritesCount = 0
+        fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
+        if xbmcvfs.exists( fav_file ):
+            doc = parse( fav_file )
+            listing = doc.documentElement.getElementsByTagName( 'favourite' )
+            
+            for count, favourite in enumerate(listing):
+                label = ""
+                image = "special://skin/extras/hometiles/favourites.png"
+                for (name, value) in favourite.attributes.items():
+                    if name == "name":
+                        label = value
+                    if name == "thumb":
+                        image = value
+                path = favourite.childNodes [ 0 ].nodeValue
+                
+                path="plugin://script.titanskin.helpers?LAUNCHAPP&&&" + path
+                li = xbmcgui.ListItem(label, path=path)
+                li.setThumbnailImage(image)
+                li.setProperty('IsPlayable', 'false')
+                
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=li, isFolder=False)
+    except: pass        
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
