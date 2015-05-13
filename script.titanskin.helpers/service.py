@@ -111,9 +111,9 @@ class Main:
                     if ((xbmc.getCondVisibility("Container.Content(plugins)")) or xbmc.getCondVisibility("!IsEmpty(Container.PluginName)")):
                         AddonName = xbmc.getInfoLabel('Container.PluginName')
                         AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('name')
-                        xbmcgui.Window(10142).setProperty("Player.AddonName", AddonName)
+                        win.setProperty("Player.AddonName", AddonName)
                     else:
-                        xbmcgui.Window(10142).clearProperty("Player.AddonName")
+                        win.clearProperty("Player.AddonName")
 
 
 
