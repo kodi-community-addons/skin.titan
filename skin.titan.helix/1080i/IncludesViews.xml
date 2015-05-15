@@ -389,6 +389,7 @@
 			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
 			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 			<visible>!skin.hastheme(classic)</visible>
+			<visible>!Control.IsVisible(516)</visible>
 		</control>
 		
 		
@@ -459,7 +460,7 @@
           <control type="group">
 			 <control type="image">
 				<posy>35</posy>
-				<posx>-10</posx>
+				<posx>-13</posx>
 				<width>605</width>
 				<height>760</height>
 				<texture border="15">diffuse/rounded.png</texture>
@@ -471,28 +472,18 @@
 				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
 				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 				<visible>!skin.hastheme(classic)</visible>
+				<visible>!Control.IsVisible(516)</visible>
 			</control>
 			
 			<include condition="skin.hastheme(classic)">ClassicDetailsPanel3</include>
-			
-			
-			<control type="image">
-				<posy>38</posy>
-				<posx>-8</posx>
-				<width>603</width>
-				<height>342</height>
-				<texture border="5">diffuse/box.png</texture>
-				<colordiffuse>$VAR[panel_color]</colordiffuse>
-				<visible>Skin.HasSetting(DetailsLeftHidepanel)</visible>
-				<animation effect="slide" start="0" end="20" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-			</control>
+
 			<control type="image">
 				<posx>0</posx>
 				<posy>47</posy>
-				<width>585</width>
+				<width>580</width>
 				<height>320</height>
-				<texture background="true" diffuse="home/home_matte2.png">$VAR[DetailsFanArtImage]</texture>
-				<aspectratio aligny="center">scale</aspectratio>
+				<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+				<texture diffuse="diffuse/landscape.png" background="true">$VAR[DetailsFanArtImage]</texture>
 				<visible>!skin.hastheme(classic)</visible>
 			</control>
 			
@@ -935,6 +926,16 @@
 			<selected>Skin.HasSetting(BigListViewShowInfo)</selected>
 			<visible>Control.IsVisible(51)</visible>
 		</control>
+		
+		<control type="radiobutton" id="1342">
+			<!--Show info-->
+			<include>SubMenuButton</include>
+			<label>36427</label>
+			<onclick>Skin.ToggleSetting(SlimListViewShowInfo)</onclick>
+			<selected>Skin.HasSetting(SlimListViewShowInfo)</selected>
+			<visible>Control.IsVisible(516)</visible>
+		</control>
+		
 		<control type="radiobutton" id="343">
 			<!--Hide panel behind moviedetails-->
 			<include>SubMenuButton</include>
@@ -997,7 +998,7 @@
 			<label>31200</label>
 			<onclick>Skin.ToggleSetting(View51_ShowCDart)</onclick>
 			<selected>Skin.HasSetting(View51_ShowCDart)</selected>
-			<visible>Control.IsVisible(51) + !Skin.HasSetting(BigListViewShowInfo)</visible>
+			<visible>Control.IsVisible(51)</visible>
 		</control>
 		<control type="radiobutton" id="345">
 			<!--animate discart-->
@@ -1010,7 +1011,7 @@
 			[Skin.HasSetting(View508_ShowCDart) + Control.IsVisible(508)] | 
 			[Skin.HasSetting(View513_ShowCDart) + Control.IsVisible(513)] | 
 			[Skin.HasSetting(View514_ShowCDart) + Control.IsVisible(514)] | 
-			[Skin.HasSetting(View51_ShowCDart) + Control.IsVisible(51) + !Skin.HasSetting(BigListViewShowInfo)] | 
+			[Skin.HasSetting(View51_ShowCDart) + Control.IsVisible(51) | 
 			[Skin.HasSetting(View52_ShowCDart) + Control.IsVisible(52)]
 			</visible>
 			<visible></visible>
@@ -1030,6 +1031,14 @@
 			<onclick>Skin.ToggleSetting(View515_HidePanel)</onclick>
 			<selected>Skin.HasSetting(View515_HidePanel)</selected>
 			<visible>Control.IsVisible(515) + !StringCompare(Skin.String(ViewDetailsPanelOpacity),0)</visible>
+		</control>
+		<control type="radiobutton" id="1503">
+			<!--Hide background panel-->
+			<include>SubMenuButton</include>
+			<label>31155</label>
+			<onclick>Skin.ToggleSetting(View516_HidePanel)</onclick>
+			<selected>Skin.HasSetting(View516_HidePanel)</selected>
+			<visible>Control.IsVisible(516) + !StringCompare(Skin.String(ViewDetailsPanelOpacity),0)</visible>
 		</control>
 		
 		<control type="radiobutton" id="601">
@@ -2950,7 +2959,9 @@
 					<height>20</height>
 				</control>
 			</control>
-            <!-- Plot -->
+            
+			
+			<!-- Plot -->
             <control type="group">
                 <animation effect="slide" end="40,0" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
                 <posx>1040</posx>
