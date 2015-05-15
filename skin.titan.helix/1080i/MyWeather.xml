@@ -21,8 +21,8 @@
         <include condition="!Skin.HasSetting(DisableHeader)">TimeInfo</include>
         
 		<!-- weather View -->
-		<include condition="IsEmpty(Window.Property(Daily.IsFetched))">SimpleWeather</include>
-		<include condition="!IsEmpty(Window.Property(Daily.IsFetched))">ExtendedWeather</include>
+		<include condition="!Skin.HasSetting(useExtendedWeatherScreen)">SimpleWeather</include>
+		<include condition="Skin.HasSetting(useExtendedWeatherScreen)">ExtendedWeather</include>
 		
 		
         <!--Sub Menu Tab Left-->
@@ -103,6 +103,15 @@
 					<onclick condition="skin.string(WeatherIconPack, set3)">Skin.SetString(WeatherIconPack, set4)</onclick>
 					<onclick condition="skin.string(WeatherIconPack, set4)">Skin.SetString(WeatherIconPack, set1)</onclick>
                     <include>SubMenuButton</include>
+                </control>
+				
+				<control type="radiobutton" id="5163">
+                    <description>use extended weather screen</description>
+                    <label>31452</label>
+                    <include>SubMenuButton</include>
+                    <onclick>Skin.ToggleSetting(useExtendedWeatherScreen)</onclick>
+                    <selected>Skin.HasSetting(useExtendedWeatherScreen)</selected>
+					<onclick>Reloadskin()</onclick>
                 </control>
 
 
