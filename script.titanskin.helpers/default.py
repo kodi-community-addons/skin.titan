@@ -10,6 +10,7 @@ sys.path.append(BASE_RESOURCE_PATH)
 import MainModule
 import BackupRestore
 from SearchDialog import SearchDialog
+from ColorPicker import ColorPicker
 
 #script init
 action = ""
@@ -66,7 +67,11 @@ elif action == "VIDEOSEARCH":
     searchDialog = SearchDialog("CustomSearch.xml", __cwd__, "default", "1080i")
     searchDialog.doModal()
     del searchDialog
-    
+elif action == "COLORPICKER":
+    colorPicker = ColorPicker("ColorPicker.xml", __cwd__, "default", "1080i")
+    colorPicker.skinString = argument1
+    colorPicker.doModal()
+    del colorPicker
 elif action == "BACKUP":
     BackupRestore.backup()
 elif action == "RESTORE":
