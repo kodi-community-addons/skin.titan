@@ -91,7 +91,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         
         if action.getId() in ACTION_CANCEL_DIALOG:
             self.close()
-        else:
+        if action.getId() == ACTION_SELECT_ITEM:
             item =  self.colorsList.getSelectedItem()
             colorstring = item.getProperty("colorstring")
             self.manualEdit.setText(colorstring)
