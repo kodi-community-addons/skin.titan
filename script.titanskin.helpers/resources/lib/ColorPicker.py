@@ -54,15 +54,30 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         self.colorsList = self.getControl(3110)
         self.manualEdit = self.getControl(3010)
         
+        #get current color that is stored in the skin setting
+        currentColor = xbmc.getInfoLabel("Skin.String(" + self.skinString + ')')
+        selectItem = 0
+        
+        #get all colors from the colors xml file
         colors_file = xbmc.translatePath( 'special://home/addons/script.titanskin.helpers/resources/colors/colors.xml' ).decode("utf-8")
         if xbmcvfs.exists( colors_file ):
             doc = parse( colors_file )
             listing = doc.documentElement.getElementsByTagName( 'color' )
-            
             for count, color in enumerate(listing):
                 name = color.attributes[ 'name' ].nodeValue
                 colorstring = color.childNodes [ 0 ].nodeValue
+                if colorstring == currentColor:
+                    selectItem = count
                 self.addColorToList(name, colorstring)
+                
+        #focus the current color
+        xbmc.executebuiltin("Control.SetFocus(3110)")
+        self.colorsList.selectItem(selectItem)
+        item =  self.colorsList.getSelectedItem()
+        colorstring = item.getProperty("colorstring")
+        self.manualEdit.setText(colorstring)
+        
+        
 
     def onFocus(self, controlId):
         pass
@@ -79,7 +94,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         else:
             item =  self.colorsList.getSelectedItem()
             colorstring = item.getProperty("colorstring")
-            self.manualEdit.setLabel(colorstring)
+            self.manualEdit.setText(colorstring)
 
 
     def closeDialog(self):
@@ -92,6 +107,10 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             colorstring = item.getProperty("colorstring")
             xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
             self.closeDialog()
-        else:
+        elif(controlID == 3010):       
+            colorstring = self.manualEdit.getText()
+            xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
             self.closeDialog()
-            pass
+        elif(controlID == 3011):       
+            xbmc.executebuiltin("Skin.SetString(" + self.skinString + ',"")')
+            self.closeDialog()
