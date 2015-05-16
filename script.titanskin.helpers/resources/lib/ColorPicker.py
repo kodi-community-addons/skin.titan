@@ -66,7 +66,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             for count, color in enumerate(listing):
                 name = color.attributes[ 'name' ].nodeValue
                 colorstring = color.childNodes [ 0 ].nodeValue
-                if colorstring == currentColor:
+                if (colorstring == currentColor or name == currentColor):
                     selectItem = count
                 self.addColorToList(name, colorstring)
                 
