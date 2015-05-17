@@ -38,7 +38,7 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         if action.getId() in ACTION_CANCEL_DIALOG:
             searchTerm = self.getControl(3010).getText()
             if(len(searchTerm) == 0):
-                self.close()
+                self.closeDialog()
             else:
                 searchTerm = searchTerm[:-1]
                 self.getControl(3010).setText(searchTerm)
@@ -50,7 +50,8 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
 
     def closeDialog(self):
         self.searchThread.stopRunning()
-        self.close()
+        #self.close() ##crashes kodi ?
+        xbmc.executebuiltin("Dialog.Close(all,true)")
         
     def onClick(self, controlID):
 

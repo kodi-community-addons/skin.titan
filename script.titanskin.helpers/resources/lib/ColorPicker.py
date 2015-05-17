@@ -90,7 +90,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         ACTION_PARENT_DIR = 9
         
         if action.getId() in ACTION_CANCEL_DIALOG:
-            self.close()
+            self.closeDialog()
         if action.getId() == ACTION_SELECT_ITEM:
             item =  self.colorsList.getSelectedItem()
             colorstring = item.getProperty("colorstring")
@@ -98,7 +98,8 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
 
 
     def closeDialog(self):
-        self.close()
+        #self.close() ##crashes kodi ?
+        xbmc.executebuiltin("Dialog.Close(all,true)")
         
     def onClick(self, controlID):
 
