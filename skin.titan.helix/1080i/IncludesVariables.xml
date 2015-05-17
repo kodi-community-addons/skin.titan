@@ -1034,18 +1034,19 @@
     <value condition="Container.Content(Episodes) + ListItem.Property(season_finale)">$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration, ,min. • ] $LOCALIZE[31336]</value>
 	<value condition="Container.Content(Episodes) + ListItem.Property(series_finale)">$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration, ,min. • ] $LOCALIZE[31335]</value>
 	<value condition="Container.Content(Episodes)">$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration, ,min.]</value>
-    <value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
+	<value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
     <value condition="Container.Content(songs)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre,, • ]$INFO[ListItem.Album]</value>
     <value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),[COLOR=mainblue]$LOCALIZE[515]: [/COLOR]]</value>
     <value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),[COLOR=mainblue]$LOCALIZE[176]: [/COLOR]]</value>
-    <value condition="Container.Content(MusicVideos)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,, min.]</value>
+    <value condition="Container.Content(MusicVideos) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,, min.]</value>
 	<value condition="SubString(ListItem.Path,videodb://movies/sets/)">$INFO[Window(Home).Property(MovieSet.Year),, • ]$INFO[Window(Home).Property(MovieSet.Genre)]</value>
-    <value condition="Container.Content(Movies)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration, , min.]$INFO[ListItem.Genre, • ]</value>
-    <value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] [COLOR=mainblue]$INFO[ListItem.Property(UnWatchedEpisodes), (,) ][/COLOR]</value>
-    <value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ]</value>
+    <value condition="Container.Content(Movies) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year) | !IsEmpty(ListItem.Genre)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration, , min.]$INFO[ListItem.Genre, • ]</value>
+	<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] [COLOR=mainblue]$INFO[ListItem.Property(UnWatchedEpisodes), (,) ][/COLOR]</value>
+    <value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ]</value>
     <value condition="window.isactive(mypvrchannels.xml) + !IsEmpty(ListItem.ChannelName)">$INFO[ListItem.Title,, • ]$INFO[ListItem.StartTime]-$INFO[ListItem.EndTime]</value>
-	<value condition="!IsEmpty(ListItem.ChannelName)">$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartDate]</value>
-	<value>$INFO[ListItem.Label2]</value>
+	<value condition="!IsEmpty(ListItem.ChannelName) + !IsEmpty(ListItem.StartDate)">$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartDate]</value>
+	<value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration, ,min. • ]</value>
+	<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
   </variable>
   
   <variable name="Plots">
