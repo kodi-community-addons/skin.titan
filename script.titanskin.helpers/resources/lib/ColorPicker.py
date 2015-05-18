@@ -9,6 +9,7 @@ import threading
 import InfoDialog
 from PIL import Image
 from xml.dom.minidom import parse
+from operator import itemgetter
 
 win = xbmcgui.Window( 10000 )
 addon = xbmcaddon.Addon(id='script.titanskin.helpers')
@@ -58,18 +59,32 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         currentColor = xbmc.getInfoLabel("Skin.String(" + self.skinString + ')')
         selectItem = 0
         
-        #get all colors from the colors xml file
+        #get all colors from the colors xml file and fill a list with tuples to sort later on
+        allColors = []
         colors_file = xbmc.translatePath( 'special://home/addons/script.titanskin.helpers/resources/colors/colors.xml' ).decode("utf-8")
         if xbmcvfs.exists( colors_file ):
             doc = parse( colors_file )
             listing = doc.documentElement.getElementsByTagName( 'color' )
             for count, color in enumerate(listing):
-                name = color.attributes[ 'name' ].nodeValue
-                colorstring = color.childNodes [ 0 ].nodeValue
-                if (colorstring == currentColor or name == currentColor):
-                    selectItem = count
-                self.addColorToList(name, colorstring)
+                name = color.attributes[ 'name' ].nodeValue.lower()
+                colorstring = color.childNodes [ 0 ].nodeValue.lower()
+                allColors.append((name,colorstring))
+        
+        print allColors
                 
+        #sort list and fill the panel
+        count = 0
+        allColors = sorted(allColors,key=itemgetter(1))
+        
+        print "###########################################"
+        print allColors
+        
+        for color in allColors:
+            count += 1
+            self.addColorToList(color[0], color[1])
+            if (colorstring == color[1] or name == color[0]):
+                selectItem = count
+
         #focus the current color
         xbmc.executebuiltin("Control.SetFocus(3110)")
         self.colorsList.selectItem(selectItem)
