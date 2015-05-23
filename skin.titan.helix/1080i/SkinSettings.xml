@@ -32,12 +32,12 @@
 			<width>1820</width>
 			<height>810</height>
 			<texture border="15">diffuse/bgpanel.png</texture>
-			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
-			<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),0)">Conditional</animation>
+			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 		</control>
 		
 		<control type="image">
@@ -46,12 +46,12 @@
 			<width>500</width>
 			<height>810</height>
 			<texture border="15">diffuse/bgpanel.png</texture>
-			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
-			<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
+			<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),0)">Conditional</animation>
+			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 		</control>
 		
         <!--List 100 Left Area-->
@@ -618,10 +618,51 @@
                     <align>left</align>
                     <label>$LOCALIZE[31455] [COLOR=$INFO[Skin.String(FooterTextColor)]]$INFO[Skin.String(FooterTextColor)][/COLOR]</label>
                     <height>50</height>
-                    
 					<shadowcolor>black</shadowcolor>
                     <font>Reg28</font>
 					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,FooterTextColor)</onclick>
+					<visible>!Skin.HasSetting(NoFooterBar)</visible>
+                </control>
+				
+				<!--footer panel color-->
+				<control type="button" id="13712">
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>$LOCALIZE[31471]: $INFO[Skin.String(FooterGeneralPanelsColor)]</label>
+                    <height>50</height>
+					<shadowcolor>black</shadowcolor>
+                    <font>Reg28</font>
+					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,FooterGeneralPanelsColor)</onclick>
+					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar)</visible>
+                </control>
+				
+				<!--Footer bar opacity-->
+				<control type="button" id="13713">
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>$LOCALIZE[31471]: $INFO[Skin.String(FooterPanelOpacity)]</label>
+                    <height>50</height>
+					<shadowcolor>black</shadowcolor>
+                    <font>Reg28</font>
+					<onclick condition="skin.string(FooterPanelOpacity, 100)">Skin.SetString(FooterPanelOpacity, 80)</onclick>
+					<onclick condition="skin.string(FooterPanelOpacity, 80)">Skin.SetString(FooterPanelOpacity, 60)</onclick>
+					<onclick condition="skin.string(FooterPanelOpacity, 60)">Skin.SetString(FooterPanelOpacity, 40)</onclick>
+					<onclick condition="skin.string(FooterPanelOpacity, 40)">Skin.SetString(FooterPanelOpacity, 20)</onclick>
+					<onclick condition="skin.string(FooterPanelOpacity, 20)">Skin.SetString(FooterPanelOpacity, 0)</onclick>
+					<onclick condition="skin.string(FooterPanelOpacity, 0)">Skin.SetString(FooterPanelOpacity, 100)</onclick>
+					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar)</visible>
+                </control>
+				
+				<!--no footer-->
+				<control type="radiobutton" id="13714">
+                    <description></description>
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>31029</label>
+                    <height>50</height>
+                    <font>Reg28</font>
+                    <onclick>Skin.ToggleSetting(NoFooterBar)</onclick>
+                    <selected>Skin.HasSetting(NoFooterBar)</selected>
                 </control>
 				
 				<!--buttons focus color-->
@@ -660,49 +701,36 @@
 					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,ButtonFocusTextColor)</onclick>
                 </control>
 				
-				<!--no footer-->
-				<control type="radiobutton" id="13015">
-                    <description></description>
-                    <width>1230</width>
-                    <align>left</align>
-                    <label>31029</label>
-                    <height>50</height>
-                    
-                    <font>Reg28</font>
-                    <onclick>Skin.ToggleSetting(NoFooterBar)</onclick>
-                    <selected>Skin.HasSetting(NoFooterBar)</selected>
-                </control>
-				
-				<!--Footer bar opacity opacity-->
+
+				<!--General panels opacity-->
 				<control type="button" id="13016">
                     <width>1230</width>
                     <align>left</align>
-                    <label>$LOCALIZE[31249]: $INFO[Skin.String(FooterOpacity)]</label>
+                    <label>$LOCALIZE[31249]: $INFO[Skin.String(GeneralPanelsOpacity)]</label>
                     <height>50</height>
                     
 					<shadowcolor>black</shadowcolor>
                     <font>Reg28</font>
-					<onclick condition="skin.string(FooterOpacity, 100)">Skin.SetString(FooterOpacity, 80)</onclick>
-					<onclick condition="skin.string(FooterOpacity, 80)">Skin.SetString(FooterOpacity, 60)</onclick>
-					<onclick condition="skin.string(FooterOpacity, 60)">Skin.SetString(FooterOpacity, 40)</onclick>
-					<onclick condition="skin.string(FooterOpacity, 40)">Skin.SetString(FooterOpacity, 20)</onclick>
-					<onclick condition="skin.string(FooterOpacity, 20)">Skin.SetString(FooterOpacity, 0)</onclick>
-					<onclick condition="skin.string(FooterOpacity, 0)">Skin.SetString(FooterOpacity, 100)</onclick>
+					<onclick condition="skin.string(GeneralPanelsOpacity, 100)">Skin.SetString(GeneralPanelsOpacity, 80)</onclick>
+					<onclick condition="skin.string(GeneralPanelsOpacity, 80)">Skin.SetString(GeneralPanelsOpacity, 60)</onclick>
+					<onclick condition="skin.string(GeneralPanelsOpacity, 60)">Skin.SetString(GeneralPanelsOpacity, 40)</onclick>
+					<onclick condition="skin.string(GeneralPanelsOpacity, 40)">Skin.SetString(GeneralPanelsOpacity, 20)</onclick>
+					<onclick condition="skin.string(GeneralPanelsOpacity, 20)">Skin.SetString(GeneralPanelsOpacity, 0)</onclick>
+					<onclick condition="skin.string(GeneralPanelsOpacity, 0)">Skin.SetString(GeneralPanelsOpacity, 100)</onclick>
 					<visible>!skin.hastheme(classic) + !skin.hassetting(nofooterbar)</visible>
                 </control>
 				
-				<!--panel color-->
+				<!--General panel color-->
 				<control type="button" id="13017">
 					<width>1230</width>
 					<align>left</align>
 					<onup>13000</onup>
 					<ondown>13000</ondown>
-					<label>$LOCALIZE[31260]: [COLOR=$INFO[Skin.String(PanelColor)]]$INFO[Skin.String(PanelColor)][/COLOR]</label>
+					<label>$LOCALIZE[31260]: $INFO[Skin.String(GeneralPanelsColor)]</label>
 					<shadowcolor>black</shadowcolor>
 					<height>50</height>
-					
 					<font>Reg28</font>
-					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,PanelColor)</onclick>
+					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,GeneralPanelsColor)</onclick>
 				</control>
 				
 				<!--general text color-->
@@ -819,7 +847,6 @@
                     <align>left</align>
                     <label>$LOCALIZE[31222] [COLOR=$INFO[Skin.String(ViewDetailsTextColor)]]$INFO[Skin.String(ViewDetailsTextColor)][/COLOR]</label>
                     <height>50</height>
-                    
 					<shadowcolor>black</shadowcolor>
                     <font>Reg28</font>
 					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,ViewDetailsTextColor)</onclick>
@@ -878,6 +905,16 @@
 					<onclick condition="skin.string(ViewDetailsPanelOpacity, 0)">Skin.SetString(ViewDetailsPanelOpacity, 100)</onclick>
                 </control>
 				
+				<!--viewdetails panel color-->
+				<control type="button" id="13325">
+                    <width>1230</width>
+                    <align>left</align>
+                    <label>$LOCALIZE[31472]: $INFO[Skin.String(ViewDetailsPanelColor)]</label>
+                    <height>50</height>
+					<shadowcolor>black</shadowcolor>
+                    <font>Reg28</font>
+					<onclick>RunScript(script.titanskin.helpers,COLORPICKER,ViewDetailsPanelColor)</onclick>
+                </control>
 				
 				
 				<!-- prefer fanart in landscaped views -->
