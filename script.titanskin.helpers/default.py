@@ -79,6 +79,8 @@ elif action == "COLORTHEMES":
     colorThemes = ColorThemes("ColorThemes.xml", __cwd__, "default", "1080i")
     colorThemes.doModal()
     del colorPicker
+elif action == "COLORTHEMETEXTURE":    
+    MainModule.selectOverlayTexture()   
 elif action == "BACKUP":
     BackupRestore.backup()
 elif action == "RESTORE":

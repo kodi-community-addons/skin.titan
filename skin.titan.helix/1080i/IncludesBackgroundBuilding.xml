@@ -7,9 +7,8 @@
         <control type="image">
 			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + SubString(Window.Property(xmlfile),My,left)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
 			<include>DimensionsFullscreen</include>
-			<texture>special://skin/extras/bgoverlays/Default.png</texture>
+			<texture>$VAR[ColorOverlayTexture]</texture>
 			<colordiffuse>$INFO[Skin.String(ColorTheme)]</colordiffuse>
-			<visible>!Skin.String(CustomColorTheme)</visible>
 			<visible>![Control.IsVisible(507) + !IsEmpty(ListItem.Art(fanart))]</visible>
 			<animation effect="fade" reversible="false" end="95" time="0" condition="StringCompare(Skin.String(OverlayOpacity),95)">Conditional</animation>
 			<animation effect="fade" reversible="false" end="90" time="0" condition="StringCompare(Skin.String(OverlayOpacity),90)">Conditional</animation>
@@ -19,39 +18,26 @@
 			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(OverlayOpacity),40)">Conditional</animation>
 			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(OverlayOpacity),20)">Conditional</animation>
 		</control>
-		<!--Dialog Overlay other-->
-		<control type="image">
-			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + SubString(Window.Property(xmlfile),My,left)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
-            <include>DimensionsFullscreen</include>
-            <texture>$INFO[Skin.String(CustomColorTheme)]</texture>
-			<visible>Skin.String(CustomColorTheme)</visible>
-			<visible>![Control.IsVisible(507) + !IsEmpty(ListItem.Art(fanart))]</visible>
-			<animation effect="fade" reversible="false" end="95" time="0" condition="StringCompare(Skin.String(OverlayOpacity),95)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="90" time="0" condition="StringCompare(Skin.String(OverlayOpacity),90)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="85" time="0" condition="StringCompare(Skin.String(OverlayOpacity),85)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(OverlayOpacity),80)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(OverlayOpacity),60)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(OverlayOpacity),40)">Conditional</animation>
-			<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(OverlayOpacity),20)">Conditional</animation>
-        </control>
     </include>
 	
-	<variable name="ColorOverlay">
-		<value condition="!Skin.String(ColorTheme, none) + !Skin.String(ColorTheme, custom)">$INFO[Skin.String(ColorTheme),special://skin/extras/bgoverlays/,.png]</value>
-		<value condition="Skin.String(ColorTheme, custom)">$INFO[Skin.String(CustomColorTheme)]</value>
+	<variable name="ColorOverlayTexture">
+		<value condition="!Skin.String(ColorThemeTexture, Custom)">special://skin/extras/bgoverlays/$INFO[Skin.String(ColorThemeTexture)].png</value>
+		<value condition="Skin.String(ColorThemeTexture, Custom)">$INFO[Skin.String(CustomColorThemeTexture)]</value>
    </variable>
 	
 	<include name="DialogOverlayExtra">
+		<!-- fallback if user disabled overlays -->
 		<control type="image">
 			<include>DimensionsFullscreen</include>
 			<texture>special://skin/extras/bgoverlays/Default.png</texture>
 			<colordiffuse>FF4d86a6</colordiffuse>
-			<visible>!Skin.String(ColorTheme) | Skin.String(ColorTheme, None)</visible>
+			<visible>!Skin.String(ColorThemeTexture) | Skin.String(ColorThemeTexture, None)</visible>
 		</control>
+		<!-- the normal overlay with high opacity levels -->
 		<control type="image">
 			<include>DimensionsFullscreen</include>
-			<texture>special://skin/extras/bgoverlays/Default.png</texture>
-			<visible>Skin.String(ColorTheme)</visible>
+			<texture>$VAR[ColorOverlayTexture]</texture>
+			<visible>!Skin.String(ColorThemeTexture, None) + Skin.String(ColorThemeTexture)</visible>
 			<colordiffuse>$INFO[Skin.String(ColorTheme)]</colordiffuse>
 		</control>
     </include>

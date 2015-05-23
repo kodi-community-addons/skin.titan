@@ -885,8 +885,30 @@ def getFavourites():
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=li, isFolder=False)
     except: pass        
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
+def selectOverlayTexture():
+    overlaysList = []
+    overlaysList.append("Custom Overlay Image")
+    dirs, files = xbmcvfs.listdir("special://skin/extras/bgoverlays/")
+    for file in files:
+        if file.endswith(".png"):
+            label = file.replace(".png","")
+            overlaysList.append(label)
     
+    overlaysList.append("None")
     
+    dialog = xbmcgui.Dialog()
+    ret = dialog.select(xbmc.getLocalizedString(31470), overlaysList)
+    if ret == 0:
+        dialog = xbmcgui.Dialog()
+        custom_texture = dialog.browse( 2 , xbmc.getLocalizedString(31457), 'files')
+        if custom_texture:
+            xbmc.executebuiltin("Skin.SetString(ColorThemeTexture,Custom)")
+            xbmc.executebuiltin("Skin.SetString(CustomColorThemeTexture,%s)" % custom_texture)
+    else:
+        xbmc.executebuiltin("Skin.SetString(ColorThemeTexture,%s)" % overlaysList[ret])
+        xbmc.executebuiltin("Skin.Reset(CustomColorThemeTexture)")
+
 def selectView():
     import Dialogs as dialogs
     
