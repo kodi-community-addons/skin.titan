@@ -600,17 +600,30 @@
 				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
 			
-			<!--Cover movies-->
+			<!--Cover movies - poster-->
 			<control type="image" id="1">
 				<posx>60</posx>
 				<posy>820</posy>
-				<width>240</width>
+				<width>165</width>
 				<height>240</height>
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
-				<aspectratio align="left" aligny="top">keep</aspectratio>
-				<visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
+				<aspectratio align="left" aligny="top">scale</aspectratio>
+				<visible>Player.HasVideo + !VideoPlayer.Content(livetv) + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
+			
+			<!--Cover movies - no poster-->
+			<control type="image" id="1">
+				<posx>60</posx>
+				<posy>830</posy>
+				<width>250</width>
+				<height>170</height>
+				<fadetime>200</fadetime>
+				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
+				<aspectratio align="left" aligny="top">scale</aspectratio>
+				<visible>Player.HasVideo + !VideoPlayer.Content(livetv) + [IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster))]</visible>
+			</control>
+
 			
 			<!--Cover livetv-->
 			<control type="image">
