@@ -179,17 +179,6 @@
 			</control>
 
 			
-			<control type="image">
-				<posx>-20</posx>
-				<width>1930</width>
-				<texture border="39">pvr/pvr_epg_panel.png</texture>
-				<aspectratio>stretch</aspectratio>
-				<height>340</height>
-				<visible>skin.hastheme(classic)</visible>
-				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-			</control>
-			
 			<!-- clearlogo -->
 			<control type="image">
 				<posx>755</posx>
@@ -219,63 +208,10 @@
 				<texturenofocus>dialogs/default/separator.png</texturenofocus>
 				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<include>animation_fade_visible_hidden_delayed</include>
-				<visible>!skin.hastheme(classic)</visible>
 				<visible allowhiddenfocus="true">[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
 			</control>
-			
-			<!-- widget type selector classic theme -->
-			<control type="group">		
-				<visible>skin.hastheme(classic)</visible>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-				<visible>!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + !SubString(Window(Home).Property(activewidget),smart-) + ![StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]</visible>
-				<control type="image">
-					<height>70</height>
-					<width>60</width>
-					<posy>-5</posy>
-					<right>70</right>
-					<texture>common/spinctrl/arrow-down-nf.png</texture>
-					<aspectratio aligny="center" align="center">keep</aspectratio>
-					<visible>!Control.HasFocus(511)</visible>
-				</control>
-				<control type="image">
-					<height>70</height>
-					<width>60</width>
-					<posy>-5</posy>
-					<right>70</right>
-					<texture>common/spinctrl/arrow-down-fo.png</texture>
-					<aspectratio aligny="center" align="center">keep</aspectratio>
-					<visible>Control.HasFocus(511)</visible>
-				</control>					
-				<control type="image">
-					<right>19</right>
-					<height>70</height>
-					<width>60</width>
-					<posy>-5</posy>
-					<texture>common/spinctrl/arrow-up-nf.png</texture>
-					<aspectratio aligny="center" align="center">keep</aspectratio>
-				</control>
-			</control>
-			<control type="button" id="511">
-				<right>30</right>
-				<width>1000</width>
-				<height>60</height>
-				<align>right</align>
-				<textcolor>darkgrey</textcolor>
-				<focusedcolor>white</focusedcolor>
-				<font>Bold32</font>
-				<onup>Skin.Reset(ShowWidgets)</onup>
-				<onup>300</onup>
-				<ondown>510</ondown>
-				<textoffsetx>80</textoffsetx>
-				<label>$VAR[HomeWidgetLabel]</label>
-				<texturefocus>-</texturefocus>
-				<texturenofocus>-</texturenofocus>
-				<onclick>$VAR[HomeWidgetClickActions]</onclick>
-				<include>animation_fade_visible_hidden_delayed</include>
-				<visible>skin.hastheme(classic)</visible>
-				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
-			</control>
+
 			
 			<control type="label">
 				<right>30</right>
@@ -287,37 +223,9 @@
 				<textoffsetx>80</textoffsetx>
 				<label>$VAR[HomeWidgetLabel]</label>
 				<visible>Control.HasFocus(511)</visible>
-				<visible>skin.hastheme(classic)</visible>
 				<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
 			</control>
 
-			<control type="image">
-				<posx>35</posx>
-				<posy>10</posy>
-				<width>315</width>
-				<height>27</height>
-				<colordiffuse>aaFFFFFF</colordiffuse>
-				<texture>$VAR[HomeMenuWidgetInfoRating]</texture>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
-				<visible>skin.hastheme(classic)</visible>
-				<include>animation_fade_visible_hidden_delayed</include>
-			</control>
-			<control type="label">
-				<!--Rating-->
-				<posx>380</posx>
-				<posy>-8</posy>
-				<width>600</width>
-				<font>Reg30</font>
-				<align>left</align>
-				<textcolor>$VAR[ThemeFontColorBlueGrey]</textcolor>
-				<label>$VAR[HomeMenuWidgetInfoRatingLabel]</label>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
-				<visible>skin.hastheme(classic)</visible>
-				<include>animation_fade_visible_hidden_delayed</include>
-				<visible>!SubString(Container(510).ListItem.Rating,song)</visible>
-			</control>
 			
 			<control type="group">
 				<width>330</width>
@@ -325,7 +233,6 @@
 				<posy>10</posy>
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
-				<visible>!skin.hastheme(classic)</visible>
 				<visible>!StringCompare(Container(510).ListItem.Rating,None) + !StringCompare(Container(510).ListItem.Property(VideoRating),None)</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
 				<control type="image">
