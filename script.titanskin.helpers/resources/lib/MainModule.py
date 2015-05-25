@@ -672,21 +672,17 @@ def UpdateBackgrounds(firstrun=False):
     
     #get plex nodes
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
-        print "get plexbmc images.."
         if firstrun:
             updatePlexlinks()
         
         totalNodes = 14
         for i in range(totalNodes):
             if win.getProperty("plexbmc.%s.title"%str(i)):
-                plexcontent = win.getProperty("plexbmc.%s.path"%str(i))
-                print "plex ID-->" + str(i)
-                print "plex content-->" + plexcontent
-                
+                plexcontent = win.getProperty("plexbmc.%s.all"%str(i))
+                if not plexcontent:
+                    plexcontent = win.getProperty("plexbmc.%s.path"%str(i))
                 plextype = win.getProperty("plexbmc.%s.type" %str(i))
-                print "type -->" + plextype
                 image = getImageFromPath(plexcontent,firstrun)
-                print "image -->" + image
                 if image:
                     win.setProperty("plexbmc.%s.background"%str(i),image)
                     if plextype == "movie":
