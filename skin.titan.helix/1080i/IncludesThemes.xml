@@ -636,18 +636,6 @@
 				<aspectratio align="center" aligny="center">keep</aspectratio>
 				<visible>Player.HasVideo + VideoPlayer.Content(livetv)</visible>
 			</control>
-
-			<control type="image">
-				<!--record icon-->
-				<posx>250</posx>
-				<posy>790</posy>
-				<width>120</width>
-				<height>120</height>
-				<fadetime>200</fadetime>
-				<texture background="true">pvr/icons/pvr_record.png</texture>
-				<aspectratio align="left" aligny="top">stretch</aspectratio>
-				<visible>Player.Recording</visible>
-			</control>
 			
 			<control type="group">
 				<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
@@ -673,13 +661,39 @@
 					<label>[B]$VAR[OSDLabel2][/B]</label>
 					<scroll>false</scroll>
 				</control>
+				
+				<control type="progress" id="1">
+					<description>ProgressbarCache</description>
+					<posx>540</posx>
+					<posy>955</posy>
+					<height>30</height>
+					<width>700</width>
+					<info>Player.ProgressCache</info>
+					<visible>Player.HasDuration</visible>
+					<texturebg border="5" colordiffuse="$INFO[Skin.String(OSDPanelColor)]">diffuse/panel.png</texturebg>
+					<lefttexture>-</lefttexture>
+					<midtexture border="5" colordiffuse="$INFO[Skin.String(ViewDetailsFocusColor)]">diffuse/panel_trans.png</midtexture>
+					<righttexture>-</righttexture>
+					<overlaytexture>-</overlaytexture>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+				<control type="progress" id="23">
+					<description>Progress Bar</description>
+					<posx>540</posx>
+					<posy>955</posy>
+					<height>30</height>
+					<width>700</width>
+					<info>Player.Progress</info>
+					<visible>Player.HasDuration</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
 
 				<!--Process/Seekbar-->
 				<control type="label">
 					<!--Play Time-->
 					<posx>400</posx>
 					<posy>940</posy>
-					<width>400</width>
+					<width>160</width>
 					<align>left</align>
 					<font>Light28</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
@@ -688,9 +702,9 @@
 				</control>
 				<control type="label">
 					<!--Play Time-->
-					<posx>1235</posx>
+					<posx>1280</posx>
 					<posy>940</posy>
-					<width>400</width>
+					<width>160</width>
 					<align>left</align>
 					<font>Light28</font>
 					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
@@ -698,28 +712,7 @@
 					<visible>Player.HasDuration</visible>
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
-				<control type="progress" id="1">
-					<description>ProgressbarCache</description>
-					<posx>515</posx>
-					<posy>960</posy>
-					<height>20</height>
-					<width>700</width>
-					<info>Player.ProgressCache</info>
-					<visible>Player.HasDuration</visible>
-					<midtexture border="6,0,6,0" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">common/progress/ProgressMidFlat.png</midtexture>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-				</control>
-				<control type="progress" id="23">
-					<description>Progress Bar</description>
-					<posx>515</posx>
-					<posy>960</posy>
-					<height>20</height>
-					<width>700</width>
-					<info>Player.Progress</info>
-					<midtexture border="6,0,6,0">common/progress/ProgressMid.png</midtexture>
-					<visible>Player.HasDuration</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-				</control>
+				
 			
 				<!-- OSDLabel3 -->
 				<control type="label">
@@ -1016,6 +1009,488 @@
 
 		</control>
     </include>
+	
+	<include name="OSDPanelModernSlim">
+		<control type="group">
+			
+			<!--Panel-->
+			<control type="image">
+				<posx>0</posx>
+				<posy>800</posy>
+				<width>1920</width>
+				<height>330</height>
+				<texture border="5">diffuse/panel.png</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
+				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
+			</control>
+
+			<!-- cd art -->
+			<control type="image">
+				<posx>140</posx>
+				<posy>820</posy>
+				<width>240</width>
+				<height>240</height>
+				<aligny>center</aligny>
+				<aspectratio align="left">keep</aspectratio>
+				<fadetime>300</fadetime>
+				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+				<texture background="true" fallback="defaultcovers/cd.png">$VAR[AudioDiscArtImage]</texture>
+				<visible>Player.HasAudio + !IsEmpty(Player.Art(thumb))</visible>
+			</control>
+			
+			<control type="image">
+				<posx>60</posx>
+				<posy>820</posy>
+				<width>240</width>
+				<height>240</height>
+				<aligny>center</aligny>
+				<aspectratio align="left">keep</aspectratio>
+				<fadetime>300</fadetime>
+				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+				<texture background="true" fallback="defaultcovers/cd.png">$VAR[AudioDiscArtImage]</texture>
+				<visible>Player.HasAudio + IsEmpty(Player.Art(thumb))</visible>
+			</control>
+
+			<control type="image">
+				<!--Music-->
+				<posx>60</posx>
+				<posy>820</posy>
+				<width>240</width>
+				<height>240</height>
+				<fadetime>200</fadetime>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Player.Art(thumb)]</texture>
+				<aspectratio align="left" aligny="top">stretch</aspectratio>
+				<visible>Player.HasAudio</visible>
+			</control>
+			
+			<!-- discart -->
+			<control type="image">
+				<posx>120</posx>
+				<posy>840</posy>
+				<width>200</width>
+				<height>200</height>
+				<aligny>center</aligny>
+				<aspectratio align="left">keep</aspectratio>
+				<fadetime>300</fadetime>
+				<animation effect="rotate" end="-360" center="auto" time="12000" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
+				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.Art(discart)]</texture>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+			</control>
+			
+			<!--Cover movies - poster-->
+			<control type="image" id="1">
+				<posx>60</posx>
+				<posy>820</posy>
+				<width>165</width>
+				<height>240</height>
+				<fadetime>200</fadetime>
+				<texture background="true">$VAR[OSDImage]</texture>
+				<aspectratio align="left" aligny="top">scale</aspectratio>
+				<visible>Player.HasVideo + !VideoPlayer.Content(livetv) + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+			</control>
+			
+			<!--Cover movies - no poster-->
+			<control type="image" id="1">
+				<posx>60</posx>
+				<posy>830</posy>
+				<width>250</width>
+				<height>170</height>
+				<fadetime>200</fadetime>
+				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
+				<aspectratio align="left" aligny="top">scale</aspectratio>
+				<visible>Player.HasVideo + !VideoPlayer.Content(livetv) + [IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster))]</visible>
+			</control>
+
+			
+			<!--Cover livetv-->
+			<control type="image">
+				<posx>60</posx>
+				<posy>800</posy>
+				<width>240</width>
+				<height>240</height>
+				<fadetime>200</fadetime>
+				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
+				<aspectratio align="center" aligny="center">keep</aspectratio>
+				<visible>Player.HasVideo + VideoPlayer.Content(livetv)</visible>
+			</control>
+			
+			<control type="group">
+				<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
+				<!-- OSDLabel1 -->
+				<control type="label">
+					<posx>400</posx>
+					<posy>820</posy>
+					<width>1100</width>
+					<align>left</align>
+					<font>Light40</font>
+					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+					<label>$VAR[OSDLabel1]</label>
+					<scroll>false</scroll>
+				</control>
+                <!-- OSDLabel2 -->
+				<control type="label">
+					<posx>400</posx>
+					<posy>880</posy>
+					<width>1050</width>
+					<align>left</align>
+					<font>Light42</font>
+					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+					<label>[B]$VAR[OSDLabel2][/B]</label>
+					<scroll>false</scroll>
+				</control>
+				
+				<control type="progress" id="1">
+					<description>ProgressbarCache</description>
+					<posx>400</posx>
+					<posy>950</posy>
+					<height>40</height>
+					<width>1000</width>
+					<info>Player.ProgressCache</info>
+					<visible>Player.HasDuration</visible>
+					<texturebg>-</texturebg>
+					<midtexture border="5" colordiffuse="darkgrey">diffuse/panel.png</midtexture>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+				<control type="progress" id="23">
+					<description>Progress Bar</description>
+					<posx>400</posx>
+					<posy>950</posy>
+					<height>40</height>
+					<width>1000</width>
+					<info>Player.Progress</info>
+					<visible>Player.HasDuration</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+
+				<!--Process/Seekbar-->
+				<control type="label">
+					<!--Play Time-->
+					<posx>403</posx>
+					<posy>940</posy>
+					<width>400</width>
+					<align>left</align>
+					<font>Light28</font>
+					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+					<label>$INFO[Player.Time]</label>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+				<control type="label">
+					<!--Play Time-->
+					<posx>1397</posx>
+					<posy>940</posy>
+					<width>400</width>
+					<align>right</align>
+					<font>Light28</font>
+					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+					<label>$INFO[Player.TimeRemaining,- ]</label>
+					<visible>Player.HasDuration</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+				
+			
+				<!-- OSDLabel3 -->
+				<control type="label">
+					<posx>400</posx>
+					<posy>1000</posy>
+					<width>1100</width>
+					<align>left</align>
+					<font>Light34</font>
+					<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+					<label>$VAR[OSDLabel3]</label>
+				</control>
+			</control>
+
+			
+		
+			<!-- media flags -->
+			<control type="grouplist">
+			<orientation>horizontal</orientation>
+			<right>36</right>
+			<width>550</width>
+			<posy>1020</posy>
+			
+			<!--Video 3D-->
+			<control type="group">
+				<width>50</width>
+				<height>36</height>
+				<control type="image">
+					<colordiffuse>white</colordiffuse>
+					<posx>0</posx>
+					<texture>flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>VideoPlayer.IsStereoScopic | !IsEmpty(VideoPlayer.Property(Video3DFormat))</visible>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<posx>0</posx>
+					<label>3D</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+					<visible>VideoPlayer.IsStereoScopic | !IsEmpty(VideoPlayer.Property(Video3DFormat))</visible>
+				</control>
+			</control>
+			<!--Video Resolution-->
+			<control type="group">
+				<width>100</width>
+				<height>36</height>
+				<control type="image">
+					<height>36</height>
+					<colordiffuse>white</colordiffuse>
+					<texture>flags/flag_box_video.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>!IsEmpty(VideoPlayer.VideoResolution) + Player.HasVideo</visible>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<left>25</left>
+					<width>75</width>
+					<label>$INFO[VideoPlayer.VideoResolution]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+					<visible>!IsEmpty(VideoPlayer.VideoResolution) + Player.HasVideo</visible>
+				</control>
+			</control>
+			
+			<!--Video Codec-->
+			<control type="group">
+				<width>80</width>
+				<height>36</height>
+				<control type="image">
+				<posx>-7</posx>
+					<colordiffuse>white</colordiffuse>
+					<texture>flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>!IsEmpty(VideoPlayer.VideoCodec) + Player.HasVideo</visible>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<posx>-7</posx>
+					<label>$VAR[VideoCodecVar]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+					<visible>!IsEmpty(VideoPlayer.VideoCodec) + Player.HasVideo</visible>
+				</control>
+			</control>
+			
+			<!--Aspectratio-->
+			<control type="group">
+				<width>60</width>
+				<height>36</height>
+				<control type="image">
+					<posx>-7</posx>
+					<colordiffuse>white</colordiffuse>
+					<texture>flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>!IsEmpty(VideoPlayer.VideoAspect) + Player.HasVideo</visible>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<posx>-7</posx>
+					<label>$VAR[VideoAspectVar]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+					<visible>!IsEmpty(VideoPlayer.VideoAspect) + Player.HasVideo</visible>
+				</control>
+			</control>
+			
+			<control type="group">
+				<width>5</width>
+				<height>36</height>
+			</control>
+			
+			<!--Audio Codec-->
+			<control type="group">
+				<width>150</width>
+				<height>36</height>
+				<control type="image">
+					<colordiffuse>white</colordiffuse>
+					<texture>flags/flag_box_audio.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<right>0</right>
+					<width>115</width>
+					<label>$VAR[AudioCodecVar]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+				</control>
+			</control>
+				
+			<!--Audio Channels-->
+			<control type="group">
+				<width>40</width>
+				<height>36</height>
+				<control type="image">
+					<posx>-6</posx>
+					<colordiffuse>white</colordiffuse>
+					<texture>flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<posx>-6</posx>
+					<label>$VAR[AudioChannelsVar]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+					<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
+				</control>
+			</control>
+		</control>
+		
+		
+		<control type="image">
+			<!--Stars music-->
+			<visible>Window.IsActive(MusicVisualisation.xml)</visible>
+			<right>300</right>
+			<posy>1014</posy>
+			<width>200</width>
+			<height>50</height>
+			<aspectratio aligny="top" align="right">keep</aspectratio>
+			<texture fallback="leftrating/rating0.png">$INFO[Player.StarRating,leftrating/]</texture>
+		</control>
+			
+		    <!--OSD: right side below clock-->
+		    <control type="label">
+				<!--PlayerActionLabel-->
+				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
+					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+				</animation>
+				<posx>1850</posx>
+				<posy>890</posy>
+				<width>890</width>
+				<align>right</align>
+				<font>Reg30</font>
+				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+				<label>$VAR[PlayerActionLabel]</label>
+				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+			</control>
+			
+			<control type="label">
+				<!--Total duration-->
+				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
+					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+				</animation>
+				<posx>1850</posx>
+				<posy>940</posy>
+				<width>940</width>
+				<align>right</align>
+				<font>Light28</font>
+				<textcolor>$VAR[ThemeFontColorWhite]</textcolor>
+				<label>$INFO[Player.Duration,[B]$LOCALIZE[180]: [/B]]</label>
+				<visible>Player.HasDuration</visible>
+				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+			</control>
+			
+			<control type="image">
+				<visible>player.paused</visible>
+				<animation delay="150" time="300" effect="fade">Visible</animation>
+				<animation delay="0" time="200" effect="fade">Hidden</animation>
+				<right>50</right>
+				<bottom>110</bottom>
+				<width>160</width>
+				<height>160</height>
+				<texture>osd/osd_pause.png</texture>
+			</control>
+			<control type="image">
+				<visible>player.forwarding</visible>
+				<animation delay="150" time="300" effect="fade">Visible</animation>
+				<animation delay="0" time="200" effect="fade">Hidden</animation>
+				<right>60</right>
+				<bottom>130</bottom>
+				<width>120</width>
+				<height>120</height>
+				<texture>osd/ff.png</texture>
+			</control>
+			<control type="image">
+				<visible>player.rewinding</visible>
+				<animation delay="150" time="300" effect="fade">Visible</animation>
+				<animation delay="0" time="200" effect="fade">Hidden</animation>
+				<right>70</right>
+				<bottom>130</bottom>
+				<width>120</width>
+				<height>120</height>
+				<texture flipx="true">osd/ff.png</texture>
+			</control>
+	
+			<!-- close dialog button -->
+			<control type="button">
+				<right>70</right>
+				<posx>1450</posx>
+				<posy>835</posy>
+				<width>50</width>
+				<height>50</height>
+				<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
+				<texturenofocus colordiffuse="aawhite">touchcontrols/icon_close.png</texturenofocus>
+				<aspectratio>keep</aspectratio>
+				<onclick>back</onclick>
+				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
+				<visible>!Window.IsActive(DialogSlider.xml)</visible>
+				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
+					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+				</animation>
+			</control>
+			
+			<!--Clock-->
+			<control type="grouplist">
+				<posx>1450</posx>
+				<posy>810</posy>
+				<width>400</width>
+				<height>100</height>
+				<align>right</align>
+				<itemgap>4</itemgap>
+				<orientation>horizontal</orientation>
+				<usecontrolcoords>true</usecontrolcoords>
+				<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
+					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+				</animation>
+				<control type="label">
+					<width min="0" max="150">auto</width>
+					<height>80</height>
+					<info>System.Time(hh:mm)</info>
+					<font>Light60</font>
+					<aligny>center</aligny>
+					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				</control>
+				<control type="label">
+					<visible>substring(system.time,AM,right)</visible>
+					<width min="0" max="150">auto</width>
+					<height>80</height>
+					<label>378</label>
+					<font>Light60</font>
+					<aligny>center</aligny>
+					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				</control>
+				<control type="label">
+					<visible>substring(system.time,PM,right)</visible>
+					<width min="0" max="150">auto</width>
+					<height>80</height>
+					<label>379</label>
+					<font>Light60</font>
+					<aligny>center</aligny>
+					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				</control>
+			</control>
+
+		</control>
+    </include>
+	
+	
+	
 	
 	<include name="MusicOSDClassic">
 		<include>animation_fade_visible_hidden</include>
@@ -1619,9 +2094,9 @@
 			
 			<control type="slider" id="401">
 				<description>Seekbar</description>
-				<posx>515</posx>
-				<posy>960</posy>
-				<height>20</height>
+				<posx>540</posx>
+				<posy>950</posy>
+				<height>40</height>
 				<width>700</width>
 				<visible>Window.IsActive(VideoOSD.xml)</visible>
 				<visible>Player.HasDuration</visible>
@@ -1646,7 +2121,7 @@
 				<defaultcontrol always="true">104</defaultcontrol>
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 				<animation effect="slide" end="50" time="0" condition="player.hasaudio">Conditional</animation>
-                <control type="button" id="201">
+                <control type="togglebutton" id="201">
                     <!--Skip Back or previous channel-->
                     <!--visible>ControlGroup(20).HasFocus()</visible-->
                     <include>animation_fade_visible_hidden</include>
@@ -1711,7 +2186,7 @@
                     <texturenofocus>osd/OSDForward.png</texturenofocus>
                     <onclick>PlayerControl(Forward)</onclick>
                 </control>
-                <control type="button" id="206">
+                <control type="togglebutton" id="206">
                     <!--Next-->
                     <include>animation_fade_visible_hidden</include>
                     <width>100</width>
@@ -1770,7 +2245,7 @@
 				  <onclick>XBMC.PlayerControl(Random)</onclick>
 				  <visible>Player.HasAudio</visible>
 				</control>
-				<control type="button" id="10">
+				<control type="togglebutton" id="10">
                     <!--Record-->
                     <include>animation_fade_visible_hidden</include>
                     <width>100</width>
