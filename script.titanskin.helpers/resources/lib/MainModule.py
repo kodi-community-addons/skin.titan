@@ -19,7 +19,7 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 import xml.etree.cElementTree as ET
 
-doDebugLog = False
+doDebugLog = True
 
 
 win = xbmcgui.Window( 10000 )
@@ -188,6 +188,8 @@ def updatePlexlinks():
     while linkCount !=14:
         plexstring = "plexbmc." + str(linkCount)
         link = win.getProperty(plexstring + ".title")
+        if not link:
+            break
         logMsg(plexstring + ".title --> " + link)
         plexType = win.getProperty(plexstring + ".type")
         logMsg(plexstring + ".type --> " + plexType)            
@@ -670,18 +672,23 @@ def UpdateBackgrounds(firstrun=False):
     
     #get plex nodes
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
-        
+        print "get plexbmc images.."
         if firstrun:
             updatePlexlinks()
         
         totalNodes = 14
         for i in range(totalNodes):
-            if win.getProperty("plexbmc.%s.title" %str(i)):
-                plexcontent = win.getProperty("plexbmc.%s.content" %str(i))
+            if win.getProperty("plexbmc.%s.title"%str(i)):
+                plexcontent = win.getProperty("plexbmc.%s.path"%str(i))
+                print "plex ID-->" + str(i)
+                print "plex content-->" + plexcontent
+                
                 plextype = win.getProperty("plexbmc.%s.type" %str(i))
+                print "type -->" + plextype
                 image = getImageFromPath(plexcontent,firstrun)
+                print "image -->" + image
                 if image:
-                    win.setProperty("plexbmc.%s.background" %str(i),image)
+                    win.setProperty("plexbmc.%s.background"%str(i),image)
                     if plextype == "movie":
                         win.setProperty("plexfanartbg", image)
 
