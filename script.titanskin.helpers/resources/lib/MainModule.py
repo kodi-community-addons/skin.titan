@@ -19,7 +19,7 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 import xml.etree.cElementTree as ET
 
-doDebugLog = True
+doDebugLog = False
 
 
 win = xbmcgui.Window( 10000 )
