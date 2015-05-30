@@ -885,8 +885,12 @@ def getFavourites():
                 li.setThumbnailImage(image)
                 li.setProperty('IsPlayable', 'false')
                 
+                print "eol"
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=li, isFolder=False)
-    except: pass        
+    except Exception as e: 
+        print "exception ?"
+        print e
+        pass        
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def selectOverlayTexture():

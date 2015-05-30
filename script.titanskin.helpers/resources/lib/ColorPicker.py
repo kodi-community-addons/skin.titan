@@ -75,10 +75,10 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         allColors = sorted(allColors,key=itemgetter(1))
         
         for color in allColors:
-            count += 1
             self.addColorToList(color[0], color[1])
-            if (colorstring == color[1] or name == color[0]):
+            if (currentColor == color[1] or currentColor == color[0]):
                 selectItem = count
+            count += 1
 
         #focus the current color
         xbmc.executebuiltin("Control.SetFocus(3110)")
@@ -101,7 +101,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         
         if action.getId() in ACTION_CANCEL_DIALOG:
             self.closeDialog()
-        if action.getId() == ACTION_SELECT_ITEM:
+        else:
             item =  self.colorsList.getSelectedItem()
             colorstring = item.getProperty("colorstring")
             self.manualEdit.setText(colorstring)

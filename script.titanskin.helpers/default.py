@@ -39,7 +39,7 @@ try:
     argument3 = str(sys.argv[4])
 except: 
     pass  
-
+    
 # select action
 if action == "SENDCLICK":
     MainModule.sendClick(argument1)
@@ -100,3 +100,4 @@ elif "?LAUNCHAPP" in argument1:
         app = argument1.split("&&&")[-1]
         xbmc.executebuiltin(app)
     except: pass
+
