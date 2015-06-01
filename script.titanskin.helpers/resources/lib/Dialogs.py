@@ -64,6 +64,7 @@ class DialogSelect( xbmcgui.WindowXMLDialog ):
         self.listing = kwargs.get( "listing" )
         self.windowtitle = kwargs.get( "windowtitle" )
         self.result = -1
+        self.autoFocusId = 2
 
     def onInit(self):
         try:
@@ -82,6 +83,7 @@ class DialogSelect( xbmcgui.WindowXMLDialog ):
             self.fav_list.addItem( listitem )
 
         self.setFocus(self.fav_list)
+        self.fav_list.selectItem(self.autoFocusId)
 
     def onAction(self, action):
         if action.getId() in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):

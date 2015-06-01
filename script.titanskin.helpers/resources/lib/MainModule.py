@@ -933,23 +933,45 @@ def selectView():
         contenttype = "seasons"
     elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
         contenttype = "musicvideos"
+    elif xbmc.getCondVisibility("Container.Content(artists)"):
+        contenttype = "artists"
+    elif xbmc.getCondVisibility("Container.Content(songs)"):
+        contenttype = "songs"
+    elif xbmc.getCondVisibility("Container.Content(albums)"):
+        contenttype = "albums"
+    elif xbmc.getCondVisibility("Container.Content(songs)"):
+        contenttype = "songs"
+    elif xbmc.getCondVisibility("Container.Content(livetv) | Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(radiorecordings)"):
+        contenttype = "livetv"
+    elif xbmc.getCondVisibility("Window.IsActive(programs)"):
+        contenttype = "programs"
+    elif xbmc.getCondVisibility("Window.IsActive(pictures)"):
+        contenttype = "pictures"
     
+    currentView = xbmc.getInfoLabel("Container.Viewmode")
+    currentViewSelectId = 4
+
     allViews = []   
     views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
     if xbmcvfs.exists( views_file ):
         doc = parse( views_file )
         listing = doc.documentElement.getElementsByTagName( 'view' )
+        itemcount = 0
         for count, view in enumerate(listing):
             label = __language__(int(view.attributes[ 'languageid' ].nodeValue))
             id = view.attributes[ 'value' ].nodeValue
             type = view.attributes[ 'type' ].nodeValue
+            if label.lower() == currentView.lower():
+                currentViewSelectId = itemcount
             if type == "all" or contenttype in type:
                 image = "special://skin/extras/viewthumbs/%s.jpg" %id
                 listitem = xbmcgui.ListItem(label=label, iconImage=image)
                 listitem.setProperty("id",id)
                 listitem.setProperty("icon",image)
                 allViews.append(listitem)
+                itemcount +=1
     w = dialogs.DialogSelect( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle="select view",multiselect=False )
+    w.autoFocusId = currentViewSelectId
     w.doModal()
     selectedItem = w.result
     if selectedItem != -1:
