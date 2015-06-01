@@ -934,7 +934,7 @@ def selectView():
     elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
         contenttype = "musicvideos"
     
-    allViews = []
+    allViews = []   
     views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
     if xbmcvfs.exists( views_file ):
         doc = parse( views_file )
@@ -949,10 +949,10 @@ def selectView():
                 listitem.setProperty("id",id)
                 listitem.setProperty("icon",image)
                 allViews.append(listitem)
-    w = dialogs.DialogSelect( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle="select view",multiselect=True )
+    w = dialogs.DialogSelect( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle="select view",multiselect=False )
     w.doModal()
     selectedItem = w.result
-    if selectedItem:
+    if selectedItem != -1:
         label = allViews[selectedItem].getLabel()
         id = allViews[selectedItem].getProperty("id")
         xbmc.executebuiltin("Container.SetViewMode(%s)" %id)
