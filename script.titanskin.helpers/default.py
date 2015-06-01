@@ -8,10 +8,6 @@ BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'li
 sys.path.append(BASE_RESOURCE_PATH)
 
 import MainModule
-import BackupRestore
-from SearchDialog import SearchDialog
-from ColorPicker import ColorPicker
-from ColorThemes import ColorThemes
 
 #script init
 action = ""
@@ -45,8 +41,6 @@ if action == "SENDCLICK":
     MainModule.sendClick(argument1)
 elif action =="ADDSHORTCUT":
     MainModule.addShortcutWorkAround()
-elif action == "SETVIEW":
-    MainModule.setView(argument1, argument2)
 elif action == "SHOWSUBMENU":
     MainModule.showSubmenu(argument1,argument2)
 elif action == "SHOWINFO":
@@ -63,29 +57,38 @@ elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
     MainModule.musicSearch()
-elif action == "SELECTVIEW":
-    MainModule.selectView()
+elif action == "SETVIEW":
+    MainModule.setView()
+elif action == "SETFORCEDVIEW":
+    MainModule.setForcedView(argument1)    
+elif action == "ENABLEVIEWS":
+    MainModule.enableViews()
 elif action == "VIDEOSEARCH":
-    #MainModule.videoSearch()
+    from SearchDialog import SearchDialog
     searchDialog = SearchDialog("CustomSearch.xml", __cwd__, "default", "1080i")
     searchDialog.doModal()
     del searchDialog
 elif action == "COLORPICKER":
+    from ColorPicker import ColorPicker
     colorPicker = ColorPicker("ColorPicker.xml", __cwd__, "default", "1080i")
     colorPicker.skinString = argument1
     colorPicker.doModal()
     del colorPicker
 elif action == "COLORTHEMES":
+    from ColorThemes import ColorThemes
     colorThemes = ColorThemes("ColorThemes.xml", __cwd__, "default", "1080i")
     colorThemes.doModal()
     del colorPicker
 elif action == "COLORTHEMETEXTURE":    
     MainModule.selectOverlayTexture()   
 elif action == "BACKUP":
+    import BackupRestore
     BackupRestore.backup()
 elif action == "RESTORE":
+    import BackupRestore
     BackupRestore.restore()
 elif action == "RESET":
+    import BackupRestore
     BackupRestore.reset()
 elif action == "BACKGROUNDS":
     MainModule.UpdateBackgrounds()
@@ -101,3 +104,6 @@ elif "?LAUNCHAPP" in argument1:
         xbmc.executebuiltin(app)
     except: pass
 
+
+    
+    

@@ -784,33 +784,6 @@ def setMovieSetDetails():
                     count += 1
                 xbmc.sleep(125)
             
-def setView(containerType,viewId):
-
-    if viewId=="00":
-        curView = xbmc.getInfoLabel("Container.Viewmode")
-        viewId = getViewId(curView)
-        
-    else:
-        viewId=viewId    
-
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc)"):
-        __settings__ = xbmcaddon.Addon(id='plugin.video.netflixbmc')
-
-        if containerType=="MOVIES":
-            __settings__.setSetting('viewIdVideos', viewId)
-        elif containerType=="SERIES":
-            __settings__.setSetting('viewIdEpisodesNew', viewId)
-        elif containerType=="SEASONS":
-            __settings__.setSetting('viewIdEpisodesNew', viewId)
-        elif containerType=="EPISODES":
-            __settings__.setSetting('viewIdEpisodesNew', viewId)
-        else:
-            __settings__.setSetting('viewIdActivity', viewId)
-            
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
-        __settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
-        if __settings__.getSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType) != "disabled":
-            __settings__.setSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType, viewId)
 
 def checkNotifications(notificationType):
     
@@ -916,11 +889,57 @@ def selectOverlayTexture():
         xbmc.executebuiltin("Skin.SetString(ColorThemeTexture,%s)" % overlaysList[ret])
         xbmc.executebuiltin("Skin.Reset(CustomColorThemeTexture)")
 
-def selectView():
+        
+def enableViews():
+    import Dialogs as dialogs
+    
+    allViews = []   
+    views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
+    if xbmcvfs.exists( views_file ):
+        doc = parse( views_file )
+        listing = doc.documentElement.getElementsByTagName( 'view' )
+        for count, view in enumerate(listing):
+            label = xbmc.getLocalizedString(int(view.attributes[ 'languageid' ].nodeValue))
+            id = view.attributes[ 'value' ].nodeValue
+            type = view.attributes[ 'type' ].nodeValue
+            listitem = xbmcgui.ListItem(label=label)
+            listitem.setProperty("id",id)
+            if not xbmc.getCondVisibility("Skin.HasSetting(View.Disabled.%s)" %id):
+                listitem.select(selected=True)
+            allViews.append(listitem)
+    
+    w = dialogs.DialogSelectSmall( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle=xbmc.getLocalizedString(31487),multiselect=True )
+    w.doModal()
+    
+    selectedItems = w.result
+    if selectedItems != -1:
+        itemcount = len(allViews) -1
+        while (itemcount != -1):
+            viewid = allViews[itemcount].getProperty("id")
+            if itemcount in selectedItems:
+                #view is enabled
+                xbmc.executebuiltin("Skin.Reset(View.Disabled.%s)" %viewid)
+            else:
+                #view is disabled
+                xbmc.executebuiltin("Skin.SetBool(View.Disabled.%s)" %viewid)
+            itemcount -= 1    
+    del w        
+
+
+def setForcedView(contenttype):
+    currentView = xbmc.getInfoLabel("Skin.String(ForcedViews.%s)" %contenttype)
+    
+    selectedItem = selectView(contenttype, currentView)
+    if selectedItem != -1 and selectedItem != None:
+        xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
+    
+
+def setView():
+    #sets the selected viewmode for the container
     import Dialogs as dialogs
     
     #get current content type
-    contenttype = "other"
+    contenttype="other"
     if xbmc.getCondVisibility("Container.Content(episodes)"):
         contenttype = "episodes"
     elif xbmc.getCondVisibility("Container.Content(movies)"):
@@ -941,15 +960,27 @@ def selectView():
         contenttype = "albums"
     elif xbmc.getCondVisibility("Container.Content(songs)"):
         contenttype = "songs"
-    elif xbmc.getCondVisibility("Container.Content(livetv) | Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(radiorecordings)"):
-        contenttype = "livetv"
-    elif xbmc.getCondVisibility("Window.IsActive(programs)"):
+    elif xbmc.getCondVisibility("Window.IsActive(tvchannels) | Window.IsActive(radiochannels)"):
+        contenttype = "tvchannels"
+    elif xbmc.getCondVisibility("Window.IsActive(tvrecordings) | Window.IsActive(radiorecordings)"):
+        contenttype = "tvrecordings"
+    elif xbmc.getCondVisibility("Window.IsActive(programs) | Window.IsActive(addonbrowser)"):
         contenttype = "programs"
     elif xbmc.getCondVisibility("Window.IsActive(pictures)"):
         contenttype = "pictures"
     
     currentView = xbmc.getInfoLabel("Container.Viewmode")
-    currentViewSelectId = 4
+    selectedItem = selectView(contenttype, currentView)
+
+    if selectedItem != -1 and selectedItem != None:
+        xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
+        xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
+        
+        
+    
+def selectView(contenttype="other", currentView=None):
+    import Dialogs as dialogs
+    currentViewSelectId = None
 
     allViews = []   
     views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
@@ -961,21 +992,21 @@ def selectView():
             label = __language__(int(view.attributes[ 'languageid' ].nodeValue))
             id = view.attributes[ 'value' ].nodeValue
             type = view.attributes[ 'type' ].nodeValue
-            if label.lower() == currentView.lower():
+            if label.lower() == currentView.lower() or id == currentView:
                 currentViewSelectId = itemcount
-            if type == "all" or contenttype in type:
+            if (type == "all" or contenttype in type) and not xbmc.getCondVisibility("Skin.HasSetting(View.Disabled.%s)" %id):
                 image = "special://skin/extras/viewthumbs/%s.jpg" %id
                 listitem = xbmcgui.ListItem(label=label, iconImage=image)
                 listitem.setProperty("id",id)
                 listitem.setProperty("icon",image)
                 allViews.append(listitem)
                 itemcount +=1
-    w = dialogs.DialogSelect( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle="select view",multiselect=False )
+    w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle="select view",multiselect=False )
     w.autoFocusId = currentViewSelectId
     w.doModal()
     selectedItem = w.result
-    if selectedItem != -1:
-        label = allViews[selectedItem].getLabel()
-        id = allViews[selectedItem].getProperty("id")
-        xbmc.executebuiltin("Container.SetViewMode(%s)" %id)
     del w
+    if selectedItem != -1:
+        id = allViews[selectedItem].getProperty("id")
+        return id
+    
