@@ -564,25 +564,24 @@
 				<posy>820</posy>
 				<width>240</width>
 				<height>240</height>
-				<aligny>center</aligny>
-				<aspectratio align="left">keep</aspectratio>
+				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 				<fadetime>300</fadetime>
 				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
-				<texture background="true" fallback="defaultcovers/cd.png">$VAR[AudioDiscArtImage]</texture>
-				<visible>Player.HasAudio + !IsEmpty(Player.Art(thumb))</visible>
+				<texture background="true" fallback="defaultcovers/cd.png" diffuse="defaultcovers/cd2.png">$VAR[AudioDiscArtImage]</texture>
+				<visible>Player.HasAudio</visible>
 			</control>
 			
 			<control type="image">
+				<!--Music bg-->
 				<posx>60</posx>
 				<posy>820</posy>
 				<width>240</width>
 				<height>240</height>
-				<aligny>center</aligny>
-				<aspectratio align="left">keep</aspectratio>
-				<fadetime>300</fadetime>
-				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
-				<texture background="true" fallback="defaultcovers/cd.png">$VAR[AudioDiscArtImage]</texture>
-				<visible>Player.HasAudio + IsEmpty(Player.Art(thumb))</visible>
+				<fadetime>200</fadetime>
+				<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+				<texture border="5">diffuse/music_cover_cd.png</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+				<visible>Player.HasAudio</visible>
 			</control>
 
 			<control type="image">
@@ -592,7 +591,7 @@
 				<width>240</width>
 				<height>240</height>
 				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Player.Art(thumb)]</texture>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[MusicPlayer.Cover]</texture>
 				<aspectratio align="left" aligny="top">stretch</aspectratio>
 				<visible>Player.HasAudio</visible>
 			</control>
@@ -604,11 +603,11 @@
 				<width>200</width>
 				<height>200</height>
 				<aligny>center</aligny>
-				<aspectratio align="left">keep</aspectratio>
 				<fadetime>300</fadetime>
 				<animation effect="rotate" end="-360" center="auto" time="12000" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
 				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
-				<texture background="true" fallback="defaultcovers/cd.png">$INFO[Player.Art(discart)]</texture>
+				<texture background="true" diffuse="defaultcovers/cd2.png" border="5">$VAR[VideoDiscArtImage]</texture>
+				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
 			
@@ -2038,7 +2037,7 @@
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 				<visible>Skin.HasSetting(OSDUseLargeIcons)</visible>
 				<animation effect="slide" end="-90,-70" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
-                
+                <animation effect="slide" end="60" time="0" condition="!player.hasvideo">Conditional</animation>
 				
 				<control type="togglebutton" id="201">
                     <!--Skip Back or previous channel-->
@@ -2112,9 +2111,8 @@
                     <onclick>PlayerControl(Next)</onclick>
                 </control>
 				<control type="button" id="207">
-				  <posx>0</posx>
-				  <width>100</width>
-                  <height>100</height>
+				  <width>90</width>
+                    <height>90</height>
 				  <label>$LOCALIZE[486]$INFO[Playlist.Repeat, : ]</label>
 				  <font>-</font>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDRepeat.png</texturefocus>
@@ -2131,8 +2129,8 @@
 				  <onclick>XBMC.PlayerControl(Repeat)</onclick>
 				</control>
 				<control type="button" id="210">
-				  <width>100</width>
-                  <height>100</height>
+				  <width>90</width>
+                    <height>90</height>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDRepeatAll.png</texturefocus>
                   <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDRepeatAll.png</texturenofocus>
 				  <visible>Playlist.IsRepeat + Player.HasAudio</visible>
@@ -2321,7 +2319,7 @@
 					<font>-</font>
 					<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDInfo.png</texturefocus>
                     <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDInfo.png</texturenofocus>
-					<visible>!VideoPlayer.Content(livetv)</visible>
+					<visible>!VideoPlayer.Content(livetv) + player.hasvideo</visible>
 					<onclick>Skin.ToggleSetting(EnableOSDInfo)</onclick>
 				</control>
             </control>
@@ -2342,7 +2340,7 @@
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 				<visible>!Skin.HasSetting(OSDUseLargeIcons)</visible>
 				<animation effect="slide" end="-90,-70" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
-                
+                <animation effect="slide" end="60" time="0" condition="!player.hasvideo">Conditional</animation>
 				
 				<control type="togglebutton" id="201">
                     <!--Skip Back or previous channel-->
@@ -2425,9 +2423,8 @@
                 </control>
 				<control type="button" id="207">
 				  <include>animation_fade_visible_hidden</include>
-				  <posx>0</posx>
-				  <width>100</width>
-                  <height>100</height>
+				  <width>90</width>
+				  <height>90</height>
 				  <label>$LOCALIZE[486]$INFO[Playlist.Repeat, : ]</label>
 				  <font>-</font>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimRepeat.png</texturefocus>
@@ -2437,8 +2434,8 @@
 				</control>
 				<control type="button" id="208">
 				  <include>animation_fade_visible_hidden</include>
-				  <width>100</width>
-                  <height>100</height>
+				   <width>90</width>
+				  <height>90</height>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimRepeatOne.png</texturefocus>
                   <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimRepeatOne.png</texturenofocus>
 				  <visible>Playlist.IsRepeatOne + Player.HasAudio</visible>
@@ -2446,8 +2443,8 @@
 				</control>
 				<control type="button" id="210">
 				  <include>animation_fade_visible_hidden</include>
-				  <width>100</width>
-                  <height>100</height>
+				   <width>90</width>
+				  <height>90</height>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimRepeatAll.png</texturefocus>
                   <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimRepeatAll.png</texturenofocus>
 				  <visible>Playlist.IsRepeat + Player.HasAudio</visible>
@@ -2456,7 +2453,7 @@
 				<control type="togglebutton" id="212">
 				  <include>animation_fade_visible_hidden</include>
 				  <width>90</width>
-                    <height>90</height>
+				  <height>90</height>
 				  <label>$LOCALIZE[590]$INFO[Playlist.Random, : ]</label>
 				  <altlabel>$LOCALIZE[590] : $LOCALIZE[16041]</altlabel>
 				  <font>-</font>
@@ -2641,7 +2638,7 @@
 					<font>-</font>
 					<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimInfo.png</texturefocus>
                     <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimInfo.png</texturenofocus>
-					<visible>!VideoPlayer.Content(livetv)</visible>
+					<visible>!VideoPlayer.Content(livetv) + player.hasvideo</visible>
 					<onclick>Skin.ToggleSetting(EnableOSDInfo)</onclick>
 				</control>
             </control>
