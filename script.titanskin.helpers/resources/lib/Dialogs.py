@@ -134,7 +134,7 @@ class DialogSelectBig( xbmcgui.WindowXMLDialog ):
         self.listing = kwargs.get( "listing" )
         self.windowtitle = kwargs.get( "windowtitle" )
         self.result = -1
-        self.autoFocusId = 2
+        self.autoFocusId = 0
 
     def onInit(self):
         try:
@@ -149,7 +149,7 @@ class DialogSelectBig( xbmcgui.WindowXMLDialog ):
 
         for item in self.listing :
             listitem = xbmcgui.ListItem(label=item.getLabel(), label2=item.getLabel2(), iconImage=item.getProperty( "icon" ), thumbnailImage=item.getProperty( "thumbnail" ))
-            listitem.setProperty( "Addon.Summary", item.getLabel2() )
+            listitem.setProperty( "Addon.Summary", "blaat" )
             self.fav_list.addItem( listitem )
 
         self.setFocus(self.fav_list)

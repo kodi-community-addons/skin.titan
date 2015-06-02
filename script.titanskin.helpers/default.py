@@ -59,6 +59,8 @@ elif action == "MUSICSEARCH":
     MainModule.musicSearch()
 elif action == "SETVIEW":
     MainModule.setView()
+elif action == "SEARCHTRAILER":
+    MainModule.searchTrailer(argument1)
 elif action == "SETFORCEDVIEW":
     MainModule.setForcedView(argument1)    
 elif action == "ENABLEVIEWS":

@@ -975,7 +975,44 @@ def setView():
     if selectedItem != -1 and selectedItem != None:
         xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
         xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
-        
+
+
+
+def searchTrailer(title):
+    xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+    xbmcgui.lock()
+    import Dialogs as dialogs
+    libPath = "plugin://plugin.video.youtube/kodion/search/query/?q=%s Trailer" %title
+    media_array = None
+    allTrailers = []
+    media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art","plot"], "directory": "' + libPath + '", "media": "files", "limits": {"end":25} }')
+    if(media_array != None and media_array.has_key('files')):
+        for media in media_array['files']:
+            
+            if not media["filetype"] == "directory":
+                label = media["label"]
+                label2 = media["plot"]
+                image = None
+                if media.has_key('art'):
+                    if media['art'].has_key('thumb'):
+                        image = (media['art']['thumb'])
+                        
+                path = media["file"]
+                listitem = xbmcgui.ListItem(label=label, label2=label2, iconImage=image)
+                listitem.setProperty("path",path)
+                listitem.setProperty("icon",image)
+                allTrailers.append(listitem)
+
+    w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=allTrailers, windowtitle="select trailer",multiselect=False )
+    xbmcgui.unlock()
+    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    w.doModal()
+    selectedItem = w.result
+    del w
+    if selectedItem != -1:
+        path = allTrailers[selectedItem].getProperty("path")
+        xbmc.executebuiltin("PlayMedia(%s)" %path)
+    
         
     
 def selectView(contenttype="other", currentView=None):
