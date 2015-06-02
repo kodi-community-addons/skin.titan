@@ -131,6 +131,21 @@
                     <description>Buttons</description>
                     <include>SubMenuButton</include>
                 </control>
+				
+				<!-- play trailer -->
+				<control type="button" id="9324">
+					<include>SubMenuButton</include>
+					<onleft>Dialog.Close(106)</onleft>
+					<onright>Dialog.Close(106)</onright>
+					<onclick condition="!IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[ListItem.Trailer])</onclick>
+					<onclick condition="IsEmpty(ListItem.Trailer) + !System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
+					<onclick condition="IsEmpty(ListItem.Trailer) + SubString(System.AddonVersion(plugin.video.youtube),4,left)">ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
+					<onclick condition="IsEmpty(ListItem.Trailer) + SubString(System.AddonVersion(plugin.video.youtube),5,left)">ActivateWindow(videos,plugin://plugin.video.youtube/kodion/search/query/?q=$ESCINFO[ListItem.Label] Trailer,return)</onclick>
+					<label>20410</label>
+					<visible>SubString(System.BuildVersion,14,left)</visible>
+					<visible>Container.Content(movies)</visible>
+				</control>
+				
 				<control type="button" id="9325">
 					<include>SubMenuButton</include>
 					<label>31248</label>
