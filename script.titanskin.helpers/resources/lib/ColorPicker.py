@@ -7,14 +7,21 @@ import os, sys
 import urllib
 import threading
 import InfoDialog
-from PIL import Image
+
 from xml.dom.minidom import parse
 from operator import itemgetter
 
 win = xbmcgui.Window( 10000 )
 addon = xbmcaddon.Addon(id='script.titanskin.helpers')
 addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
-colorsPath = os.path.join(addondir,"colors") + os.sep
+colorsPath = xbmc.translatePath( 'special://home/addons/script.titanskin.helpers/resources/colors/' ).decode("utf-8")
+
+#PIL fails on Android devices ?
+hasPilModule = True
+try:
+    from PIL import Image
+except:
+    hasPilModule = False
 
 class ColorPicker(xbmcgui.WindowXMLDialog):
 
@@ -29,7 +36,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         
         colorImageFile = os.path.join(colorsPath,colorstring + ".png")
         
-        if not xbmcvfs.exists(colorImageFile):
+        if not xbmcvfs.exists(colorImageFile) and hasPilModule:
             colorstring = colorstring.strip()
             if colorstring[0] == '#': colorstring = colorstring[1:]
             if len(colorstring) != 8:
@@ -39,6 +46,8 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             color = (r, g, b, a)
             im = Image.new("RGBA", (64, 64), color)
             im.save(colorImageFile)
+        elif not xbmcvfs.exists(colorImageFile) and not hasPilModule:
+            return
         
         listitem = xbmcgui.ListItem(label=colorname, iconImage=colorImageFile)
         listitem.setProperty("colorstring",colorstring)
@@ -68,11 +77,12 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             for count, color in enumerate(listing):
                 name = color.attributes[ 'name' ].nodeValue.lower()
                 colorstring = color.childNodes [ 0 ].nodeValue.lower()
-                allColors.append((name,colorstring))
+                sortstring = colorstring[-6:]
+                allColors.append((name,colorstring,sortstring))
                 
         #sort list and fill the panel
         count = 0
-        allColors = sorted(allColors,key=itemgetter(1))
+        allColors = sorted(allColors,key=itemgetter(2))
         
         for color in allColors:
             self.addColorToList(color[0], color[1])
@@ -81,10 +91,15 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             count += 1
 
         #focus the current color
-        xbmc.executebuiltin("Control.SetFocus(3110)")
-        self.colorsList.selectItem(selectItem)
-        item =  self.colorsList.getSelectedItem()
-        colorstring = item.getProperty("colorstring")
+        if selectItem != 0:
+            xbmc.executebuiltin("Control.SetFocus(3110)")
+            self.colorsList.selectItem(selectItem)
+            item =  self.colorsList.getSelectedItem()
+            colorstring = item.getProperty("colorstring")
+        else:
+            xbmc.executebuiltin("Control.SetFocus(3010)")
+            colorstring = currentColor
+        
         self.manualEdit.setText(colorstring)
         
         
@@ -115,7 +130,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
 
         if(controlID == 3110):       
             item = self.colorsList.getSelectedItem()
-            colorstring = item.getProperty("colorstring")
+            colorstring = item.getLabel()
             xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
             self.closeDialog()
         elif(controlID == 3010):       
@@ -123,5 +138,5 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
             self.closeDialog()
         elif(controlID == 3011):       
-            xbmc.executebuiltin("Skin.SetString(" + self.skinString + ',"")')
+            xbmc.executebuiltin("Skin.SetString(" + self.skinString + ',"None")')
             self.closeDialog()

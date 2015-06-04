@@ -275,6 +275,7 @@
 						<enable>!Skin.HasSetting(KioskMode.Enabled)</enable>
 						<visible>Skin.HasSetting(EnableTVTunes) + System.HasAddon(script.tvtunes) + [Container.Content(TVShows) | Container.Content(movies) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("TvTunes_HideVideoInfoButton"))</visible>
 					</control>
+					
 					<control type="button" id="101">
 						<!--Get Thumb Artwork Downloader-->
 						<label>13511</label>
@@ -293,6 +294,16 @@
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
 						<enable>!Skin.HasSetting(KioskMode.Enabled)</enable>
+					</control>
+					<control type="radiobutton" id="9300">
+						<!--discart-->
+						<width>340</width>
+						<height>60</height>
+						<label>31200</label>
+						<align>left</align>
+						<textoffsetx>20</textoffsetx>
+						<onclick>Skin.ToggleSetting(VideoInfo_ShowCDart)</onclick>
+						<selected>Skin.HasSetting(VideoInfo_ShowCDart)</selected>
 					</control>
 				</control>
 				
@@ -335,10 +346,11 @@
 						<posy>310</posy>
 						<width>500</width>
 						<height>500</height>
-						<texture background="true" diffuse="defaultcovers/cd2.png" border="5">$VAR[VideoDiscArtImage]</texture>
+						<texture background="true" diffuse="defaultcovers/cd2.png">$VAR[VideoDiscArtImage]</texture>
 						<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 						<animation effect="slide" start="0" end="-140" tween="cubic" easing="inout" time="600" delay="100">WindowOpen</animation>
 						<animation effect="fade" start="0" end="100" delay="0" time="2400" pulse="false">WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" delay="0" time="150" pulse="false" condition="!Skin.HasSetting(VideoInfo_ShowCDart)">Conditional</animation>
 						<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
 						<animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
 						<visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(ListItem.Property(TVShowThumb))</visible>

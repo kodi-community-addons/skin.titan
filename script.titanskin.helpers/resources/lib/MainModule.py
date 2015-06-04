@@ -929,7 +929,7 @@ def enableViews():
 def setForcedView(contenttype):
     currentView = xbmc.getInfoLabel("Skin.String(ForcedViews.%s)" %contenttype)
     
-    selectedItem = selectView(contenttype, currentView)
+    selectedItem = selectView(contenttype, currentView, True)
     if selectedItem != -1 and selectedItem != None:
         xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
     
@@ -1015,11 +1015,16 @@ def searchTrailer(title):
     
         
     
-def selectView(contenttype="other", currentView=None):
+def selectView(contenttype="other", currentView=None, displayNone=False):
     import Dialogs as dialogs
     currentViewSelectId = None
 
-    allViews = []   
+    allViews = []
+    if displayNone:
+        listitem = xbmcgui.ListItem(label="None")
+        listitem.setProperty("id","None")
+        allViews.append(listitem)
+        
     views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
     if xbmcvfs.exists( views_file ):
         doc = parse( views_file )
