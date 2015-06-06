@@ -57,9 +57,9 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                     value = ""
                 
                 #only get properties from the titan skin
-                if skinsetting.attributes['name'].nodeValue.startswith(xbmc.getSkinDir()):
+                if skinsetting.attributes['name'].nodeValue.startswith(xbmc.getSkinDir() + "."):
                     name = skinsetting.attributes['name'].nodeValue
-                    if "Color" in name or "Opacity" in name:
+                    if "color" in name.lower() or "opacity" in name.lower() or "texture" in name.lower():
                         name = name.replace(xbmc.getSkinDir(),"TITANSKIN")
                         newlist.append((skinsetting.attributes['type'].nodeValue, name, value))
                 
