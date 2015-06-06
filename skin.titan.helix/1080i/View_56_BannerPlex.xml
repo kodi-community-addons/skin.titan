@@ -28,13 +28,15 @@
 				[Container.Content(tvshows) + Skin.String(ForcedViews.tvshows,None)] | 
 				[Container.Content(seasons) + Skin.String(ForcedViews.seasons,None)] | 
 				[Container.Content(episodes) + Skin.String(ForcedViews.episodes,None)] | 
-				[Container.Content(movies) + Skin.String(ForcedViews.movies,56)] | 
+				[[Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + Skin.String(ForcedViews.sets,56)] | 
+				[Container.Content(movies) + Skin.String(ForcedViews.movies,56) + !substring(Container.FolderPath,videodb://movies/sets/,left)] | 
+				[Container.Content(movies) + Skin.String(ForcedViews.setmovies,56) + substring(Container.FolderPath,videodb://movies/sets/,left)] | 
 				[Container.Content(tvshows) + Skin.String(ForcedViews.tvshows,56)] | 
 				[Container.Content(seasons) + Skin.String(ForcedViews.seasons,56)] | 
 				[Container.Content(episodes) + Skin.String(ForcedViews.episodes,56)] | 
-				[!Container.Content(movies) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(episodes)]				
+				[!Container.Content(movies) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(episodes) + !Container.Content(sets)]				
 				</visible>
-				<visible>container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)</visible>
+				<visible>container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons) | container.content(seasons) | container.content(sets)</visible>
                 <itemlayout height="145" width="610" condition="container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)">
 					<control type="group">
 						<posy>10</posy>

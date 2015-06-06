@@ -82,7 +82,9 @@ elif action == "COLORTHEMES":
     colorThemes.doModal()
     del colorPicker
 elif action == "COLORTHEMETEXTURE":    
-    MainModule.selectOverlayTexture()   
+    MainModule.selectOverlayTexture()
+elif action == "BUSYTEXTURE":    
+    MainModule.selectBusyTexture()     
 elif action == "BACKUP":
     import BackupRestore
     BackupRestore.backup()

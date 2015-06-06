@@ -889,6 +889,73 @@ def selectOverlayTexture():
         xbmc.executebuiltin("Skin.SetString(ColorThemeTexture,%s)" % overlaysList[ret])
         xbmc.executebuiltin("Skin.Reset(CustomColorThemeTexture)")
 
+def selectBusyTexture():
+    
+    xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+    import Dialogs as dialogs
+    spinnersList = []
+    
+    currentSpinnerTexture = xbmc.getInfoLabel("Skin.String(SpinnerTexture)")
+    
+    listitem = xbmcgui.ListItem(label="None")
+    listitem.setProperty("icon","-")
+    spinnersList.append(listitem)
+    
+    listitem = xbmcgui.ListItem(label="Custom single image (gif)")
+    listitem.setProperty("icon","-")
+    spinnersList.append(listitem)
+    
+    listitem = xbmcgui.ListItem(label="Custom multi image (path)")
+    listitem.setProperty("icon","-")
+    spinnersList.append(listitem)
+
+    dirs, files = xbmcvfs.listdir("special://skin/extras/busy_spinners/")
+    
+    for dir in dirs:
+        listitem = xbmcgui.ListItem(label=dir)
+        listitem.setProperty("icon","special://skin/extras/busy_spinners/" + dir)
+        spinnersList.append(listitem)
+    
+    for file in files:
+        if file.endswith(".gif"):
+            label = file.replace(".gif","")
+            listitem = xbmcgui.ListItem(label=label)
+            listitem.setProperty("icon","special://skin/extras/busy_spinners/" + file)
+            spinnersList.append(listitem)
+
+    w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=spinnersList, windowtitle="select trailer",multiselect=False )
+    
+    count = 0
+    for li in spinnersList:
+        if li.getLabel() == currentSpinnerTexture:
+            w.autoFocusId = count
+        count += 1
+         
+    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    w.doModal()
+    selectedItem = w.result
+    del w
+    
+    if selectedItem == -1:
+        return
+    
+    if selectedItem == 1:
+        dialog = xbmcgui.Dialog()
+        custom_texture = dialog.browse( 2 , xbmc.getLocalizedString(31504), 'files', mask='.gif')
+        if custom_texture:
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
+    elif selectedItem == 2:
+        dialog = xbmcgui.Dialog()
+        custom_texture = dialog.browse( 2 , xbmc.getLocalizedString(31504), 'files')
+        if custom_texture:
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
+    else:
+        xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
+        xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % spinnersList[selectedItem].getProperty("icon"))
+        
+        
         
 def enableViews():
     import Dialogs as dialogs
@@ -977,10 +1044,8 @@ def setView():
         xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
 
 
-
 def searchTrailer(title):
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
-    xbmcgui.lock()
     import Dialogs as dialogs
     libPath = "plugin://plugin.video.youtube/kodion/search/query/?q=%s Trailer" %title
     media_array = None
@@ -1004,7 +1069,6 @@ def searchTrailer(title):
                 allTrailers.append(listitem)
 
     w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=allTrailers, windowtitle="select trailer",multiselect=False )
-    xbmcgui.unlock()
     xbmc.executebuiltin( "Dialog.Close(busydialog)" )
     w.doModal()
     selectedItem = w.result
@@ -1036,6 +1100,8 @@ def selectView(contenttype="other", currentView=None, displayNone=False):
             type = view.attributes[ 'type' ].nodeValue
             if label.lower() == currentView.lower() or id == currentView:
                 currentViewSelectId = itemcount
+                if displayNone == True:
+                    currentViewSelectId += 1
             if (type == "all" or contenttype in type) and not xbmc.getCondVisibility("Skin.HasSetting(View.Disabled.%s)" %id):
                 image = "special://skin/extras/viewthumbs/%s.jpg" %id
                 listitem = xbmcgui.ListItem(label=label, iconImage=image)
