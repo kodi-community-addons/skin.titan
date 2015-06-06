@@ -25,6 +25,7 @@
 			
 			<control type="image">
 				<posx>0</posx>
+				<posy>-120</posy>
 				<width>1920</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
 				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
@@ -34,10 +35,13 @@
 				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 				<aspectratio>stretch</aspectratio>
-				<height>912</height>
+				<height>1032</height>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
+				<animation type="Conditional" condition="Skin.String(widgetstyle, poster)">
+                 <effect type="slide" start="0,0" end="0,120" time="0" delay="0"/>
+			</animation>
             </control>
 
 		<control type="label">
@@ -127,7 +131,7 @@
 			<!--widget Arrow DOWN-->
 			<control type="group">
 				<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-				<visible>ControlGroup(77777).HasFocus + !skin.hastheme(classic)</visible>
+				<visible>ControlGroup(77777).HasFocus + !skin.hastheme(classic) + !Skin.String(widgetstyle, poster)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<control type="button">
@@ -175,7 +179,7 @@
 				<texturefocus colordiffuse="white">home/basichome_down.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">home/basichome_down.png</texturenofocus>
 				<visible>ControlGroup(77777).HasFocus + skin.hastheme(classic)</visible>
-				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+				<visible>!Skin.HasSetting(HideWidgetPanelBackground) + !Skin.String(widgetstyle, poster)</visible>
 			</control>
 
 			
@@ -191,24 +195,72 @@
 				<animation time="400" effect="fade" delay="1000">Visible</animation>
 				<animation time="0" effect="fade" delay="0">Hidden</animation>
 				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+				<visible>!Skin.String(widgetstyle, poster)</visible>
+			</control>
+			<control type="image">
+				<posx>755</posx>
+				<posy>450</posy>
+				<width>400</width>
+				<height>110</height>
+				<aspectratio align="center" aligny="bottom">keep</aspectratio>
+				<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+				<visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
+				<animation time="400" effect="fade" delay="1000">Visible</animation>
+				<animation time="0" effect="fade" delay="0">Hidden</animation>
+				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+				<visible>Skin.String(widgetstyle, poster)</visible>
 			</control>
 			
-			<!--change widget button default theme -->
-			<control type="button" id="511">
-				<right>35</right>
-				<width>370</width>
+			<!--change widget button -->
+			<control type="group">
+				<right>40</right>
+				<width>600</width>
 				<height>60</height>
-				<align>right</align>
-				<font>Reg30</font>
-				<onup>Skin.Reset(ShowWidgets)</onup>
-				<onup>300</onup>
-				<ondown>510</ondown>
-				<textoffsetx>10</textoffsetx>
-				<label>$VAR[HomeWidgetLabel]</label>
-				<texturenofocus>dialogs/default/separator.png</texturenofocus>
-				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<include>animation_fade_visible_hidden_delayed</include>
-				<visible allowhiddenfocus="true">[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+				<control type="image">
+					<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+					<texture flipy="true">dialogs/default/separator.png</texture>
+					<visible>Control.IsVisible(511)</visible>
+				</control>
+				<control type="button" id="511">
+					<right>0</right>
+					<width>600</width>
+					<align>right</align>
+					<font>Reg30</font>
+					<onup>Skin.Reset(ShowWidgets)</onup>
+					<onup>300</onup>
+					<ondown>510</ondown>
+					<textoffsetx>90</textoffsetx>
+					<label>$VAR[HomeWidgetLabel]</label>
+					<texturenofocus>dialogs/default/separator.png</texturenofocus>
+					<onclick>$VAR[HomeWidgetClickActions]</onclick>
+					<visible allowhiddenfocus="true">[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+				</control>
+				<control type="image">
+					<right>5</right>
+					<posy>0</posy>
+					<width>40</width>
+					<height>60</height>
+					<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+					<texture>common/spinctrl/arrow-up-nf.png</texture>
+					<visible>Control.IsVisible(511)</visible>
+				</control>
+				<control type="image">
+					<right>45</right>
+					<posy>0</posy>
+					<width>40</width>
+					<height>60</height>
+					<texture>common/spinctrl/arrow-down-nf.png</texture>
+					<visible>Control.IsVisible(511) + !Control.HasFocus(511)</visible>
+				</control>
+				<control type="image">
+					<right>45</right>
+					<posy>0</posy>
+					<width>40</width>
+					<height>60</height>
+					<texture>common/spinctrl/arrow-down-fo.png</texture>
+					<visible>Control.IsVisible(511) + Control.HasFocus(511)</visible>
+				</control>
 			</control>
 
 
@@ -605,7 +657,7 @@
 			<onclick>ActivateWindow(weather)</onclick>
 			<visible>!IsEmpty(Window(Weather).Property(Day5.Title))</visible>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
-			<visible>!Skin.String(GadgetRows, simplever)</visible>
+			<visible>!Skin.String(widgetstyle, poster)</visible>
 		</item>
 		<item>
 			<label>[UPPERCASE]$INFO[Window(Weather).Property(Day6.Title)][/UPPERCASE]</label>
@@ -617,7 +669,7 @@
 			<onclick>ActivateWindow(weather)</onclick>
 			<visible>!IsEmpty(Window(Weather).Property(Day6.Title))</visible>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
-			<visible>!Skin.String(GadgetRows, simplever)</visible>
+			<visible>!Skin.String(widgetstyle, poster)</visible>
 		</item>
 		<!--rom collection browser -->
 		<item>
@@ -1669,21 +1721,60 @@
     </variable>
 	
 
-	<include name="panel_layout_vertical">
+	<include name="panel_layout_vertical_poster">
 		<width>1320</width>
 		<height>760</height>
 		<orientation>vertical</orientation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,4)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
+		<animation effect="slide" start="0" end="0,350" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,5) | StringCompare(Container(510).NumItems,5)">Conditional</animation>
+		<animation effect="slide" end="0,-30" time="0" condition="StringCompare(Window(Home).Property(activewidget),music)">Conditional</animation>
+	</include>
+	
+	<include name="panel_layout_vertical_landscape">
+		<posx>230</posx>
+		<posy>155</posy>
+		<width>1250</width>
+		<height>630</height>
+		<orientation>vertical</orientation>
+		<animation effect="slide" start="0" end="368" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="368" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
+		
+		<animation effect="slide" start="0" end="0,210" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
+		<animation effect="slide" start="0" end="0,210" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,6)">Conditional</animation>
+		<animation effect="slide" end="60" time="0" condition="StringCompare(Window(Home).Property(activewidget),music)">Conditional</animation>
+	</include>
+	
+	<include name="panel_layout_horizontal_poster">
+		<width>1830</width>
+		<height>380</height>
+		<itemgap>5</itemgap>
+		<orientation>horizontal</orientation>
+		<animation type="Conditional" condition="Skin.String(GadgetRows, simplehor)">
+			<effect type="slide" start="0,0" end="0,-160" time="0" tween="cubic" easing="inout" delay="0" reversible="false"/>
+		</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,6)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,5)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,4)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
+		<animation effect="slide" end="0,30" time="0" condition="StringCompare(Window(Home).Property(activewidget),music) + !Skin.String(GadgetRows, simplehor)">Conditional</animation>
+		<animation effect="slide" end="0,110" time="0" condition="StringCompare(Window(Home).Property(activewidget),music) + Skin.String(GadgetRows, simplehor)">Conditional</animation>
 	</include>
 	
 	<include name="panel_layout">
-		<include condition="Skin.String(GadgetRows, simplever)">panel_layout_vertical</include>
-		<posx>34</posx>
+		<include condition="Skin.String(widgetstyle, poster) + Skin.String(GadgetRows, simplever)">panel_layout_vertical_poster</include>
+		<include condition="Skin.String(widgetstyle, landscape) + Skin.String(GadgetRows, simplever)">panel_layout_vertical_landscape</include>
+		<include condition="Skin.String(widgetstyle, poster) + !Skin.String(GadgetRows, simplever)">panel_layout_horizontal_poster</include>
+		<posx>30</posx>
 		<posy>55</posy>
 		<width>1830</width>
 		<height>245</height>
 		<onleft></onleft>
 		<onleft condition="Skin.String(GadgetRows, simplever)">300</onleft>
-		
 		<ondown condition="Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)">300</ondown>
 		<ondown condition="Skin.String(GadgetRows, enhanced)">510</ondown>
 		<ondown condition="Skin.String(GadgetRows, simplehor)">511</ondown>
@@ -1699,11 +1790,12 @@
 		<animation type="Conditional" condition="!StringCompare(Window(Home).Property(activewidget),music) + !Skin.String(GadgetRows, simplever)">
 			<effect type="slide" start="0,0" end="0,20" time="0" tween="cubic" easing="inout" delay="0" reversible="false"/>
 		</animation>
+		
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
-		<itemlayout width="368" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + !Skin.String(GadgetRows, simplever)">
+		<itemlayout width="368" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, landscape)">
 			<include>HomeMenuWidgetItemlayout</include>
 		</itemlayout>
-		<focusedlayout width="368" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + !Skin.String(GadgetRows, simplever)">
+		<focusedlayout width="368" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, landscape)">
 			<control type="group">
 				<include>HomeMenuWidgetFocuslayout</include>
 			</control>
@@ -1781,7 +1873,7 @@
 			</control>
         </focusedlayout>
 		
-		<itemlayout height="380" width="259" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(GadgetRows, simplever)">
+		<itemlayout height="380" width="261" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, poster)">
           <control type="image">
             <include>BigPanelPosterDimensions</include>
             <include>PosterThumbBG</include>
@@ -1829,7 +1921,7 @@
 				<shadowcolor>black</shadowcolor>
 			</control>
         </itemlayout>
-        <focusedlayout height="380" width="259" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(GadgetRows, simplever)">
+        <focusedlayout height="380" width="261" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, poster)">
           <control type="image">
             <include>BigPanelPosterDimensions</include>
             <include>PosterThumbFO</include>

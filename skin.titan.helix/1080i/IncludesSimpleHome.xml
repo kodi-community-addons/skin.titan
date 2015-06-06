@@ -189,28 +189,63 @@
 			
 			<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
 			
-			
-			<control type="button" id="511">
-				<right>-20</right>
+			<!--change widget button -->
+			<control type="group">
+				<right>40</right>
 				<posy>285</posy>
-				<width>1000</width>
-				<height>60</height>
-				<align>right</align>
-				<textcolor>grey</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<focusedcolor>$INFO[Skin.String(ButtonFocusColor)]</focusedcolor>
-				<font>Reg28</font>
-				<onup>Skin.Reset(ShowWidgets)</onup>
-				<onup>510</onup>
-				<ondown>300</ondown>
-				<textoffsetx>80</textoffsetx>
-				<label>$VAR[HomeWidgetLabel]</label>
-				<texturefocus>-</texturefocus>
-				<texturenofocus>-</texturenofocus>
-				<onclick>$VAR[HomeWidgetClickActions]</onclick>
-				<visible>Control.HasFocus(510) | Control.HasFocus(511)</visible>
+				<width>600</width>
+				<height>45</height>
 				<include>animation_fade_visible_hidden_delayed</include>
+				<control type="image">
+					<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+					<texture flipy="true">dialogs/default/separator.png</texture>
+					<visible>Control.IsVisible(511)</visible>
+				</control>
+				<control type="button" id="511">
+					<right>0</right>
+					<width>600</width>
+					<height>45</height>
+					<align>right</align>
+					<font>Reg30</font>
+					<onup>Skin.Reset(ShowWidgets)</onup>
+					<onup>4444</onup>
+					<ondown>300</ondown>
+					<textoffsetx>90</textoffsetx>
+					<label>$VAR[HomeWidgetLabel]</label>
+					<texturenofocus>dialogs/default/separator.png</texturenofocus>
+					<onclick>$VAR[HomeWidgetClickActions]</onclick>
+					<visible allowhiddenfocus="true">!IsEmpty(Window(Home).Property(activewidget))</visible>
+				</control>
+				<control type="image">
+					<right>5</right>
+					<posy>-5</posy>
+					<width>40</width>
+					<height>60</height>
+					<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+					<texture>common/spinctrl/arrow-up-nf.png</texture>
+					<visible>Control.IsVisible(511)</visible>
+				</control>
+				<control type="image">
+					<right>45</right>
+					<posy>-5</posy>
+					<width>40</width>
+					<height>60</height>
+					<texture>common/spinctrl/arrow-down-nf.png</texture>
+					<visible>Control.IsVisible(511) + !Control.HasFocus(511)</visible>
+				</control>
+				<control type="image">
+					<right>45</right>
+					<posy>-5</posy>
+					<width>40</width>
+					<height>60</height>
+					<texture>common/spinctrl/arrow-down-fo.png</texture>
+					<visible>Control.IsVisible(511) + Control.HasFocus(511)</visible>
+				</control>
 			</control>
+			
+			
+			
+			
 		</control>
 		
 		</control>
@@ -426,12 +461,6 @@
         </animation>
 		
 		<control type="group">
-				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,4)">Conditional</animation>
-				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
-				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
-				<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
-				<animation effect="slide" start="0" end="0,350" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,5) | StringCompare(Container(510).NumItems,5)">Conditional</animation>
-				<animation effect="slide" end="0,-30" time="0" condition="StringCompare(Window(Home).Property(activewidget),music)">Conditional</animation>
 				<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
 			</control>
 
@@ -479,29 +508,62 @@
 			</control>
 		</control>
 		
-		<control type="button" id="511">
-			<right>-20</right>
-			<bottom>55</bottom>
-			<width>1000</width>
-			<height>60</height>
-			<align>right</align>
-			<textcolor>grey</textcolor>
-			<shadowcolor>black</shadowcolor>
-			<focusedcolor>$INFO[Skin.String(ButtonFocusColor)]</focusedcolor>
-			<font>Bold32</font>
-			<onup>Skin.Reset(ShowWidgets)</onup>
-			<onup>510</onup>
-			<onleft>300</onleft>
-			<ondown>510</ondown>
-			<textoffsetx>80</textoffsetx>
-			<label>$VAR[HomeWidgetLabel]</label>
-			<texturefocus>-</texturefocus>
-			<texturenofocus>-</texturenofocus>
-			<onclick>$VAR[HomeWidgetClickActions]</onclick>
+		<!--change widget button -->
+		<control type="group">
+			<right>60</right>
+			<bottom>60</bottom>
+			<width>600</width>
+			<height>45</height>
 			<include>animation_fade_visible_hidden_delayed</include>
-			<visible>![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]</visible>
-			<animation time="100" effect="fade" start="100" end="0" delay="0" condition="!StringCompare(Window(Home).Property(activewidget),systeminfo) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget) + SubString(Window(Home).Property(activewidget),smart-) | [StringCompare(Window(Home).Property(activewidget),custom) + !IsEmpty(Window(Home).Property(customwidgetcontent))]">Conditional</animation>
+			<control type="image">
+				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+				<texture flipy="true">dialogs/default/separator.png</texture>
+				<visible>Control.IsVisible(511)</visible>
+			</control>
+			<control type="button" id="511">
+				<right>0</right>
+				<width>600</width>
+				<height>45</height>
+				<align>right</align>
+				<font>Reg30</font>
+				<onup>510</onup>
+				<ondown>300</ondown>
+				<textoffsetx>90</textoffsetx>
+				<label>$VAR[HomeWidgetLabel]</label>
+				<texturenofocus>dialogs/default/separator.png</texturenofocus>
+				<onclick>$VAR[HomeWidgetClickActions]</onclick>
+				<visible>![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]</visible>
+				<visible allowhiddenfocus="true">!IsEmpty(Window(Home).Property(activewidget))</visible>
+			</control>
+			<control type="image">
+				<right>5</right>
+				<posy>-5</posy>
+				<width>40</width>
+				<height>60</height>
+				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+				<texture>common/spinctrl/arrow-up-nf.png</texture>
+				<visible>Control.IsVisible(511)</visible>
+			</control>
+			<control type="image">
+				<right>45</right>
+				<posy>-5</posy>
+				<width>40</width>
+				<height>60</height>
+				<texture>common/spinctrl/arrow-down-nf.png</texture>
+				<visible>Control.IsVisible(511) + !Control.HasFocus(511)</visible>
+			</control>
+			<control type="image">
+				<right>45</right>
+				<posy>-5</posy>
+				<width>40</width>
+				<height>60</height>
+				<texture>common/spinctrl/arrow-down-fo.png</texture>
+				<visible>Control.IsVisible(511) + Control.HasFocus(511)</visible>
+			</control>
 		</control>
+		
+		
+		
 	</control>
 	
 	<!--RSS -->			
