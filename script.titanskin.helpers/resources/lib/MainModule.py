@@ -947,8 +947,9 @@ def selectBusyTexture():
             xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
     elif selectedItem == 2:
         dialog = xbmcgui.Dialog()
-        custom_texture = dialog.browse( 2 , xbmc.getLocalizedString(31504), 'files')
+        custom_texture = dialog.browse( 0 , xbmc.getLocalizedString(31504), 'files')
         if custom_texture:
+            print "custom_texture -->" + custom_texture
             xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
             xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
     else:
