@@ -91,7 +91,7 @@ class DialogSelectSmall( xbmcgui.WindowXMLDialog ):
             self.close()
         
         # select item in list
-        if action.getId() == 7:
+        if action.getId() == 7 or action.getId() == 100:
             if self.multiselect == True:
                 item =  self.fav_list.getSelectedItem()
                 if item.isSelected() == True:
