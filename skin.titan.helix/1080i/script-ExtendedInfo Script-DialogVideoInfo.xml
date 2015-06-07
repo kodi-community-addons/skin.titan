@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
-    <defaultcontrol always="true">1000</defaultcontrol>
-	<zorder>6</zorder>
-	
+    <defaultcontrol always="true">9000</defaultcontrol>
+	<zorder>1</zorder>
     <controls>
         <control type="group">
 
@@ -18,6 +17,8 @@
 				</control>
 				<include>DialogOverlay</include>
 			</control>
+			<!-- touchscreen workaround for windows tablets -->
+			<include condition="Skin.HasSetting(EnableTouchSupport)">TouchScreenWorkaround</include>
 			
 			<control type="label">
 				<include>animation_fade_visible_hidden</include>
@@ -61,23 +62,166 @@
 				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 			</control>
 			
-			<include condition="!skin.hassetting(nofooterbar)">Footer</include>
+			<!-- footer with controls -->
+				<control type="image">
+					<posx>0</posx>
+					<posy>982</posy>
+					<width>1920</width>
+					<height>110</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+					<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),0)">Conditional</animation>
+				</control>
+
+				<!--Butons 9000-->			
+				<control type="grouplist" id="9000">
+					<posx>60</posx>
+					<bottom>15</bottom>
+					<width>1800</width>
+					<height>60</height>
+					<itemgap>15</itemgap>
+					<onup condition="!Skin.HasSetting(EnableTouchSupport)">4000</onup>
+					<ondown condition="!Skin.HasSetting(EnableTouchSupport)">4000</ondown>
+					<onleft>9000</onleft>
+					<onright>9000</onright>
+					<orientation>horizontal</orientation>
+					
+					<!-- touch controls -->
+					
+					<control type="button" id="208">
+						<label></label>
+						<width>60</width>
+						<height>60</height>
+						<font>-</font>
+						<texturefocus colordiffuse="white">touchcontrols/icon_back.png</texturefocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_back.png</texturenofocus>
+						<aspectratio aligny="bottom">keep</aspectratio>
+						<onclick>Back</onclick>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+					</control>
+					<control type="button" id="209">
+						<width>60</width>
+						<height>60</height>
+						<label>210</label>
+						<font>-</font>
+						<texturefocus colordiffuse="white">touchcontrols/icon_home.png</texturefocus>
+						<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_home.png</texturenofocus>
+						<aspectratio>keep</aspectratio>
+						<onclick>Back</onclick>
+						<onclick>ActivateWindow(Home)</onclick>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+					</control>
+					<control type="image" id="210">
+						<width>135</width>
+						<height>60</height>
+						<label>210</label>
+						<font>-</font>
+						<texture>colors/color_transparent.png</texture>
+						<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+					</control>
+					
+					<control type="radiobutton" id="6001">
+						<visible>false</visible>
+					</control>
+					<control type="radiobutton" id="6003">
+						<visible>false></visible>
+					</control>
+					<control type="radiobutton" id="6005">
+						<visible>false></visible>
+					</control>
+					<control type="radiobutton" id="6002">
+						<visible>false></visible>
+					</control>
+					<control type="radiobutton" id="6006">
+						<visible>false></visible>
+					</control>
+					
+					<!-- play button -->
+					<control type="button" id="8">
+						<label>$LOCALIZE[208]</label>
+						<width>285</width>
+						<height>60</height>
+						<align>center</align>
+						<textoffsetx>0</textoffsetx>
+						 <visible>!IsEmpty(Window.Property(movie.PercentPlayed))</visible>
+					</control>
+					
+					<!-- resume button -->
+					<control type="button" id="9">
+						<width>285</width>
+						<height>60</height>
+						<align>center</align>
+						<textoffsetx>0</textoffsetx>
+						<label>$LOCALIZE[13404] $INFO[Window.Property(movie.PercentPlayed),(,%)]</label>
+						<visible>IntegerGreaterThan(Window.Property(movie.PercentPlayed),0)</visible>
+					</control>
+					
+					<!-- couchpotato button -->
+					<control type="button" id="777">
+						<label>$ADDON[script.extendedinfo 32165]</label>
+						<width>285</width>
+						<height>60</height>
+						<align>center</align>
+						<textoffsetx>0</textoffsetx>
+						<onclick>XBMC.RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=$INFO[Window.Property(movie.imdb_id)])</onclick>
+						<visible>IsEmpty(Window.Property(movie.PercentPlayed)) + System.HasAddon(plugin.video.couchpotato_manager)</visible>
+					</control>
+					
+					<!-- manage button -->
+					<control type="button" id="445">
+						<width>285</width>
+						<height>60</height>
+						<align>center</align>
+						<textoffsetx>0</textoffsetx>
+						<label>$ADDON[script.extendedinfo 32133]</label>
+						<visible>!Skin.HasSetting(kioskmode)</visible>
+					</control>
+					
+					<!--Search Trailer on Youtube-->
+					<control type="button" id="200">
+						<width>285</width>
+						<height>60</height>
+						<align>center</align>
+						<textoffsetx>0</textoffsetx>
+						<label>YouTube $LOCALIZE[20410]</label>
+						<onclick condition="System.HasAddon(plugin.video.youtube)">XBMC.RunScript(script.titanskin.helpers,SEARCHTRAILER,$INFO[Window.Property(movie.Title)])</onclick>
+						<onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
+						<visible>!IsEmpty(Window.Property(movie.imdb_id))</visible>
+					</control>
+					
+					<!--video extras -->
+					<control type="button" id="100">
+						<width>285</width>
+						<height>60</height>
+						<align>center</align>
+						<textoffsetx>0</textoffsetx>
+						<label>$ADDON[script.extendedinfo 32132]</label>
+						<onclick>XBMC.RunScript(script.videoextras,display,"$INFO[Window.Property(movie.FilenameAndPath)]")</onclick>
+						<visible>System.HasAddon(script.videoextras) + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
+						<visible>!IsEmpty(Window.Property(movie.FilenameAndPath))</visible>
+					</control>
+
+				</control>
             
+
 			<control type="group">
 
-				
-				
                 <control type="grouplist" id="4000">
                     <orientation>vertical</orientation>
                     <scrolltime tween="sine">400</scrolltime>
                     <posx>60</posx>
                     <posy>180</posy>
                     <itemgap>0</itemgap>
-                    <ondown>5000</ondown>
-                    <onup>4000</onup>
-					<onleft>back</onleft>
+                    <ondown condition="!Skin.HasSetting(EnableTouchSupport)">9000</ondown>
+                    <onup condition="!Skin.HasSetting(EnableTouchSupport)">4000</onup>
+					<onleft>9000</onleft>
                     <width>2100</width>
                     <height>800</height>
+					<pagecontrol>999</pagecontrol>
                                        
 					<!-- rating stuff -->
 					<control type="group">
@@ -317,10 +461,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>1000</onright>
-                            <onup>5000</onup>
-                            <ondown>750</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">5000</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">750</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
                             <itemlayout height="270" width="201">
@@ -449,10 +593,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>750</onright>
-                            <onup>1000</onup>
-                            <ondown>150</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">1000</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">150</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
                             <itemlayout height="270" width="201">
@@ -563,10 +707,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>150</onright>
-                            <onup>750</onup>
-                            <ondown>250</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">750</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">250</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
 							<itemlayout height="270" width="201">
@@ -689,10 +833,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>250</onright>
-                            <onup>150</onup>
-                            <ondown>1150</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">150</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">1150</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
 							<itemlayout height="270" width="201">
@@ -803,10 +947,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>210</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>1150</onright>
-                            <onup>250</onup>
-                            <ondown>350</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">250</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">350</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -911,10 +1055,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>210</height>
-							<onleft>back</onleft>
+							<onleft>9000</onleft>
                             <onright>350</onright>
-                            <onup>1150</onup>
-                            <ondown>550</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">1150</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">550</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1018,10 +1162,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>210</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>550</onright>
-                            <onup>350</onup>
-                            <ondown>1450</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">350</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">1450</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1134,10 +1278,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>210</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>1450</onright>
-                            <onup>550</onup>
-                            <ondown>650</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">550</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">650</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1257,10 +1401,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>210</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>650</onright>
-                            <onup>1450</onup>
-                            <ondown>850</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">1450</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">850</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1364,10 +1508,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>100</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>850</onright>
-                            <onup>650</onup>
-                            <ondown>1050</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">650</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">1050</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1438,7 +1582,7 @@
                         <height>365</height>
                         <control type="label">
                             <posx>5</posx>
-                            <posy>0</posy>
+                            <posy>130</posy>
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
@@ -1447,7 +1591,7 @@
                         </control>
 						<control type="image">
                             <posx>1810</posx>
-                            <posy>0</posy>
+                            <posy>130</posy>
                             <width>35</width>
                             <height>100</height>
                             <texture>info/arrowright.png</texture>
@@ -1458,29 +1602,32 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>300</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>1050</onright>
-                            <onup>850</onup>
-                            <ondown>950</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">850</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">950</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
+							<itemgap>50</itemgap>
 							
-							<itemlayout height="300" width="780">
+							<itemlayout height="300" width="900">
                                 <control type="group">
                                     <control type="image">
+										<width>880</width>
                                         <texture border="5" colordiffuse="black">diffuse/panel.png</texture>
                                     </control>
                                     <control type="image">
+										<width>880</width>
 										<bordersize>5</bordersize>
                                         <texture border="5" colordiffuse="$INFO[Skin.String(ViewDetailsPanelColor)]">diffuse/panel.png</texture>
                                     </control>
                                    <control type="textbox">
 										<top>20</top>
 										<left>20</left>
-										<width>740</width>
+										<width>820</width>
 										<height>260</height>
 										<align>justify</align>
 										<aligny>justify</aligny>
@@ -1490,19 +1637,21 @@
 									</control>
                                 </control>
                             </itemlayout>
-                            <focusedlayout height="300" width="780">
+                            <focusedlayout height="300" width="900">
                                 <control type="group">
                                     <control type="image">
+										<width>880</width>
                                         <texture border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">diffuse/panel.png</texture>
                                     </control>
                                     <control type="image">
+										<width>880</width>
 										<bordersize>5</bordersize>
                                         <texture border="5" colordiffuse="$INFO[Skin.String(ViewDetailsPanelColor)]">diffuse/panel.png</texture>
                                     </control>
                                    <control type="textbox">
 										<top>20</top>
 										<left>20</left>
-										<width>740</width>
+										<width>820</width>
 										<height>260</height>
 										<align>justify</align>
 										<aligny>justify</aligny>
@@ -1541,10 +1690,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>220</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>950</onright>
-                            <onup>1050</onup>
-                            <ondown>1250</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">1050</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">1250</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1635,10 +1784,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>1250</onright>
-                            <onup>950</onup>
-                            <ondown>1350</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">950</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">1350</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
                             <itemlayout height="270" width="201">
@@ -1708,10 +1857,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>1350</onright>
-                            <onup>1250</onup>
-                            <ondown>450</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">1250</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">450</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
                             <itemlayout width="362" height="200">
@@ -1776,10 +1925,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>280</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>450</onright>
-                            <onup>1350</onup>
-                            <ondown>2000</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">1350</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">2000</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
 							
@@ -1891,10 +2040,10 @@
                             <posy>40</posy>
                             <width>1800</width>
                             <height>210</height>
-                            <onleft>back</onleft>
+                            <onleft>9000</onleft>
                             <onright>2000</onright>
-                            <onup>450</onup>
-                            <ondown>5000</ondown>
+                            <onup condition="!Skin.HasSetting(EnableTouchSupport)">450</onup>
+                            <ondown condition="!Skin.HasSetting(EnableTouchSupport)">9000</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -1982,29 +2131,20 @@
 						</control>
                     </control>
 					
-					<!-- buttons (hidden)-->
+					<!-- buttons (hidden)
 					<control type="grouplist" id="5000">
 						<posx>60</posx>
 						<posy>140</posy>
 						<width>1090</width>
 						<height>400</height>
-						<onleft>back</onleft>
+						<onleft>9000</onleft>
 						<onright>5000</onright>
-						<onup>2000</onup>
-						<ondown>1000</ondown>
+						<onup condition="!Skin.HasSetting(EnableTouchSupport)">2000</onup>
+						<ondown condition="!Skin.HasSetting(EnableTouchSupport)">1000</ondown>
 						<itemgap>-10</itemgap>
 						<visible>false</visible>
 						<orientation>horizontal</orientation>
 						<scrolltime tween="quadratic">200</scrolltime>
-						<control type="radiobutton" id="8">
-							<visible>false</visible>
-						</control>
-						<control type="group" id="99">
-							<width>280</width>
-							<visible>false</visible>
-							<control type="button" id="9">
-							</control>
-						</control>
 						<control type="group" id="20000">
 							<posx>0</posx>
 							<posy>0</posy>
@@ -2018,27 +2158,23 @@
 								<visible>false</visible>
 							</control>
 						</control>
-						<control type="radiobutton" id="6003">
-							<visible>false</visible>
-						</control>
-						<control type="radiobutton" id="6005">
-							<visible>false</visible>
-						</control>
-						<control type="radiobutton" id="6002">
-							<visible>false</visible>
-						</control>
-						<control type="radiobutton" id="6006">
-							<visible>false</visible>
-						</control>
-						<control type="radiobutton" id="445">
-							<visible>false</visible>
-						</control>
-					</control>
+						
+					</control> -->
                 
 				
 				</control>
                 
-				
+				<!--vertical Scollbar-->
+				<control type="scrollbar" id="999">
+					<right>5</right>
+					<posy>175</posy>
+					<height>770</height>
+					<onup condition="!Skin.HasSetting(EnableTouchSupport)">60</onup>
+					<ondown condition="!Skin.HasSetting(EnableTouchSupport)">60</ondown>
+					<onleft>4000</onleft>
+					<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)">Conditional</animation>
+					<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+				</control>
 				
 				<!--Movie info-->
                 <control type="group" id="33000">
