@@ -30,7 +30,7 @@ __language__ = xbmc.getLocalizedString
 __cwd__ = addon.getAddonInfo('path')
 
 def logMsg(msg, level = 1):
-    if doDebugLog == True:
+    if doDebugLog == True or level == 0:
         xbmc.log(msg)
 
 def sendClick(controlId):
@@ -173,10 +173,11 @@ def setCustomContent(skinString):
     win.setProperty("customwidgetcontent", skinStringContent)
         
 def updatePlexlinks():
-    logMsg("update plexlinks started...")
-    xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
+    logMsg("update plexlinks started...", 0)
+    if not win.getProperty("plexbmc.0.title"):
+        xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
     linkCount = 0
-    logMsg("updateplexlinks started...")
+    logMsg("updateplexlinks started...", 0)
     
     #wait for max 20 seconds untill the plex nodes are available
     count = 0
@@ -190,32 +191,38 @@ def updatePlexlinks():
         link = win.getProperty(plexstring + ".title")
         if not link:
             break
-        logMsg(plexstring + ".title --> " + link)
+        logMsg(plexstring + ".title --> " + link, 0)
         plexType = win.getProperty(plexstring + ".type")
-        logMsg(plexstring + ".type --> " + plexType)            
+        logMsg(plexstring + ".type --> " + plexType, 0)            
 
-        link = win.getProperty(plexstring + ".recent")
-        logMsg(plexstring + ".recent --> " + link)
-        link = link.replace("ActivateWindow(VideoLibrary, ", "")
-        link = link.replace("ActivateWindow(VideoLibrary,", "")
-        link = link.replace("ActivateWindow(MusicFiles,", "")
-        link = link.replace("ActivateWindow(Pictures,", "")
-        link = link.replace(",return)", "")
-        win.setProperty(plexstring + ".recent.content", link)
-        logMsg(plexstring + ".recent --> " + link)
+        link = win.getProperty(plexstring + ".path")
+        logMsg(plexstring + ".path --> " + link, 0)
+        
+        link = link.replace("mode=1", "mode=0")
+        link = link.replace("mode=2", "mode=0")
+        
+        recentlink = link.replace("/all", "/recentlyAdded")
+        win.setProperty(plexstring + ".recent", recentlink)
+        win.setProperty(plexstring + ".recent.content", getContentPath(recentlink))
+        logMsg(plexstring + ".recent --> " + recentlink, 0)
+        logMsg(plexstring + ".recent.content --> " + getContentPath(recentlink), 0)
 
-        link = win.getProperty(plexstring + ".viewed")
-        logMsg(plexstring + ".viewed --> " + link)
-        link = link.replace("ActivateWindow(VideoLibrary, ", "")
-        link = link.replace("ActivateWindow(VideoLibrary,", "")
-        link = link.replace("ActivateWindow(MusicFiles,", "")
-        link = link.replace("ActivateWindow(Pictures,", "")
-        link = link.replace(",return)", "")
-        win.setProperty(plexstring + ".viewed.content", link)
-        logMsg(plexstring + ".viewed --> " + link)
+        progresslink = link.replace("/all", "/onDeck")
+        win.setProperty(plexstring + ".viewed", progresslink)
+        win.setProperty(plexstring + ".viewed.content", getContentPath(progresslink))
+        logMsg(plexstring + ".viewed --> " + progresslink, 0)
 
         linkCount += 1
-                       
+
+def getContentPath(path):
+    path = path.replace("ActivateWindow(VideoLibrary, ", "")
+    path = path.replace("ActivateWindow(VideoLibrary,", "")
+    path = path.replace("ActivateWindow(MusicFiles,", "")
+    path = path.replace("ActivateWindow(Pictures,", "")
+    path = path.replace(",return)", "")
+    return path
+
+        
 def showInfoPanel():
     tryCount = 0
     secondsToDisplay = "4"
