@@ -173,11 +173,11 @@ def setCustomContent(skinString):
     win.setProperty("customwidgetcontent", skinStringContent)
         
 def updatePlexlinks():
-    logMsg("update plexlinks started...", 0)
+    logMsg("update plexlinks started...")
     if not win.getProperty("plexbmc.0.title"):
         xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
     linkCount = 0
-    logMsg("updateplexlinks started...", 0)
+    logMsg("updateplexlinks started...")
     
     #wait for max 20 seconds untill the plex nodes are available
     count = 0
@@ -191,12 +191,12 @@ def updatePlexlinks():
         link = win.getProperty(plexstring + ".title")
         if not link:
             break
-        logMsg(plexstring + ".title --> " + link, 0)
+        logMsg(plexstring + ".title --> " + link)
         plexType = win.getProperty(plexstring + ".type")
-        logMsg(plexstring + ".type --> " + plexType, 0)            
+        logMsg(plexstring + ".type --> " + plexType)            
 
         link = win.getProperty(plexstring + ".path")
-        logMsg(plexstring + ".path --> " + link, 0)
+        logMsg(plexstring + ".path --> " + link)
         
         link = link.replace("mode=1", "mode=0")
         link = link.replace("mode=2", "mode=0")
@@ -204,13 +204,13 @@ def updatePlexlinks():
         recentlink = link.replace("/all", "/recentlyAdded")
         win.setProperty(plexstring + ".recent", recentlink)
         win.setProperty(plexstring + ".recent.content", getContentPath(recentlink))
-        logMsg(plexstring + ".recent --> " + recentlink, 0)
-        logMsg(plexstring + ".recent.content --> " + getContentPath(recentlink), 0)
+        logMsg(plexstring + ".recent --> " + recentlink)
+        logMsg(plexstring + ".recent.content --> " + getContentPath(recentlink))
 
         progresslink = link.replace("/all", "/onDeck")
         win.setProperty(plexstring + ".viewed", progresslink)
         win.setProperty(plexstring + ".viewed.content", getContentPath(progresslink))
-        logMsg(plexstring + ".viewed --> " + progresslink, 0)
+        logMsg(plexstring + ".viewed --> " + progresslink)
 
         linkCount += 1
 
