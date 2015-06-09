@@ -905,15 +905,15 @@ def selectBusyTexture():
     currentSpinnerTexture = xbmc.getInfoLabel("Skin.String(SpinnerTexture)")
     
     listitem = xbmcgui.ListItem(label="None")
-    listitem.setProperty("icon","-")
+    listitem.setProperty("icon","special://skin/extras/icons/no-spinner-icon.png")
     spinnersList.append(listitem)
     
     listitem = xbmcgui.ListItem(label="Custom single image (gif)")
-    listitem.setProperty("icon","-")
+    listitem.setProperty("icon","special://skin/extras/icons/animated-gif-icon.png")
     spinnersList.append(listitem)
     
     listitem = xbmcgui.ListItem(label="Custom multi image (path)")
-    listitem.setProperty("icon","-")
+    listitem.setProperty("icon","special://skin/extras/icons/animated-spinner-folder-icon.png")
     spinnersList.append(listitem)
 
     dirs, files = xbmcvfs.listdir("special://skin/extras/busy_spinners/")
