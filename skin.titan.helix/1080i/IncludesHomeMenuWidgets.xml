@@ -1641,18 +1641,6 @@
 
 	</variable>
 	
-	<variable name="HomeMenuWidgetImage">
-		<value condition="!IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
-		<value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode)  + !IsEmpty(ListItem.Season) + !IsEmpty(ListItem.Thumb) + !Skin.HasSetting(PreferTvShowThumbWidget)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(landscape)]</value>
-		<value condition="!IsEmpty(ListItem.Art(tvshow.landscape))">$INFO[ListItem.Art(tvshow.landscape)]</value>
-		<value condition="!IsEmpty(ListItem.Property(small_fanartimage))">$INFO[ListItem.Property(small_fanartimage)]</value>
-        <value condition="!IsEmpty(ListItem.Art(fanart)) + !StringCompare(Window(Home).Property(activewidget),youtube)">$INFO[ListItem.Art(fanart)]</value>
-		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
-		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-		<value>$INFO[ListItem.ActualIcon]</value>
-    </variable>
 
 	<variable name="HomeMenuWidgetLabel">
 		<value condition="StringCompare(Window(Home).Property(activewidget), youtube) | StringCompare(Window(Home).Property(activewidget), music)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
@@ -1792,12 +1780,12 @@
 		</animation>
 		
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
-		<itemlayout width="368" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, landscape)">
-			<include>HomeMenuWidgetItemlayout</include>
+		<itemlayout width="370" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, landscape)">
+			<include>ThumbsViewLayout</include>
 		</itemlayout>
-		<focusedlayout width="368" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, landscape)">
+		<focusedlayout width="370" height="210" condition="!StringCompare(Window(Home).Property(activewidget),music) + Skin.String(widgetstyle, landscape)">
 			<control type="group">
-				<include>HomeMenuWidgetFocuslayout</include>
+				<include>ThumbsViewLayoutFocus</include>
 			</control>
 		</focusedlayout>
 		<itemlayout height="265" width="262" condition="StringCompare(Window(Home).Property(activewidget),music)">
@@ -1975,110 +1963,6 @@
 	</include>
 
 	
-    <include name="HomeMenuWidgetItemlayout">
-		<control type="image">
-            <!--Panel Shadow-->
-            <posx>0</posx>
-            <posy>0</posy>
-            <width>363</width>
-            <height>210</height>
-            <texture>home/home_shadow.png</texture>
-        </control>
-		<control type="image">
-            <!--Panel Normal-->
-            <posx>0</posx>
-            <posy>0</posy>
-            <width>355</width>
-            <height>200</height>
-            <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[HomeMenuWidgetImage]</texture>
-            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-        </control>
-        <control type="image">
-            <!--Panel Ovelay-->
-            <posx></posx>
-            <posy>0</posy>
-            <width>355</width>
-            <height>200</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-			<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-        </control>
-        <control type="label">
-            <!--Label-->
-            <centerleft>174</centerleft>
-            <posy>117</posy>
-            <width>340</width>
-            <height>100</height>
-            <align>center</align>
-            <label>$VAR[HomeMenuWidgetLabel]</label>
-            <font>Light25</font>
-            <textcolor>lightgrey</textcolor>
-			<shadowcolor>black</shadowcolor>
-			<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-        </control>
-		<control type="image">
-				<!--Watched Overlay-->
-				<right>13</right>
-				<posy>0</posy>
-				<width>60</width>
-				<height>60</height>
-				<colordiffuse>ccFFFFFF</colordiffuse>
-				<texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
-			</control>
-			<control type="label">
-				<!--watched label-->
-				<width>100</width>
-				<centerright>30</centerright>
-				<posy>-17</posy>
-				<align>center</align>
-				<label>$VAR[WatchedLabel]</label>
-				<font>Light20</font>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
-			</control>
-    </include>
-    <include name="HomeMenuWidgetFocuslayout">
-
-        <include>HomeMenuWidgetItemlayout</include>
-        <control type="label">
-            <!--Label White-->
-            <animation type="Focus">
-                <effect type="fade" start="0" end="100" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <animation type="UnFocus">
-                <effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <centerleft>174</centerleft>
-            <posy>117</posy>
-            <width>340</width>
-            <height>100</height>
-            <align>center</align>
-            <label>$VAR[HomeMenuWidgetLabel]</label>
-            <font>Light25</font>
-            <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
-			<shadowcolor>black</shadowcolor>
-			<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-        </control>
-        <control type="image">
-            <!--Panel Focus-->
-            <animation type="Focus">
-                <effect type="fade" start="0" end="100" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <animation type="UnFocus">
-                <effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <posx>-5</posx>
-            <posy>-8</posy>
-            <width>368</width>
-            <height>217</height>
-            <texture>home/home_focus.png</texture>
-			<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-        </control>
-    </include>
-
+    
 	
 	</includes>

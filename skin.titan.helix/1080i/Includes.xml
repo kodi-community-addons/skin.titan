@@ -272,11 +272,11 @@
 			</control>
 			
 			
-			
+			<!--Rating normal-->
 			<control type="group">
-				<!--Rating-->
+				
 				<visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
-				<visible>!Control.IsVisible(58) + !Control.IsVisible(508)</visible>
+				<visible>![!Skin.hastheme(classic) + Skin.HasSetting(StudioInFooter)]</visible>
 				<visible>Window.IsActive(myvideonav.xml) | StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
 				<posy>985</posy>
 				<posx>1450</posx>
@@ -320,6 +320,79 @@
 					<label>$INFO[ListItem.Rating]</label>
 				</control>
 			</control>
+			
+			<!--Rating + Studio-->
+			<control type="group">
+				<visible>!IsEmpty(ListItem.Studio) | !IsEmpty(ListItem.Rating)</visible>
+				<visible>!Skin.hastheme(classic) + Skin.HasSetting(StudioInFooter)</visible>
+				<control type="image">
+					<right>70</right>
+					<height>70</height>
+					<width>84</width>
+					<bottom>10</bottom>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>white</colordiffuse>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="image">
+					<right>70</right>
+					<height>70</height>
+					<width>84</width>
+					<bottom>10</bottom>
+					<bordersize>2</bordersize>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>black</colordiffuse>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="image">
+					<!--imdb logo-->
+					<right>70</right>
+					<bottom>40</bottom>
+					<width>84</width>
+					<height>40</height>
+					<bordersize>2</bordersize>
+					<texture>flags/imdb_logo.png</texture>
+				</control>
+				<control type="label">
+					<!--Rating modern-->
+					<visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+					<right>70</right>
+					<bottom>12</bottom>
+					<width>84</width>
+					<height>30</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>flags</font>
+					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+					<label fallback="0.0">$INFO[ListItem.Rating]</label>
+				</control>
+				<control type="image">
+					<!--studio logo normal-->
+					<right>185</right>
+					<bottom>5</bottom>
+					<width>270</width>
+					<height>90</height>
+					<aspectratio aligny="center" align="right">keep</aspectratio>
+					<fadetime>250</fadetime>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<bordersize>2</bordersize>
+					<texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[ListItem.Studio,special://skin/extras/flags/studios/,.png]</texture>
+					<visible>!Skin.String(StudioImagesCustompath)</visible>
+				</control>
+				<control type="image">
+					<!--studio logo custom-->
+					<right>185</right>
+					<bottom>5</bottom>
+					<width>270</width>
+					<height>90</height>
+					<aspectratio aligny="center" align="right">keep</aspectratio>
+					<fadetime>250</fadetime>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<bordersize>2</bordersize>
+					<texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[Skin.String(StudioImagesCustompath)]$INFO[ListItem.Studio,,.png]</texture>
+					<visible>Skin.String(StudioImagesCustompath)</visible>
+				</control>
+			</control>	
 			
 			<control type="group">
 			<!--Title-->

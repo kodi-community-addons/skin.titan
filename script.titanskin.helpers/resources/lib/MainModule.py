@@ -734,11 +734,13 @@ def setMovieSetDetails():
     win.clearProperty('MovieSet.Plot')
             
     if dbId != "":
-        json_response = getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer","genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
+        json_response = getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer", "playcount", "genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
         #clear_properties()
         if ("setdetails" in json_response):
             
             count = 1
+            unwatchedcount = 0
+            watchedcount = 0
             runtime = 0
             writer = []
             director = []
@@ -751,6 +753,12 @@ def setMovieSetDetails():
             title_header = "[B]" + str(json_response['setdetails']['limits']['total']) + " " + xbmc.getLocalizedString(20342) + "[/B][CR]"
             set_fanart = []
             for item in json_response['setdetails']['movies']:
+                
+                if item["playcount"] == 0:
+                    unwatchedcount += 1
+                else:
+                    watchedcount += 1
+                
                 art = item['art']
                 set_fanart.append(art.get('fanart', ''))
                 title_list += "[I]" + item['label'] + " (" + str(item['year']) + ")[/I][CR]"
@@ -786,6 +794,8 @@ def setMovieSetDetails():
             win.setProperty('MovieSet.Years', " / ".join(years))
             win.setProperty('MovieSet.Year', years[0] + " - " + years[-1])
             win.setProperty('MovieSet.Count', str(json_response['setdetails']['limits']['total']))
+            win.setProperty('MovieSet.WatchedCount', str(watchedcount))
+            win.setProperty('MovieSet.UnWatchedCount', str(unwatchedcount))
             
             count = 40
             while dbId == xbmc.getInfoLabel("ListItem.DBID") and set_fanart != []:
@@ -1010,8 +1020,8 @@ def enableViews():
 
 def setForcedView(contenttype):
     currentView = xbmc.getInfoLabel("Skin.String(ForcedViews.%s)" %contenttype)
-    
     selectedItem = selectView(contenttype, currentView, True)
+    
     if selectedItem != -1 and selectedItem != None:
         xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
     
@@ -1024,10 +1034,12 @@ def setView():
     contenttype="other"
     if xbmc.getCondVisibility("Container.Content(episodes)"):
         contenttype = "episodes"
-    elif xbmc.getCondVisibility("Container.Content(movies)"):
-        contenttype = "movies"
-    elif xbmc.getCondVisibility("Container.Content(sets)"):
+    elif xbmc.getCondVisibility("Container.Content(movies) + !substring(Container.FolderPath,setid=)"):
+        contenttype = "movies"  
+    elif xbmc.getCondVisibility("[Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + !substring(Container.FolderPath,setid=)"):
         contenttype = "sets"
+    elif xbmc.getCondVisibility("substring(Container.FolderPath,setid=)"):
+        contenttype = "setmovies" 
     elif xbmc.getCondVisibility("Container.Content(tvshows)"):
         contenttype = "tvshows"
     elif xbmc.getCondVisibility("Container.Content(seasons)"):
