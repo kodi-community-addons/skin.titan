@@ -185,6 +185,10 @@ def updatePlexlinks():
         xbmc.sleep(250)
         count += 1
     
+    #get the plex setting if there are subnodes
+    plexaddon = xbmcaddon.Addon(id='plugin.video.plexbmc')
+    hasSecondayMenus = plexaddon.getSetting("secondary") == "true"
+    
     #update plex window properties
     while linkCount !=14:
         plexstring = "plexbmc." + str(linkCount)
@@ -198,17 +202,20 @@ def updatePlexlinks():
         link = win.getProperty(plexstring + ".path")
         logMsg(plexstring + ".path --> " + link)
         
-        link = link.replace("mode=1", "mode=0")
-        link = link.replace("mode=2", "mode=0")
-        
-        recentlink = link.replace("/all", "/recentlyAdded")
-        win.setProperty(plexstring + ".recent", recentlink)
+        if hasSecondayMenus == True:
+            recentlink = win.getProperty(plexstring + ".recent")
+            progresslink = win.getProperty(plexstring + ".viewed")
+        else:
+            link = link.replace("mode=1", "mode=0")
+            link = link.replace("mode=2", "mode=0")
+            recentlink = link.replace("/all", "/recentlyAdded")
+            progresslink = link.replace("/all", "/onDeck")
+            win.setProperty(plexstring + ".recent", recentlink)
+            win.setProperty(plexstring + ".viewed", progresslink)
+            
         win.setProperty(plexstring + ".recent.content", getContentPath(recentlink))
-        logMsg(plexstring + ".recent --> " + recentlink)
-        logMsg(plexstring + ".recent.content --> " + getContentPath(recentlink))
-
-        progresslink = link.replace("/all", "/onDeck")
-        win.setProperty(plexstring + ".viewed", progresslink)
+        logMsg(plexstring + ".recent --> " + recentlink)       
+        
         win.setProperty(plexstring + ".viewed.content", getContentPath(progresslink))
         logMsg(plexstring + ".viewed --> " + progresslink)
 
