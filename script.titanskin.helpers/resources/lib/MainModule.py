@@ -174,22 +174,30 @@ def setCustomContent(skinString):
         
 def updatePlexlinks():
     logMsg("update plexlinks started...")
+    
+    #initialize plex window props by using the amberskin entrypoint for now
+    if not win.getProperty("plexbmc.0.title"):
+        xbmc.executebuiltin('RunScript(plugin.video.plexbmc,amberskin)')
+        #wait for max 20 seconds untill the plex nodes are available
+        count = 0
+        while (count < 80 and win.getProperty("plexbmc.0.title") == ""):
+            xbmc.sleep(250)
+            count += 1
+    
+    #fallback to normal skin init
     if not win.getProperty("plexbmc.0.title"):
         xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
-    linkCount = 0
-    logMsg("updateplexlinks started...")
-    
-    #wait for max 20 seconds untill the plex nodes are available
-    count = 0
-    while (count < 80 and win.getProperty("plexbmc.0.title") == ""):
-        xbmc.sleep(250)
-        count += 1
+        count = 0
+        while (count < 80 and win.getProperty("plexbmc.0.title") == ""):
+            xbmc.sleep(250)
+            count += 1
     
     #get the plex setting if there are subnodes
     plexaddon = xbmcaddon.Addon(id='plugin.video.plexbmc')
     hasSecondayMenus = plexaddon.getSetting("secondary") == "true"
     
     #update plex window properties
+    linkCount = 0
     while linkCount !=14:
         plexstring = "plexbmc." + str(linkCount)
         link = win.getProperty(plexstring + ".title")

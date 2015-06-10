@@ -43,6 +43,7 @@ class Main:
         unwatched = 1
         lastEpPath = ""
         backgroundDelay = 240
+        lastDuration = ""
             
         #first run get backgrounds immediately from cache
         MainModule.UpdateBackgrounds(True)
@@ -69,6 +70,24 @@ class Main:
                         MainModule.checkExtraFanArt()
                     else:
                         win.clearProperty("ExtraFanArtPath")
+                
+                # monitor listitem to set duration
+                if (xbmc.getCondVisibility("!IsEmpty(ListItem.Duration) + Window.IsVisible(videolibrary) + !Container.Scrolling") ):
+                    currentDuration = xbmc.getInfoLabel("ListItem.Duration")
+                    if (currentDuration != lastDuration):
+                        lastDuration = currentDuration
+                        try:
+                            full_minutes = int(currentDuration)
+                            minutes = full_minutes % 60
+                            hours   = full_minutes // 60
+                            readable_duration = str(hours) + 'h' + str(minutes).zfill(2)
+                        except:
+                            readable_duration = currentDuration + " min."
+                        win.setProperty('Duration', readable_duration)
+                else:
+                    win.clearProperty('Duration')
+
+
                 
                 # monitor movie sets
                 if (xbmc.getCondVisibility("Container.Content(movies) | Container.Content(sets)") and not xbmc.getCondVisibility("Container.Scrolling")):
