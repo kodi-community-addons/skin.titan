@@ -75,21 +75,40 @@
 			<animation time="400" effect="fade" delay="1000">Visible</animation>
 			<animation time="0" effect="fade" delay="0">Hidden</animation>
         </control>
-		<control type="textbox">
+		
+		
+		<control type="grouplist">
+			<width>1500</width>
 			<posx>405</posx>
 			<posy>195</posy>
-			<width>1465</width>
-			<height>350</height>
-			<label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
-			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-			<align>justify</align>
-			<font>Light28</font>
+			<height>367</height>
+			<orientation>vertical</orientation>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-			<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Window(Home).Property(activewidget),weather)">Conditional</animation>
+			<control type="textbox">
+				<width>1455</width>
+				<height max="294">auto</height>
+				<label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+				<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+				<align>justify</align>
+				<font>Light28</font>
+				<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Window(Home).Property(activewidget),weather)">Conditional</animation>
+			</control>
+			<control type="label">
+				<height>25</height>
+				<label></label>
+			</control>
+			<control type="group">
+				<height>60</height>
+				<posx>405</posx>
+				<posy>195</posy>
+				<include>mediaflagsnew</include>
+			</control>
 		</control>
+		
+		
 		<control type="image">
-			<left>50</left>
+			<left>30</left>
 			<posy>105</posy>
 			<width>340</width>
 			<height>485</height>
@@ -101,7 +120,7 @@
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
-			<left>50</left>
+			<left>30</left>
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
@@ -111,12 +130,12 @@
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
-			<right>50</right>
+			<right>30</right>
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
 			<texture fallback="DefaultAddonWeather.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
-			<aspectratio align="right" aligny="top">keep</aspectratio>
+			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<visible>StringCompare(Window(Home).Property(activewidget),weather)</visible>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
@@ -213,7 +232,7 @@
 			
 			<!--change widget button -->
 			<control type="group">
-				<right>40</right>
+				<right>60</right>
 				<width>600</width>
 				<height>60</height>
 				<include>animation_fade_visible_hidden_delayed</include>
@@ -265,33 +284,8 @@
 
 
 			
-			<control type="group">
-				<width>330</width>
-				<posx>35</posx>
-				<posy>10</posy>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-				<visible>!IsEmpty(Container(510).ListItem.Rating) | !IsEmpty(Container(510).ListItem.Property(VideoRating))</visible>
-				<visible>!StringCompare(Container(510).ListItem.Rating,None) + !StringCompare(Container(510).ListItem.Property(VideoRating),None)</visible>
-				<include>animation_fade_visible_hidden_delayed</include>
-				<control type="image">
-					<posx>-4</posx>
-					<posy>-5</posy>
-					<width>220</width>
-					<height>45</height>
-					<texture fallback="rating/0.0.png">$VAR[HomeMenuWidgetInfoRating]</texture>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-				</control>
-				<control type="label">
-					<!--Rating modern-->
-					<posx>230</posx>
-					<posy>-12</posy>
-					<width>600</width>
-					<font>Reg36</font>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[HomeMenuWidgetInfoRatingLabel]</label>
-					<visible>!SubString(Container(510).ListItem.Rating,song)</visible>
-				</control>
-			</control>
+			
+			
 			<include>widgets</include>
 
 		</control>

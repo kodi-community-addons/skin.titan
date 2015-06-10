@@ -2543,7 +2543,7 @@
 			<control type="group">
 				<width>100</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoResolution)</visible>
+				<visible>!IsEmpty(ListItem.VideoResolution) | !IsEmpty(Container(510).ListItem.VideoResolution)</visible>
 				<control type="image">
 					<height>36</height>
 					<colordiffuse>white</colordiffuse>
@@ -2554,7 +2554,7 @@
 					<font>flags</font>
 					<left>25</left>
 					<width>75</width>
-					<label>$INFO[ListItem.VideoResolution]</label>
+					<label>$INFO[ListItem.VideoResolution]$INFO[Container(510).ListItem.VideoResolution]</label>
 					<align>center</align>
 					<aligny>center</aligny>
 					<height>36</height>
@@ -2564,14 +2564,14 @@
 			<control type="group">
 				<width>7</width>
 				<height>36</height>
-				<visible>IsEmpty(ListItem.VideoResolution)</visible>
+				<visible>IsEmpty(ListItem.VideoResolution) + IsEmpty(Container(510).ListItem.VideoResolution)</visible>
 			</control>
 			
 			<!--Video 3D-->
 			<control type="group">
 				<width>50</width>
 				<height>36</height>
-				<visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)</visible>
+				<visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.) | Container(510).ListItem.IsStereoScopic | !IsEmpty(Container(510).ListItem.Property(Video3DFormat)) | substring(Container(510).ListItem.FileName,.3d.)</visible>
 				<control type="image">
 					<colordiffuse>white</colordiffuse>
 					<posx>-7</posx>
@@ -2592,7 +2592,7 @@
 			<control type="group">
 				<width>80</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoCodec)</visible>
+				<visible>!IsEmpty(ListItem.VideoCodec) | !IsEmpty(Container(510).ListItem.VideoCodec)</visible>
 				<control type="image">
 				<posx>-7</posx>
 					<colordiffuse>white</colordiffuse>
@@ -2613,8 +2613,8 @@
 			<control type="group">
 				<width>60</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoAspect)</visible>
-				<visible>!IsEmpty(ListItem.VideoCodec)</visible>
+				<visible>!IsEmpty(ListItem.VideoAspect) | !IsEmpty(Container(510).ListItem.VideoAspect)</visible>
+				<visible>!IsEmpty(ListItem.VideoCodec) | !IsEmpty(Container(510).ListItem.VideoCodec)</visible>
 				<control type="image">
 					<posx>-7</posx>
 					<colordiffuse>white</colordiffuse>
@@ -2634,14 +2634,14 @@
 			<control type="group">
 				<width>2</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoResolution)</visible>
+				<visible>!IsEmpty(ListItem.VideoResolution) | !IsEmpty(Container(510).ListItem.VideoResolution)</visible>
 			</control>
 			
 			<!--Audio Codec-->
 			<control type="group">
 				<width>150</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
+				<visible>!IsEmpty(ListItem.AudioCodec) | !IsEmpty(Container(510).ListItem.AudioCodec)</visible>
 				<control type="image">
 					<colordiffuse>white</colordiffuse>
 					<texture border="25,0,0,0">flags/flag_box_audio.png</texture>
@@ -2662,8 +2662,8 @@
 			<control type="group">
 				<width>40</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioChannels)</visible>
-				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
+				<visible>!IsEmpty(ListItem.AudioChannels) | !IsEmpty(Container(510).ListItem.AudioChannels)</visible>
+				<visible>!IsEmpty(ListItem.AudioCodec) | !IsEmpty(Container(510).ListItem.AudioCodec)</visible>
 				<control type="image">
 					<posx>-6</posx>
 					<colordiffuse>white</colordiffuse>
@@ -2683,15 +2683,14 @@
 			<control type="group">
 				<width>8</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
+				<visible>!IsEmpty(ListItem.AudioCodec) | !IsEmpty(Container(510).ListItem.AudioCodec)</visible>
 			</control>
 			
 			<!-- mpaa rating -->
 			<control type="group">
 				<width>170</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.MPAA)</visible>
-				<visible>!IsEmpty(ListItem.MPAA)</visible>
+				<visible>!IsEmpty(ListItem.MPAA) | !IsEmpty(Container(510).ListItem.MPAA)</visible>
 				<control type="image">
 					<posx>-6</posx>
 					<colordiffuse>white</colordiffuse>
@@ -2713,32 +2712,32 @@
 			<control type="group">
 				<width>12</width>
 				<height>36</height>
-				<visible>!IsEmpty(ListItem.MPAA)</visible>
+				<visible>!IsEmpty(ListItem.MPAA) | !IsEmpty(Container(510).ListItem.MPAA)</visible>
 			</control>
 			
 			<control type="group">
 				<!--Rating-->
-				<visible>Window.IsActive(dialogvideoinfo.xml)</visible>
+				<visible>Window.IsActive(dialogvideoinfo.xml) | window.isactive(home)</visible>
 				<width>220</width>
 				<height>36</height>
 				<control type="image">
 					<!--Stars modern-->
-					<visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+					<visible>[!IsEmpty(ListItem.Rating) | !IsEmpty(Container(510).ListItem.Rating)] + !skin.hastheme(classic)</visible>
 					<posx>0</posx>
 					<posy>-6</posy>
 					<width>220</width>
 					<height>45</height>
-					<texture fallback="rating/0.0.png">$INFO[ListItem.Rating,rating/,.png]</texture>
+					<texture fallback="rating/0.0.png">rating/$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating].png</texture>
 				</control>
 				<control type="label">
 					<!--Rating modern-->
-					<visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+					<visible>[!IsEmpty(ListItem.Rating) | !IsEmpty(Container(510).ListItem.Rating)] + !skin.hastheme(classic)</visible>
 					<posx>220</posx>
 					<posy>-13</posy>
 					<width>100</width>
 					<font>Reg36</font>
 					<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-					<label>$INFO[ListItem.Rating]</label>
+					<label>$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating]</label>
 				</control>
 			</control>
 			
