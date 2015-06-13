@@ -39,20 +39,18 @@ except:
 # select action
 if action == "SENDCLICK":
     MainModule.sendClick(argument1)
+
 elif action =="ADDSHORTCUT":
     MainModule.addShortcutWorkAround()
-elif action == "SHOWSUBMENU":
-    MainModule.showSubmenu(argument1,argument2)
+
 elif action == "SHOWINFO":
     MainModule.showInfoPanel()
+
+#setwidget is called from window other then home    
 elif action == "SETWIDGET":
-    MainModule.setWidget(argument1)
-elif action == "UPDATEPLEXLINKS":   
-    MainModule.updatePlexlinks()
-elif action == "SHOWWIDGET":   
-    MainModule.showWidget()
-elif action == "SETCUSTOM":
-    MainModule.setCustomContent(argument1)
+    if (xbmc.getCondVisibility("!Window.IsActive(home)")):
+        from HomeMonitor import HomeMonitor
+        HomeMonitor().setWidget(argument1)
 elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
@@ -94,12 +92,10 @@ elif action == "RESTORE":
 elif action == "RESET":
     import BackupRestore
     BackupRestore.reset()
-elif action == "BACKGROUNDS":
-    MainModule.UpdateBackgrounds()
-elif action == "CHECKNOTIFICATIONS":
-    MainModule.checkNotifications(argument1)
 elif action == "SETSKINVERSION":
     MainModule.setSkinVersion()
+elif "NEXTEPISODES" in argument1:
+    MainModule.getNextEpisodes()    
 elif argument1 == "?FAVOURITES":
     MainModule.getFavourites()
 elif "?LAUNCHAPP" in argument1:

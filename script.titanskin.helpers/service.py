@@ -2,139 +2,48 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import xbmc
-import xbmcgui
-import xbmcplugin
 import xbmcaddon
-import xbmcvfs
-import random
-import urllib
-import datetime
-from traceback import print_exc
-from time import gmtime, strftime
-import xml.etree.ElementTree as etree
+
 
 __settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
 __cwd__ = __settings__.getAddonInfo('path')
+__addonversion__ = __settings__.getAddonInfo('version')
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
 sys.path.append(BASE_RESOURCE_PATH)
-import MainModule
 
-
-__addon__        = xbmcaddon.Addon()
-__addonversion__ = __addon__.getAddonInfo('version')
-__addonid__      = __addon__.getAddonInfo('id')
-__addonname__    = __addon__.getAddonInfo('name')
-__localize__     = __addon__.getLocalizedString
-
-lastEpPath = None
-win = xbmcgui.Window( 10000 )
-
-def log(txt):
-    message = '%s: %s' % (__addonname__, txt.encode('ascii', 'ignore'))
-    xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+from BackgroundsUpdater import BackgroundsUpdater
+from LibraryMonitor import LibraryMonitor
+from LibraryMonitor import Kodi_Monitor
+from HomeMonitor import HomeMonitor
 
 class Main:
     
+    KodiMonitor = Kodi_Monitor()
+    
     def __init__(self):
+                   
+        #start the extra threads
+        homeMonitor = HomeMonitor()
+        homeMonitor.start()
         
-        count = 0
-        unwatched = 1
-        lastEpPath = ""
-        backgroundDelay = 240
-        lastDuration = ""
-            
-        #first run get backgrounds immediately from cache
-        MainModule.UpdateBackgrounds(True)
-         
-        while (not xbmc.abortRequested):
-            xbmc.sleep(250)
-            
-            if not xbmc.Player().isPlayingVideo():
-                
-                # Update home backgrounds every interval (default 60 seconds)
-                if (count >= backgroundDelay and xbmc.getCondVisibility("Window.IsActive(home.xml)")):
-                    backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
-                    if backgroundDelayStr:
-                        backgroundDelay = int(backgroundDelayStr) * 4
-
-                    MainModule.UpdateBackgrounds()
-                    count = 0
-                else:
-                    count += 1
-                               
-                # monitor extra fanart
-                if xbmc.getCondVisibility("Skin.HasSetting(EnableExtraFanart)"):
-                    if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and not xbmc.getCondVisibility("Container.Scrolling")):
-                        MainModule.checkExtraFanArt()
-                    else:
-                        win.clearProperty("ExtraFanArtPath")
-                
-                # monitor listitem to set duration
-                if (xbmc.getCondVisibility("!IsEmpty(ListItem.Duration) + Window.IsVisible(videolibrary) + !Container.Scrolling") ):
-                    currentDuration = xbmc.getInfoLabel("ListItem.Duration")
-                    if (currentDuration != lastDuration):
-                        lastDuration = currentDuration
-                        try:
-                            full_minutes = int(currentDuration)
-                            minutes = full_minutes % 60
-                            hours   = full_minutes // 60
-                            readable_duration = str(hours) + 'h' + str(minutes).zfill(2)
-                        except:
-                            readable_duration = currentDuration + " min."
-                        win.setProperty('Duration', readable_duration)
-                else:
-                    win.clearProperty('Duration')
-
-
-                
-                # monitor movie sets
-                if (xbmc.getCondVisibility("Container.Content(movies) | Container.Content(sets)") and not xbmc.getCondVisibility("Container.Scrolling")):
-                    if xbmc.getCondVisibility("SubString(ListItem.Path,videodb://movies/sets/,left)"):
-                        MainModule.setMovieSetDetails()
-                    else:
-                        win.clearProperty('MovieSet.Title')
-                        win.clearProperty('MovieSet.Runtime')
-                        win.clearProperty('MovieSet.Writer')
-                        win.clearProperty('MovieSet.Director')
-                        win.clearProperty('MovieSet.Genre')
-                        win.clearProperty('MovieSet.Country')
-                        win.clearProperty('MovieSet.Studio')
-                        win.clearProperty('MovieSet.Years')
-                        win.clearProperty('MovieSet.Year')
-                        win.clearProperty('MovieSet.Count')
-                        win.clearProperty('MovieSet.Plot')
-                
-                # monitor episodes for auto focus first unwatched
-                if xbmc.getCondVisibility("Skin.HasSetting(AutoFocusUnwatchedEpisode)"):
-                    
-                    #store unwatched episodes
-                    if ((xbmc.getCondVisibility("Container.Content(seasons) | Container.Content(tvshows)")) and xbmc.getCondVisibility("!IsEmpty(ListItem.Property(UnWatchedEpisodes))")):
-                        try:
-                            unwatched = int(xbmc.getInfoLabel("ListItem.Property(UnWatchedEpisodes)"))
-                        except: pass
-                    
-                    if (xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and (xbmc.getCondVisibility("Container.Content(episodes) | Container.Content(seasons)"))):
-                        if (xbmc.getInfoLabel("Container.FolderPath") != lastEpPath and unwatched != 0):
-                            try:
-                                MainModule.focusEpisode()
-                            except: 
-                                xbmc.log("Titanskin Helper: Exception while trying to focus episode")
-                                pass
-                                
-                    lastEpPath = xbmc.getInfoLabel("Container.FolderPath")
-                
-                # set addon name as property
-                if not xbmc.Player().isPlayingAudio():
-                    if ((xbmc.getCondVisibility("Container.Content(plugins)")) or xbmc.getCondVisibility("!IsEmpty(Container.PluginName)")):
-                        AddonName = xbmc.getInfoLabel('Container.PluginName')
-                        AddonName = xbmcaddon.Addon(AddonName).getAddonInfo('name')
-                        win.setProperty("Player.AddonName", AddonName)
-                    else:
-                        win.clearProperty("Player.AddonName")
-
-
+        backgroundsUpdater = BackgroundsUpdater()
+        backgroundsUpdater.start()
+        
+        libraryMonitor = LibraryMonitor()
+        libraryMonitor.start()
+        
+        while not self.KodiMonitor.abortRequested():
+                     
+            if self.KodiMonitor.waitForAbort(1):
+                # Abort was requested while waiting. We should exit
+                xbmc.log('TITANSKIN DEBUG --> shutdown requested !')         
+        else:
+            #stop the extra threads
+            backgroundsUpdater.stop()
+            libraryMonitor.stop()
+            homeMonitor.stop()
+    
 
 xbmc.log('titan helper version %s started' % __addonversion__)
 Main()

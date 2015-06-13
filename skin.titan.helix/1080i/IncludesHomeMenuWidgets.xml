@@ -246,7 +246,6 @@
 					<width>600</width>
 					<align>right</align>
 					<font>Reg30</font>
-					<onup>Skin.Reset(ShowWidgets)</onup>
 					<onup>300</onup>
 					<ondown>510</ondown>
 					<textoffsetx>90</textoffsetx>
@@ -782,10 +781,8 @@
 	
 	
 	<variable name="MoviesWidgetContent">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<!-- refresh widgets when using mediabrowser -->
-		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<!-- movies widgets - netflix -->
 		<value condition="Skin.HasSetting(HomeMenuUseNetflixforMovies) + StringCompare(skin.string(MoviesWidget),newmovies)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=movie&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson</value>
@@ -799,10 +796,10 @@
 		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + StringCompare(skin.string(MoviesWidget),recommended)">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.content)]</value>
 		
 		<!-- movies widgets - normal kodi -->
-		<value condition="StringCompare(skin.string(MoviesWidget),newmovies)">plugin://service.library.data.provider?type=recentmovies&amp;reload=$INFO[Window.Property(recentmovies)]</value>
+		<value condition="StringCompare(skin.string(MoviesWidget),newmovies)">videodb://recentlyaddedmovies/</value>
 		<value condition="StringCompare(skin.string(MoviesWidget),randommovies)">special://skin/extras/widgetplaylists/randommovies.xsp</value>
 		<value condition="StringCompare(skin.string(MoviesWidget),inprogressmovies)">special://skin/extras/widgetplaylists/inprogressmovies.xsp</value>
-		<value condition="StringCompare(skin.string(MoviesWidget),recommended)">plugin://service.library.data.provider?type=recommendedmovies&amp;reload=$INFO[Window.Property(recommendedmovies)]</value>
+		<value condition="StringCompare(skin.string(MoviesWidget),recommended)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</value>
 		
 		<!-- fallback -->
 		<value>special://skin/extras/widgetplaylists/emptywidget.xsp</value>
@@ -810,16 +807,13 @@
 	</variable>
 	
 	<variable name="TvShowsWidgetContent">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<!-- refresh widgets when using mediabrowser -->
-		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<!-- tvshows widgets - netflix -->
 		<value condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries) + SubString(skin.string(TvShowsWidget),latest)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson</value>
 		<value condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries) + SubString(skin.string(TvShowsWidget),random)">plugin://plugin.video.netflixbmc/?mode=listSliderVideos&amp;thumb&amp;type=tv&amp;url=slider_3</value>
 		<value condition="Skin.HasSetting(HomeMenuUseNetflixforTVseries) + SubString(skin.string(TvShowsWidget),inprogress)">plugin://plugin.video.netflixbmc/?mode=listVideos&amp;thumb&amp;type=tv&amp;url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall</value>
-		
 		
 		<!-- tvshows widgets - mediabrowser -->
 		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(skin.string(TvShowsWidget),latest)">$INFO[Window(Home).Property(MediaBrowser.std.tvshows.1.content)]</value>
@@ -828,11 +822,11 @@
 		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(skin.string(TvShowsWidget),nextup)">$INFO[Window(Home).Property(MediaBrowser.std.tvshows.3.content)]</value>
 		
 		<!-- tvshows widgets - normal kodi -->
-		<value condition="StringCompare(skin.string(TvShowsWidget),latest)">plugin://service.library.data.provider?type=recentepisodes&amp;reload=$INFO[Window.Property(recentepisodes)]</value>
-		<value condition="StringCompare(skin.string(TvShowsWidget),random)">plugin://service.library.data.provider?type=randomepisodes&amp;reload=$INFO[Window.Property(randomepisodes)]</value>
-		<value condition="StringCompare(skin.string(TvShowsWidget),inprogress)">plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)]</value>
+		<value condition="StringCompare(skin.string(TvShowsWidget),latest)">videodb://recentlyaddedepisodes/</value>
+		<value condition="StringCompare(skin.string(TvShowsWidget),random)">special://skin/extras/widgetplaylists/randomepisodes.xsp</value>
+		<value condition="StringCompare(skin.string(TvShowsWidget),inprogress)">special://skin/extras/widgetplaylists/inprogressepisodes.xsp</value>
         <value condition="StringCompare(skin.string(TvShowsWidget),favouriteepisodes)">plugin://service.library.data.provider?type=favouriteepisodes&amp;reload=$INFO[Window.Property(favouriteepisodes)]</value>
-		<value condition="StringCompare(skin.string(TvShowsWidget),nextup)">library://video/inprogressshows.xml</value>
+		<value condition="StringCompare(skin.string(TvShowsWidget),nextup)">plugin://script.titanskin.helpers/?NEXTEPISODES&reload=$INFO[Window(Home).Property(widgetreload)]</value>
 		
 		<!-- fallback -->
 		<value>special://skin/extras/widgetplaylists/emptywidget.xsp</value>
@@ -840,7 +834,7 @@
 	</variable>
 
 	<variable name="YoutubeWidgetContent">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<!-- YouTubeWidgetContent -->
@@ -864,7 +858,7 @@
 	</variable>
 	
 	<variable name="MusicWidgetContent">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<!-- music widgets - mediabrowser -->
@@ -873,8 +867,8 @@
 		<value condition="Skin.HasSetting(HomeMenuUseMBforMusic) + StringCompare(skin.string(MusicWidget),inprogress)">$INFO[Window(Home).Property(MediaBrowser.std.music.2.content)]</value>
 		
 		<!-- music widgets - normal kodi -->
-		<value condition="StringCompare(skin.string(MusicWidget),latestalbum)">plugin://service.library.data.provider?type=recentalbums&amp;reload=$INFO[Window.Property(recentalbums)]</value>
-		<value condition="StringCompare(skin.string(MusicWidget),randomalbum)">plugin://service.library.data.provider?type=randomalbums&amp;reload=$INFO[Window.Property(randomalbums)]</value>
+		<value condition="StringCompare(skin.string(MusicWidget),latestalbum)">musicdb://recentlyaddedalbums/</value>
+		<value condition="StringCompare(skin.string(MusicWidget),randomalbum)">special://skin/extras/widgetplaylists/randomalbums.xsp</value>
 		<value condition="StringCompare(skin.string(MusicWidget),inprogress)">musicdb://recentlyplayedalbums/</value>
 		<value condition="StringCompare(skin.string(MusicWidget),latestsong)">special://skin/extras/widgetplaylists/recentsongs.xsp</value>
 		<value condition="StringCompare(skin.string(MusicWidget),randomsong)">special://skin/extras/widgetplaylists/randomsongs.xsp</value>
@@ -899,7 +893,7 @@
 	</variable>
 	
 	<variable name="collectionwidget0content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		
@@ -920,7 +914,7 @@
 	</variable>
 
 	<variable name="collectionwidget1content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.1.recent.content)) + StringCompare(skin.string(collectionwidget1),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.1.recent.content)]</value>
@@ -941,7 +935,7 @@
 	</variable>
 	
 	<variable name="collectionwidget2content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.2.recent.content)) + StringCompare(skin.string(collectionwidget2),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.2.recent.content)]</value>
@@ -961,7 +955,7 @@
 	</variable>
 	
 	<variable name="collectionwidget3content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.3.recent.content)) + StringCompare(skin.string(collectionwidget3),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.3.recent.content)]</value>
@@ -981,7 +975,7 @@
 	</variable>
 	
 	<variable name="collectionwidget4content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.4.recent.content)) + StringCompare(skin.string(collectionwidget4),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.4.recent.content)]</value>
@@ -1002,7 +996,7 @@
 	</variable>
 	
 	<variable name="collectionwidget5content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.5.recent.content)) + StringCompare(skin.string(collectionwidget5),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.5.recent.content)]</value>
@@ -1023,7 +1017,7 @@
 	</variable>
 	
 	<variable name="collectionwidget6content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.6.recent.content)) + StringCompare(skin.string(collectionwidget6),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.6.recent.content)]</value>
@@ -1044,7 +1038,7 @@
 	</variable>
 	
 	<variable name="collectionwidget7content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.7.recent.content)) + StringCompare(skin.string(collectionwidget7),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.7.recent.content)]</value>
@@ -1065,7 +1059,7 @@
 	</variable>
 	
 	<variable name="collectionwidget8content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.8.recent.content)) + StringCompare(skin.string(collectionwidget8),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.8.recent.content)]</value>
@@ -1086,7 +1080,7 @@
 	</variable>
 	
 	<variable name="collectionwidget9content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.9.recent.content)) + StringCompare(skin.string(collectionwidget9),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.9.recent.content)]</value>
@@ -1107,7 +1101,7 @@
 	</variable>
 	
 	<variable name="collectionwidget10content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.10.recent.content)) + StringCompare(skin.string(collectionwidget10),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.10.recent.content)]</value>
@@ -1128,7 +1122,7 @@
 	</variable>
 	
 	<variable name="collectionwidget11content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.11.recent.content)) + StringCompare(skin.string(collectionwidget11),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.11.recent.content)]</value>
@@ -1149,7 +1143,7 @@
 	</variable>
 	
 	<variable name="collectionwidget12content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.12.recent.content)) + StringCompare(skin.string(collectionwidget12),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.12.recent.content)]</value>
@@ -1170,7 +1164,7 @@
 	</variable>
 	
 	<variable name="collectionwidget13content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.13.recent.content)) + StringCompare(skin.string(collectionwidget13),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.13.recent.content)]</value>
@@ -1191,7 +1185,7 @@
 	</variable>
 	
 	<variable name="collectionwidget14content">
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 		
 		<value condition="!IsEmpty(Window(Home).Property(MediaBrowser.usr.14.recent.content)) + StringCompare(skin.string(collectionwidget14),recent)">$INFO[Window(Home).Property(MediaBrowser.usr.14.recent.content)]</value>
@@ -1213,12 +1207,8 @@
 	
 	<variable name="CustomWidgetContent">
 		
-		<!-- empty widgets when home not active -->
+		<!-- refresh widgets when requested -->
 		<value condition="StringCompare(Window(Home).Property(refreshwidgets),hide)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<!-- refresh widgets when using custom widgets -->
-		<value condition="Skin.HasSetting(HomeMenuUseMBforMovies) + StringCompare(Window(Home).Property(activewidget),movies) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<value condition="Skin.HasSetting(HomeMenuUseMBforTVseries) + StringCompare(Window(Home).Property(activewidget),tvshows) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Window(Home).Property(refreshwidgets),refresh)">special://skin/extras/widgetplaylists/emptywidget.xsp</value>
 
 		<!--musicvideos-->	
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),musicvideos) + Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window(Home).Property(MediaBrowser.std.music.3.content)]</value>
@@ -1246,8 +1236,7 @@
 		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, latest)">$LOCALIZE[31105]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, inprogress)">$LOCALIZE[31104]</value>
         <value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, favouriteepisodes)">$LOCALIZE[31158]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.HasSetting(HomeMenuUseMBforTVseries) + Skin.String(TvShowsWidget, nextup)">$LOCALIZE[31228]</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, nextup)">$LOCALIZE[626]</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, nextup)">$LOCALIZE[31228]</value>
 		
 		<value condition="StringCompare(Window(Home).Property(activewidget),music) + Skin.String(MusicWidget, latestsong)">$LOCALIZE[31106]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),music) + Skin.String(MusicWidget, latestalbum)">$LOCALIZE[31107]</value>
@@ -1419,7 +1408,8 @@
 		<!-- tvshows -->
 		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, random) | !Skin.String(TvShowsWidget)">Skin.SetString(TvShowsWidget, latest)</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, latest)">Skin.SetString(TvShowsWidget, inprogress)</value>
-		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, inprogress)">Skin.SetString(TvShowsWidget, favouriteepisodes)</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, inprogress) + System.HasAddon(service.library.data.provider)">Skin.SetString(TvShowsWidget, favouriteepisodes)</value>
+		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, inprogress) + !System.HasAddon(service.library.data.provider)">Skin.SetString(TvShowsWidget, nextup)</value>
         <value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, favouriteepisodes)">Skin.SetString(TvShowsWidget, nextup)</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),tvshows) + Skin.String(TvShowsWidget, nextup)">Skin.SetString(TvShowsWidget, random)</value>
 		
@@ -1756,12 +1746,14 @@
 		<width>1830</width>
 		<height>245</height>
 		<onleft></onleft>
+		<ondown>ClearProperty(ShowWidget, Home)</ondown>
 		<onleft condition="Skin.String(GadgetRows, simplever)">300</onleft>
 		<ondown condition="Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)">300</ondown>
 		<ondown condition="Skin.String(GadgetRows, enhanced)">510</ondown>
 		<ondown condition="Skin.String(GadgetRows, simplehor)">511</ondown>
 		<ondown condition="Skin.String(GadgetRows, simplever)">511</ondown>
 		<onback>300</onback>
+		<onback>ClearProperty(ShowWidget, Home)</onback>
 		<onup condition="Skin.String(GadgetRows, simplehor) + Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
 		<onup condition="![Skin.String(GadgetRows, simplever) | Skin.String(GadgetRows, simplehor)]">511</onup>
 		<orientation>horizontal</orientation>
