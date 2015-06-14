@@ -151,18 +151,15 @@
     </variable>
 	
     <variable name="value_list_label_2">
-        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + ![SubString(ListItem.Duration,min) | SubString(ListItem.Path,videodb://1/7,left)]">$INFO[ListItem.Duration,[B]$LOCALIZE[180]:[/B] ,min]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
-        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + SubString(ListItem.Duration,min) + !SubString(ListItem.Path,videodb://1/7,left)">$INFO[ListItem.Duration,[B]$LOCALIZE[180]:[/B]]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
+        <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + !SubString(ListItem.Path,videodb://1/7,left)">$VAR[ListItemDuration,[B]$LOCALIZE[180]:[/B] ,min]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
         <value condition="SubString(ListItem.Path,videodb://1/7,left)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20457][/COLOR]</value>
         <!-- Movie Sets -->
         <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)]  - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
         <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">[COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="Container.Content(episodes) + !SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $VAR[ListItemDuration] min - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
-        <value condition="Container.Content(episodes) + SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $VAR[ListItemDuration] - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
+        <value condition="Container.Content(episodes)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $VAR[ListItemDuration] - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
         <value condition="Container.Content(artists)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[21898]: [/COLOR]$INFO[ListItem.Property(Artist_YearsActive)]</value>
         <!-- YearsActive/Artists -->
-        <value condition="Container.Content(songs) + !SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $VAR[ListItemDuration] min</value>
-        <value condition="Container.Content(songs) + SubString(ListItem.Duration,min)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $VAR[ListItemDuration]</value>
+        <value condition="Container.Content(songs)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[180]: [/COLOR] $VAR[ListItemDuration]</value>
         <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + IsEmpty(ListItem.Label2)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)]</value>
         <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + !IsEmpty(ListItem.Label2)">[COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=$VAR[ViewDetailsFocusColor]]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)] - [COLOR=$VAR[ViewDetailsFocusColor]]$INFO[ListItem.Label2][/COLOR]</value>
     </variable>
@@ -401,8 +398,7 @@
 		<value condition="SubString(ListItem.Path,videodb://movies/sets/)">$INFO[Window(Home).Property(MovieSet.Director)]</value>
         <value condition="Container.Content(movies) | Window.IsVisible(VideoPlaylist) | Container.Content(musicvideos)">$INFO[ListItem.Director]</value>
         <value condition="Container.Content(tvshows)">$INFO[ListItem.Property(TotalEpisodes)] ($LOCALIZE[16101]: $INFO[ListItem.Property(UnwatchedEpisodes)])</value>
-        <value condition="Container.Content(episodes) + !SubString(ListItem.Duration,min)">$VAR[ListItemDuration] min</value>
-        <value condition="Container.Content(episodes) + SubString(ListItem.Duration,min)">$VAR[ListItemDuration]</value>
+        <value condition="Container.Content(episodes)">$VAR[ListItemDuration] min</value>
     </variable>
 	
     <variable name="MusicButtonThumb">
@@ -1121,16 +1117,22 @@
     </variable>
 	
 	<variable name="ListItemDuration">
+		<value condition="!IsEmpty(Window(home).Property(MovieSet.Duration))">$INFO[Window(home).Property(MovieSet.Duration)]</value>
         <value condition="!IsEmpty(Window(home).Property(Duration))">$INFO[Window(home).Property(Duration)]</value>
         <value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration,, min.]</value>
-		<value>0:00</value>
+    </variable>
+	
+		<variable name="ListItemExtendedDuration">
+		<value condition="!IsEmpty(Window(home).Property(MovieSet.Duration))">$INFO[Window(home).Property(MovieSet.Duration)] $INFO[Window(home).Property(MovieSet.Runtime,(, $LOCALIZE[12391])]</value>
+        <value condition="!IsEmpty(Window(home).Property(Duration))">$INFO[Window(home).Property(Duration)] $INFO[ListItem.Duration,(, $LOCALIZE[12391])]</value>
+        <value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration,, $LOCALIZE[12391]]</value>
     </variable>
 	
 	<variable name="Details">
 		<value condition="!Container.content(Addons) + Window.IsActive(MyPics.xml)">$INFO[ListItem.Date,, • ]$INFO[ListItem.Size]</value>
 		<value condition="Container.content(Albums)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Artist]</value>
-		<value condition="Container.Content(Episodes) + ListItem.Property(season_finale)">$INFO[ListItem.Premiered,, • ]$INFO[Window(home).Property(Duration),, • ] $LOCALIZE[31336]</value>
-		<value condition="Container.Content(Episodes) + ListItem.Property(series_finale)">$INFO[ListItem.Premiered,, • ]$INFO[Window(home).Property(Duration),, • ] $LOCALIZE[31335]</value>
+		<value condition="Container.Content(Episodes) + ListItem.Property(season_finale)">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration,, • ] $LOCALIZE[31336]</value>
+		<value condition="Container.Content(Episodes) + ListItem.Property(series_finale)">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration,, • ] $LOCALIZE[31335]</value>
 		<value condition="Container.Content(Episodes)">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration]</value>
 		<value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
 		<value condition="Container.Content(songs)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre,, • ]$INFO[ListItem.Album]</value>
@@ -1415,6 +1417,10 @@
 	 <variable name="showHiddenPVRLabel">
 		<value condition="Window.IsActive(TVRecordings) | Window.IsActive(RadioRecordings)">$LOCALIZE[19184]</value>
 		<value>$LOCALIZE[19051]</value>
+	 </variable>
+	 
+	 <variable name="view52type">
+		<value>fixedlist</value>
 	 </variable>
 	 
 </includes>

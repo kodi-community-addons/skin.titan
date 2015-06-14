@@ -14,12 +14,7 @@ import xml.etree.ElementTree as etree
 import base64
 import time
 
-
 import Utils as utils
-
-win = xbmcgui.Window( 10000 )
-addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 
 
 class HomeMonitor(threading.Thread):
@@ -29,11 +24,14 @@ class HomeMonitor(threading.Thread):
     delayedTaskInterval = 899
     lastWeatherNotificationCheck = None
     lastNextAiredNotificationCheck = None
+    win = None
     
     def __init__(self, *args):
         utils.logMsg("HomeMonitor - started")
+        self.win = xbmcgui.Window( 10000 )
         self.event =  threading.Event()
-        threading.Thread.__init__(self, *args)    
+        threading.Thread.__init__(self, *args)   
+        
     
     def stop(self):
         utils.logMsg("HomeMonitor - stop called")
@@ -59,7 +57,7 @@ class HomeMonitor(threading.Thread):
             if (xbmc.getCondVisibility("Window.IsActive(home) + !Window.IsActive(fullscreenvideo)")):
 
                 #monitor widget window prop
-                if win.getProperty("ShowWidget") == "show":
+                if self.win.getProperty("ShowWidget") == "show":
                     self.showWidget()
                 
                 listItem = xbmc.getInfoLabel("Container(%s).ListItem.Label" %mainMenuContainer)
@@ -102,19 +100,19 @@ class HomeMonitor(threading.Thread):
             utils.logMsg("update plexlinks started...")
             
             #initialize plex window props by using the amberskin entrypoint for now
-            if not win.getProperty("plexbmc.0.title"):
+            if not self.win.getProperty("plexbmc.0.title"):
                 xbmc.executebuiltin('RunScript(plugin.video.plexbmc,amberskin)')
                 #wait for max 20 seconds untill the plex nodes are available
                 count = 0
-                while (count < 80 and win.getProperty("plexbmc.0.title") == ""):
+                while (count < 80 and self.win.getProperty("plexbmc.0.title") == ""):
                     xbmc.sleep(250)
                     count += 1
             
             #fallback to normal skin init
-            if not win.getProperty("plexbmc.0.title"):
+            if not self.win.getProperty("plexbmc.0.title"):
                 xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
                 count = 0
-                while (count < 80 and win.getProperty("plexbmc.0.title") == ""):
+                while (count < 80 and self.win.getProperty("plexbmc.0.title") == ""):
                     xbmc.sleep(250)
                     count += 1
             
@@ -126,31 +124,31 @@ class HomeMonitor(threading.Thread):
             linkCount = 0
             while linkCount !=14:
                 plexstring = "plexbmc." + str(linkCount)
-                link = win.getProperty(plexstring + ".title")
+                link = self.win.getProperty(plexstring + ".title")
                 if not link:
                     break
                 utils.logMsg(plexstring + ".title --> " + link)
-                plexType = win.getProperty(plexstring + ".type")
+                plexType = self.win.getProperty(plexstring + ".type")
                 utils.logMsg(plexstring + ".type --> " + plexType)            
 
-                link = win.getProperty(plexstring + ".path")
+                link = self.win.getProperty(plexstring + ".path")
                 utils.logMsg(plexstring + ".path --> " + link)
                 
                 if hasSecondayMenus == True:
-                    recentlink = win.getProperty(plexstring + ".recent")
-                    progresslink = win.getProperty(plexstring + ".viewed")
+                    recentlink = self.win.getProperty(plexstring + ".recent")
+                    progresslink = self.win.getProperty(plexstring + ".viewed")
                 else:
                     link = link.replace("mode=1", "mode=0")
                     link = link.replace("mode=2", "mode=0")
                     recentlink = link.replace("/all", "/recentlyAdded")
                     progresslink = link.replace("/all", "/onDeck")
-                    win.setProperty(plexstring + ".recent", recentlink)
-                    win.setProperty(plexstring + ".viewed", progresslink)
+                    self.win.setProperty(plexstring + ".recent", recentlink)
+                    self.win.setProperty(plexstring + ".viewed", progresslink)
                     
-                win.setProperty(plexstring + ".recent.content", utils.getContentPath(recentlink))
+                self.win.setProperty(plexstring + ".recent.content", utils.getContentPath(recentlink))
                 utils.logMsg(plexstring + ".recent --> " + recentlink)       
                 
-                win.setProperty(plexstring + ".viewed.content", utils.getContentPath(progresslink))
+                self.win.setProperty(plexstring + ".viewed.content", utils.getContentPath(progresslink))
                 utils.logMsg(plexstring + ".viewed --> " + progresslink)
 
                 linkCount += 1
@@ -168,14 +166,14 @@ class HomeMonitor(threading.Thread):
         
         #nextaired notifications
         if (xbmc.getCondVisibility("Skin.HasSetting(EnableNextAiredNotifications) + System.HasAddon(script.tv.show.next.aired)") and currentHour != self.lastNextAiredNotificationCheck):
-            if (win.getProperty("NextAired.TodayShow")):
+            if (self.win.getProperty("NextAired.TodayShow")):
                 dialog = xbmcgui.Dialog()
-                dialog.notification(xbmc.getLocalizedString(31295), win.getProperty("NextAired.TodayShow"), xbmcgui.NOTIFICATION_WARNING, 8000)
+                dialog.notification(xbmc.getLocalizedString(31295), self.win.getProperty("NextAired.TodayShow"), xbmcgui.NOTIFICATION_WARNING, 8000)
                 self.lastNextAiredNotificationCheck = currentHour
     
     def setWidget(self, containerID):
-        win.clearProperty("activewidget")
-        win.clearProperty("customwidgetcontent")
+        self.win.clearProperty("activewidget")
+        self.win.clearProperty("customwidgetcontent")
         skinStringContent = ""
         customWidget = False
         
@@ -196,17 +194,17 @@ class HomeMonitor(threading.Thread):
                 skinStringContent = utils.getContentPath(skinStringContent)
                 customWidget = True   
             if customWidget:
-                 win.setProperty("customwidgetcontent", skinStringContent)
-                 win.setProperty("activewidget","custom")
+                 self.win.setProperty("customwidgetcontent", skinStringContent)
+                 self.win.setProperty("activewidget","custom")
             else:
-                win.clearProperty("customwidgetcontent")
-                win.setProperty("activewidget",skinStringContent)
+                self.win.clearProperty("customwidgetcontent")
+                self.win.setProperty("activewidget",skinStringContent)
 
         else:
-            win.clearProperty("activewidget")
+            self.win.clearProperty("activewidget")
 
     def setSpotlightWidget(self, containerID):
-        win.clearProperty("spotlightwidgetcontent")
+        self.win.clearProperty("spotlightwidgetcontent")
         skinStringContent = ""
         customWidget = False
         
@@ -226,7 +224,7 @@ class HomeMonitor(threading.Thread):
             if ("$INFO" in skinStringContent or "Activate" in skinStringContent or ":" in skinStringContent):
                 skinStringContent = utils.getContentPath(skinStringContent)
                 customWidget = True
-            win.setProperty("spotlightwidgetcontent", skinStringContent)
+            self.win.setProperty("spotlightwidgetcontent", skinStringContent)
 
         else:
-            win.clearProperty("spotlightwidgetcontent")        
+            self.win.clearProperty("spotlightwidgetcontent")        

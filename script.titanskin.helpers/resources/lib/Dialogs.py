@@ -11,9 +11,6 @@ from PIL import Image
 from xml.dom.minidom import parse
 from operator import itemgetter
 
-win = xbmcgui.Window( 10000 )
-addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 
 class DialogContextMenu( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):

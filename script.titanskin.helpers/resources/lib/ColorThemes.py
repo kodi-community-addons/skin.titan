@@ -11,18 +11,20 @@ import json
 from xml.dom.minidom import parse
 from operator import itemgetter
 
-win = xbmcgui.Window( 10000 )
-addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
-userThemesPath = os.path.join(addondir,"themes") + os.sep
-skinThemesPath = xbmc.translatePath("special://skin/extras/skinthemes")
+
 
 class ColorThemes(xbmcgui.WindowXMLDialog):
 
     themesList = None
+    userThemesPath = None
+    skinThemesPath = None
     
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+        addon = xbmcaddon.Addon(id='script.titanskin.helpers')
+        addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
+        self.userThemesPath = os.path.join(addondir,"themes") + os.sep
+        self.skinThemesPath = xbmc.translatePath("special://skin/extras/skinthemes")
         
     def createColorTheme(self):
         
@@ -37,7 +39,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         custom_thumbnail = dialog.browse( 2 , xbmc.getLocalizedString(31468), 'files')
         
         if custom_thumbnail:
-            xbmcvfs.copy(custom_thumbnail, os.path.join(userThemesPath, themeName + ".jpg"))
+            xbmcvfs.copy(custom_thumbnail, os.path.join(self.userThemesPath, themeName + ".jpg"))
 
         #read the guisettings file to get all skin settings
         from xml.dom.minidom import parse
@@ -64,7 +66,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                         newlist.append((skinsetting.attributes['type'].nodeValue, name, value))
                 
             #save guisettings
-            text_file_path = os.path.join(userThemesPath, themeName + ".theme")
+            text_file_path = os.path.join(self.userThemesPath, themeName + ".theme")
             text_file = xbmcvfs.File(text_file_path, "w")
             json.dump(newlist, text_file)
             text_file.close()
@@ -109,8 +111,8 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
     def removeColorTheme(self,file):
         file = file.split(os.sep)[-1]
         themeName = file.replace(".theme","")
-        xbmcvfs.delete(os.path.join(userThemesPath,themeName + ".jpg"))
-        xbmcvfs.delete(os.path.join(userThemesPath,themeName + ".theme"))
+        xbmcvfs.delete(os.path.join(self.userThemesPath,themeName + ".jpg"))
+        xbmcvfs.delete(os.path.join(self.userThemesPath,themeName + ".theme"))
         self.refreshListing()
         
     def renameColorTheme(self,file):
@@ -122,8 +124,8 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         if not themeNameNew:
             return
         
-        xbmcvfs.rename(os.path.join(userThemesPath,themeNameOld + ".jpg"), os.path.join(userThemesPath,themeNameNew + ".jpg"))
-        xbmcvfs.rename(os.path.join(userThemesPath,themeNameOld + ".theme"), os.path.join(userThemesPath,themeNameNew + ".theme"))
+        xbmcvfs.rename(os.path.join(self.userThemesPath,themeNameOld + ".jpg"), os.path.join(self.userThemesPath,themeNameNew + ".jpg"))
+        xbmcvfs.rename(os.path.join(self.userThemesPath,themeNameOld + ".theme"), os.path.join(self.userThemesPath,themeNameNew + ".theme"))
         self.refreshListing()
     
     def setIconForColorTheme(self,file):
@@ -134,8 +136,8 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         custom_thumbnail = dialog.browse( 2 , xbmc.getLocalizedString(1030), 'files')
         
         if custom_thumbnail:
-            xbmcvfs.delete(os.path.join(userThemesPath,themeName + ".jpg"))
-            xbmcvfs.copy(custom_thumbnail, os.path.join(userThemesPath, themeName + ".jpg"))
+            xbmcvfs.delete(os.path.join(self.userThemesPath,themeName + ".jpg"))
+            xbmcvfs.copy(custom_thumbnail, os.path.join(self.userThemesPath, themeName + ".jpg"))
 
         self.refreshListing()
     
@@ -146,11 +148,11 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         self.themesList.reset()
         
         #get all skin defined themes
-        dirs, files = xbmcvfs.listdir(skinThemesPath)
+        dirs, files = xbmcvfs.listdir(self.skinThemesPath)
         for file in files:
             if file.endswith(".theme"):
-                icon = os.path.join(skinThemesPath,file.replace(".theme",".jpg"))
-                f = open(os.path.join(skinThemesPath,file),"r")
+                icon = os.path.join(self.skinThemesPath,file.replace(".theme",".jpg"))
+                f = open(os.path.join(self.skinThemesPath,file),"r")
                 importstring = json.load(f)
                 f.close()
                 for count, skinsetting in enumerate(importstring):
@@ -160,22 +162,22 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                         label = skinsetting[1]
 
                 listitem = xbmcgui.ListItem(label=label, iconImage=icon)
-                listitem.setProperty("filename",os.path.join(skinThemesPath,file))
+                listitem.setProperty("filename",os.path.join(self.skinThemesPath,file))
                 listitem.setProperty("description",desc)
                 listitem.setProperty("type","skin")
                 self.themesList.addItem(listitem)
                 count += 1
         
         #get all user defined themes
-        dirs, files = xbmcvfs.listdir(userThemesPath)
+        dirs, files = xbmcvfs.listdir(self.userThemesPath)
         for file in files:
             if file.endswith(".theme"):
                 label = file
                 label = file.replace(".theme","")
-                icon = os.path.join(userThemesPath,label + ".jpg")
+                icon = os.path.join(self.userThemesPath,label + ".jpg")
                 desc = "user defined theme"
                 listitem = xbmcgui.ListItem(label=label, iconImage=icon)
-                listitem.setProperty("filename",os.path.join(userThemesPath,file))
+                listitem.setProperty("filename",os.path.join(self.userThemesPath,file))
                 listitem.setProperty("description",desc)
                 listitem.setProperty("type","user")
                 self.themesList.addItem(listitem)
@@ -186,8 +188,8 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
     def onInit(self):
         self.action_exitkeys_id = [10, 13]
 
-        if not xbmcvfs.exists(userThemesPath):
-            xbmcvfs.mkdir(userThemesPath)
+        if not xbmcvfs.exists(self.userThemesPath):
+            xbmcvfs.mkdir(self.userThemesPath)
         
         self.themesList = self.getControl(6)
         

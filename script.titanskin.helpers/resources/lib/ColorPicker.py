@@ -11,10 +11,6 @@ import InfoDialog
 from xml.dom.minidom import parse
 from operator import itemgetter
 
-win = xbmcgui.Window( 10000 )
-addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
-colorsPath = xbmc.translatePath( 'special://home/addons/script.titanskin.helpers/resources/colors/' ).decode("utf-8")
 
 #PIL fails on Android devices ?
 hasPilModule = True
@@ -28,13 +24,15 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
     manualEdit = None
     colorsList = None
     skinString = None
+    colorsPath = None
     
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+        self.colorsPath = xbmc.translatePath( 'special://home/addons/script.titanskin.helpers/resources/colors/' ).decode("utf-8")
         
     def addColorToList(self, colorname, colorstring):
         
-        colorImageFile = os.path.join(colorsPath,colorstring + ".png")
+        colorImageFile = os.path.join(self.colorsPath,colorstring + ".png")
         
         if not xbmcvfs.exists(colorImageFile) and hasPilModule:
             colorstring = colorstring.strip()
@@ -58,8 +56,8 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
     def onInit(self):
         self.action_exitkeys_id = [10, 13]
 
-        if not xbmcvfs.exists(colorsPath):
-            xbmcvfs.mkdir(colorsPath)
+        if not xbmcvfs.exists(self.colorsPath):
+            xbmcvfs.mkdir(self.colorsPath)
         
         self.colorsList = self.getControl(3110)
         self.manualEdit = self.getControl(3010)

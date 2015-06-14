@@ -7,15 +7,18 @@ import urllib
 import threading
 import InfoDialog
 
-__settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
-__cwd__ = __settings__.getAddonInfo('path')
+
 
 class SearchDialog(xbmcgui.WindowXMLDialog):
 
     searchThread = None
+    settings = None
+    cwd = None
     
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+        self.settings = xbmcaddon.Addon(id='script.titanskin.helpers')
+        self.cwd = self.settings.getAddonInfo('path')
         
     def onInit(self):
         self.action_exitkeys_id = [10, 13]
@@ -178,7 +181,7 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif controlId == 3112:
             listitem = self.getControl( controlId ).getSelectedItem()
             content = "episodes"
-        info_dialog = InfoDialog.GUI( "CustomInfo.xml" , __cwd__, "default", "1080i", listitem=listitem, content=content )
+        info_dialog = InfoDialog.GUI( "CustomInfo.xml" , self.cwd, "default", "1080i", listitem=listitem, content=content )
         info_dialog.doModal()
         if info_dialog.action is not None:
             if info_dialog.action == 'play_movie':

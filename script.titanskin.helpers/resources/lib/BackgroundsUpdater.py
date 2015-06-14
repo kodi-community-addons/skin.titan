@@ -16,13 +16,6 @@ import json
 
 import Utils as utils
 
-doDebugLog = False
-
-win = xbmcgui.Window( 10000 )
-addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
-cachePath = os.path.join(addondir,"backgroundscache.json")
-SmartShortcutsCachePath = os.path.join(addondir,"smartshotcutscache.json")
 
 class BackgroundsUpdater(threading.Thread):
     
@@ -31,10 +24,23 @@ class BackgroundsUpdater(threading.Thread):
     allBackgrounds = {}
     tempBlacklist = set()
     defBlacklist = set()
-    lastPicturesPath = xbmc.getInfoLabel("skin.string(CustomPicturesBackgroundPath)")
+    lastPicturesPath = None
     smartShortcuts = {}
+    cachePath = None
+    SmartShortcutsCachePath = None
+    win = None
     
     def __init__(self, *args):
+        
+        self.win = xbmcgui.Window( 10000 )
+        self.lastPicturesPath = xbmc.getInfoLabel("skin.string(CustomPicturesBackgroundPath)")
+        
+        addon = xbmcaddon.Addon(id='script.titanskin.helpers')
+        addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
+        
+        self.cachePath = os.path.join(addondir,"backgroundscache.json")
+        self.SmartShortcutsCachePath = os.path.join(addondir,"smartshotcutscache.json")
+
         utils.logMsg("BackgroundsUpdater - started")
         self.event =  threading.Event()
         threading.Thread.__init__(self, *args)    
@@ -74,21 +80,21 @@ class BackgroundsUpdater(threading.Thread):
             xbmcvfs.mkdir(addondir)
         
         self.allBackgrounds["blacklist"] = list(self.defBlacklist)
-        json.dump(self.allBackgrounds, open(cachePath,'w'))
+        json.dump(self.allBackgrounds, open(self.cachePath,'w'))
         
-        json.dump(self.smartShortcuts, open(SmartShortcutsCachePath,'w'))
+        json.dump(self.smartShortcuts, open(self.SmartShortcutsCachePath,'w'))
         
 
     def getCacheFromFile(self):
-        if xbmcvfs.exists(cachePath):
-            with open(cachePath) as data_file:    
+        if xbmcvfs.exists(self.cachePath):
+            with open(self.cachePath) as data_file:    
                 data = json.load(data_file)
                 
                 self.defBlacklist = data["blacklist"]
                 self.allBackgrounds = data
         
-        if xbmcvfs.exists(SmartShortcutsCachePath):
-            with open(SmartShortcutsCachePath) as data_file:    
+        if xbmcvfs.exists(self.SmartShortcutsCachePath):
+            with open(self.SmartShortcutsCachePath) as data_file:    
                 self.smartShortcuts = json.load(data_file)    
                 
 
@@ -264,41 +270,41 @@ class BackgroundsUpdater(threading.Thread):
     def UpdateBackgrounds(self):
         
         #get all movies  
-        win.setProperty("AllMoviesBackground",self.getImageFromPath("videodb://movies/titles/"))
+        self.win.setProperty("AllMoviesBackground",self.getImageFromPath("videodb://movies/titles/"))
         
         
         #get all tvshows  
-        win.setProperty("AllTvShowsBackground",self.getImageFromPath("videodb://tvshows/titles/"))
+        self.win.setProperty("AllTvShowsBackground",self.getImageFromPath("videodb://tvshows/titles/"))
         
         #get all musicvideos  
-        win.setProperty("AllMusicVideosBackground",self.getImageFromPath("videodb://musicvideos/titles/"))
+        self.win.setProperty("AllMusicVideosBackground",self.getImageFromPath("videodb://musicvideos/titles/"))
         
             
         #get all music  
-        win.setProperty("AllMusicBackground",self.getImageFromPath("musicdb://artists/"))
+        self.win.setProperty("AllMusicBackground",self.getImageFromPath("musicdb://artists/"))
         
         #get global fanart background 
-        win.setProperty("GlobalFanartBackground",self.getGlobalBackground())
+        self.win.setProperty("GlobalFanartBackground",self.getGlobalBackground())
         
             
         #get in progress movies  
-        win.setProperty("InProgressMovieBackground",self.getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
+        self.win.setProperty("InProgressMovieBackground",self.getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
 
         #get recent and unwatched movies
-        win.setProperty("RecentMovieBackground",self.getImageFromPath("videodb://recentlyaddedmovies/"))
+        self.win.setProperty("RecentMovieBackground",self.getImageFromPath("videodb://recentlyaddedmovies/"))
         
             
         #unwatched movies
-        win.setProperty("UnwatchedMovieBackground",self.getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp"))
+        self.win.setProperty("UnwatchedMovieBackground",self.getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp"))
       
         #get in progress tvshows
-        win.setProperty("InProgressShowsBackground",self.getImageFromPath("library://video/inprogressshows.xml"))
+        self.win.setProperty("InProgressShowsBackground",self.getImageFromPath("library://video/inprogressshows.xml"))
         
         #get recent episodes
-        win.setProperty("RecentEpisodesBackground",self.getImageFromPath("videodb://recentlyaddedepisodes/"))
+        self.win.setProperty("RecentEpisodesBackground",self.getImageFromPath("videodb://recentlyaddedepisodes/"))
         
         #get pictures background
-        win.setProperty("PicturesBackground", self.getPicturesBackground())
+        self.win.setProperty("PicturesBackground", self.getPicturesBackground())
         
         #smart shortcuts --> emby nodes
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.emby)"):
@@ -312,18 +318,18 @@ class BackgroundsUpdater(threading.Thread):
                     label = node[1]
                     path = node[2]
                     image = self.getImageFromPath(node[2])
-                    win.setProperty(key + ".image", image)
-                    win.setProperty(key + ".title", label)
-                    win.setProperty(key + ".path", path)
+                    self.win.setProperty(key + ".image", image)
+                    self.win.setProperty(key + ".title", label)
+                    self.win.setProperty(key + ".path", path)
             else:
                 utils.logMsg("no cache - Get emby entries from file.... ")            
                 #wait for max 5 seconds untill the emby nodes are available
                 count = 0
-                while (count < 20 and win.getProperty("Emby.nodes.total") == ""):
+                while (count < 20 and self.win.getProperty("Emby.nodes.total") == ""):
                     xbmc.sleep(250)
                     count += 1
                 
-                embyProperty = win.getProperty("Emby.nodes.total")
+                embyProperty = self.win.getProperty("Emby.nodes.total")
                 contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
                 if embyProperty:
                     nodes = []
@@ -331,13 +337,13 @@ class BackgroundsUpdater(threading.Thread):
                     for i in range(totalNodes):
                         for contentString in contentStrings:
                             key = "Emby.nodes.%s%s"%(str(i),contentString)
-                            path = win.getProperty("Emby.nodes.%s%s.path"%(str(i),contentString))
-                            label = win.getProperty("Emby.nodes.%s%s.title"%(str(i),contentString))
+                            path = self.win.getProperty("Emby.nodes.%s%s.path"%(str(i),contentString))
+                            label = self.win.getProperty("Emby.nodes.%s%s.title"%(str(i),contentString))
                             if path:
                                 nodes.append( (key, label, path ) )
                                 image = self.getImageFromPath(path)
                                 if image:
-                                    win.setProperty("Emby.nodes.%s%s.image"%(str(i),contentString),image)
+                                    self.win.setProperty("Emby.nodes.%s%s.image"%(str(i),contentString),image)
                                 
                     self.smartShortcuts["emby"] = nodes
                     
@@ -354,9 +360,9 @@ class BackgroundsUpdater(threading.Thread):
                         label = playlist[1]
                         path = playlist[2]
                         image = self.getImageFromPath(playlist[2])
-                        win.setProperty("playlist." + str(playlistCount) + ".image", image)
-                        win.setProperty("playlist." + str(playlistCount) + ".label", label)
-                        win.setProperty("playlist." + str(playlistCount) + ".action", path)
+                        self.win.setProperty("playlist." + str(playlistCount) + ".image", image)
+                        self.win.setProperty("playlist." + str(playlistCount) + ".label", label)
+                        self.win.setProperty("playlist." + str(playlistCount) + ".action", path)
                 else:
                     utils.logMsg("no cache - Get playlist entries from file.... ")
                     playlistCount = 0
@@ -371,9 +377,9 @@ class BackgroundsUpdater(threading.Thread):
                                 image = self.getImageFromPath(playlist)
                                 if image != None:
                                     playlist = "ActivateWindow(Videos," + playlist + ",return)"
-                                    win.setProperty("playlist." + str(playlistCount) + ".image", image)
-                                    win.setProperty("playlist." + str(playlistCount) + ".label", label)
-                                    win.setProperty("playlist." + str(playlistCount) + ".action", playlist)
+                                    self.win.setProperty("playlist." + str(playlistCount) + ".image", image)
+                                    self.win.setProperty("playlist." + str(playlistCount) + ".label", label)
+                                    self.win.setProperty("playlist." + str(playlistCount) + ".action", playlist)
                                     playlists.append( (playlistCount, label, playlist ))
                                     playlistCount += 1
                     
@@ -396,9 +402,9 @@ class BackgroundsUpdater(threading.Thread):
                         label = favourite[1]
                         path = favourite[2]
                         image = self.getImageFromPath(favourite[2])
-                        win.setProperty("favorite." + str(playlistCount) + ".image", image)
-                        win.setProperty("favorite." + str(playlistCount) + ".label", label)
-                        win.setProperty("favorite." + str(playlistCount) + ".action", path)
+                        self.win.setProperty("favorite." + str(playlistCount) + ".image", image)
+                        self.win.setProperty("favorite." + str(playlistCount) + ".label", label)
+                        self.win.setProperty("favorite." + str(playlistCount) + ".action", path)
                 else:
                     utils.logMsg("no cache - Get favourite entries from file.... ")
                     favoritesCount = 0
@@ -414,9 +420,9 @@ class BackgroundsUpdater(threading.Thread):
                             if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025") or path.startswith("ActivateWindow(videos") or path.startswith("ActivateWindow(Music") or path.startswith("ActivateWindow(10502")) and not "script://" in path:
                                 image = self.getImageFromPath(path)
                                 if image != None:
-                                    win.setProperty("favorite." + str(favoritesCount) + ".image", image)
-                                    win.setProperty("favorite." + str(favoritesCount) + ".label", name)
-                                    win.setProperty("favorite." + str(favoritesCount) + ".action", path)
+                                    self.win.setProperty("favorite." + str(favoritesCount) + ".image", image)
+                                    self.win.setProperty("favorite." + str(favoritesCount) + ".label", name)
+                                    self.win.setProperty("favorite." + str(favoritesCount) + ".action", path)
                                     favourites.append( (favoritesCount, label, path) )
                                     favoritesCount += 1
                                     
@@ -440,34 +446,34 @@ class BackgroundsUpdater(threading.Thread):
                     label = node[1]
                     path = node[2]
                     image = self.getImageFromPath(node[2])
-                    win.setProperty(key + ".background", image)
-                    win.setProperty(key + ".title", label)
-                    win.setProperty(key + ".path", path)
+                    self.win.setProperty(key + ".background", image)
+                    self.win.setProperty(key + ".title", label)
+                    self.win.setProperty(key + ".path", path)
             else:
                 utils.logMsg("no cache - Get plex entries from file.... ")    
             
                 #wait for max 5 seconds untill the plex nodes are available
                 count = 0
-                while (count < 20 and not win.getProperty("plexbmc.0.title")):
+                while (count < 20 and not self.win.getProperty("plexbmc.0.title")):
                     xbmc.sleep(250)
                     count += 1
                     
                 totalNodes = 14
                 nodes = []
                 for i in range(totalNodes):
-                    plextitle = win.getProperty("plexbmc.%s.title"%str(i))
+                    plextitle = self.win.getProperty("plexbmc.%s.title"%str(i))
                     if plextitle:
-                        plexcontent = win.getProperty("plexbmc.%s.all"%str(i))
+                        plexcontent = self.win.getProperty("plexbmc.%s.all"%str(i))
                         if not plexcontent:
-                            plexcontent = win.getProperty("plexbmc.%s.path"%str(i))
-                        plextype = win.getProperty("plexbmc.%s.type" %str(i))
+                            plexcontent = self.win.getProperty("plexbmc.%s.path"%str(i))
+                        plextype = self.win.getProperty("plexbmc.%s.type" %str(i))
                         image = self.getImageFromPath(plexcontent)
                         key = "plexbmc.%s"%str(i)
                         nodes.append( (key, plextitle, plexcontent ) )
                         if image:
-                            win.setProperty("plexbmc.%s.background"%str(i),image)
+                            self.win.setProperty("plexbmc.%s.background"%str(i),image)
                             if plextype == "movie":
-                                win.setProperty("plexfanartbg", image)
+                                self.win.setProperty("plexfanartbg", image)
                     else:
                         break
                 
