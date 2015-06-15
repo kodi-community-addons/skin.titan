@@ -158,7 +158,8 @@ class LibraryMonitor(threading.Thread):
                     self.win.setProperty('MovieSet.Title', title_list)
                     self.win.setProperty('MovieSet.Runtime', str(runtime))
                     durationString = self.getDurationString(runtime / 60)
-                    self.win.setProperty('MovieSet.Duration', durationString)
+                    if durationString:
+                        self.win.setProperty('MovieSet.Duration', durationString)
                     self.win.setProperty('MovieSet.Writer', " / ".join(writer))
                     self.win.setProperty('MovieSet.Director', " / ".join(director))
                     self.win.setProperty('MovieSet.Genre', " / ".join(genre))
@@ -285,10 +286,13 @@ class LibraryMonitor(threading.Thread):
         
     def setDuration(self):
         # monitor listitem to set duration
-        if (xbmc.getCondVisibility("!IsEmpty(ListItem.Duration)") ):
+        if (xbmc.getCondVisibility("!IsEmpty(ListItem.Duration)")):
             currentDuration = xbmc.getInfoLabel("ListItem.Duration")
             durationString = self.getDurationString(currentDuration)
-            self.win.setProperty('Duration', durationString)
+            if durationString:
+                self.win.setProperty('Duration', durationString)
+            else:
+                self.win.clearProperty('Duration')
         else:
             self.win.clearProperty('Duration')
         
@@ -301,6 +305,7 @@ class LibraryMonitor(threading.Thread):
             hours   = full_minutes // 60
             durationString = str(hours) + ':' + str(minutes).zfill(2)
         except:
+            print "exception in getDurationString"
             return None
         return durationString
             

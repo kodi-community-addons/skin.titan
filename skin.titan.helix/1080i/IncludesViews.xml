@@ -293,17 +293,7 @@
 		<visible>Skin.HasSetting(GuideShowInfo) + skin.hastheme(classic)</visible>
 	</control>
   </include>
-  
-  
-  
-  <!-- panel -->
-				
 
-  
-  
-  
- 
-  
   <include name="MovieDetailsLeft">
      <control type="group" id="44447">
 		<control type="group">
@@ -601,26 +591,11 @@
 				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
 				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
 			</control>
-			<control type="image">
+			<control type="group">
 				<!--Watched Overlay-->
 				<right>5</right>
-				<posy>5</posy>
-				<width>60</width>
-				<height>60</height>
-				<colordiffuse>ccFFFFFF</colordiffuse>
-				<texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
-			</control>
-			<control type="label">
-				<!--watched label-->
-				<width>100</width>
-				<centerright>24</centerright>
-				<posy>-14</posy>
-				<align>center</align>
-				<label>$VAR[WatchedLabel]</label>
-				<font>Light20</font>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+				<top>5</top>
+				<include>WatchedIndicatorNormal</include>
 			</control>
 			
 		</control>
@@ -678,26 +653,11 @@
 				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
 				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
 			</control>
-			<control type="image">
+			<control type="group">
 				<!--Watched Overlay-->
 				<right>5</right>
-				<posy>5</posy>
-				<width>60</width>
-				<height>60</height>
-				<colordiffuse>ccFFFFFF</colordiffuse>
-				<texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
-			</control>
-			<control type="label">
-				<!--watched label-->
-				<width>100</width>
-				<centerright>24</centerright>
-				<posy>-14</posy>
-				<align>center</align>
-				<label>$VAR[WatchedLabel]</label>
-				<font>Light20</font>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+				<top>5</top>
+				<include>WatchedIndicatorNormal</include>
 			</control>
 			
 		</control>
@@ -742,175 +702,129 @@
 			<shadowcolor>black</shadowcolor>
 			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo))</visible>
 		</control>
-		<control type="image">
-			<!--Watched Overlay-->
-			<posx>496</posx>
-			<posy>0</posy>
-			<width>95</width>
-			<height>95</height>
-			<colordiffuse>ccFFFFFF</colordiffuse>
-			<texture>$VAR[WatchedImageBanner]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayBannerPlex)</visible>
-		</control>
-		<control type="label">
-			<!--watched label-->
-			<centerleft>560</centerleft>
-			<posy>-10</posy>
-			<width>50</width>
-			<height>60</height>
-			<font>Reg24</font>
-			<align>center</align>
-			<label>$VAR[WatchedLabel]</label>
-			<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-			<visible>!Skin.HasSetting(HideWatchedOverlayBannerPlex)</visible>
+		<control type="group">
+		<right>9</right>
+		<include>WatchedIndicatorNormal</include>
 		</control>
 	</include>
     <include name="SmallPosterViewWatchedImage">
-		<control type="image">
-            <!--Watched Overlay-->
+		<control type="group">
+			<!--Watched Overlay-->
 			<posx>80</posx>
 			<posy>0</posy>
 			<width>70</width>
-			<height>70</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture>$VAR[WatchedImage]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayPoster)</visible>
-        </control>
-		<control type="label">
-            <!--watched label-->
-			<centerleft>129</centerleft>
-			<posy>-4</posy>
-			<width>60</width>
-			<height>40</height>
-			<font>Reg20</font>
-            <align>center</align>
-            <label>$VAR[WatchedLabel]</label>
-            <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-			<visible>!Skin.HasSetting(HideWatchedOverlayPoster)</visible>
-        </control>
+			<include>WatchedIndicatorSmall</include>
+			<animation type="Conditional" condition="skin.hastheme(classic)">
+				<effect type="slide" end="3,-3" time="0"  />
+			</animation>
+		</control>
     </include>
     
 	<include name="BannerViewImagesNormal">
+	<control type="group">
+		<include>BannerViewImageSizeNormal</include>
 		<control type="image">
             <!--background-->
-            <include>BannerViewImageSizeNormal</include>
             <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
 			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-			<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+			<animation effect="fade" reversible="false" end="85" time="0" condition="true">Conditional</animation>
             <aspectratio>stretch</aspectratio>
         </control>
         <control type="image">
             <!--Panel icon image-->
-            <include>BannerViewImageSizeNormal</include>
+			<bordersize>5</bordersize>
             <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
 		<control type="image">
             <!--season image legacy-->
-            <include>BannerViewImageSizeNormal</include>
+			<bordersize>5</bordersize>
             <texture background="true" diffuse="home/home_matte2.png">$VAR[BannerLandscapeImageSeason]</texture>
             <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
 			<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video) + !Skin.HasSetting(DisableLandscapeThumbs)</visible>
         </control>
         <control type="image">
             <!--Panel Overlay-->
-            <include>BannerViewOverlaySizeNormal</include>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="home/home_matte.png">home/home_overlay.png</texture>
+			<bordersize>5</bordersize>
+			<bottom>0</bottom>
+			<height>80</height>
+            <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+			<animation effect="fade" reversible="false" end="85" time="0" condition="true">Conditional</animation>
+            <aspectratio>stretch</aspectratio>
             <include>ShowTitleOverlay</include>
         </control>
         <control type="label">
             <!--Label with title-->
-            <centerleft>287</centerleft>
-			<posy>222</posy>
-			<width>530</width>
-			<height>100</height>
+            <bottom>0</bottom>
+			<height>80</height>
+			<left>15</left>
+			<width>95%</width>
 			<font>Reg42</font>
             <align>center</align>
             <info>ListItem.Label</info>
-			<animation effect="fade" time="0" end="0" delay="0">Focus</animation>
 			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <include>ShowTitleOverlay</include>
         </control>
-        <control type="image">
-            <!--Watched Overlay-->
-            <posx>466</posx>
-			<posy>15</posy>
-			<width>95</width>
-			<height>95</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="1,0" time="0"  />
-			</animation>
-        </control>
-		<control type="image">
-            <!--Watched Overlay-->
-            <posx>466</posx>
-			<posy>15</posy>
-			<width>95</width>
-			<height>95</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-			<visible>skin.hastheme(classic)</visible>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="1,0" time="0"  />
-			</animation>
-        </control>
-		<control type="image">
-            <!--Watched Overlay-->
-            <posx>466</posx>
-			<posy>15</posy>
-			<width>95</width>
-			<height>95</height>
-            <colordiffuse>ccFFFFFF</colordiffuse>
-            <texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-			<visible>skin.hastheme(classic)</visible>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="1,0" time="0"  />
-			</animation>
-        </control>
-		<control type="label">
-            <!--watched label-->
-            <centerleft>532</centerleft>
-			<posy>5</posy>
-			<width>60</width>
-			<height>60</height>
-			<font>Reg26</font>
-            <align>center</align>
-            <label>$VAR[WatchedLabel]</label>
-            <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-			<visible>!Skin.HasSetting(HideWatchedOverlayLandscape)</visible>
-        </control>
+		<control type="group">
+			<right>5</right>
+			<top>5</top>
+			<include>WatchedIndicatorNormal</include>
+		 </control>
+		</control>
     </include>
     <include name="BannerViewOverlayFocusNormal">
 		<control type="group">
+			<include>BannerViewImageSizeNormal</include>
 			<control type="image">
 				<!--focus image-->
-				<include>BannerViewImageSizeNormal</include>
-				<bordersize>-8</bordersize>
-				<texture>home/home_matte2.png</texture>
+				<texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+				<aspectratio>stretch</aspectratio>
 			</control>
-			<include>BannerViewImagesNormal</include>
-			<control type="label">
-				<!--Label with title-->
-				<centerleft>287</centerleft>
-				<posy>222</posy>
-				<width>530</width>
-				<height>100</height>
-				<font>Reg42</font>
-				<align>center</align>
-				<scroll>true</scroll>
-				<info>ListItem.Label</info>
-				<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<control type="image">
+				<!--Panel icon image-->
+				<bordersize>5</bordersize>
+				<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
+				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+			</control>
+			<control type="image">
+				<!--season image legacy-->
+				<bordersize>5</bordersize>
+				<texture background="true" diffuse="home/home_matte2.png">$VAR[BannerLandscapeImageSeason]</texture>
+				<aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
+				<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video) + !Skin.HasSetting(DisableLandscapeThumbs)</visible>
+			</control>
+			<control type="image">
+				<!--Panel Overlay-->
+				<bordersize>5</bordersize>
+				<bottom>0</bottom>
+				<height>80</height>
+				<texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+				<animation effect="fade" reversible="false" end="85" time="0" condition="true">Conditional</animation>
+				<aspectratio>stretch</aspectratio>
 				<include>ShowTitleOverlay</include>
 			</control>
+			<control type="label">
+				<!--Label with title-->
+				<bottom>0</bottom>
+				<height>80</height>
+				<left>15</left>
+				<width>95%</width>
+				<font>Reg42</font>
+				<align>center</align>
+				<info>ListItem.Label</info>
+				<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+				<include>ShowTitleOverlay</include>
+			</control>
+			<control type="group">
+				<right>5</right>
+				<top>5</top>
+				<include>WatchedIndicatorNormal</include>
+			 </control>
 		 </control>
     </include>
 
@@ -1389,10 +1303,8 @@
 	
    
 	<include name="BannerViewImageSizeNormal">
-        <posx>11</posx>
-        <posy>15</posy>
-        <width>550</width>
-        <height>310</height>
+        <width>565</width>
+        <height>320</height>
     </include>
     <include name="BannerViewImageSizeNormalShadow">
         <posx>0</posx>
@@ -1410,968 +1322,20 @@
 
 
 	<include name="BigPanelWatchedImage">
-			<control type="image">
+			<control type="group">
 				<!--Watched Overlay-->
 				<posx>182</posx>
 				<posy>7</posy>
 				<width>70</width>
-				<height>70</height>
-				<colordiffuse>ccFFFFFF</colordiffuse>
-				<texture diffuse="diffuse/watched_icon.png">$VAR[WatchedImage]</texture>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
+				<include>WatchedIndicatorNormal</include>
 				<animation type="Conditional" condition="skin.hastheme(classic)">
 					<effect type="slide" end="3,-3" time="0"  />
 				</animation>
 			</control>
-			<control type="label">
-				<!--watched label-->
-				<centerleft>229</centerleft>
-				<posy>-10</posy>
-				<width>50</width>
-				<align>center</align>
-				<label>$VAR[WatchedLabel]</label>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-				<font>Reg20</font>
-				<visible>!Skin.HasSetting(HideWatchedOverlayBigPanel)</visible>
-			</control>
 	</include>
 
-    <!-- Movie Showcase Variables: Main thumbs -->
-    <include name="MovieShowcaseThumb">
-        <posx>54</posx>
-        <posy>-12</posy>
-        <width>300</width>
-        <height>421</height>
-        <align>center</align>
-        <texture background="true" diffuse="diffuse/poster.png">colors/color_keyboard.png</texture>
-        <aspectratio scalediffuse="false">scale</aspectratio>
-		<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
-		<bordersize>20</bordersize>
-    </include>
-    <include name="MovieShowcaseWatched">
-        <posx>273</posx>
-        <posy>9</posy>
-        <width>60</width>
-        <height>60</height>
-        <align>center</align>
-        <aspectratio scalediffuse="true">stretch</aspectratio>
-		<visible>!Skin.HasSetting(HideWatchedOverlayShowCase)</visible>
-		<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="4,-3" time="0"  />
-		</animation>
-    </include>
-    <include name="MovieShowcaseThumbMain">
-         <posx>54</posx>
-        <posy>-12</posy>
-        <width>300</width>
-        <height>421</height>
-        <align>center</align>
-        <texture background="true" diffuse="diffuse/poster.png">colors/color_keyboard.png</texture>
-        <aspectratio scalediffuse="false">scale</aspectratio>
-		<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
-		<bordersize>20</bordersize>
-    </include>
-    <include name="MovieShowcaseThumbReflectionMain">
-        <texture background="true" flipy="true" diffuse="diffuse/poster_reflect.png"></texture>
-        <posx>74</posx>
-        <posy>393</posy>
-        <width>260</width>
-        <height>381</height>
-        <colordiffuse>52FFFFFF</colordiffuse>
-        <aspectratio scalediffuse="false">scale</aspectratio>
-    </include>
-    <include name="MovieShowcaseThumbReflection">
-        <texture background="true" flipy="true" diffuse="diffuse/poster_reflect.png"></texture>
-        <posx>74</posx>
-        <posy>393</posy>
-        <width>260</width>
-        <height>381</height>
-        <colordiffuse>52FFFFFF</colordiffuse>
-        <aspectratio scalediffuse="false">scale</aspectratio>
-    </include>
-    <!--ShowcaseMovies-->
-    <include name="ShowcaseMovies">
-        <!-- On Next -->
-        <control type="group" id="6001">
-            <posy>550</posy>
-            <camera x="960" y="750" />
-            <visible>Control.IsVisible(500) + Container.OnNext + !Skin.HasSetting(flattenshowcase)</visible>
-            <animation effect="slide" end="-135,0" time="250" reversible="false">Hidden</animation>
-            <control type="group">
-                <!-- -7 Fade Out-->
-                <posx>15</posx>
-                <visible>Container.OnNext</visible>
-                <animation effect="fade" start="100" end="0" time="250" tween="cubic" easing="out" reversible="false">Hidden</animation>
-                <animation effect="rotatey" center="-135" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container(500).ListItem(-7).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container(500).ListItem(-7).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-7).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>150</posx>
-                <animation effect="rotatey" center="0" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container(500).ListItem(-6).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container(500).ListItem(-6).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <include>MovieShowcaseWatched</include>
-					 <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
-                </control>
-            </control>
-            <control type="group">
-                <posx>285</posx>
-                <animation effect="rotatey" center="135" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container(500).ListItem(-5).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container(500).ListItem(-5).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>420</posx>
-                <animation effect="rotatey" center="270" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container(500).ListItem(-4).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container(500).ListItem(-4).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>555</posx>
-                <animation effect="rotatey" center="405" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container(500).ListItem(-3).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container(500).ListItem(-3).Art(poster)</info>
-                        <visible>Control.IsVisible(500)</visible>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>690</posx>
-                <animation effect="rotatey" center="540" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +6 Fade In-->
-                <posx>1635</posx>
-                <visible>!Container.OnNext</visible>
-                <animation effect="fade" start="0" end="100" delay="0" time="250" tween="cubic" easing="in" reversible="false">Visible</animation>
-                <animation effect="rotatey" center="2205" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1500</posx>
-                <animation effect="rotatey" center="2070" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1365</posx>
-                <animation effect="rotatey" center="1935" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1230</posx>
-                <animation effect="rotatey" center="1800" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1095</posx>
-                <animation effect="rotatey" center="1665" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>960</posx>
-                <animation effect="rotatey" center="1530" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <visible>Container.OnNext</visible>
-                <animation effect="slide" end="75,0" time="250" reversible="false">Hidden</animation>
-                <control type="group">
-                    <posx>825</posx>
-                    <visible>Container.OnNext</visible>
-                    <animation effect="rotatey" center="1395" start="0" end="-55" time="250" reversible="false" tween="quadratic" easing="in">Hidden</animation>
-                    <animation effect="rotatey" center="1395" start="55" end="55" time="0" condition="true">Conditional</animation>
-                    <control type="group">
-                        <control type="image">
-                            <include>MovieShowcaseThumb</include>
-                            <info>Container.ListItem(0).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseThumbReflection</include>
-                            <info>Container.ListItem(0).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseWatched</include>
-                            <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
-                        </control>
-                    </control>
-                </control>
-                <control type="group">
-                    <posx>758</posx>
-                    <visible>Container.OnNext</visible>
-                    <animation effect="rotatey" center="608" start="0" end="-55" time="250" reversible="false" tween="quadratic" easing="out">Hidden</animation>
-                    <control type="group">
-                        <control type="image">
-                            <include>MovieShowcaseThumb</include>
-                            <info>Container.ListItem(-1).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseThumbReflection</include>
-                            <info>Container.ListItem(-1).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseWatched</include>
-                            <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
-                        </control>
-                    </control>
-                </control>
-            </control>
-        </control>
-        <!-- On Previous-->
-        <control type="group" id="6002">
-            <posy>550</posy>
-            <camera x="960" y="750" />
-            <visible>Control.IsVisible(500) + Container.OnPrevious + !Skin.HasSetting(flattenshowcase)</visible>
-            <animation effect="slide" end="135,0" time="250" reversible="false">Hidden</animation>
-            <control type="group">
-                <!-- +7 Fade out-->
-                <posx>1500</posx>
-                <visible>Container.OnPrevious</visible>
-                <animation effect="fade" start="100" end="0" time="250" tween="cubic" easing="out" reversible="false">Hidden</animation>
-                <animation effect="rotatey" center="2070" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(7).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(7).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(7).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1365</posx>
-                <animation effect="rotatey" center="1935" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1230</posx>
-                <animation effect="rotatey" center="1800" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>1095</posx>
-                <animation effect="rotatey" center="1665" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>960</posx>
-                <animation effect="rotatey" center="1530" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>825</posx>
-                <animation effect="rotatey" center="1395" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -6 Fade In-->
-                <posx>-120</posx>
-                <visible>!Container.OnPrevious</visible>
-                <animation effect="fade" start="0" end="100" delay="0" time="250" tween="cubic" easing="in" reversible="false">Visible</animation>
-                <animation effect="rotatey" center="-270" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>15</posx>
-                <animation effect="rotatey" center="-135" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>150</posx>
-                <animation effect="rotatey" center="0" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>285</posx>
-                <animation effect="rotatey" center="135" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-3).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>420</posx>
-                <animation effect="rotatey" center="270" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <posx>555</posx>
-                <animation effect="rotatey" center="405" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <visible>Container.OnPrevious</visible>
-                <animation effect="slide" end="-75,0" time="250" reversible="false">Hidden</animation>
-                <control type="group">
-                    <posx>690</posx>
-                    <visible>Container.OnPrevious</visible>
-                    <animation effect="rotatey" center="540" start="0" end="55" time="250" reversible="false" tween="quadratic" easing="in">Hidden</animation>
-                    <animation effect="rotatey" center="540" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                    <control type="group">
-                        <control type="image">
-                            <include>MovieShowcaseThumb</include>
-                            <info>Container.ListItem(0).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseThumbReflection</include>
-                            <info>Container.ListItem(0).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseWatched</include>
-                            <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
-                        </control>
-                    </control>
-                </control>
-                <control type="group">
-                    <posx>758</posx>
-                    <visible>Container.OnPrevious</visible>
-                    <animation effect="rotatey" center="1328" start="0" end="55" time="250" reversible="false" tween="quadratic" easing="out">Hidden</animation>
-                    <control type="group">
-                        <control type="image">
-                            <include>MovieShowcaseThumb</include>
-                            <info>Container.ListItem(1).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseThumbReflection</include>
-                            <info>Container.ListItem(1).Art(poster)</info>
-                        </control>
-                        <control type="image">
-                            <include>MovieShowcaseWatched</include>
-                            <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
-                        </control>
-                    </control>
-                </control>
-            </control>
-        </control>
-        <!-- No Move -->
-        <control type="group" id="6000">
-            <posy>550</posy>
-            <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)" reversible="false">
-                <effect type="fade" start="100" end="0" time="10" delay="800" tween="cubic" easing="inout" />
-            </animation>
-            <animation effect="fade" time="250">WindowClose</animation>
-            <visible>Control.IsVisible(500) + !Control.IsVisible(6001) + !Control.IsVisible(6002)</visible>
-            <camera x="960" y="750" />
-            <control type="group">
-                <!-- -7 Puffer -->
-                <control type="group">
-                    <control type="image">
-                        <texture background="true"></texture>
-                        <posx>-10</posx>
-                        <posy>-10</posy>
-                        <width>1</width>
-                        <height>1</height>
-                        <info>Container.ListItem(-7).Art(poster)</info>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +7 Puffer -->
-                <control type="group">
-                    <control type="image">
-                        <texture background="true"></texture>
-                        <posx>-10</posx>
-                        <posy>-10</posy>
-                        <width>1</width>
-                        <height>1</height>
-                        <info>Container.ListItem(7).Art(poster)</info>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -6 -->
-                <posx>15</posx>
-                <animation effect="rotatey" center="-135" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="-135" start="0" end="55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="-1542" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-6).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -5 -->
-                <posx>150</posx>
-                <animation effect="rotatey" center="0" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="0" start="0" end="55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="-1299" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-5).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -4 -->
-                <posx>285</posx>
-                <animation effect="rotatey" center="135" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="135" start="0" end="55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="-1056" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-4).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -3 -->
-                <posx>420</posx>
-                <animation effect="rotatey" center="270" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="270" start="0" end="55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="-472" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-3).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -2 -->
-                <posx>555</posx>
-                <animation effect="rotatey" center="405" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="405" start="0" end="55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="-337" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-2).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- -1 -->
-                <posx>691</posx>
-                <!-- add +1 -->
-                <animation effect="rotatey" center="540" start="-55" end="-55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="540" start="0" end="55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="-202" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(-1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(-1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(-1).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +6 -->
-                <posx>1500</posx>
-                <animation effect="rotatey" center="2070" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="2070" start="0" end="-55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="1542" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(6).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(6).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +5 -->
-                <posx>1365</posx>
-                <animation effect="rotatey" center="1935" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="1935" start="0" end="-55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="1299" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(5).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(5).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +4 -->
-                <posx>1230</posx>
-                <animation effect="rotatey" center="1800" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="1800" start="0" end="-55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="1056" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(4).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(4).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +3 -->
-                <posx>1095</posx>
-                <animation effect="rotatey" center="1665" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="1665" start="0" end="-55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="473" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(3).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(3).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +2 -->
-                <posx>960</posx>
-                <animation effect="rotatey" center="1530" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="1530" start="0" end="-55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="338" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(2).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(2).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- +1 -->
-                <posx>821</posx>
-                <!-- add +1 -->
-                <animation effect="rotatey" center="1395" start="55" end="55" time="0" condition="true">Conditional</animation>
-                <animation type="Conditional" condition="Skin.HasSetting(flattenshowcase)">
-                    <effect type="rotatey" center="1395" start="0" end="-55" time="250" tween="cubic" easing="inout" />
-                    <effect type="slide" start="0" end="203" time="250" tween="cubic" easing="inout" />
-                </animation>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumb</include>
-                        <info>Container.ListItem(1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflection</include>
-                        <info>Container.ListItem(1).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(1).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <!-- 0 -->
-                <posx>758</posx>
-                <control type="group">
-                    <control type="image">
-                        <include>MovieShowcaseThumbMain</include>
-                        <info>Container.ListItem(0).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseThumbReflectionMain</include>
-                        <info>Container.ListItem(0).Art(poster)</info>
-                    </control>
-                    <control type="image">
-                        <include>MovieShowcaseWatched</include>
-                        <texture diffuse="diffuse/watched_icon.png">$INFO[ListItem(0).Overlay,overlays/showcase/,]</texture>
-                    </control>
-                </control>
-            </control>
-        </control>
-    </include>
+    
+	 
 	 <include name="mediaflagssmall">
         <control type="image">
             <!--Video Resolution-->
@@ -2709,7 +1673,7 @@
 				<control type="image">
 					<posx>-6</posx>
 					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="25,0,0,0">flags/flag_box_rating.png</texture>
+					<texture border="25,0,2,0">flags/flag_box_mpaa.png</texture>
 					<aspectratio>stretch</aspectratio>
 				</control>
 				<control type="label">
@@ -2726,33 +1690,35 @@
 			</control>
 			
 			<control type="group">
-				<!--Rating-->
-				<visible>Window.IsActive(dialogvideoinfo.xml) | window.isactive(home)</visible>
-				<width>220</width>
+				<width>8</width>
 				<height>36</height>
-				<control type="image">
-					<!--Stars modern-->
-					<visible>[!IsEmpty(ListItem.Rating) | !IsEmpty(Container(510).ListItem.Rating)] + !skin.hastheme(classic)</visible>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<posx>0</posx>
-					<posy>-6</posy>
-					<width>220</width>
-					<height>45</height>
-					<texture fallback="rating/0.0.png">rating/$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating].png</texture>
-				</control>
-				<control type="label">
-					<!--Rating modern-->
-					<visible>[!IsEmpty(ListItem.Rating) | !IsEmpty(Container(510).ListItem.Rating)] + !skin.hastheme(classic)</visible>
-					<posx>220</posx>
-					<posy>-13</posy>
-					<width>100</width>
-					<font>Reg36</font>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating]</label>
-				</control>
+				<visible>!IsEmpty(ListItem.MPAA) | !IsEmpty(Container(510).ListItem.MPAA)</visible>
 			</control>
 			
-			
+			<!-- star rating -->
+			<control type="group">
+				<width>110</width>
+				<height>36</height>
+				<visible>!IsEmpty(ListItem.Rating) | !IsEmpty(Container(510).ListItem.Rating)</visible>
+				<control type="image">
+					<posx>-6</posx>
+					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+					<texture border="25,0,2,0">flags/flag_box_mpaa.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label">
+					<font>flags</font>
+					<posx>-6</posx>
+					<width>80</width>
+					<right>0</right>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<label>$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating]</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+				</control>
+			</control>
+	
 			
 		</control>
     </include>
@@ -2925,7 +1891,7 @@
 				<control type="image">
 					<posx>-6</posx>
 					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="25,0,0,0">flags/flag_box_rating.png</texture>
+					<texture border="25,0,0,0">flags/flag_box_mpaa.png</texture>
 					<aspectratio>stretch</aspectratio>
 				</control>
 				<control type="label">
@@ -3507,6 +2473,116 @@
 				</control>
 			</control>
 			
+			<!-- disc 26 -->
+			<control type="group">
+				<width>15</width>
+				<height>40</height>
+				<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.Count),25)</visible>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_w.png</texture>
+					<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.WatchedCount),25)</visible>
+				</control>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_u.png</texture>
+				</control>
+			</control>
+			
+			<!-- disc 27 -->
+			<control type="group">
+				<width>15</width>
+				<height>40</height>
+				<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.Count),26)</visible>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_w.png</texture>
+					<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.WatchedCount),26)</visible>
+				</control>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_u.png</texture>
+				</control>
+			</control>
+			
+			<!-- disc 28 -->
+			<control type="group">
+				<width>15</width>
+				<height>40</height>
+				<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.Count),27)</visible>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_w.png</texture>
+					<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.WatchedCount),27)</visible>
+				</control>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_u.png</texture>
+				</control>
+			</control>
+			
+			<!-- disc 29 -->
+			<control type="group">
+				<width>15</width>
+				<height>40</height>
+				<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.Count),28)</visible>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_w.png</texture>
+					<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.WatchedCount),28)</visible>
+				</control>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_u.png</texture>
+				</control>
+			</control>
+			
+			<!-- disc 30 -->
+			<control type="group">
+				<width>15</width>
+				<height>40</height>
+				<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.Count),29)</visible>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_w.png</texture>
+					<visible>IntegerGreaterThan(Window(Home).Property(MovieSet.WatchedCount),29)</visible>
+				</control>
+				<control type="image">
+					<posx>-45</posx>
+					<width>60</width>
+					<height>40</height>
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<texture>flags/discsets/DiskAdd_u.png</texture>
+				</control>
+			</control>
+			
 			
 		</control>
 		
@@ -3560,7 +2636,7 @@
                     <!--Year: Movies-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>!IsEmpty(ListItem.Year) | !IsEmpty(Window(Home).Property(MovieSet.Years))</visible>
+                    <visible>[!IsEmpty(ListItem.Year) | !IsEmpty(Window(Home).Property(MovieSet.Years))] + IsEmpty(ListItem.Premiered)</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>3</posy>
@@ -3716,7 +2792,7 @@
                     <!--Writer: Movies, Episodes-->
                     <width>800</width>
                     <height>40</height>
-                    <visible>[Container.Content(Movies) | Container.Content(episodes) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + [!IsEmpty(ListItem.Writer) | !IsEmpty(Window(Home).Property(MovieSet.Writer))]</visible>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + [!IsEmpty(ListItem.Writer) | !IsEmpty(Window(Home).Property(MovieSet.Writer))]</visible>
                     <control type="image">
                         <posx>0</posx>
                         <posy>2</posy>
@@ -4113,6 +3189,195 @@
 		 
        
 	</include>
+	
+
+	<include name="WatchedIndicatorNormal">
+		<control type="image">
+			<!--Watched Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Progress Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayUnWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Progress.Color)]</colordiffuse>
+			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Episodes Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayUnWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
+			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Sets Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBoxSet.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
+			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		
+		
+		<control type="label">
+			<!--watched label-->
+			<right>0</right>
+			<top>-13</top>
+			<align>center</align>
+			<width>50</width>
+			<align>center</align>
+			<label>$VAR[WatchedLabel]</label>
+			<font>Reg24</font>
+			<textcolor>black</textcolor>
+			<visible>[ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)] | [IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)]</visible>
+		</control>
+	</include>
+	
+	<include name="WatchedIndicatorSmall">
+		<control type="image">
+			<!--Watched Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Progress Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayUnWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Progress.Color)]</colordiffuse>
+			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Episodes Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayUnWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
+			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Sets Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBoxSet.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
+			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="label">
+			<!--watched label-->
+			<right>0</right>
+			<top>-16</top>
+			<align>center</align>
+			<width>40</width>
+			<align>center</align>
+			<label>$VAR[WatchedLabel]</label>
+			<font>Reg20</font>
+			<textcolor>black</textcolor>
+			<visible>[ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)] | [IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)]</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+	</include>
+	
+	<include name="WatchedIndicatorLarge">
+		<control type="image">
+			<!--Watched Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>120</width>
+			<height>120</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Progress Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>120</width>
+			<height>120</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayUnWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Progress.Color)]</colordiffuse>
+			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Episodes Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>120</width>
+			<height>120</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayUnWatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
+			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--Sets Overlay-->
+			<right>0</right>
+			<top>0</top>
+			<width>120</width>
+			<height>120</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayBoxSet.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
+			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="label">
+			<!--watched label-->
+			<right>0</right>
+			<top>0</top>
+			<align>center</align>
+			<width>75</width>
+			<label>$VAR[WatchedLabel]</label>
+			<font>Reg32</font>
+			<textcolor>black</textcolor>
+			<visible>[ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)] | [IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)]</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+	</include>
+
+
+	<variable name="WatchedLabel">
+        <value condition="[Container.Content(TVShows) | Container.Content(Seasons) | ListItem.IsFolder] + [IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + !Skin.HasSetting(HideWatchedCounts)]">$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
+		<value condition="ListItem.IsResumable + !IsEmpty(ListItem.Property(complete_percentage))">$INFO[ListItem.Property(complete_percentage)]%</value>
+		<value condition="ListItem.IsResumable">$INFO[ListItem.PercentPlayed]%</value>
+		<value>??</value>
+    </variable>
 	
 	
 
