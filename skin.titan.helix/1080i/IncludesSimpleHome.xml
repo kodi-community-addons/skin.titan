@@ -86,7 +86,8 @@
 				</control>
 			  </focusedlayout>
 			  <content>
-				<include>skinshortcuts-mainmenu</include>
+				<include condition="Skin.Hassetting(ClickToOpenSubMenu)">homeMenuContent</include>
+	<include condition="!Skin.Hassetting(ClickToOpenSubMenu)">skinshortcuts-mainmenu</include>
 			  </content>
 			</control>
 			<control type="wraplist" id="4444" description="Submenu Bar">
@@ -249,117 +250,59 @@
 		</control>
 	</include>
 
+	<include name="verticalhome_focusedmainmenuitem">
+		<!-- menu label -->
+		<control type="label">
+			<right>0</right>
+			<width>350</width>
+			<height>80</height>
+			<align>right</align>
+			<aligny>center</aligny>
+			<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<label>[B]$INFO[ListItem.Label][/B]</label>
+			<font>Reg42</font>
+		</control>
+	  <control type="button">
+			<visible>false</visible>
+			<onfocus condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
+			<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
+			<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>			
+			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
+			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,show,home)</onfocus>
+			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,hide,home)</onfocus>
+		</control>
+	</include>
   
    <include name="simplehome_vertical">
 	
-	<!-- submenu -->
-	<control type="group">
-		<posx>445</posx>
-		<posy>160</posy>
-		<animation type="Conditional" condition="SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)">
-            <effect type="fade" start="0" end="100" time="250" delay="0" />
-        </animation>
-		<animation type="Conditional" condition="![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]">
-            <effect type="fade" start="100" end="0" time="250" delay="0" />
-        </animation>
-		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,0)">
-            <effect type="slide" end="0,80" time="0" delay="0" />
-        </animation>
-		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,1)">
-            <effect type="slide" end="0,80" time="0" delay="0" />
-        </animation>
-		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,2)">
-            <effect type="slide" end="0,80" time="0" delay="0" />
-        </animation>
-		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,3)">
-            <effect type="slide" end="0,80" time="0" delay="0" />
-        </animation>
-		<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,4)">
-            <effect type="slide" end="0,80" time="0" delay="0" />
-        </animation>
-
-		
-		<!--Panel-->
-		<control type="image">
-			<posy>0</posy>
-			<posx>-30</posx>
-			<width>400</width>
-			<height>495</height>
-			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
-			<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
-			<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
-			<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
-			<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
-			<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
-			<bordersize>20</bordersize>
-			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-			<aspectratio>stretch</aspectratio>
-		</control>
-		
-		<control type="list" id="4444">
-			<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)</visible>
-			<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
-			<width>320</width>
-			<posx>20</posx>
-			<posy>20</posy>
-			<height>440</height>
-			<itemgap>3</itemgap>
-			<onleft>300</onleft>
-			<onleft>ClearProperty(submenu,home)</onleft>
-			<onright>510</onright>
-			<onup>4444</onup>
-			<ondown>4444</ondown>
-			<onback>300</onback>
-			<onback>ClearProperty(submenu,home)</onback>
-			<focusposition>0</focusposition>
-			<movement>3</movement>
-			<itemlayout width="320" height="65">
-
-			<control type="label" description="Main Label">
-				<posx>0</posx>
-				<width>315</width>
-				<align>left</align>
-				<font>Reg26</font>
-				<height>60</height>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-			  <label>$INFO[ListItem.Label]</label>
-			</control>
-			</itemlayout>
-			<focusedlayout width="320" height="65">
-			<control type="label" description="Main Label">
-			  <posx>0</posx>
-				<width>315</width>
-				<align>left</align>
-				<font>Reg26</font>
-				<height>60</height>
-			  <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
-			  <label>$INFO[ListItem.Label]</label>
-			</control>
-			</focusedlayout>
-			<content>
-			<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
-			</content>
-			</control>
-
-	</control>
-
 	
     <control type="group">
 	
 	<!--Panel-->
 	<control type="image">
-		<posy>-60</posy>
-		<posx>-60</posx>
-		<width>515</width>
-		<height>1200</height>
-		<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+		<posy>0</posy>
+		<posx>0</posx>
+		<width>435</width>
+		<height>1080</height>
+		<texture>colors/color_white.png</texture>
 		<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
 		<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
 		<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
 		<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
-		<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
-		<bordersize>20</bordersize>
 		<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+		<aspectratio>stretch</aspectratio>
+	</control>
+	<control type="image">
+		<posy>0</posy>
+		<posx>435</posx>
+		<width>2</width>
+		<height>1080</height>
+		<texture>colors/color_white.png</texture>
+		<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
+		<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
+		<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
+		<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
 		<aspectratio>stretch</aspectratio>
 	</control>
 	
@@ -372,19 +315,25 @@
 		<aspectratio align="right">keep</aspectratio>
 		<texture>$VAR[LogoImage]</texture>
 	</control>
+	
+	
 
-    <control type="list" id="300" description="Main Bar">
-        <animation effect="fade" time="200" start="100" end="80" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
+    <control type="fixedlist" id="300" description="Main Bar">
+        <animation effect="fade" time="200" start="100" end="70" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
         <posx>35</posx>
         <posy>160</posy>
         <width>370</width>
         <height>800</height>
 		<onup condition="!Skin.HasSetting(ShowProfile)">300</onup>
 		<onup condition="Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
-        <ondown>300</ondown>
-        <onleft condition="!Skin.HasSetting(DisablePowerMenu)">2</onleft>
-        <onright condition="IntegerGreaterThan(Container(4444).NumItems,0)">4444</onright>
-		<onright condition="!IntegerGreaterThan(Container(4444).NumItems,0)">510</onright>
+        <ondown>2</ondown>
+
+		<onright>77777</onright>
+		
+		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,show,home)</onleft>
+		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0)">Control.SetFocus(4444,0)</onleft>
+		
+
         <pagecontrol>-</pagecontrol>
         <focusposition>4</focusposition>
         <movement>0</movement>
@@ -404,16 +353,16 @@
 			<scroll>false</scroll>
           </control>
         </itemlayout>
-        <focusedlayout height="80" width="370">
+        <focusedlayout height="80" width="370" condition="!StringCompare(Window(Home).Property(submenu),show)">
 			<!-- submenu indicator -->
 			<control type="image">
 				<animation effect="fade" start="0" end="50" tween="sine" easing="inout" time="1200" pulse="true" reversible="false" condition="true">Conditional</animation>
-				<right>0</right>
+				<right>-5</right>
 				<top>3</top>
-				<width>20</width>
+				<width>32</width>
 				<height>80</height>
 				<aspectratio>keep</aspectratio>
-				<texture>dialogs/videoinfo/arrow.png</texture>
+				<texture flipx="true">common/spinctrl/arrow-down-nf.png</texture>
 				<visible>IntegerGreaterThan(Container(4444).NumItems,0) + Control.HasFocus(300)</visible>
 				<colordiffuse>white</colordiffuse>
 			</control>
@@ -440,33 +389,125 @@
 				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,hide,home)</onfocus>
 			</control>
         </focusedlayout>
+		
+		<focusedlayout height="140" width="370" condition="StringCompare(Window(Home).Property(submenu),show) + StringCompare(Container(4444).NumItems,1)">
+			<include>verticalhome_focusedmainmenuitem</include>
+        </focusedlayout>
+		<focusedlayout height="205" width="370" condition="StringCompare(Window(Home).Property(submenu),show) + StringCompare(Container(4444).NumItems,2)">
+			<include>verticalhome_focusedmainmenuitem</include>
+        </focusedlayout>
+		<focusedlayout height="270" width="370" condition="StringCompare(Window(Home).Property(submenu),show) + StringCompare(Container(4444).NumItems,3)">
+			<include>verticalhome_focusedmainmenuitem</include>
+        </focusedlayout>
+		<focusedlayout height="335" width="370" condition="StringCompare(Window(Home).Property(submenu),show) + StringCompare(Container(4444).NumItems,4)">
+			<include>verticalhome_focusedmainmenuitem</include>
+        </focusedlayout>
+		<focusedlayout height="380" width="370" condition="StringCompare(Window(Home).Property(submenu),show) + StringCompare(Container(4444).NumItems,5)">
+			<include>verticalhome_focusedmainmenuitem</include>
+        </focusedlayout>
+		<focusedlayout height="460" width="370" condition="StringCompare(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,5)">
+			<include>verticalhome_focusedmainmenuitem</include>
+        </focusedlayout>
+
         <content>
-          <include>skinshortcuts-mainmenu</include>
+			<include condition="Skin.Hassetting(ClickToOpenSubMenu)">homeMenuContent</include>
+			<include condition="!Skin.Hassetting(ClickToOpenSubMenu)">skinshortcuts-mainmenu</include>
         </content>
       </control>
     </control>
 	
-	<!-- widgets -->
+	<!-- submenu -->
 	<control type="group">
+		<posx>70</posx>
+		<posy>530</posy>
+		
+		<!--Panel-->
+	
+		<control type="list" id="4444">
+			<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show)</visible>
+			<animation effect="slide" end="-580" time="0" condition="!SubString(Window(Home).Property(submenu),show)">Conditional</animation>
+			<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
+			<width>350</width>
+			<posx>-20</posx>
+			<posy>20</posy>
+			<height>440</height>
+			<itemgap>3</itemgap>
+			<onleft>300</onleft>
+			<onleft>ClearProperty(submenu,home)</onleft>
+			<onright>510</onright>
+			<onright>ClearProperty(submenu,home)</onright>
+			<onup>ClearProperty(submenu,home)</onup>
+			<ondown>ClearProperty(submenu,home)</ondown>
+			<onup>300</onup>
+			<ondown>Control.Move(300,1)</ondown>
+			<ondown>300</ondown>
+			<onback>300</onback>
+			<onback>ClearProperty(submenu,home)</onback>
+			<focusposition>0</focusposition>
+			<movement>3</movement>
+			<itemlayout width="400" height="65">
+
+			<control type="label" description="Main Label">
+				<posx>0</posx>
+				<width>350</width>
+				<align>right</align>
+				<font>Reg28</font>
+				<height>60</height>
+				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+			  <label>$INFO[ListItem.Label]</label>
+			  <animation effect="fade" time="200" start="100" end="60" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
+			</control>
+			</itemlayout>
+			<focusedlayout width="320" height="65">
+			<control type="label" description="Main Label">
+			  <posx>0</posx>
+				<width>350</width>
+				<align>right</align>
+				<font>Reg28</font>
+				<height>60</height>
+			  <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+			  <label>$INFO[ListItem.Label]</label>
+			  <visible>!Control.HasFocus(4444)</visible>
+			  <animation effect="fade" time="200" start="100" end="60" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
+			</control>
+			<control type="label" description="Main Label">
+			  <posx>0</posx>
+				<width>350</width>
+				<align>right</align>
+				<font>Reg28</font>
+				<height>60</height>
+			  <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
+			  <label>$INFO[ListItem.Label]</label>
+			  <visible>Control.HasFocus(4444)</visible>
+			</control>
+			</focusedlayout>
+			<content>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
+			</content>
+			</control>
+
+	</control>
+
+	
+	
+	<!-- widgets -->
+	<control type="group" id="77777">
 		<posy>180</posy>
 		<posx>530</posx>
-		<animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + IntegerGreaterThan(Container(510).NumItems,4)">
-            <effect type="slide" start="0" end="310" time="300" delay="0" tween="cubic" easing="inout" />
-        </animation>
-		
+		<visible>!IsEmpty(Window(Home).Property(activewidget))</visible>
 		<control type="group">
 				<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
 			</control>
 
 		<control type="group" id="77551">
-			<visible>Control.HasFocus(510) + !StringCompare(Window(Home).Property(activewidget),submenuaswidget)</visible>
+			<visible>[Control.HasFocus(510) | Control.HasFocus(511)] + !StringCompare(Window(Home).Property(activewidget),submenuaswidget)</visible>
 			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
 			<animation effect="slide" end="0,-50" time="0" condition="StringCompare(Window(Home).Property(activewidget),music)">Conditional</animation>
 			<control type="image">
 				<posx>50</posx>
 				<posy>-300</posy>
 				<width>1270</width>
-				<texture border="5">diffuse/panel.png</texture>
+				<texture border="15">diffuse/bgpanel.png</texture>
 				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
 				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
 				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
@@ -508,11 +549,12 @@
 			<bottom>60</bottom>
 			<width>600</width>
 			<height>45</height>
-			<include>animation_fade_visible_hidden_delayed</include>
+			<include>animation_fade_visible_hidden</include>
+			<visible allowhiddenfocus="true">!IsEmpty(Control.GetLabel(511))</visible>
 			<control type="image">
 				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
 				<texture flipy="true">dialogs/default/separator.png</texture>
-				<visible>Control.IsVisible(511)</visible>
+				<visible>!IsEmpty(Control.GetLabel(511))</visible>
 			</control>
 			<control type="button" id="511">
 				<right>0</right>
@@ -520,13 +562,13 @@
 				<height>45</height>
 				<align>right</align>
 				<font>Reg30</font>
+				<onleft>300</onleft>
 				<onup>510</onup>
 				<ondown>300</ondown>
 				<textoffsetx>90</textoffsetx>
 				<label>$VAR[HomeWidgetLabel]</label>
 				<texturenofocus>dialogs/default/separator.png</texturenofocus>
 				<onclick>$VAR[HomeWidgetClickActions]</onclick>
-				<visible>![SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]</visible>
 				<visible allowhiddenfocus="true">!IsEmpty(Window(Home).Property(activewidget))</visible>
 			</control>
 			<control type="image">

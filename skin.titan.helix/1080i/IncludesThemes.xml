@@ -332,6 +332,7 @@
 			<texture background="true" diffuse="diffuse/cdmask_medium.png" fallback="defaultcovers/cd_medium.png" border="5">$VAR[VideoDiscArtImage]</texture>
 			<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 			<visible>VideoPlayer.Content(Movies) + !IsEmpty(Player.Art(poster))</visible>
+			<visible>!Skin.HasSetting(HideOSDDisc)</visible>
 		</control>
 		
         <control type="image">
@@ -673,10 +674,10 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="top">scale</aspectratio>
-				<visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
 			
-			<!--Cover livetv-->
+			<!--Cover livetv or no poster image-->
 			<control type="image">
 				<posx>60</posx>
 				<posy>800</posy>
@@ -685,7 +686,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
 				<aspectratio align="center" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo + VideoPlayer.Content(livetv)</visible>
+				<visible>Player.HasVideo + IsEmpty(Player.Art(tvshow.poster))</visible>
 			</control>
 			
 			<control type="group">
@@ -2049,7 +2050,7 @@
 			<onleft>200</onleft>
 			<onright>200</onright>
 			<orientation>horizontal</orientation>
-			<defaultcontrol always="true">104</defaultcontrol>
+			<defaultcontrol always="true">203</defaultcontrol>
 			<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 			<animation effect="slide" end="-90,-70" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
 			<animation effect="slide" end="60" time="0" condition="!player.hasvideo">Conditional</animation>

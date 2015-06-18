@@ -284,10 +284,17 @@ def setView():
     
     currentView = xbmc.getInfoLabel("Container.Viewmode")
     selectedItem = selectView(contenttype, currentView)
-
-    if selectedItem != -1 and selectedItem != None:
+    currentForcedView = xbmc.getInfoLabel("Skin.String(ForcedViews.%s)" %contenttype)
+    
+    #also store forced view    
+    if currentForcedView != "None":
         xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
+    
+    #set view
+    if selectedItem != -1 and selectedItem != None:
         xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
+    
+    
 
 def searchTrailer(title):
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
@@ -346,8 +353,8 @@ def getNextEpisodes():
                             break
     
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
-
-            
+  
+    
 def selectView(contenttype="other", currentView=None, displayNone=False):
     import Dialogs as dialogs
     currentViewSelectId = None

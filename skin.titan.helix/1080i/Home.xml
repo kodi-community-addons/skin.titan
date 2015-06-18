@@ -42,7 +42,9 @@
 			<animation effect="slide" end="-20" time="0" condition="Skin.HasSetting(HideWidgetPanelBackground) + Skin.String(GadgetRows, enhanced)">Conditional</animation>
 			<include>TimeInfo</include>
 		</control>
-	
+		
+		<!-- workaround to open submenu on enter -->
+		<include condition="Skin.Hassetting(ClickToOpenSubMenu)">homeMenuClickSubmenuOpen</include>
 	
 		<!-- Home Screen -->
 		<control type="group">
@@ -123,16 +125,16 @@
 			<texturenofocus colordiffuse="white">common/shutdown2.png</texturenofocus>
 			<onclick>ActivateWindow(111)</onclick>
 			<onfocus>ActivateWindow(111)</onfocus>
-			<visible>!Skin.String(GadgetRows, simplever)</visible>
 			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 			<visible>!Skin.HasSetting(DisablePowerMenu)</visible>
 			<include>animation_fade_visible_hidden</include>
 			<visible allowhiddenfocus="true">![[Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)] + Control.IsVisible(4444) + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]]</visible>
-			<visible>!system.getbool(lookandfeel.enablerssfeeds)</visible>
+			<visible>![system.getbool(lookandfeel.enablerssfeeds) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3) | Skin.String(GadgetRows, simplehor) | Skin.String(GadgetRows, enhanced)]]</visible>
 			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)]">
 				<effect type="slide" start="0,0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
 			</animation>
-			<animation effect="slide" end="0,-17" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+			<animation effect="slide" end="0,-17" time="0" condition="skin.hastheme(classic) + !Skin.String(GadgetRows, simplever)">Conditional</animation>
+			<animation effect="slide" end="-580" time="0" condition="Skin.String(GadgetRows, simplever)">Conditional</animation>
 		
 		
 		</control>

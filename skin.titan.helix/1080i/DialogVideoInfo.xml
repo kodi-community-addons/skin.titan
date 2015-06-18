@@ -28,6 +28,7 @@
 			
 			<!-- Header -->
 			<control type="group">
+			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
 				<control type="label">
 					<posx>61</posx>
 					<posy>10</posy>
@@ -387,8 +388,8 @@
 							<posy>246</posy>
 							<width>500</width>
 							<height>620</height>
-							<aspectratio align="right" aligny="center">keep</aspectratio>
-							<texture background="true">$VAR[VideoInfoPosterImage]</texture>
+							<aspectratio align="right" aligny="top" scalediffuse="true">keep</aspectratio>
+							<texture background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png" border="5">$VAR[VideoInfoPosterImage]</texture>
 						</control>
 
 						<!--Info-->
@@ -448,6 +449,7 @@
 									<posy>3</posy>
 									<width>49</width>
 									<height>49</height>
+									<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/premiered-icon.png</texture>
 									<visible>!IsEmpty(ListItem.Premiered) | !IsEmpty(ListItem.Year)</visible>
 								</control>
@@ -480,6 +482,7 @@
 									<posy>3</posy>
 									<width>49</width>
 									<height>49</height>
+									<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/time-icon.png</texture>
 									<visible>!IsEmpty(ListItem.Duration)</visible>
 								</control>
@@ -505,6 +508,7 @@
 									<posy>5</posy>
 									<width>49</width>
 									<height>49</height>
+									<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/director-icon.png</texture>
 									<visible>!IsEmpty(ListItem.Director)</visible>
 								</control>
@@ -525,6 +529,7 @@
 									<posy>2</posy>
 									<width>49</width>
 									<height>49</height>
+									<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/writer-icon.png</texture>
 									<visible>!IsEmpty(ListItem.Writer)</visible>
 								</control>
@@ -552,6 +557,7 @@
 									<posy>5</posy>
 									<width>49</width>
 									<height>49</height>
+									<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/genre-icon.png</texture>
 									<visible>!IsEmpty(ListItem.Genre)</visible>
 								</control>
@@ -572,6 +578,7 @@
 									<posy>2</posy>
 									<width>49</width>
 									<height>49</height>
+									<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/tvstudio-icon.png</texture>
 									<visible>!IsEmpty(ListItem.Genre)</visible>
 								</control>
@@ -655,6 +662,7 @@
 						<width>1150</width>
 						<posy>920</posy>
 						<include>mediaflagsnew</include>
+						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
 					</control>
 					<control type="group">
 						<posx>80</posx>
@@ -663,6 +671,7 @@
 						<width>1150</width>
 						<height>40</height>
 						<visible>!IsEmpty(ListItem.FileNameAndPath)</visible>
+						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
 						<control type="label">
 							<posy>0</posy>
 							<width>1150</width>
@@ -676,13 +685,14 @@
 						</control>
 					</control>
 					
-					<!--Rating + Studio-->
+					<!--Studio-->
 					<control type="group">
 						<width>400</width>
 						<height>120</height>
 						<bottom>220</bottom>
 						<right>680</right>
 						<visible>!IsEmpty(ListItem.Studio)</visible>
+						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
 						<control type="image">
 							<!--studio logo normal-->
 							<right>0</right>
@@ -691,7 +701,7 @@
 							<bottom>10</bottom>
 							<aspectratio aligny="bottom" align="right">keep</aspectratio>
 							<fadetime>250</fadetime>
-							<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+							<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 							<texture>$INFO[Window(home).Property(ListItemStudio),special://skin/extras/flags/studios/,.png]</texture>
 							<visible>!Skin.String(StudioImagesCustompath)</visible>
 						</control>
@@ -703,7 +713,7 @@
 							<bottom>10</bottom>
 							<aspectratio aligny="bottom" align="right">keep</aspectratio>
 							<fadetime>250</fadetime>
-							<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+							<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 							<texture>$INFO[Skin.String(StudioImagesCustompath)]$INFO[Window(home).Property(ListItemStudio),,.png]</texture>
 							<visible>Skin.String(StudioImagesCustompath)</visible>
 						</control>

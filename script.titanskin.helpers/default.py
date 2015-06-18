@@ -95,7 +95,7 @@ elif action == "RESET":
 elif action == "SETSKINVERSION":
     MainModule.setSkinVersion()
 elif "NEXTEPISODES" in argument1:
-    MainModule.getNextEpisodes()    
+    MainModule.getNextEpisodes()  
 elif argument1 == "?FAVOURITES":
     MainModule.getFavourites()
 elif "?LAUNCHAPP" in argument1:

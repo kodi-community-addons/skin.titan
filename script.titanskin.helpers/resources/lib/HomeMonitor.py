@@ -57,7 +57,7 @@ class HomeMonitor(threading.Thread):
             if (xbmc.getCondVisibility("Window.IsActive(home) + !Window.IsActive(fullscreenvideo)")):
 
                 #monitor widget window prop
-                if self.win.getProperty("ShowWidget") == "show":
+                if self.win.getProperty("ShowWidget") == "show" and not xbmc.getCondVisibility("Window.IsActive(dialogselect.xml) | Window.IsActive(dialogprogress.xml)"):
                     self.showWidget()
                 
                 listItem = xbmc.getInfoLabel("Container(%s).ListItem.Label" %mainMenuContainer)
@@ -72,8 +72,7 @@ class HomeMonitor(threading.Thread):
                         
                         #normal widget
                         self.setWidget(mainMenuContainer)
-                        
-                    
+
                     lastListItem = listItem
   
                 else:
@@ -189,7 +188,7 @@ class HomeMonitor(threading.Thread):
             if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
                 skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
            
-        if skinStringContent:
+        if skinStringContent and not "search" in skinStringContent:
             if ("$INFO" in skinStringContent or "Activate" in skinStringContent or ":" in skinStringContent):
                 skinStringContent = utils.getContentPath(skinStringContent)
                 customWidget = True   
@@ -220,7 +219,7 @@ class HomeMonitor(threading.Thread):
             if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
                 skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
            
-        if skinStringContent:
+        if skinStringContent and not "search" in skinStringContent:
             if ("$INFO" in skinStringContent or "Activate" in skinStringContent or ":" in skinStringContent):
                 skinStringContent = utils.getContentPath(skinStringContent)
                 customWidget = True
