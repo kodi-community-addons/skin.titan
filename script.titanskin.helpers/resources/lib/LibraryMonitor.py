@@ -181,9 +181,12 @@ class LibraryMonitor(threading.Thread):
                     self.win.setProperty('MovieSet.Studio', " / ".join(studio))
                     for item in studio:
                         if item in self.allStudioLogos:
-                            studio = item
+                            listudio = item
                             break
-                    self.win.setProperty("ListItemStudio", studio)
+                    if listudio:
+                        self.win.setProperty("ListItemStudio", studio)
+                    else:
+                        self.win.clearProperty("ListItemStudio")
                     
                     self.win.setProperty('MovieSet.Years', " / ".join(years))
                     self.win.setProperty('MovieSet.Year', years[0] + " - " + years[-1])

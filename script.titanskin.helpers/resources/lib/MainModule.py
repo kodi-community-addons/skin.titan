@@ -304,7 +304,7 @@ def searchTrailer(title):
     libPath = "plugin://plugin.video.youtube/kodion/search/query/?q=%s Trailer" %title
     media_array = None
     allTrailers = []
-    media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art","plot"], "directory": "' + libPath + '", "media": "files", "limits": {"end":25} }')
+    media_array = utils.getJSON('Files.GetDirectory','{ "properties": ["title","art","plot"], "directory": "' + libPath + '", "media": "files", "limits": {"end":25} }')
     if(media_array != None and media_array.has_key('files')):
         for media in media_array['files']:
             
