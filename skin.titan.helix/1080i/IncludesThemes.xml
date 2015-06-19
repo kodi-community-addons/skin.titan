@@ -686,7 +686,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
 				<aspectratio align="center" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo + IsEmpty(Player.Art(tvshow.poster))</visible>
+				<visible>Player.HasVideo + IsEmpty(Player.Art(tvshow.poster)) + IsEmpty(Player.Art(poster))</visible>
 			</control>
 			
 			<control type="group">
@@ -1128,7 +1128,19 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="bottom">scale</aspectratio>
-				<visible>Player.HasVideo + !VideoPlayer.Content(livetv)</visible>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+			</control>
+			
+			<!--Cover no poster-->
+			<control type="image">
+				<posx>40</posx>
+				<bottom>20</bottom>
+				<width>165</width>
+				<height>165</height>
+				<fadetime>200</fadetime>
+				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
+				<aspectratio align="left" aligny="bottom">keep</aspectratio>
+				<visible>Player.HasVideo + IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster))</visible>
 			</control>
 			
 			<!--clearlogo-->
@@ -1144,17 +1156,7 @@
 			</control>
 
 			
-			<!--Cover livetv-->
-			<control type="image">
-				<posx>40</posx>
-				<bottom>20</bottom>
-				<width>165</width>
-				<height>165</height>
-				<fadetime>200</fadetime>
-				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
-				<aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>Player.HasVideo + VideoPlayer.Content(livetv)</visible>
-			</control>
+			
 			
 			<control type="group">
 				<!-- OSDLabel1 -->
@@ -2029,8 +2031,8 @@
 			</control>
 			
 			<!--SeekBar -->
-			<include condition="Skin.HasSetting(Skin.HasSetting(UseSlimOSDPanel))">SeekBar_Slim</include>
-			<include condition="!Skin.HasSetting(Skin.HasSetting(UseSlimOSDPanel))">SeekBar_Normal</include>
+			<include condition="Skin.HasSetting(UseSlimOSDPanel)">SeekBar_Slim</include>
+			<include condition="!Skin.HasSetting(UseSlimOSDPanel)">SeekBar_Normal</include>
 			
 			<!-- OSD buttons -->
 			<include condition="Skin.HasSetting(OSDUseLargeIcons)">OSDButtons_Large</include>
@@ -2670,8 +2672,8 @@
 			<left>250</left>
 			<right>40</right>
 			<width>1630</width>
-			<posy>1027</posy>
-			<height>36</height>
+			<posy>1029</posy>
+			<height>17</height>
 			<visible>Window.IsActive(VideoOSD.xml)</visible>
 			<visible>Player.HasDuration</visible>
 			<action>seek</action>

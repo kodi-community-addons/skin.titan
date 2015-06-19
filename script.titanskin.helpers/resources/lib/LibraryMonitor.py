@@ -28,6 +28,8 @@ class LibraryMonitor(threading.Thread):
     allStudioLogos = list()
     LastStudioImagesPath = None
     delayedTaskInterval = 1800
+    moviesetCache = {}
+    extraFanartcache = {}
     
     win = None
     addon = None
@@ -70,12 +72,15 @@ class LibraryMonitor(threading.Thread):
                     self.liPathLast = self.liPath
                     
                     # update the listitem stuff
-                    self.setDuration()
-                    self.setStudioName()
-                    self.focusEpisode()
-                    self.checkExtraFanArt()
-                    self.setMovieSetDetails()
-                    self.setAddonName()
+                    try:
+                        self.setDuration()
+                        self.setStudioName()
+                        self.focusEpisode()
+                        self.checkExtraFanArt()
+                        self.setMovieSetDetails()
+                        self.setAddonName()
+                    except Exception as e:
+                        utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
   
                 else:
                     xbmc.sleep(50)
@@ -104,8 +109,17 @@ class LibraryMonitor(threading.Thread):
             
             dbId = xbmc.getInfoLabel("ListItem.DBID")
                     
-            if dbId != "":
-                json_response = utils.getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer", "playcount", "genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
+            if dbId:
+                
+                #try to get from cache first
+                if self.moviesetCache.has_key(dbId):
+                    json_response = self.moviesetCache[dbId]
+                else:
+                    json_response = utils.getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer", "playcount", "genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
+                
+                #save to cache
+                self.moviesetCache[dbId] = json_response
+                
                 #clear_properties()
                 if ("setdetails" in json_response):
                     
@@ -177,21 +191,23 @@ class LibraryMonitor(threading.Thread):
                     self.win.setProperty('MovieSet.WatchedCount', str(watchedcount))
                     self.win.setProperty('MovieSet.UnWatchedCount', str(unwatchedcount))
                     
-                    count = 5
-                    delaycount = 5
-                    backgroundDelayStr = xbmc.getInfoLabel("skin.string(extrafanartdelay)")
-                    if backgroundDelayStr:
-                        count = int(backgroundDelayStr)
-                        delaycount = int(backgroundDelayStr)
-                    while dbId == xbmc.getInfoLabel("ListItem.DBID") and set_fanart != []:
-                        #rotate fanart from movies in set while listitem is in focus
-                        if count == delaycount:
-                            random.shuffle(set_fanart)
-                            self.win.setProperty('ExtraFanArtPath', set_fanart[0])
-                            count = 0
-                        else:
-                            xbmc.sleep(1000)
-                            count += 1
+                    #rotate fanart from movies in set while listitem is in focus
+                    if xbmc.getCondVisibility("Skin.HasSetting(EnableExtraFanart)"):
+                        count = 5
+                        delaycount = 5
+                        backgroundDelayStr = xbmc.getInfoLabel("skin.string(extrafanartdelay)")
+                        if backgroundDelayStr:
+                            count = int(backgroundDelayStr)
+                            delaycount = int(backgroundDelayStr)
+                        while dbId == xbmc.getInfoLabel("ListItem.DBID") and set_fanart != []:
+                            
+                            if count == delaycount:
+                                random.shuffle(set_fanart)
+                                self.win.setProperty('ExtraFanArtPath', set_fanart[0])
+                                count = 0
+                            else:
+                                xbmc.sleep(1000)
+                                count += 1
 
     def setAddonName(self):
         # set addon name as property
@@ -332,6 +348,15 @@ class LibraryMonitor(threading.Thread):
         if xbmc.getCondVisibility("Window.IsActive(movieinformation)"):
             return
         
+        #get the item from cache first
+        if self.extraFanartcache.has_key(self.liPath):
+            if self.extraFanartcache[self.liPath] == "None":
+                self.win.clearProperty("ExtraFanArtPath")
+                return
+            else:
+                self.win.setProperty("ExtraFanArtPath",self.extraFanartcache[self.liPath])
+                return
+        
         if not xbmc.getCondVisibility("Skin.HasSetting(EnableExtraFanart) + [Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Container.Scrolling"):
             self.win.clearProperty("ExtraFanArtPath")
             return
@@ -344,6 +369,7 @@ class LibraryMonitor(threading.Thread):
             # do not set extra fanart for virtuals
             if (("plugin://" in self.liPath) or ("addon://" in self.liPath) or ("sources" in self.liPath) or ("plugin://" in containerPath) or ("sources://" in containerPath) or ("plugin://" in containerPath)):
                 self.win.clearProperty("ExtraFanArtPath")
+                self.extraFanartcache[self.liPath] = "None"
                 lastPath = None
             else:
 
@@ -363,10 +389,11 @@ class LibraryMonitor(threading.Thread):
                 if (efaPath != None and efaFound == True):
                     if lastPath != efaPath:
                         self.win.setProperty("ExtraFanArtPath",efaPath)
-                        lastPath = efaPath
-                        
+                        self.extraFanartcache[self.liPath] = efaPath
+                        lastPath = efaPath       
                 else:
                     self.win.clearProperty("ExtraFanArtPath")
+                    self.extraFanartcache[self.liPath] = "None"
                     lastPath = None
         else:
             self.win.clearProperty("ExtraFanArtPath")

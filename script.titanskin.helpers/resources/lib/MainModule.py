@@ -72,12 +72,14 @@ def addShortcutWorkAround():
     
     count = 0
     #wait for the empy item is focused
-    while (count != 60 and xbmc.getCondVisibility("!StringCompare(Container(211).ListItem.Property(path), noop)")):
-        xbmc.sleep(100)
-        print "test --> " + xbmc.getInfoLabel("Container(211).ListItem.Property(path)")
-        count += 1
+    while (count != 60 and xbmc.getCondVisibility("Window.IsActive(script-skinshortcuts.xml)")):
+        if not xbmc.getCondVisibility("StringCompare(Container(211).ListItem.Property(path), noop)"):
+            xbmc.sleep(100)
+            count += 1
+        else:
+            break
         
-    if xbmc.getCondVisibility("StringCompare(Container(211).ListItem.Property(path), noop)"):
+    if xbmc.getCondVisibility("StringCompare(Container(211).ListItem.Property(path), noop) + Window.IsActive(script-skinshortcuts.xml)"):
         xbmc.executebuiltin('SendClick(401)')
     
                  

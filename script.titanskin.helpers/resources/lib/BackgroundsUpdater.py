@@ -56,8 +56,12 @@ class BackgroundsUpdater(threading.Thread):
         backgroundDelay = 30000
             
         #first run get backgrounds immediately from filebased cache and reset the cache in memory to populate all images from scratch
-        self.getCacheFromFile()
-        self.UpdateBackgrounds()
+        try:
+            self.getCacheFromFile()
+            self.UpdateBackgrounds()
+        except Exception as e:
+            utils.logMsg("ERROR in BackgroundsUpdater ! --> " + str(e), 0)
+        
         self.allBackgrounds = {}
         self.smartShortcuts = {}
          
@@ -69,8 +73,11 @@ class BackgroundsUpdater(threading.Thread):
                 backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
                 if backgroundDelayStr:
                     backgroundDelay = int(backgroundDelayStr) * 1000
-
-                self.UpdateBackgrounds()
+                
+                try:
+                    self.UpdateBackgrounds()
+                except Exception as e:
+                    utils.logMsg("ERROR in UpdateBackgrounds ! --> " + str(e), 0)
             
             xbmc.sleep(backgroundDelay)
                                
@@ -90,7 +97,7 @@ class BackgroundsUpdater(threading.Thread):
             with open(self.cachePath) as data_file:    
                 data = json.load(data_file)
                 
-                self.defBlacklist = data["blacklist"]
+                self.defBlacklist = set(data["blacklist"])
                 self.allBackgrounds = data
         
         if xbmcvfs.exists(self.SmartShortcutsCachePath):
@@ -417,7 +424,7 @@ class BackgroundsUpdater(threading.Thread):
                         for count, favourite in enumerate(listing):
                             name = favourite.attributes[ 'name' ].nodeValue
                             path = favourite.childNodes [ 0 ].nodeValue
-                            if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025") or path.startswith("ActivateWindow(videos") or path.startswith("ActivateWindow(Music") or path.startswith("ActivateWindow(10502")) and not "script://" in path:
+                            if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025") or path.startswith("ActivateWindow(videos") or path.startswith("ActivateWindow(Music") or path.startswith("ActivateWindow(10502")) and not "script://" in path and not "mode=9" in path and not "search" in path:
                                 image = self.getImageFromPath(path)
                                 if image != None:
                                     self.win.setProperty("favorite." + str(favoritesCount) + ".image", image)
@@ -433,7 +440,7 @@ class BackgroundsUpdater(threading.Thread):
                 utils.logMsg("Error while processing smart shortcuts for favourites - set disabled.... ")                
         
         
-        #get plex nodes
+        #smart shortcuts --> plex nodes
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
             
             utils.logMsg("Processing smart shortcuts for plex nodes.... ")
@@ -476,5 +483,15 @@ class BackgroundsUpdater(threading.Thread):
                                 self.win.setProperty("plexfanartbg", image)
                     else:
                         break
+                
+                #channels
+                plextitle = self.win.getProperty("plexbmc.channels.title")
+                key = "plexbmc.channels"
+                plexcontent = self.win.getProperty("plexbmc.channels.path")
+                if plexcontent:
+                    image = self.getImageFromPath(plexcontent)
+                    nodes.append( (key, plextitle, plexcontent ) )
+                    if image:
+                        self.win.setProperty("plexbmc.channels.background", image)
                 
                 self.smartShortcuts["plex"] = nodes

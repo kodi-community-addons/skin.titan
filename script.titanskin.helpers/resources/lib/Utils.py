@@ -18,6 +18,7 @@ def getContentPath(libPath):
     if "Activate" in libPath:
         libPath = libPath.split(",",1)[1]
         libPath = libPath.replace(",return","")
+        libPath = libPath.replace(", return","")
         libPath = libPath.replace(")","")
         libPath = libPath.replace("\"","")
     

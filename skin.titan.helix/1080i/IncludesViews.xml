@@ -671,14 +671,14 @@
 			<height>120</height>
 			<texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="5">$VAR[BannerImage]</texture>
 			<aspectratio align="center" aligny="center">stretch</aspectratio>
-			<visible>!IsEmpty(ListItem.Art(banner)) | !IsEmpty(ListItem.Art(tvshow.banner))</visible>
+			<visible>!IsEmpty(ListItem.Art(banner)) | !IsEmpty(ListItem.Art(tvshow.banner)) | !IsEmpty(ListItem.Property(banner))</visible>
 		</control>
 		<control type="image">
 			<width>590</width>
 			<height>120</height>
 			<texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="0">$VAR[BannerImageFallback]</texture>
 			<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner))</visible>
+			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
 		</control>
 		
 		
@@ -689,7 +689,7 @@
 			<height>100</height>
 			<aspectratio scalediffuse="false" align="left">keep</aspectratio>
 			<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
-			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner))</visible>
+			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
 		</control>
 		<control type="label">
 			<centerleft>290</centerleft>
@@ -700,7 +700,7 @@
 			<label>$INFO[ListItem.Label]</label>
 			<font>Bold34</font>
 			<shadowcolor>black</shadowcolor>
-			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo))</visible>
+			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(banner))</visible>
 		</control>
 		<control type="group">
 		<right>9</right>
@@ -1703,7 +1703,7 @@
 				<control type="image">
 					<posx>-6</posx>
 					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="25,0,2,0">flags/flag_box_mpaa.png</texture>
+					<texture border="25,0,2,0">flags/flag_box_rating.png</texture>
 					<aspectratio>stretch</aspectratio>
 				</control>
 				<control type="label">
@@ -3271,7 +3271,7 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
-			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
@@ -3282,7 +3282,7 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/discset.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
-			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 
@@ -3333,7 +3333,7 @@
 			<width>40</width>
 			<align>center</align>
 			<label>$VAR[WatchedLabel]</label>
-			<font>Reg24</font>
+			<font>Reg20</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
 		</control>
@@ -3370,7 +3370,7 @@
 			<height>60</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
-			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
@@ -3381,7 +3381,7 @@
 			<height>60</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/discset.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
-			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 
@@ -3465,7 +3465,7 @@
 			<height>120</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
-			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
@@ -3476,7 +3476,7 @@
 			<height>120</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/big/discset.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
-			<visible>ListItem.IsCollection | [ListItem.IsFolder + Container.Content(Movies)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
+			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 

@@ -146,11 +146,22 @@ class HomeMonitor(threading.Thread):
                     
                 self.win.setProperty(plexstring + ".recent.content", utils.getContentPath(recentlink))
                 utils.logMsg(plexstring + ".recent --> " + recentlink)       
-                
                 self.win.setProperty(plexstring + ".viewed.content", utils.getContentPath(progresslink))
                 utils.logMsg(plexstring + ".viewed --> " + progresslink)
-
                 linkCount += 1
+                
+            #add plex channels as entry - extract path from one of the nodes as a workaround because main plex addon channels listing is in error
+            link = self.win.getProperty("plexbmc.0.path")
+            
+            if link:
+                link = link.split("/library/")[0]
+                link = link + "/channels/all&mode=21"
+                link = link + ", return)"
+                plexstring = "plexbmc.channels"
+                self.win.setProperty(plexstring + ".title", "Channels")
+                utils.logMsg(plexstring + ".path --> " + link)
+                self.win.setProperty(plexstring + ".path", link)
+                self.win.setProperty(plexstring + ".content", utils.getContentPath(link))
 
     def checkNotifications(self):
         

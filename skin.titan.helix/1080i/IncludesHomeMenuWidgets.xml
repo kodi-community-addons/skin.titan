@@ -501,7 +501,7 @@
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
 				<content target="$VAR[WidgetTarget]">$VAR[CustomWidgetContent]</content> 
 				<visible>StringCompare(Window(Home).Property(activewidget),custom)</visible>
-				<visible>![SubString(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-) | SubString(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-)]</visible>
+				<visible>![SubString(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-) | SubString(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-)] | StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-channels-title)</visible>
 			</control>
 
 			<!-- static widgets (weather, romcollectionbrowser and systeminfo) -->
@@ -1215,6 +1215,10 @@
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),musicvideos) + Skin.HasSetting(HomeMenuUseMBforMusicVideos)">$INFO[Window(Home).Property(MediaBrowser.std.music.3.content)]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),musicvideos)">videodb://recentlyaddedmusicvideos/</value>
 		
+		<!-- plex channels -->
+		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-channels-title)">$INFO[Window(Home).Property(plexbmc.channels.content)]</value>
+		
+		
 		<!-- mb3 channels, favorite movies etc -->
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[31036])">$INFO[Window(Home).Property(MediaBrowser.std.movies.3.content)]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[19019])">$INFO[Window(Home).Property(MediaBrowser.std.channels.0.content)]</value>
@@ -1275,6 +1279,9 @@
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + substring(Container(300).ListItem.Property(defaultID),$LOCALIZE[31036])">$LOCALIZE[31036]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[19019])">$LOCALIZE[19019]</value>
 		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[31157])">$LOCALIZE[31157]</value>
+		
+		<value condition="StringCompare(Window(Home).Property(activewidget),custom) + StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-channels-title)">$LOCALIZE[19019]</value>
+		
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-0-title) + StringCompare(skin.string(collectionwidget0),recent)">$LOCALIZE[31127]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-0-title) + StringCompare(skin.string(collectionwidget0),inprogress)">$LOCALIZE[575]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-0-title) + StringCompare(skin.string(collectionwidget0),nextepisodes)">$LOCALIZE[31228]</value>
@@ -1442,6 +1449,7 @@
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[31036])">noop</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[19019])">noop</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),$LOCALIZE[31157])">noop</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-plexbmc-channels-title)">noop</value>
 		
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-0-title) + StringCompare(skin.string(collectionwidget0),recent) + !IsEmpty(Window(Home).Property(MediaBrowser.usr.0.inprogress.content))">Skin.SetString(collectionwidget0, inprogress)</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(defaultID),info-window-home-property-MediaBrowser-usr-0-title) + StringCompare(skin.string(collectionwidget0),inprogress) + !IsEmpty(Window(Home).Property(MediaBrowser.usr.0.nextepisodes.content))">Skin.SetString(collectionwidget0, nextepisodes)</value>
@@ -1787,26 +1795,16 @@
 				<include>BigPanelSquareDimensions</include>
 				<include>SquareThumb</include>
 			  </control>
-			  <control type="image">
-					<posx>18</posx>
-					<posy>51</posy>
-					<width>236</width>
-					<height>190</height>
-					<colordiffuse>ccFFFFFF</colordiffuse>
-					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					<visible>Skin.HasSetting(ShowLabelsSquare)</visible>
-					<visible>!StringCompare(ListItem.Label,..)</visible>
-				</control>
 				<control type="label">
 					<posx>25</posx>
-					<posy>182</posy>
+					<posy>192</posy>
 					<width>220</width>
 					<height>60</height>
 					<font>Reg22</font>
-					<align>left</align>
+					<align>center</align>
 					<info>ListItem.Label</info>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextolor)]</textcolor>
-					<visible>Skin.HasSetting(ShowLabelsSquare)</visible>
+					<textcolor>white</textcolor>
+					<visible>IsEmpty(ListItem.Thumb)</visible>
 					<visible>!StringCompare(ListItem.Label,..)</visible>
 				</control>
 			</control>
@@ -1823,26 +1821,16 @@
 				<include>BigPanelSquareDimensions</include>
 				<include>SquareThumb</include>
 			  </control>
-			  <control type="image">
-					<posx>18</posx>
-					<posy>51</posy>
-					<width>236</width>
-					<height>190</height>
-					<colordiffuse>ccFFFFFF</colordiffuse>
-					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					<visible>Skin.HasSetting(ShowLabelsSquare)</visible>
-					<visible>!StringCompare(ListItem.Label,..)</visible>
-				</control>
 				<control type="label">
 					<posx>25</posx>
-					<posy>182</posy>
+					<posy>192</posy>
 					<width>220</width>
 					<height>60</height>
 					<font>Reg22</font>
-					<align>left</align>
+					<align>center</align>
 					<info>ListItem.Label</info>
 					<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-					<visible>Skin.HasSetting(ShowLabelsSquare)</visible>
+					<visible>IsEmpty(ListItem.Thumb)</visible>
 					<visible>!StringCompare(ListItem.Label,..)</visible>
 				</control>
 			</control>
