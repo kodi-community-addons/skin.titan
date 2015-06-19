@@ -57,7 +57,7 @@ class HomeMonitor(threading.Thread):
             if (xbmc.getCondVisibility("Window.IsActive(home) + !Window.IsActive(fullscreenvideo)")):
 
                 #monitor widget window prop
-                if self.win.getProperty("ShowWidget") == "show" and not xbmc.getCondVisibility("Window.IsActive(dialogselect.xml) | Window.IsActive(dialogprogress.xml)"):
+                if self.win.getProperty("ShowWidget") == "show" and not xbmc.getCondVisibility("Window.IsActive(selectdialog) | Window.IsActive(shutdownmenu) | Window.IsActive(contextmenu)"):
                     self.showWidget()
                 
                 listItem = xbmc.getInfoLabel("Container(%s).ListItem.Label" %mainMenuContainer)
