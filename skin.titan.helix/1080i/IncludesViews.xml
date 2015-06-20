@@ -3,7 +3,61 @@
 	
 	<include name="PosterThumb">
     <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
-    <aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
+    <aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
+	<bordersize>0</bordersize>
+  </include>
+  
+  <include name="PosterOverlay">
+	<control type="image">
+		<texture border="1" diffuse="diffuse/poster.png">cases/default_top.png</texture>
+		<!-- border left,top,right,bottom  -->
+		<bordersize>0</bordersize>
+		<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
+		<visible>
+			SubString(ListItem.Filenameandpath,.3d) | 
+			IntegerGreaterThan(ListItem.VideoResolution,1080) | SubString(ListItem(0).Filenameandpath,4k) |
+			[substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)] |
+			StringCompare(ListItem.VideoResolution,480) | StringCompare(ListItem.VideoResolution,540) | StringCompare(ListItem.VideoResolution,576) | StringCompare(ListItem.VideoResolution,720) | StringCompare(ListItem.VideoResolution,1080) | SubString(ListItem.Path,videodb://movies/sets,left)
+		</visible>
+	</control>
+	
+	<control type="image">
+	<texture>$VAR[PosterOverlayVar]</texture>
+		<top>3</top>
+		<left>10</left>
+		<height>10%</height>
+		 <aspectratio aligny="top" align="left">keep</aspectratio>
+		<!-- border left,top,right,bottom  -->
+		<bordersize>0</bordersize>
+		<colordiffuse>$INFO[Skin.String(CaseOverlays.TextColor)]</colordiffuse>
+	</control>
+
+  </include>
+  
+  <variable name="PosterOverlayVar">
+	<value condition="SubString(ListItem.Filenameandpath,.3d)">cases/3dbd.png</value>
+	<value condition="IntegerGreaterThan(ListItem.VideoResolution,1080) | SubString(ListItem(0).Filenameandpath,4k)">cases/4k.png</value>
+	<value condition="[substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">cases/bluray.png</value>
+	<value condition="SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right)">cases/dvd.png</value>
+	<value condition="StringCompare(ListItem.VideoResolution,480)">cases/480.png</value>
+	<value condition="StringCompare(ListItem.VideoResolution,540)">cases/540.png</value>
+	<value condition="StringCompare(ListItem.VideoResolution,576)">cases/576.png</value>
+	<value condition="StringCompare(ListItem.VideoResolution,720)">cases/720.png</value>
+	<value condition="StringCompare(ListItem.VideoResolution,1080)">cases/1080.png</value>
+	<value condition="SubString(ListItem.Path,videodb://movies/sets,left)">cases/set.png</value>
+  </variable>
+  
+  <include name="PosterThumbBG">
+    <bordersize>-6</bordersize>
+	<texture border="0">diffuse/poster.png</texture>
+	<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+	<animation effect="fade" reversible="false" end="40" time="0" condition="true">Conditional</animation>
+	
+  </include>
+  <include name="PosterThumbFO">
+    <bordersize>-6</bordersize>
+    <texture border="0">diffuse/poster.png</texture>
+	<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
   </include>
   
   
@@ -459,16 +513,7 @@
   </include>
   
  
-  <include name="PosterThumbBG">
-    <bordersize>-6</bordersize>
-	<texture border="0">diffuse/poster.png</texture>
-	<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-  </include>
-  <include name="PosterThumbFO">
-    <bordersize>-6</bordersize>
-    <texture border="0">diffuse/poster.png</texture>
-	<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-  </include>
+  
 
   <include name="EpisodeThumb">
     <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>

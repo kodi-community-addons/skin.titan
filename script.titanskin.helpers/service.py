@@ -37,7 +37,7 @@ class Main:
                      
             if self.KodiMonitor.waitForAbort(1):
                 # Abort was requested while waiting. We should exit
-                xbmc.log('TITANSKIN DEBUG --> shutdown requested !')         
+                xbmc.log('TITANSKIN HELPER SERVICE --> shutdown requested !')         
         else:
             #stop the extra threads
             backgroundsUpdater.stop()
