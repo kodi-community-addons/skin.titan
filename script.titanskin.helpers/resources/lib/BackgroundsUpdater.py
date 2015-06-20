@@ -29,6 +29,7 @@ class BackgroundsUpdater(threading.Thread):
     cachePath = None
     SmartShortcutsCachePath = None
     win = None
+    addondir = None
     
     def __init__(self, *args):
         
@@ -36,10 +37,10 @@ class BackgroundsUpdater(threading.Thread):
         self.lastPicturesPath = xbmc.getInfoLabel("skin.string(CustomPicturesBackgroundPath)")
         
         addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-        addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
+        self.addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
         
-        self.cachePath = os.path.join(addondir,"backgroundscache.json")
-        self.SmartShortcutsCachePath = os.path.join(addondir,"smartshotcutscache.json")
+        self.cachePath = os.path.join(self.addondir,"backgroundscache.json")
+        self.SmartShortcutsCachePath = os.path.join(self.addondir,"smartshotcutscache.json")
 
         utils.logMsg("BackgroundsUpdater - started")
         self.event =  threading.Event()
@@ -83,8 +84,8 @@ class BackgroundsUpdater(threading.Thread):
                                
     def saveCacheToFile(self):
         #safety check: does the config directory exist?
-        if not xbmcvfs.exists(addondir + os.sep):
-            xbmcvfs.mkdir(addondir)
+        if not xbmcvfs.exists(self.addondir + os.sep):
+            xbmcvfs.mkdir(self.addondir)
         
         self.allBackgrounds["blacklist"] = list(self.defBlacklist)
         json.dump(self.allBackgrounds, open(self.cachePath,'w'))

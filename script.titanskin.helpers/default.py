@@ -78,7 +78,7 @@ elif action == "COLORTHEMES":
     from ColorThemes import ColorThemes
     colorThemes = ColorThemes("ColorThemes.xml", __cwd__, "default", "1080i")
     colorThemes.doModal()
-    del colorPicker
+    del colorThemes
 elif action == "COLORTHEMETEXTURE":    
     MainModule.selectOverlayTexture()
 elif action == "BUSYTEXTURE":    

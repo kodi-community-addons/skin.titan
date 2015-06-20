@@ -1727,7 +1727,7 @@
 	<include name="mediaflagsfooter">
         <control type="grouplist">
 			<orientation>horizontal</orientation>
-			<visible>IsEmpty(Window(Home).Property(NextAired.Status))</visible>
+			<visible>![!IsEmpty(Window(Home).Property(NextAired.Status)) + [container.content(tvshows) | container.content(seasons)]]</visible>
 			
 			<!--Video Resolution-->
 			<control type="group">
@@ -3190,8 +3190,7 @@
        
 	</include>
 	
-
-	<include name="WatchedIndicatorNormal">
+	<include name="indicator_watched_normal">
 		<control type="image">
 			<!--Watched Overlay background-->
 			<right>0</right>
@@ -3200,8 +3199,6 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
-			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
 			<!--Watched Overlay image-->
@@ -3211,10 +3208,10 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/watched.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
-			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
-		
+	</include>
+	
+	<include name="indicator_progress_normal_image">
 		<control type="image">
 			<!--Progress Overlay Background-->
 			<right>0</right>
@@ -3223,22 +3220,10 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Progress.Color)]</colordiffuse>
-			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
-			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
-		<control type="label">
-			<!--Progress Overlay Text-->
-			<right>0</right>
-			<top>-13</top>
-			<align>center</align>
-			<width>50</width>
-			<align>center</align>
-			<label>$VAR[WatchedLabel]</label>
-			<font>Reg24</font>
-			<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
-			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
-		</control>
-		
+	</include>
+	
+	<include name="indicator_episodes_normal_image">
 		<control type="image">
 			<!--Episodes Overlay Background-->
 			<right>0</right>
@@ -3247,22 +3232,10 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
-			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
-			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
-		<control type="label">
-			<!--Episodes Overlay Text-->
-			<right>0</right>
-			<top>-13</top>
-			<align>center</align>
-			<width>50</width>
-			<align>center</align>
-			<label>$VAR[WatchedLabel]</label>
-			<font>Reg24</font>
-			<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
-			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
-		</control>
-		
+	</include>
+	
+	<include name="indicator_sets_normal">
 		<control type="image">
 			<!--Sets Overlay Background-->
 			<right>0</right>
@@ -3271,8 +3244,6 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
-			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
-			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
 			<!--Sets Overlay image-->
@@ -3282,11 +3253,53 @@
 			<height>80</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/discset.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
+		</control>
+	</include>
+	
+
+	<include name="WatchedIndicatorNormal">
+		<control type="group">
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+			<include>indicator_watched_normal</include>
+		</control>
+		<control type="group">
+			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+			<include>indicator_progress_normal_image</include>
+			<control type="label">
+				<!--Progress Overlay Text-->
+				<right>0</right>
+				<top>-13</top>
+				<align>center</align>
+				<width>50</width>
+				<align>center</align>
+				<label>$INFO[ListItem.PercentPlayed]%</label>
+				<font>Reg24</font>
+				<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
+			</control>
+		</control>
+		<control type="group">
+			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+			<include>indicator_episodes_normal_image</include>
+			<control type="label">
+				<!--Episodes Overlay Text-->
+				<right>0</right>
+				<top>-13</top>
+				<align>center</align>
+				<width>50</width>
+				<align>center</align>
+				<label>$INFO[ListItem.Property(UnWatchedEpisodes)]</label>
+				<font>Reg24</font>
+				<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
+			</control>
+		</control>
+		<control type="group">
 			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+			<include>indicator_sets_normal</include>
 		</control>
-
-		
 	</include>
 	
 	<include name="WatchedIndicatorSmall">

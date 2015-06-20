@@ -52,8 +52,7 @@ class LibraryMonitor(threading.Thread):
 
     def run(self):
 
-        lastListItemPath = None
-        listItemPath = None
+        lastListItemLabel = None
 
         while (xbmc.abortRequested == False and self.exit != True):
             
@@ -67,9 +66,11 @@ class LibraryMonitor(threading.Thread):
             if (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
                 
                 self.liPath = xbmc.getInfoLabel("ListItem.Path")
-                if ((self.liPath != self.liPathLast) and xbmc.getCondVisibility("!Container.Scrolling")):
+                liLabel = xbmc.getInfoLabel("ListItem.Label")
+                if ((liLabel != lastListItemLabel) and xbmc.getCondVisibility("!Container.Scrolling")):
                     
                     self.liPathLast = self.liPath
+                    lastListItemLabel = liLabel
                     
                     # update the listitem stuff
                     try:
@@ -184,7 +185,7 @@ class LibraryMonitor(threading.Thread):
                             listudio = item
                             break
                     if listudio:
-                        self.win.setProperty("ListItemStudio", studio)
+                        self.win.setProperty("ListItemStudio", listudio)
                     else:
                         self.win.clearProperty("ListItemStudio")
                     
