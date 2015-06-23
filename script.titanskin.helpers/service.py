@@ -19,31 +19,28 @@ from HomeMonitor import HomeMonitor
 
 class Main:
     
-    KodiMonitor = Kodi_Monitor()
-    
     def __init__(self):
+        
+        KodiMonitor = Kodi_Monitor()
+        homeMonitor = HomeMonitor()
+        backgroundsUpdater = BackgroundsUpdater()
+        libraryMonitor = LibraryMonitor()
                    
         #start the extra threads
-        homeMonitor = HomeMonitor()
         homeMonitor.start()
-        
-        backgroundsUpdater = BackgroundsUpdater()
         backgroundsUpdater.start()
-        
-        libraryMonitor = LibraryMonitor()
         libraryMonitor.start()
         
-        while not self.KodiMonitor.abortRequested():
-                     
-            if self.KodiMonitor.waitForAbort(1):
-                # Abort was requested while waiting. We should exit
-                xbmc.log('TITANSKIN HELPER SERVICE --> shutdown requested !')         
+        while not (KodiMonitor.abortRequested() or xbmc.abortRequested):
+            xbmc.sleep(150)
         else:
+            # Abort was requested while waiting. We should exit
+            xbmc.log('TITANSKIN HELPER SERVICE --> shutdown requested !')
             #stop the extra threads
             backgroundsUpdater.stop()
             libraryMonitor.stop()
             homeMonitor.stop()
-    
+                              
 
 xbmc.log('titan helper version %s started' % __addonversion__)
 Main()

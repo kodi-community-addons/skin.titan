@@ -46,15 +46,16 @@ class LibraryMonitor(threading.Thread):
         threading.Thread.__init__(self, *args)    
     
     def stop(self):
-        utils.logMsg("LibraryMonitor - stop called")
+        utils.logMsg("LibraryMonitor - stop called",0)
         self.exit = True
         self.event.set()
 
     def run(self):
 
         lastListItemLabel = None
+        KodiMonitor = xbmc.Monitor()
 
-        while (xbmc.abortRequested == False and self.exit != True):
+        while (self.exit != True):
             
             #do some background stuff every 30 minutes
             if (xbmc.getCondVisibility("!Window.IsActive(videolibrary) + !Window.IsActive(fullscreenvideo)")):
@@ -83,12 +84,9 @@ class LibraryMonitor(threading.Thread):
                     except Exception as e:
                         utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
   
-                else:
-                    xbmc.sleep(50)
-
-            else:
-                xbmc.sleep(1000)
-                self.delayedTaskInterval += 1
+            xbmc.sleep(150)
+            self.delayedTaskInterval += 0.15
+                
     
     def setMovieSetDetails(self):
         #get movie set details -- thanks to phil65 - used this idea from his skin info script
@@ -405,8 +403,6 @@ class LibraryMonitor(threading.Thread):
 
 class Kodi_Monitor(xbmc.Monitor):
     
-    WINDOW = xbmcgui.Window(10000)
-
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
 
@@ -419,6 +415,7 @@ class Kodi_Monitor(xbmc.Monitor):
             jsondata = json.loads(data)
             if jsondata != None:
                 #update nextup list when library has changed
+                WINDOW = xbmcgui.Window(10000)
                 self.WINDOW.setProperty("widgetreload", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
                                            

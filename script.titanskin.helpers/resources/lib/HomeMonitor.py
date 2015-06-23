@@ -34,7 +34,7 @@ class HomeMonitor(threading.Thread):
         
     
     def stop(self):
-        utils.logMsg("HomeMonitor - stop called")
+        utils.logMsg("HomeMonitor - stop called",0)
         self.exit = True
         self.event.set()
 
@@ -44,7 +44,7 @@ class HomeMonitor(threading.Thread):
         lastListItem = None
         mainMenuContainer = "300"
 
-        while (xbmc.abortRequested == False and self.exit != True):
+        while (self.exit != True):
             
             #do some background stuff every 15 minutes
             if (xbmc.getCondVisibility("!Window.IsActive(fullscreenvideo)")):
@@ -61,7 +61,7 @@ class HomeMonitor(threading.Thread):
                     self.showWidget()
                 
                 listItem = xbmc.getInfoLabel("Container(%s).ListItem.Label" %mainMenuContainer)
-                if ((listItem != lastListItem) and xbmc.getCondVisibility("!Container(%s).Scrolling" %mainMenuContainer)):
+                if ((listItem != lastListItem) and xbmc.getCondVisibility("!Container(%s).Scrolling + !Window.IsActive(selectdialog) + !Window.IsActive(shutdownmenu) + !Window.IsActive(contextmenu)" %mainMenuContainer)):
                     
                     # update the widget content
                     if (xbmc.getCondVisibility("!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)")):
@@ -75,16 +75,11 @@ class HomeMonitor(threading.Thread):
 
                     lastListItem = listItem
   
-                else:
-                    xbmc.sleep(150)
-                    self.delayedTaskInterval += 0.15
 
-            else:
-                lastListItem = None
-                xbmc.sleep(1000)
-                self.delayedTaskInterval += 1
-                
-    
+            xbmc.sleep(150)
+            self.delayedTaskInterval += 0.15
+
+
     
     def showWidget(self):
         linkCount = 20

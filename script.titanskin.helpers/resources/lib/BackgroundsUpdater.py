@@ -30,6 +30,7 @@ class BackgroundsUpdater(threading.Thread):
     SmartShortcutsCachePath = None
     win = None
     addondir = None
+    delayedTaskInterval = 30
     
     def __init__(self, *args):
         
@@ -47,14 +48,15 @@ class BackgroundsUpdater(threading.Thread):
         threading.Thread.__init__(self, *args)    
     
     def stop(self):
-        utils.logMsg("BackgroundsUpdater - stop called")
+        utils.logMsg("BackgroundsUpdater - stop called",0)
         self.saveCacheToFile()
         self.exit = True
         self.event.set()
 
     def run(self):
 
-        backgroundDelay = 30000
+        
+        KodiMonitor = xbmc.Monitor()
             
         #first run get backgrounds immediately from filebased cache and reset the cache in memory to populate all images from scratch
         try:
@@ -68,19 +70,25 @@ class BackgroundsUpdater(threading.Thread):
          
         while (self.exit != True):
             
-            if not xbmc.Player().isPlayingVideo():
-                
-                # Update home backgrounds every interval (default 60 seconds)
+            if (not xbmc.getCondVisibility("Window.IsActive(fullscreenvideo)")):
+
                 backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
                 if backgroundDelayStr:
-                    backgroundDelay = int(backgroundDelayStr) * 1000
+                    try:
+                        backgroundDelay = int(backgroundDelayStr)
+                    except:
+                        backgroundDelay = 30
                 
-                try:
-                    self.UpdateBackgrounds()
-                except Exception as e:
-                    utils.logMsg("ERROR in UpdateBackgrounds ! --> " + str(e), 0)
+                # Update home backgrounds every interval (default 60 seconds)
+                if (self.delayedTaskInterval >= backgroundDelay):
+                    self.delayedTaskInterval = 0
+                    try:
+                        self.UpdateBackgrounds()
+                    except Exception as e:
+                        utils.logMsg("ERROR in UpdateBackgrounds ! --> " + str(e), 0)
             
-            xbmc.sleep(backgroundDelay)
+            xbmc.sleep(150)
+            self.delayedTaskInterval += 0.15
                                
     def saveCacheToFile(self):
         #safety check: does the config directory exist?
