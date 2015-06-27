@@ -407,15 +407,11 @@ class Kodi_Monitor(xbmc.Monitor):
         xbmc.Monitor.__init__(self)
 
     def onDatabaseUpdated(self, database):
-        pass
+        #update nextup list when library has changed
+        WINDOW = xbmcgui.Window(10000)
+        WINDOW.setProperty("widgetreload", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def onNotification(self,sender,method,data):
-
-        if method == "VideoLibrary.OnUpdate":
-            jsondata = json.loads(data)
-            if jsondata != None:
-                #update nextup list when library has changed
-                WINDOW = xbmcgui.Window(10000)
-                self.WINDOW.setProperty("widgetreload", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        pass
 
                                            

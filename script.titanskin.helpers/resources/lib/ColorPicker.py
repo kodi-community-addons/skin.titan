@@ -21,7 +21,6 @@ except:
 
 class ColorPicker(xbmcgui.WindowXMLDialog):
 
-    manualEdit = None
     colorsList = None
     skinString = None
     colorsPath = None
@@ -60,7 +59,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             xbmcvfs.mkdir(self.colorsPath)
         
         self.colorsList = self.getControl(3110)
-        self.manualEdit = self.getControl(3010)
+        self.win = xbmcgui.Window( 10000 )
         
         #get current color that is stored in the skin setting
         currentColor = xbmc.getInfoLabel("Skin.String(" + self.skinString + ')')
@@ -98,7 +97,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin("Control.SetFocus(3010)")
             colorstring = currentColor
         
-        self.manualEdit.setText(colorstring)
+        self.win.setProperty("colorstring",colorstring)
         
         
 
@@ -117,7 +116,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         else:
             item =  self.colorsList.getSelectedItem()
             colorstring = item.getProperty("colorstring")
-            self.manualEdit.setText(colorstring)
+            self.win.setProperty("colorstring",colorstring)
 
 
     def closeDialog(self):
@@ -132,7 +131,8 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
             self.closeDialog()
         elif(controlID == 3010):       
-            colorstring = self.manualEdit.getText()
+            dialog = xbmcgui.Dialog()
+            colorstring = dialog.input("Color", self.win.getProperty("colorstring"), type=xbmcgui.INPUT_ALPHANUM)
             xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
             self.closeDialog()
         elif(controlID == 3011):       

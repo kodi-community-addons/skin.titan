@@ -65,18 +65,18 @@ elif action == "ENABLEVIEWS":
     MainModule.enableViews()
 elif action == "VIDEOSEARCH":
     from SearchDialog import SearchDialog
-    searchDialog = SearchDialog("CustomSearch.xml", __cwd__, "default", "1080i")
+    searchDialog = SearchDialog("script-titanskin_helpers-CustomSearch.xml", __cwd__, "default", "1080i")
     searchDialog.doModal()
     del searchDialog
 elif action == "COLORPICKER":
     from ColorPicker import ColorPicker
-    colorPicker = ColorPicker("ColorPicker.xml", __cwd__, "default", "1080i")
+    colorPicker = ColorPicker("script-titanskin_helpers-ColorPicker.xml", __cwd__, "default", "1080i")
     colorPicker.skinString = argument1
     colorPicker.doModal()
     del colorPicker
 elif action == "COLORTHEMES":
     from ColorThemes import ColorThemes
-    colorThemes = ColorThemes("ColorThemes.xml", __cwd__, "default", "1080i")
+    colorThemes = ColorThemes("script-titanskin_helpers-ColorThemes.xml", __cwd__, "default", "1080i")
     colorThemes.doModal()
     del colorThemes
 elif action == "COLORTHEMETEXTURE":    

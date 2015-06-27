@@ -7,6 +7,70 @@
 	<bordersize>0</bordersize>
   </include>
   
+  <include name="BigPanelLabelOverlayVisibility">
+	<visible>
+		[Control.IsVisible(57) + Skin.HasSetting(ShowLabels57)] | 
+		[Control.IsVisible(59) + Skin.HasSetting(ShowLabels59)] | 
+		[Control.IsVisible(52) + Skin.HasSetting(ShowLabels52)] | 
+		IsEmpty(ListItem.Art(poster))
+	</visible>
+	<visible>!SubString(ListItem.Label,..,left)</visible>
+  </include>
+  
+  <include name="BigPanelLabelOverlay">
+	<control type="group">
+		<include>BigPanelLabelOverlayVisibility</include>
+		<include>BigPanelPosterDimensions</include>
+		<!--Panel-->
+		<control type="image">
+			<bottom>-1</bottom>
+			<width>234</width>
+			<height>60</height>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
+		</control>
+		<control type="label">
+		<!--Label focus-->
+			<left>10</left>
+			<bottom>0</bottom>
+			<width>220</width>
+			<height>60</height>
+			<align>left</align>
+			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<font>Reg22</font>
+			<textcolor>$INFO[Skin.String(CaseOverlays.TextColor)]</textcolor>
+		</control>
+	</control>
+  </include>
+  
+  <include name="BigPanelLabelOverlayFocus">
+	<control type="group">
+		<include>BigPanelLabelOverlayVisibility</include>
+		<include>BigPanelPosterDimensions</include>
+		<!--Panel-->
+		<control type="image">
+			<bottom>0</bottom>
+			<width>234</width>
+			<height>60</height>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
+		</control>
+		<control type="label">
+		<!--Label focus-->
+			<left>10</left>
+			<bottom>0</bottom>
+			<width>220</width>
+			<height>60</height>
+			<align>left</align>
+			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<font>Reg22</font>
+			<scroll>true</scroll>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
+			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+		</control>
+	</control>
+  </include>
+  
   <include name="PosterOverlay">
 	<control type="image">
 		<texture border="1" diffuse="diffuse/poster.png">cases/default_top.png</texture>
@@ -16,7 +80,8 @@
 		<visible>
 			SubString(ListItem.Filenameandpath,.3d) | 
 			IntegerGreaterThan(ListItem.VideoResolution,1080) | SubString(ListItem(0).Filenameandpath,4k) |
-			[substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)] |
+			[substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)] | 
+			SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right) | 
 			StringCompare(ListItem.VideoResolution,480) | StringCompare(ListItem.VideoResolution,540) | StringCompare(ListItem.VideoResolution,576) | StringCompare(ListItem.VideoResolution,720) | StringCompare(ListItem.VideoResolution,1080) | SubString(ListItem.Path,videodb://movies/sets,left)
 		</visible>
 	</control>
@@ -932,6 +997,30 @@
 			<onclick>Skin.ToggleSetting(ShowLabelsSquareDetails)</onclick>
 			<selected>Skin.HasSetting(ShowLabelsSquareDetails)</selected>
 			<visible>Control.IsVisible(510)</visible>
+		</control>
+		<control type="radiobutton" id="5340">
+			<!--Show labels-->
+			<include>SubMenuButton</include>
+			<label>20459</label>
+			<onclick>Skin.ToggleSetting(ShowLabels57)</onclick>
+			<selected>Skin.HasSetting(ShowLabels57)</selected>
+			<visible>Control.IsVisible(57)</visible>
+		</control>
+		<control type="radiobutton" id="5341">
+			<!--Show labels-->
+			<include>SubMenuButton</include>
+			<label>20459</label>
+			<onclick>Skin.ToggleSetting(ShowLabels52)</onclick>
+			<selected>Skin.HasSetting(ShowLabels52)</selected>
+			<visible>Control.IsVisible(52)</visible>
+		</control>
+		<control type="radiobutton" id="5342">
+			<!--Show labels-->
+			<include>SubMenuButton</include>
+			<label>20459</label>
+			<onclick>Skin.ToggleSetting(ShowLabels59)</onclick>
+			<selected>Skin.HasSetting(ShowLabels59)</selected>
+			<visible>Control.IsVisible(59)</visible>
 		</control>
 		<control type="radiobutton" id="329">
 			<!--Show info-->
@@ -3304,7 +3393,7 @@
 
 	<include name="WatchedIndicatorNormal">
 		<control type="group">
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_watched_normal</include>
 		</control>
@@ -3320,7 +3409,7 @@
 				<width>50</width>
 				<align>center</align>
 				<label>$INFO[ListItem.PercentPlayed]%</label>
-				<font>Reg24</font>
+				<font>indicator_normal</font>
 				<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
 			</control>
 		</control>
@@ -3336,7 +3425,7 @@
 				<width>50</width>
 				<align>center</align>
 				<label>$INFO[ListItem.Property(UnWatchedEpisodes)]</label>
-				<font>Reg24</font>
+				<font>indicator_normal</font>
 				<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
 			</control>
 		</control>
@@ -3357,7 +3446,7 @@
 			<height>60</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
@@ -3368,7 +3457,7 @@
 			<height>60</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/normal/watched.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		
@@ -3391,7 +3480,7 @@
 			<width>40</width>
 			<align>center</align>
 			<label>$VAR[WatchedLabel]</label>
-			<font>Reg20</font>
+			<font>indicator_small</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
 		</control>
@@ -3415,7 +3504,7 @@
 			<width>40</width>
 			<align>center</align>
 			<label>$VAR[WatchedLabel]</label>
-			<font>Reg24</font>
+			<font>indicator_small</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
 		</control>
@@ -3454,7 +3543,7 @@
 			<height>120</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayBackground.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		<control type="image">
@@ -3465,7 +3554,7 @@
 			<height>120</height>
 			<texture diffuse="diffuse/watched_icon.png">overlays/big/watched.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
-			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched)</visible>
+			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		
@@ -3487,7 +3576,7 @@
 			<align>center</align>
 			<width>75</width>
 			<label>$VAR[WatchedLabel]</label>
-			<font>Reg32</font>
+			<font>indicator_large</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
 		</control>
@@ -3510,7 +3599,7 @@
 			<align>center</align>
 			<width>75</width>
 			<label>$VAR[WatchedLabel]</label>
-			<font>Reg32</font>
+			<font>indicator_large</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
 		</control>
