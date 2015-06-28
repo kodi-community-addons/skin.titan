@@ -19,8 +19,10 @@
   
   <include name="BigPanelLabelOverlay">
 	<control type="group">
+		<!-- label overlay when poster cases enabled -->
 		<include>BigPanelLabelOverlayVisibility</include>
 		<include>BigPanelPosterDimensions</include>
+		<visible>Skin.HasSetting(CaseOverlays)</visible>
 		<!--Panel-->
 		<control type="image">
 			<bottom>-1</bottom>
@@ -41,15 +43,44 @@
 			<textcolor>$INFO[Skin.String(CaseOverlays.TextColor)]</textcolor>
 		</control>
 	</control>
+	<control type="group">
+		<!-- label overlay when poster cases disabled -->
+		<include>BigPanelLabelOverlayVisibility</include>
+		<include>BigPanelPosterDimensions</include>
+		<visible>!Skin.HasSetting(CaseOverlays)</visible>
+		<!--Panel-->
+		<control type="image">
+			<bottom>-1</bottom>
+			<width>234</width>
+			<height>60</height>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+		</control>
+		<control type="label">
+		<!--Label focus-->
+			<left>10</left>
+			<bottom>0</bottom>
+			<width>220</width>
+			<height>60</height>
+			<align>left</align>
+			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<font>Reg22</font>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+		</control>
+	</control>
   </include>
   
   <include name="BigPanelLabelOverlayFocus">
+	
 	<control type="group">
+		<!-- label overlay when poster cases enabled -->
 		<include>BigPanelLabelOverlayVisibility</include>
 		<include>BigPanelPosterDimensions</include>
+		<visible>Skin.HasSetting(CaseOverlays)</visible>
 		<!--Panel-->
 		<control type="image">
-			<bottom>0</bottom>
+			<bottom>-1</bottom>
 			<width>234</width>
 			<height>60</height>
 			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
@@ -65,22 +96,51 @@
 			<label>$VAR[HomeMenuWidgetLabel]</label>
 			<font>Reg22</font>
 			<scroll>true</scroll>
+			<textcolor>$INFO[Skin.String(CaseOverlays.TextColor)]</textcolor>
+		</control>
+	</control>
+	<control type="group">
+		<!-- label overlay when poster cases disabled -->
+		<include>BigPanelLabelOverlayVisibility</include>
+		<include>BigPanelPosterDimensions</include>
+		<visible>!Skin.HasSetting(CaseOverlays)</visible>
+		<!--Panel-->
+		<control type="image">
+			<bottom>-1</bottom>
+			<width>234</width>
+			<height>60</height>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+		</control>
+		<control type="label">
+		<!--Label focus-->
+			<left>10</left>
+			<bottom>0</bottom>
+			<width>220</width>
+			<height>60</height>
+			<align>left</align>
+			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<font>Reg22</font>
+			<scroll>true</scroll>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
 			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
 		</control>
 	</control>
+
   </include>
   
   <include name="PosterOverlay">
 	<control type="image">
-		<texture border="1" diffuse="diffuse/poster.png">cases/default_top.png</texture>
+		<texture border="1" diffuse="diffuse/poster.png">cases/default_top2.png</texture>
 		<!-- border left,top,right,bottom  -->
-		<bordersize>0</bordersize>
+		<bordersize>-2</bordersize>
 		<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
 		<visible>
+			!StringCompare(Skin.String(CaseOverlays.Fallback),None) | 
 			SubString(ListItem.Filenameandpath,.3d) | 
 			IntegerGreaterThan(ListItem.VideoResolution,1080) | SubString(ListItem(0).Filenameandpath,4k) |
-			[substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)] | 
+			[substring(ListItem.FilenameAndPath,bdmv) | substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)] | 
 			SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right) | 
 			StringCompare(ListItem.VideoResolution,480) | StringCompare(ListItem.VideoResolution,540) | StringCompare(ListItem.VideoResolution,576) | StringCompare(ListItem.VideoResolution,720) | StringCompare(ListItem.VideoResolution,1080) | SubString(ListItem.Path,videodb://movies/sets,left)
 		</visible>
@@ -89,9 +149,10 @@
 	<control type="image">
 	<texture>$VAR[PosterOverlayVar]</texture>
 		<top>3</top>
-		<left>10</left>
-		<height>10%</height>
-		 <aspectratio aligny="top" align="left">keep</aspectratio>
+		<left>33%</left>
+		<width>33%</width>
+		<height>9%</height>
+		<aspectratio aligny="top" align="center">keep</aspectratio>
 		<!-- border left,top,right,bottom  -->
 		<bordersize>0</bordersize>
 		<colordiffuse>$INFO[Skin.String(CaseOverlays.TextColor)]</colordiffuse>
@@ -102,7 +163,7 @@
   <variable name="PosterOverlayVar">
 	<value condition="SubString(ListItem.Filenameandpath,.3d)">cases/3dbd.png</value>
 	<value condition="IntegerGreaterThan(ListItem.VideoResolution,1080) | SubString(ListItem(0).Filenameandpath,4k)">cases/4k.png</value>
-	<value condition="[substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">cases/bluray.png</value>
+	<value condition="[substring(ListItem.FilenameAndPath,bdmv) | substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">cases/bluray.png</value>
 	<value condition="SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right)">cases/dvd.png</value>
 	<value condition="StringCompare(ListItem.VideoResolution,480)">cases/480.png</value>
 	<value condition="StringCompare(ListItem.VideoResolution,540)">cases/540.png</value>
@@ -110,6 +171,9 @@
 	<value condition="StringCompare(ListItem.VideoResolution,720)">cases/720.png</value>
 	<value condition="StringCompare(ListItem.VideoResolution,1080)">cases/1080.png</value>
 	<value condition="SubString(ListItem.Path,videodb://movies/sets,left)">cases/set.png</value>
+	<value condition="StringCompare(Skin.String(CaseOverlays.Fallback),HD1080)">cases/1080.png</value>
+	<value condition="StringCompare(Skin.String(CaseOverlays.Fallback),DVD)">cases/dvd.png</value>
+	<value condition="StringCompare(Skin.String(CaseOverlays.Fallback),Bluray)">cases/bluray.png</value>
   </variable>
   
   <include name="PosterThumbBG">
@@ -1655,6 +1719,28 @@
         <control type="grouplist">
 			<orientation>horizontal</orientation>
 			
+			<!--Video Type-->
+			<control type="group">
+				<width>85</width>
+				<height>36</height>
+				<visible>!IsEmpty(Control.GetLabel(44223))</visible>
+				<control type="image">
+					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+					<posx>2</posx>
+					<texture border="0,0,3,0">flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label" id="44223">
+					<font>flags</font>
+					<posx>2</posx>
+					<label>$VAR[VideoFileTypeVar]</label>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>34</height>
+				</control>
+			</control>
+			
 			<!--Video Resolution-->
 			<control type="group">
 				<width>100</width>
@@ -1872,6 +1958,28 @@
 			<orientation>horizontal</orientation>
 			<visible>![!IsEmpty(Window(Home).Property(NextAired.Status)) + [container.content(tvshows) | container.content(seasons)]]</visible>
 			
+			<!--Video Type-->
+			<control type="group">
+				<width>85</width>
+				<height>36</height>
+				<visible>!IsEmpty(Control.GetLabel(44223)) + !Skin.String(ClearLogoLocation, footer) + [Container.Content(movies) | Container.Content(episodes)]</visible>
+				<control type="image">
+					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+					<posx>2</posx>
+					<texture border="0,0,2,0">flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label" id="44223">
+					<font>flags</font>
+					<posx>2</posx>
+					<label>$VAR[VideoFileTypeVarFooter]</label>
+					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+					<align>center</align>
+					<aligny>center</aligny>
+					<height>34</height>
+				</control>
+			</control>
+			
 			<!--Video Resolution-->
 			<control type="group">
 				<width>110</width>
@@ -1894,35 +2002,7 @@
 					<height>34</height>
 				</control>
 			</control>
-			
-			<control type="group">
-				<width>7</width>
-				<height>36</height>
-				<visible>IsEmpty(ListItem.VideoResolution)</visible>
-			</control>
-			
-			<!--Video 3D-->
-			<control type="group">
-				<width>50</width>
-				<height>36</height>
-				<visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<posx>-7</posx>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>3D</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			
+					
 			<!--Video Codec-->
 			<control type="group">
 				<width>80</width>

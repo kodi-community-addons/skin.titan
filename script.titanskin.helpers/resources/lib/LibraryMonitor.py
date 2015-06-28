@@ -26,6 +26,7 @@ class LibraryMonitor(threading.Thread):
     unwatched = 1
     lastEpPath = ""
     allStudioLogos = list()
+    studioLogosPath = None
     LastStudioImagesPath = None
     delayedTaskInterval = 1800
     moviesetCache = {}
@@ -76,7 +77,7 @@ class LibraryMonitor(threading.Thread):
                     # update the listitem stuff
                     try:
                         self.setDuration()
-                        self.setStudioName()
+                        self.setStudioLogo()
                         self.focusEpisode()
                         self.checkExtraFanArt()
                         self.setMovieSetDetails()
@@ -221,23 +222,44 @@ class LibraryMonitor(threading.Thread):
             else:
                 self.win.clearProperty("Player.AddonName")
     
-    def setStudioName(self):
+    def setStudioLogo(self):
         studio = xbmc.getInfoLabel('ListItem.Studio')
+        studiologo = None
+        
+        #find logo if multiple found
         if "/" in studio:
             studios = studio.split(" / ")
             count = 0
             for item in studios:
                 if item in self.allStudioLogos:
-                    studio = studios[count]
+                    studiologo = self.studioLogosPath + studios[count]
                     break
                 count += 1
-        self.win.setProperty("ListItemStudio", studio)
+        
+        #find logo normal
+        if studio in self.allStudioLogos:
+            studiologo = self.studioLogosPath + studio
+        else:
+            #find logo by substituting characters
+            studio = studio.replace(" (US)","")
+            studio = studio.replace(" (UK)","")
+            studio = studio.replace(" (CA)","")
+            for logo in self.allStudioLogos:
+                if logo.lower() == studio.lower():
+                    studiologo = self.studioLogosPath + logo
+
+        if studiologo:
+            self.win.setProperty("ListItemStudioLogo", studiologo + ".png")
+        else:
+            self.win.clearProperty("ListItemStudioLogo")
                 
     def getStudioLogos(self):
         #fill list with all studio logos
         StudioImagesCustompath = xbmc.getInfoLabel("Skin.String(StudioImagesCustompath)")
         if StudioImagesCustompath:
             path = StudioImagesCustompath
+            if not (path.endswith("/") or path.endswith("\\")):
+                path = path + os.sep()
         else:
             path = "special://skin/extras/flags/studios/"
         
@@ -249,7 +271,8 @@ class LibraryMonitor(threading.Thread):
                 file = file.replace(".png","")
                 file = file.replace(".PNG","")
                 allLogos.append(file)
-
+            
+            self.studioLogosPath = path
             self.allStudioLogos = set(allLogos)
     
     def focusEpisode(self):
