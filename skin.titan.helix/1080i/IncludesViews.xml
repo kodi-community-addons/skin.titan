@@ -131,11 +131,7 @@
   </include>
   
   <include name="PosterOverlay">
-	<control type="image">
-		<texture border="1" diffuse="diffuse/poster.png">cases/default_top2.png</texture>
-		<!-- border left,top,right,bottom  -->
-		<bordersize>-2</bordersize>
-		<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
+	<control type="group">
 		<visible>
 			!StringCompare(Skin.String(CaseOverlays.Fallback),None) | 
 			SubString(ListItem.Filenameandpath,.3d) | 
@@ -144,18 +140,25 @@
 			SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right) | 
 			StringCompare(ListItem.VideoResolution,480) | StringCompare(ListItem.VideoResolution,540) | StringCompare(ListItem.VideoResolution,576) | StringCompare(ListItem.VideoResolution,720) | StringCompare(ListItem.VideoResolution,1080) | SubString(ListItem.Path,videodb://movies/sets,left)
 		</visible>
-	</control>
-	
-	<control type="image">
-	<texture>$VAR[PosterOverlayVar]</texture>
-		<top>3</top>
-		<left>33%</left>
-		<width>33%</width>
-		<height>9%</height>
-		<aspectratio aligny="top" align="center">keep</aspectratio>
-		<!-- border left,top,right,bottom  -->
-		<bordersize>0</bordersize>
-		<colordiffuse>$INFO[Skin.String(CaseOverlays.TextColor)]</colordiffuse>
+		<visible>!StringCompare(Window(Home).Property(activewidget),weather) + !StringCompare(Window(Home).Property(activewidget),youtube)</visible>
+		<control type="image">
+			<texture border="1" diffuse="diffuse/poster.png">cases/default_top2.png</texture>
+			<!-- border left,top,right,bottom  -->
+			<bordersize>-2</bordersize>
+			<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
+		</control>
+		
+		<control type="image">
+		<texture>$VAR[PosterOverlayVar]</texture>
+			<top>3</top>
+			<left>33%</left>
+			<width>33%</width>
+			<height>9%</height>
+			<aspectratio aligny="top" align="center">keep</aspectratio>
+			<!-- border left,top,right,bottom  -->
+			<bordersize>0</bordersize>
+			<colordiffuse>$INFO[Skin.String(CaseOverlays.TextColor)]</colordiffuse>
+		</control>
 	</control>
 
   </include>

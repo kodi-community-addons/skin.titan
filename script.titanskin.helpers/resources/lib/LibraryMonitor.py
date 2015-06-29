@@ -323,7 +323,7 @@ class LibraryMonitor(threading.Thread):
                                 else:    
                                     curItem -= 1
                                         
-                            self.lastEpPath = xbmc.getInfoLabel("Container.FolderPath")
+            self.lastEpPath = xbmc.getInfoLabel("Container.FolderPath")
         
     def setDuration(self):
         # monitor listitem to set duration
