@@ -130,19 +130,30 @@ class HomeMonitor(threading.Thread):
                 
                 if hasSecondayMenus == True:
                     recentlink = self.win.getProperty(plexstring + ".recent")
-                    progresslink = self.win.getProperty(plexstring + ".viewed")
+                    progresslink = self.win.getProperty(plexstring + ".ondeck")
+                    alllink = self.win.getProperty(plexstring + ".all")
                 else:
                     link = link.replace("mode=1", "mode=0")
                     link = link.replace("mode=2", "mode=0")
                     recentlink = link.replace("/all", "/recentlyAdded")
                     progresslink = link.replace("/all", "/onDeck")
                     self.win.setProperty(plexstring + ".recent", recentlink)
-                    self.win.setProperty(plexstring + ".viewed", progresslink)
-                    
+                    self.win.setProperty(plexstring + ".ondeck", progresslink)
+                    alllink = link
+                
                 self.win.setProperty(plexstring + ".recent.content", utils.getContentPath(recentlink))
                 utils.logMsg(plexstring + ".recent --> " + recentlink)       
-                self.win.setProperty(plexstring + ".viewed.content", utils.getContentPath(progresslink))
-                utils.logMsg(plexstring + ".viewed --> " + progresslink)
+                self.win.setProperty(plexstring + ".ondeck.content", utils.getContentPath(progresslink))
+                utils.logMsg(plexstring + ".ondeck --> " + progresslink)
+                
+                link = alllink.replace("mode=1", "mode=0")
+                link = alllink.replace("mode=2", "mode=0")
+                unwatchedlink = alllink.replace("/all", "/unwatched")
+                self.win.setProperty(plexstring + ".unwatched", unwatchedlink)
+                self.win.setProperty(plexstring + ".unwatched.content", utils.getContentPath(unwatchedlink))
+                
+                self.win.setProperty(plexstring + ".content", utils.getContentPath(alllink))
+                
                 linkCount += 1
                 
             #add plex channels as entry - extract path from one of the nodes as a workaround because main plex addon channels listing is in error

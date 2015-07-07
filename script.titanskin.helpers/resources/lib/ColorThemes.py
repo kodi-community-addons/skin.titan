@@ -107,7 +107,55 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         if currentSkinTheme != skintheme:
             xbmc.executebuiltin("Skin.Theme(-1)")
 
+    def backupColorTheme(self, themeName, themeFile):
+        import zipfile
+        backup_path = self.get_browse_dialog(dlg_type=3,heading=xbmc.getLocalizedString(31283))
+        
+        if backup_path:
+            backup_path = os.path.join(backup_path,"TITANSKIN_COLORTHEME_" + themeName)
+            zf = zipfile.ZipFile("%s.zip" % (backup_path), "w", zipfile.ZIP_DEFLATED)
             
+            abs_src = os.path.abspath(self.userThemesPath)
+            
+            for dirname, subdirs, files in os.walk(self.userThemesPath):
+                for filename in files:
+                    if themeName in filename:
+                        absname = os.path.abspath(os.path.join(dirname, filename))
+                        arcname = absname[len(abs_src) + 1:]
+                        zf.write(absname, arcname)
+            zf.close()
+       
+    def restoreColorTheme(self):
+        import shutil
+        import zipfile
+        zip_path = None
+        zip_path = self.get_browse_dialog(dlg_type=1,heading=xbmc.getLocalizedString(31282),mask=".zip")
+        if zip_path:
+            #create temp path
+            temp_path = xbmc.translatePath('special://temp/skinbackup/').decode("utf-8")
+            if xbmcvfs.exists(temp_path):
+                shutil.rmtree(temp_path)
+            xbmcvfs.mkdir(temp_path)
+            
+            #unzip to temp
+            zfile = zipfile.ZipFile(zip_path)
+            zfile.extractall(temp_path)
+            zfile.close()
+            
+            dirs, files = xbmcvfs.listdir(temp_path)
+            for file in files:
+                if file.endswith(".theme") or file.endswith(".jpg"):
+                    sourcefile = os.path.join(temp_path,file)
+                    destfile = os.path.join(self.userThemesPath,file)
+                    xbmcvfs.copy(sourcefile,destfile)
+                
+            #refresh listing
+            list = self.refreshListing()
+            if list != 0:
+                xbmc.executebuiltin("Control.SetFocus(6)")
+            else:
+                xbmc.executebuiltin("Control.SetFocus(5)")
+    
     def removeColorTheme(self,file):
         file = file.split(os.sep)[-1]
         themeName = file.replace(".theme","")
@@ -223,6 +271,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                 menuOptions.append(xbmc.getLocalizedString(117))
                 menuOptions.append(xbmc.getLocalizedString(118))
                 menuOptions.append(xbmc.getLocalizedString(19285))
+                menuOptions.append(xbmc.getLocalizedString(190))
             ret = dialog.select('', menuOptions)
             if ret == 0:
                 self.loadColorTheme(themeFile)
@@ -231,7 +280,9 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
             elif ret == 2:
                 self.renameColorTheme(themeFile)
             elif ret == 3:
-                self.setIconForColorTheme(themeFile)    
+                self.setIconForColorTheme(themeFile)
+            elif ret == 4:
+                self.backupColorTheme(item.getLabel(),themeFile) 
 
     def closeDialog(self):
         #self.close() ##crashes kodi ?
@@ -242,9 +293,15 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         if(controlID == 5):       
             self.createColorTheme()
         
+        if(controlID == 7):       
+            self.restoreColorTheme()
+        
         if(controlID == 6):
             item = self.themesList.getSelectedItem()
             themeFile = item.getProperty("filename")
             self.loadColorTheme(themeFile)
 
-
+    def get_browse_dialog(self, default="protocol://", heading="Browse", dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
+        dialog = xbmcgui.Dialog()
+        value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
+        return value

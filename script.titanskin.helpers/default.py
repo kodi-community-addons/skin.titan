@@ -97,7 +97,11 @@ elif action == "SETSKINVERSION":
 elif "NEXTEPISODES" in argument1:
     MainModule.getNextEpisodes()
 elif "RECOMMENDEDMOVIES" in argument1:
-    MainModule.getRecommendedMovies()      
+    MainModule.getRecommendedMovies()
+elif "RECOMMENDEDMEDIA" in argument1:
+    MainModule.getRecommendedMedia(False)
+elif "INPROGRESSMEDIA" in argument1:
+    MainModule.getRecommendedMedia(True)      
 elif argument1 == "?FAVOURITES":
     MainModule.getFavourites()
 elif "?LAUNCHAPP" in argument1:

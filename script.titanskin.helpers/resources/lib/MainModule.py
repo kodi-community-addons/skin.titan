@@ -376,7 +376,7 @@ def getNextEpisodes():
     
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
-def getRecommendedMovies2():
+def getRecommendedMovies():
     limit = 25
     count = 0
     xbmcplugin.setContent(int(sys.argv[1]), 'movies')
@@ -408,64 +408,85 @@ def getRecommendedMovies2():
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
 
-def getRecommendedMovies():
+def getRecommendedMedia(ondeckOnly=True):
     limit = 25
     count = 0
     allItems = []
-    allTitles = set()
+    allTitles = list()
     xbmcplugin.setContent(int(sys.argv[1]), 'files')
     
     # Get a list of all the in-progress Movies
-    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "mpaa", "runtime", "writer", "cast", "dateadded", "lastplayed", "tagline" ] }, "id": "1"}')
     json_result = json.loads(json_query_string)
-    # If we found any, find the oldest unwatched show for each one.
     if json_result.has_key('result') and json_result['result'].has_key('movies'):
         for item in json_result['result']['movies']:
             lastplayed = item["lastplayed"]
-            if item["title"] not in allTitles:
+            if not item["title"] in allTitles:
                 allItems.append((lastplayed,item))
-                allTitles.add(item["title"])
+                allTitles.append(item["title"])
     
-    # Random movies with a score higher then 7
-    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "random" }, "filter": {"and": [{"operator":"is", "field":"playcount", "value":"0"},{"operator":"greaterthan", "field":"rating", "value":"7"}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
+    # Get a list of all the in-progress MusicVideos
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "limits": { "start" : 0, "end": 25 }, "properties": [ "title", "playcount", "plot", "file", "resume", "art", "streamdetails", "year", "runtime", "dateadded", "lastplayed" ] }, "id": "1"}')
     json_result = json.loads(json_query_string)
-    # If we found any, find the oldest unwatched show for each one.
-    if json_result.has_key('result') and json_result['result'].has_key('movies'):
-        for item in json_result['result']['movies']:
+    if json_result.has_key('result') and json_result['result'].has_key('musicvideos'):
+        for item in json_result['result']['musicvideos']:
             lastplayed = item["lastplayed"]
-            if item["title"] not in allTitles:
+            if not item["title"] in allTitles and item["resume"]["position"] != 0:
                 allItems.append((lastplayed,item))
-                allTitles.add(item["title"])
+                allTitles.append(item["title"])
     
+    # Get a list of all the in-progress music songs
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetRecentlyPlayedSongs", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "limits": { "start" : 0, "end": 5 }, "properties": [ "artist", "title", "rating", "fanart", "thumbnail", "duration", "playcount", "comment", "file", "album", "lastplayed" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    if json_result.has_key('result') and json_result['result'].has_key('songs'):
+        for item in json_result['result']['songs']:
+            lastplayed = item["lastplayed"]
+            if not item["title"] in allTitles and lastplayed and item["thumbnail"]:
+                allItems.append((lastplayed,item))
+                allTitles.append(item["title"])
     
     # NextUp episodes
     json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "studio", "mpaa", "file", "art" ] }, "id": "1"}')
     json_result = json.loads(json_query_string)
     if json_result.has_key('result') and json_result['result'].has_key('tvshows'):
         for item in json_result['result']['tvshows']:
-            json_query2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ "title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "firstaired", "runtime", "writer", "cast", "dateadded", "lastplayed" ], "limits":{"end":1}}, "id": "1"}' %item['tvshowid'])
+            json_query2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ "title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "mpaa", "resume", "tvshowid", "art", "streamdetails", "firstaired", "runtime", "writer", "cast", "dateadded", "lastplayed" ], "limits":{"end":1}}, "id": "1"}' %item['tvshowid'])
             if json_query2:
                 json_query2 = json.loads(json_query2)
                 if json_query2.has_key('result') and json_query2['result'].has_key('episodes'):
                     
                     for item in json_query2['result']['episodes']:
                         lastplayed = item["lastplayed"]
-                        if item["title"] not in allTitles:
+                        if not item["title"] in allTitles:
                             allItems.append((lastplayed,item))
-                            allTitles.add(item["title"])
+                            allTitles.append(item["title"])            
     
+    
+    #sort the list with in progress items by lastplayed date   
     from operator import itemgetter
     allItems = sorted(allItems,key=itemgetter(0),reverse=True)
     
+    if not ondeckOnly:
+        # Random movies with a score higher then 7
+        json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "random" }, "filter": {"and": [{"operator":"is", "field":"playcount", "value":"0"},{"operator":"greaterthan", "field":"rating", "value":"7"}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
+        json_result = json.loads(json_query_string)
+        # If we found any, find the oldest unwatched show for each one.
+        if json_result.has_key('result') and json_result['result'].has_key('movies'):
+            for item in json_result['result']['movies']:
+                lastplayed = item["lastplayed"]
+                if not item["title"] in set(allTitles):
+                    allItems.append((lastplayed,item))
+                    allTitles.append(item["title"])
+
     #build that listing
     for item in allItems:
         liz = utils.createListItem(item[1])
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item[1]['file'], listitem=liz)
-        # count +=1
-        # if count == limit:
-            # break
+        count +=1
+        if count == limit:
+            break       
     
-    
+   
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))    
     
 def selectView(contenttype="other", currentView=None, displayNone=False, displayViewId=False):

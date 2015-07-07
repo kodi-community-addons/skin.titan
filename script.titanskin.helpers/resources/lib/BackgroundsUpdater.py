@@ -473,25 +473,25 @@ class BackgroundsUpdater(threading.Thread):
                 while (count < 20 and not self.win.getProperty("plexbmc.0.title")):
                     xbmc.sleep(250)
                     count += 1
-                    
-                totalNodes = 14
-                nodes = []
-                for i in range(totalNodes):
-                    plextitle = self.win.getProperty("plexbmc.%s.title"%str(i))
-                    if plextitle:
-                        plexcontent = self.win.getProperty("plexbmc.%s.all"%str(i))
-                        if not plexcontent:
-                            plexcontent = self.win.getProperty("plexbmc.%s.path"%str(i))
-                        plextype = self.win.getProperty("plexbmc.%s.type" %str(i))
-                        image = self.getImageFromPath(plexcontent)
-                        key = "plexbmc.%s"%str(i)
-                        nodes.append( (key, plextitle, plexcontent ) )
-                        if image:
-                            self.win.setProperty("plexbmc.%s.background"%str(i),image)
-                            if plextype == "movie":
-                                self.win.setProperty("plexfanartbg", image)
-                    else:
-                        break
+                                   
+                contentStrings = ["", ".ondeck", ".recent", ".unwatched"]
+                if self.win.getProperty("plexbmc.0.title"):
+                    nodes = []
+                    totalNodes = 14
+                    for i in range(totalNodes):
+                        for contentString in contentStrings:
+                            key = "plexbmc.%s%s"%(str(i),contentString)
+                            path = self.win.getProperty("plexbmc.%s%s.content"%(str(i),contentString))
+                            label = self.win.getProperty("plexbmc.%s%s.title"%(str(i),contentString))
+                            plextype = self.win.getProperty("plexbmc.%s.type" %str(i))
+                            if path:
+                                nodes.append( (key, label, path ) )
+                                image = self.getImageFromPath(path)
+                                if image:
+                                    self.win.setProperty("plexbmc.%s%s.background"%(str(i),contentString),image)
+                                    if plextype == "movie":
+                                        self.win.setProperty("plexfanartbg", image)
+                
                 
                 #channels
                 plextitle = self.win.getProperty("plexbmc.channels.title")

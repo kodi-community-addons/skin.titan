@@ -61,22 +61,50 @@ def createListItem(item):
     
     if "episodeid" in item:
         liz.setProperty("dbid", str(item['episodeid']))
+        liz.setIconImage('DefaultTVShows.png')
+        
+    if "songid" in item:
+        liz.setProperty("dbid", str(item['songid']))
+        liz.setIconImage('DefaultAudio.png')
         
     if "movieid" in item:
         liz.setProperty("dbid", str(item['movieid']))
+        liz.setIconImage('DefaultMovies.png')
+    
+    if "musicvideoid" in item:
+        liz.setProperty("dbid", str(item['musicvideoid']))
+        liz.setIconImage('DefaultMusicVideos.png')
     
     if "firstaired" in item:
         liz.setInfo( type="Video", infoLabels={ "Premiered": item['firstaired'] })
     
-    plot = item['plot']
+    if "plot" in item:
+        plot = item['plot']
+    elif "comment" in item:
+        plot = item['comment']
+    else:
+        plot = None
+    
     liz.setInfo( type="Video", infoLabels={ "Plot": plot })
+    
+    if "artist" in item:
+        liz.setInfo( type="Video", infoLabels={ "Artist": item['artist'] })
+        
+    if "mpaa" in item:
+        liz.setInfo( type="Video", infoLabels={ "mpaa": item['mpaa'] })
+        
+    if "tagline" in item:
+        liz.setInfo( type="Video", infoLabels={ "mpaa": item['tagline'] })
     
     if "showtitle" in item:
         liz.setInfo( type="Video", infoLabels={ "TVshowTitle": item['showtitle'] })
     
     if "rating" in item:
         liz.setInfo( type="Video", infoLabels={ "Rating": str(round(float(item['rating']),1)) })
-    liz.setInfo( type="Video", infoLabels={ "Playcount": item['playcount'] })
+    
+    if "playcount" in item:
+        liz.setInfo( type="Video", infoLabels={ "Playcount": item['playcount'] })
+    
     if "director" in item:
         liz.setInfo( type="Video", infoLabels={ "Director": " / ".join(item['director']) })
     if "writer" in item:
@@ -92,15 +120,29 @@ def createListItem(item):
         liz.setInfo( type="Video", infoLabels={ "Cast": cast[0] })
         liz.setInfo( type="Video", infoLabels={ "CastAndRole": cast[1] })
     
-    liz.setProperty("resumetime", str(item['resume']['position']))
-    liz.setProperty("totaltime", str(item['resume']['total']))
-    liz.setArt(item['art'])
-    liz.setThumbnailImage(item['art'].get('thumb',''))
-    liz.setIconImage('DefaultTVShows.png')
+    if "resume" in item:
+        liz.setProperty("resumetime", str(item['resume']['position']))
+        liz.setProperty("totaltime", str(item['resume']['total']))
     
-    #liz.setProperty("fanart_image", item['art'].get('tvshow.fanart',''))
-    for key, value in item['streamdetails'].iteritems():
-        for stream in value:
-            liz.addStreamInfo( key, stream )
+    
+    if "art" in item:
+        art = item['art']
+        liz.setThumbnailImage(item['art'].get('thumb',''))
+    else:
+        art = []
+        if "fanart" in item:
+            art.append({"fanart",item['fanart']})
+        if "thumbnail" in item:
+            art.append({"thumb",item['thumbnail']})
+            liz.setThumbnailImage(item['thumbnail'])
+    
+    liz.setArt(art)
+    
+    
+    
+    if "streamdetails" in item:
+        for key, value in item['streamdetails'].iteritems():
+            for stream in value:
+                liz.addStreamInfo( key, stream )
     
     return liz
