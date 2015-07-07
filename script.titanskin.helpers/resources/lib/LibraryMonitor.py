@@ -433,8 +433,19 @@ class Kodi_Monitor(xbmc.Monitor):
         #update nextup list when library has changed
         WINDOW = xbmcgui.Window(10000)
         WINDOW.setProperty("widgetreload", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        #refresh some widgets when library has changed
+        WINDOW.setProperty("widgetrefresh","refresh")
+        xbmc.sleep(500)
+        WINDOW.clearProperty("widgetrefresh")
 
     def onNotification(self,sender,method,data):
-        pass
+        if method == "VideoLibrary.OnUpdate":
+            #update nextup list when library has changed
+            WINDOW = xbmcgui.Window(10000)
+            WINDOW.setProperty("widgetreload", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            #refresh some widgets when library has changed
+            WINDOW.setProperty("widgetrefresh","refresh")
+            xbmc.sleep(500)
+            WINDOW.clearProperty("widgetrefresh")
 
                                            

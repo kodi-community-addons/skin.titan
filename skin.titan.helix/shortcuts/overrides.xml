@@ -3,7 +3,7 @@
 
 	<groupings>
 	
-		<shortcut label="Open submenu" grouping="32029">submenu</shortcut>
+		<shortcut label="Open submenu" grouping="32029" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">submenu</shortcut>
 		
 		<!-- SMART SHORTCUTS -->
 		<node label="Smart shortcuts" condition="IsEmpty(Window(Home).Property(customWidget)) + [!IsEmpty(Window(Home).Property(playlist.0.label)) | !IsEmpty(Window(Home).Property(favorite.0.label))]">
@@ -35,7 +35,7 @@
 		</node>
 		
 		<!-- SMART SHORTCUTS FOR EMBY -->
-		<node label="Smart Shortcuts for Emby" icon="special://home/addons/plugin.video.emby/icon.png" condition="Skin.HasSetting(SmartShortcuts.emby) + System.HasAddon(plugin.video.emby) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + !IsEmpty(Window(Home).Property(emby.nodes.0.path))">
+		<node label="Smart Shortcuts for Emby" icon="special://home/addons/plugin.video.emby/icon.png" condition="Skin.HasSetting(SmartShortcuts.emby) + System.HasAddon(plugin.video.emby) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + !IsEmpty(Window(Home).Property(emby.nodes.0.path))">
 			<node label="$INFO[Window(Home).Property(emby.nodes.0.title)]" icon="$INFO[Window(Home).Property(emby.nodes.0.image)]" condition="!IsEmpty(Window(Home).Property(emby.nodes.0.path))">
 				<shortcut label="$INFO[Window(Home).Property(emby.nodes.0.title)]" grouping="32029" type="1037" icon="$INFO[Window(Home).Property(emby.nodes.0.image)]" condition="!IsEmpty(Window(Home).Property(emby.nodes.0.path))">$VAR[CustomCollectionClick]</shortcut>
 				<shortcut label="$INFO[Window(Home).Property(emby.nodes.0.recent.title)]" icon="$INFO[Window(Home).Property(emby.nodes.0.recent.image)]" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(emby.nodes.0.recent.path))">$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</shortcut>
@@ -175,7 +175,7 @@
 		</node>
 		
 		<!-- SMART SHORTCUTS FOR PLEX -->
-		<node label="Smart Shortcuts for Plex" condition="System.HasAddon(plugin.video.plexbmc) + !IsEmpty(Window(Home).Property(plexbmc.0.path)) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active)">
+		<node label="Smart Shortcuts for Plex" condition="System.HasAddon(plugin.video.plexbmc) + !IsEmpty(Window(Home).Property(plexbmc.0.path)) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu)">
 			<node label="$INFO[Window(Home).Property(plexbmc.0.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.path))">
 				<shortcut label="$INFO[Window(Home).Property(plexbmc.0.title)]" grouping="32029" type="1037" icon="$VAR[PlexCustomThumb0]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.path))">$INFO[Window(Home).Property(plexbmc.0.path)]</shortcut>
 				<node label="31116">
@@ -331,7 +331,7 @@
 			<shortcut label="31102" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/randommovies.xsp</shortcut>
 			<shortcut label="20386" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recentmovies.xsp</shortcut>
 			<shortcut label="31035" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/inprogressmovies.xsp</shortcut>
-			<shortcut label="31036" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</shortcut>
+			<shortcut label="31036" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">plugin://script.titanskin.helpers/?RECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)]</shortcut>
 			
 			<shortcut label="31103" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">special://skin/extras/widgetplaylists/randomepisodes.xsp</shortcut>
 			<shortcut label="31105" grouping="32029" condition="!Skin.HasSetting(HomeMenuUsePlexforTVseries) + !Skin.HasSetting(HomeMenuUseMBforTVseries) + !Skin.HasSetting(HomeMenuUseNetflixforTVseries)">special://skin/extras/widgetplaylists/recentepisodes.xsp</shortcut>
@@ -382,25 +382,25 @@
 				<shortcut label="31036" grouping="20342" type="20342" icon="$VAR[MB3FavoritesThumb]" condition="Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window(Home).Property(mediabrowser.std.movies.3.path)]</shortcut>
 				<shortcut label="16101" grouping="20342" type="20342" icon="$VAR[UnwatchedMoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(10025,special://skin/extras/widgetplaylists/unwatchedmovies.xsp,return)</shortcut>
 				<shortcut label="31035" grouping="20342" type="20342" icon="$VAR[InProgressMoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(10025,special://skin/extras/widgetplaylists/inprogressmovies.xsp,return)</shortcut>
-				<shortcut label="Recommended movies" grouping="20342" type="20342" icon="$VAR[MoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">special://skin/extras/widgetplaylists/recommendedmovies.xsp</shortcut>
-				<shortcut label="Rotten Tomatoes - In Theaters" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=intheaters</shortcut>
-				<shortcut label="Rotten Tomatoes - Coming Soon" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=comingsoon</shortcut>
-				<shortcut label="Rotten Tomatoes - Opening" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=Opening</shortcut>
-				<shortcut label="Rotten Tomatoes - Box Office" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=boxoffice</shortcut>
-				<shortcut label="Rotten Tomatoes - Top Rentals" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=toprentals</shortcut>
-				<shortcut label="Rotten Tomatoes - Current DVD Releases" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=currentdvdreleases</shortcut>
-				<shortcut label="Rotten Tomatoes - New DVD Releases" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=newdvdreleases</shortcut>
-				<shortcut label="Rotten Tomatoes - Upcoming DVD Releases" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=upcomingdvds</shortcut>
-				<shortcut label="The MovieDB - Movies In Cinemas" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=incinemas</shortcut>
-				<shortcut label="The MovieDB - Upcoming Movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=upcoming</shortcut>
-				<shortcut label="The MovieDB - Popular Movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=popularmovies</shortcut>
-				<shortcut label="The MovieDB - Top rated Movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=topratedmovies</shortcut>
-				<shortcut label="The MovieDB - Popular TV Shows" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=populartvshows</shortcut>
-				<shortcut label="The MovieDB - Top rated TV Shows" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=topratedtvshows</shortcut>
-				<shortcut label="The MovieDB - TV Shows On Air" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=onairtvshows</shortcut>
-				<shortcut label="The MovieDB - TV Shows Airing today" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=airingtodaytvshows</shortcut>
-				<shortcut label="Trakt.tv - Trending movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=trendingmovies</shortcut>
-				<shortcut label="Trakt.tv - Trending Shows" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">plugin://script.extendedinfo?info=trendingshows</shortcut>
+				<shortcut label="Recommended movies" grouping="20342" type="20342" icon="$VAR[MoviesButtonThumb]" condition="!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)">ActivateWindow(10025,plugin://script.titanskin.helpers/?RECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)],return)</shortcut>
+				<shortcut label="Rotten Tomatoes - In Theaters" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=intheaters,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - Coming Soon" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=comingsoon,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - Opening" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=Opening,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - Box Office" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=boxoffice,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - Top Rentals" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=toprentals,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - Current DVD Releases" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=currentdvdreleases,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - New DVD Releases" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=newdvdreleases,return)</shortcut>
+				<shortcut label="Rotten Tomatoes - Upcoming DVD Releases" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=upcomingdvds,return)</shortcut>
+				<shortcut label="The MovieDB - Movies In Cinemas" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=incinemas,return)</shortcut>
+				<shortcut label="The MovieDB - Upcoming Movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=upcoming,return)</shortcut>
+				<shortcut label="The MovieDB - Popular Movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=popularmovies,return)</shortcut>
+				<shortcut label="The MovieDB - Top rated Movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=topratedmovies,return)</shortcut>
+				<shortcut label="The MovieDB - Popular TV Shows" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=populartvshows,return)</shortcut>
+				<shortcut label="The MovieDB - Top rated TV Shows" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=topratedtvshows,return)</shortcut>
+				<shortcut label="The MovieDB - TV Shows On Air" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=onairtvshows,return)</shortcut>
+				<shortcut label="The MovieDB - TV Shows Airing today" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=airingtodaytvshows,return)</shortcut>
+				<shortcut label="Trakt.tv - Trending movies" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=trendingmovies,return)</shortcut>
+				<shortcut label="Trakt.tv - Trending Shows" type="32014" icon="DefaultAddonVideo.png" condition="System.HasAddon(script.extendedinfo)">ActivateWindow(10025,plugin://script.extendedinfo?info=trendingshows,return)</shortcut>
 			</node>
 			<content>video</content>
 			<node label="32040">
@@ -425,7 +425,7 @@
 		</node>
 		
 		<!-- Live TV Gotham -->
-		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window(Home).Property(powermenu), active)" version="13">
+		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window.Property(groupname),powermenu)" version="13">
 			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
 			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
 			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(radiochannels,return)</shortcut>
@@ -441,7 +441,7 @@
 		</node>
 		
 		<!-- Live TV Helix -->
-		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window(Home).Property(powermenu), active)" version="14">
+		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window.Property(groupname),powermenu)" version="14">
 			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
 			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
 			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(radiochannels,return)</shortcut>
@@ -461,7 +461,7 @@
 		</node>
 		
 		<!-- MB3 collections -->
-		<node label="31161" condition="System.HasAddon(plugin.video.xbmb3c) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + !IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
+		<node label="31161" condition="System.HasAddon(plugin.video.xbmb3c) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + !IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
 			<node label="$INFO[Window(Home).Property(mediabrowser.usr.0.title)]" icon="$VAR[Custom0Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
 				<shortcut label="$INFO[Window(Home).Property(mediabrowser.usr.0.title)]" grouping="32029" type="1037" icon="$VAR[Custom0Thumb]" condition="!IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">$VAR[CustomCollectionClick]</shortcut>
 				<node label="31116">
@@ -615,18 +615,18 @@
 		</node>
 		
 		
-		<node label="32020" condition="!Skin.HasSetting(HomeMenuUseMBforPictures) + !Skin.HasSetting(HomeMenuUsePlexforPictures) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window(Home).Property(powermenu), active)">
+		<node label="32020" condition="!Skin.HasSetting(HomeMenuUseMBforPictures) + !Skin.HasSetting(HomeMenuUsePlexforPictures) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window.Property(groupname),powermenu)">
 			<shortcut label="10002" grouping="32029" icon="$VAR[PicturesButtonThumb]" condition="true">ActivateWindow(pictures,return)</shortcut>
 			<content>picturesources</content>
 		</node>
 		
 		<!-- playlist video - for startup playlist selection only -->
-		<node label="10028" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="10028" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + IsEmpty(Window(Home).Property(customWidget))">
 				<content>playlist-video</content>
 		</node>	
 		
 		<!-- playlist audio - for startup playlist selection only -->
-		<node label="10500" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(powermenu), active) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="10500" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + IsEmpty(Window(Home).Property(customWidget))">
 			<content>playlist-audio</content>
 		</node>
 		

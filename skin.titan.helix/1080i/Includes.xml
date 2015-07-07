@@ -63,7 +63,7 @@
 	<!-- Gadget Row sizes -->
     <include name="Gadget1Row">
         <height>325</height>
-        <bottom>120</bottom>
+        <bottom>110</bottom>
 		<focusposition>1</focusposition>
     </include>
     <include name="Gadget2Row">
@@ -135,7 +135,7 @@
 				<control type="image">
 					<posx>0</posx>
 					<bottom>0</bottom>
-					<width>1920</width>
+					<width>100%</width>
 					<height>110</height>
 					<texture border="5">diffuse/panel.png</texture>
 					<colordiffuse>$INFO[Skin.String(FooterPanelColor)]</colordiffuse>
@@ -253,23 +253,36 @@
 				</control>
 			</control>
 			
-			<!-- codec info-->
+			<!-- codec info normal-->
 			<control type="group">
-			<posx>60</posx>
-			<height>50</height>
-			<bottom>20</bottom>
-			<include>mediaflagsfooter</include>
-			<visible>!skin.hastheme(classic) + ![Skin.HasSetting(EnableTouchSupport) + [[Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] | [Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] | Control.IsVisible(88888)]]</visible>
-			<animation effect="slide" end="3,-910" time="0" condition="Skin.HasSetting(EnableTouchSupport)">Conditional</animation>
+				<posx>60</posx>
+				<height>50</height>
+				<bottom>20</bottom>
+				<include>mediaflagsfooter</include>
+				<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+				<visible>!skin.hastheme(classic)</visible>
+				</control>
+			
+			<!-- codec info classic-->
+			<control type="group">
+				<bottom>30</bottom>
+				<posx>80</posx>
+				<height>50</height>
+				<bottom>30</bottom>
+				<include>mediaflagssmall</include>
+				<visible>skin.hastheme(classic) + !IsEmpty(ListItem.VideoResolution)</visible>
+				<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
 			</control>
+			
+			<!-- codec info with touch enabled-->
 			<control type="group">
-			<posy>1000</posy>
-			<posx>80</posx>
-			<height>50</height>
-			<bottom>30</bottom>
-			<include>mediaflagssmall</include>
-			<visible>skin.hastheme(classic) + !IsEmpty(ListItem.VideoResolution)</visible>
-			<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+				<posx>60</posx>
+				<height>50</height>
+				<top>100</top>
+				<include>mediaflagsfooter</include>
+				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
+				<visible>!skin.hastheme(classic)</visible>
+				<visible>![[[Window.IsActive(DialogKaiToast.xml) + IsEmpty(Window(Home).Property(activewidget))] | [Window.IsActive(DialogExtendedProgressBar.xml) + IsEmpty(Window(Home).Property(activewidget))] | Control.IsVisible(88888)]]</visible>
 			</control>
 			
 			
@@ -563,7 +576,7 @@
 			<visible>!Control.IsVisible(882)</visible>
         </control>
 		<control type="image">
-            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget)) +window.isactive(home)]</visible>
             <posx>60</posx>
             <posy>40</posy>
             <height>64</height>
@@ -574,7 +587,7 @@
 			<visible>!Control.IsVisible(882)</visible>
         </control>
         <control type="label">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget)) +window.isactive(home)]</visible>
             <posx>61</posx>
             <posy>10</posy>
             <width min="80" max="1400">auto</width>
@@ -588,7 +601,7 @@
 			<animation effect="slide" end="80,15" time="0" condition="skin.hastheme(classic)">Conditional</animation>
         </control>
 		 <control type="label">
-			<visible>!skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget))]</visible>
+			<visible>!skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Window(Home).Property(activewidget)) +window.isactive(home)]</visible>
 			<posy>85</posy>
 			<posx>61</posx>
 			<width min="0" max="1400">auto</width>
@@ -1232,7 +1245,7 @@
 			<control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
-				<width>1920</width>
+				<width>100%</width>
 				<height>230</height>
 				<texture border="5">diffuse/panel.png</texture>
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>

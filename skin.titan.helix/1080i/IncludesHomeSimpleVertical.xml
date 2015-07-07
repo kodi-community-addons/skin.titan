@@ -20,6 +20,7 @@
 			<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
 			<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>			
 			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
+			<onfocus condition="!Skin.HasSetting(AutoShowSubmenu)">SetProperty(submenu,hide,home)</onfocus>
 			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,show,home)</onfocus>
 			<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,hide,home)</onfocus>
 		</control>
@@ -64,6 +65,7 @@
 				<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
 				<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>			
 				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
+				<onfocus condition="!Skin.HasSetting(AutoShowSubmenu)">SetProperty(submenu,hide,home)</onfocus>
 				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,show,home)</onfocus>
 				<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !IntegerGreaterThan(Container(4444).NumItems,0)">SetProperty(submenu,hide,home)</onfocus>
 			</control>
@@ -123,7 +125,7 @@
 		<onright condition="!IntegerGreaterThan(Container(4444).NumItems,0) | Skin.HasSetting(VerticalHomeInlineSubmenu)">77777</onright>	
 		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0) + Skin.HasSetting(VerticalHomeInlineSubmenu)">SetProperty(submenu,show,home)</onleft>
 		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0) + Skin.HasSetting(VerticalHomeInlineSubmenu)">Control.SetFocus(4444,0)</onleft>
-        <onleft condition="!Skin.HasSetting(VerticalHomeInlineSubmenu)">2</onleft>
+        <onleft condition="!Skin.HasSetting(VerticalHomeInlineSubmenu) + !Skin.HasSetting(DisablePowerMenu)">2</onleft>
 		<onright condition="IntegerGreaterThan(Container(4444).NumItems,0) + !Skin.HasSetting(VerticalHomeInlineSubmenu)">SetProperty(submenu,show,home)</onright>
 		<onright condition="IntegerGreaterThan(Container(4444).NumItems,0) + !Skin.HasSetting(VerticalHomeInlineSubmenu)">Control.SetFocus(4444,0)</onright>
 		
@@ -390,7 +392,6 @@
 			<animation type="Conditional" condition="SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)">
 				<effect type="fade" start="0" end="100" time="250" delay="0" />
 			</animation>
-			<animation effect="slide" end="-800" time="0" condition="!SubString(Window(Home).Property(submenu),show)">Conditional</animation>
 			<animation type="Conditional" condition="![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)]">
 				<effect type="fade" start="100" end="0" time="250" delay="0" />
 			</animation>
@@ -438,7 +439,6 @@
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 				<aspectratio>stretch</aspectratio>
 			</control>
-			
 			<control type="list" id="4444">
 				<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
 				<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
@@ -477,12 +477,31 @@
 				  <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
 				  <label>$INFO[ListItem.Label]</label>
 				</control>
+				<control type="button">
+					<label>-</label>
+					<visible>false</visible>
+					<onfocus>SetProperty(menu,4444,Home)</onfocus>
+					<onfocus>SetProperty(submenu,show,home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackground,$INFO[Container(4444).ListItem.Property(defaultID)],Home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(4444).ListItem.Property(Background)],Home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
+				</control>
 				</focusedlayout>
 				<content>
 				<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
 				</content>
 			</control>
 
+			<control type="button">
+				<label>-</label>
+				<width>310</width>
+				<height>380</height>
+				<visible>!SubString(Window(Home).Property(submenu),show)</visible>
+				<onfocus>SetProperty(submenu,show,home)</onfocus>
+				<texturefocus></texturefocus>
+				<texturenofocus></texturenofocus>
+			</control>
 		</control>
 
 	</include>
@@ -590,6 +609,16 @@
 				  <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
 				  <label>$INFO[ListItem.Label]</label>
 				  <visible>Control.HasFocus(4444)</visible>
+				</control>
+				<control type="button">
+					<label>-</label>
+					<visible>false</visible>
+					<onfocus>SetProperty(menu,4444,Home)</onfocus>
+					<onfocus>SetProperty(submenu,show,home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackground,$INFO[Container(4444).ListItem.Property(defaultID)],Home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(4444).ListItem.Property(Background)],Home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
+					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
 				</control>
 				</focusedlayout>
 				<content>

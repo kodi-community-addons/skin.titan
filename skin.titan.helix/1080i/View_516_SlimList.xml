@@ -84,7 +84,77 @@
 			<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
 			<animation effect="fade" reversible="false" end="40" time="0" condition="true">Conditional</animation>
 		</control>
-		<include>SlimListLayout</include>
+		<!--Title-->
+		<control type="label">
+			<posx>10</posx>
+			<align>left</align>
+			<width>65%</width>
+			<label>[B]$INFO[ListItem.Label][/B]</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<font>Light30</font>
+			<scroll>true</scroll>
+		</control>
+		
+		<!--quality-->
+		<control type="label">
+			<right>5</right>
+			<width>80</width>
+			<align>right</align>
+			<label>[B]$VAR[HDIndicator][/B]</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<font>Light28</font>
+			<visible>![!Skin.HasSetting(HideWatchedOverlayList) + [StringCompare(ListItem.Overlay,OverlayWatched.png) | SubString(ListItem.Path,videodb://movies/sets/) | ListItem.IsResumable | IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0)]]</visible>
+		</control>
+		
+		<!--Rating-->
+		<control type="label">
+			<right>80</right>
+			<width>80</width>
+			<align>center</align>
+			<label>$INFO[ListItem.Rating]</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<font>Light28</font>
+			<visible>!Control.IsVisible(51) + !Control.IsVisible(515)</visible>
+		</control>
+		
+		
+		<!--runtime-->
+		<control type="label">
+			<right>160</right>
+			<width>140</width>
+			<align>center</align>
+			<label>$INFO[ListItem.Duration,, min.]</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<visible>![Skin.HasSetting(BigListViewShowInfo) + Control.IsVisible(51)] + !Control.IsVisible(515)</visible>
+			<font>Light28</font>
+		</control>
+		
+		<!--Year-->
+		<control type="label">
+			<right>320</right>
+			<width>110</width>
+			<align>center</align>
+			<label>$INFO[ListItem.Year]</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<visible>![Skin.HasSetting(BigListViewShowInfo) + Control.IsVisible(51)] + !Control.IsVisible(515)</visible>
+			<font>Light28</font>
+		</control>
+		
+		<include>WatchedIndicatorSmall</include>
+		
+		<control type="image">
+			<bottom>0</bottom>
+			<posy>0</posy>
+			<height>1</height>
+			<texture>diffuse/panel.png</texture>
+			<colordiffuse>grey</colordiffuse>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="true">Conditional</animation>
+		</control>
 	</include>
 	
     <include name="View_516_SlimList">
@@ -94,13 +164,12 @@
 			<defaultcontrol always="true">516</defaultcontrol>
 			<visible>Control.IsVisible(516) + IntegerGreaterThan(Container.NumItems,0)</visible>
             <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
-			
+			<height>795</height>
+			<bottom>125</bottom>
 			<!-- Background Panel-->
 			<control type="image">
 				<posx>50</posx>
-				<posy>165</posy>
 				<width>1820</width>
-				<height>795</height>
 				<texture border="15">diffuse/bgpanel.png</texture>
 				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
 				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
@@ -114,9 +183,7 @@
 			<!-- Background Panel-->
 			<control type="image">
 				<posx>50</posx>
-				<posy>165</posy>
 				<width>615</width>
-				<height>795</height>
 				<texture border="5">diffuse/bgpanel.png</texture>
 				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
 				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
@@ -127,20 +194,12 @@
 				<visible>!Skin.HasSetting(View516_HidePanel)</visible>
 				<visible>Skin.HasSetting(SlimListViewShowInfo)</visible>
 			</control>
-			
-			
-			<control type="group">
-				<posy>-15</posy>
-				<visible>Skin.HasSetting(SlimListViewShowInfo)</visible>
-				<include>MovieDetailsLeft</include>
-			</control>
-			
 
 		
 			<control type="panel" id="516">
 					
 				<posx>680</posx>
-				<posy>170</posy>
+				<posy>5</posy>
 				<width>1260</width>
 				<height>780</height>
 				<onup>516</onup>
@@ -184,7 +243,7 @@
 				<visible>!Skin.HasSetting(SlimListViewShowInfo)</visible>
 				<control type="image">
 					<left>37</left>
-					<posy>160</posy>
+					<posy>-5</posy>
 					<width>560</width>
 					<height>825</height>
 					<border>5</border>
@@ -200,7 +259,7 @@
 			<control type="scrollbar" id="60">
 				<visible>Control.IsVisible(516)</visible>
 				<right>15</right>
-				<posy>180</posy>
+				<posy>20</posy>
 				<height>785</height>
 				<onup>60</onup>
 				<ondown>60</ondown>
@@ -211,6 +270,11 @@
 
 		</control>
 		
+		<control type="group">
+				<visible>Skin.HasSetting(SlimListViewShowInfo)</visible>
+				<visible>Control.IsVisible(516) + IntegerGreaterThan(Container.NumItems,0)</visible>
+				<include>MovieDetailsLeft</include>
+			</control>
 	</include>
 
 </includes>

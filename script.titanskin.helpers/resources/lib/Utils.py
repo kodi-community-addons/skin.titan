@@ -58,7 +58,13 @@ def createListItem(item):
     if season and episode:
         episodeno = "s%se%s" %(season,episode)
         liz.setProperty("episodeno", episodeno)
+    
+    if "episodeid" in item:
+        liz.setProperty("dbid", str(item['episodeid']))
         
+    if "movieid" in item:
+        liz.setProperty("dbid", str(item['movieid']))
+    
     if "firstaired" in item:
         liz.setInfo( type="Video", infoLabels={ "Premiered": item['firstaired'] })
     
@@ -91,8 +97,8 @@ def createListItem(item):
     liz.setArt(item['art'])
     liz.setThumbnailImage(item['art'].get('thumb',''))
     liz.setIconImage('DefaultTVShows.png')
-    liz.setProperty("dbid", str(item['episodeid']))
-    liz.setProperty("fanart_image", item['art'].get('tvshow.fanart',''))
+    
+    #liz.setProperty("fanart_image", item['art'].get('tvshow.fanart',''))
     for key, value in item['streamdetails'].iteritems():
         for stream in value:
             liz.addStreamInfo( key, stream )
