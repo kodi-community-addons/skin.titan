@@ -1,6 +1,5 @@
 <includes>
 
-
 	<variable name="SpotLightWidgetContent">
 		<value condition="StringCompare(Window(Home).Property(spotlightwidgetcontent),movies) + Skin.HasSetting(HomeMenuUseMBforMovies)">$INFO[Window.Property(MediaBrowser.std.movies.3.content)]</value>
 		<value condition="StringCompare(Window(Home).Property(spotlightwidgetcontent),tvshows) + Skin.HasSetting(HomeMenuUseMBforTvSeries)">$INFO[Window.Property(MediaBrowser.std.tvshows.4.content)]</value>
@@ -28,376 +27,7 @@
 		<value condition="!IsEmpty(ListItem.Property(Plot))">$INFO[ListItem.Title,[B],[/B]][CR]$INFO[ListItem.Property(Plot)]</value>
 		<value>$INFO[ListItem.Title,[B],[/B]]</value>
     </variable>
-	
-	<include name="HomeLayoutFixedFocus">
-		<!-- home menu Widgets -->
-		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">HomeMenuWidget</include>
-		
-		<control type="wraplist" id="300">
-			<visible>!Skin.String(GadgetRows, enhanced)</visible>
-            <posx>38</posx>
-            <width>1845</width>
-            <include>normalHomePanelLayout</include>
-        </control>
-		<!-- touchscreen support -->
-		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsHome</include>
-	</include>
-	
-	<include name="HomeLayoutNormal">
-	
-		<!-- home menu Widgets -->
-		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">HomeMenuWidget</include>
-		
-		<control type="panel" id="300">
-			<visible>!Skin.String(GadgetRows, enhanced)</visible>
-            <posx>38</posx>
-            <width>1845</width>
-            <include>normalHomePanelLayout</include>
-        </control>
-		<!-- touchscreen support -->
-		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsHome</include>
-	</include>
-	
-	
-	
-	<include name="normalHomePanelLayout">
-		<include condition="Skin.String(GadgetRows, 1) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget1Row</include>
-		<include condition="Skin.String(GadgetRows, 2) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget2Row</include>
-		<include condition="!Skin.String(GadgetRows)">Gadget2Row</include>
-		<include condition="Skin.String(GadgetRows, 3) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget3Row</include>
-		
-		<include condition="Skin.String(GadgetRows, 1) + Skin.HasSetting(UseSmallHomeTiles)">Gadget1RowSmall</include>
-		<include condition="Skin.String(GadgetRows, 2) + Skin.HasSetting(UseSmallHomeTiles)">Gadget2RowSmall</include>
-		<include condition="Skin.String(GadgetRows, 3) + Skin.HasSetting(UseSmallHomeTiles)">Gadget3RowSmall</include>
-		
-		<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
-			<effect type="slide" start="0,-0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
-		</animation>
-		
-		<animation type="Conditional" condition="SubString(Window(Home).Property(HomeLoaded),loaded)">
-			<effect type="slide" start="0,1100" end="0,0" time="450" delay="600" tween="cubic" easing="inout" />
-		</animation>
 
-		<animation type="Conditional" condition="Control.IsVisible(4444) + Skin.String(SubmenuLayout, tiles)">
-			<effect type="slide" start="0,0" end="0,-60" time="200" tween="cubic" easing="inout" delay="0" />
-		</animation>
-		
-		<animation type="Conditional" condition="Skin.HasSetting(HideHomeTileIndicators)">
-			<effect type="slide" start="0,0" end="0,30" time="200" tween="cubic" easing="inout" delay="0" />
-		</animation>
-		
-		
-		
-		<animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)">
-			<effect type="slide" start="0,0" end="0,1000" time="0" delay="0" />
-		</animation>
-
-		<onup>$VAR[HomeButtonUpAction]</onup>
-		<ondown>$VAR[HomeButtonDownAction]</ondown>
-		<onleft></onleft>
-		<onright></onright>
-		<orientation>horizontal</orientation>
-
-		<pagecontrol>60</pagecontrol>
-
-		<itemlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles)">
-			<control type="group">
-			<posy>20</posy>
-				<control type="image">
-					<!--Panel Shadow-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>613</width>
-					<height>261</height>
-					<texture>home/home_shadow.png</texture>
-					<visible>!Skin.HasSetting(NoShadowOnHomeMenuTiles)</visible>
-				</control>
-				<control type="image">
-					<!--focus image-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>590</width>
-					<height>240</height>
-					<bordersize>-4</bordersize>
-					<texture>home/home_matte2.png</texture>
-					<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-					<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
-				</control>
-				<control type="image">
-					<!--Panel Normal-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>590</width>
-					<height>240</height>
-					<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/hometiles/addons.png">$INFO[ListItem.Icon]</texture>
-					<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-					<fadetime>800</fadetime>
-					<include>backgroundfade</include>
-				</control>
-				<control type="image">
-					<!--Panel Ovelay-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>590</width>
-					<height>240</height>
-					<colordiffuse>ccFFFFFF</colordiffuse>
-					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="label">
-					<!--Label-->
-					<centerleft>315</centerleft>
-					<posy>160</posy>
-					<width>590</width>
-					<height>100</height>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<font>Reg45</font>
-					<textcolor>aawhite</textcolor>
-					<shadowcolor>black</shadowcolor>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="label">
-					<!--Label Grey-->
-					<centerleft>315</centerleft>
-					<posy>160</posy>
-					<width>590</width>
-					<height>100</height>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<font>Reg45</font>
-					<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
-					<shadowcolor>black</shadowcolor>
-					<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label) + ![Skin.HasSetting(NoTitleOnHomeMenuTiles) | StringCompare(ListItem.Property(disableLabel), disable)]</visible>
-				</control>
-			</control>
-		</itemlayout>
-		<focusedlayout width="612" height="265" condition="!Skin.HasSetting(UseSmallHomeTiles)">
-			<control type="group">
-				<posy>20</posy>
-				
-				<!--widget Arrow UP-->
-				<control type="group">
-					<!-- show arrow up button if widget available -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<control type="image">
-						<posx>236</posx>
-						<posy>-19</posy>
-						<width>149</width>
-						<height>33</height>
-						<texture border="5" colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">diffuse/panel.png</texture>
-						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>236</posx>
-						<posy>-18</posy>
-						<width>149</width>
-						<height>28</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/home_arrow_up.png</texture>
-						<aspectratio>keep</aspectratio>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>236</posx>
-						<posy>-16</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/basichome_up.png</texture>
-						<visible>skin.hastheme(classic)</visible>
-					</control>
-				</control>
-				
-				
-				<!--widget Arrow DOWN-->
-				<control type="group">
-					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<control type="image">
-						<posx>236</posx>
-						<posy>253</posy>
-						<width>149</width>
-						<height>33</height>
-						<texture border="5" colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">diffuse/panel.png</texture>
-						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>236</posx>
-						<posy>258</posy>
-						<width>149</width>
-						<height>28</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/home_arrow_down.png</texture>
-						<aspectratio>keep</aspectratio>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>236</posx>
-						<posy>253</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/basichome_down.png</texture>
-						<visible>skin.hastheme(classic)</visible>
-					</control>
-				</control>
-				
-				<control type="image">
-					<!--focus image-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>590</width>
-					<height>240</height>
-					<bordersize>-6</bordersize>
-					<texture>home/home_matte2.png</texture>
-					<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-				</control>
-				<control type="image">
-					<!--Panel Normal-->
-					<posx>11</posx>
-					<posy>13</posy>
-					<width>590</width>
-					<height>240</height>
-					<texture background="true" fallback="special://skin/extras/hometiles/addons.png" diffuse="home/home_matte2.png">$INFO[ListItem.Icon]</texture>
-					<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-					<fadetime>800</fadetime>
-					<include>backgroundfade</include>
-				</control>
-				<control type="image">
-					<!--Panel Ovelay-->
-				   <posx>11</posx>
-					<posy>13</posy>
-					<width>590</width>
-					<height>240</height>
-					<colordiffuse>ccFFFFFF</colordiffuse>
-					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="label">
-					<!--Label Grey-->
-					<centerleft>315</centerleft>
-					<posy>160</posy>
-					<width>590</width>
-					<height>100</height>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<font>Reg45</font>
-					<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
-					<shadowcolor>black</shadowcolor>
-					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-				</control>
-				<control type="button">
-					<left>150</left>
-					<top>0</top>
-					<width>1</width>
-					<height>60</height>
-					<font>Reg28</font>
-					<textcolor>blue</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<label>-</label>
-					<visible>false</visible>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,300,Home)</onfocus>
-					<onfocus condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
-					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
-					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>	
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(submenupos,$INFO[Container(300).Position],Home)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + Skin.String(SubmenuLayout, vertical)">SetFocus(4444)</onfocus>
-					<onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !Skin.String(SubmenuLayout, vertical)">SetProperty(submenu,show,home)</onfocus>
-				</control>
-			</control>
-		</focusedlayout>
-		
-		
-		<itemlayout width="365" height="205" condition="Skin.HasSetting(UseSmallHomeTiles)">
-			<control type="group">
-			<posy>25</posy>
-			<posx>20</posx>
-			<include>EnhancedHomeMainLayout</include>
-			</control>
-		</itemlayout>
-		<focusedlayout width="365" height="215" condition="Skin.HasSetting(UseSmallHomeTiles)">
-			<control type="group">
-				<posy>25</posy>
-				<posx>20</posx>
-				
-				<!--widget Arrow UP-->
-				<control type="group">
-					<!-- show arrow up button if widget available -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + !IsEmpty(Window(Home).Property(activewidget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<control type="image">
-						<posx>94</posx>
-						<posy>-28</posy>
-						<width>149</width>
-						<height>28</height>
-						<texture colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">colors/color_white.png</texture>
-						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>94</posx>
-						<posy>-28</posy>
-						<width>149</width>
-						<height>28</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/home_arrow_up.png</texture>
-						<aspectratio>keep</aspectratio>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>94</posx>
-						<posy>-28</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/basichome_up.png</texture>
-						<visible>skin.hastheme(classic)</visible>
-					</control>
-				</control>
-				
-				
-				<!--widget Arrow DOWN-->
-				<control type="group">
-					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Window(Home).Property(activewidget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
-					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
-					<control type="image">
-						<posx>94</posx>
-						<posy>178</posy>
-						<width>149</width>
-						<height>23</height>
-						<texture colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">colors/color_white.png</texture>
-						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>94</posx>
-						<posy>174</posy>
-						<width>149</width>
-						<height>28</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/home_arrow_down.png</texture>
-						<aspectratio>keep</aspectratio>
-						<visible>!skin.hastheme(classic)</visible>
-					</control>
-					<control type="image">
-						<posx>94</posx>
-						<posy>172</posy>
-						<width>149</width>
-						<height>30</height>
-						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/basichome_down.png</texture>
-						<visible>skin.hastheme(classic)</visible>
-					</control>
-				</control>
-				
-				<include>EnhancedHomeMainLayoutFocus</include>
-			</control>
-		</focusedlayout>
-		<content>
-			<include>skinshortcuts-mainmenu</include>
-		</content>
-	</include>
-	
-	
 	<include name="EnhancedHomeScreen">
 	
 		<control type="image">
@@ -519,7 +149,7 @@
 				<onback>300</onback>
 				<onup condition="Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
 				<include>animation_fade_visible_hidden</include>
-				<visible>!IsEmpty(Window(Home).Property(activewidget))</visible>
+				<visible allowhiddenfocus="true">IntegerGreaterThan(Container(4444).NumItems,0) + [!IsEmpty(Window(Home).Property(activewidget)) | !IsEmpty(Window(Home).Property(spotlightwidgetcontent))]</visible>
 				<itemlayout width="362" height="185">
 					<include>ThumbsViewLayoutEnhanced</include>
 				</itemlayout>
@@ -559,7 +189,7 @@
 				<ondown>300</ondown>
 				<onup condition="Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
 				<include>animation_fade_visible_hidden</include>
-				<visible>IsEmpty(Window(Home).Property(activewidget))</visible>
+				<visible>IsEmpty(Window(Home).Property(activewidget)) + IsEmpty(Window(Home).Property(spotlightwidgetcontent))</visible>
 				<itemlayout width="360" height="60">
 					<control type="button">
 						<label></label>
@@ -642,12 +272,11 @@
 		
 		<!-- widgets -->
 		<control type="group">
-			<posx>413</posx>
+			<posx>60</posx>
 			<posy>190</posy>
-			<width>1437</width>
+			<width>1790</width>
 			<height>680</height>
-			<include>animation_fade_visible_hidden</include>
-			<visible>!IsEmpty(Window(Home).Property(activewidget))</visible>
+			<visible>!IsEmpty(Window(Home).Property(activewidget)) | !IsEmpty(Window(Home).Property(spotlightwidgetcontent))</visible>
 			<!-- change spotlight widget button -->
 			<control type="button" id="513">
 				<posy>0</posy>
@@ -669,297 +298,106 @@
 				<onright>300</onright>
 				<onup>noop</onup>
 				<ondown>510</ondown>
-				<animation effect="slide" end="-345,0" time="0" condition="!IntegerGreaterThan(Container(4444).NumItems,0)">Conditional</animation>
+				<animation effect="slide" end="360,0" time="0" condition="Control.IsVisible(4444)">Conditional</animation>
+			</control>
+	
+			
+			<!-- alt spotlight -- submenu+widget present-->
+			<control type="group">
+			<posy>35</posy>
+			<posx>365</posx>
+			<width>1070</width>
+			<height>555</height>
+			<animation time="150" effect="fade">Visible</animation>
+			<animation time="150" effect="fade">Hidden</animation>
+			<visible>[!Control.IsVisible(1508) | Control.HasFocus(510)] + IntegerGreaterThan(Container(4444).NumItems,0) + !IsEmpty(Window(Home).Property(activewidget))</visible>
+				<include>spotLightWidgetLayoutAlt</include>
+			</control>
+			
+			
+			<!-- alt spotlight -- only widget present-->
+			<control type="group">
+			<posy>35</posy>
+			<posx>5</posx>
+			<width>1430</width>
+			<height>555</height>
+			<animation time="150" effect="fade">Visible</animation>
+			<animation time="150" effect="fade">Hidden</animation>
+			<visible>!IntegerGreaterThan(Container(4444).NumItems,0) + !Control.IsVisible(1508) + !IsEmpty(Window(Home).Property(activewidget))</visible>
+				<include>spotLightWidgetLayoutAlt</include>
 			</control>
 	
 			<!-- spotlight widget -->
 			<control type="panel" id="1508">
-				<posy>40</posy>
-				<posx>10</posx>
-				<width>1070</width>
-				<height>550</height>
-				<onleft>4444</onleft>
+				<posy>35</posy>
+				<posx>5</posx>
+				<width>1790</width>
+				<height>555</height>
+				<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0)">4444</onleft>
+				<onleft condition="!IntegerGreaterThan(Container(4444).NumItems,0)">300</onleft>
 				<onright condition="IntegerGreaterThan(Container(510).NumItems,0)">510</onright>
-				<onright condition="!IntegerGreaterThan(Container(510).NumItems,0)">511</onright>
+				<onright condition="!IntegerGreaterThan(Container(510).NumItems,0) + !IsEmpty(Control.GetLabel(511))">511</onright>
+				<onright condition="!IntegerGreaterThan(Container(510).NumItems,0) + IsEmpty(Control.GetLabel(511))">300</onright>
 				<ondown>1508</ondown>
 				<onback>300</onback>
 				<onup>1508</onup>
 				<orientation>vertical</orientation>
 				<focusposition>2</focusposition>
-				<visible>!IsEmpty(Window(Home).Property(activewidget))</visible>
+				<visible>!IsEmpty(Window(Home).Property(spotlightwidgetcontent)) + !Control.HasFocus(510)</visible>
 				<scrolltime tween="cubic" easing="inout">500</scrolltime>
-				<itemlayout width="1070" height="558">
-					<!-- spotlight image -->
-					<control type="image">
-						<width>1068</width>
-						<height>550</height>
-						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio scalediffuse="false">scale</aspectratio>
-					</control>
-					<!--info Overlay-->
-					 <control type="image">
-						<width>1069</width>
-						<height>551</height>
-						<colordiffuse>ccFFFFFF</colordiffuse>
-						<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					</control>
-					<!-- plot small (with logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>750</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[SpotLightWidgetInfoPlot]</label>
-						<font>Light26</font>
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>!IsEmpty(ListItem.Art(clearlogo)) | !IsEmpty(ListItem.Property(clearlogo)) | !IsEmpty(ListItem.Art(clearlogo))</visible>
-					</control>
-					<!-- plot wide (no logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>980</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[SpotLightWidgetInfoPlot]</label>
-						<font>Light26</font>
-						
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(clearlogo)) + IsEmpty(ListItem.Art(clearlogo))</visible>
-					</control>
-					<!-- clearlogo -->
-					<control type="image">
-						<posx>800</posx>
-						<posy>390</posy>
-						<width>250</width>
-						<height>140</height>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-						<texture background="true">$VAR[SpotLightWidgetInfoclearlogo]</texture>
+				<itemlayout width="1790" height="555" condition="!IsEmpty(Window(Home).Property(activewidget)) + Control.IsVisible(4444)">
+					<control type="group">
+						<width>1070</width>
+						<right>360</right>
+						<include>spotLightWidgetLayout</include>
 					</control>
 				</itemlayout>
-				<focusedlayout width="1070" height="558">
-					<!-- spotlight image -->
-					<control type="image">
-						<width>1068</width>
-						<height>550</height>
-						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio scalediffuse="false">scale</aspectratio>
-					</control>
-					<!--info Overlay-->
-					 <control type="image">
-						<width>1069</width>
-						<height>551</height>
-						<colordiffuse>ccFFFFFF</colordiffuse>
-						<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					</control>
-					<!-- plot small (with logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>750</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>[COLOR=white]$VAR[SpotLightWidgetInfoPlot][/COLOR]</label>
-						<font>Light26</font>
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>!IsEmpty(ListItem.Art(clearlogo)) | !IsEmpty(ListItem.Property(clearlogo)) | !IsEmpty(ListItem.Art(clearlogo))</visible>
-					</control>
-					<!-- plot wide (no logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>980</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[SpotLightWidgetInfoPlot]</label>
-						<font>Light26</font>
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(clearlogo)) + IsEmpty(ListItem.Art(clearlogo))</visible>
-					</control>
-					<!-- clearlogo -->
-					<control type="image">
-						<posx>800</posx>
-						<posy>390</posy>
-						<width>250</width>
-						<height>140</height>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-						<texture>$VAR[SpotLightWidgetInfoclearlogo]</texture>
-					</control>
-
-					<control type="image">
-						<!--Panel Focus-->
-						<animation type="Focus">
-							<effect type="fade" start="0" end="100" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-						</animation>
-						<animation type="UnFocus">
-							<effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-						</animation>
-						<posx>-16</posx>
-						<posy>-22</posy>
-						<width>1104</width>
-						<height>590</height>
-						<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-						<texture>home/home_focus.png</texture>
+				<focusedlayout width="1790" height="555" condition="!IsEmpty(Window(Home).Property(activewidget)) + Control.IsVisible(4444)">
+					<control type="group">
+						<width>1070</width>
+						<right>360</right>
+						<include>spotLightWidgetLayoutFocus</include>
 					</control>
 				</focusedlayout>
+				<itemlayout width="1790" height="555" condition="!IsEmpty(Window(Home).Property(activewidget)) + !Control.IsVisible(4444)">
+					<control type="group">
+						<width>1430</width>
+						<right>360</right>
+						<include>spotLightWidgetLayout</include>
+					</control>
+				</itemlayout>
+				<focusedlayout width="1790" height="555" condition="!IsEmpty(Window(Home).Property(activewidget)) + !Control.IsVisible(4444)">
+					<control type="group">
+						<width>1070</width>
+						<right>360</right>
+						<include>spotLightWidgetLayoutFocus</include>
+					</control>
+				</focusedlayout>
+				<itemlayout width="1790" height="555" condition="IsEmpty(Window(Home).Property(activewidget)) + !Control.IsVisible(4444)">
+					<control type="group">
+						<width>1790</width>
+						<right>0</right>
+						<include>spotLightWidgetLayout</include>
+					</control>
+				</itemlayout>
+				<focusedlayout width="1790" height="555" condition="IsEmpty(Window(Home).Property(activewidget)) + !Control.IsVisible(4444)">
+					<control type="group">
+						<width>1790</width>
+						<right>0</right>
+						<include>spotLightWidgetLayoutFocus</include>
+					</control>
+				</focusedlayout>
+				
+				
 				<content target="$VAR[WidgetTarget]">$VAR[SpotLightWidgetContent]</content>
-			</control>
-			
-			<!-- alt widget info submenu present-->
-			<control type="group">
-			<posy>40</posy>
-			<posx>10</posx>
-			<visible>[!IntegerGreaterThan(Container(1508).NumItems,0) | Control.HasFocus(510)] + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
-			<!-- spotlight image -->
-					<control type="image">
-						<width>1068</width>
-						<height>550</height>
-						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio scalediffuse="false">scale</aspectratio>
-					</control>
-					<!--info Overlay-->
-					 <control type="image">
-						<width>1069</width>
-						<height>551</height>
-						<colordiffuse>ccFFFFFF</colordiffuse>
-						<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					</control>
-					<!-- plot small (with logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>750</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlot]</label>
-						<font>Light26</font>
-						
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>!IsEmpty(Container(510).ListItem.Property(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo))</visible>
-					</control>
-					<!-- plot wide (no logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>980</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlot]</label>
-						<font>Light26</font>
-						
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>IsEmpty(Container(510).ListItem.Property(clearlogo)) + IsEmpty(Container(510).ListItem.Art(clearlogo)) + IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo))</visible>
-					</control>
-					<!-- clearlogo -->
-					<control type="image">
-						<posx>800</posx>
-						<posy>390</posy>
-						<width>250</width>
-						<height>140</height>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-						<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-					</control>
-					<!-- weather -->
-					<control type="image">
-						<posx>800</posx>
-						<posy>380</posy>
-						<width>250</width>
-						<height>180</height>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container(510).ListItem.Thumb]</texture>
-						<visible>StringCompare(Window(Home).Property(activewidget), weather)</visible>
-					</control>
-			</control>
 			
 			
-			<!-- alt widget info submenu NOT present-->
-			<control type="group">
-			<posy>40</posy>
-			<posx>-342</posx>
-			<visible>!IntegerGreaterThan(Container(4444).NumItems,0)</visible>
-			<!-- spotlight image -->
-					<control type="image">
-						<width>1422</width>
-						<height>550</height>
-						<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
-						<aspectratio scalediffuse="false" aligny="top">scale</aspectratio>
-					</control>
-					<!--info Overlay-->
-					 <control type="image">
-						<width>1422</width>
-						<height>551</height>
-						<colordiffuse>ccFFFFFF</colordiffuse>
-						<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
-					</control>
-					<!-- plot small (with logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>1050</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlot]</label>
-						<font>Light26</font>
-						
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>!IsEmpty(Container(510).ListItem.Property(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo))</visible>
-					</control>
-					<!-- plot wide (no logo)-->
-					<control type="textbox">
-						<posy>395</posy>
-						<posx>20</posx>
-						<width>1300</width>
-						<height>130</height>
-						<align>left</align>
-						<valign>bottom</valign>
-						<label>$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlot]</label>
-						<font>Light26</font>
-						
-						<textcolor>aawhite</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<visible>IsEmpty(Container(510).ListItem.Property(clearlogo)) + IsEmpty(Container(510).ListItem.Art(clearlogo)) + IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo))</visible>
-					</control>
-					<!-- clearlogo -->
-					<control type="image">
-						<posx>1100</posx>
-						<posy>390</posy>
-						<width>250</width>
-						<height>140</height>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-						<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-					</control>
-					<!-- weather -->
-					<control type="image">
-						<posx>1200</posx>
-						<posy>380</posy>
-						<width>250</width>
-						<height>180</height>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container(510).ListItem.Thumb]</texture>
-						<visible>StringCompare(Window(Home).Property(activewidget), weather)</visible>
-					</control>
 			</control>
-	
 			
 		
 			<!-- widget right -->
 			<control type="group">
-			<posx>1087</posx>
+			<right>0</right>
 			<width>350</width>
 			<height>750</height>
 			
@@ -975,7 +413,6 @@
 				<textoffsetx>0</textoffsetx>
 				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
 				<texturenofocus>-</texturenofocus>
-				
 				<label>$VAR[HomeWidgetLabel]</label>
 				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<onleft condition="!IntegerGreaterThan(Container(1508).NumItems,0)">4444</onleft>
@@ -1034,7 +471,6 @@
 		
 	</include>
 	
-	
 	<include name="panel_layout_enhanced">
 		<posy>40</posy>
 		<posx>10</posx>
@@ -1058,8 +494,146 @@
 		</focusedlayout>
 	</include>
 	
+	<include name="spotLightWidgetLayout">
+		<!-- spotlight image -->
+		<control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<bordersize>5</bordersize>
+			<texture background="true" diffuse="diffuse/wide.png">$VAR[SpotLightWidgetImage]</texture>
+			<aspectratio scalediffuse="false">scale</aspectratio>
+		</control>
+		<!--info Overlay-->
+		 <control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<bordersize>5</bordersize>
+			<colordiffuse>ccFFFFFF</colordiffuse>
+			<texture diffuse="diffuse/wide.png">home/home_overlay.png</texture>
+		</control>
+		<!-- plot small (with logo)-->
+		<control type="textbox">
+			<bottom>15</bottom>
+			<posx>20</posx>
+			<width>70%</width>
+			<height>155</height>
+			<align>left</align>
+			<valign>bottom</valign>
+			<label>$VAR[SpotLightWidgetInfoPlot]</label>
+			<font>Light26</font>
+			<textcolor>aawhite</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<visible>!IsEmpty(ListItem.Art(clearlogo)) | !IsEmpty(ListItem.Property(clearlogo)) | !IsEmpty(ListItem.Art(clearlogo))</visible>
+		</control>
+		<!-- plot wide (no logo)-->
+		<control type="textbox">
+			<bottom>15</bottom>
+			<posx>20</posx>
+			<width>95%</width>
+			<height>155</height>
+			<align>left</align>
+			<valign>bottom</valign>
+			<label>$VAR[SpotLightWidgetInfoPlot]</label>
+			<font>Light26</font>
+			<textcolor>aawhite</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<visible>IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(clearlogo)) + IsEmpty(ListItem.Art(clearlogo))</visible>
+		</control>
+		<!-- clearlogo -->
+		<control type="image">
+			<right>20</right>
+			<bottom>10</bottom>
+			<width>25%</width>
+			<height>170</height>
+			<aspectratio align="right" aligny="center">keep</aspectratio>
+			<texture background="true">$VAR[SpotLightWidgetInfoclearlogo]</texture>
+		</control>
+	</include>
 	
-	 <include name="ThumbsViewLayoutEnhanced">
+	<include name="spotLightWidgetLayoutFocus">
+		<control type="image">
+			<!--Panel Focus-->
+			<animation type="Focus">
+				<effect type="fade" start="0" end="100" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
+			</animation>
+			<animation type="UnFocus">
+				<effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
+			</animation>
+			<width>100%</width>
+			<height>100%</height>
+			<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
+			<texture>diffuse/wide.png</texture>
+		</control>
+		<include>spotLightWidgetLayout</include>
+		
+	</include>
+	
+	<include name="spotLightWidgetLayoutAlt">
+		<control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<bordersize>5</bordersize>
+			<texture background="true" diffuse="home/home_matte2.png">$VAR[SpotLightWidgetImage]</texture>
+			<aspectratio scalediffuse="false">scale</aspectratio>
+		</control>
+		<!--info Overlay-->
+		 <control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<bordersize>5</bordersize>
+			<colordiffuse>ccFFFFFF</colordiffuse>
+			<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
+		</control>
+		<!-- plot small (with logo)-->
+		<control type="textbox">
+			<bottom>15</bottom>
+			<posx>20</posx>
+			<width>70%</width>
+			<height>155</height>
+			<align>left</align>
+			<valign>bottom</valign>
+			<label>$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlot]</label>
+			<font>Light26</font>
+			<textcolor>aawhite</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<visible>!IsEmpty(Container(510).ListItem.Property(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(clearlogo)) | !IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo))</visible>
+		</control>
+		<!-- plot wide (no logo)-->
+		<control type="textbox">
+			<bottom>15</bottom>
+			<posx>20</posx>
+			<width>95%</width>
+			<height>155</height>
+			<align>left</align>
+			<valign>bottom</valign>
+			<label>$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlot]</label>
+			<font>Light26</font>
+			<textcolor>aawhite</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<visible>IsEmpty(Container(510).ListItem.Property(clearlogo)) + IsEmpty(Container(510).ListItem.Art(clearlogo)) + IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo))</visible>
+		</control>
+		<!-- clearlogo -->
+		<control type="image">
+			<right>20</right>
+			<bottom>10</bottom>
+			<width>25%</width>
+			<height>170</height>
+			<aspectratio align="right" aligny="center">keep</aspectratio>
+			<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+		</control>
+		<!-- weather -->
+		<control type="image">
+			<right>20</right>
+			<bottom>0</bottom>
+			<width>250</width>
+			<height>180</height>
+			<aspectratio align="center" aligny="center">keep</aspectratio>
+			<texture background="true">$INFO[Container(510).ListItem.Thumb]</texture>
+			<visible>StringCompare(Window(Home).Property(activewidget), weather)</visible>
+		</control>
+	</include>
+	
+	<include name="ThumbsViewLayoutEnhanced">
 
 		<control type="image">
             <!--Panel Normal-->
@@ -1104,7 +678,6 @@
 
     </include>
     
-	
 	<include name="ThumbsViewLayoutFocusEnhanced">
 
         <include>ThumbsViewLayoutEnhanced</include>
@@ -1150,7 +723,6 @@
 			<onfocus>SetProperty(menu,4444,Home)</onfocus>
 		</control>
     </include>
-	
 	
 	<include name="EnhancedHomeMainLayout">
 		<control type="image">
