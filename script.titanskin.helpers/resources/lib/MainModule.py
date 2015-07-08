@@ -146,7 +146,7 @@ def selectBusyTexture():
     currentSpinnerTexture = xbmc.getInfoLabel("Skin.String(SpinnerTexture)")
     
     listitem = xbmcgui.ListItem(label="None")
-    listitem.setProperty("icon","special://skin/extras/icons/no-spinner-icon.png")
+    listitem.setProperty("icon","None")
     spinnersList.append(listitem)
     
     listitem = xbmcgui.ListItem(label="Custom single image (gif)")
@@ -197,7 +197,6 @@ def selectBusyTexture():
         dialog = xbmcgui.Dialog()
         custom_texture = dialog.browse( 0 , xbmc.getLocalizedString(31504), 'files')
         if custom_texture:
-            print "custom_texture -->" + custom_texture
             xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
             xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
     else:
