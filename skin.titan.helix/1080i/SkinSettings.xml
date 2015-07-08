@@ -4,12 +4,6 @@
     <defaultcontrol always="true">100</defaultcontrol>
 	
 	<onunload>SetProperty(powermenu, notactive, Home)</onunload>
-	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.movies.0.path))">Skin.Reset(HomeMenuUseMBforMovies)</onload>
-	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforTVseries)</onload>
-	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforMusic)</onload>
-	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforPictures)</onload>
-	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(HomeMenuUseMBforMusicVideos)</onload>
-	<onload condition="IsEmpty(Window(Home).Property(mediabrowser.std.tvshows.0.path))">Skin.Reset(MB3ModeDetectDone)</onload>
 	<onload>XBMC.RunScript(script.titanskin.helpers,SETSKINVERSION)</onload>
     <allowoverlay>yes</allowoverlay>
     <include>defaultskinsettings</include>
@@ -149,18 +143,17 @@
 					<alttexturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel_trans.png</alttexturenofocus>
 					<usealttexture>StringCompare(Window(Home).Property(currentButton),6)</usealttexture>
 				</control>
-				<control type="togglebutton" id="5">
-					<!--skin mode ID=7000-->
-					<label>31004</label>
+				<!-- smart shortcuts -->
+				<control type="togglebutton" id="19">
+					<label>31531</label>
 					<onclick>noop</onclick>
 					<width>440</width>
-					<visible>System.HasAddon(plugin.video.xbmb3c) | System.HasAddon(plugin.video.plexbmc) | System.HasAddon(plugin.video.netflixbmc)</visible>
 					<align>left</align>
-					<onfocus>SetProperty(currentButton,5,Home)</onfocus>
+					<onfocus>SetProperty(currentButton,19,Home)</onfocus>
 					<font>Reg28</font>
 					<alttexturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel.png</alttexturefocus>
 					<alttexturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel_trans.png</alttexturenofocus>
-					<usealttexture>StringCompare(Window(Home).Property(currentButton),5)</usealttexture>
+					<usealttexture>StringCompare(Window(Home).Property(currentButton),19)</usealttexture>
 				</control>
 				<!-- advanced settings -->
 				<control type="togglebutton" id="14">
@@ -193,6 +186,107 @@
 				<posx>600</posx>
 				<posy>20</posy>
 			   
+				<!-- smart shortcuts -->
+				<control type="grouplist" id="19000">
+					<description>Control Area</description>
+					<width>1230</width>
+					<height>96%</height>
+					<itemgap>5</itemgap>
+					<onup>8000</onup>
+					<ondown>noop</ondown>
+					<onleft>100</onleft>
+					<onright>313</onright>
+					<orientation>vertical</orientation>
+					<pagecontrol>313</pagecontrol>
+					<visible>StringCompare(Window(Home).Property(currentButton),19)</visible>
+
+					<!-- smart shortcuts -->
+					<control type="label" id="19001">
+						<width>1230</width>
+						<height>50</height>
+						<font>Bold32</font>
+						<label>31323</label>
+						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					
+					<control type="textbox" id="19002">
+						<description></description>
+						<width>1200</width>
+						<align>justify</align>
+						<label>31322</label>
+						<height>auto</height>
+						
+						<font>Reg20</font>
+						<onclick>Skin.ToggleSetting(SmartShortcuts.favorites)</onclick>
+						<selected>Skin.HasSetting(SmartShortcuts.favorites)</selected>
+					</control>
+					<control type="label" id="19003">
+						<width>1230</width>
+						<height>10</height>
+						<align>left</align>
+						<aligny>center</aligny>
+					</control>
+					<control type="radiobutton" id="19010">
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>31320</label>
+						<height>50</height>
+						
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(SmartShortcuts.playlists)</onclick>
+						<selected>Skin.HasSetting(SmartShortcuts.playlists)</selected>
+					</control>
+					<control type="radiobutton" id="19011">
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>31321</label>
+						<height>50</height>
+						
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(SmartShortcuts.favorites)</onclick>
+						<selected>Skin.HasSetting(SmartShortcuts.favorites)</selected>
+					</control>
+					<control type="radiobutton" id="19012">
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>31339</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(SmartShortcuts.emby)</onclick>
+						<selected>Skin.HasSetting(SmartShortcuts.emby) + System.HasAddon(plugin.video.emby)</selected>
+						<enable>System.HasAddon(plugin.video.emby)</enable>
+					</control>
+					<control type="radiobutton" id="19013">
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>$LOCALIZE[31532] (plexbmc)</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(SmartShortcuts.plex)</onclick>
+						<selected>Skin.HasSetting(SmartShortcuts.plex) + System.HasAddon(plugin.video.plexbmc)</selected>
+						<enable>System.HasAddon(plugin.video.plexbmc)</enable>
+					</control>
+					<control type="radiobutton" id="19014">
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>$LOCALIZE[31533] (netflixbmc)</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(SmartShortcuts.netflix)</onclick>
+						<selected>Skin.HasSetting(SmartShortcuts.netflix) + System.HasAddon(plugin.video.netflixbmc)</selected>
+						<enable>System.HasAddon(plugin.video.netflixbmc)</enable>
+					</control>
+
+				</control>
+
 				<!-- advanced settings -->
 				<control type="grouplist" id="8000">
 					<description>Control Area</description>
@@ -297,9 +391,7 @@
 						<onclick>Skin.ToggleSetting(DisableSubtitles)</onclick>
 						<selected>Skin.HasSetting(DisableSubtitles)</selected>
 					</control>
-					
-					
-					
+
 					<control type="radiobutton" id="8015">
 						<description></description>
 						<width>1230</width>
@@ -324,83 +416,9 @@
 						<onclick condition="Skin.String(CustomPicturesBackgroundPath)">Skin.Reset(CustomPicturesBackgroundPath)</onclick>
 						<selected>Skin.String(CustomPicturesBackgroundPath)</selected>
 					</control>
-					
-					
-					
-					<!-- spacing -->
-					<control type="label" id="8020">
-						<width>1230</width>
-						<height>20</height>
-						<align>left</align>
-						<aligny>center</aligny>
-					</control>
-					
-					<!-- smart shortcuts -->
-					<control type="label" id="8021">
-						<width>1230</width>
-						<height>50</height>
-						<font>Bold32</font>
-						<label>31323</label>
-						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<align>left</align>
-						<aligny>center</aligny>
-					</control>
-					
-					<control type="textbox" id="8023">
-						<description></description>
-						<width>1200</width>
-						<align>justify</align>
-						<label>31322</label>
-						<height>auto</height>
-						
-						<font>Reg20</font>
-						<onclick>Skin.ToggleSetting(SmartShortcuts.favorites)</onclick>
-						<selected>Skin.HasSetting(SmartShortcuts.favorites)</selected>
-					</control>
-					<control type="label" id="8022">
-						<width>1230</width>
-						<height>10</height>
-						<align>left</align>
-						<aligny>center</aligny>
-					</control>
-					<control type="radiobutton" id="8024">
-						<description></description>
-						<width>1230</width>
-						<align>left</align>
-						<label>31320</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(SmartShortcuts.playlists)</onclick>
-						<selected>Skin.HasSetting(SmartShortcuts.playlists)</selected>
-					</control>
-					<control type="radiobutton" id="8025">
-						<description></description>
-						<width>1230</width>
-						<align>left</align>
-						<label>31321</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(SmartShortcuts.favorites)</onclick>
-						<selected>Skin.HasSetting(SmartShortcuts.favorites)</selected>
-					</control>
-					<control type="radiobutton" id="8026">
-						<description></description>
-						<width>1230</width>
-						<align>left</align>
-						<label>31339</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(SmartShortcuts.emby)</onclick>
-						<selected>Skin.HasSetting(SmartShortcuts.emby)</selected>
-						<visible>System.HasAddon(plugin.video.emby)</visible>
-					</control>
-
 				</control>
 
+				
 				<!-- OSD -->
 				<control type="grouplist" id="16000">
 					<description>Control Area</description>
@@ -2147,238 +2165,7 @@
 					
 					
 				</control>
-				
-				<!-- skin mode-->
-				<control type="grouplist" id="7000">
-					<description>Control Area</description>
-					<width>1230</width>
-					<height>96%</height>
-					<itemgap>5</itemgap>
-					<onup>7000</onup>
-					<ondown>7000</ondown>
-					<onleft>100</onleft>
-					<onright>noop</onright>
-					<orientation>vertical</orientation>
-					<visible>StringCompare(Window(Home).Property(currentButton),5)</visible>
-					<control type="label" id="2311">
-						<width>1230</width>
-						<height>50</height>
-						<font>Bold32</font>
-						<label>31078</label>
-						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<align>left</align>
-						<aligny>center</aligny>
-					</control>
-					<control type="textbox" id="2310">
-						<width>1230</width>
-						<height>auto</height>
-						<font>Reg25</font>
-						<posy>60</posy>
-						<label>31079</label>
-						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<align>left</align>
-						<aligny>top</aligny>
-					</control>
-					<control type="label" id="7101">
-						<width>1230</width>
-						<height>80</height>
-						<font>Bold32</font>
-						<label>31012</label>
-						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<align>left</align>
-						<aligny>center</aligny>
-						<visible>System.HasAddon(plugin.video.xbmb3c)</visible>
-					</control>
-					<control type="radiobutton" id="7001">
-						<!--Music-->
-						<description>Music</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31008] $LOCALIZE[2]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseMBforMusic)</onclick>
-						<onclick>Skin.Reset(HomeMenuUsePlexforMusic)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseMBforMusic)</selected>
-						<visible>System.HasAddon(plugin.video.xbmb3c)</visible>
-					</control>
-					<control type="radiobutton" id="7003">
-						<!--Movies-->
-						<description>Movies</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31008] $LOCALIZE[342]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseMBforMovies)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseNetflixforMovies)</onclick>
-						<onclick>Skin.Reset(HomeMenuUsePlexforMovies)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseMBforMovies)</selected>
-						<visible>System.HasAddon(plugin.video.xbmb3c)</visible>
-					</control>
-					<control type="radiobutton" id="7005">
-						<!--TV Series-->
-						<description>Tv Series</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31008] $LOCALIZE[20343]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseMBforTVseries)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseNetflixforTVseries)</onclick>
-						<onclick>Skin.Reset(HomeMenuUsePlexforTVseries)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseMBforTVseries)</selected>
-						<visible>System.HasAddon(plugin.video.xbmb3c)</visible>
-					</control>
-					<control type="radiobutton" id="7007">
-						<!--Pictures-->
-						<description>Pictures</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31008] $LOCALIZE[1]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseMBforPictures)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseMBforPictures)</selected>
-						<onclick>Skin.Reset(HomeMenuUsePlexforPictures)</onclick>
-						<visible>System.HasAddon(plugin.video.xbmb3c)</visible>
-					</control>
-					<control type="radiobutton" id="71008">
-						<!--MusicVideos-->
-						<description>MusicVideos</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31008] $LOCALIZE[31045]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseMBforMusicVideos)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseMBforMusicVideos)</selected>
-						<visible>System.HasAddon(plugin.video.xbmb3c)</visible>
-					</control>
-					
-					<!-- netflix mode -->
-					<control type="label" id="2301">
-						<width>1230</width>
-						<height>50</height>
-						<font>Bold32</font>
-						<label>31080</label>
-						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<align>left</align>
-						<aligny>center</aligny>
-						<visible>System.HasAddon(plugin.video.netflixbmc)</visible>
-					</control>
 
-					<control type="radiobutton" id="2303">
-						<!--Movies-->
-						<description>Movies</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31082] $LOCALIZE[342]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseNetflixforMovies)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseMBforMovies)</onclick>
-						<onclick>Skin.Reset(HomeMenuUsePlexforMovies)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseNetflixforMovies) + !Skin.HasSetting(HomeMenuUseMBforMovies)</selected>
-						<visible>System.HasAddon(plugin.video.netflixbmc)</visible>
-					</control>
-					<control type="radiobutton" id="2304">
-						<!--TV Series-->
-						<description>Tv Series</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31082] $LOCALIZE[20343]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUseNetflixforTVseries)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseMBforTVseries)</onclick>
-						<onclick>Skin.Reset(HomeMenuUsePlexforTVseries)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUseNetflixforTVseries)</selected>
-					   <visible>System.HasAddon(plugin.video.netflixbmc)</visible>
-					</control>
-					
-					<control type="label" id="2400">
-						<width>1230</width>
-						<height>50</height>
-						<font>Bold32</font>
-						<label>31181</label>
-						<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
-						<align>left</align>
-						<aligny>center</aligny>
-						<visible>System.HasAddon(plugin.video.plexbmc)</visible>
-					</control>
-					<control type="radiobutton" id="2402">
-						<!--Movies-->
-						<description>Movies</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31182] $LOCALIZE[342]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUsePlexforMovies)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseMBforMovies)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseNetflixforMovies)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUsePlexforMovies)</selected>
-						<visible>System.HasAddon(plugin.video.plexbmc)</visible>
-					</control>
-					<control type="radiobutton" id="2403">
-						<!--TV Series-->
-						<description>Tv Series</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31182] $LOCALIZE[20343]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUsePlexforTVseries)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseMBforTVseries)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseNetflixforTVseries)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUsePlexforTVseries)</selected>
-					   <visible>System.HasAddon(plugin.video.plexbmc)</visible>
-					</control>
-					<control type="radiobutton" id="2404">
-						<!--Pictures-->
-						<description>Pictures</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31182] $LOCALIZE[1]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUsePlexforPictures)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUsePlexforPictures)</selected>
-						<onclick>Skin.Reset(HomeMenuUseMBforPictures)</onclick>
-						<visible>System.HasAddon(plugin.video.plexbmc)</visible>
-					</control>
-					<control type="radiobutton" id="2405">
-						<!--Music-->
-						<description>Music</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31182] $LOCALIZE[2]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(HomeMenuUsePlexforMusic)</onclick>
-						<onclick>Skin.Reset(HomeMenuUseMBforMusic)</onclick>
-						<selected>Skin.HasSetting(HomeMenuUsePlexforMusic)</selected>
-						<visible>System.HasAddon(plugin.video.plexbmc)</visible>
-					</control>
-				</control>
-				
 				<!--general settings-->
 				<control type="grouplist" id="5000">
 					<description>Control Area</description>
@@ -2554,11 +2341,9 @@
 						<align>left</align>
 						<label>31258</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(HideWatchedRecentlyAdded)</onclick>
 						<selected>Skin.HasSetting(HideWatchedRecentlyAdded)</selected>
-						<visible>!Skin.HasSetting(HomeMenuUseMBforMovies) + !Skin.HasSetting(HomeMenuUseNetflixforMovies)</visible>
 					</control>
 					
 					<control type="radiobutton" id="5159">

@@ -308,8 +308,7 @@ class BackgroundsUpdater(threading.Thread):
 
         #get recent and unwatched movies
         self.win.setProperty("RecentMovieBackground",self.getImageFromPath("videodb://recentlyaddedmovies/"))
-        
-            
+           
         #unwatched movies
         self.win.setProperty("UnwatchedMovieBackground",self.getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp"))
       
@@ -323,7 +322,7 @@ class BackgroundsUpdater(threading.Thread):
         self.win.setProperty("PicturesBackground", self.getPicturesBackground())
         
         #smart shortcuts --> emby nodes
-        if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.emby)"):
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.emby) + Skin.HasSetting(SmartShortcuts.emby)"):
             utils.logMsg("Processing smart shortcuts for emby nodes.... ")
             
             if self.smartShortcuts.has_key("emby"):
@@ -362,8 +361,7 @@ class BackgroundsUpdater(threading.Thread):
                                     self.win.setProperty("Emby.nodes.%s%s.image"%(str(i),contentString),image)
                                 
                     self.smartShortcuts["emby"] = nodes
-                    
-                    
+                                        
         #smart shortcuts --> playlists
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
             utils.logMsg("Processing smart shortcuts for playlists.... ")
@@ -404,8 +402,7 @@ class BackgroundsUpdater(threading.Thread):
                 #something wrong so disable the smartshortcuts for this section for now
                 xbmc.executebuiltin("Skin.Reset(SmartShortcuts.playlists)")
                 utils.logMsg("Error while processing smart shortcuts for playlists - set disabled.... ")
-        
-            
+                    
         #smart shortcuts --> favorites
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
             utils.logMsg("Processing smart shortcuts for favourites.... ")
@@ -447,10 +444,9 @@ class BackgroundsUpdater(threading.Thread):
                 #something wrong so disable the smartshortcuts for this section for now
                 xbmc.executebuiltin("Skin.Reset(SmartShortcuts.favorites)")
                 utils.logMsg("Error while processing smart shortcuts for favourites - set disabled.... ")                
-        
-        
+               
         #smart shortcuts --> plex nodes
-        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"):
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc) + Skin.HasSetting(SmartShortcuts.plex)"):
             
             utils.logMsg("Processing smart shortcuts for plex nodes.... ")
             

@@ -90,7 +90,7 @@ class HomeMonitor(threading.Thread):
     
     def updatePlexlinks(self):
         
-        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc)"): 
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc) + Skin.HasSetting(SmartShortcuts.plex)"): 
             utils.logMsg("update plexlinks started...")
             
             #initialize plex window props by using the amberskin entrypoint for now
