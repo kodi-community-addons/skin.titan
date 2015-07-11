@@ -43,12 +43,15 @@ class HomeMonitor(threading.Thread):
         listItem = None
         lastListItem = None
         mainMenuContainer = "300"
+        utils.setSkinVersion()
+        self.checkNetflixReady()
 
         while (self.exit != True):
             
             #do some background stuff every 15 minutes
             if (xbmc.getCondVisibility("!Window.IsActive(fullscreenvideo)")):
                 if (self.delayedTaskInterval >= 900):
+                    self.checkNetflixReady()
                     self.updatePlexlinks()
                     self.checkNotifications()
                     self.delayedTaskInterval = 0
@@ -88,6 +91,15 @@ class HomeMonitor(threading.Thread):
             linkCount -= 1
             xbmc.sleep(50)
     
+    def checkNetflixReady(self):
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc)"):
+            #set windowprop if netflix addon has a username filled in to prevent login loop box
+            nfaddon = xbmcaddon.Addon(id='plugin.video.netflixbmc')
+            if nfaddon.getSetting("username") and nfaddon.getSetting("html5MessageShown"):
+                self.win.setProperty("netflixready","ready")
+            else:
+                self.win.clearProperty("netflixready")
+                
     def updatePlexlinks(self):
         
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc) + Skin.HasSetting(SmartShortcuts.plex)"): 
@@ -96,9 +108,9 @@ class HomeMonitor(threading.Thread):
             #initialize plex window props by using the amberskin entrypoint for now
             if not self.win.getProperty("plexbmc.0.title"):
                 xbmc.executebuiltin('RunScript(plugin.video.plexbmc,amberskin)')
-                #wait for max 20 seconds untill the plex nodes are available
+                #wait for max 10 seconds untill the plex nodes are available
                 count = 0
-                while (count < 80 and self.win.getProperty("plexbmc.0.title") == ""):
+                while (count < 40 and self.win.getProperty("plexbmc.0.title") == ""):
                     xbmc.sleep(250)
                     count += 1
             
@@ -106,7 +118,7 @@ class HomeMonitor(threading.Thread):
             if not self.win.getProperty("plexbmc.0.title"):
                 xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
                 count = 0
-                while (count < 80 and self.win.getProperty("plexbmc.0.title") == ""):
+                while (count < 16 and self.win.getProperty("plexbmc.0.title") == ""):
                     xbmc.sleep(250)
                     count += 1
             

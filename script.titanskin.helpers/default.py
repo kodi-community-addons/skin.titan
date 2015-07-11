@@ -79,6 +79,12 @@ elif action == "COLORTHEMES":
     colorThemes = ColorThemes("script-titanskin_helpers-ColorThemes.xml", __cwd__, "default", "1080i")
     colorThemes.doModal()
     del colorThemes
+elif action == "CREATECOLORTHEME":
+    import ColorThemes as colorThemes
+    colorThemes.createColorTheme()
+elif action == "RESTORECOLORTHEME":
+    import ColorThemes as colorThemes
+    colorThemes.restoreColorTheme()
 elif action == "COLORTHEMETEXTURE":    
     MainModule.selectOverlayTexture()
 elif action == "BUSYTEXTURE":    
@@ -93,7 +99,8 @@ elif action == "RESET":
     import BackupRestore
     BackupRestore.reset()
 elif action == "SETSKINVERSION":
-    MainModule.setSkinVersion()
+    import Utils as utils
+    utils.setSkinVersion()
 elif "NEXTEPISODES" in argument1:
     MainModule.getNextEpisodes()
 elif "RECOMMENDEDMOVIES" in argument1:

@@ -55,7 +55,6 @@ class BackgroundsUpdater(threading.Thread):
 
     def run(self):
 
-        
         KodiMonitor = xbmc.Monitor()
             
         #first run get backgrounds immediately from filebased cache and reset the cache in memory to populate all images from scratch
@@ -114,7 +113,7 @@ class BackgroundsUpdater(threading.Thread):
                 self.smartShortcuts = json.load(data_file)    
                 
 
-    def getImageFromPath(self, libPath):
+    def getImageFromPath(self, libPath, fallbackImage=None):
         
         if self.exit:
             return None
@@ -125,12 +124,12 @@ class BackgroundsUpdater(threading.Thread):
         #is path in the temporary blacklist ?
         if libPath in self.tempBlacklist:
             utils.logMsg("path blacklisted - skipping for path " + libPath)
-            return None
+            return fallbackImage
         
         #is path in the definitive blacklist ?
         if libPath in self.defBlacklist:
             utils.logMsg("path blacklisted - skipping for path " + libPath)
-            return None
+            return fallbackImage
         
         #no blacklist so read cache and/or path
         utils.logMsg("path is NOT blacklisted (or blacklist file error) - continuing for path " + libPath)
@@ -167,14 +166,14 @@ class BackgroundsUpdater(threading.Thread):
                 if libPath.startswith("musicdb://") or libPath.startswith("videodb://") or libPath.startswith("library://") or libPath.endswith(".xsp") or libPath.startswith("plugin://plugin.video.emby"):
                     #addpath to temporary blacklist
                     self.tempBlacklist.add(libPath)
-                    return None
+                    return fallbackImage
                 else:
                     #blacklist this path
                     self.defBlacklist.add(libPath)
-                    return None
+                    return fallbackImage
         
         #all is fine, we have some images to randomize and return one
-        image = None
+        image = fallbackImage
         if images != []:
             self.allBackgrounds[libPath] = images
             random.shuffle(images)
@@ -272,7 +271,7 @@ class BackgroundsUpdater(threading.Thread):
         except:
             utils.logMsg("exception occured in getPicturesBackground.... ")
             return None            
-            
+               
     def getGlobalBackground(self):
         #just get a random image from all the images in the cache
         if self.allBackgrounds != {}:
@@ -288,21 +287,18 @@ class BackgroundsUpdater(threading.Thread):
         #get all movies  
         self.win.setProperty("AllMoviesBackground",self.getImageFromPath("videodb://movies/titles/"))
         
-        
         #get all tvshows  
         self.win.setProperty("AllTvShowsBackground",self.getImageFromPath("videodb://tvshows/titles/"))
         
         #get all musicvideos  
         self.win.setProperty("AllMusicVideosBackground",self.getImageFromPath("videodb://musicvideos/titles/"))
         
-            
         #get all music  
         self.win.setProperty("AllMusicBackground",self.getImageFromPath("musicdb://artists/"))
         
         #get global fanart background 
         self.win.setProperty("GlobalFanartBackground",self.getGlobalBackground())
-        
-            
+         
         #get in progress movies  
         self.win.setProperty("InProgressMovieBackground",self.getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
 
@@ -336,14 +332,11 @@ class BackgroundsUpdater(threading.Thread):
                     self.win.setProperty(key + ".image", image)
                     self.win.setProperty(key + ".title", label)
                     self.win.setProperty(key + ".path", path)
-            else:
-                utils.logMsg("no cache - Get emby entries from file.... ")            
-                #wait for max 5 seconds untill the emby nodes are available
-                count = 0
-                while (count < 20 and self.win.getProperty("Emby.nodes.total") == ""):
-                    xbmc.sleep(250)
-                    count += 1
+            
+            elif self.win.getProperty("Emby.nodes.total"):
                 
+                utils.logMsg("no cache - Get emby entries from file.... ")            
+               
                 embyProperty = self.win.getProperty("Emby.nodes.total")
                 contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
                 if embyProperty:
@@ -446,8 +439,8 @@ class BackgroundsUpdater(threading.Thread):
                 utils.logMsg("Error while processing smart shortcuts for favourites - set disabled.... ")                
                
         #smart shortcuts --> plex nodes
-        if xbmc.getCondVisibility("System.HasAddon(plugin.video.plexbmc) + Skin.HasSetting(SmartShortcuts.plex)"):
-            
+        if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.plex)"):
+            nodes = []
             utils.logMsg("Processing smart shortcuts for plex nodes.... ")
             
             if self.smartShortcuts.has_key("plex"):
@@ -461,14 +454,8 @@ class BackgroundsUpdater(threading.Thread):
                     self.win.setProperty(key + ".background", image)
                     self.win.setProperty(key + ".title", label)
                     self.win.setProperty(key + ".path", path)
-            else:
+            elif self.win.getProperty("plexbmc.0.title"):
                 utils.logMsg("no cache - Get plex entries from file.... ")    
-            
-                #wait for max 5 seconds untill the plex nodes are available
-                count = 0
-                while (count < 20 and not self.win.getProperty("plexbmc.0.title")):
-                    xbmc.sleep(250)
-                    count += 1
                                    
                 contentStrings = ["", ".ondeck", ".recent", ".unwatched"]
                 if self.win.getProperty("plexbmc.0.title"):
@@ -489,14 +476,61 @@ class BackgroundsUpdater(threading.Thread):
                                         self.win.setProperty("plexfanartbg", image)
                 
                 
-                #channels
-                plextitle = self.win.getProperty("plexbmc.channels.title")
-                key = "plexbmc.channels"
-                plexcontent = self.win.getProperty("plexbmc.channels.path")
-                if plexcontent:
-                    image = self.getImageFromPath(plexcontent)
-                    nodes.append( (key, plextitle, plexcontent ) )
-                    if image:
-                        self.win.setProperty("plexbmc.channels.background", image)
-                
-                self.smartShortcuts["plex"] = nodes
+                    #channels
+                    plextitle = self.win.getProperty("plexbmc.channels.title")
+                    key = "plexbmc.channels"
+                    plexcontent = self.win.getProperty("plexbmc.channels.path")
+                    if plexcontent:
+                        image = self.getImageFromPath(plexcontent)
+                        nodes.append( (key, plextitle, plexcontent ) )
+                        if image:
+                            self.win.setProperty("plexbmc.channels.background", image)
+                    
+                    self.smartShortcuts["plex"] = nodes
+                 
+        #smart shortcuts --> netflix nodes
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc) + Skin.HasSetting(SmartShortcuts.netflix)") and self.win.getProperty("netflixready") == "ready":
+            
+            #general - images from viewing activity
+            self.win.setProperty("Netflix.general",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb&type=both&widget=true&url", "special://skin/extras/hometiles/netflix.png"))
+            
+            #my list
+            self.win.setProperty("Netflix.mylist",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_38", "special://skin/extras/hometiles/netflix.png"))
+            
+            #my list movies
+            self.win.setProperty("Netflix.mylistmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=movie&widget=true&url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall", "special://skin/extras/hometiles/netflix.png"))
+            
+            #my list tv
+            self.win.setProperty("Netflix.mylisttv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=tv&widget=true&url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall", "special://skin/extras/hometiles/netflix.png"))
+            
+            #suggestions
+            self.win.setProperty("Netflix.suggestions",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_12", "special://skin/extras/hometiles/netflix.png"))
+            
+            #suggestions movie
+            self.win.setProperty("Netflix.suggestionsmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=movie&widget=true&url=slider_12", "special://skin/extras/hometiles/netflix.png"))
+            
+            #suggestions tv
+            self.win.setProperty("Netflix.suggestionstv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=tv&widget=true&url=slider_12", "special://skin/extras/hometiles/netflix.png"))
+            
+            #recent movies
+            self.win.setProperty("Netflix.recentmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=movie&widget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson", "special://skin/extras/hometiles/netflix.png"))
+            
+            #recent tv
+            self.win.setProperty("Netflix.recenttv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=tvwidget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson&", "special://skin/extras/hometiles/netflix.png"))
+            
+            #all movies
+            self.win.setProperty("Netflix.allmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb&type=movie&widget=true&url", "special://skin/extras/hometiles/netflix.png"))
+            
+            #all tv
+            self.win.setProperty("Netflix.alltv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb&type=tv&widget=true&url", "special://skin/extras/hometiles/netflix.png"))
+            
+            #in progress
+            self.win.setProperty("Netflix.progress",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_4", "special://skin/extras/hometiles/netflix.png"))
+            
+            #in progress movies
+            self.win.setProperty("Netflix.progressmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=movie&widget=true&url=slider_4", "special://skin/extras/hometiles/netflix.png"))
+            
+            #in progress tv
+            self.win.setProperty("Netflix.progresstv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=tv&widget=true&url=slider_4", "special://skin/extras/hometiles/netflix.png"))
+            
+            

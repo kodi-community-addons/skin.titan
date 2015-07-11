@@ -45,11 +45,6 @@ def musicSearch():
     xbmc.executebuiltin( "ActivateWindow(MusicLibrary)" )
     xbmc.executebuiltin( "SendClick(8)" )
     
-def setSkinVersion():
-    skin = xbmc.getSkinDir()
-    skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
-    skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
-    win.setProperty("skinTitle",skinLabel + " (v" + skinVersion + ")")
         
 def showInfoPanel():
     tryCount = 0
@@ -294,8 +289,6 @@ def setView():
     if selectedItem != -1 and selectedItem != None:
         xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
     
-    
-
 def searchTrailer(title):
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
     import Dialogs as dialogs
@@ -333,7 +326,6 @@ def getNextEpisodes():
     limit = 25
     count = 0
     xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-    
     # First we get a list of all the in-progress TV shows
     json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "studio", "mpaa", "file", "art" ] }, "id": "1"}')
 
@@ -379,7 +371,6 @@ def getRecommendedMovies():
     limit = 25
     count = 0
     xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-    
     # First we get a list of all the in-progress Movies
     json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
     json_result = json.loads(json_query_string)
@@ -405,15 +396,13 @@ def getRecommendedMovies():
                 break
     
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
-
-
+    
 def getRecommendedMedia(ondeckOnly=True):
     limit = 25
     count = 0
     allItems = []
     allTitles = list()
     xbmcplugin.setContent(int(sys.argv[1]), 'files')
-    
     # Get a list of all the in-progress Movies
     json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "mpaa", "runtime", "writer", "cast", "dateadded", "lastplayed", "tagline" ] }, "id": "1"}')
     json_result = json.loads(json_query_string)

@@ -1,4 +1,5 @@
 import xbmcplugin
+import xbmcaddon
 import xbmcgui
 import xbmc
 import json
@@ -9,16 +10,22 @@ def logMsg(msg, level = 1):
         xbmc.log("Titanskin DEBUG --> " + msg)
 
 def getContentPath(libPath):
-    if "$INFO" in libPath:
+    if "$INFO" in libPath and not "reload=" in libPath:
         win = xbmcgui.Window( 10000 )
         libPath = libPath.replace("$INFO[Window(Home).Property(", "")
         libPath = libPath.replace(")]", "")
         libPath = win.getProperty(libPath)    
 
     if "Activate" in libPath:
-        libPath = libPath.split(",",1)[1]
-        libPath = libPath.replace(",return","")
-        libPath = libPath.replace(", return","")
+        if "ActivateWindow(MusicLibrary," in libPath:
+            libPath = libPath.replace("ActivateWindow(MusicLibrary," ,"musicdb://").lower()
+            libPath = libPath.replace(",return","/")
+            libPath = libPath.replace(", return","/")
+        else:
+            libPath = libPath.split(",",1)[1]
+            libPath = libPath.replace(",return","")
+            libPath = libPath.replace(", return","")
+        
         libPath = libPath.replace(")","")
         libPath = libPath.replace("\"","")
     
@@ -35,6 +42,13 @@ def getJSON(method,params):
         logMsg("no result " + str(jsonobject))
         return None
 
+def setSkinVersion():
+    skin = xbmc.getSkinDir()
+    win = xbmcgui.Window( 10000 )
+    skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
+    skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
+    win.setProperty("skinTitle",skinLabel + " - " + xbmc.getLocalizedString(19114) + ": " + skinVersion)
+    win.setProperty("skinVersion",xbmc.getLocalizedString(19114) + ": " + skinVersion)
         
 def createListItem(item):
        
@@ -124,17 +138,16 @@ def createListItem(item):
         liz.setProperty("resumetime", str(item['resume']['position']))
         liz.setProperty("totaltime", str(item['resume']['total']))
     
-    
     if "art" in item:
         art = item['art']
         liz.setThumbnailImage(item['art'].get('thumb',''))
     else:
         art = []
         if "fanart" in item:
-            art.append({"fanart",item['fanart']})
+            art.append(("fanart",item["fanart"]))
         if "thumbnail" in item:
-            art.append({"thumb",item['thumbnail']})
-            liz.setThumbnailImage(item['thumbnail'])
+            art.append(("thumb",item["thumbnail"]))
+            liz.setThumbnailImage(item["thumbnail"])
     
     liz.setArt(art)
     

@@ -11,7 +11,8 @@ import json
 from xml.dom.minidom import parse
 from operator import itemgetter
 
-
+addon = xbmcaddon.Addon(id='script.titanskin.helpers')
+addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 
 class ColorThemes(xbmcgui.WindowXMLDialog):
 
@@ -21,62 +22,9 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
     
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
-        addon = xbmcaddon.Addon(id='script.titanskin.helpers')
-        addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
+        
         self.userThemesPath = os.path.join(addondir,"themes") + os.sep
         self.skinThemesPath = xbmc.translatePath("special://skin/extras/skinthemes")
-        
-    def createColorTheme(self):
-        
-        #user has to enter name for the theme
-        dialog = xbmcgui.Dialog()
-        themeName = dialog.input(xbmc.getLocalizedString(31467), type=xbmcgui.INPUT_ALPHANUM)
-        if not themeName:
-            return
-        
-        #add screenshot
-        dialog = xbmcgui.Dialog()
-        custom_thumbnail = dialog.browse( 2 , xbmc.getLocalizedString(31468), 'files')
-        
-        if custom_thumbnail:
-            xbmcvfs.copy(custom_thumbnail, os.path.join(self.userThemesPath, themeName + ".jpg"))
-
-        #read the guisettings file to get all skin settings
-        from xml.dom.minidom import parse
-        guisettings_path = xbmc.translatePath('special://profile/guisettings.xml').decode("utf-8")
-        if xbmcvfs.exists(guisettings_path):
-            doc = parse(guisettings_path)
-            skinsettings = doc.documentElement.getElementsByTagName('setting')
-            newlist = []
-            newlist.append(("THEMENAME", themeName))
-            newlist.append(("DESCRIPTION", xbmc.getLocalizedString(31466)))
-            newlist.append(("SKINTHEME", xbmc.getInfoLabel("Skin.CurrentTheme")))
-
-            for count, skinsetting in enumerate(skinsettings):
-                if skinsetting.childNodes:
-                    value = skinsetting.childNodes[0].nodeValue
-                else:
-                    value = ""
-                
-                #only get properties from the titan skin
-                if skinsetting.attributes['name'].nodeValue.startswith(xbmc.getSkinDir() + "."):
-                    name = skinsetting.attributes['name'].nodeValue
-                    if "color" in name.lower() or "opacity" in name.lower() or "texture" in name.lower():
-                        name = name.replace(xbmc.getSkinDir(),"TITANSKIN")
-                        newlist.append((skinsetting.attributes['type'].nodeValue, name, value))
-                
-            #save guisettings
-            text_file_path = os.path.join(self.userThemesPath, themeName + ".theme")
-            text_file = xbmcvfs.File(text_file_path, "w")
-            json.dump(newlist, text_file)
-            text_file.close()
-            
-            #refresh listing
-            list = self.refreshListing()
-            if list != 0:
-                xbmc.executebuiltin("Control.SetFocus(6)")
-            else:
-                xbmc.executebuiltin("Control.SetFocus(5)")
 
         
     def loadColorTheme(self,file):
@@ -109,7 +57,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
 
     def backupColorTheme(self, themeName, themeFile):
         import zipfile
-        backup_path = self.get_browse_dialog(dlg_type=3,heading=xbmc.getLocalizedString(31283))
+        backup_path = get_browse_dialog(dlg_type=3,heading=xbmc.getLocalizedString(31283))
         
         if backup_path:
             backup_path = os.path.join(backup_path,"TITANSKIN_COLORTHEME_" + themeName)
@@ -125,36 +73,6 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                         zf.write(absname, arcname)
             zf.close()
        
-    def restoreColorTheme(self):
-        import shutil
-        import zipfile
-        zip_path = None
-        zip_path = self.get_browse_dialog(dlg_type=1,heading=xbmc.getLocalizedString(31282),mask=".zip")
-        if zip_path:
-            #create temp path
-            temp_path = xbmc.translatePath('special://temp/skinbackup/').decode("utf-8")
-            if xbmcvfs.exists(temp_path):
-                shutil.rmtree(temp_path)
-            xbmcvfs.mkdir(temp_path)
-            
-            #unzip to temp
-            zfile = zipfile.ZipFile(zip_path)
-            zfile.extractall(temp_path)
-            zfile.close()
-            
-            dirs, files = xbmcvfs.listdir(temp_path)
-            for file in files:
-                if file.endswith(".theme") or file.endswith(".jpg"):
-                    sourcefile = os.path.join(temp_path,file)
-                    destfile = os.path.join(self.userThemesPath,file)
-                    xbmcvfs.copy(sourcefile,destfile)
-                
-            #refresh listing
-            list = self.refreshListing()
-            if list != 0:
-                xbmc.executebuiltin("Control.SetFocus(6)")
-            else:
-                xbmc.executebuiltin("Control.SetFocus(5)")
     
     def removeColorTheme(self,file):
         file = file.split(os.sep)[-1]
@@ -271,8 +189,8 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                 menuOptions.append(xbmc.getLocalizedString(117))
                 menuOptions.append(xbmc.getLocalizedString(118))
                 menuOptions.append(xbmc.getLocalizedString(19285))
-                menuOptions.append(xbmc.getLocalizedString(190))
-            ret = dialog.select('', menuOptions)
+                menuOptions.append(xbmc.getLocalizedString(31542))
+            ret = dialog.select(xbmc.getLocalizedString(33063), menuOptions)
             if ret == 0:
                 self.loadColorTheme(themeFile)
             elif ret == 1:
@@ -289,19 +207,88 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("Dialog.Close(all,true)")
         
     def onClick(self, controlID):
-        
-        if(controlID == 5):       
-            self.createColorTheme()
-        
-        if(controlID == 7):       
-            self.restoreColorTheme()
-        
+                
         if(controlID == 6):
             item = self.themesList.getSelectedItem()
             themeFile = item.getProperty("filename")
             self.loadColorTheme(themeFile)
 
-    def get_browse_dialog(self, default="protocol://", heading="Browse", dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
-        dialog = xbmcgui.Dialog()
-        value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
-        return value
+
+def get_browse_dialog(default="protocol://", heading="Browse", dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
+    dialog = xbmcgui.Dialog()
+    value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
+    return value
+
+def restoreColorTheme():
+    import shutil
+    import zipfile
+    zip_path = None
+    userThemesPath = os.path.join(addondir,"themes") + os.sep
+    zip_path = get_browse_dialog(dlg_type=1,heading=xbmc.getLocalizedString(31282),mask=".zip")
+    if zip_path:
+        #create temp path
+        temp_path = xbmc.translatePath('special://temp/skinbackup/').decode("utf-8")
+        if xbmcvfs.exists(temp_path):
+            shutil.rmtree(temp_path)
+        xbmcvfs.mkdir(temp_path)
+        
+        #unzip to temp
+        zfile = zipfile.ZipFile(zip_path)
+        zfile.extractall(temp_path)
+        zfile.close()
+        
+        dirs, files = xbmcvfs.listdir(temp_path)
+        for file in files:
+            if file.endswith(".theme") or file.endswith(".jpg"):
+                sourcefile = os.path.join(temp_path,file)
+                destfile = os.path.join(userThemesPath,file)
+                xbmcvfs.copy(sourcefile,destfile)
+        xbmcgui.Dialog().ok(xbmc.getLocalizedString(31541), xbmc.getLocalizedString(31540))
+        
+def createColorTheme():
+    userThemesPath = os.path.join(addondir,"themes") + os.sep    
+    #user has to enter name for the theme
+    dialog = xbmcgui.Dialog()
+    themeName = dialog.input(xbmc.getLocalizedString(31467), type=xbmcgui.INPUT_ALPHANUM)
+    if not themeName:
+        return
+    
+    #add screenshot
+    dialog = xbmcgui.Dialog()
+    custom_thumbnail = dialog.browse( 2 , xbmc.getLocalizedString(31468), 'files')
+    
+    if custom_thumbnail:
+        xbmcvfs.copy(custom_thumbnail, os.path.join(userThemesPath, themeName + ".jpg"))
+
+    #read the guisettings file to get all skin settings
+    from xml.dom.minidom import parse
+    guisettings_path = xbmc.translatePath('special://profile/guisettings.xml').decode("utf-8")
+    if xbmcvfs.exists(guisettings_path):
+        doc = parse(guisettings_path)
+        skinsettings = doc.documentElement.getElementsByTagName('setting')
+        newlist = []
+        newlist.append(("THEMENAME", themeName))
+        newlist.append(("DESCRIPTION", xbmc.getLocalizedString(31466)))
+        newlist.append(("SKINTHEME", xbmc.getInfoLabel("Skin.CurrentTheme")))
+
+        for count, skinsetting in enumerate(skinsettings):
+            if skinsetting.childNodes:
+                value = skinsetting.childNodes[0].nodeValue
+            else:
+                value = ""
+            
+            #only get properties from the titan skin
+            if skinsetting.attributes['name'].nodeValue.startswith(xbmc.getSkinDir() + "."):
+                name = skinsetting.attributes['name'].nodeValue
+                if "color" in name.lower() or "opacity" in name.lower() or "texture" in name.lower():
+                    name = name.replace(xbmc.getSkinDir(),"TITANSKIN")
+                    newlist.append((skinsetting.attributes['type'].nodeValue, name, value))
+            
+        #save guisettings
+        text_file_path = os.path.join(userThemesPath, themeName + ".theme")
+        text_file = xbmcvfs.File(text_file_path, "w")
+        json.dump(newlist, text_file)
+        text_file.close()
+        
+        xbmcgui.Dialog().ok(xbmc.getLocalizedString(31539), xbmc.getLocalizedString(31540))
+        
