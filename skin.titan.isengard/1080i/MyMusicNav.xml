@@ -12,13 +12,13 @@
 		
 
 		 <!--Header-->
-        <include>Header</include>
+        <include condition="!Skin.HasSetting(DisableHeader)">Header</include>
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
         <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
 		<include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
 		<!--Time & Weather-->
-        <include>TimeInfo</include>
+        <include condition="!Skin.HasSetting(DisableHeader)">TimeInfo</include>
 		
        
 		
@@ -27,18 +27,19 @@
 			<visible>![Control.IsVisible(514) + StringCompare(Window(Home).Property(showinfopanel),show)]</visible>
 			<include condition="!skin.hassetting(nofooterbar)">Footer</include>
 		</control>
+		<include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
 		
 		
          <!--Views-->
 		 <control type="group">
 			<include>animation_window_open_close</include>
 			<include>View_50_List</include>
-			<include>View_51_BigList</include>
-			<include>View_509_PanelSquare</include>
-			<include>View_510_PanelSquareDetails</include>
-			<include>View_511_Thumbs</include>
-			<include>View_512_ThumbsDetails</include>
-			<include>View_515_LowList</include>
+			<include condition="!Skin.HasSetting(View.Disabled.51)">View_51_BigList</include>
+			<include condition="!Skin.HasSetting(View.Disabled.509)">View_509_PanelSquare</include>
+			<include condition="!Skin.HasSetting(View.Disabled.510)">View_510_PanelSquareDetails</include>
+			<include condition="!Skin.HasSetting(View.Disabled.511)">View_511_Thumbs</include>
+			<include condition="!Skin.HasSetting(View.Disabled.512)">View_512_ThumbsDetails</include>
+			<include condition="!Skin.HasSetting(View.Disabled.515)">View_515_LowList</include>
 		</control>
         <!--Sub Menu Tab Left-->
         <include>SubMenuTabLeft</include>
@@ -61,6 +62,7 @@
 				<onright>ClearProperty(ShowViewSubMenu, Home)</onright>
 				<onleft>ClearProperty(ShowViewSubMenu, Home)</onleft>
 				<onback>ClearProperty(ShowViewSubMenu, Home)</onback>
+				<onback>50</onback>
                 <onup>9000</onup>
                 <ondown>9000</ondown>
                 <orientation>vertical</orientation>
@@ -144,7 +146,7 @@
                     <!--Set View-->
                     <include>SubMenuButton</include>
                     <label>$LOCALIZE[31305] $INFO[Container.Viewmode]</label>
-                    <onclick>Container.NextViewMode</onclick>
+					<onclick>XBMC.RunScript(script.titanskin.helpers,SETVIEW)</onclick>
 				</control>
 				<include>SideBladeViewCommands</include>
             </control>
