@@ -25,12 +25,14 @@ class LibraryMonitor(threading.Thread):
     liPathLast = None
     unwatched = 1
     lastEpPath = ""
+    lastMusicDbId = None
     allStudioLogos = list()
     studioLogosPath = None
     LastStudioImagesPath = None
     delayedTaskInterval = 1800
     moviesetCache = {}
     extraFanartcache = {}
+    musicArtCache = {}
     
     win = None
     addon = None
@@ -63,6 +65,17 @@ class LibraryMonitor(threading.Thread):
                 if (self.delayedTaskInterval >= 1800):
                     self.getStudioLogos()
                     self.delayedTaskInterval = 0                   
+            
+            # monitor listitem props when musiclibrary is active
+            if (xbmc.getCondVisibility("Window.IsActive(musiclibrary) + !Container.Scrolling")):
+                if self.win.getProperty("resetMusicArtCache") == "reset":
+                    self.lastMusicDbId = None
+                    self.musicArtCache = {}
+                    self.win.clearProperty("resetMusicArtCache")
+                try:
+                    self.checkMusicArt()
+                except Exception as e:
+                    utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
             
             # monitor listitem props when videolibrary is active
             if (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
@@ -179,6 +192,7 @@ class LibraryMonitor(threading.Thread):
                     self.win.setProperty('MovieSet.Genre', " / ".join(genre))
                     self.win.setProperty('MovieSet.Country', " / ".join(country))
                     self.win.setProperty('MovieSet.Studio', " / ".join(studio))
+                    listudio = None
                     for item in studio:
                         if item in self.allStudioLogos:
                             listudio = item
@@ -345,8 +359,8 @@ class LibraryMonitor(threading.Thread):
             minutes = full_minutes % 60
             hours   = full_minutes // 60
             durationString = str(hours) + ':' + str(minutes).zfill(2)
-        except:
-            print "exception in getDurationString"
+        except Exception as e:
+            utils.logMsg("ERROR in getDurationString ! --> " + str(e), 0)
             return None
         return durationString
             
@@ -362,6 +376,228 @@ class LibraryMonitor(threading.Thread):
         
         return viewId    
 
+    def checkMusicArt(self):
+        
+        dbID = xbmc.getInfoLabel("ListItem.Label") + xbmc.getInfoLabel("ListItem.Artist") + xbmc.getInfoLabel("ListItem.Album")
+        cacheFound = False
+
+        if self.lastMusicDbId == dbID:
+            return
+        
+        self.win.setProperty("ExtraFanArtPath","") 
+        self.win.clearProperty("bannerArt") 
+        self.win.clearProperty("logoArt") 
+        self.win.clearProperty("cdArt")
+        self.win.clearProperty("songInfo")
+        
+        self.lastMusicDbId = dbID
+        
+        if xbmc.getInfoLabel("ListItem.Label").startswith("..") or xbmc.getCondVisibility("![Container.Content(artists) | Container.Content(albums) | Container.Content(songs)]") or not xbmc.getInfoLabel("ListItem.FolderPath").startswith("musicdb"):
+            return
+        
+        #get the items from cache first
+        if self.musicArtCache.has_key(dbID + "cdArt"):
+            cacheFound = True
+            if self.musicArtCache[dbID + "cdArt"] == "None":
+                self.win.clearProperty("cdArt")   
+            else:
+                self.win.setProperty("cdArt",self.musicArtCache[dbID + "cdArt"])
+
+        if self.musicArtCache.has_key(dbID + "logoArt"):
+            cacheFound = True
+            if self.musicArtCache[dbID + "logoArt"] == "None":
+                self.win.clearProperty("logoArt")   
+            else:
+                self.win.setProperty("logoArt",self.musicArtCache[dbID + "logoArt"])
+                
+        if self.musicArtCache.has_key(dbID + "bannerArt"):
+            cacheFound = True
+            if self.musicArtCache[dbID + "bannerArt"] == "None":
+                self.win.clearProperty("bannerArt")   
+            else:
+                self.win.setProperty("bannerArt",self.musicArtCache[dbID + "bannerArt"])
+        
+        if self.musicArtCache.has_key(dbID + "extraFanArt"):
+            cacheFound = True
+            if self.musicArtCache[dbID + "extraFanArt"] == "None":
+                self.win.setProperty("ExtraFanArtPath","")   
+            else:
+                self.win.setProperty("ExtraFanArtPath",self.musicArtCache[dbID + "extraFanArt"])
+                
+        if self.musicArtCache.has_key(dbID + "songInfo"):
+            cacheFound = True
+            if self.musicArtCache[dbID + "songInfo"] == "None":
+                self.win.setProperty("songInfo","")   
+            else:
+                self.win.setProperty("songInfo",self.musicArtCache[dbID + "songInfo"])
+               
+        if not cacheFound:
+            
+            self.win.setProperty("fromcache","false")
+            path = None
+            json_response = None
+            cdArt = None
+            logoArt = None
+            bannerArt = None
+            extraFanArt = None
+            songInfo = None
+            folderPath = xbmc.getInfoLabel("ListItem.FolderPath")
+            
+            if xbmc.getCondVisibility("Container.Content(songs) | Container.Content(singles)"):
+                if "singles/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://singles/","")
+                    dbid = folderPath.replace(".mp3?singles=true","")
+                if "songs/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://songs/","")
+                    dbid = folderPath.replace(".mp3","")
+                elif "top100/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://top100/songs/","")
+                    dbid = folderPath.replace(".mp3","")
+                elif "artists/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://artists/","")
+                    folderPath = folderPath.split("/")[2]
+                    dbid = folderPath.split(".mp3")[0]  
+                json_response = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongDetails", "params": { "songid": %s, "properties": [ "file","artistid","albumid","comment" ] }, "id": "libSongs"}'%int(dbid))
+                
+            elif xbmc.getCondVisibility("Container.Content(artists)"):
+                if "/genres/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://genres/","")
+                    dbid = folderPath.split("/")[1]
+                else:    
+                    folderPath = folderPath.replace("musicdb://artists/","")
+                    dbid = folderPath.split("/")[0]
+                json_response = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "filter":{"artistid": %s}, "limits": { "start" : 0, "end": 5 }, "properties": [ "file","artistid" ] }, "id": "libSongs"}'%int(dbid))
+            
+            elif xbmc.getCondVisibility("Container.Content(albums)"):
+                if "/artists/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://artists/","")
+                    dbid = folderPath.split("/")[1]
+                elif "/genres/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://genres/","")
+                    dbid = folderPath.split("/")[1]
+                elif "/years/" in folderPath:
+                    folderPath = folderPath.replace("musicdb://years/","")
+                    dbid = folderPath.split("/")[1]
+                else:
+                    folderPath = folderPath.replace("musicdb://albums/","")
+                    folderPath = folderPath.replace("musicdb://recentlyaddedalbums/","")
+                    folderPath = folderPath.replace("musicdb://recentlyplayedalbums/","")
+                    folderPath = folderPath.replace("musicdb://top100/albums/","")
+                    folderPath = folderPath.replace("musicdb://genres/","")
+                    dbid = folderPath.split("/")[0]   
+                json_response = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "filter":{"albumid": %s}, "limits": { "start" : 0, "end": 5 }, "properties": [ "file","artistid" ] }, "id": "libSongs"}'%int(dbid))
+            
+            if json_response:
+                song = None
+                json_response = json.loads(json_response)
+                if json_response.has_key("result"):
+                    result = json_response["result"]
+                    if result.has_key("songs"):
+                        songs = result["songs"]
+                        if len(songs) > 0:
+                            song = songs[0]
+                            path = song["file"]
+                    elif result.has_key("songdetails"):
+                        song = result["songdetails"]
+                        path = song["file"]
+                        songInfo = song["comment"]
+                        if not songInfo:
+                            json_response2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": { "albumid": %s, "properties": [ "musicbrainzalbumid","description" ] }, "id": "1"}'%song["albumid"])
+                            json_response2 = json.loads(json_response2)
+                            if json_response2.has_key("result"):
+                                result = json_response2["result"]
+                                if result.has_key("albumdetails"):
+                                    albumdetails = result["albumdetails"]
+                                    if albumdetails["description"]:
+                                        songInfo = albumdetails["description"]
+                    if not songInfo and song:
+                        json_response2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtistDetails", "params": { "artistid": %s, "properties": [ "musicbrainzartistid","description" ] }, "id": "1"}'%song["artistid"][0])
+                        json_response2 = json.loads(json_response2)
+                        if json_response2.has_key("result"):
+                            result = json_response2["result"]
+                            if result.has_key("artistdetails"):
+                                artistdetails = result["artistdetails"]
+                                if artistdetails["description"]:
+                                    songInfo = artistdetails["description"]
+
+            if path:
+                if "\\" in path:
+                    delim = "\\"
+                else:
+                    delim = "/"
+                        
+                path = path.replace(path.split(delim)[-1],"")
+                                      
+                #extrafanart
+                imgPath = os.path.join(path,"extrafanart" + delim)
+                if xbmcvfs.exists(imgPath):
+                    extraFanArt = imgPath
+                else:
+                    imgPath = os.path.join(path.replace(path.split(delim)[-2]+delim,""),"extrafanart" + delim)
+                    if xbmcvfs.exists(imgPath):
+                        extraFanArt = imgPath
+                
+                #cdart
+                if xbmcvfs.exists(os.path.join(path,"cdart.png")):
+                    cdArt = os.path.join(path,"cdart.png")
+                else:
+                    imgPath = os.path.join(path.replace(path.split(delim)[-2]+delim,""),"cdart.png")
+                    if xbmcvfs.exists(imgPath):
+                        cdArt = imgPath
+                
+                #banner
+                if xbmcvfs.exists(os.path.join(path,"banner.jpg")):
+                    bannerArt = os.path.join(path,"banner.jpg")
+                else:
+                    imgPath = os.path.join(path.replace(path.split(delim)[-2]+delim,""),"banner.jpg")
+                    if xbmcvfs.exists(imgPath):
+                        bannerArt = imgPath
+                        
+                #logo
+                imgPath = os.path.join(path,"logo.png")
+                if xbmcvfs.exists(imgPath):
+                    logoArt = imgPath
+                else:
+                    imgPath = os.path.join(path.replace(path.split(delim)[-2]+delim,""),"logo.png")
+                    if xbmcvfs.exists(imgPath):
+                        logoArt = imgPath
+   
+            if extraFanArt:
+                self.win.setProperty("ExtraFanArtPath",extraFanArt)
+                self.musicArtCache[dbID + "extraFanArt"] = extraFanArt
+            else:
+                self.win.setProperty("ExtraFanArtPath","")
+                self.musicArtCache[dbID + "extraFanArt"] = "None"
+                    
+            if cdArt:
+                self.win.setProperty("CdArt",cdArt)
+                self.musicArtCache[dbID + "cdArt"] = cdArt
+            else:
+                self.win.setProperty("ExtraFanArtPath","")
+                self.musicArtCache[dbID + "cdArt"] = "None"
+                
+            if bannerArt:
+                self.win.setProperty("bannerArt",bannerArt)
+                self.musicArtCache[dbID + "bannerArt"] = bannerArt
+            else:
+                self.win.clearProperty("bannerArt")
+                self.musicArtCache[dbID + "bannerArt"] = "None"
+
+            if logoArt:
+                self.win.setProperty("logoArt",logoArt)
+                self.musicArtCache[dbID + "logoArt"] = logoArt
+            else:
+                self.win.clearProperty("logoArt")
+                self.musicArtCache[dbID + "logoArt"] = "None"
+
+            if songInfo:
+                self.win.setProperty("songInfo",songInfo)
+                self.musicArtCache[dbID + "songInfo"] = songInfo
+            else:
+                self.win.clearProperty("songInfo")
+                self.musicArtCache[dbID + "songInfo"] = "None"
+                
+
     def checkExtraFanArt(self):
         
         lastPath = None
@@ -376,14 +612,14 @@ class LibraryMonitor(threading.Thread):
         #get the item from cache first
         if self.extraFanartcache.has_key(self.liPath):
             if self.extraFanartcache[self.liPath] == "None":
-                self.win.clearProperty("ExtraFanArtPath")
+                self.win.setProperty("ExtraFanArtPath","")
                 return
             else:
                 self.win.setProperty("ExtraFanArtPath",self.extraFanartcache[self.liPath])
                 return
         
         if not xbmc.getCondVisibility("Skin.HasSetting(EnableExtraFanart) + [Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Container.Scrolling"):
-            self.win.clearProperty("ExtraFanArtPath")
+            self.win.setProperty("ExtraFanArtPath","")
             return
         
         if (self.liPath != None and (xbmc.getCondVisibility("Container.Content(movies) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(tvshows)")) and not "videodb:" in self.liPath):
@@ -393,7 +629,7 @@ class LibraryMonitor(threading.Thread):
             
             # do not set extra fanart for virtuals
             if (("plugin://" in self.liPath) or ("addon://" in self.liPath) or ("sources" in self.liPath) or ("plugin://" in containerPath) or ("sources://" in containerPath) or ("plugin://" in containerPath)):
-                self.win.clearProperty("ExtraFanArtPath")
+                self.win.setProperty("ExtraFanArtPath","")
                 self.extraFanartcache[self.liPath] = "None"
                 lastPath = None
             else:
@@ -417,11 +653,11 @@ class LibraryMonitor(threading.Thread):
                         self.extraFanartcache[self.liPath] = efaPath
                         lastPath = efaPath       
                 else:
-                    self.win.clearProperty("ExtraFanArtPath")
+                    self.win.setProperty("ExtraFanArtPath","")
                     self.extraFanartcache[self.liPath] = "None"
                     lastPath = None
         else:
-            self.win.clearProperty("ExtraFanArtPath")
+            self.win.setProperty("ExtraFanArtPath","")
             lastPath = None
 
 class Kodi_Monitor(xbmc.Monitor):

@@ -108,9 +108,9 @@ class HomeMonitor(threading.Thread):
             #initialize plex window props by using the amberskin entrypoint for now
             if not self.win.getProperty("plexbmc.0.title"):
                 xbmc.executebuiltin('RunScript(plugin.video.plexbmc,amberskin)')
-                #wait for max 10 seconds untill the plex nodes are available
+                #wait for max 20 seconds untill the plex nodes are available
                 count = 0
-                while (count < 40 and self.win.getProperty("plexbmc.0.title") == ""):
+                while (count < 80 and self.win.getProperty("plexbmc.0.title") == ""):
                     xbmc.sleep(250)
                     count += 1
             
@@ -118,7 +118,7 @@ class HomeMonitor(threading.Thread):
             if not self.win.getProperty("plexbmc.0.title"):
                 xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
                 count = 0
-                while (count < 16 and self.win.getProperty("plexbmc.0.title") == ""):
+                while (count < 40 and self.win.getProperty("plexbmc.0.title") == ""):
                     xbmc.sleep(250)
                     count += 1
             
@@ -137,34 +137,36 @@ class HomeMonitor(threading.Thread):
                 plexType = self.win.getProperty(plexstring + ".type")
                 utils.logMsg(plexstring + ".type --> " + plexType)            
 
-                link = self.win.getProperty(plexstring + ".path")
-                utils.logMsg(plexstring + ".path --> " + link)
-                
                 if hasSecondayMenus == True:
                     recentlink = self.win.getProperty(plexstring + ".recent")
                     progresslink = self.win.getProperty(plexstring + ".ondeck")
                     alllink = self.win.getProperty(plexstring + ".all")
                 else:
+                    link = self.win.getProperty(plexstring + ".path")
+                    alllink = link
                     link = link.replace("mode=1", "mode=0")
                     link = link.replace("mode=2", "mode=0")
                     recentlink = link.replace("/all", "/recentlyAdded")
                     progresslink = link.replace("/all", "/onDeck")
                     self.win.setProperty(plexstring + ".recent", recentlink)
                     self.win.setProperty(plexstring + ".ondeck", progresslink)
-                    alllink = link
+                    
+                
+                utils.logMsg(plexstring + ".all --> " + alllink)
                 
                 self.win.setProperty(plexstring + ".recent.content", utils.getContentPath(recentlink))
                 utils.logMsg(plexstring + ".recent --> " + recentlink)       
                 self.win.setProperty(plexstring + ".ondeck.content", utils.getContentPath(progresslink))
                 utils.logMsg(plexstring + ".ondeck --> " + progresslink)
                 
-                link = alllink.replace("mode=1", "mode=0")
-                link = alllink.replace("mode=2", "mode=0")
+                unwatchedlink = alllink.replace("mode=1", "mode=0")
+                unwatchedlink = alllink.replace("mode=2", "mode=0")
                 unwatchedlink = alllink.replace("/all", "/unwatched")
                 self.win.setProperty(plexstring + ".unwatched", unwatchedlink)
                 self.win.setProperty(plexstring + ".unwatched.content", utils.getContentPath(unwatchedlink))
                 
                 self.win.setProperty(plexstring + ".content", utils.getContentPath(alllink))
+                self.win.setProperty(plexstring + ".path", alllink)
                 
                 linkCount += 1
                 

@@ -452,8 +452,6 @@ class BackgroundsUpdater(threading.Thread):
                     path = node[2]
                     image = self.getImageFromPath(node[2])
                     self.win.setProperty(key + ".background", image)
-                    self.win.setProperty(key + ".title", label)
-                    self.win.setProperty(key + ".path", path)
             elif self.win.getProperty("plexbmc.0.title"):
                 utils.logMsg("no cache - Get plex entries from file.... ")    
                                    
@@ -516,7 +514,7 @@ class BackgroundsUpdater(threading.Thread):
             self.win.setProperty("Netflix.recentmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=movie&widget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson", "special://skin/extras/hometiles/netflix.png"))
             
             #recent tv
-            self.win.setProperty("Netflix.recenttv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=tvwidget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson&", "special://skin/extras/hometiles/netflix.png"))
+            self.win.setProperty("Netflix.recenttv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=tv&widget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson&", "special://skin/extras/hometiles/netflix.png"))
             
             #all movies
             self.win.setProperty("Netflix.allmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb&type=movie&widget=true&url", "special://skin/extras/hometiles/netflix.png"))

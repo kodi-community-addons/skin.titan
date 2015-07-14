@@ -1959,7 +1959,6 @@
 	<include name="mediaflagsfooter">
         <control type="grouplist">
 			<orientation>horizontal</orientation>
-			<visible>![!IsEmpty(Window(Home).Property(NextAired.Status)) + [container.content(tvshows) | container.content(seasons)]]</visible>
 			
 			<!--Video Type-->
 			<control type="group">
@@ -2133,6 +2132,34 @@
 				</control>
 			</control>
 
+			<control type="group">
+				<width>8</width>
+				<height>36</height>
+				<visible>!IsEmpty(ListItem.MPAA)</visible>
+			</control>
+			
+			<control type="label">
+				<visible>Container.Content(tvshows) | Container.Content(seasons)</visible>
+				<visible>!IsEmpty(Window(Home).Property(NextAired.NextDate))</visible>
+				<!--NextAired status for TVShows-->
+				<height>36</height>
+				<width>500</width>
+				<font>Reg30</font>
+				<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
+				<label>$LOCALIZE[31212]: $INFO[Window(Home).Property(NextAired.NextDate)]</label>
+			</control>
+			<control type="label">
+				<visible>Container.Content(tvshows) | Container.Content(seasons)</visible>
+				<visible>IsEmpty(Window(Home).Property(NextAired.NextDate)) + !IsEmpty(Window(Home).Property(NextAired.Status))</visible>
+				<!--NextAired status for TVShows-->
+				<height>36</height>
+				<width>500</width>
+				<font>Reg30</font>
+				<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
+				<label>$INFO[Window(Home).Property(NextAired.Status)]</label>
+			</control>
 		</control>
     
 		<!-- sets flags -->
