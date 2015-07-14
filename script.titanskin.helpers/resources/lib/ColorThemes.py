@@ -60,8 +60,11 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         backup_path = get_browse_dialog(dlg_type=3,heading=xbmc.getLocalizedString(31283))
         
         if backup_path:
-            backup_path = os.path.join(backup_path,"TITANSKIN_COLORTHEME_" + themeName)
-            zf = zipfile.ZipFile("%s.zip" % (backup_path), "w", zipfile.ZIP_DEFLATED)
+            backup_name = "TITANSKIN_COLORTHEME_" + themeName
+            backup_path = os.path.join(backup_path,backup_name)
+            backup_path_temp = xbmc.translatePath('special://temp/' + backup_name)
+            
+            zf = zipfile.ZipFile("%s.zip" % (backup_path_temp), "w", zipfile.ZIP_DEFLATED)
             
             abs_src = os.path.abspath(self.userThemesPath)
             
@@ -72,6 +75,8 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
                         arcname = absname[len(abs_src) + 1:]
                         zf.write(absname, arcname)
             zf.close()
+            
+            xbmcvfs.copy(backup_path_temp + ".zip", backup_path + ".zip")
        
     
     def removeColorTheme(self,file):
@@ -233,9 +238,17 @@ def restoreColorTheme():
         xbmcvfs.mkdir(temp_path)
         
         #unzip to temp
-        zfile = zipfile.ZipFile(zip_path)
+        if "\\" in zip_path:
+            delim = "\\"
+        else:
+            delim = "/"
+        
+        zip_temp = xbmc.translatePath('special://temp/' + zip_path.split(delim)[-1])
+        xbmcvfs.copy(zip_path,zip_temp)
+        zfile = zipfile.ZipFile(zip_temp)
         zfile.extractall(temp_path)
         zfile.close()
+        xbmcvfs.delete(zip_temp)
         
         dirs, files = xbmcvfs.listdir(temp_path)
         for file in files:
