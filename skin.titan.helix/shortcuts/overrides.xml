@@ -3,7 +3,7 @@
 
 	<groupings>
 	
-		<shortcut label="Open submenu" grouping="32029" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">submenu</shortcut>
+		<shortcut label="Open submenu" grouping="32029" condition="IsEmpty(Window(Home).Property(customWidget))">submenu</shortcut>
 		
 		<!-- SMART SHORTCUTS -->
 		<node label="Smart shortcuts" condition="IsEmpty(Window(Home).Property(customWidget)) + [!IsEmpty(Window(Home).Property(playlist.0.label)) | !IsEmpty(Window(Home).Property(favorite.0.label))]">
@@ -35,7 +35,7 @@
 		</node>
 		
 		<!-- SMART SHORTCUTS FOR EMBY -->
-		<node label="Smart Shortcuts for Emby" icon="special://home/addons/plugin.video.emby/icon.png" condition="Skin.HasSetting(SmartShortcuts.emby) + System.HasAddon(plugin.video.emby) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + !IsEmpty(Window(Home).Property(emby.nodes.0.path))">
+		<node label="Smart Shortcuts for Emby" icon="special://home/addons/plugin.video.emby/icon.png" condition="Skin.HasSetting(SmartShortcuts.emby) + System.HasAddon(plugin.video.emby) + !StringCompare(Window.Property(powermenu),active) + !IsEmpty(Window(Home).Property(emby.nodes.0.path))">
 			<node label="$INFO[Window(Home).Property(emby.nodes.0.title)]" icon="$INFO[Window(Home).Property(emby.nodes.0.image)]" condition="!IsEmpty(Window(Home).Property(emby.nodes.0.path))">
 				<shortcut label="$INFO[Window(Home).Property(emby.nodes.0.title)]" grouping="32029" type="1037" icon="$INFO[Window(Home).Property(emby.nodes.0.image)]" condition="!IsEmpty(Window(Home).Property(emby.nodes.0.path))">$VAR[CustomCollectionClick]</shortcut>
 				<shortcut label="$INFO[Window(Home).Property(emby.nodes.0.recent.title)]" icon="$INFO[Window(Home).Property(emby.nodes.0.recent.image)]" grouping="32029" type="1037" condition="!IsEmpty(Window(Home).Property(emby.nodes.0.recent.path))">$INFO[Window(Home).Property(emby.nodes.0.recent.path)]</shortcut>
@@ -175,7 +175,7 @@
 		</node>
 		
 		<!-- SMART SHORTCUTS FOR PLEX -->
-		<node label="Smart Shortcuts for Plex" condition="Skin.HasSetting(SmartShortcuts.plex) + System.HasAddon(plugin.video.plexbmc) + !IsEmpty(Window(Home).Property(plexbmc.0.path)) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu)">
+		<node label="Smart Shortcuts for Plex" condition="Skin.HasSetting(SmartShortcuts.plex) + System.HasAddon(plugin.video.plexbmc) + !IsEmpty(Window(Home).Property(plexbmc.0.path)) + !StringCompare(Window.Property(powermenu),active)">
 			<node label="$INFO[Window(Home).Property(plexbmc.0.title)]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.path))">
 				<shortcut label="$INFO[Window(Home).Property(plexbmc.0.title)]" grouping="32029" type="1037" icon="$INFO[Window(Home).Property(plexbmc.0.background)]" condition="!IsEmpty(Window(Home).Property(plexbmc.0.path))">$INFO[Window(Home).Property(plexbmc.0.path)]</shortcut>
 				<node label="31116">
@@ -315,7 +315,7 @@
 		</node>
 		
 		<!-- SMART SHORTCUTS FOR XBMB3C -->
-		<node label="Smart shortcuts for MediaBrowser XBMB3C" condition="System.HasAddon(plugin.video.xbmb3c) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + !IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
+		<node label="Smart shortcuts for MediaBrowser XBMB3C" condition="System.HasAddon(plugin.video.xbmb3c) + !StringCompare(Window.Property(powermenu),active) + !IsEmpty(Window(Home).Property(mediabrowser.usr.0.path))">
 			
 			<shortcut label="31036" grouping="20342" type="20342" icon="$INFO[Window(Home).Property(MB3.Background.FavouriteMovies.FanArt.small)]">$INFO[Window(Home).Property(mediabrowser.std.movies.3.path)]</shortcut>
 			
@@ -472,7 +472,7 @@
 		</node>
 		
 		<!-- SMART SHORTCUTS FOR NETFLIX -->
-		<node label="Smart Shortcuts for Netflix" icon="$INFO[Window(Home).Property(Netflix.general)]" condition="Skin.HasSetting(SmartShortcuts.netflix) + System.HasAddon(plugin.video.netflixbmc) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + !IsEmpty(Window(Home).Property(Netflix.general))">
+		<node label="Smart Shortcuts for Netflix" icon="$INFO[Window(Home).Property(Netflix.general)]" condition="Skin.HasSetting(SmartShortcuts.netflix) + System.HasAddon(plugin.video.netflixbmc) + !StringCompare(Window.Property(powermenu),active) + !IsEmpty(Window(Home).Property(Netflix.general))">
 			<node label="31018" icon="$INFO[Window(Home).Property(Netflix.general)]">
 				<shortcut label="31018" grouping="32029" type="netflix" icon="$INFO[Window(Home).Property(Netflix.general)]">ActivateWindow(10025,plugin://plugin.video.netflixbmc,return)</shortcut>
 				<shortcut label="31131" grouping="32029" type="netflix" icon="$INFO[Window(Home).Property(Netflix.suggestions)]">ActivateWindow(10025,"plugin://plugin.video.netflixbmc/?mode=wiHome&amp;thumb&amp;type=both&amp;url",return)</shortcut>
@@ -538,7 +538,7 @@
 		</node>
 
 		<!-- common items -->
-		<node label="32029" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="32029" condition="IsEmpty(Window(Home).Property(customWidget))">
 			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
 			<shortcut label="342" grouping="32029" icon="$VAR[MoviesButtonThumb]">ActivateWindow(10025,videodb://movies/titles/,return)</shortcut>
 			<shortcut label="20343" grouping="32029" icon="$VAR[TvseriesButtonThumb]">ActivateWindow(10025,videodb://tvshows/titles/,return)</shortcut>
@@ -562,7 +562,7 @@
 		</node>
 
 		<!-- video library-->
-		<node label="32030" condition="Window.IsActive(script-skinshortcuts.xml)">
+		<node label="32030">
 			<shortcut label="19140" grouping="1211" type="1211">RunScript(script.titanskin.helpers,VIDEOSEARCH)</shortcut>
 			<node label="Specials" condition="System.HasAddon(script.extendedinfo)">
 				<shortcut label="16101" grouping="20342" type="20342" icon="$VAR[UnwatchedMoviesButtonThumb]">ActivateWindow(10025,special://skin/extras/widgetplaylists/unwatchedmovies.xsp,return)</shortcut>
@@ -605,14 +605,14 @@
 		</node>
 		
 		<!-- music -->
-		<node label="1211" condition="Window.IsActive(script-skinshortcuts.xml)">
+		<node label="1211">
 			<shortcut label="10005" grouping="32029" icon="$VAR[MusicButtonThumb]">ActivateWindow(Music,musicdb://,return)</shortcut>
 			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="IsEmpty(Window(Home).Property(customWidget))">ActivateWindow(radiochannels,return)</shortcut>
 			<content>music</content>
 		</node>
 		
 		<!-- Live TV Gotham -->
-		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window.Property(groupname),powermenu)" version="13">
+		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + !StringCompare(Window(Home).Property(customWidget), active) + !StringCompare(Window.Property(powermenu),active)" version="13">
 			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
 			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
 			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(radiochannels,return)</shortcut>
@@ -628,7 +628,7 @@
 		</node>
 		
 		<!-- Live TV Helix -->
-		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window.Property(groupname),powermenu)" version="14">
+		<node label="32017" condition="System.GetBool(pvrmanager.enabled) + IsEmpty(Window(Home).Property(customWidget)) + !StringCompare(Window.Property(powermenu),active)" version="14">
 			<shortcut label="32022" grouping="32029" icon="special://skin/extras/hometiles/livetv.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVGuide)</shortcut>
 			<shortcut label="19163" grouping="32029" icon="special://skin/extras/hometiles/tvrecordings.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(TVRecordings,return)</shortcut>
 			<shortcut label="19021" grouping="32029" icon="special://skin/extras/hometiles/radio.png" condition="System.GetBool(pvrmanager.enabled)">ActivateWindow(radiochannels,return)</shortcut>
@@ -648,23 +648,23 @@
 		</node>
 		
 		<!-- pictures -->
-		<node label="32020" condition="Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu)">
+		<node label="32020" condition="!StringCompare(Window.Property(powermenu),active)">
 			<shortcut label="10002" grouping="32029" icon="$VAR[PicturesButtonThumb]" condition="IsEmpty(Window(Home).Property(customWidget))">ActivateWindow(pictures,return)</shortcut>
 			<content>picturesources</content>
 		</node>
 		
 		<!-- playlist video - for startup playlist selection only -->
-		<node label="10028" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="10028" condition="!StringCompare(Window.Property(powermenu),active) + IsEmpty(Window(Home).Property(customWidget))">
 				<content>playlist-video</content>
 		</node>	
 		
 		<!-- playlist audio - for startup playlist selection only -->
-		<node label="10500" condition="!Window.IsActive(script-skinshortcuts.xml) + !StringCompare(Window.Property(groupname),powermenu) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="10500" condition="!StringCompare(Window.Property(powermenu),active) + IsEmpty(Window(Home).Property(customWidget))">
 			<content>playlist-audio</content>
 		</node>
 		
 		<!-- addons -->
-		<node label="32007" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="32007" condition="IsEmpty(Window(Home).Property(customWidget))">
 			<shortcut label="1037" type="32014" thumb="DefaultAddonVideo.png">ActivateWindow(Videos,Addons,return)</shortcut>
 			<shortcut label="1038" type="32019" thumb="DefaultAddonMusic.png">ActivateWindow(MusicLibrary,Addons,return)</shortcut>
 			<shortcut label="1039" type="32020" thumb="DefaultAddonPicture.png">ActivateWindow(Pictures,Addons,return)</shortcut>
@@ -677,19 +677,19 @@
 		</node>
 			
 		<!-- favourites-->	
-		<node label="32006" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="32006" condition="IsEmpty(Window(Home).Property(customWidget))">
 			<shortcut label="10134" grouping="32029" icon="special://skin/extras/hometiles/favourites.png" condition="true">ActivateWindow(favourites)</shortcut>
 			<content>favourite</content>
 		</node>
 		
 		<!-- settings -->
-		<node label="10004" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="10004" condition="IsEmpty(Window(Home).Property(customWidget))">
 			<shortcut label="7" grouping="32029" icon="special://skin/extras/hometiles/filemanager.png" condition="true">ActivateWindow(filemanager)</shortcut>
 			<content>settings</content>
 		</node>
 		
 		<!-- xbmc commands -->
-		<node label="32054" condition="Window.IsActive(script-skinshortcuts.xml) + IsEmpty(Window(Home).Property(customWidget))">
+		<node label="32054" condition="IsEmpty(Window(Home).Property(customWidget))">
 			<shortcut label="20077" icon="common/settings1.png">ActivateWindow(Settings)</shortcut>
 			<shortcut label="10004" icon="common/settings1.png">ActivateWindow(Skin Settings)</shortcut>
 			<shortcut label="20126" icon="common/lock.png">System.LogOff </shortcut>
