@@ -75,7 +75,7 @@ class LibraryMonitor(threading.Thread):
                 try:
                     self.checkMusicArt()
                 except Exception as e:
-                    utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
+                    utils.logMsg("ERROR in checkMusicArt ! --> " + str(e), 0)
             
             # monitor listitem props when videolibrary is active
             if (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
@@ -98,10 +98,13 @@ class LibraryMonitor(threading.Thread):
                     except Exception as e:
                         utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
   
+            #flush cache if videolibrary has changed
+            if self.win.getProperty("widgetrefresh") == "refresh":
+                self.moviesetCache = {}
+            
             xbmc.sleep(150)
             self.delayedTaskInterval += 0.15
-                
-    
+                    
     def setMovieSetDetails(self):
         #get movie set details -- thanks to phil65 - used this idea from his skin info script
         
@@ -500,7 +503,6 @@ class LibraryMonitor(threading.Thread):
                     elif result.has_key("songdetails"):
                         song = result["songdetails"]
                         path = song["file"]
-                        songInfo = song["comment"]
                         if not songInfo:
                             json_response2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": { "albumid": %s, "properties": [ "musicbrainzalbumid","description" ] }, "id": "1"}'%song["albumid"])
                             json_response2 = json.loads(json_response2)
@@ -597,7 +599,6 @@ class LibraryMonitor(threading.Thread):
                 self.win.clearProperty("songInfo")
                 self.musicArtCache[dbID + "songInfo"] = "None"
                 
-
     def checkExtraFanArt(self):
         
         lastPath = None

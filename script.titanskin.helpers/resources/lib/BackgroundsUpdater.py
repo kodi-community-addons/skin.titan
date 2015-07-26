@@ -72,11 +72,12 @@ class BackgroundsUpdater(threading.Thread):
             if (not xbmc.getCondVisibility("Window.IsActive(fullscreenvideo)")):
 
                 backgroundDelayStr = xbmc.getInfoLabel("skin.string(randomfanartdelay)")
+                backgroundDelay = 30
                 if backgroundDelayStr:
                     try:
                         backgroundDelay = int(backgroundDelayStr)
                     except:
-                        backgroundDelay = 30
+                        pass
                 
                 # Update home backgrounds every interval (default 60 seconds)
                 if (self.delayedTaskInterval >= backgroundDelay):
