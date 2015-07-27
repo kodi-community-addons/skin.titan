@@ -449,17 +449,17 @@ class LibraryMonitor(threading.Thread):
             if xbmc.getCondVisibility("Container.Content(songs) | Container.Content(singles)"):
                 if "singles/" in folderPath:
                     folderPath = folderPath.replace("musicdb://singles/","")
-                    dbid = folderPath.replace(".mp3?singles=true","")
+                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","").replace("?singles=true","")
                 if "songs/" in folderPath:
                     folderPath = folderPath.replace("musicdb://songs/","")
-                    dbid = folderPath.replace(".mp3","")
+                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","")
                 elif "top100/" in folderPath:
                     folderPath = folderPath.replace("musicdb://top100/songs/","")
-                    dbid = folderPath.replace(".mp3","")
+                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","")
                 elif "artists/" in folderPath:
                     folderPath = folderPath.replace("musicdb://artists/","")
                     folderPath = folderPath.split("/")[2]
-                    dbid = folderPath.split(".mp3")[0]  
+                    dbid = folderPath.split(".")[0]  
                 json_response = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongDetails", "params": { "songid": %s, "properties": [ "file","artistid","albumid","comment" ] }, "id": "libSongs"}'%int(dbid))
                 
             elif xbmc.getCondVisibility("Container.Content(artists)"):
