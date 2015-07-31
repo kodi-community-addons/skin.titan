@@ -3,11 +3,13 @@
 <window id="0">
     <defaultcontrol always="true">300</defaultcontrol>
     <allowoverlay>yes</allowoverlay>
-	<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
+	<onload condition="!Skin.String(GadgetRows, netflix)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
+	<onload condition="Skin.String(GadgetRows, netflix)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onload>
     <include>defaultskinsettings</include>
 	<onload>300</onload>
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
 	<onload condition="Skin.String(GadgetRows, enhanced)">AlarmClock(SpotlightMove,Control.Move(1508,1),00:08,silent,loop)</onload>
+	<onload condition="Skin.String(GadgetRows, netflix)">AlarmClock(SpotlightMove,Control.Move(510,1),00:30,silent,loop)</onload>
 	<onunload>ClearProperty(ShowViewSubMenu)</onunload>
 	<onunload>CancelAlarm(SpotlightMove,true)</onunload>
 	<onunload>ClearProperty(submenu)</onunload>
@@ -15,6 +17,8 @@
     <onload>ClearProperty(submenu)</onload>
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
 	<onload>ClearProperty(ExtraFanArtPath)</onload>
+	<onload>SetProperty(homevisible,visible)</onload>
+	<onunload>SetProperty(homevisible,hidden)</onunload>
 	<onload condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onload>
 	<onload condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onload>
 	<onload condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onload>
@@ -34,7 +38,7 @@
 		
 		<!--Footer-->
 		<control type="group">
-			<include condition="[!skin.hassetting(nofooterbar) + !Skin.String(GadgetRows, enhanced) + !Skin.String(GadgetRows, simplever)] + ![Skin.String(GadgetRows, simplehor) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)]">Footer</include>
+			<include condition="[!skin.hassetting(nofooterbar) + !Skin.String(GadgetRows, enhanced) + !Skin.String(GadgetRows, simplever) + !Skin.String(GadgetRows, netflix)] + ![Skin.String(GadgetRows, simplehor) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)]">Footer</include>
 		</control>
 		
 		<!--Time-->
@@ -83,6 +87,7 @@
 			<include condition="Skin.String(GadgetRows, enhanced)">EnhancedHomeScreen</include>
 			<include condition="Skin.String(GadgetRows, simplehor)">simplehome_horizontal</include>
 			<include condition="Skin.String(GadgetRows, simplever)">simplehome_vertical</include>
+			<include condition="Skin.String(GadgetRows, netflix)">HomeLayoutNetflix</include>
 		
 		
 			<control type="scrollbar" id="60">
