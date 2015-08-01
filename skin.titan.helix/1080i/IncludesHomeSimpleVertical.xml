@@ -119,8 +119,8 @@
         <height>800</height>
 		<onup condition="!Skin.HasSetting(ShowProfile)">300</onup>
 		<onup condition="Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
-        <ondown condition="Skin.HasSetting(VerticalHomeInlineSubmenu)">2</ondown>
-		<ondown condition="!Skin.HasSetting(VerticalHomeInlineSubmenu)">300</ondown>
+        <ondown condition="Skin.HasSetting(VerticalHomeInlineSubmenu) + !Skin.HasSetting(DisablePowerMenu)">2</ondown>
+		<ondown condition="!Skin.HasSetting(VerticalHomeInlineSubmenu) | Skin.HasSetting(DisablePowerMenu)">300</ondown>
 		<onright condition="!IntegerGreaterThan(Container(4444).NumItems,0) | Skin.HasSetting(VerticalHomeInlineSubmenu)">77777</onright>	
 		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0) + Skin.HasSetting(VerticalHomeInlineSubmenu)">SetProperty(submenu,show,home)</onleft>
 		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0) + Skin.HasSetting(VerticalHomeInlineSubmenu)">Control.SetFocus(4444,0)</onleft>
@@ -387,10 +387,10 @@
 			<posx>453</posx>
 			<posy>170</posy>
 
-			<animation type="Conditional" condition="SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)">
+			<animation type="Conditional" condition="Control.IsVisible(4444)">
 				<effect type="fade" start="0" end="100" time="250" delay="0" />
 			</animation>
-			<animation type="Conditional" condition="![SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)]">
+			<animation type="Conditional" condition="!Control.IsVisible(4444)">
 				<effect type="fade" start="100" end="0" time="250" delay="0" />
 			</animation>
 			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,0) + !Skin.HasSetting(VerticalHomeTiles)">
@@ -438,7 +438,7 @@
 				<aspectratio>stretch</aspectratio>
 			</control>
 			<control type="list" id="4444">
-				<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
+				<visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | control.hasfocus(4444)] + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
 				<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 				<width>310</width>
 				<height>380</height>
@@ -479,7 +479,7 @@
 					<label>-</label>
 					<visible>false</visible>
 					<onfocus>SetProperty(menu,4444,Home)</onfocus>
-					<onfocus>SetProperty(submenu,show,home)</onfocus>
+					<!-- <onfocus>SetProperty(submenu,show,home)</onfocus> -->
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackground,$INFO[Container(4444).ListItem.Property(defaultID)],Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(4444).ListItem.Property(Background)],Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(4444).ListItem.Property(Background))">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
@@ -489,16 +489,6 @@
 				<content>
 				<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
 				</content>
-			</control>
-
-			<control type="button">
-				<label>-</label>
-				<width>310</width>
-				<height>380</height>
-				<visible>!SubString(Window(Home).Property(submenu),show)</visible>
-				<onfocus>SetProperty(submenu,show,home)</onfocus>
-				<texturefocus></texturefocus>
-				<texturenofocus></texturenofocus>
 			</control>
 		</control>
 
