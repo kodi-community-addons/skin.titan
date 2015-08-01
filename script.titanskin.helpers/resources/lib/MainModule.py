@@ -410,11 +410,11 @@ def getSimilarMovies():
             originalTitle = item["title"]
             #get all movies from the same genre
             for genre in genres:
-                json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"' + genre + '"}, "properties": [ "title", "playcount", "plot", "file", "genre", "rating", "resume", "art", "streamdetails", "year", "mpaa", "runtime", "writer", "cast", "dateadded", "lastplayed", "tagline" ],"limits":{"end":10} }, "id": "1"}')
+                json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "random" }, "filter": {"and": [{"operator":"is", "field":"genre", "value":"' + genre + '"}, {"operator":"is", "field":"playcount", "value":"0"}]}, "properties": [ "title", "playcount", "plot", "file", "genre", "rating", "resume", "art", "streamdetails", "year", "mpaa", "runtime", "writer", "cast", "dateadded", "lastplayed", "tagline" ],"limits":{"end":10} }, "id": "1"}')
                 json_result = json.loads(json_query_string)
                 if json_result.has_key('result') and json_result['result'].has_key('movies'):
                     for item in json_result['result']['movies']:
-                        if not item["title"] in allTitles:
+                        if not item["title"] in allTitles and not item["title"] == originalTitle:
                             rating = item["rating"]
                             allItems.append((rating,item))
                             allTitles.append(item["title"])
