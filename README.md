@@ -1,11 +1,11 @@
-# xbmc.skin.titan
+# skin.titan
 
 This skin is available in the official XBMC repository.
 
 Installation instructions:
- 1. In XBMC, go to Settings --> Appearance --> Skin
+ 1. In Kodi, go to Settings --> Appearance --> Skin
  2. Press the "Get more" button
- 3. Select "Titan MediaBrowser" and hit install
+ 3. Select Titan and hit install
  4. Default installation now complete and you can sit back and enjoy :-)
 
 Beta version repository
