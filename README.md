@@ -1,6 +1,6 @@
 # skin.titan
 
-This skin is available in the official XBMC repository.
+This skin is available in the official Kodi repository.
 
 Installation instructions:
  1. In Kodi, go to Settings --> Appearance --> Skin
