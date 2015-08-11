@@ -155,6 +155,7 @@ class LibraryMonitor(threading.Thread):
                     unwatchedcount = 0
                     watchedcount = 0
                     runtime = 0
+                    runtime_mins = 0
                     writer = []
                     director = []
                     genre = []
@@ -198,7 +199,7 @@ class LibraryMonitor(threading.Thread):
                     else:
                         self.win.setProperty('MovieSet.ExtendedPlot', plot)
                     self.win.setProperty('MovieSet.Title', title_list)
-                    self.win.setProperty('MovieSet.Runtime', str(runtime))
+                    self.win.setProperty('MovieSet.Runtime', str(runtime / 60))
                     durationString = self.getDurationString(runtime / 60)
                     if durationString:
                         self.win.setProperty('MovieSet.Duration', durationString)
