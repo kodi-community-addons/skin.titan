@@ -66,8 +66,12 @@ class LibraryMonitor(threading.Thread):
                     self.getStudioLogos()
                     self.delayedTaskInterval = 0                   
             
+            #flush cache if videolibrary has changed
+            elif self.win.getProperty("widgetrefresh") == "refresh":
+                self.moviesetCache = {}
+            
             # monitor listitem props when musiclibrary is active
-            if (xbmc.getCondVisibility("Window.IsActive(musiclibrary) + !Container.Scrolling")):
+            elif (xbmc.getCondVisibility("Window.IsActive(musiclibrary) + !Container.Scrolling")):
                 if self.win.getProperty("resetMusicArtCache") == "reset":
                     self.lastMusicDbId = None
                     self.musicArtCache = {}
@@ -78,7 +82,7 @@ class LibraryMonitor(threading.Thread):
                     utils.logMsg("ERROR in checkMusicArt ! --> " + str(e), 0)
             
             # monitor listitem props when videolibrary is active
-            if (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
+            elif (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
                 
                 self.liPath = xbmc.getInfoLabel("ListItem.Path")
                 liLabel = xbmc.getInfoLabel("ListItem.Label")
@@ -98,9 +102,17 @@ class LibraryMonitor(threading.Thread):
                     except Exception as e:
                         utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
   
-            #flush cache if videolibrary has changed
-            if self.win.getProperty("widgetrefresh") == "refresh":
-                self.moviesetCache = {}
+            else:
+                #reset window props
+                self.win.clearProperty("ListItemStudioLogo")
+                self.win.clearProperty('Duration')
+                self.win.setProperty("ExtraFanArtPath","") 
+                self.win.clearProperty("bannerArt") 
+                self.win.clearProperty("logoArt") 
+                self.win.clearProperty("cdArt")
+                self.win.clearProperty("songInfo")
+                self.win.setProperty("ExtraFanArtPath","")
+                
             
             xbmc.sleep(150)
             self.delayedTaskInterval += 0.15
