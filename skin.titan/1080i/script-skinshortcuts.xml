@@ -12,6 +12,7 @@
 	
 	 <!--Global Background-->
         <include>GlobalBackground</include>
+		
 		<!--Time & Weather-->
         <include condition="!Skin.HasSetting(DisableHeader)">TimeInfo</include>
 		<!-- Now playing -->
@@ -194,7 +195,7 @@
 					
 					<!--widget text-->
 					<control type="label">
-						<label>$INFO[Window(Home).Property(activewidget)]</label>
+						<label>$INFO[Container(211).Listitem.Property(widgetName)]</label>
 						<font>Reg26</font>
 						<scroll>true</scroll>
 						<height>50</height>
@@ -218,7 +219,32 @@
 					
 					<!--action text-->
 					<control type="label">
-						<label>$INFO[Container(211).Listitem.Property(path)]</label>
+						<label>$INFO[Container(211).Listitem.Property(translatedPath)]</label>
+						<font>Reg22</font>
+						<scroll>false</scroll>
+						<height>50</height>
+						<width>500</width>
+					</control>
+					
+					<!--blank label-->
+					<control type="label">
+						<label></label>
+						<font>Reg26</font>
+						<scroll>false</scroll>
+						<height>25</height>
+					</control>
+					
+					<!--action label-->
+					<control type="label">
+						<label>[B]$LOCALIZE[19190]:[/B]</label>
+						<font>Reg26</font>
+						<scroll>false</scroll>
+						<height>50</height>
+					</control>
+					
+					<!--action text-->
+					<control type="label">
+						<label>$INFO[Container(211).Listitem.Property(backgroundName)]</label>
 						<font>Reg26</font>
 						<scroll>true</scroll>
 						<height>50</height>
@@ -278,7 +304,7 @@
 				<control type="button" id="1301"> <!--new shortcut workaround-->
 					<width>500</width>
 					<align>center</align>
-					<onclick>XBMC.RunScript(script.titanskin.helper,ADDSHORTCUT)</onclick>
+					<onclick>XBMC.RunScript(script.skin.helper.service,action=ADDSHORTCUT)</onclick>
 					<onclick>ClearProperty(customWidget, Home)</onclick>
 					<label>$ADDON[script.skinshortcuts 32000]</label>
 					<onfocus>ClearProperty(customWidget, Home)</onfocus>
@@ -330,18 +356,7 @@
 					<visible>!SubString(Container(211).ListItem.Property(labelID),MediaBrowser.usr)</visible>
 				</control>
 				
-				<!--edit thumbnail without selection-->
-				<control type="button" id="306"> 
-					<width>500</width>
-					<align>center</align>
-					<onclick>noop</onclick>
-					<label>31011</label>
-					<onfocus>ClearProperty(customWidget, Home)</onfocus>
-					<visible>false</visible>
-					<visible>StringCompare(Window.Property(groupname),mainmenu) | Skin.String(GadgetRows, enhanced) | Skin.HasSetting(UseSubmenuImages) | StringCompare(Window.Property(groupname),powermenu)</visible>
-				</control>
-				
-				<!--edit thumbnail with selection-->
+				<!--edit thumbnail -->
 				<control type="button" id="311"> 
 					<width>500</width>
 					<align>center</align>
@@ -354,31 +369,15 @@
 				<control type="button" id="312"> <!--set widget-->
 					<width>500</width>
 					<align>center</align>
-					<visible>false</visible>
-				</control>	
-				
-				<control type="button" id="1406"> <!--custom widget content-->
-					<width>500</width>
-					<align>center</align>
-					<onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;skinLabel=label&amp;skinAction=widget-$INFO[Container(211).ListItem.Property(labelID)])</onclick>
+					<visible>true</visible>
 					<onclick>SetProperty(customWidget, normal, Home)</onclick>
-					<onclick>SetProperty(customProperty, customcontent)</onclick>
-					<onclick>SetProperty(customValue, "")</onclick>
-					<onclick>SendClick(404)</onclick>
-					<onfocus>SetProperty(customProperty, widget)</onfocus>
-					<onfocus>SetProperty(customValue, "")</onfocus>
-					<onfocus>SendClick(404)</onfocus>
-					<label>31306</label>
-					<visible>!Skin.String(GadgetRows, netflix)</visible>
-					<visible>StringCompare(Window.Property(groupname),mainmenu)</visible>
-					<visible>!Skin.String(GadgetRows, 3) + !Skin.HasSetting(DisableAllWidgets)</visible>
-				</control>
-				
+				</control>	
+							
 				<control type="button" id="1407"> <!--spotlight widget content-->
 					<width>500</width>
 					<align>center</align>
-					<onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;skinLabel=label&amp;skinAction=spotlightwidget-$INFO[Container(211).ListItem.Property(labelID)])</onclick>
-					<onclick>SetProperty(customWidget, spotlight, Home)</onclick>
+					<onclick>SetProperty(widgetID, 1)</onclick>
+					<onclick>SendClick(312)</onclick>
 					<label>31307</label>
 					<visible>StringCompare(Window.Property(groupname),mainmenu) + Skin.String(GadgetRows, enhanced)</visible>
 					<visible>!Skin.HasSetting(DisableAllWidgets)</visible>

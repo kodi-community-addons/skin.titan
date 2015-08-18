@@ -22,13 +22,13 @@ class Main:
         mainMenuContainer = "300"
         self.win = xbmcgui.Window( 10000 )
 
-        while not (KodiMonitor.abortRequested() or xbmc.abortRequested):
+        while not xbmc.abortRequested:
                         
             # monitor main menu when home is active
             if (xbmc.getCondVisibility("Window.IsActive(home) + !Window.IsActive(fullscreenvideo)")):
-
+                mainMenuContainer = "300"
                 #monitor widget window prop
-                if self.win.getProperty("ShowWidget") == "show" and not xbmc.getCondVisibility("Window.IsActive(selectdialog) | Window.IsActive(shutdownmenu) | Window.IsActive(contextmenu)"):
+                if self.win.getProperty("ShowWidget") == "show" and not xbmc.getCondVisibility("Window.IsActive(selectdialog) | Window.IsActive(shutdownmenu) | Window.IsActive(contextmenu) | Window.IsActive(script-skinshortcuts.xml)"):
                     self.showWidget()
                 
                 listItem = xbmc.getInfoLabel("Container(%s).ListItem.Label" %mainMenuContainer)
@@ -46,6 +46,20 @@ class Main:
 
                     lastListItem = listItem
   
+            # monitor menu when skinshortcuts window is active
+            if (xbmc.getCondVisibility("Window.IsActive(script-skinshortcuts.xml) + !Window.IsActive(fullscreenvideo)")):
+                mainMenuContainer = "211"               
+                listItem = xbmc.getInfoLabel("Container(%s).ListItem.Label" %mainMenuContainer)
+                if ((listItem != lastListItem) and xbmc.getCondVisibility("!Window.IsActive(selectdialog) + !Window.IsActive(shutdownmenu) + !Window.IsActive(contextmenu)")):
+
+                    #spotlight widget
+                    if xbmc.getCondVisibility("Skin.String(GadgetRows, enhanced)"):
+                        self.setSpotlightWidget(mainMenuContainer)
+                    
+                    #normal widget
+                    self.setWidget(mainMenuContainer)
+
+                    lastListItem = listItem
 
             xbmc.sleep(150)
 
