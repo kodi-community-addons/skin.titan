@@ -3,8 +3,8 @@
 <window id="0">
     <defaultcontrol always="true">300</defaultcontrol>
     <allowoverlay>yes</allowoverlay>
-	<onload condition="!Skin.String(GadgetRows, netflix)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
-	<onload condition="Skin.String(GadgetRows, netflix)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onload>
+	<onload condition="!Skin.String(GadgetRows, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
+	<onload condition="Skin.String(GadgetRows, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onload>
     <include>defaultskinsettings</include>
 	<onload>300</onload>
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
@@ -18,11 +18,13 @@
 	<onunload>Dialog.Close(shutdownmenu,true)</onunload>
 	<onload>ClearProperty(SkinHelper.ExtraFanArtPath)</onload>
 	<onload>SetProperty(homevisible,visible)</onload>
+	<onload>SetProperty(SkinHelper.WidgetContainer,510)</onload>
 	<onunload>SetProperty(homevisible,hidden)</onunload>
 	<onload condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onload>
 	<onload condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onload>
 	<onload condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onload>
-    <controls>
+    <onload condition="Skin.String(OSDPanelOpacity)">RunScript(script.titanskin.helpers,migrate)</onload>
+	<controls>
 	
 	<!--Global Background-->
 	<include>GlobalBackground</include>

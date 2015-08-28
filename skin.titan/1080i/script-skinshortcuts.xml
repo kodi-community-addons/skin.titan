@@ -5,9 +5,8 @@
 	<allowoverlay>no</allowoverlay>
 	
 	<defaultcontrol always="true">300</defaultcontrol>
-	<onload>ClearProperty(shortcutDialog, Home)</onload>
-	<onload>ClearProperty(customWidget, Home)</onload>
-	<onunload>ClearProperty(customWidget, Home)</onunload>
+	<onunload condition="!Skin.String(GadgetRows, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onunload>
+	<onunload condition="Skin.String(GadgetRows, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onunload>
 	<controls>
 	
 	 <!--Global Background-->
@@ -46,11 +45,6 @@
 				<posy>0</posy>
 				<width>1820</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
-				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),0)">Conditional</animation>
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 			</control>
 			
@@ -62,11 +56,6 @@
 					<width>620</width>
 					<height>770</height>
 					<texture border="15">diffuse/bgpanel.png</texture>
-					<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),0)">Conditional</animation>
 					<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 				</control>
 				<control type="list" id="211"> <!--Current shortcuts -->
@@ -149,11 +138,6 @@
 					<width>540</width>
 					<height>770</height>
 					<texture border="15">diffuse/bgpanel.png</texture>
-					<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
-					<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(GeneralPanelsOpacity),0)">Conditional</animation>
 					<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 				</control>
 				
@@ -174,7 +158,7 @@
 					<control type="image">
 						<height>220</height>
 						<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-						<texture>$INFO[Container(211).Listitem.Icon]</texture>
+						<texture>$INFO[Container(211).ListItem.Icon]</texture>
 					</control>
 					
 					<!--blank label-->
@@ -182,23 +166,39 @@
 						<label></label>
 						<font>Reg26</font>
 						<scroll>false</scroll>
-						<height>50</height>
+						<height>30</height>
 					</control>
 					
-					<!--widget label-->
+					<!--widget1 label-->
 					<control type="label">
-						<label>[B]$LOCALIZE[31499]:[/B]</label>
+						<label>[B]$LOCALIZE[31499] 1:[/B]</label>
 						<font>Reg26</font>
 						<scroll>false</scroll>
-						<height>50</height>
+						<height>40</height>
 					</control>
 					
-					<!--widget text-->
+					<!--widget1 text-->
 					<control type="label">
-						<label>$INFO[Container(211).Listitem.Property(widgetName)]</label>
+						<label fallback="231">$INFO[Container(211).Listitem.Property(widgetName)]</label>
 						<font>Reg26</font>
 						<scroll>true</scroll>
-						<height>50</height>
+						<height>55</height>
+					</control>
+					
+					<!--widget2 label-->
+					<control type="label">
+						<label>[B]$LOCALIZE[31499] 2:[/B]</label>
+						<font>Reg26</font>
+						<scroll>false</scroll>
+						<height>40</height>
+					</control>
+					
+					<!--widget2 text-->
+					<control type="label">
+						<label fallback="231">$INFO[Container(211).Listitem.Property(widgetName.1)]</label>
+						<font>Reg26</font>
+						<scroll>true</scroll>
+						<height>40</height>
 					</control>
 					
 					<!--blank label-->
@@ -206,7 +206,7 @@
 						<label></label>
 						<font>Reg26</font>
 						<scroll>false</scroll>
-						<height>50</height>
+						<height>30</height>
 					</control>
 					
 					<!--action label-->
@@ -214,15 +214,15 @@
 						<label>[B]$LOCALIZE[31501]:[/B]</label>
 						<font>Reg26</font>
 						<scroll>false</scroll>
-						<height>50</height>
+						<height>40</height>
 					</control>
 					
 					<!--action text-->
 					<control type="label">
-						<label>$INFO[Container(211).Listitem.Property(translatedPath)]</label>
+						<label fallback="231">$INFO[Container(211).Listitem.Property(translatedPath)]</label>
 						<font>Reg22</font>
 						<scroll>false</scroll>
-						<height>50</height>
+						<height>40</height>
 						<width>500</width>
 					</control>
 					
@@ -239,15 +239,15 @@
 						<label>[B]$LOCALIZE[19190]:[/B]</label>
 						<font>Reg26</font>
 						<scroll>false</scroll>
-						<height>50</height>
+						<height>40</height>
 					</control>
 					
-					<!--action text-->
+					<!--background-->
 					<control type="label">
-						<label>$INFO[Container(211).Listitem.Property(backgroundName)]</label>
+						<label fallback="231">$INFO[Container(211).Listitem.Property(backgroundName)]</label>
 						<font>Reg26</font>
 						<scroll>true</scroll>
-						<height>50</height>
+						<height>40</height>
 						<width>500</width>
 					</control>
 				
@@ -352,7 +352,6 @@
 					<align>center</align>
 					<onclick>SetProperty(shortcutDialog, label, Home)</onclick>
 					<label>$ADDON[script.skinshortcuts 32025]</label>
-					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>!SubString(Container(211).ListItem.Property(labelID),MediaBrowser.usr)</visible>
 				</control>
 				
@@ -370,24 +369,24 @@
 					<width>500</width>
 					<align>center</align>
 					<visible>true</visible>
+					<label>$ADDON[script.skinshortcuts 32044] 1</label>
 					<onclick>SetProperty(customWidget, normal, Home)</onclick>
-				</control>	
-							
-				<control type="button" id="1407"> <!--spotlight widget content-->
+				</control>
+											
+				<control type="button" id="1407"> <!--set widget 2-->
 					<width>500</width>
 					<align>center</align>
 					<onclick>SetProperty(widgetID, 1)</onclick>
 					<onclick>SendClick(312)</onclick>
-					<label>31307</label>
-					<visible>StringCompare(Window.Property(groupname),mainmenu) + Skin.String(GadgetRows, enhanced)</visible>
+					<label>$ADDON[script.skinshortcuts 32044] 2</label>
 					<visible>!Skin.HasSetting(DisableAllWidgets)</visible>
 				</control>
 				
 				<control type="button" id="310"> <!--background-->
 					<width>500</width>
 					<align>center</align>
+					<label>$ADDON[script.skinshortcuts 32045]</label>
 					<onclick>SetProperty(shortcutDialog, background, Home)</onclick>
-					<label>31169</label>
 					<onfocus>ClearProperty(customWidget, Home)</onfocus>
 					<visible>Skin.HasSetting(UseSectionBackground)</visible>
 				</control>
@@ -405,6 +404,7 @@
 				<control type="button" id="307"> <!--change action-->
 					<width>500</width>
 					<align>center</align>
+					<label>$ADDON[script.skinshortcuts 32027]</label>
 				</control>
 					
 				<!-- disable label -->

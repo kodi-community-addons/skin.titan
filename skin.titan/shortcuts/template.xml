@@ -5,19 +5,60 @@
 	
 	<other include="widget">
 		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
-		<condition tag="property" attribute="name|widgetTarget">video</condition>
+		<condition tag="property" attribute="name|widgetTarget"></condition>
 		<match>any</match>
 
 		<!-- For nodes, set the content property to the value of widgetPath -->
 		<property name="content" tag="property" attribute="name|widgetPath" />
+		<property name="target" tag="property" attribute="name|widgetTarget" />
 
 		<controls>
 			<control type="list" id="510">
 				<skinshortcuts>visibility</skinshortcuts>
+				<visible>StringCompare(Window(home).Property(activewidget),0) | IsEmpty(Window(home).Property(activewidget))</visible>
 				<include condition="!Skin.String(GadgetRows, enhanced)">panel_layout</include><include condition="Skin.String(GadgetRows, enhanced)">panel_layout_enhanced</include>
-				<content>$SKINSHORTCUTS[content]</content>
+				<content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]</content>
+			</control>
+
+		</controls>
+	</other>
+	
+	<other include="widget.1">
+		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
+		<condition tag="property" attribute="name|widgetTarget.1"></condition>
+		<match>any</match>
+		<!-- For nodes, set the content property to the value of widgetPath -->
+		<property name="content" tag="property" attribute="name|widgetPath.1" />
+		<property name="target" tag="property" attribute="name|widgetTarget.1" />
+
+		<controls>
+			<control type="list" id="510">
+				<skinshortcuts>visibility</skinshortcuts>
+				<visible>!Skin.String(GadgetRows, enhanced)</visible>
+				<visible>StringCompare(Window(home).Property(activewidget),1)</visible>
+				<include>panel_layout</include>
+				<content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]</content>
 			</control>
 		</controls>
 	</other>
+	
+	<other include="spotlightwidget">
+		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
+		<condition tag="property" attribute="name|widgetTarget.1"></condition>
+		<match>any</match>
+
+		<!-- For nodes, set the content property to the value of widgetPath -->
+		<property name="content" tag="property" attribute="name|widgetPath.1" />
+		<property name="target" tag="property" attribute="name|widgetTarget.1" />
+
+		<controls>
+			<control type="panel" id="1508">
+				<skinshortcuts>visibility</skinshortcuts>
+				<include>SpotLightWidgetLayout</include>
+				<content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]</content>
+			</control>
+		</controls>
+	</other>
+
 
 </template>

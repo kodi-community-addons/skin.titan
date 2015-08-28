@@ -42,7 +42,7 @@
 			<control type="image">
 				<texture>home/home_overlay2.png</texture>
 				<bordersize>5</bordersize>
-				<animation effect="fade" end="80" time="0" reversible="false" condition="true">Conditional</animation>
+				
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 				<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
 			</control>
@@ -86,10 +86,6 @@
 		<width>435</width>
 		<height>100%</height>
 		<texture>colors/color_white.png</texture>
-		<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
-		<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
-		<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
-		<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
 		<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 		<aspectratio>stretch</aspectratio>
 	</control>
@@ -160,7 +156,7 @@
 				<control type="image">
 					<texture>home/home_overlay2.png</texture>
 					<bordersize>5</bordersize>
-					<animation effect="fade" end="80" time="0" reversible="false" condition="true">Conditional</animation>
+					
 					<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
 				</control>
@@ -259,23 +255,19 @@
         </animation>
 		
 		<control type="group">
-				<include condition="!Skin.HasSetting(DisableAllWidgets)">widgets</include>
+				<include condition="!Skin.HasSetting(DisableAllWidgets)">skinshortcuts-template-widget</include>
+				<include condition="!Skin.HasSetting(DisableAllWidgets)">skinshortcuts-template-widget.1</include>
 			</control>
 
 		<control type="group" id="77551">
-			<visible>[Control.HasFocus(510) | Control.HasFocus(511)] + !StringCompare(Container(300.ListItem.Property(widget),submenuaswidget)</visible>
+			<visible>[Control.HasFocus(510) | Control.HasFocus(511)] + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
 			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
-			<animation effect="slide" end="0,-50" time="0" condition="StringCompare(Container(300.ListItem.Property(widget),music)">Conditional</animation>
+			<animation effect="slide" end="0,-50" time="0" condition="StringCompare(Container(300).ListItem.Property(widget),music)">Conditional</animation>
 			<control type="image">
 				<posx>50</posx>
 				<posy>-300</posy>
 				<width>1270</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
-				<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
-				<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 				<aspectratio>stretch</aspectratio>
 				<height>325</height>
@@ -290,7 +282,7 @@
 				<shadowcolor>black</shadowcolor>
 				<align>justify</align>
 				<font>Reg24</font>
-				<visible>!StringCompare(Container(300.ListItem.Property(widget),music)</visible>
+				<visible>!StringCompare(Container(300).ListItem.Property(widget),music)</visible>
 			</control>
 			<control type="textbox">
 				<posx>60</posx>
@@ -302,7 +294,7 @@
 				<shadowcolor>black</shadowcolor>
 				<align>justify</align>
 				<font>Reg24</font>
-				<visible>StringCompare(Container(300.ListItem.Property(widget),music)</visible>
+				<visible>StringCompare(Container(300).ListItem.Property(widget),music)</visible>
 			</control>
 		</control>
 		
@@ -329,9 +321,11 @@
 				<onup>510</onup>
 				<ondown>300</ondown>
 				<textoffsetx>90</textoffsetx>
-				<label>$VAR[HomeWidgetLabel]</label>
+				<label>$VAR[changeWidgetLabel]</label>
+				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + [StringCompare(Window(home).Property(activewidget),0) | IsEmpty(Window(home).Property(activewidget))]">SetProperty(activewidget,1)</onclick>
+				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(activewidget),1)">SetProperty(activewidget,0)</onclick>
+				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1))">RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
 				<texturenofocus>dialogs/default/separator.png</texturenofocus>
-				<onclick>$VAR[HomeWidgetClickActions]</onclick>
 				<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget))</visible>
 			</control>
 			<control type="image">
@@ -435,10 +429,6 @@
 				<width>360</width>
 				<height>400</height>
 				<texture border="5">diffuse/panel.png</texture>
-				<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),80)">Conditional</animation>
-				<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),60)">Conditional</animation>
-				<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),40)">Conditional</animation>
-				<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(GeneralPanelsOpacity),20)">Conditional</animation>
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 				<aspectratio>stretch</aspectratio>
 			</control>
