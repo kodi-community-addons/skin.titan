@@ -598,39 +598,50 @@
     </variable>
 	
 
-	<include name="panel_layout_vertical_poster">
+	<include name="widget_layout_vertical_poster">
+        <bottom>90</bottom>
+        <right>40</right>
 		<width>1320</width>
 		<height>760</height>
 		<orientation>vertical</orientation>
+        <onleft>300</onleft>
+        <ondown>511</ondown>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,4)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
 		<animation effect="slide" start="0" end="0,350" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,5) | StringCompare(Container(510).NumItems,5)">Conditional</animation>
 		<animation effect="slide" end="0,-30" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
+        <include>widget_layout</include>
 	</include>
 	
-	<include name="panel_layout_vertical_landscape">
-		<posx>230</posx>
-		<posy>155</posy>
-		<width>1250</width>
+	<include name="widget_layout_vertical_landscape">
+		<bottom>110</bottom>
+        <right>40</right>
+		<width>1110</width>
 		<height>630</height>
 		<orientation>vertical</orientation>
+        <onleft>300</onleft>
+        <ondown>511</ondown>
 		<animation effect="slide" start="0" end="368" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
 		<animation effect="slide" start="0" end="368" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
-		
 		<animation effect="slide" start="0" end="0,210" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
 		<animation effect="slide" start="0" end="0,210" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,6)">Conditional</animation>
 		<animation effect="slide" end="60" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
+        <include>widget_layout</include>
 	</include>
 	
-	<include name="panel_layout_horizontal_poster">
+	<include name="widget_layout_horizontal_poster">
+        <posy>55</posy>
+        <posx>20</posx>
 		<width>1830</width>
 		<height>380</height>
 		<itemgap>5</itemgap>
 		<orientation>horizontal</orientation>
-		<animation type="Conditional" condition="Skin.String(GadgetRows, simplehor)">
-			<effect type="slide" start="0,0" end="0,-160" time="0" tween="cubic" easing="inout" delay="0"/>
+        <ondown>300</ondown>
+        <onup>511</onup>
+		<animation type="Conditional" condition="Skin.String(GadgetRows, simplehor) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
+			<effect type="slide" start="0,0" end="0,-160" time="300" tween="cubic" easing="inout" delay="0"/>
 		</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,6)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,5)">Conditional</animation>
@@ -640,29 +651,25 @@
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
 		<animation effect="slide" end="0,30" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(GadgetRows, simplehor)">Conditional</animation>
 		<animation effect="slide" end="0,110" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(GadgetRows, simplehor)">Conditional</animation>
+        <include>widget_layout</include>
 	</include>
-	
-	<include name="panel_layout">
-		<include condition="Skin.String(widgetstyle, poster) + Skin.String(GadgetRows, simplever)">panel_layout_vertical_poster</include>
-		<include condition="Skin.String(widgetstyle, landscape) + Skin.String(GadgetRows, simplever)">panel_layout_vertical_landscape</include>
-		<include condition="Skin.String(widgetstyle, poster) + !Skin.String(GadgetRows, simplever)">panel_layout_horizontal_poster</include>
+    
+    <include name="widget_layout_horizontal_landscape">
 		<posx>30</posx>
 		<posy>55</posy>
 		<width>1830</width>
 		<height>245</height>
-		<onleft></onleft>
+        <ondown>300</ondown>
+        <onup>511</onup>
+        <orientation>horizontal</orientation>
+        <include>widget_layout</include>
+	</include>
+	
+	<include name="widget_layout">
 		<ondown>ClearProperty(ShowWidget, Home)</ondown>
-		<onleft condition="Skin.String(GadgetRows, simplever)">300</onleft>
-		<ondown condition="Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3) | Skin.String(GadgetRows, simplehor)">300</ondown>
-		<ondown condition="Skin.String(GadgetRows, enhanced)">510</ondown>
-		<ondown condition="Skin.String(GadgetRows, simplever)">511</ondown>
 		<onback>300</onback>
 		<onback>ClearProperty(ShowWidget, Home)</onback>
-		<onup condition="Skin.String(GadgetRows, simplehor) + Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
-		<onup condition="!Skin.String(GadgetRows, simplever)">511</onup>
 		<orientation>horizontal</orientation>
-		<focusposition>-</focusposition>
-		
 		<animation effect="slide" end="0,10" time="0" condition="skin.hastheme(classic) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
 		<animation effect="slide" end="0,-30" time="0" condition="Skin.String(GadgetRows, simplehor) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
 		
