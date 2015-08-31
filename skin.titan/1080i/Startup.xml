@@ -3,6 +3,16 @@
 <window>
 <!--Splash Screen-->
 	<include>defaultskinsettings</include>
+    <!-- initialize 3th party addons -->
+    <onload condition="System.HasAddon(script.artistslideshow) + Skin.HasSetting(enableArtistSlideshow)">RunScript(script.artistslideshow, daemon=True)</onload>
+    <onload condition="System.HasAddon(script.games.rom.collection.browser)">RunScript(script.games.rom.collection.browser,limit=10)</onload>
+    <onload condition="Skin.String(AutoStartPlayList)">AlarmClock(playliststart,PlayMedia($ESCINFO[Skin.String(AutoStartPlayList)]),00:08,silent)</onload>	
+    <onload>Skin.SetBool(enable.smartish.widgets)</onload>
+    <onload>SetProperty(SkinIsCompatible,true,Home)</onload>
+
+    <!-- (optional) automatic run of the artwork downloader on startup -->
+    <onload condition="Skin.HasSetting(EnableArtworkDownloader)">XBMC.runscript(script.artwork.downloader, silent=true)</onload>
+    
 	<onload condition="!Skin.HasSetting(DisableSplashScreen)">AlarmClock(loadhome,ReplaceWindow(Home),00:6,silent)</onload>
 	<onload condition="Skin.HasSetting(DisableSplashScreen)">ReplaceWindow(Home)</onload>
 	<controls>
