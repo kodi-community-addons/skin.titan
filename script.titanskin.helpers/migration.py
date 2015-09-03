@@ -18,15 +18,21 @@ def fullMigration():
     migrateSkinHelperSettings()
     migrateSkinShortcuts()
 
-
 def migrateSkinHelperSettings():
-    settings = ["ShowInfoAtPlaybackStart","RandomFanartDelay","SpinnerTexture","SpinnerTexturePath"]
+    #migrate string settings
+    settings = ["ShowInfoAtPlaybackStart","RandomFanartDelay","SpinnerTexture","SpinnerTexturePath","ForcedViews.movies","ForcedViews.tvshows","ForcedViews.seasons","ForcedViews.episodes","ForcedViews.sets","ForcedViews.setmovies"]
     for setting in settings:
-        currentvalue = xbmc.getInfoLabel(setting)
+        currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %setting)
         xbmc.executebuiltin("Skin.SetString(SkinHelper.%s,%s)" %(setting,currentvalue))
-        xbmc.executebuiltin("Skin.Reset(SkinHelper.%s)" %setting)
+        xbmc.executebuiltin("Skin.Reset(%s)" %setting)
     
-   
+    #migrate bool settings
+    settings = ["ForcedViews.Enabled"]
+    for setting in settings:
+        currentvalue = xbmc.getCondVisibility("Skin.HasSetting(%s)" %setting)
+        if currentvalue:
+            xbmc.executebuiltin("Skin.SetBool(SkinHelper.%s)" %setting)
+        xbmc.executebuiltin("Skin.Reset(%s)" %setting)
 
 def migrateColorSettings():
     xbmc.log("TITAN SKIN --> Migrating Color settings.....")
@@ -87,6 +93,8 @@ def migrateColorSettings():
                     settingvalue = ""
                 
                 settingname = settingname.replace(xbmc.getSkinDir()+".","")
+                if settingname.startswith("beta.") or settingname.startswith("helix."):
+                    continue
                 settingtype = skinsetting.attributes['type'].nodeValue
 
                 if "color" in settingname.lower() and not settingname.lower().endswith(".name") and settingtype == "string":
@@ -125,7 +133,6 @@ def migrateColorSettings():
                             xbmc.log("Error has occurred while correcting " + settingname)
                             xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
 
-
 def migrateSkinShortcuts():
     propertiesList = []
     xbmc.log("TITAN SKIN --> Migrating Widget and background settings.....")
@@ -142,10 +149,19 @@ def migrateSkinShortcuts():
         
     #Migrate skin shortcuts - convert widget settings
     skinshortcutspath = xbmc.translatePath("special://home/userdata/addon_data/script.skinshortcuts/mainmenu.DATA.xml").decode("utf-8")
-    if xbmcvfs.exists( skinshortcutspath ):
+    if xbmcvfs.exists( skinshortcutspath ):       
         doc = parse( skinshortcutspath )
         listing = doc.documentElement.getElementsByTagName( 'shortcut' )
         for shortcut in listing:
+            
+            #check visbility condition - to cleanup non-exististing shortcuts
+            visible = shortcut.getElementsByTagName( 'visible' )
+            if visible:
+                visible = visible[0].firstChild.data
+                if not xbmc.getCondVisibility(visible):
+                    doc.documentElement.removeChild(shortcut)
+                    continue
+        
             defaultID = shortcut.getElementsByTagName( 'defaultID' )
             if defaultID:
                 defaultID = defaultID[0].firstChild
@@ -156,6 +172,7 @@ def migrateSkinShortcuts():
                     xbmc.executebuiltin("Skin.Reset(widget-%s)" %defaultID)
                     widgetPropExists = False
                     backgroundPropExists = False
+                    
                     for line in propertiesList:
                         if "widget" in line and "'" + defaultID + "'" in line:
                             widgetPropExists = True
@@ -168,7 +185,7 @@ def migrateSkinShortcuts():
                             propertiesList.append("['mainmenu', '%s', 'widgetName', u'$LOCALIZE[12600]']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetType', u'static']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetTarget', u'static']"%defaultID)
-                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'$INCLUDE[StaticWidgetContent]']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'$INCLUDE[WeatherWidget]']"%defaultID)
                         elif widget == "movies":
                             propertiesList.append("['mainmenu', '%s', 'widget', u'recommendedmovies']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetName', u'$ADDON[script.skin.helper.service 32003]']"%defaultID)
@@ -192,7 +209,13 @@ def migrateSkinShortcuts():
                             propertiesList.append("['mainmenu', '%s', 'widgetName', u'$LOCALIZE[130]']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetType', u'static']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetTarget', u'static']"%defaultID)
-                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'$INCLUDE[StaticWidgetContent]']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'$INCLUDE[SystemInfoWidget]']"%defaultID)
+                        elif widget == "submenuaswidget":
+                            propertiesList.append("['mainmenu', '%s', 'widget', u'submenuaswidget']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetName', u'$LOCALIZE[31196]']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetType', u'static']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetTarget', u'static']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'$INCLUDE[skinshortcuts-submenu]']"%defaultID)
                         elif widget == "music":
                             propertiesList.append("['mainmenu', '%s', 'widget', u'recentalbums']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetName', u'$LOCALIZE[359]']"%defaultID)
@@ -252,6 +275,10 @@ def migrateSkinShortcuts():
                         if defaultID == "settings":
                             propertiesList.append("['mainmenu', 'settings', 'background', u'special://skin/extras/backgrounds/systeminfo.jpg']")
                             propertiesList.append("['mainmenu', 'settings', 'backgroundName', u'$LOCALIZE[10040]']")
+        
+        xbmcvfs.delete(skinshortcutspath)
+        with open(skinshortcutspath, 'w') as f:
+            f.write(doc.toxml(encoding='utf-8'))
 
 
     #write the properties list
@@ -295,23 +322,31 @@ def migrateSkinShortcuts():
             contents = contents.replace("$VAR[CustomCollectionClick]","SetFocus(4444)")
             contents = contents.replace("plugin://script.titanskin.helpers/?","plugin://script.skin.helper.service/?action=")
             
+            contents = contents.replace("$VAR[MoviesButtonOnClick]","ActivateWindow(10025,videodb://movies/titles/,return)")
+            contents = contents.replace("$VAR[MoviesTitlesButtonOnClick]","ActivateWindow(10025,videodb://movies/titles/,return)")
+            contents = contents.replace("$VAR[TVseriesButtonOnClick]","ActivateWindow(10025,videodb://tvshows/titles/,return)")
+            contents = contents.replace("$VAR[TVseriesTitleButtonOnClick]","ActivateWindow(10025,videodb://tvshows/titles/,return)")
+            contents = contents.replace("$VAR[NetflixButtonOnClick]","ActivateWindow(10025,plugin://plugin.video.netflixbmc,return)")
+            contents = contents.replace("$VAR[MusicButtonOnClick]","ActivateWindow(Music,musicdb://,return)")
+            contents = contents.replace("$VAR[VideosButtonOnClick]","ActivateWindow(Video,return)")
+            contents = contents.replace("$VAR[SettingsButtonOnClick]","ActivateWindow(Settings)")
+            contents = contents.replace("$VAR[MusicVideosButtonOnClick]","ActivateWindow(10025,videodb://musicvideos/titles/,return)")
+            contents = contents.replace("$VAR[PicturesButtonOnClick]","ActivateWindow(pictures,return)")
+            contents = contents.replace("$VAR[MB3ChannelsThumb]","DefaultShortcut.png")
+            
             f = open(skinshortcutspath+file, "w")
             f.write(contents)
             f.close()
 
-	#rebuild skinshortcuts
-	skinshortcutspath = xbmc.translatePath("special://home/userdata/addon_data/script.skinshortcuts/%s.hash" %xbmc.getSkinDir()).decode("utf-8")
-	retries = 3
-        for i in range(retries):
-			count = 0
-			while count != 240 and not xbmcvfs.exists( skinshortcutspath ):
-				xbmc.sleep(500)
-				count += 1
-			#delete the hashfile
-			xbmcvfs.delete( skinshortcutspath )
-			xbmc.sleep(500)
-			xbmc.executebuiltin("RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)")
-
+    #rebuild skinshortcuts
+    skinshortcutspath = xbmc.translatePath("special://home/userdata/addon_data/script.skinshortcuts/%s.hash" %xbmc.getSkinDir()).decode("utf-8")
+    while count != 240 and not xbmcvfs.exists( skinshortcutspath ):
+        xbmc.sleep(500)
+        count += 1
+    #delete the hashfile
+    xbmcvfs.delete( skinshortcutspath )
+    xbmc.sleep(500)
+    xbmc.executebuiltin("RunScript(script.skinshortcuts,type=buildxml&mainmenuID=300&group=mainmenu|powermenu)")
 
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
