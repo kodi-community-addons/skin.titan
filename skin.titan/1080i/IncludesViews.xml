@@ -2,7 +2,7 @@
 <includes>
 
 <include name="allViewIds">
-	<views>50,51,52,500,501,502,503,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516</views>
+	<views>10,50,51,52,500,501,502,503,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516</views>
 </include>
 
 <include name="allViews">
@@ -12,6 +12,7 @@
 		<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
 		<visible>IntegerGreaterThan(Container.NumItems,0)</visible>
 		<include>View_50_List</include>
+        <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.10)">View_10_SimplePVR</include>
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.55)">View_55_BannerList</include>
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.500)">View_500_Showcase</include>
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.51)">View_51_BigList</include>
@@ -3177,7 +3178,6 @@
                     <include>SubMenuButton</include>
                     <label>$VAR[showHiddenPVRLabel]</label>
 					<visible>Window.IsActive(TVChannels) | Window.IsActive(RadioChannels) | Window.IsActive(TVRecordings) | Window.IsActive(RadioRecordings)</visible>
-					<visible>SubString(System.BuildVersion,15,left)</visible>
                 </control>
 				<control type="radiobutton" id="31">
                     <!--filter-->
@@ -3186,8 +3186,16 @@
 					<selected>Container.Filtered</selected>
 					<onclick>right</onclick>
 					<visible>Window.IsActive(TVChannels) | Window.IsActive(RadioChannels)</visible>
-					<visible>SubString(System.BuildVersion,15,left)</visible>
                 </control>
+                
+                <control type="radiobutton" id="3331">
+                    <!--show PVR live thumbs-->
+                    <include>SubMenuButton</include>
+                    <label>31566</label>
+					<selected>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</selected>
+					<onclick>Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)</onclick>
+                </control>
+                
                 <include>SideBladeViewCommands</include>
 				
             </control>
@@ -3270,6 +3278,28 @@
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_watched_normal</include>
 		</control>
+        <control type="image">
+			<!--UnWatched Overlay background-->
+			<right>0</right>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.Color)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--UnWatched Overlay image-->
+			<right>0</right>
+			<top>0</top>
+			<width>80</width>
+			<height>80</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/unwatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.TextColor)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
 		<control type="group">
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
@@ -3305,6 +3335,33 @@
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_sets_normal</include>
 		</control>
+        <control type="image">
+			<!--PVR is recording-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture>pvr/icons/pvr_record.png</texture>
+			<visible>ListItem.IsRecording</visible>
+		</control>
+        <control type="image">
+			<!--PVR is playing-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture>pvr/icons/pvr_play.png</texture>
+			<visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+		</control>
+        <control type="image">
+			<!--PVR has timer-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture>pvr/icons/pvr_timer.png</texture>
+			<visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) + !ListItem.IsRecording</visible>
+		</control>
 	</include>
 	
 	<include name="WatchedIndicatorSmall">
@@ -3330,6 +3387,57 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+        
+        <control type="image">
+			<!--UnWatched Overlay background-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/OverlayBackground.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.Color)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--UnWatched Overlay image-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/normal/unwatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.TextColor)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+
+		<control type="image">
+			<!--PVR is recording-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture>pvr/icons/pvr_record.png</texture>
+			<visible>ListItem.IsRecording</visible>
+		</control>
+        <control type="image">
+			<!--PVR is playing-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture>pvr/icons/pvr_play.png</texture>
+			<visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+		</control>
+        <control type="image">
+			<!--PVR has timer-->
+			<right>0</right>
+			<top>0</top>
+			<width>65</width>
+			<height>60</height>
+			<texture>pvr/icons/pvr_timer.png</texture>
+			<visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) + !ListItem.IsRecording</visible>
 		</control>
 		
 		<control type="image">
@@ -3424,6 +3532,28 @@
 			<texture diffuse="diffuse/watched_icon.png">overlays/big/watched.png</texture>
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+        <control type="image">
+			<!--UnWatched Overlay background-->
+			<right>0</right>
+			<top>0</top>
+			<width>120</width>
+			<height>120</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/big/OverlayBackground.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.Color)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
+			<visible>!SubString(ListItem.Label,..,left)</visible>
+		</control>
+		<control type="image">
+			<!--UnWatched Overlay image-->
+			<right>0</right>
+			<top>0</top>
+			<width>120</width>
+			<height>120</height>
+			<texture diffuse="diffuse/watched_icon.png">overlays/big/unwatched.png</texture>
+			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.TextColor)]</colordiffuse>
+			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 		</control>
 		

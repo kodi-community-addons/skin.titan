@@ -169,6 +169,8 @@ def migrateSkinShortcuts():
                     defaultID = defaultID.data
                     label = shortcut.getElementsByTagName( 'label' )[0].firstChild.data
                     widget = xbmc.getInfoLabel("$INFO[Skin.String(widget-%s)]" %defaultID)
+                    if not widget:
+                        widget = xbmc.getInfoLabel("$INFO[Skin.String(widget-%s)]" %label)
                     xbmc.executebuiltin("Skin.Reset(widget-%s)" %defaultID)
                     widgetPropExists = False
                     backgroundPropExists = False
@@ -321,7 +323,7 @@ def migrateSkinShortcuts():
             contents = contents.replace("$VAR[RecentMoviesButtonThumb]","$INFO[Window(Home).Property(SkinHelper.RecentMoviesBackground)]")
             contents = contents.replace("$VAR[CustomCollectionClick]","SetFocus(4444)")
             contents = contents.replace("plugin://script.titanskin.helpers/?","plugin://script.skin.helper.service/?action=")
-            
+            contents = contents.replace("RunScript(script.titanskin.helpers,","RunScript(script.skin.helper.service,action=")
             contents = contents.replace("$VAR[MoviesButtonOnClick]","ActivateWindow(10025,videodb://movies/titles/,return)")
             contents = contents.replace("$VAR[MoviesTitlesButtonOnClick]","ActivateWindow(10025,videodb://movies/titles/,return)")
             contents = contents.replace("$VAR[TVseriesButtonOnClick]","ActivateWindow(10025,videodb://tvshows/titles/,return)")
@@ -340,7 +342,7 @@ def migrateSkinShortcuts():
 
     #rebuild skinshortcuts
     skinshortcutspath = xbmc.translatePath("special://home/userdata/addon_data/script.skinshortcuts/%s.hash" %xbmc.getSkinDir()).decode("utf-8")
-    while count != 240 and not xbmcvfs.exists( skinshortcutspath ):
+    while count != 20 and not xbmcvfs.exists( skinshortcutspath ):
         xbmc.sleep(500)
         count += 1
     #delete the hashfile
