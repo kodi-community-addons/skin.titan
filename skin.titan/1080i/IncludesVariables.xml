@@ -132,17 +132,20 @@
     </variable>
 	
     <variable name="value_list_label_2">
+        <!-- PVR -->
+        <value condition="SubString(Window.Property(xmlfile),MyPVR,left)">$INFO[ListItem.StartDate] - $INFO[ListItem.StartTime]$INFO[ListItem.Duration, / ,]</value>
+        <!-- movies -->
         <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + !SubString(ListItem.Path,videodb://1/7,left)">$INFO[ListItem.Duration,[B]$LOCALIZE[180]:[/B] ,min.]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
-        <value condition="SubString(ListItem.Path,videodb://1/7,left)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[20457][/COLOR]</value>
+        <value condition="SubString(ListItem.Path,videodb://1/7,left)">$LOCALIZE[20457]</value>
         <!-- Movie Sets -->
-        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)]  - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$INFO[ListItem.TVShowTitle][/COLOR] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[20360]: [/COLOR]$INFO[ListItem.Property(TotalEpisodes)] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[16101]: [/COLOR]$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="Container.Content(episodes)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration,,min.] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$INFO[ListItem.TVShowTitle][/COLOR]</value>
-        <value condition="Container.Content(artists)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[21898]: [/COLOR]$INFO[ListItem.Property(Artist_YearsActive)]</value>
+        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">$LOCALIZE[20360]: $INFO[ListItem.Property(TotalEpisodes)]  - $LOCALIZE[16101]: $INFO[ListItem.Property(UnWatchedEpisodes)]</value>
+        <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TVShowTitle] - $LOCALIZE[20360]: $INFO[ListItem.Property(TotalEpisodes)] - $LOCALIZE[16101]: $INFO[ListItem.Property(UnWatchedEpisodes)]</value>
+        <value condition="Container.Content(episodes)">$LOCALIZE[180]:  $INFO[ListItem.Duration,,min.] - $INFO[ListItem.TVShowTitle]</value>
+        <value condition="Container.Content(artists)">$LOCALIZE[21898]: $INFO[ListItem.Property(Artist_YearsActive)]</value>
         <!-- YearsActive/Artists -->
-        <value condition="Container.Content(songs)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[180]: [/COLOR] $INFO[ListItem.Duration]</value>
-        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + IsEmpty(ListItem.Label2)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)]</value>
-        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + !IsEmpty(ListItem.Label2)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[24051] [/COLOR]$INFO[ListItem.Property(Addon.Version)] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[21863]: [/COLOR]$INFO[ListItem.Property(Addon.Creator)] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$INFO[ListItem.Label2][/COLOR]</value>
+        <value condition="Container.Content(songs)">$LOCALIZE[180]:  $INFO[ListItem.Duration]</value>
+        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + IsEmpty(ListItem.Label2)">$LOCALIZE[24051] $INFO[ListItem.Property(Addon.Version)] - $LOCALIZE[21863]: $INFO[ListItem.Property(Addon.Creator)]</value>
+        <value condition="Container.Content(addons) + !IsEmpty(ListItem.Property(Addon.Version)) + !IsEmpty(ListItem.Label2)">$LOCALIZE[24051] $INFO[ListItem.Property(Addon.Version)] - $LOCALIZE[21863]: $INFO[ListItem.Property(Addon.Creator)] - $INFO[ListItem.Label2]</value>
     </variable>
 	
 	
@@ -497,6 +500,8 @@
 		<value condition="!IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(poster))">$INFO[ListItem.Property(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(tvshow.poster))">$INFO[ListItem.Property(poster)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))">$INFO[Window(home).Property(SkinHelper.PVR.Poster)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
@@ -599,6 +604,13 @@
         <value condition="Player.IsInternetStream">[B]$LOCALIZE[31040][/B]</value>
         <value>[B]$LOCALIZE[31040][/B]  ($INFO[Player.Time] / $INFO[Player.Duration])</value>
     </variable>
+    
+    <variable name="PVRThumb">
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))">$INFO[Window(home).Property(SkinHelper.PVR.Poster)]</value>
+        <value condition="!IsEmpty(ListItem.Icon) + !SubString(Window.Property(xmlfile),MyPVRRecordings,left)">$INFO[ListItem.Icon]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.ChannelLogo))">$INFO[Window(home).Property(SkinHelper.PVR.ChannelLogo)]</value>
+    </variable>
 	
 	<variable name="ListItemDuration">
 		<value condition="!IsEmpty(Window(home).Property(SkinHelper.MovieSet.Duration))">$INFO[Window(home).Property(SkinHelper.MovieSet.Duration)]$INFO[Window(home).Property(SkinHelper.MovieSet.Runtime), (, min.)]</value>
@@ -624,12 +636,12 @@
 		<value condition="Container.Content(Episodes)">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration]</value>
 		<value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
 		<value condition="Container.Content(songs)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre,, • ]$INFO[ListItem.Album]</value>
-		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),[COLOR=mainblue]$LOCALIZE[515]: [/COLOR]]</value>
-		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),[COLOR=mainblue]$LOCALIZE[176]: [/COLOR]]</value>
+		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),[COLOR=mainblue]$LOCALIZE[515]: ]</value>
+		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),[COLOR=mainblue]$LOCALIZE[176]: ]</value>
 		<value condition="Container.Content(MusicVideos) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year)]">$INFO[ListItem.Year,, • ]$VAR[ListItemDuration]</value>
 		<value condition="SubString(ListItem.Path,videodb://movies/sets/)">$INFO[Window(Home).Property(SkinHelper.MovieSet.Year),, • ]$INFO[Window(Home).Property(SkinHelper.MovieSet.Genre)]</value>
 		<value condition="Container.Content(Movies) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year) | !IsEmpty(ListItem.Genre)]">$INFO[ListItem.Year,, • ]$VAR[ListItemDuration]$INFO[ListItem.Genre, • ]</value>
-		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] [COLOR=mainblue]$INFO[ListItem.Property(UnWatchedEpisodes), (,) ][/COLOR]</value>
+		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] [COLOR=mainblue]$INFO[ListItem.Property(UnWatchedEpisodes), (,) ]</value>
 		<value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ]</value>
 		<value condition="window.isactive(mypvrchannels.xml) + !IsEmpty(ListItem.ChannelName)">$INFO[ListItem.Title,, • ]$INFO[ListItem.StartTime]-$INFO[ListItem.EndTime]</value>
 		<value condition="!IsEmpty(ListItem.ChannelName) + !IsEmpty(ListItem.StartDate)">$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartDate]</value>
@@ -645,12 +657,12 @@
 		<value condition="Container.Content(Episodes)">$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration,, min. • ]</value>
 		<value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
 		<value condition="Container.Content(songs)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre,, • ]$INFO[ListItem.Album]</value>
-		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),[COLOR=mainblue]$LOCALIZE[515]: [/COLOR]]</value>
-		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),[COLOR=mainblue]$LOCALIZE[176]: [/COLOR]]</value>
+		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),[COLOR=mainblue]$LOCALIZE[515]: ]</value>
+		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),[COLOR=mainblue]$LOCALIZE[176]: ]</value>
 		<value condition="Container.Content(MusicVideos) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration]</value>
 		<value condition="SubString(ListItem.Path,videodb://movies/sets/)">$INFO[Window(Home).Property(SkinHelper.MovieSet.Year),, • ]$INFO[Window(Home).Property(SkinHelper.MovieSet.Genre)]</value>
 		<value condition="Container.Content(Movies) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year) | !IsEmpty(ListItem.Genre)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,, min.]$INFO[ListItem.Genre, • ]</value>
-		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: ] [COLOR=mainblue]$INFO[ListItem.Property(UnWatchedEpisodes), (,) ][/COLOR]</value>
+		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: ] [COLOR=mainblue]$INFO[ListItem.Property(UnWatchedEpisodes), (,) ]</value>
 		<value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: ]</value>
 		<value condition="window.isactive(mypvrchannels.xml) + !IsEmpty(ListItem.ChannelName)">$INFO[ListItem.Title,, • ]$INFO[ListItem.StartTime]-$INFO[ListItem.EndTime]</value>
 		<value condition="!IsEmpty(ListItem.ChannelName) + !IsEmpty(ListItem.StartDate)">$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartDate]</value>
@@ -671,7 +683,7 @@
     <value condition="Window.IsActive(MyPics.xml) + !IsEmpty(ListItem.PictureDesc)">$INFO[ListItem.PictureDesc]</value>
     <value condition="Window.IsActive(MyPics.xml) + !IsEmpty(ListItem.PictureComment)">$INFO[ListItem.PictureComment]</value>
     <value condition="Window.IsActive(MyPics.xml) + !IsEmpty(ListItem.PictureKeywords)">$INFO[ListItem.PictureKeywords]</value>
-    <value condition="Window.IsActive(MyPics.xml)">[CR][COLOR=mainblue]$LOCALIZE[21821]:[/COLOR][CR]$LOCALIZE[416]</value>
+    <value condition="Window.IsActive(MyPics.xml)">[CR][COLOR=mainblue]$LOCALIZE[21821]:[CR]$LOCALIZE[416]</value>
 	<value condition="Window.IsActive(MyPVRChannels.xml) + !IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]$INFO[Container.ListItem.NextTitle,[CR][CR][B]$LOCALIZE[19031]:[/B] ]</value>
     <value condition="!IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
 	<value condition="!IsEmpty(ListItem.Comment)">$INFO[ListItem.Comment]</value>
@@ -760,10 +772,10 @@
 	 </variable>
      
 	 <variable name="OSDLabel3">
-        <value condition="Player.HasVideo + VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[VideoPlayer.NextTitle]</value>
+        <value condition="Player.HasVideo + VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)">$LOCALIZE[19031]: $INFO[VideoPlayer.NextTitle]</value>
         <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD) + !IsEmpty(player.chaptercount) + !StringCompare(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]$INFO[player.chaptername, - ,]</value>
-        <value condition="Player.HasAudio + !IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[554]:[/COLOR] $INFO[MusicPlayer.PlaylistPosition]/$INFO[MusicPlayer.PlaylistLength] - [COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</value>
-        <value condition="!IsEmpty(VideoPlayer.Genre) + !Window.IsActive(VideoOSD)">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$LOCALIZE[515]:[/COLOR] $INFO[VideoPlayer.Genre]</value>
+        <value condition="Player.HasAudio + !IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)">$LOCALIZE[554]: $INFO[MusicPlayer.PlaylistPosition]/$INFO[MusicPlayer.PlaylistLength] - $LOCALIZE[19031]: $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</value>
+        <value condition="!IsEmpty(VideoPlayer.Genre) + !Window.IsActive(VideoOSD)">$LOCALIZE[515]: $INFO[VideoPlayer.Genre]</value>
 	 </variable>
 	 
 	 <variable name="NextAiredLabel">

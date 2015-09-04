@@ -22,7 +22,7 @@
 				<posx>50</posx>
 				<width>510</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
-				<visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 			</control>
 			
@@ -38,7 +38,7 @@
 				<posx>50</posx>
 				<width>920</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
-				<visible>Container.Content(episodes) + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>[Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 			</control>
 
@@ -60,7 +60,7 @@
             </control>
 			<control type="image">
                 <!--Poster for all other-->
-                <visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | Container.Content(episodes)]</visible>
+                <visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)]</visible>
                 <posx>70</posx>
                 <posy>20</posy>
                 <width>470</width>
@@ -82,8 +82,29 @@
                 <!--1,78-->
                 <fadetime>600</fadetime>
                 <texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$INFO[ListItem.Icon]</texture>
-                <bordertexture border="-2">colors/color_black.png</bordertexture>
             </control>
+            <control type="group">
+                <!--PVR Thumb-->
+                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
+                <posx>90</posx>
+                <posy>40</posy>
+                <control type="image">
+                    <width>260</width>
+                    <height>330</height>
+                    <texture diffuse="home/home_matte.png">$VAR[PVRThumb]</texture>
+                    <aspectratio align="left" aligny="top">keep</aspectratio>
+                    <visible>![VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)]</visible>
+                    <animation effect="slide" end="-5,-10" time="0" condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))">Conditional</animation>
+                </control>
+                <!--Video Window -->
+                <control type="videowindow">
+                    <posx>-5</posx>
+                    <width>260</width>
+                    <height>230</height>
+                    <visible>VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)</visible>
+                </control>
+            </control>
+            
         </control>
         <!--View 50-->
         <control type="group">
@@ -91,191 +112,291 @@
             <visible>![Window.IsActive(DialogVideoInfo.xml)]</visible>
 			
 			 <!--Info-->
-        <control type="grouplist">
-            <!--Regie, Duration... Movies, TV-Shows, Sesaons, Music-Videos-->
-            <visible>Container.Content(MusicVideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)</visible>
+            <control type="grouplist">
+                <!--Regie, Duration... Movies, TV-Shows, Sesaons, Music-Videos-->
+                <visible>Container.Content(MusicVideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons)</visible>
+                
+                <itemgap>0</itemgap>
+                <onup>500</onup>
+                <ondown>500</ondown>
+                <onleft>100</onleft>
+                <onright>noop</onright>
+                <orientation>vertical</orientation>
+                <posx>510</posx>
+                <posy>30</posy>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>600</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground1_label][/B] $VAR[value_ground1_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5301))</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>600</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground2_label][/B] $VAR[value_ground2_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5302))</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>600</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground3_label][/B] $VAR[value_ground3_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5303))</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>600</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground4_label][/B] $VAR[value_ground4_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5304))</visible>
+                </control>
+            </control>
+            <control type="grouplist">
+                <!--Regie, Duration... Episodes-->
+                <visible>Container.content(episodes)</visible>
+                <posx>460</posx>
+                <posy>30</posy>
+                <itemgap>0</itemgap>
+                <onup>500</onup>
+                <ondown>500</ondown>
+                <onleft>100</onleft>
+                <onright>noop</onright>
+                <orientation>vertical</orientation>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground1_label][/B] $VAR[value_ground1_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5301))</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground2_label][/B] $VAR[value_ground2_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5302))</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground3_label][/B] $VAR[value_ground3_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5303))</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$VAR[value_ground4_label][/B] $VAR[value_ground4_value]</label>
+                    <visible>!IsEmpty(Control.GetLabel(5304))</visible>
+                </control>
+            </control>
+            <control type="grouplist">
+                <!-- PVR details-->
+                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
+                <posx>360</posx>
+                <posy>30</posy>
+                <itemgap>0</itemgap>
+                <onup>500</onup>
+                <ondown>500</ondown>
+                <onleft>100</onleft>
+                <onright>noop</onright>
+                <orientation>vertical</orientation>
+                <control type="fadelabel">
+                    <width>600</width>
+                    <font>Reg36</font>
+                    <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>$INFO[ListItem.Title]</label>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[20359] :[/B] $INFO[ListItem.Episode]</label>
+                    <visible>!IsEmpty(ListItem.Episode)</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[19029] :[/B] $INFO[ListItem.ChannelName]</label>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[19126] :[/B] $INFO[ListItem.StartTime]</label>
+                    <visible>SubString(Window.Property(xmlfile),MyPVRChannels,left)</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[19127] :[/B] $INFO[ListItem.EndTime]</label>
+                    <visible>SubString(Window.Property(xmlfile),MyPVRChannels,left)</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[19126] :[/B] $INFO[ListItem.StartDate]</label>
+                    <visible>SubString(Window.Property(xmlfile),MyPVRRecordings,left)</visible>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>500</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[180]: [/B] $INFO[Window(home).Property(SkinHelper.ListItemDuration)]$INFO[ListItem.Duration, (, min.)]</label>
+                    <visible>!IsEmpty(ListItem.Duration)</visible>
+                </control>
+                <control type="label">
+                    <!--Next Title-->
+                    <width>600</width>
+                    <height>40</height>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label>[B]$LOCALIZE[19031]:[/B] $INFO[ListItem.NextTitle] $INFO[ListItem.NextStartTime] - $INFO[ListItem.NextEndTime]</label>
+                    <scroll>false</scroll>
+                    <visible>!IsEmpty(ListItem.NextTitle)</visible>
+                </control>
+            </control>
+            <control type="group">
+                <posx>510</posx>
+                <posy>210</posy>
+                <width>600</width>
+                <height>318</height>
+                <!--Info Plot: Movies, TV-Shows, Music-Videos-->
+                <visible>Container.Content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | container.content(seasons)</visible>
+                <control type="textbox">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <label>$VAR[Plots]</label>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Light28</font>
+                </control>
+            </control>
+            <control type="group">
+                <posx>110</posx>
+                <posy>220</posy>
+                <width>800</width>
+                <height>390</height>
+                <!--Info Plot: Movies, TV-Shows, Music-Videos-->
+                <visible>Container.Content(episodes)</visible>
+                
+                <control type="textbox">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <label>$VAR[Plots]</label>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Light28</font>
+                </control>
+            </control>
             
-            <itemgap>0</itemgap>
-            <onup>500</onup>
-            <ondown>500</ondown>
-            <onleft>100</onleft>
-            <onright>noop</onright>
-            <orientation>vertical</orientation>
-            <posx>510</posx>
-            <posy>30</posy>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>600</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground1_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground1_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5301))</visible>
-            </control>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>600</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground2_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground2_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5302))</visible>
-            </control>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>600</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground3_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground3_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5303))</visible>
-            </control>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>600</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground4_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground4_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5304))</visible>
-            </control>
-        </control>
-        <control type="grouplist">
-            <!--Regie, Duration... Episodes-->
-            <visible>Container.content(episodes)</visible>
-            
-            <posx>460</posx>
-            <posy>30</posy>
-            <itemgap>0</itemgap>
-            <onup>500</onup>
-            <ondown>500</ondown>
-            <onleft>100</onleft>
-            <onright>noop</onright>
-            <orientation>vertical</orientation>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>500</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground1_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground1_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5301))</visible>
-            </control>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>500</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground2_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground2_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5302))</visible>
-            </control>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>500</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground3_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground3_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5303))</visible>
-            </control>
-            <control type="label">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>500</width>
-                <height>40</height>
-                <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsFocusShadowColor)]</shadowcolor>
-                <label>[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[value_ground4_label][/COLOR][COLOR=$INFO[Skin.String(ViewDetailsTextColor)]] $VAR[value_ground4_value][/COLOR]</label>
-                <visible>!IsEmpty(Control.GetLabel(5304))</visible>
-            </control>
-        </control>
-        <control type="group">
-            <posx>510</posx>
-            <posy>210</posy>
-            <width>600</width>
-            <height>318</height>
-            <!--Info Plot: Movies, TV-Shows, Music-Videos-->
-            <visible>Container.Content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | container.content(seasons)</visible>
             <control type="textbox">
-                <posx>0</posx>
-                <posy>0</posy>
-                <label>$VAR[Plots]</label>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <align>justify</align>
+                <!--PVR Plot-->
+                <posx>90</posx>
+                <posy>360</posy>
+                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
+                <width>830</width>
+                <height>200</height>
                 <font>Light28</font>
-            </control>
-        </control>
-        <control type="group">
-            <posx>110</posx>
-            <posy>220</posy>
-            <width>800</width>
-            <height>390</height>
-            <!--Info Plot: Movies, TV-Shows, Music-Videos-->
-            <visible>Container.Content(episodes)</visible>
-            
-            <control type="textbox">
-                <posx>0</posx>
-                <posy>0</posy>
-                <label>$VAR[Plots]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <align>justify</align>
-                <font>Light28</font>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <label>$INFO[ListItem.Plot]</label>
             </control>
-        </control>
-     
             
-		<!--Control Tags-->
-        <control type="grouplist">
-            <control type="label" id="5101">
-                <include>HiddenButton</include>
-                <label>$VAR[value_list_label_2]</label>
+            <!--Control Tags-->
+            <control type="grouplist">
+                <control type="label" id="5101">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_list_label_2]</label>
+                </control>
+                <control type="label" id="5201">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground1_label]</label>
+                </control>
+                <control type="label" id="5202">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground2_label]</label>
+                </control>
+                <control type="label" id="5203">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground3_label]</label>
+                </control>
+                <control type="label" id="5204">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground4_label]</label>
+                </control>
+                <control type="label" id="5301">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground1_value]</label>
+                </control>
+                <control type="label" id="5302">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground2_value]</label>
+                </control>
+                <control type="label" id="5303">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground3_value]</label>
+                </control>
+                <control type="label" id="5304">
+                    <include>HiddenButton</include>
+                    <label>$VAR[value_ground4_value]</label>
+                </control>
             </control>
-            <control type="label" id="5201">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground1_label]</label>
-            </control>
-            <control type="label" id="5202">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground2_label]</label>
-            </control>
-            <control type="label" id="5203">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground3_label]</label>
-            </control>
-            <control type="label" id="5204">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground4_label]</label>
-            </control>
-            <control type="label" id="5301">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground1_value]</label>
-            </control>
-            <control type="label" id="5302">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground2_value]</label>
-            </control>
-            <control type="label" id="5303">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground3_value]</label>
-            </control>
-            <control type="label" id="5304">
-                <include>HiddenButton</include>
-                <label>$VAR[value_ground4_value]</label>
-            </control>
-        </control>
-			
-			
-		<!-- ID="50" -->
-		<control type="list" id="50">
+                
+                
+            <!-- ID="50" -->
+            <control type="list" id="50">
                 <posy>20</posy>
                 <width>1880</width>
                 <height>570</height>
@@ -303,7 +424,7 @@
 				[!Container.Content(movies) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(episodes) + !Container.Content(sets)]
 				</visible>
                 <!-- All Other x=570 w=1180 -->
-                <itemlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes)]" width="1900" height="62">
+                <itemlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)]" width="1900" height="62">
                     <control type="label">
                         <!--Label 1-->
                         <posx>630</posx>
@@ -330,15 +451,14 @@
                         <texture>common/separator.png</texture>
                     </control>
                 </itemlayout>
-                <focusedlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes)]" width="1900" height="90">
+                <focusedlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)]" width="1900" height="90">
                     <control type="image">
 						<right>80</right>
 						<posy>0</posy>
 						<height>86</height>
 						<width>1210</width>
-						<texture border="5">diffuse/panel.png</texture>
-						<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
-						
+						<texture border="5">diffuse/panel_trans.png</texture>
+						<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
 					</control>
                     <control type="label">
                         <!--Label 1-->
@@ -347,7 +467,7 @@
                         <height>55</height>
                         <font>Reg36</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <label>$VAR[value_list_label_1]</label>
                     </control>
                     <control type="group">
@@ -413,8 +533,8 @@
 						<posy>0</posy>
 						<height>86</height>
 						<width>600</width>
-						<texture border="5">diffuse/panel.png</texture>
-						<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+						<texture border="5">diffuse/panel_trans.png</texture>
+						<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
 						
 					</control>
                     <control type="group">
@@ -428,7 +548,7 @@
                         <height>55</height>
                         <font>Reg36</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <label>$VAR[value_list_label_1]</label>
                     </control>
                     <control type="label">
@@ -502,9 +622,8 @@
 					
                 </focusedlayout>
             
-				
-				<!-- Seasons, Episodes x=980 w=765 -->
-                <itemlayout condition="Container.Content(episodes)" width="1800" height="60">
+				<!-- Episodes, livetv x=980 w=765 -->
+                <itemlayout condition="Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)" width="1800" height="60">
                     <control type="label">
                         <!--Label 1-->
                         <posx>1040</posx>
@@ -530,14 +649,14 @@
                         <texture>common/separator.png</texture>
                     </control>
                 </itemlayout>
-                <focusedlayout condition="Container.Content(episodes)" width="1800" height="90">
+                <focusedlayout condition="Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)" width="1800" height="90">
                     <control type="image">
 						<right>0</right>
 						<posy>0</posy>
 						<height>86</height>
 						<width>780</width>
 						<texture border="5">diffuse/panel.png</texture>
-						<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+						<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
 						
 					</control>
                     <control type="label">
@@ -547,7 +666,7 @@
                         <height>55</height>
                         <font>Reg36</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <label>$VAR[value_list_label_1]</label>
                     </control>
                     <control type="label">
