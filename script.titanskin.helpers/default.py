@@ -13,4 +13,6 @@ if action =="migrate":
 	
 elif action =="migratecolors":
     migrateColorSettings()
-    
+
+if action =="migratethemes":
+    migrateColorThemes()

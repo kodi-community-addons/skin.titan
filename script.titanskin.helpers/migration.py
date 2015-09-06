@@ -5,7 +5,7 @@ import math
 import json
 
 __settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
-__cwd__ = __settings__.getAddonInfo('path')
+__cwd__ = __settings__.getAddonInfo('path').decode("utf-8")
 KODI_VERSION  = int(xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0])
 
 
@@ -15,6 +15,7 @@ def fullMigration():
     # to migrate all current user settings to the new skinhelper and skinshortcuts
     # applied only once
     migrateColorSettings()
+    migrateColorThemes()
     migrateSkinHelperSettings()
     migrateSkinShortcuts()
 
@@ -33,14 +34,8 @@ def migrateSkinHelperSettings():
         if currentvalue:
             xbmc.executebuiltin("Skin.SetBool(SkinHelper.%s)" %setting)
         xbmc.executebuiltin("Skin.Reset(%s)" %setting)
-        
-def migrateColorSettings():
-    xbmc.log("TITAN SKIN --> Migrating Color settings.....")
-    
-    if KODI_VERSION >= 16:
-        xbmc.executebuiltin("Reloadskin")
-        xbmc.sleep(1500)
-    
+ 
+def getAllColors():
     #get all colors from the colors xml file and fill a list with tuples to sort later on
     allColors = []
     colors_file = xbmc.translatePath("special://home/addons/script.skin.helper.service/resources/colors/colors.xml").decode("utf-8")
@@ -61,6 +56,19 @@ def migrateColorSettings():
             name = color.attributes[ 'name' ].nodeValue.lower()
             colorstring = color.childNodes [ 0 ].nodeValue.lower()
             allColors.append((name,colorstring))
+            
+    return allColors
+ 
+def migrateColorSettings():
+    
+    xbmc.log("TITAN SKIN --> Migrating Color settings.....")
+    
+    if KODI_VERSION >= 16:
+        xbmc.executebuiltin("Reloadskin")
+        xbmc.sleep(1500)
+    
+    #get all colors from the colors xml file and fill a list with tuples to sort later on
+    allColors = getAllColors()
     
     #read the guisettings file to get all skin settings
     skinsettingsList = []
@@ -101,7 +109,7 @@ def migrateColorSettings():
                 settingtype = skinsetting.attributes['type'].nodeValue
                 
                 
-                if settingname.lower().endswith("color") and settingtype == "string":
+                if settingname.lower().endswith("color") or settingname.lower() == "colortheme":
                     colorname = "None"
                     colorvalue = "None"
                     matchfound = False
@@ -117,33 +125,109 @@ def migrateColorSettings():
                         colorvalue = "None"
                     elif matchfound == False:
                         colorvalue = settingvalue
-                        colorname = "Custom " + settingvalue
                     
                     #check for old opacity setting...
-                    opacity = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname.replace("Color","Opacity"))
-                    if opacity:
-                        xbmc.sleep(1000)
-                        try:
-                            num = int(opacity) / 100.0 * 255
-                            e = num - math.floor( num )
-                            a = e < 0.5 and int( math.floor( num ) ) or int( math.ceil( num ) )
-                            
-                            colorstring = colorvalue.strip()
-                            r, g, b = colorstring[2:4], colorstring[4:6], colorstring[6:]
-                            r, g, b = [int(n, 16) for n in (r, g, b)]
-                            color = (a, r, g, b)
-                            colorvalue = '%02x%02x%02x%02x' % color
-                            xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
-                        except Exception as e:
-                            xbmc.log("Error has occurred while correcting " + settingname)
-                            xbmc.log(str(e))
-                            xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
-    
-
+                    if not colorvalue == "None":
+                        opacity = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname.replace("Color","Opacity"))
+                        if opacity:
+                            xbmc.sleep(1000)
+                            try:
+                                num = int(opacity) / 100.0 * 255
+                                e = num - math.floor( num )
+                                a = e < 0.5 and int( math.floor( num ) ) or int( math.ceil( num ) )
+                                
+                                colorstring = colorvalue.strip()
+                                r, g, b = colorstring[2:4], colorstring[4:6], colorstring[6:]
+                                r, g, b = [int(n, 16) for n in (r, g, b)]
+                                color = (a, r, g, b)
+                                colorvalue = '%02x%02x%02x%02x' % color
+                                xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
+                            except Exception as e:
+                                xbmc.log("Error has occurred while correcting " + settingname)
+                                xbmc.log(str(e))
+                                xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
+                    
+                    if matchfound == False and not colorvalue == "None":
+                        colorname = "Custom " + colorvalue
                     xbmc.executebuiltin("Skin.SetString(%s,%s)" %(settingname,colorvalue))
                     xbmc.executebuiltin("Skin.SetString(%s.name,%s)" %(settingname,colorname))
                         
-                            
+def migrateColorThemes():
+    #migrates any colorthemes setup by the user
+    skin = xbmcaddon.Addon(id=xbmc.getSkinDir())
+    userThemesDir = xbmc.translatePath(skin.getAddonInfo('profile')).decode("utf-8")
+    userThemesPath = os.path.join(userThemesDir,"themes") + os.sep
+    settingsList = []
+    allColors = getAllColors()
+    dirs, files = xbmcvfs.listdir(userThemesPath)
+    for file in files:
+        if file.endswith(".theme"):
+            f = open(os.path.join(userThemesPath,file),"r")
+            importstring = json.load(f)
+            f.close()
+            for count, skinsetting in enumerate(importstring):
+                if skinsetting[0] == "DESCRIPTION" or skinsetting[0] == "THEMENAME" or skinsetting[0] == "SKINTHEME":
+                    settingsList.append(skinsetting)
+                elif not "opacity" in skinsetting[1].lower() and not ".helix" in skinsetting[1].lower():
+                    settingtype = skinsetting[0]
+                    settingname = skinsetting[1]
+                    settingvalue = skinsetting[2]
+                    colorname = "None"
+                    colorvalue = "None"
+                    opacity = None
+                    matchfound = False
+                    
+                    if settingname.lower().endswith("color") or settingname.endswith("colortheme"):
+                        for color in allColors:
+                            if settingvalue.lower() == color[0].lower() or settingvalue.lower() == color[1].lower():
+                                colorvalue = color[1]
+                                colorname = color[0]
+                                matchfound = True
+                                break
+                        
+                        if not settingvalue or settingvalue.lower() == "none" or settingvalue.upper()=="00FFFFFF":
+                            colorname = "None"
+                            colorvalue = "None"
+                        elif matchfound == False:
+                            colorvalue = settingvalue
+                            print "no match found for color %s in theme %s - setting %s" %(settingvalue, file, settingname)
+                        
+                        #check for old opacity setting...
+                        if not colorvalue == "None":
+                            opacitysetting = settingname.lower().replace("color","opacity")
+                            for count2, skinsetting2 in enumerate(importstring):
+                                if skinsetting2[1].lower() == opacitysetting:
+                                    opacity = skinsetting2[2]
+                                    break
+
+                            if opacity:
+                                try:
+                                    num = int(opacity) / 100.0 * 255
+                                    e = num - math.floor( num )
+                                    a = e < 0.5 and int( math.floor( num ) ) or int( math.ceil( num ) )
+                                    
+                                    colorstring = colorvalue.strip()
+                                    r, g, b = colorstring[2:4], colorstring[4:6], colorstring[6:]
+                                    r, g, b = [int(n, 16) for n in (r, g, b)]
+                                    color = (a, r, g, b)
+                                    colorvalue = '%02x%02x%02x%02x' % color
+                                except Exception as e:
+                                    xbmc.log("Error has occurred while correcting " + settingname)
+                                    xbmc.log(str(e))
+                        if matchfound == False and not colorvalue == "None":
+                            colorname = "Custom " + colorvalue
+                    settingname = settingname.replace("TITANSKIN.","")    
+                    if settingname.lower().endswith("color") or settingname.lower() == "colortheme":
+                        settingsList.append( (settingtype, settingname, colorvalue) )
+                        settingsList.append( (settingtype, settingname+".name", colorname) )
+                    else:
+                        settingsList.append( (settingtype, settingname, settingvalue) )
+                        
+            #save the migrated theme
+            text_file = xbmcvfs.File(os.path.join(userThemesPath,file), "w")
+            json.dump(settingsList, text_file)
+            text_file.close()
+                    
 def migrateSkinShortcuts():
     propertiesList = []
     xbmc.log("TITAN SKIN --> Migrating Widget and background settings.....")
