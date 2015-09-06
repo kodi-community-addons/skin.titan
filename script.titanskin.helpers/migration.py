@@ -33,10 +33,13 @@ def migrateSkinHelperSettings():
         if currentvalue:
             xbmc.executebuiltin("Skin.SetBool(SkinHelper.%s)" %setting)
         xbmc.executebuiltin("Skin.Reset(%s)" %setting)
-
         
 def migrateColorSettings():
     xbmc.log("TITAN SKIN --> Migrating Color settings.....")
+    
+    if KODI_VERSION >= 16:
+        xbmc.executebuiltin("Reloadskin")
+        xbmc.sleep(1500)
     
     #get all colors from the colors xml file and fill a list with tuples to sort later on
     allColors = []
@@ -66,7 +69,6 @@ def migrateColorSettings():
     else:
         guisettings_path = 'special://profile/addon_data/%s/settings.xml' %xbmc.getSkinDir()
     if xbmcvfs.exists(guisettings_path):
-        print guisettings_path
         guisettings_path = xbmc.translatePath(guisettings_path).decode("utf-8")
         retries = 3
         for i in range(retries):
@@ -97,55 +99,50 @@ def migrateColorSettings():
                 if settingname.startswith("beta.") or settingname.startswith("helix."):
                     continue
                 settingtype = skinsetting.attributes['type'].nodeValue
-
-                if "color" in settingname.lower() and not settingname.lower().endswith(".name") and settingtype == "string":
-                    match = None
+                
+                
+                if settingname.lower().endswith("color") and settingtype == "string":
+                    colorname = "None"
+                    colorvalue = "None"
+                    matchfound = False
                     for color in allColors:
-                        if settingvalue == color[0] or settingvalue == color[1]:
-                            match = color
+                        if settingvalue.lower() == color[0].lower() or settingvalue.lower() == color[1].lower():
+                            colorvalue = color[1]
+                            colorname = color[0]
+                            matchfound = True
                             break
-                    if match:
-                        xbmc.executebuiltin("Skin.SetString(" + settingname + '.name,'+ match[0] + ')')
-                        xbmc.executebuiltin("Skin.SetString(" + settingname + ','+ match[1] + ')')
-                    elif settingvalue.lower() == "none" or not settingvalue or settingvalue.upper()=="00FFFFFF":
-                        xbmc.executebuiltin("Skin.SetString(%s.name,None)" %settingname)
-                        xbmc.executebuiltin("Skin.SetString(%s,None)" %settingname)
-                    else:
-                        xbmc.executebuiltin("Skin.SetString(%s.name, Custom %s)" %(settingname,settingvalue))
+                    
+                    if not settingvalue or settingvalue.lower() == "none" or settingvalue.upper()=="00FFFFFF":
+                        colorname = "None"
+                        colorvalue = "None"
+                    elif matchfound == False:
+                        colorvalue = settingvalue
+                        colorname = "Custom " + settingvalue
                     
                     #check for old opacity setting...
                     opacity = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname.replace("Color","Opacity"))
                     if opacity:
                         xbmc.sleep(1000)
                         try:
-                            if match:
-                                color = match[1]
-                            else:
-                                color = settingvalue
-                            print settingname
-                            print color
-                            print opacity
                             num = int(opacity) / 100.0 * 255
                             e = num - math.floor( num )
                             a = e < 0.5 and int( math.floor( num ) ) or int( math.ceil( num ) )
                             
-                            colorstring = color.strip()
+                            colorstring = colorvalue.strip()
                             r, g, b = colorstring[2:4], colorstring[4:6], colorstring[6:]
                             r, g, b = [int(n, 16) for n in (r, g, b)]
                             color = (a, r, g, b)
-                            colorstringvalue = '%02x%02x%02x%02x' % color
-                            xbmc.executebuiltin("Skin.SetString(" + settingname + ','+ colorstringvalue + ')')
+                            colorvalue = '%02x%02x%02x%02x' % color
                             xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
                         except Exception as e:
                             xbmc.log("Error has occurred while correcting " + settingname)
                             xbmc.log(str(e))
                             xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
     
-    #some other legacy color settings
-    currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(ViewDetailsFocusColor)]")
-    xbmc.executebuiltin("Skin.SetString(ViewDetailsHighlightTextColor,%s)" %currentvalue)
-    currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(ViewDetailsTextShadowColor)]")
-    xbmc.executebuiltin("Skin.SetString(ViewDetailsHighlightTextShadowColor,%s)" %currentvalue)                        
+
+                    xbmc.executebuiltin("Skin.SetString(%s,%s)" %(settingname,colorvalue))
+                    xbmc.executebuiltin("Skin.SetString(%s.name,%s)" %(settingname,colorname))
+                        
                             
 def migrateSkinShortcuts():
     propertiesList = []
@@ -355,6 +352,7 @@ def migrateSkinShortcuts():
             f.close()
 
     #rebuild skinshortcuts
+    count = 0
     skinshortcutspath = xbmc.translatePath("special://home/userdata/addon_data/script.skinshortcuts/%s.hash" %xbmc.getSkinDir()).decode("utf-8")
     while count != 20 and not xbmcvfs.exists( skinshortcutspath ):
         xbmc.sleep(500)
