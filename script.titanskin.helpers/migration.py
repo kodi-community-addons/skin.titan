@@ -34,6 +34,7 @@ def migrateSkinHelperSettings():
             xbmc.executebuiltin("Skin.SetBool(SkinHelper.%s)" %setting)
         xbmc.executebuiltin("Skin.Reset(%s)" %setting)
 
+        
 def migrateColorSettings():
     xbmc.log("TITAN SKIN --> Migrating Color settings.....")
     
@@ -115,9 +116,15 @@ def migrateColorSettings():
                     #check for old opacity setting...
                     opacity = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname.replace("Color","Opacity"))
                     if opacity:
-                        xbmc.sleep(250)
+                        xbmc.sleep(1000)
                         try:
-                            color = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname)
+                            if match:
+                                color = match[1]
+                            else:
+                                color = settingvalue
+                            print settingname
+                            print color
+                            print opacity
                             num = int(opacity) / 100.0 * 255
                             e = num - math.floor( num )
                             a = e < 0.5 and int( math.floor( num ) ) or int( math.ceil( num ) )
@@ -129,10 +136,17 @@ def migrateColorSettings():
                             colorstringvalue = '%02x%02x%02x%02x' % color
                             xbmc.executebuiltin("Skin.SetString(" + settingname + ','+ colorstringvalue + ')')
                             xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
-                        except:
+                        except Exception as e:
                             xbmc.log("Error has occurred while correcting " + settingname)
+                            xbmc.log(str(e))
                             xbmc.executebuiltin("Skin.Reset(%s)" %settingname.replace("Color","Opacity"))
-
+    
+    #some other legacy color settings
+    currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(ViewDetailsFocusColor)]")
+    xbmc.executebuiltin("Skin.SetString(ViewDetailsHighlightTextColor,%s)" %currentvalue)
+    currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(ViewDetailsTextShadowColor)]")
+    xbmc.executebuiltin("Skin.SetString(ViewDetailsHighlightTextShadowColor,%s)" %currentvalue)                        
+                            
 def migrateSkinShortcuts():
     propertiesList = []
     xbmc.log("TITAN SKIN --> Migrating Widget and background settings.....")

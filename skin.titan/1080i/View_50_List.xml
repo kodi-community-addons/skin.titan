@@ -130,6 +130,16 @@
                     <posy>0</posy>
                     <width>600</width>
                     <height>40</height>
+                    <font>Reg32</font>
+                    <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                    <label>[UPPERCASE]$INFO[ListItem.Title][/UPPERCASE]</label>
+                </control>
+                <control type="label">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>600</width>
+                    <height>40</height>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                     <label>[B]$VAR[value_ground1_label][/B] $VAR[value_ground1_value]</label>
@@ -233,9 +243,9 @@
                     <width>580</width>
                     <font>Reg36</font>
                     <height>50</height>
-                    <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
-                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                    <disabledcolor fallback="white">$INFO[Skin.String(ViewDetailsFocusColor)]</disabledcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                    <disabledcolor fallback="white">$INFO[Skin.String(ViewDetailsHighlightTextColor)]</disabledcolor>
                     <label>$INFO[ListItem.Title]</label>
                     <include>ListDetailsBtn</include>
                 </control>
@@ -290,9 +300,9 @@
             </control>
             <control type="group">
                 <posx>510</posx>
-                <posy>210</posy>
+                <posy>250</posy>
                 <width>600</width>
-                <height>318</height>
+                <height>328</height>
                 <!--Info Plot: Movies, TV-Shows, Music-Videos-->
                 <visible>Container.Content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | container.content(seasons)</visible>
                 <control type="textbox">
@@ -413,8 +423,7 @@
                         <posx>630</posx>
                         <width>1100</width>
                         <font>Reg28</font>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <selectedcolor>list_label_1_select</selectedcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
                         <label>$VAR[ListTitle]</label>
                     </control>
                     <control type="group">
@@ -440,7 +449,7 @@
 						<posy>0</posy>
 						<height>86</height>
 						<width>1210</width>
-						<texture border="5">diffuse/panel_trans.png</texture>
+						<texture border="5">diffuse/panel.png</texture>
 						<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
 					</control>
                     <control type="label">
@@ -450,7 +459,7 @@
                         <height>55</height>
                         <font>Reg36</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <label>$VAR[ListTitle]</label>
                     </control>
                     <control type="group">
@@ -466,8 +475,7 @@
                         <height>30</height>
                         <font>Light30</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <label>$VAR[ListDetails]</label>
                         <visible>!StringCompare(ListItem.Label,..)</visible>
                     </control>
@@ -490,8 +498,7 @@
                         <posx>1225</posx>
                         <width>520</width>
                         <font>Reg28</font>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
                         <label>$VAR[ListTitle]</label>
                     </control>
 					<control type="group">
@@ -516,7 +523,7 @@
 						<posy>0</posy>
 						<height>86</height>
 						<width>600</width>
-						<texture border="5">diffuse/panel_trans.png</texture>
+						<texture border="5">diffuse/panel.png</texture>
 						<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
 						
 					</control>
@@ -531,7 +538,7 @@
                         <height>55</height>
                         <font>Reg36</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <label>$VAR[ListTitle]</label>
                     </control>
                     <control type="label">
@@ -542,8 +549,7 @@
                         <height>30</height>
                         <font>Light28</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <label>$VAR[ListDetails]</label>
                         <visible>!StringCompare(ListItem.Label,..)</visible>
                     </control>
@@ -605,15 +611,14 @@
 					
                 </focusedlayout>
             
-				<!-- Episodes, livetv x=980 w=765 -->
-                <itemlayout condition="Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)" width="1800" height="60">
+				<!-- Episodes, pvr timers, pvr search, pvr recordings x=980 w=765 -->
+                <itemlayout condition="Container.Content(episodes) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRSearch.xml)" width="1800" height="60">
                     <control type="label">
                         <!--Label 1-->
                         <posx>1040</posx>
                         <width>650</width>
                         <font>Reg28</font>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ViewDetailsTextColor)]</selectedcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
                         <label>$VAR[ListTitle]</label>
                     </control>
                     
@@ -633,7 +638,7 @@
                         <texture>common/separator.png</texture>
                     </control>
                 </itemlayout>
-                <focusedlayout condition="Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)" width="1800" height="90">
+                <focusedlayout condition="Container.Content(episodes) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRSearch.xml)" width="1800" height="90">
                     <control type="image">
 						<right>0</right>
 						<posy>0</posy>
@@ -650,7 +655,7 @@
                         <height>55</height>
                         <font>Reg36</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <label>$VAR[ListTitle]</label>
                     </control>
                     <control type="label">
@@ -661,7 +666,7 @@
                         <height>30</height>
                         <font>Light28</font>
 						<scroll>true</scroll>
-                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <label>$VAR[ListDetails]</label>
                         <visible>!StringCompare(ListItem.Label,..)</visible>
                     </control>
@@ -680,6 +685,155 @@
                         <texture>common/separator.png</texture>
                     </control>
 					
+                </focusedlayout>
+                
+                <!-- pvr channels -->
+                <itemlayout condition="Window.IsActive(MyPVRChannels.xml)" height="60" width="1900">
+                    <control type="label">
+                        <!--Channel Number-->
+                        <posx>1030</posx>
+                        <posy>5</posy>
+                        <width>100</width>
+                        <height>50</height>
+                        <font>Reg29</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <align>left</align>
+                        <info>ListItem.ChannelNumberLabel</info>
+                    </control>
+                    <control type="image">
+                        <!--Rec-->
+                        <posx>1185</posx>
+                        <posy>0</posy>
+                        <width>55</width>
+                        <height>55</height>
+                        <texture>pvr/icons/pvr_record.png</texture>
+                        <visible>ListItem.IsRecording</visible>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--Now Playing Icon-->
+                        <posx>1185</posx>
+                        <posy>0</posy>
+                        <width>55</width>
+                        <height>55</height>
+                        <fadetime>600</fadetime>
+                        <texture>pvr/icons/pvr_play.png</texture>
+                        <visible>ListItem.Isplaying</visible>
+                        <visible>!ListItem.IsRecording</visible>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--Chanel Icon-->
+                        <posx>1100</posx>
+                        <posy>5</posy>
+                        <width>48</width>
+                        <height>48</height>
+                        <texture>$INFO[ListItem.Thumb]</texture>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="label">
+                        <!--Channel Name-->
+                        <animation effect="slide" start="0" end="50" time="0" reversible="false" condition="[ListItem.Isplaying | ListItem.IsRecording]">Conditional</animation>
+                        <posx>1200</posx>
+                        <width>545</width>
+                        <height>55</height>
+                        <font>Reg29</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>1020</posx>
+                        <posy>56</posy>
+                        <width>785</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
+                </itemlayout>
+                <focusedlayout condition="Window.IsActive(MyPVRChannels.xml)" height="90" width="1900">
+                    <control type="image">
+                        <right>80</right>
+                        <posy>0</posy>
+                        <height>86</height>
+                        <width>810</width>
+                        <texture border="5">diffuse/panel.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <!--Channel Number-->
+                        <posx>1030</posx>
+                        <posy>5</posy>
+                        <width>80</width>
+                        <height>80</height>
+                        <font>Reg29</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
+                        <info>ListItem.ChannelNumberLabel</info>
+                    </control>
+                    <control type="image">
+                        <!--Rec-->
+                        <posx>1185</posx>
+                        <posy>0</posy>
+                        <width>55</width>
+                        <height>55</height>
+                        <texture>pvr/icons/pvr_record.png</texture>
+                        <visible>ListItem.IsRecording</visible>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--Now Playing Icon-->
+                        <posx>1185</posx>
+                        <posy>0</posy>
+                        <width>55</width>
+                        <height>55</height>
+                        <fadetime>600</fadetime>
+                        <texture>pvr/icons/pvr_play.png</texture>
+                        <visible>ListItem.Isplaying</visible>
+                        <visible>!ListItem.IsRecording</visible>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--Chanel Icon-->
+                        <posx>1085</posx>
+                        <posy>5</posy>
+                        <width>78</width>
+                        <height>78</height>
+                        <texture>$INFO[ListItem.Thumb]</texture>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                    <control type="label">
+                        <!--Channel Name-->
+                        <animation effect="slide" start="0" end="50" time="0" reversible="false" condition="[ListItem.Isplaying | ListItem.IsRecording]">Conditional</animation>
+                        <posx>1200</posx>
+                        <width>545</width>
+                        <height>55</height>
+                        <font>Reg29</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <!--Channel Now Playing-->
+                        <posx>1200</posx>
+                        <posy>50</posy>
+                        <width>545</width>
+                        <height>33</height>
+                        <font>Light28</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
+                        <label>[B]$INFO[ListItem.Title][/B]</label>
+                    </control>
+                    <control type="image">
+                        <!--Separator-->
+                        <posx>1020</posx>
+                        <posy>86</posy>
+                        <width>785</width>
+                        <height>20</height>
+                        <fadetime>400</fadetime>
+                        <colordiffuse>list_separator</colordiffuse>
+                        <texture>common/separator.png</texture>
+                    </control>
                 </focusedlayout>
             </control>
         </control>
