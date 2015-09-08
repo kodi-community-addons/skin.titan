@@ -7,16 +7,9 @@
 
 			<!-- default animation -->
 			<include>animation_window_open_close</include>
-
-			<control type="group">
-				<control type="image">
-					<include>DimensionsFullscreen</include>
-					<texture background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$INFO[Window.Property(movie.FanArt)]</texture>
-					<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-					<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-				</control>
-				<include>DialogOverlay</include>
-			</control>
+            
+            <include>GlobalBackground</include>
+            
 			<!-- touchscreen workaround for windows tablets -->
 			<include condition="Skin.HasSetting(EnableTouchSupport)">TouchScreenWorkaround</include>
 			
@@ -55,7 +48,8 @@
 				<width>100%</width>
 				<height>930</height>
 				<texture border="5">diffuse/panel.png</texture>
-				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                <visible>!Skin.HasSetting(ExtendedInfoHidePanel)</visible>
 				<aspectratio>stretch</aspectratio>
 			</control>
 			
@@ -192,6 +186,16 @@
 						<visible>System.HasAddon(script.videoextras) + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
 						<visible>!IsEmpty(Window.Property(movie.FilenameAndPath))</visible>
 					</control>
+                    
+                    <control type="radiobutton" id="3052">
+                        <!--Hide panel behind moviedetails-->
+                        <label>31155</label>
+                        <width>400</width>
+                        <textoffsetx>20</textoffsetx>
+                        <align>left</align>
+                        <onclick>Skin.ToggleSetting(ExtendedInfoHidePanel)</onclick>
+                        <selected>Skin.HasSetting(ExtendedInfoHidePanel)</selected>
+                    </control>
 
 				</control>
             
@@ -453,8 +457,8 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>Bold32</font>
-							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+							<shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
                             <label>$LOCALIZE[206]$INFO[Container(1000).NumItems, (,)]</label>
                         </control>
 						<control type="image">
@@ -500,7 +504,6 @@
 										<width>164</width>
 										<height>65</height>
 										<include>PosterThumbBG</include>
-										
 									</control>
 									
 									<control type="textbox">
@@ -508,9 +511,9 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[CR]] $LOCALIZE[20347]]</label>
 									</control>
                                 </control>
                             </itemlayout>
@@ -544,9 +547,9 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[CR]] $LOCALIZE[20347]]</label>
 									</control>
                                 </control>
                             </focusedlayout>
@@ -580,7 +583,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32115]$INFO[Container(750).NumItems, (,)]</label>
@@ -636,9 +641,9 @@
 										<width>156</width>
 										<height>75</height>
 										<align>center</align>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[CR]] $LOCALIZE[20347]]</label>
 									</control>
                                 </control>
                             </itemlayout>
@@ -673,9 +678,9 @@
 										<width>156</width>
 										<height>75</height>
 										<align>center</align>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[CR]] $LOCALIZE[20347]]</label>
 									</control>
                                 </control>
                             </focusedlayout>
@@ -692,7 +697,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32116]$INFO[Container(150).NumItems, (,)]</label>
@@ -748,7 +755,7 @@
 										<width>156</width>
 										<height>75</height>
 										<align>center</align>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label] ($INFO[ListItem.Year])</label>
 									</control>
@@ -784,7 +791,7 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label] ($INFO[ListItem.Year])</label>
 									</control>
@@ -804,7 +811,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$INFO[Window.Property(movie.set.label)]$INFO[Container(250).NumItems, (,)]</label>
@@ -816,7 +825,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$LOCALIZE[33054] $INFO[Container(250).NumItems, (,)]</label>
@@ -872,7 +883,7 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label] ($INFO[ListItem.Year])</label>
 									</control>
@@ -908,7 +919,7 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label] ($INFO[ListItem.Year])</label>
 									</control>
@@ -927,7 +938,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32117]</label>
@@ -981,7 +994,7 @@
 										<left>15</left>
 										<width>310</width>
 										<height>50</height>
-										<textcolor>white</textcolor><font>Reg20</font>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor><font>Reg20</font>
 										<label>$INFO[ListItem.Property(Type),[B],: [/B]]$INFO[ListItem.Label]</label>
 									</control>
 								</control>
@@ -1012,7 +1025,7 @@
 										<left>15</left>
 										<width>310</width>
 										<height>50</height>
-										<textcolor>white</textcolor><font>Reg20</font>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor><font>Reg20</font>
 										<label>$INFO[ListItem.Property(Type),[B],: [/B]]$INFO[ListItem.Label]</label>
 									</control>
 								</control>
@@ -1031,7 +1044,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32118]</label>
@@ -1084,7 +1099,7 @@
 										<left>15</left>
 										<width>310</width>
 										<height>50</height>
-										<textcolor>white</textcolor><font>Reg20</font>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor><font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 								</control>
@@ -1115,7 +1130,7 @@
 										<left>15</left>
 										<width>310</width>
 										<height>50</height>
-										<textcolor>white</textcolor><font>Reg20</font>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor><font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
 								</control>
@@ -1134,7 +1149,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$LOCALIZE[20388]</label>
@@ -1191,7 +1208,7 @@
 										<left>10</left>
 										<width>322</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1226,7 +1243,7 @@
 										<left>10</left>
 										<width>322</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1246,7 +1263,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32152]</label>
@@ -1303,7 +1322,7 @@
 										<left>10</left>
 										<width>322</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1338,7 +1357,7 @@
 										<left>10</left>
 										<width>322</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1357,7 +1376,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32168]</label>
@@ -1376,6 +1397,7 @@
                             <width>1795</width>
                             <height>120</height>
                             <font>Reg20</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                             <label>$INFO[Container(650).ListItem.Property(meaning)]</label>
                         </control>
                         <control type="panel" id="650">
@@ -1422,7 +1444,7 @@
 										<left>10</left>
 										<width>322</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Property(release_date)][CR]$INFO[ListItem.Property(certification)]</label>
 									</control>
@@ -1457,7 +1479,7 @@
 										<left>10</left>
 										<width>322</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Property(release_date)][CR]$INFO[ListItem.Property(certification)]</label>
 									</control>
@@ -1476,7 +1498,9 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>Genres</label>
@@ -1516,7 +1540,7 @@
 										<height>90</height>
 										<align>center</align>
 										<aligny>center</aligny>
-										
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg28</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1544,7 +1568,7 @@
 										<height>90</height>
 										<align>center</align>
 										<aligny>center</aligny>
-										
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg28</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1564,8 +1588,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>Bold32</font>
-							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32167]</label>
                         </control>
 						<control type="image">
@@ -1610,7 +1633,7 @@
 										<height>260</height>
 										<align>justify</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg26</font>
 										<label>$INFO[ListItem.Property(Author),[B],[/B][CR]]$INFO[ListItem.Property(Content)]</label>
 									</control>
@@ -1634,7 +1657,7 @@
 										<height>260</height>
 										<align>justify</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg26</font>
 										<label>$INFO[ListItem.Property(Author),[B],[/B][CR]]$INFO[ListItem.Property(Content)]</label>
 									</control>
@@ -1653,9 +1676,8 @@
                             <width>1540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
-							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>Keywords</label>
                         </control>
 						<control type="image">
@@ -1703,7 +1725,7 @@
 										<height>90</height>
 										<align>center</align>
 										<aligny>center</aligny>
-										
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg28</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1731,7 +1753,7 @@
 										<height>90</height>
 										<align>center</align>
 										<aligny>center</aligny>
-										
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg28</font>
 										<label>$INFO[ListItem.Label]</label>
 									</control>
@@ -1749,7 +1771,9 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$ADDON[script.extendedinfo 32119]</label>
@@ -1824,7 +1848,9 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$LOCALIZE[20445]</label>
@@ -1894,7 +1920,9 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>Related TMDB Lists$INFO[Container(450).NumItems, (,)]</label>
@@ -1950,7 +1978,7 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(Description),[CR]]</label>
 									</control>
@@ -1986,7 +2014,7 @@
 										<left>10</left>
 										<width>156</width>
 										<height>75</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(Description),[CR]]</label>
 									</control>
@@ -2005,7 +2033,9 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                          <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>Episode Index</label>
@@ -2063,7 +2093,7 @@
 										<left>15</left>
 										<width>305</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Episode,[B],[/B]]$INFO[ListItem.Label,[B]:[/B] ]</label>
 									</control>
@@ -2099,7 +2129,7 @@
 										<left>15</left>
 										<width>305</width>
 										<height>60</height>
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Episode,[B],[/B]]$INFO[ListItem.Label,[B]:[/B] ]</label>
 									</control>

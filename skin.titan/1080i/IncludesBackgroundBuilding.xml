@@ -5,7 +5,7 @@
     <include name="DialogOverlay">
         <!--Dialog Overlay default-->
         <control type="image">
-			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + SubString(Window.Property(xmlfile),My,left)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
+			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
 			<include>DimensionsFullscreen</include>
 			<texture>$VAR[ColorOverlayTexture]</texture>
 			<colordiffuse>$VAR[ColorOverlayDiffuse]</colordiffuse>
@@ -14,7 +14,7 @@
 		</control>
 		<!--Dialog Overlay without colordiffuse-->
         <control type="image">
-			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + SubString(Window.Property(xmlfile),My,left)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
+			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
 			<include>DimensionsFullscreen</include>
 			<texture>$VAR[ColorOverlayTexture]</texture>
 			<visible>Skin.String(ColorTheme, None)</visible>
@@ -43,6 +43,13 @@
 			<include>DimensionsFullscreen</include>
 			<texture>special://skin/extras/bgoverlays/Default.png</texture>
 			<colordiffuse>aa0f0f0f</colordiffuse>
+            <visible>!Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
+		</control>
+        <control type="image">
+			<include>DimensionsFullscreen</include>
+			<texture>special://skin/extras/bgoverlays/Default.png</texture>
+			<colordiffuse>ddwhite</colordiffuse>
+            <visible>Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
 		</control>
     </include>
 	
@@ -74,6 +81,14 @@
 	
 	<include name="extraFanartBackground">
 		<!-- extra fanart background -->
+        
+        <!-- background panel -->
+        <control type="image" description="Background">
+            <include>DimensionsFullscreen</include>
+            <texture colordiffuse="$VAR[backgroundDiffuse]">colors/color_white.png</texture>
+            <visible>Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
+        </control>
+        
         <control type="multiimage">
             <include>DimensionsFullscreen</include>
             <imagepath background="true">$VAR[extraFanartBackground]</imagepath>
@@ -83,6 +98,7 @@
 			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
 			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
 			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
+            <colordiffuse>$VAR[backgroundDiffuseVar]</colordiffuse>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
@@ -115,8 +131,25 @@
 	</include>
 
 	
+    <variable name="backgroundDiffuseVar">
+        <!-- theme specific diffuse -->
+        <value condition="Control.IsVisible(507)">ffffffff</value>
+        <value condition="Skin.String(SkinHelper.LastColorTheme, Default Modern white) + [Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]">2Fffffff</value>
+        <value condition="Skin.String(ColorTheme.name, black) + [Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]">2F000000</value>
+        <value>aaffffff</value>
+    </variable>
+    
+
+    
 	<!--Global Background -->
     <include name="GlobalBackground">
+        
+        <!-- background panel -->
+        <control type="image" description="Background">
+            <include>DimensionsFullscreen</include>
+            <texture colordiffuse="$VAR[backgroundDiffuse]">colors/color_white.png</texture>
+            <visible>Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
+        </control>
 			
 		<!-- multi image background -->
         <control type="multiimage" id="99004">
@@ -129,6 +162,7 @@
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 20)">fanartSpeed20</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 30)">fanartSpeed30</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 60)">fanartSpeed60</include>
+            <colordiffuse>$VAR[backgroundDiffuseVar]</colordiffuse>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
@@ -156,7 +190,12 @@
         
         <!-- conditional background override -->
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.ConditionalBackground))">$INFO[Window(home).Property(SkinHelper.ConditionalBackground)]</value>
-   
+        
+        <!-- extendedinfo -->
+        <value condition="Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + !IsEmpty(Window.Property(movie.FanArt))">$INFO[Window.Property(movie.FanArt)]</value>
+        <value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml) + !IsEmpty(Window.Property(actor.thumb))">$INFO[Window.Property(actor.thumb)]</value>
+        <value condition="Window.IsActive(script-ExtendedInfo Script-VideoList.xml) + !IsEmpty(Container(500).ListItem.Property(Fanart_small))">$INFO[Container(500).ListItem.Property(Fanart_small)]</value>
+        
 		<!--nextaired script backgrounds -->
 		<value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Fanart))">$INFO[Container(200).ListItem.Property(Fanart)]</value>
 		<value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(201) + !IsEmpty(Container(201).ListItem.Property(Fanart))">$INFO[Container(201).ListItem.Property(Fanart)]</value>

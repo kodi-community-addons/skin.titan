@@ -9,13 +9,7 @@
             <!-- default animation -->
 			<include>animation_window_open_close</include>
 
-			<control type="group">
-				<control type="image">
-					<include>DimensionsFullscreen</include>
-					<texture background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$INFO[Window.Property(movie.FanArt)]</texture>
-				</control>
-				<include>DialogOverlay</include>
-			</control>
+			<include>GlobalBackground</include>
 			
 			<control type="label">
 				<posx>61</posx>
@@ -46,7 +40,7 @@
 				<posx>61</posx>
 				<width min="0" max="1100">auto</width>
 				<height>50</height>
-				<label>$INFO[Window.Property(TotalItems),[COLOR grey]$ADDON[script.extendedinfo 32124]:[/COLOR] ]$INFO[Window.Property(CurrentPage),[COLOR grey] - $ADDON[script.extendedinfo 32125]: [/COLOR]]$INFO[Window.Property(TotalPages), / ]</label>
+				<label>$INFO[Window.Property(TotalItems),$ADDON[script.extendedinfo 32124]: ]$INFO[Window.Property(CurrentPage), - $ADDON[script.extendedinfo 32125]: ]$INFO[Window.Property(TotalPages), / ]</label>
 				<font>Reg30</font>
 				<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
@@ -105,7 +99,7 @@
 							<height>75</height>
 							<align>center</align>
 							
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 							
 							<font>Reg20</font>
 							<label>$INFO[ListItem.Label]</label>
@@ -144,7 +138,7 @@
 							<height>75</height>
 							<align>center</align>
 							
-							<textcolor>white</textcolor>
+							<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 							
 							<font>Reg20</font>
 							<label>$INFO[ListItem.Label]</label>
@@ -178,30 +172,8 @@
             <posx>-660</posx>
 			<posy>0</posy>
 			<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
-			<include>animation_sub_menu</include>
-			<!--Panel-->
-			<control type="image">
-				<posy>0</posy>
-				<posx>0</posx>
-				<width>485</width>
-				<height>100%</height>
-				<texture border="5">diffuse/panel.png</texture>
-				
-				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-				<aspectratio>stretch</aspectratio>
-			</control>
-			<!-- header -->
-			<control type="label">
-				<posx>61</posx>
-				<posy>10</posy>
-				<width min="80" max="1100">auto</width>
-				<height>100</height>
-				<font>Bold45</font>
-				<align>left</align>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-				<label>[UPPERCASE]$ADDON[script.extendedinfo 32023][/UPPERCASE]</label>
-				<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
-			</control>
+			<include condition="skin.hastheme(classic)">SideBladeClassic</include>
+			<include condition="!skin.hastheme(classic)">SideBladeModern</include>
 			<control type="image">
 				<!--Seperator-->
 				<posx>21</posx>
@@ -252,18 +224,18 @@
                 <!--Buttons-->
                 <control type="button" id="5007">
                     <label>$LOCALIZE[467]:</label> <!--564-->
-                    <label2>[COLOR white]$INFO[Window.Property(Type)][/COLOR]</label2>
+                    <label2>$INFO[Window.Property(Type)]</label2>
                     <include>SubMenuButton</include>
                 </control>
 				<control type="button" id="5001">
                     <onup>6000</onup>
                     <label>$ADDON[script.extendedinfo 32104]</label>
-                    <label2>[COLOR white]$INFO[Window.Property(Sort_Label)][/COLOR]</label2>
+                    <label2>$INFO[Window.Property(Sort_Label)]</label2>
                     <include>SubMenuButton</include>
                 </control>
 				<control type="button" id="5004">
                     <label>$ADDON[script.extendedinfo 32128]</label>
-                    <label2>[COLOR white]$INFO[Window.Property(Order_Label)][/COLOR]</label2>
+                    <label2>$INFO[Window.Property(Order_Label)]</label2>
                     <include>SubMenuButton</include>
                 </control>
                 <control type="button" id="5002">

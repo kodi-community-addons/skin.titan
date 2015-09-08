@@ -10,16 +10,7 @@
         <control type="group">
 		
 		<include>animation_window_open_close</include>
-			<control type="group">
-				<control type="image">
-					<include>DimensionsFullscreen</include>
-					<include>backgroundfade</include>
-					<texture background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$INFO[Window.Property(actor.thumb)]</texture>
-					<fadetime>800</fadetime>
-					<aspectratio>scale</aspectratio>
-				</control>
-				<include>DialogOverlay</include>
-			</control>
+			<include>GlobalBackground</include>
 			
 			<control type="label">
 				<include>animation_fade_visible_hidden</include>
@@ -55,7 +46,8 @@
 				<width>100%</width>
 				<height>940</height>
 				<texture border="5">diffuse/panel.png</texture>
-				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <visible>!Skin.HasSetting(ExtendedInfoHidePanel)</visible>
+				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 				<aspectratio>stretch</aspectratio>
 			</control>
 					
@@ -91,9 +83,9 @@
 								<posx>0</posx>
 								<width>1800</width>
 								<height>140</height>
-								<label>$INFO[Window.Property(actor.AlsoKnownAs),$ADDON[script.extendedinfo 32016]: [COLOR=white],[/COLOR] • ]$INFO[Window.Property(actor.Birthday),$ADDON[script.extendedinfo 32012]: [COLOR=white],[/COLOR] • ]$INFO[Window.Property(actor.PlaceOfBirth),$ADDON[script.extendedinfo 32014]: [COLOR=white],[/COLOR] • ]$INFO[Window.Property(actor.TotalMovies),$ADDON[script.extendedinfo 32011]: [COLOR=white],[/COLOR] • ]$INFO[Window.Property(actor.DBMovies),$ADDON[script.extendedinfo 32021]: [COLOR=white],[/COLOR] • ]$INFO[Window.Property(actor.Homepage),$ADDON[script.extendedinfo 32017]: [COLOR=white],[/COLOR] • ]$INFO[Window.Property(actor.Deathday),$ADDON[script.extendedinfo 32013]: [COLOR=white],[/COLOR]][CR]$INFO[Window.Property(actor.Biography),[COLOR=white],[/COLOR]]</label>
+								<label>$INFO[Window.Property(actor.AlsoKnownAs),$ADDON[script.extendedinfo 32016]: , • ]$INFO[Window.Property(actor.Birthday),$ADDON[script.extendedinfo 32012]: , • ]$INFO[Window.Property(actor.PlaceOfBirth),$ADDON[script.extendedinfo 32014]: , • ]$INFO[Window.Property(actor.TotalMovies),$ADDON[script.extendedinfo 32011]: , • ]$INFO[Window.Property(actor.DBMovies),$ADDON[script.extendedinfo 32021]: , • ]$INFO[Window.Property(actor.Homepage),$ADDON[script.extendedinfo 32017]: , • ]$INFO[Window.Property(actor.Deathday),$ADDON[script.extendedinfo 32013]: ,][CR]$INFO[Window.Property(actor.Biography),,]</label>
 								<font>Reg24</font>
-								<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 							</control>
 						</control>
 					
@@ -107,7 +99,8 @@
                             <width>540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32120]$INFO[Container(150).NumItems, (,)]</label>
                         </control>
                        <control type="image">
@@ -148,28 +141,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -178,9 +154,9 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </itemlayout>
@@ -202,28 +178,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -232,10 +191,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </focusedlayout>
@@ -252,7 +211,8 @@
                             <width>540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32121]$INFO[Container(250).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -293,28 +253,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -323,10 +266,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </itemlayout>
@@ -348,28 +291,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -378,10 +304,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </focusedlayout>
@@ -399,7 +325,8 @@
                             <width>540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32122]$INFO[Container(550).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -440,28 +367,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -470,10 +380,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </itemlayout>
@@ -495,28 +405,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -525,10 +418,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </focusedlayout>
@@ -545,7 +438,8 @@
                             <width>540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32123]$INFO[Container(650).NumItems, (,)]</label>
                         </control>
                        <control type="image">
@@ -586,28 +480,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -616,10 +493,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </itemlayout>
@@ -641,28 +518,11 @@
 										<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
 									  </control>
 									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
-									</control>
-									<control type="image">
-										<bottom>0</bottom>
-										<left>0</left>
-										<width>176</width>
-										<height>75</height>
-										<texture border="0">pvr/guide_diffuse.png</texture>
-										<aspectratio>stretch</aspectratio>
+										<bottom>6</bottom>
+										<left>6</left>
+										<width>164</width>
+										<height>65</height>
+										<include>PosterThumbBG</include>
 									</control>
 									<control type="textbox">
 										<bottom>0</bottom>
@@ -671,10 +531,10 @@
 										<height>75</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
-										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+										<label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[CR] $LOCALIZE[20347] ,]</label>
 									</control>
                                 </control>
                             </focusedlayout>
@@ -691,7 +551,8 @@
                             <width>540</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32118]</label>
                         </control>
                         <control type="image">
@@ -765,7 +626,7 @@
 										<height>60</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
@@ -820,7 +681,7 @@
 										<height>60</height>
 										<align>center</align>
 										
-										<textcolor>white</textcolor>
+										<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 										
 										<font>Reg20</font>
 										<label>$INFO[ListItem.Label]</label>
@@ -840,7 +701,8 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$ADDON[script.extendedinfo 32119]</label>
                         </control>
 						<control type="image">
@@ -916,7 +778,8 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>Bold32</font>
+                           <font>Bold32</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                             <label>$LOCALIZE[20445]</label>
                         </control>
 						<control type="image">
