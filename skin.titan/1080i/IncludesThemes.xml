@@ -286,7 +286,7 @@
 			<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
 			<texturenofocus colordiffuse="bbwhite">touchcontrols/icon_close.png</texturenofocus>
 			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
-			<visible>StringCompare(Window(Home).Property(ShowViewSubMenu),show)</visible>
+			<visible>Skin.HasSetting(EnableTouchSupport)</visible>
 		</control>
 		
 		<!-- back -->
@@ -409,76 +409,11 @@
 
 			<!--Flags-->
 			<control type="group">
-				<!--Flags Video-->
 				<visible>!Window.IsActive(VideoOSD.xml)</visible>
 				<animation time="300" effect="fade" delay="300">Visible</animation>
-				<visible>VideoPlayer.Content(movies) | VideoPlayer.Content(episodes)</visible>
 				<posx>550</posx>
 				<posy>263</posy>
-				<control type="image">
-					<!--Video Resolution-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>188</width>
-					<!--212-->
-					<height>40</height>
-					<!--45-->
-					<colordiffuse>black</colordiffuse>
-					<texture fallback="flags/resolution/default.png">$INFO[VideoPlayer.VideoResolution,flags/resolution/,.png]</texture>
-				</control>
-				<control type="image">
-					<!--VideoCode-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>188</width>
-					<!--212-->
-					<height>40</height>
-					<!--45-->
-					<colordiffuse>black</colordiffuse>
-					<texture fallback="flags/videocodec/default.png">$INFO[VideoPlayer.VideoCodec,flags/videocodec/,.png]</texture>
-				</control>
-				<control type="image">
-					<!--Aspectration-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>188</width>
-					<!--212-->
-					<height>40</height>
-					<!--45-->
-					<colordiffuse>black</colordiffuse>
-					<texture fallback="flags/aspectration/default.png">$INFO[VideoPlayer.VideoAspect,flags/aspectration/,.png]</texture>
-				</control>
-			</control>
-			<control type="group">
-				<!--Flags Audio-->
-				<visible>!Window.IsActive(VideoOSD.xml)</visible>
-				<animation time="300" effect="fade" delay="300">Visible</animation>
-				<visible>VideoPlayer.Content(movies) | VideoPlayer.Content(episodes)</visible>
-				<posx>780</posx>
-				<!-- +230 more-->
-				<posy>263</posy>
-				<control type="image">
-					<!--Audio Codec-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>110</width>
-					<!--124-->
-					<height>40</height>
-					<!--45-->
-					<colordiffuse>black</colordiffuse>
-					<texture fallback="flags/audiocodec/default.png">$INFO[VideoPlayer.AudioCodec,flags/audiocodec/,.png]</texture>
-				</control>
-				<control type="image">
-					<!--Audio Channels-->
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>110</width>
-					<!--212-->
-					<height>40</height>
-					<!--45-->
-					<colordiffuse>black</colordiffuse>
-					<texture fallback="flags/audiochannels/default.png">$INFO[VideoPlayer.AudioChannels,flags/audiochannels/,.png]</texture>
-				</control>
+				<include>mediaflags</include>
 			</control>
 			
 			<!--Time-->
@@ -822,213 +757,30 @@
 				</control>
 				
 			
-				<!-- OSDLabel3 -->
+				<!-- OSDLabel3 
 				<control type="label">
 					<posx>400</posx>
-					<posy>200</posy>
+					<posy>220</posy>
 					<width>1040</width>
 					<align>left</align>
-					<font>Light34</font>
+					<font>Light28</font>
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$VAR[OSDLabel3]</label>
 					<visible>!Window.IsActive(VideoOSD.xml)</visible>
 					<animation time="300" effect="fade" delay="300">Visible</animation>
-				</control>
+				</control>-->
 			</control>
 
 			
 		
 			<!-- media flags -->
-			<control type="grouplist">
-			<animation time="0" effect="slide" end="115" delay="0" condition="!Player.HasVideo">Conditional</animation>
-			<orientation>horizontal</orientation>
-			<right>70</right>
-			<width>575</width>
-			<posy>215</posy>
-			
-			<!--Video Type-->
 			<control type="group">
-				<width>110</width>
-				<height>36</height>
-				<visible>Player.HasVideo</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<posx>2</posx>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-				</control>
-				<control type="label" id="44223">
-					<font>flags</font>
-					<posx>2</posx>
-					<label>$VAR[VideoFileTypeVar]</label>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-					<visible>!VideoPlayer.Content(livetv)</visible>
-				</control>
-			</control>
-			
-			<!--Video Resolution-->
-			<control type="group">
-				<width>100</width>
-				<height>36</height>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture>flags/video.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<left>28</left>
-					<width>75</width>
-					<label>$INFO[VideoPlayer.VideoResolution]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<visible>!IsEmpty(VideoPlayer.VideoResolution) + Player.HasVideo</visible>
-				</control>
-			</control>
-			
-			<!--Video Codec-->
-			<control type="group">
-				<width>80</width>
-				<height>36</height>
-				<control type="image">
-				<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.VideoCodec) + Player.HasVideo</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>$VAR[VideoCodecVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<visible>!IsEmpty(VideoPlayer.VideoCodec) + Player.HasVideo</visible>
-				</control>
-			</control>
-			
-			<!--Aspectratio-->
-			<control type="group">
-				<width>60</width>
-				<height>36</height>
-				<control type="image">
-					<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.VideoAspect) + Player.HasVideo</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>$VAR[VideoAspectVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<visible>!IsEmpty(VideoPlayer.VideoAspect) + Player.HasVideo</visible>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>5</width>
-				<height>36</height>
-			</control>
-			
-			<!--Audio Codec-->
-			<control type="group">
-				<width>150</width>
-				<height>36</height>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture>flags/audio.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<right>0</right>
-					<width>115</width>
-					<label>$VAR[AudioCodecVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-				</control>
-			</control>
-				
-			<!--Audio Channels-->
-			<control type="group">
-				<width>40</width>
-				<height>36</height>
-				<control type="image">
-					<posx>-6</posx>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<label>$VAR[AudioChannelsVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-				</control>
-			</control>
-		
-			<!--Video Type-->
-			<control type="group">
-				<width>85</width>
-				<height>36</height>
-				<visible>!IsEmpty(Control.GetLabel(44223)) + [VideoPlayer.Content(movies) | VideoPlayer.Content(episodes)]</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<posx>2</posx>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label" id="44223">
-					<font>flags</font>
-					<posx>2</posx>
-					<label>$VAR[VideoFileTypeVar]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-		
-		</control>
+                <posx>350</posx>
+                <posy>215</posy>
+                <include>mediaflags</include>
+                <visible>![Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml)]</visible>
+            </control>
 		
 		
 		<control type="image">
@@ -1140,6 +892,7 @@
 				<orientation>horizontal</orientation>
 				<usecontrolcoords>true</usecontrolcoords>
 				<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+                <visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
 					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
 				</animation>
@@ -1344,151 +1097,8 @@
 			<width>575</width>
 			<posy>75</posy>
 			
-			<!--Video Type-->
-			<control type="group">
-				<width>110</width>
-				<height>36</height>
-				<visible>Player.HasVideo</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<posx>2</posx>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label" id="44223">
-					<font>flags</font>
-					<posx>2</posx>
-					<label>$VAR[VideoFileTypeVar]</label>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			<!--Video Resolution-->
-			<control type="group">
-				<width>100</width>
-				<height>36</height>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="25,0,0,0">flags/flag_box_video.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.VideoResolution) + Player.HasVideo</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<left>25</left>
-					<width>75</width>
-					<label>$INFO[VideoPlayer.VideoResolution]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-					<visible>!IsEmpty(VideoPlayer.VideoResolution) + Player.HasVideo</visible>
-				</control>
-			</control>
-			
-			<!--Video Codec-->
-			<control type="group">
-				<width>80</width>
-				<height>36</height>
-				<control type="image">
-				<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.VideoCodec) + Player.HasVideo</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>$VAR[VideoCodecVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-					<visible>!IsEmpty(VideoPlayer.VideoCodec) + Player.HasVideo</visible>
-				</control>
-			</control>
-			
-			<!--Aspectratio-->
-			<control type="group">
-				<width>60</width>
-				<height>36</height>
-				<control type="image">
-					<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.VideoAspect) + Player.HasVideo</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>$VAR[VideoAspectVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-					<visible>!IsEmpty(VideoPlayer.VideoAspect) + Player.HasVideo</visible>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>5</width>
-				<height>36</height>
-			</control>
-			
-			<!--Audio Codec-->
-			<control type="group">
-				<width>150</width>
-				<height>36</height>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="25,0,0,0">flags/flag_box_audio.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<right>0</right>
-					<width>115</width>
-					<label>$VAR[AudioCodecVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-				</control>
-			</control>
-				
-			<!--Audio Channels-->
-			<control type="group">
-				<width>40</width>
-				<height>36</height>
-				<control type="image">
-					<posx>-6</posx>
-					<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<label>$VAR[AudioChannelsVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-					<visible>!IsEmpty(VideoPlayer.AudioChannels)</visible>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-				</control>
-			</control>
-		</control>
+			<include>mediaflags</include>
+            </control>
 		
 			<!--Clock-->
 			<control type="grouplist">

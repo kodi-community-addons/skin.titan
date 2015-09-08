@@ -22,6 +22,9 @@
 			<animation type="Conditional" condition="!Skin.String(GadgetRows, simplehor) + Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
                  <effect type="slide" start="0,0" end="0,580" time="400" tween="cubic" easing="inout" delay="0"/>
 			</animation>
+            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + !Skin.String(GadgetRows, simplehor) + Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
+                 <effect type="slide" start="0,0" end="0,230" time="400" tween="cubic" easing="inout" delay="0"/>
+			</animation>
 			
 			<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget))</visible>
 
@@ -40,6 +43,7 @@
 				<aspectratio>stretch</aspectratio>
 				<height>1032</height>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                <visible>!Skin.String(widgetstyle, single box)</visible>
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 				<include>animation_fade_visible_hidden_delayed</include>
 				<animation type="Conditional" condition="Skin.String(widgetstyle, poster)">
@@ -57,6 +61,7 @@
             <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <label>$VAR[HomeMenuWidgetInfoLabel]</label>
+            <visible>!Skin.String(widgetstyle, single box)</visible>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Container(300).ListItem.Property(widget),weather)">Conditional</animation>
         </control>
@@ -86,6 +91,7 @@
 			<posy>195</posy>
 			<height>367</height>
 			<orientation>vertical</orientation>
+            <visible>!Skin.String(widgetstyle, single box)</visible>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			<control type="textbox">
 				<width>1455</width>
@@ -119,6 +125,7 @@
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
 			<bordersize>20</bordersize>
+            <visible>!Skin.String(widgetstyle, single box)</visible>
 			<texture background="true" diffuse="diffuse/poster.png" fallback="colors/color_keyboard.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
 			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
@@ -128,6 +135,7 @@
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
+            <visible>!Skin.String(widgetstyle, single box)</visible>
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<texture background="true" fallback="DefaultMusicSongs.png" diffuse="diffuse/music_cover.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
@@ -138,6 +146,7 @@
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
+            <visible>!Skin.String(widgetstyle, single box)</visible>
 			<texture fallback="DefaultAddonWeather.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<visible>StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
@@ -156,6 +165,7 @@
 				<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
 				<visible>ControlGroup(77777).HasFocus + !skin.hastheme(classic) + !Skin.String(widgetstyle, poster)</visible>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                <visible>!Skin.String(widgetstyle, single box)</visible>
 				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
 				<control type="button">
 					<!--widget Arrow DOWN-->
@@ -194,6 +204,7 @@
 				<width>149</width>
 				<height>30</height>
 				<onclick>ClearProperty(ShowWidget, Home)</onclick>
+                <visible>!Skin.String(widgetstyle, single box)</visible>
 				<texturefocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">home/basichome_down.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">home/basichome_down.png</texturenofocus>
 				<visible>ControlGroup(77777).HasFocus + skin.hastheme(classic)</visible>
@@ -214,6 +225,7 @@
 				<animation time="0" effect="fade" delay="0">Hidden</animation>
 				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 				<visible>!Skin.String(widgetstyle, poster)</visible>
+                <visible>!Skin.String(widgetstyle, single box)</visible>
 			</control>
 			<control type="image">
 				<posx>755</posx>
@@ -227,64 +239,28 @@
 				<animation time="0" effect="fade" delay="0">Hidden</animation>
 				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 				<visible>Skin.String(widgetstyle, poster)</visible>
+                <visible>!Skin.String(widgetstyle, single box)</visible>
 			</control>
 			
 			<!--change widget button -->
 			<control type="group">
 				<right>60</right>
-				<width>600</width>
+				<width>800</width>
 				<height>60</height>
 				<include>animation_fade_visible_hidden_delayed</include>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
-					<texture flipy="true">dialogs/default/separator.png</texture>
-					<visible>Control.IsVisible(511)</visible>
-				</control>
-				<control type="button" id="511">
-					<right>0</right>
-					<width>600</width>
-					<align>right</align>
-					<font>Reg30</font>
-					<onup>300</onup>
-					<ondown>510</ondown>
-					<textoffsetx>90</textoffsetx>
-					<texturenofocus>dialogs/default/separator.png</texturenofocus>
-                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[changeWidgetLabel]</label>
-					<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + [StringCompare(Window(home).Property(activewidget),0) | IsEmpty(Window(home).Property(activewidget))]">SetProperty(activewidget,1)</onclick>
-					<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(activewidget),1)">SetProperty(activewidget,0)</onclick>
-					<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1))">RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
-					<visible allowhiddenfocus="true">[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !IsEmpty(Control.GetLabel(511))</visible>
-				</control>
-				<control type="image">
-					<right>5</right>
-					<posy>0</posy>
-					<width>40</width>
-					<height>60</height>
-					<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
-					<texture>common/spinctrl/arrow-up-nf.png</texture>
-					<visible>Control.IsVisible(511)</visible>
-				</control>
-				<control type="image">
-					<right>45</right>
-					<posy>0</posy>
-					<width>40</width>
-					<height>60</height>
-					<texture>common/spinctrl/arrow-down-nf.png</texture>
-					<visible>Control.IsVisible(511) + !Control.HasFocus(511)</visible>
-				</control>
-				<control type="image">
-					<right>45</right>
-					<posy>0</posy>
-					<width>40</width>
-					<height>60</height>
-					<texture>common/spinctrl/arrow-down-fo.png</texture>
-					<visible>Control.IsVisible(511) + Control.HasFocus(511)</visible>
-				</control>
+				<include condition="!Skin.String(widgetstyle, single box)">changeWidgetButton</include>
 			</control>
 
 			<include>skinshortcuts-template-widget</include>
 			<include>skinshortcuts-template-widget.1</include>
+            
+            <control type="group">
+                <posy>-55</posy>
+                <right>55</right>
+                <width>940</width>
+                <height>341</height>
+                <include condition="Skin.String(widgetstyle, single box)">widgetpanel_singlebox</include>
+            </control>
 
 		</control>
 	</control>
@@ -668,6 +644,117 @@
         <include>widget_layout</include>
 	</include>
 	
+    <include name="widget_layout_single_box">
+        <posx>10</posx>
+		<posy>10</posy>
+		<width>1</width>
+		<height>1</height>
+        <ondown>300</ondown>
+        <onup>511</onup>
+        <onleft>510</onleft>
+        <onright>510</onright>
+        <orientation>horizontal</orientation>
+        <include>widget_layout</include>  
+    </include>
+    
+    <include name="widgetpanel_singlebox">
+        <control type="group">
+            <width>940</width>
+            <height>340</height>
+            <control type="image">
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            </control>
+            <control type="image">
+                <texture border="5">diffuse/thinborder.png</texture>
+                <colordiffuse>darkgrey</colordiffuse>
+            </control>
+            <control type="image">
+                <bordersize>-3</bordersize>
+                <texture border="5">diffuse/border.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+                <visible>Control.HasFocus(510)</visible>
+            </control>
+            
+            
+            <!-- poster image -->
+            <control type="group">
+                <left>-15</left>
+                <top>-4</top>
+                <include>BigPanelPosterDimensions</include>
+                  <control type="image">
+                    <include>BigPanelPosterDimensions</include>
+                    <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
+                    <aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
+                    <visible>!IsEmpty(Container(510).ListItem.Art(poster)) | !IsEmpty(Container(510).ListItem.Art(tvshow.poster))</visible>
+                  </control>
+                  <control type="image">
+                    <height>250</height>
+                    <include>BigPanelPosterDimensions</include>
+                    <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$INFO[Container(510).ListItem.Icon]</texture>
+                    <aspectratio scalediffuse="false" aligny="top" align="center">scale</aspectratio>
+                    <visible>IsEmpty(Container(510).ListItem.Art(poster)) + IsEmpty(Container(510).ListItem.Art(tvshow.poster))</visible>
+                  </control>
+                  <include>BigPanelWatchedImage</include>
+            </control>  
+
+            <control type="button" id="511">
+				<left>251</left>
+                <top>5</top>
+                <width>650</width>
+                <aligny>center</aligny>
+                <align>left</align>
+                <textoffsetx>0</textoffsetx>
+                <height>50</height>
+                <font>Reg30</font>
+				<onleft>300</onleft>
+                <onright>300</onright>
+				<onup>300</onup>
+				<ondown>510</ondown>
+				<label>$VAR[changeWidgetLabel]</label>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + [StringCompare(Window(home).Property(activewidget),0) | IsEmpty(Window(home).Property(activewidget))]">SetProperty(activewidget,1)</onclick>
+				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(activewidget),1)">SetProperty(activewidget,0)</onclick>
+				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1))">RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
+				<texturenofocus>-</texturenofocus>
+			</control>
+            <control type="label">
+                <left>251</left>
+                <top>55</top>
+                <width>650</width>
+                <aligny>center</aligny>
+                <height>80</height>
+                <font>Reg30</font>
+                <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                <label>$INFO[Container(510).ListItem.Title]</label>
+            </control>
+            <control type="textbox">
+                <left>251</left>
+                <width>650</width>
+                <top>132</top>
+                <height>140</height>
+                <font>Reg24</font>
+                <align>justify</align>
+                <autoscroll>false</autoscroll>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+            </control>
+            <control type="group">
+				<height>36</height>
+				<left>251</left>
+				<bottom>10</bottom>
+				<include>mediaflags</include>
+				<visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
+			</control>
+            
+        </control>
+    </include>
+	
+    
+    
 	<include name="widget_layout">
 		<ondown>ClearProperty(ShowWidget, Home)</ondown>
 		<onback>300</onback>
@@ -694,7 +781,7 @@
 				<include>ThumbsViewLayout</include>
 			</control>
 		</focusedlayout>
-		<itemlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music)">
+		<itemlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
           <control type="group">
 		  <animation effect="zoom" end="93" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 		  <posx>-8</posx>
@@ -714,13 +801,13 @@
 					<font>Reg22</font>
 					<align>center</align>
 					<info>ListItem.Label</info>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+					<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 					<visible>IsEmpty(ListItem.Thumb)</visible>
 					<visible>!StringCompare(ListItem.Label,..)</visible>
 				</control>
 			</control>
         </itemlayout>
-        <focusedlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music)">
+        <focusedlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
           <control type="group">
 		  <animation effect="zoom" end="93" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 		  <posx>-8</posx>
@@ -740,7 +827,7 @@
 					<font>Reg22</font>
 					<align>center</align>
 					<info>ListItem.Label</info>
-					<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+					<textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
 					<visible>IsEmpty(ListItem.Thumb)</visible>
 					<visible>!StringCompare(ListItem.Label,..)</visible>
 				</control>
@@ -802,9 +889,80 @@
           <include>BigPanelWatchedImage</include>	  
         </focusedlayout>
 	
-	</include>
+        <itemlayout height="1" width="1" condition="Skin.String(widgetstyle, single box)" />
+        <focusedlayout height="1" width="1" condition="Skin.String(widgetstyle, single box)" />
 
-	
+    </include>
+
+	<variable name="SingleBoxWidgetInfoPlot">
+		<value condition="!IsEmpty(ListItem.Property(ShortPlot))">$INFO[ListItem.Property(ShortPlot)]</value>
+		<value condition="!IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
+		<value condition="StringCompare(ListItem.Property(widget), weather)">$INFO[ListItem.Property(Plot)][CR]$INFO[ListItem.label2]</value>
+		<value condition="!IsEmpty(ListItem.Property(Plot))">$INFO[ListItem.Property(Plot)]</value>
+		<value>$INFO[ListItem.label2]</value>
+    </variable>
+    
+    <variable name="WidgetSubLabel">
+        <value condition="StringCompare(Container(300).ListItem.Property(widget),NextAired)"></value>
+        <value condition="substring(Container(510).ListItem.Property(widget),Album)">$INFO[Container(510).ListItem.Artist]$INFO[Container(510).ListItem.Year,  •  ,]</value>
+        <value condition="!StringCompare(Container(510).ListItem.Title,Container(510).ListItem.TvShowTitle) + !IsEmpty(Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.TvShowTitle,,  •  ]$INFO[Container(510).ListItem.Premiered,,  •  ]$INFO[Container(510).ListItem.Duration,, $LOCALIZE[31102]  •  ]$INFO[Container(510).ListItem.Rating]</value>
+        <value condition="!StringCompare(Container(510).ListItem.Title,Container(510).ListItem.TvShowTitle) + IsEmpty(Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.Year,,  •  ]$INFO[Container(510).ListItem.Duration,, $LOCALIZE[31102]  •  ]$INFO[Container(510).ListItem.Rating]</value>
+        <value condition="StringCompare(Container(510).ListItem.Title,Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.Episode,, $LOCALIZE[20360]  •  ]$INFO[Container(510).ListItem.Property(UnWatchedEpisodes),, $LOCALIZE[16101]  •  ]$INFO[Container(510).ListItem.Duration,, $LOCALIZE[31102]  •  ]$INFO[Container(510).ListItem.Rating]</value>
+    </variable>
+    
+    <include name="changeWidgetButton">
+        <include>animation_fade_visible_hidden</include>
+			<visible allowhiddenfocus="true">!IsEmpty(Control.GetLabel(511))</visible>
+			<control type="image">
+				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+				<texture flipy="true">dialogs/default/separator.png</texture>
+				<visible>!IsEmpty(Control.GetLabel(511))</visible>
+			</control>
+			<control type="button" id="511">
+				<right>0</right>
+				<width>800</width>
+				<height>45</height>
+				<align>right</align>
+				<font>Reg30</font>
+				<onleft>300</onleft>
+				<onup>510</onup>
+				<ondown>300</ondown>
+				<textoffsetx>90</textoffsetx>
+				<label>$VAR[changeWidgetLabel]</label>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + [StringCompare(Window(home).Property(activewidget),0) | IsEmpty(Window(home).Property(activewidget))]">SetProperty(activewidget,1)</onclick>
+				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(activewidget),1)">SetProperty(activewidget,0)</onclick>
+				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1))">RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
+				<texturenofocus>dialogs/default/separator.png</texturenofocus>
+				<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget))</visible>
+			</control>
+			<control type="image">
+				<right>5</right>
+				<posy>-5</posy>
+				<width>40</width>
+				<height>60</height>
+				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
+				<texture>common/spinctrl/arrow-up-nf.png</texture>
+				<visible>Control.IsVisible(511)</visible>
+			</control>
+			<control type="image">
+				<right>45</right>
+				<posy>-5</posy>
+				<width>40</width>
+				<height>60</height>
+				<texture>common/spinctrl/arrow-down-nf.png</texture>
+				<visible>Control.IsVisible(511) + !Control.HasFocus(511)</visible>
+			</control>
+			<control type="image">
+				<right>45</right>
+				<posy>-5</posy>
+				<width>40</width>
+				<height>60</height>
+				<texture>common/spinctrl/arrow-down-fo.png</texture>
+				<visible>Control.IsVisible(511) + Control.HasFocus(511)</visible>
+			</control>
+    </include>
     
 	
 	</includes>

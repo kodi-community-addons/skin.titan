@@ -1564,1184 +1564,850 @@
 	<include name="mediaflags">
         <control type="grouplist">
 			<orientation>horizontal</orientation>
-			
-			<!--Video Type-->
-			<control type="group">
-				<width>110</width>
-				<height>36</height>
-				<visible>!IsEmpty(Control.GetLabel(44223)) + ![window.isactive(home) + Skin.String(GadgetRows, netflix)]</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<posx>2</posx>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label" id="44223">
-					<font>flags</font>
-					<posx>2</posx>
-					<label>$VAR[VideoFileTypeVar]</label>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			
-			<!--Video Resolution-->
-			<control type="group">
-				<width>100</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoResolution) | !IsEmpty(Container(510).ListItem.VideoResolution)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
+			<height>40</height>
+            <control type="image">
+                <width>36</width>
+                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+                <texture>flags/video.png</texture>
+                <bordersize>3</bordersize>
+                <visible>!IsEmpty(Control.GetLabel(44223))</visible>
+            </control>
+            <control type="label" id="44223">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar]</label>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <visible>!IsEmpty(Control.GetLabel(44223))</visible>
+            </control>
+
+            <control type="label">
+                <!-- whitespace -->
+                <width>10</width>
+                <height>30</height>
+                <label></label>
+                <visible>!IsEmpty(Control.GetLabel(44223))</visible>
+            </control>
+
+            
+            <control type="image">
+                <width>36</width>
+                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+                <texture>flags/audio.png</texture>
+                <bordersize>3</bordersize>
+                <visible>!IsEmpty(Control.GetLabel(44224))</visible>
+            </control>
+            <control type="label" id="44224">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$VAR[AudioCodecVar,, • ]$VAR[AudioChannelsVar]</label>
+                <visible>!IsEmpty(Control.GetLabel(44224))</visible>
+            </control>
+            
+            <control type="label">
+                <!-- whitespace -->
+                <width>10</width>
+                <height>30</height>
+                <label></label>
+                <visible>!IsEmpty(Control.GetLabel(44224))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
+
+            
+            <control type="image">
+                <width>36</width>
+                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+                <texture>flags/mpaa.png</texture>
+                <bordersize>3</bordersize>
+                <visible>!IsEmpty(Control.GetLabel(44225))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
+            <control type="label" id="44225">
+                <font>flags</font>
+                <height>30</height>
+                <width>auto</width>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$VAR[RatingFlagVar]</label>
+                <visible>!IsEmpty(Control.GetLabel(44225))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
+            
+            <control type="label">
+                <!-- whitespace -->
+                <width>10</width>
+                <height>30</height>
+                <label></label>
+                <visible>!IsEmpty(Control.GetLabel(44226))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
+            
+            
+            <control type="image">
+                <width>36</width>
+                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+                <texture>flags/rating.png</texture>
+                <bordersize>3</bordersize>
+                <visible>!IsEmpty(Control.GetLabel(44226))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
+            <control type="label" id="44226">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating]</label>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
+            
+            <control type="label">
+                <!-- whitespace -->
+                <width>10</width>
+                <height>30</height>
+                <label></label>
+                <visible>!IsEmpty(Control.GetLabel(44228))</visible>
+            </control>
+            
+
+            <control type="group">
+                <visible>!IsEmpty(Control.GetLabel(44228))</visible>
+                <visible>Container.content(tvshows) | Container.content(seasons)</visible>
+                <width>40</width>
+                <height>40</height>
                 <control type="image">
-					<height>36</height>
-                    <width>36</width>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture>flags/video.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<left>25</left>
-					<width>75</width>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$INFO[ListItem.VideoResolution]$INFO[Container(510).ListItem.VideoResolution]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>3</width>
-				<height>36</height>
-				<visible>IsEmpty(ListItem.VideoResolution) + IsEmpty(Container(510).ListItem.VideoResolution)</visible>
-			</control>
-			
-			<!--Video 3D-->
-			<control type="group">
-				<width>50</width>
-				<height>36</height>
-				<visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.) | Container(510).ListItem.IsStereoScopic | !IsEmpty(Container(510).ListItem.Property(Video3DFormat)) | substring(Container(510).ListItem.FileName,.3d.)</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<posx>-7</posx>
-					<texture>flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<posx>-7</posx>
-					<label>3D</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-			
-			<!--Video Codec-->
-			<control type="group">
-				<width>80</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoCodec) | !IsEmpty(Container(510).ListItem.VideoCodec)</visible>
-				<control type="image">
-				<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture>flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[VideoCodecVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-			
-			<!--Aspectratio-->
-			<control type="group">
-				<width>60</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoAspect) | !IsEmpty(Container(510).ListItem.VideoAspect)</visible>
-				<visible>!IsEmpty(ListItem.VideoCodec) | !IsEmpty(Container(510).ListItem.VideoCodec)</visible>
-				<control type="image">
-					<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[VideoAspectVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>2</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoResolution) | !IsEmpty(Container(510).ListItem.VideoResolution)</visible>
-			</control>
-			
-			<!--Audio Codec-->
-			<control type="group">
-				<width>150</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioCodec) | !IsEmpty(Container(510).ListItem.AudioCodec)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture>flags/audio.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<right>0</right>
-					<width>115</width>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[AudioCodecVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-				
-			<!--Audio Channels-->
-			<control type="group">
-				<width>40</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioChannels) | !IsEmpty(Container(510).ListItem.AudioChannels)</visible>
-				<visible>!IsEmpty(ListItem.AudioCodec) | !IsEmpty(Container(510).ListItem.AudioCodec)</visible>
-				<control type="image">
-					<posx>-6</posx>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[AudioChannelsVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>8</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioCodec) | !IsEmpty(Container(510).ListItem.AudioCodec)</visible>
-			</control>
-			
-			<!-- mpaa rating -->
-			<control type="group">
-				<width>170</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.MPAA) | !IsEmpty(Container(510).ListItem.MPAA)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture>flags/mpaa.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<width>135</width>
-					<right>0</right>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$VAR[RatingFlagVar]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>8</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.MPAA) | !IsEmpty(Container(510).ListItem.MPAA)</visible>
-			</control>
-			
-			<!-- star rating -->
-			<control type="group">
-				<width>110</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.Rating) | !IsEmpty(Container(510).ListItem.Rating)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<texture>flags/rating.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<width>80</width>
-					<right>0</right>
-					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-					<label>$INFO[ListItem.Rating]$INFO[Container(510).ListItem.Rating]</label>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>36</height>
-				</control>
-			</control>
-	
-			
+                    <width>40</width>
+                    <height>40</height>
+                    <posy>-5</posy>
+                    <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+                    <texture>dialogs/videoinfo/time-icon.png</texture>
+                </control>
+            </control>
+            <control type="label" id="44227">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$INFO[Window(Home).Property(NextAired.NextDate)]</label>
+                <visible>Container.content(tvshows) | Container.content(seasons)</visible>
+                <visible>!IsEmpty(Window(Home).Property(NextAired.NextDate))</visible>
+            </control>
+            <control type="label" id="44228">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$INFO[Window(Home).Property(NextAired.Status)]</label>
+                <visible>Container.content(tvshows) | Container.content(seasons)</visible>
+                <visible>IsEmpty(Window(Home).Property(NextAired.NextDate)) + !IsEmpty(Window(Home).Property(NextAired.Status))</visible>
+            </control>
+            
+            <control type="label">
+                <!-- whitespace -->
+                <width>auto</width>
+                <height>30</height>
+                <label>•  </label>
+                <visible>!IsEmpty(Control.GetLabel(44229))</visible>
+            </control>
+            
+            <!-- OSD label 3 -->
+            <control type="label" id="44229">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$VAR[OSDLabel3]</label>
+                <visible>Window.IsActive(fullscreenvideo)</visible>
+            </control>
+            
+            <!-- sets flags -->
+            <control type="grouplist">
+                <orientation>horizontal</orientation>
+                <visible>SubString(ListItem.Path,videodb://movies/sets/,left) + !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Count))</visible>
+                <width>1000</width>
+                <height>40</height>
+                
+                <control type="label">
+                    <font>Reg30</font>
+                    <width>auto</width>
+                    <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.UnwatchedCount)]/$INFO[Window(Home).Property(SkinHelper.MovieSet.Count)]  </label>
+                    <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <height>40</height>
+                </control>
+                
+                <!-- disc 1 -->
+                <control type="group">
+                    <width>40</width>
+                    <height>40</height>
+                    <control type="image">
+                        <width>40</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskMain_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),0)</visible>
+                    </control>
+                    <control type="image">
+                        <width>40</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskMain_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 2 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),1)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),1)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 3 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),2)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),2)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 4 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),3)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),3)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 5 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),4)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),4)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 6 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),5)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),5)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 7 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),6)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),6)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 8 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),7)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),7)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 9 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),8)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),8)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 10 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),9)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),9)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 11 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),10)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),10)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 12 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),11)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),11)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 13 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),12)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),12)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 14 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),13)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),13)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 15 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),14)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),14)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 16 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),15)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),15)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 17 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),16)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),16)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 18 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),17)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),17)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 19 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),18)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),18)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 20 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),19)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),19)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 21 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),20)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),20)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 22 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),21)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),21)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 23 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),22)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),22)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 24 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),23)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),23)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 25 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),24)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),24)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 26 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),25)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),25)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 27 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),26)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),26)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 28 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),27)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),27)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 29 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),28)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),28)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                <!-- disc 30 -->
+                <control type="group">
+                    <width>15</width>
+                    <height>40</height>
+                    <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),29)</visible>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_w.png</texture>
+                        <visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),29)</visible>
+                    </control>
+                    <control type="image">
+                        <posx>-45</posx>
+                        <width>60</width>
+                        <height>40</height>
+                        <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                        <texture>flags/discsets/DiskAdd_u.png</texture>
+                    </control>
+                </control>
+                
+                
+            </control>
+            
+            
+            
+            
 		</control>
     </include>
 	
-	
-	<include name="mediaflagsfooter">
-        <control type="grouplist">
-			<orientation>horizontal</orientation>
-			
-			<!--Video Type-->
-			<control type="group">
-				<width>110</width>
-				<height>36</height>
-				<visible>!IsEmpty(Control.GetLabel(44223)) + !Control.IsVisible(884) + [Container.Content(movies) | Container.Content(episodes)]</visible>
-				<control type="image">
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<posx>2</posx>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label" id="44223">
-					<font>flags</font>
-					<posx>2</posx>
-					<label>$VAR[VideoFileTypeVarFooter]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			
-			<!--Video Resolution-->
-			<control type="group">
-				<width>110</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoResolution)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/video.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<left>30</left>
-					<width>85</width>
-					<label>$INFO[ListItem.VideoResolution]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-					
-			<!--Video Codec-->
-			<control type="group">
-				<width>80</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoCodec)</visible>
-				<control type="image">
-				<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>$VAR[VideoCodecVar]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			
-			<!--Aspectratio-->
-			<control type="group">
-				<width>60</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoAspect)</visible>
-				<visible>!IsEmpty(ListItem.VideoCodec)</visible>
-				<control type="image">
-					<posx>-7</posx>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-7</posx>
-					<label>$VAR[VideoAspectVar]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>2</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.VideoResolution)</visible>
-			</control>
-			
-			<!--Audio Codec-->
-			<control type="group">
-				<width>150</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/audio.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<right>0</right>
-					<width>115</width>
-					<label>$VAR[AudioCodecVar]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-				
-			<!--Audio Channels-->
-			<control type="group">
-				<width>46</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioChannels)</visible>
-				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
-				<control type="image">
-					<posx>-6</posx>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="0,0,2,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<label>$VAR[AudioChannelsVar]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-			
-			<control type="group">
-				<width>8</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.AudioCodec)</visible>
-			</control>
-			
-			<!-- mpaa rating -->
-			<control type="group">
-				<width>170</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.MPAA)</visible>
-				<visible>!IsEmpty(ListItem.MPAA)</visible>
-				<control type="image">
-					<height>36</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture border="0,0,3,0">flags/flag_box.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-                <control type="image">
-					<height>36</height>
-                    <width>36</width>
-                    <left>3</left>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/mpaa.png</texture>
-                    <bordersize>3</bordersize>
-				</control>
-				<control type="label">
-					<font>flags</font>
-					<posx>-6</posx>
-					<width>135</width>
-					<right>0</right>
-					<label>$VAR[RatingFlagVar]</label>
-					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<height>34</height>
-				</control>
-			</control>
-
-			<control type="group">
-				<width>8</width>
-				<height>36</height>
-				<visible>!IsEmpty(ListItem.MPAA)</visible>
-			</control>
-			
-			<control type="label">
-				<visible>Container.Content(tvshows) | Container.Content(seasons)</visible>
-				<visible>!IsEmpty(Window(Home).Property(NextAired.NextDate))</visible>
-				<!--NextAired status for TVShows-->
-				<height>36</height>
-				<width>500</width>
-				<font>Reg30</font>
-				<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
-				<label>$LOCALIZE[31212]: $INFO[Window(Home).Property(NextAired.NextDate)]</label>
-			</control>
-			<control type="label">
-				<visible>Container.Content(tvshows) | Container.Content(seasons)</visible>
-				<visible>IsEmpty(Window(Home).Property(NextAired.NextDate)) + !IsEmpty(Window(Home).Property(NextAired.Status))</visible>
-				<!--NextAired status for TVShows-->
-				<height>36</height>
-				<width>500</width>
-				<font>Reg30</font>
-				<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
-				<label>$INFO[Window(Home).Property(NextAired.Status)]</label>
-			</control>
-		</control>
-    
-		<!-- sets flags -->
-		<control type="grouplist">
-			<orientation>horizontal</orientation>
-			<visible>SubString(ListItem.Path,videodb://movies/sets/,left) + !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Count))</visible>
-			<width>1000</width>
-			<height>40</height>
-			
-			<control type="label">
-				<font>Reg30</font>
-				<width>auto</width>
-				<label>$INFO[Window(Home).Property(SkinHelper.MovieSet.UnwatchedCount)]/$INFO[Window(Home).Property(SkinHelper.MovieSet.Count)]  </label>
-				<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
-				<align>left</align>
-				<aligny>center</aligny>
-				<height>40</height>
-			</control>
-			
-			<!-- disc 1 -->
-			<control type="group">
-				<width>40</width>
-				<height>40</height>
-				<control type="image">
-					<width>40</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskMain_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),0)</visible>
-				</control>
-				<control type="image">
-					<width>40</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskMain_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 2 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),1)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),1)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 3 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),2)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),2)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 4 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),3)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),3)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 5 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),4)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),4)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 6 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),5)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),5)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 7 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),6)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),6)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 8 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),7)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),7)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 9 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),8)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),8)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 10 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),9)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),9)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 11 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),10)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),10)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 12 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),11)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),11)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 13 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),12)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),12)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 14 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),13)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),13)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 15 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),14)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),14)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 16 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),15)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),15)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 17 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),16)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),16)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 18 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),17)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),17)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 19 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),18)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),18)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 20 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),19)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),19)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 21 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),20)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),20)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 22 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),21)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),21)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 23 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),22)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),22)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 24 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),23)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),23)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 25 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),24)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),24)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 26 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),25)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),25)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 27 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),26)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),26)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 28 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),27)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),27)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 29 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),28)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),28)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			<!-- disc 30 -->
-			<control type="group">
-				<width>15</width>
-				<height>40</height>
-				<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.Count),29)</visible>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_w.png</texture>
-					<visible>IntegerGreaterThan(Window(Home).Property(SkinHelper.MovieSet.WatchedCount),29)</visible>
-				</control>
-				<control type="image">
-					<posx>-45</posx>
-					<width>60</width>
-					<height>40</height>
-					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
-					<texture>flags/discsets/DiskAdd_u.png</texture>
-				</control>
-			</control>
-			
-			
-		</control>
-		
-	
-	</include>
-	
+    <variable name="mediaFlagsFontColor">
+        <value condition="substring(Window.Property(xmlfile),My,left)">$INFO[Skin.String(FooterTextColor)]</value>
+        <value condition="Window.IsActive(fullscreenvideo)">$INFO[Skin.String(OSDPrimaryTextColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsTextColor)]</value>
+    </variable>
 
 	<include name="MovieDetails">
         <!-- movie details -->
