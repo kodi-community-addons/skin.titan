@@ -12,49 +12,31 @@
 	<include name="HomeMenuWidget">
 		<!-- infopanel -->
 		<control type="group">
-			
-			<animation type="Conditional" condition="!Skin.String(GadgetRows, simplehor) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(AutoShowWidgets)">
+			<top>-1100</top>
+            <left>0</left>
+            <height>100%</height>
+            <width>100%</width>
+            <visible>!Skin.String(widgetstyle, single box)</visible>
+            <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
+            <animation type="Visible">
                 <effect type="slide" start="0,0" end="0,1000" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-			<animation type="Conditional" condition="!Skin.String(GadgetRows, simplehor) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + Skin.HasSetting(AutoShowWidgets)">
-                <effect type="slide" start="0,0" end="0,420" time="400" tween="cubic" easing="inout" delay="0"/>
+            <animation type="Hidden">
+                <effect type="slide" start="0,1000" end="0,0" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-			<animation type="Conditional" condition="!Skin.String(GadgetRows, simplehor) + Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
-                 <effect type="slide" start="0,0" end="0,580" time="400" tween="cubic" easing="inout" delay="0"/>
-			</animation>
-            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + !Skin.String(GadgetRows, simplehor) + Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
-                 <effect type="slide" start="0,0" end="0,230" time="400" tween="cubic" easing="inout" delay="0"/>
-			</animation>
-            <animation type="Conditional" condition="Skin.String(GadgetRows, 2) + Skin.String(widgetstyle, single box) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + Skin.HasSetting(AutoShowWidgets)">
-                <effect type="slide" start="0,0" end="0,-235" time="400" tween="cubic" easing="inout" delay="0"/>
-            </animation>
-            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(AutoShowWidgets)">
-                <effect type="slide" start="0,0" end="0,235" time="500" tween="cubic" easing="inout" delay="0"/>
-            </animation>
-
-			
-			<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget))</visible>
-
-				<animation time="400" effect="fade">Visible</animation>
-				<animation time="200" effect="fade">Hidden</animation>
-				
-			<height>560</height>
-			<posy>-1100</posy>
-			
+            
 			<control type="image">
 				<posx>0</posx>
-				<posy>-120</posy>
+				<posy>-100</posy>
 				<width>100%</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 				<aspectratio>stretch</aspectratio>
-				<height>1032</height>
+				<height>970</height>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
                 <visible>!Skin.String(widgetstyle, single box)</visible>
-				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-				<include>animation_fade_visible_hidden</include>
 				<animation type="Conditional" condition="Skin.String(widgetstyle, poster)">
-                 <effect type="slide" start="0,0" end="0,120" time="0" delay="0"/>
+                 <effect type="slide" start="0,0" end="0,100" time="0" delay="0"/>
 			</animation>
             </control>
 
@@ -69,12 +51,11 @@
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <label>$VAR[HomeMenuWidgetInfoLabel]</label>
             <visible>!Skin.String(widgetstyle, single box)</visible>
-			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Container(300).ListItem.Property(widget),weather)">Conditional</animation>
         </control>
 		<control type="fadelabel">
             <posx>0</posx>
-            <bottom>-610</bottom>
+            <bottom>0</bottom>
             <width>100%</width>
             <height>100</height>
             <font>Bold45</font>
@@ -86,42 +67,23 @@
 			<scrollout>true</scrollout>
 			<pauseatend>0</pauseatend>
 			<visible>IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(Container(510).ListItem.Art(tvshow.clearlogo)) + IsEmpty(Container(510).ListItem.Art(clearlogo)) + !Skin.HasSetting(EnableTouchSupport)</visible>
-			<visible>ControlGroup(77777).HasFocus</visible>
 			<animation time="400" effect="fade" delay="1000">Visible</animation>
 			<animation time="0" effect="fade" delay="0">Hidden</animation>
         </control>
 		
 		
-		<control type="grouplist">
-			<width>1500</width>
-			<posx>405</posx>
-			<posy>195</posy>
-			<height>367</height>
-			<orientation>vertical</orientation>
-            <visible>!Skin.String(widgetstyle, single box)</visible>
-			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-			<control type="textbox">
-				<width>1455</width>
-				<height max="294">auto</height>
-				<label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
-				<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-				<align>justify</align>
-				<font>Light28</font>
-				<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Container(300).ListItem.Property(widget),weather)">Conditional</animation>
-			</control>
-			<control type="label">
-				<height>25</height>
-				<label></label>
-			</control>
-			<control type="group">
-				<height>60</height>
-				<posx>405</posx>
-				<posy>195</posy>
-				<include>mediaflags</include>
-				<visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
-			</control>
-		</control>
+		<control type="textbox">
+            <width>1455</width>
+            <posx>405</posx>
+            <posy>195</posy>
+            <height max="370">auto</height>
+            <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+            <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+            <align>justify</align>
+            <font>Light28</font>
+            <animation effect="slide" end="-355,0" time="0" condition="StringCompare(Container(300).ListItem.Property(widget),weather)">Conditional</animation>
+        </control>
 		
 		
 		<control type="image">
@@ -132,10 +94,8 @@
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
 			<bordersize>20</bordersize>
-            <visible>!Skin.String(widgetstyle, single box)</visible>
 			<texture background="true" diffuse="diffuse/poster.png" fallback="colors/color_keyboard.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
-			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
 			<left>30</left>
@@ -146,7 +106,6 @@
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<texture background="true" fallback="DefaultMusicSongs.png" diffuse="diffuse/music_cover.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
-			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
 		<control type="image">
 			<right>30</right>
@@ -157,125 +116,101 @@
 			<texture fallback="DefaultAddonWeather.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<visible>StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
-			<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 		</control>
-		<!-- Widget-->
-		<control type="group" id="77777">
-			<height>440</height>
-			<posx>15</posx>
-			<posy>600</posy>
-			<defaultcontrol always="true">510</defaultcontrol>
-			<animation effect="slide" end="0,25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
 
-			<!--widget Arrow DOWN-->
-			<control type="group">
-				<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-				<visible>ControlGroup(77777).HasFocus + !skin.hastheme(classic) + !Skin.String(widgetstyle, poster)</visible>
-				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                <visible>!Skin.String(widgetstyle, single box)</visible>
-				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
-				<control type="button">
-					<!--widget Arrow DOWN-->
-					<posx>872</posx>
-					<posy>311</posy>
-					<width>149</width>
-					<height>30</height>
-					<onclick>ClearProperty(ShowWidget, Home)</onclick>
-					<texturefocus>-</texturefocus>
-					<texturenofocus>-</texturenofocus>
-				</control>
-				<control type="image">
-					<posx>872</posx>
-					<posy>311</posy>
-					<width>149</width>
-					<height>30</height>
-					<texture colordiffuse="$INFO[Skin.String(ViewDetailsPanelColor)]">colors/color_$INFO[Skin.String(ViewDetailsTextColor)].png</texture>
-				</control>
-				<control type="image">
-					<posx>872</posx>
-					<posy>311</posy>
-					<width>149</width>
-					<height>34</height>
-					<texture>info/arrowright.png</texture>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-					<aspectratio>keep</aspectratio>
-					<animation effect="rotate" end="-90" center="auto" time="0" loop="false" condition="true">Conditional</animation>
-				</control>
-			</control>
-			
-			<control type="button">
-				<!--widget Arrow DOWN classic-->
-				<animation effect="fade" start="0" end="100" delay="1600" time="1600" pulse="true">Visible</animation>
-				<posx>872</posx>
-				<posy>301</posy>
-				<width>149</width>
-				<height>30</height>
-				<onclick>ClearProperty(ShowWidget, Home)</onclick>
-                <visible>!Skin.String(widgetstyle, single box)</visible>
-				<texturefocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">home/basichome_down.png</texturefocus>
-				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">home/basichome_down.png</texturenofocus>
-				<visible>ControlGroup(77777).HasFocus + skin.hastheme(classic)</visible>
-				<visible>!Skin.HasSetting(HideWidgetPanelBackground) + !Skin.String(widgetstyle, poster)</visible>
-			</control>
+		<!-- clearlogo -->
+        <control type="image">
+            <posx>755</posx>
+            <bottom>-90</bottom>
+            <width>400</width>
+            <height>160</height>
+            <aspectratio align="center" aligny="bottom">keep</aspectratio>
+            <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+            <visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <animation time="400" effect="fade" delay="1000">Visible</animation>
+            <animation time="0" effect="fade" delay="0">Hidden</animation>
+            <animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+            <visible>!Skin.String(widgetstyle, poster)</visible>
+        </control>
+        <control type="image">
+            <posx>755</posx>
+            <bottom>-90</bottom>
+            <width>400</width>
+            <height>110</height>
+            <aspectratio align="center" aligny="bottom">keep</aspectratio>
+            <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+            <visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <animation time="400" effect="fade" delay="1000">Visible</animation>
+            <animation time="0" effect="fade" delay="0">Hidden</animation>
+            <animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+            <visible>Skin.String(widgetstyle, poster)</visible>
+        </control>
+        
+        <!-- flags -->
+        <control type="group">
+            <height>60</height>
+            <posx>405</posx>
+            <posy>535</posy>
+            <include>mediaflags</include>
+            <visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
+        </control>
+        <!--change widget button -->
+        <control type="group">
+            <right>60</right>
+            <width>800</width>
+            <height>60</height>
+            <top>530</top>
+            <include condition="!Skin.String(widgetstyle, single box)">changeWidgetButton</include>
+        </control>
+            
 
-			
-			<!-- clearlogo -->
-			<control type="image">
-				<posx>755</posx>
-				<posy>400</posy>
-				<width>400</width>
-				<height>160</height>
-				<aspectratio align="center" aligny="bottom">keep</aspectratio>
-				<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-				<visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
-				<animation time="400" effect="fade" delay="1000">Visible</animation>
-				<animation time="0" effect="fade" delay="0">Hidden</animation>
-				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-				<visible>!Skin.String(widgetstyle, poster)</visible>
-                <visible>!Skin.String(widgetstyle, single box)</visible>
-			</control>
-			<control type="image">
-				<posx>755</posx>
-				<posy>450</posy>
-				<width>400</width>
-				<height>110</height>
-				<aspectratio align="center" aligny="bottom">keep</aspectratio>
-				<texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-				<visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
-				<animation time="400" effect="fade" delay="1000">Visible</animation>
-				<animation time="0" effect="fade" delay="0">Hidden</animation>
-				<animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-				<visible>Skin.String(widgetstyle, poster)</visible>
-                <visible>!Skin.String(widgetstyle, single box)</visible>
-			</control>
-			
-			<!--change widget button -->
-			<control type="group">
-				<right>60</right>
-				<width>800</width>
-				<height>60</height>
-				<include>animation_fade_visible_hidden</include>
-                <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)</visible>
-				<include condition="!Skin.String(widgetstyle, single box)">changeWidgetButton</include>
-			</control>
+        
+    </control>    
+        
+        <!-- widgets -->
+        <control type="group" id="77777">
+            <defaultcontrol always="true">510</defaultcontrol>
+            <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)]">
+                <effect type="slide" start="0,0" end="0,-1000" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)]">
+                <effect type="slide" start="0,-1000" end="0,0" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="!Skin.String(HomeLayout, simplehor) + Skin.HasSetting(AutoShowWidgets) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)]">
+                <effect type="slide" start="0,0" end="0,-350" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="!Skin.String(widgetstyle, single box) + Skin.String(HomeLayout, simplehor) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)] + Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)">
+                <effect type="slide" start="0,0" end="0,180" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="!Skin.String(widgetstyle, single box) + Skin.String(HomeLayout, simplehor) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)] + ![Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
+                <effect type="slide" start="0,0" end="0,50" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            
+            <animation type="Conditional" condition="Skin.String(HomeLayout, 2) + Skin.String(widgetstyle, single box) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)] + ![Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
+                <effect type="slide" start="0,0" end="0,-280" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            
+            <animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + Skin.String(widgetstyle, single box) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)] + [Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
+                <effect type="slide" start="0,0" end="0,-80" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + Skin.String(widgetstyle, single box) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)] + ![Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
+                <effect type="slide" start="0,0" end="0,-230" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
 
-			<include>skinshortcuts-template-widget</include>
-			<include>skinshortcuts-template-widget.1</include>
+            <include>skinshortcuts-template-widget</include>
+            <include>skinshortcuts-template-widget.1</include>
             
             <control type="group">
-                <posy>-55</posy>
+                <posy>650</posy>
                 <right>55</right>
                 <width>940</width>
                 <height>341</height>
                 <include condition="Skin.String(widgetstyle, single box)">widgetpanel_singlebox</include>
             </control>
+        </control>
 
-		</control>
-	</control>
-</include>
+    </include>
 
-	
-	
 	<include name="SystemInfoWidget">
 		<!--systeminfo widgets -->
 		<item>
@@ -589,7 +524,6 @@
 		<value>ListItem.Thumb</value>
     </variable>
 	
-
 	<include name="widget_layout_vertical_poster">
         <bottom>90</bottom>
         <right>40</right>
@@ -624,15 +558,15 @@
 	</include>
 	
 	<include name="widget_layout_horizontal_poster">
-        <posy>55</posy>
-        <posx>20</posx>
+        <posx>40</posx>
+		<posy>480</posy>
 		<width>1830</width>
 		<height>380</height>
 		<itemgap>5</itemgap>
 		<orientation>horizontal</orientation>
         <ondown>300</ondown>
         <onup>511</onup>
-		<animation type="Conditional" condition="Skin.String(GadgetRows, simplehor) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
+		<animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)]">
 			<effect type="slide" start="0,0" end="0,-160" time="300" tween="cubic" easing="inout" delay="0"/>
 		</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,6)">Conditional</animation>
@@ -641,14 +575,14 @@
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,3)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
-		<animation effect="slide" end="0,30" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(GadgetRows, simplehor)">Conditional</animation>
-		<animation effect="slide" end="0,110" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(GadgetRows, simplehor)">Conditional</animation>
+		<animation effect="slide" end="0,30" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(HomeLayout, simplehor)">Conditional</animation>
+		<animation effect="slide" end="0,110" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(HomeLayout, simplehor)">Conditional</animation>
         <include>widget_layout</include>
 	</include>
     
     <include name="widget_layout_horizontal_landscape">
-		<posx>30</posx>
-		<posy>55</posy>
+		<posx>50</posx>
+		<posy>500</posy>
 		<width>1830</width>
 		<height>245</height>
         <ondown>300</ondown>
@@ -779,20 +713,18 @@
             
         </control>
     </include>
-	
-    
-    
+	    
 	<include name="widget_layout">
 		<ondown>ClearProperty(ShowWidget, Home)</ondown>
 		<onback>300</onback>
 		<onback>ClearProperty(ShowWidget, Home)</onback>
 		<orientation>horizontal</orientation>
-		<animation effect="slide" end="0,10" time="0" condition="skin.hastheme(classic) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
-		<animation effect="slide" end="0,-30" time="0" condition="Skin.String(GadgetRows, simplehor) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
+<!-- 		<animation effect="slide" end="0,10" time="0" condition="skin.hastheme(classic) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
+		<animation effect="slide" end="0,-30" time="0" condition="Skin.String(HomeLayout, simplehor) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
 		
-		<animation type="Conditional" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(GadgetRows, simplever)">
-			<effect type="slide" start="0,0" end="0,20" time="0" tween="cubic" easing="inout" delay="0"/>
-		</animation>
+		<animation type="Conditional" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(HomeLayout, simplever)">
+			<effect type="slide" start="0,0" end="0,40" time="0" tween="cubic" easing="inout" delay="0"/>
+		</animation> -->
 		
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
 		<itemlayout width="370" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
@@ -810,7 +742,7 @@
 		</focusedlayout>
 		<itemlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
           <control type="group">
-		  <animation effect="zoom" end="93" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+		  <animation effect="zoom" end="93" time="0" condition="true">Conditional</animation>
 		  <posx>-8</posx>
 			  <control type="image">
 				<include>BigPanelSquareDimensions</include>
@@ -836,7 +768,7 @@
         </itemlayout>
         <focusedlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
           <control type="group">
-		  <animation effect="zoom" end="93" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+		  <animation effect="zoom" end="93" time="0" condition="true">Conditional</animation>
 		  <posx>-8</posx>
 			  <control type="image">
 				<include>BigPanelSquareDimensions</include>

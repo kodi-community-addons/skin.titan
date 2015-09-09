@@ -16,9 +16,36 @@ def fullMigration():
     # applied only once
     migrateColorSettings()
     migrateColorThemes()
+    migrateOtherSkinSettings()
     migrateSkinHelperSettings()
     migrateSkinShortcuts()
 
+def getMigratedSkinSettings():
+    settingsList = []
+    settingsList.append(("ColorThemeTexture","BackgroundOverlayTexture"))
+    settingsList.append(("CustomColorThemeTexture","CustomBackgroundOverlayTexture"))
+    settingsList.append(("ColorTheme","BackgroundOverlayColor"))
+    settingsList.append(("ColorTheme.name","BackgroundOverlayColor.name"))
+    settingsList.append(("GadgetRows","HomeLayout"))
+    
+    return settingsList
+    
+def getMigratedSkinSetting(settingname):
+    #check the settingname in the list of changed settings and return the new version
+    settingsList = getMigratedSkinSettings()
+    for setting in settingsList:
+        if setting[0] == settingname:
+            settingname = setting[1]
+    return settingname
+
+def migrateOtherSkinSettings():
+    settingsList = getMigratedSkinSettings()
+    for setting in settingsList:
+        currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %setting[0])
+        if currentvalue:
+            xbmc.executebuiltin("Skin.SetString(%s,%s)" %(setting[1],currentvalue))
+            xbmc.executebuiltin("Skin.Reset(%s)" %setting[0])
+    
 def migrateSkinHelperSettings():
     #migrate string settings
     settings = ["ShowInfoAtPlaybackStart","RandomFanartDelay","SpinnerTexture","SpinnerTexturePath","ForcedViews.movies","ForcedViews.tvshows","ForcedViews.seasons","ForcedViews.episodes","ForcedViews.sets","ForcedViews.setmovies"]
@@ -151,22 +178,27 @@ def migrateColorSettings():
                         colorname = "Custom " + colorvalue
                     xbmc.executebuiltin("Skin.SetString(%s,%s)" %(settingname,colorvalue))
                     xbmc.executebuiltin("Skin.SetString(%s.name,%s)" %(settingname,colorname))
-                        
+                    if colorvalue and not colorvalue == "None":
+                        colorbase = "ff" + colorvalue[2:]
+                        xbmc.executebuiltin("Skin.SetString(%s.base,%s)" %(settingname,colorbase))
+                    else: 
+                        xbmc.executebuiltin("Skin.Reset(%s.base)" %settingname)
+                                           
 def migrateColorThemes():
     #migrates any colorthemes setup by the user
     skin = xbmcaddon.Addon(id=xbmc.getSkinDir())
     userThemesDir = xbmc.translatePath(skin.getAddonInfo('profile')).decode("utf-8")
     userThemesPath = os.path.join(userThemesDir,"themes") + os.sep
-    settingsList = []
     allColors = getAllColors()
     dirs, files = xbmcvfs.listdir(userThemesPath)
     for file in files:
         if file.endswith(".theme"):
+            settingsList = []
             f = open(os.path.join(userThemesPath,file),"r")
             importstring = json.load(f)
             f.close()
             for count, skinsetting in enumerate(importstring):
-                if skinsetting[0] == "DESCRIPTION" or skinsetting[0] == "THEMENAME" or skinsetting[0] == "SKINTHEME":
+                if skinsetting[0] == "DESCRIPTION" or skinsetting[0] == "THEMENAME" or skinsetting[0] == "SKINFONT" or skinsetting[0] == "SKINCOLORS" or skinsetting[0] == "SKINTHEME":
                     settingsList.append(skinsetting)
                 elif not "opacity" in skinsetting[1].lower() and not ".helix" in skinsetting[1].lower():
                     settingtype = skinsetting[0]
@@ -216,7 +248,8 @@ def migrateColorThemes():
                                     xbmc.log(str(e))
                         if matchfound == False and not colorvalue == "None":
                             colorname = "Custom " + colorvalue
-                    settingname = settingname.replace("TITANSKIN.","")    
+                    settingname = settingname.replace("TITANSKIN.","")
+                    settingname = getMigratedSkinSetting(settingname)
                     if settingname.lower().endswith("color") or settingname.lower() == "colortheme":
                         settingsList.append( (settingtype, settingname, colorvalue) )
                         settingsList.append( (settingtype, settingname+".name", colorname) )

@@ -2,10 +2,10 @@
 	
 	<include name="HomeLayoutFixedFocus">
 		<!-- home menu Widgets -->
-		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">HomeMenuWidget</include>
+		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3)">HomeMenuWidget</include>
 		
 		<control type="wraplist" id="300">
-			<visible>!Skin.String(GadgetRows, enhanced)</visible>
+			<visible>!Skin.String(HomeLayout, enhanced)</visible>
             <posx>38</posx>
             <width>1845</width>
             <include>normalHomePanelLayout</include>
@@ -20,10 +20,10 @@
 	<include name="HomeLayoutNormal">
 	
 		<!-- home menu Widgets -->
-		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(GadgetRows, 3)">HomeMenuWidget</include>
+		<include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3)">HomeMenuWidget</include>
 		
 		<control type="panel" id="300">
-			<visible>!Skin.String(GadgetRows, enhanced)</visible>
+			<visible>!Skin.String(HomeLayout, enhanced)</visible>
             <posx>38</posx>
             <width>1845</width>
             <include>normalHomePanelLayout</include>
@@ -44,14 +44,14 @@
 	</include>
 	
 	<include name="normalHomePanelLayout">
-		<include condition="Skin.String(GadgetRows, 1) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget1Row</include>
-		<include condition="Skin.String(GadgetRows, 2) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget2Row</include>
-		<include condition="!Skin.String(GadgetRows)">Gadget2Row</include>
-		<include condition="Skin.String(GadgetRows, 3) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget3Row</include>
+		<include condition="Skin.String(HomeLayout, 1) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget1Row</include>
+		<include condition="Skin.String(HomeLayout, 2) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget2Row</include>
+		<include condition="!Skin.String(HomeLayout)">Gadget2Row</include>
+		<include condition="Skin.String(HomeLayout, 3) + !Skin.HasSetting(UseSmallHomeTiles)">Gadget3Row</include>
 		
-		<include condition="Skin.String(GadgetRows, 1) + Skin.HasSetting(UseSmallHomeTiles)">Gadget1RowSmall</include>
-		<include condition="Skin.String(GadgetRows, 2) + Skin.HasSetting(UseSmallHomeTiles)">Gadget2RowSmall</include>
-		<include condition="Skin.String(GadgetRows, 3) + Skin.HasSetting(UseSmallHomeTiles)">Gadget3RowSmall</include>
+		<include condition="Skin.String(HomeLayout, 1) + Skin.HasSetting(UseSmallHomeTiles)">Gadget1RowSmall</include>
+		<include condition="Skin.String(HomeLayout, 2) + Skin.HasSetting(UseSmallHomeTiles)">Gadget2RowSmall</include>
+		<include condition="Skin.String(HomeLayout, 3) + Skin.HasSetting(UseSmallHomeTiles)">Gadget3RowSmall</include>
 		
 		<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
 			<effect type="slide" start="0,-0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
@@ -78,8 +78,8 @@
 		<onleft></onleft>
 		<onright></onright>
 		
-		<include condition="Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2)">HomeLayoutOrientationHorizontal</include>
-		<include condition="Skin.String(GadgetRows, 3)">HomeLayoutOrientationVertical</include>
+		<include condition="Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2)">HomeLayoutOrientationHorizontal</include>
+		<include condition="Skin.String(HomeLayout, 3)">HomeLayoutOrientationVertical</include>
 
 		<pagecontrol>60</pagecontrol>
 
@@ -136,8 +136,8 @@
 					<align>center</align>
 					<info>ListItem.Label</info>
 					<font>Reg45</font>
-					
 					<shadowcolor>black</shadowcolor>
+                    <textcolor>ddffffff</textcolor>
 					<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
 				</control>
 				<control type="label">
@@ -162,7 +162,7 @@
 				<!--widget Arrow UP-->
 				<control type="group">
 					<!-- show arrow up button if widget available -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + !IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
+					<visible>!Skin.HasSetting(HideHomeTileIndicators) + !IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(HomeLayout, 1)]</visible>
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
 					<control type="image">
 						<posx>236</posx>
@@ -196,7 +196,7 @@
 				<!--widget Arrow DOWN-->
 				<control type="group">
 					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
+					<visible>!Skin.HasSetting(HideHomeTileIndicators) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(HomeLayout, 1)] | [!IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
 					<control type="image">
 						<posx>236</posx>
@@ -309,7 +309,7 @@
 				<!--widget Arrow UP-->
 				<control type="group">
 					<!-- show arrow up button if widget available -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + !IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(GadgetRows, 1)]</visible>
+					<visible>!Skin.HasSetting(HideHomeTileIndicators) + !IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4)]] | Skin.String(HomeLayout, 1)]</visible>
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
 					<control type="image">
 						<posx>94</posx>
@@ -343,7 +343,7 @@
 				<!--widget Arrow DOWN-->
 				<control type="group">
 					<!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
-					<visible>!Skin.HasSetting(HideHomeTileIndicators) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(GadgetRows, 1)] | [!IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(GadgetRows, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
+					<visible>!Skin.HasSetting(HideHomeTileIndicators) + [[IntegerGreaterThan(Container(4444).NumItems,0) + Skin.String(HomeLayout, 1)] | [!IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5)]]]</visible>
 					<animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
 					<control type="image">
 						<posx>94</posx>

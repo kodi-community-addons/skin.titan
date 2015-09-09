@@ -8,53 +8,49 @@
 			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
 			<include>DimensionsFullscreen</include>
 			<texture>$VAR[ColorOverlayTexture]</texture>
-			<colordiffuse>$VAR[ColorOverlayDiffuse]</colordiffuse>
-			<visible>!Control.IsVisible(507)</visible>
-			<visible>!Skin.String(ColorTheme, None)</visible>
-            <visible>![Skin.String(widgetstyle, single box) + Control.HasFocus(510)]</visible>
-		</control>
-		<!--Dialog Overlay without colordiffuse-->
-        <control type="image">
-			<visible>[Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]</visible>
-			<include>DimensionsFullscreen</include>
-			<texture>$VAR[ColorOverlayTexture]</texture>
-			<visible>Skin.String(ColorTheme, None)</visible>
+			<include condition="Skin.String(BackgroundOverlayColor) + !Skin.String(BackgroundOverlayColor,None)">bgOverlayDiffuse</include>
 			<visible>!Control.IsVisible(507)</visible>
             <visible>![Skin.String(widgetstyle, single box) + Control.HasFocus(510)]</visible>
 		</control>
     </include>
 	
 	<variable name="ColorOverlayTexture">
-		<value condition="!Skin.String(ColorThemeTexture, Custom)">special://skin/extras/bgoverlays/$INFO[Skin.String(ColorThemeTexture)].png</value>
-		<value condition="Skin.String(ColorThemeTexture, Custom)">$INFO[Skin.String(CustomColorThemeTexture)]</value>
+		<value condition="!Skin.String(BackgroundOverlayTexture, Custom)">special://skin/extras/bgoverlays/$INFO[Skin.String(BackgroundOverlayTexture)].png</value>
+		<value condition="Skin.String(BackgroundOverlayTexture, Custom)">$INFO[Skin.String(CustomBackgroundOverlayTexture)]</value>
    </variable>
    
-   <variable name="ColorOverlayDiffuse">
-		<value condition="Skin.String(ColorTheme, None) | Skin.String(ColorTheme, -)">-</value>
-		<value>$INFO[Skin.String(ColorTheme)]</value>
-    </variable>
+    
+    <include name="bgColorDiffuse">
+        <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor)]</colordiffuse>
+    </include>
+    
+    <include name="bgOverlayDiffuse">
+        <colordiffuse>$INFO[Skin.String(BackgroundOverlayColor)]</colordiffuse>
+    </include>
 	
-	<include name="DialogOverlayExtra">
+    
+    <include name="DialogOverlayExtra">
 		<!-- dim screen overlay used in certain dialogs -->
 		<control type="image">
 			<include>DimensionsFullscreen</include>
 			<texture>special://skin/extras/bgoverlays/Default.png</texture>
 			<colordiffuse>aawhite</colordiffuse>
+            <visible>!Skin.String(BackgroundDiffuseColor.base)</visible>
 		</control>
 		<control type="image">
 			<include>DimensionsFullscreen</include>
 			<texture>special://skin/extras/bgoverlays/Default.png</texture>
 			<colordiffuse>aa0f0f0f</colordiffuse>
-            <visible>!Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
+            <visible>!Skin.String(BackgroundDiffuseColor.base)</visible>
 		</control>
-        <control type="image">
-			<include>DimensionsFullscreen</include>
-			<texture>special://skin/extras/bgoverlays/Default.png</texture>
-			<colordiffuse>ddwhite</colordiffuse>
-            <visible>Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
-		</control>
+        <control type="image" description="panel behind bg">
+            <include>DimensionsFullscreen</include>
+            <texture>colors/color_white.png</texture>
+            <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
+            <animation effect="fade" start="100" end="95" time="150" condition="true">Conditional</animation>
+            <visible>Skin.String(BackgroundDiffuseColor.base)</visible>
+        </control>
     </include>
-	
 	
 	<include name="fanartSpeed5">
 		<timeperimage>5000</timeperimage>
@@ -85,13 +81,15 @@
 		<!-- extra fanart background -->
         
         <!-- background panel -->
-        <control type="image" description="Background">
+        <control type="image" description="panel behind bg">
             <include>DimensionsFullscreen</include>
-            <texture colordiffuse="$VAR[backgroundDiffuse]">colors/color_white.png</texture>
-            <visible>Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
+            <texture>colors/color_white.png</texture>
+            <colordiffuse>$INFO[Skin.String(BackgroundOverlayColor.base)]</colordiffuse>
+            <visible>Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)</visible>
+            <visible>Control.IsVisible(99005) + !IsEmpty(Control.GetLabel(99005))</visible>
         </control>
         
-        <control type="multiimage">
+        <control type="multiimage" id="99005">
             <include>DimensionsFullscreen</include>
             <imagepath background="true">$VAR[extraFanartBackground]</imagepath>
             <aspectratio>scale</aspectratio>
@@ -100,9 +98,10 @@
 			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
 			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
 			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
-            <colordiffuse>$VAR[backgroundDiffuseVar]</colordiffuse>
+            <include condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">bgColorDiffuse</include>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
+            <visible>!IsEmpty(Control.GetLabel(99005))</visible>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<!-- disabled fanart per view -->
@@ -132,28 +131,16 @@
         </control>
 	</include>
 
-	
-    <variable name="backgroundDiffuseVar">
-        <!-- theme specific diffuse -->
-        <value condition="Control.IsVisible(507)">ffffffff</value>
-        <value condition="Skin.String(SkinHelper.LastColorTheme, Default Modern white) + [Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]">2Fffffff</value>
-        <value>ffffffff</value>
-    </variable>
-    
-    <include name="backgroundDiffuseWhite">
-        <colordiffuse>$VAR[backgroundDiffuseVar]</colordiffuse>
-    </include>
-    
-
     
 	<!--Global Background -->
     <include name="GlobalBackground">
         
         <!-- background panel -->
-        <control type="image" description="Background">
+        <control type="image" description="panel behind bg">
             <include>DimensionsFullscreen</include>
-            <texture colordiffuse="$VAR[backgroundDiffuseVar]">colors/color_white.png</texture>
-            
+            <texture>colors/color_white.png</texture>
+            <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
+            <visible>Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)</visible>
         </control>
 			
 		<!-- multi image background -->
@@ -167,7 +154,7 @@
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 20)">fanartSpeed20</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 30)">fanartSpeed30</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 60)">fanartSpeed60</include>
-            <include condition="Skin.String(SkinHelper.LastColorTheme, Default Modern white)">backgroundDiffuseWhite</include>
+            <animation effect="fade" start="100" end="30" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>

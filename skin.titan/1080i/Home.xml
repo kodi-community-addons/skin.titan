@@ -3,14 +3,14 @@
 <window id="0">
     <defaultcontrol always="true">300</defaultcontrol>
     <allowoverlay>yes</allowoverlay>
-	<onload condition="!Skin.String(GadgetRows, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
-	<onload condition="Skin.String(GadgetRows, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onload>
+	<onload condition="!Skin.String(HomeLayout, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onload>
+	<onload condition="Skin.String(HomeLayout, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onload>
     <include>defaultskinsettings</include>
 	<onload>300</onload>
 	<onload condition="!SubString(Window(Home).Property(HomeLoaded),loaded)">SetProperty(HomeLoaded,loaded,Home)</onload>
-	<onload condition="Skin.String(GadgetRows, enhanced)">AlarmClock(SpotlightMove,Control.Move(1508,1),00:08,silent,loop)</onload>
-    <onload condition="!Skin.String(GadgetRows, enhanced) + Skin.String(widgetstyle, single box)">AlarmClock(SpotlightMove,Control.Move(510,1),00:30,silent,loop)</onload>
-	<onload condition="Skin.String(GadgetRows, netflix)">AlarmClock(SpotlightMove,Control.Move(510,1),00:30,silent,loop)</onload>
+	<onload condition="Skin.String(HomeLayout, enhanced)">AlarmClock(SpotlightMove,Control.Move(1508,1),00:08,silent,loop)</onload>
+    <onload condition="!Skin.String(HomeLayout, enhanced) + Skin.String(widgetstyle, single box)">AlarmClock(SpotlightMove,Control.Move(510,1),00:30,silent,loop)</onload>
+	<onload condition="Skin.String(HomeLayout, netflix)">AlarmClock(SpotlightMove,Control.Move(510,1),00:30,silent,loop)</onload>
 	<onunload>ClearProperty(ShowViewSubMenu)</onunload>
 	<onunload>CancelAlarm(SpotlightMove,true)</onunload>
 	<onunload>ClearProperty(submenu)</onunload>
@@ -40,12 +40,12 @@
 		
 		<!--Footer-->
 		<control type="group">
-			<include condition="[!skin.hassetting(nofooterbar) + !Skin.String(GadgetRows, enhanced) + !Skin.String(GadgetRows, simplever) + !Skin.String(GadgetRows, netflix)] + ![Skin.String(GadgetRows, simplehor) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)]">Footer</include>
+			<include condition="[!skin.hassetting(nofooterbar) + !Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, simplever) + !Skin.String(HomeLayout, netflix)] + ![Skin.String(HomeLayout, simplehor) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(EnableTouchSupport)]">Footer</include>
 		</control>
 		
 		<!--Time-->
 		<control type="group">
-			<animation effect="slide" end="-20" time="0" condition="Skin.HasSetting(HideWidgetPanelBackground) + Skin.String(GadgetRows, enhanced)">Conditional</animation>
+			<animation effect="slide" end="-20" time="0" condition="Skin.HasSetting(HideWidgetPanelBackground) + Skin.String(HomeLayout, enhanced)">Conditional</animation>
 			<include>TimeInfo</include>
 		</control>
 	
@@ -64,7 +64,7 @@
 				<colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
 				<texture>home/kodi_logo_light.png</texture>
 				<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
-				<visible>!Skin.String(GadgetRows, simplever)</visible>
+				<visible>!Skin.String(HomeLayout, simplever)</visible>
 				<visible>!Skin.HasSetting(ShowProfile) + !Skin.HasSetting(WeatherOnHome)</visible>
 				<visible>!Skin.String(CustomLogoImage)</visible>
 			</control>
@@ -77,19 +77,19 @@
 				<colordiffuse></colordiffuse>
 				<texture>$INFO[Skin.String(CustomLogoImage)]</texture>
 				<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
-				<visible>!Skin.String(GadgetRows, simplever)</visible>
+				<visible>!Skin.String(HomeLayout, simplever)</visible>
 				<visible>!Skin.HasSetting(ShowProfile) + !Skin.HasSetting(WeatherOnHome)</visible>
 				<visible>Skin.String(CustomLogoImage)</visible>
 			</control>
 			
 			<!--Home tiles List 300-->
-			<include condition="[!Skin.HasSetting(UseFixedHomeFocus) + Skin.String(GadgetRows, 1)] | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)">HomeLayoutNormal</include>
-			<include condition="Skin.HasSetting(UseFixedHomeFocus) + Skin.String(GadgetRows, 1)">HomeLayoutFixedFocus</include>
+			<include condition="[!Skin.HasSetting(UseFixedHomeFocus) + Skin.String(HomeLayout, 1)] | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)">HomeLayoutNormal</include>
+			<include condition="Skin.HasSetting(UseFixedHomeFocus) + Skin.String(HomeLayout, 1)">HomeLayoutFixedFocus</include>
 			
-			<include condition="Skin.String(GadgetRows, enhanced)">EnhancedHomeScreen</include>
-			<include condition="Skin.String(GadgetRows, simplehor)">simplehome_horizontal</include>
-			<include condition="Skin.String(GadgetRows, simplever)">simplehome_vertical</include>
-			<include condition="Skin.String(GadgetRows, netflix)">HomeLayoutNetflix</include>
+			<include condition="Skin.String(HomeLayout, enhanced)">EnhancedHomeScreen</include>
+			<include condition="Skin.String(HomeLayout, simplehor)">simplehome_horizontal</include>
+			<include condition="Skin.String(HomeLayout, simplever)">simplehome_vertical</include>
+			<include condition="Skin.String(HomeLayout, netflix)">HomeLayoutNetflix</include>
 		
 		
 			<control type="scrollbar" id="60">
@@ -103,12 +103,12 @@
 			
 	
 			<!-- submenu -->
-			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, vertical) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuVertical</include>
-			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, horizontal) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuHorizontal</include>
-			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, tiles) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuSmallTiles</include>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, vertical) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]">HomeMenuSubMenuVertical</include>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, horizontal) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]">HomeMenuSubMenuHorizontal</include>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, tiles) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]">HomeMenuSubMenuSmallTiles</include>
 
 			<!-- subpages submenu -->
-			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, subpage) + [Skin.String(GadgetRows, 1) | Skin.String(GadgetRows, 2) | Skin.String(GadgetRows, 3)]">HomeMenuSubMenuPage</include>
+			<include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.String(SubmenuLayout, subpage) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]">HomeMenuSubMenuPage</include>
 
 
 		</control>
