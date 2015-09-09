@@ -25,6 +25,13 @@
             <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + !Skin.String(GadgetRows, simplehor) + Control.IsVisible(77777) + Skin.HasSetting(AutoShowWidgets)">
                  <effect type="slide" start="0,0" end="0,230" time="400" tween="cubic" easing="inout" delay="0"/>
 			</animation>
+            <animation type="Conditional" condition="Skin.String(GadgetRows, 2) + Skin.String(widgetstyle, single box) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + Skin.HasSetting(AutoShowWidgets)">
+                <effect type="slide" start="0,0" end="0,-235" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(AutoShowWidgets)">
+                <effect type="slide" start="0,0" end="0,235" time="500" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+
 			
 			<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget))</visible>
 
@@ -45,7 +52,7 @@
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
                 <visible>!Skin.String(widgetstyle, single box)</visible>
 				<visible>[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-				<include>animation_fade_visible_hidden_delayed</include>
+				<include>animation_fade_visible_hidden</include>
 				<animation type="Conditional" condition="Skin.String(widgetstyle, poster)">
                  <effect type="slide" start="0,0" end="0,120" time="0" delay="0"/>
 			</animation>
@@ -247,7 +254,8 @@
 				<right>60</right>
 				<width>800</width>
 				<height>60</height>
-				<include>animation_fade_visible_hidden_delayed</include>
+				<include>animation_fade_visible_hidden</include>
+                <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)</visible>
 				<include condition="!Skin.String(widgetstyle, single box)">changeWidgetButton</include>
 			</control>
 
@@ -559,10 +567,15 @@
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoPlotAlt">
-		<value condition="!IsEmpty(Container(510).ListItem.Property(StartTime))">[COLOR=$INFO[Skin.String(ViewDetailsHighlightTextColor)]]$INFO[Container(510).ListItem.Property(ChannelName),, • ]$INFO[Container(510).ListItem.Property(StartTime),, - ]$INFO[Container(510).ListItem.Property(EndTime),, • ]$INFO[Container(510).ListItem.Genre][/COLOR][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-		<value condition="!IsEmpty(Container(510).ListItem.Premiered)">[COLOR=$INFO[Skin.String(ViewDetailsHighlightTextColor)]]$INFO[Container(510).ListItem.Premiered,, • ]$INFO[Container(510).ListItem.Duration,,min. • ]$INFO[Container(510).ListItem.Genre][/COLOR][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-		<value condition="!IsEmpty(Container(510).ListItem.Year)">[COLOR=$INFO[Skin.String(ViewDetailsHighlightTextColor)]]$INFO[Container(510).ListItem.Year,, • ]$INFO[Container(510).ListItem.Duration,,min. • ]$INFO[Container(510).ListItem.Genre][/COLOR][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-		<value>$VAR[HomeMenuWidgetInfoPlot]</value>
+		<!-- PVR -->
+        <value condition="!IsEmpty(Container(510).ListItem.Property(StartTime))">[B]$INFO[Container(510).ListItem.Property(ChannelName),, • ]$INFO[Container(510).ListItem.Property(StartTime),, - ]$INFO[Container(510).ListItem.Property(EndTime),, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+		<!-- tvshows, seasons -->
+        <value condition="!IsEmpty(Container(510).ListItem.TvShowTitle) + !IsEmpty(Container(510).ListItem.Genre)">[B]$INFO[Container(510).ListItem.TvShowTitle,, • ]$INFO[Container(510).ListItem.Premiered,, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+        <!-- episodes -->
+        <value condition="!IsEmpty(Container(510).ListItem.TvShowTitle)">[B]$INFO[Container(510).ListItem.TvShowTitle,, • ]$INFO[Container(510).ListItem.Premiered,, • ]$INFO[Container(510).ListItem.Duration,,min.][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+		<!-- movies -->
+        <value condition="!IsEmpty(Container(510).ListItem.Year)">[B]$INFO[Container(510).ListItem.Year,, • ]$INFO[Container(510).ListItem.Duration,,min. • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+        <value>$VAR[HomeMenuWidgetInfoPlot]</value>
     </variable>
 	
 	<variable name="HomeMenuWidgetInfoPoster">
@@ -728,7 +741,7 @@
                 <font>Reg30</font>
                 <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
-                <label>$INFO[Container(510).ListItem.Title]</label>
+                <label>$VAR[HomeMenuWidgetInfoLabel]</label>
             </control>
             <control type="textbox">
                 <left>251</left>
@@ -741,6 +754,20 @@
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                 <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                <visible>!Control.HasFocus(510)</visible>
+            </control>
+            <control type="textbox">
+                <left>251</left>
+                <width>650</width>
+                <top>132</top>
+                <height>140</height>
+                <font>Reg24</font>
+                <align>justify</align>
+                <autoscroll delay="4000" time="3000" repeat="10000" />
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                <visible>Control.HasFocus(510)</visible>
             </control>
             <control type="group">
 				<height>36</height>
@@ -894,21 +921,6 @@
 
     </include>
 
-	<variable name="SingleBoxWidgetInfoPlot">
-		<value condition="!IsEmpty(ListItem.Property(ShortPlot))">$INFO[ListItem.Property(ShortPlot)]</value>
-		<value condition="!IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
-		<value condition="StringCompare(ListItem.Property(widget), weather)">$INFO[ListItem.Property(Plot)][CR]$INFO[ListItem.label2]</value>
-		<value condition="!IsEmpty(ListItem.Property(Plot))">$INFO[ListItem.Property(Plot)]</value>
-		<value>$INFO[ListItem.label2]</value>
-    </variable>
-    
-    <variable name="WidgetSubLabel">
-        <value condition="StringCompare(Container(300).ListItem.Property(widget),NextAired)"></value>
-        <value condition="substring(Container(510).ListItem.Property(widget),Album)">$INFO[Container(510).ListItem.Artist]$INFO[Container(510).ListItem.Year,  •  ,]</value>
-        <value condition="!StringCompare(Container(510).ListItem.Title,Container(510).ListItem.TvShowTitle) + !IsEmpty(Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.TvShowTitle,,  •  ]$INFO[Container(510).ListItem.Premiered,,  •  ]$INFO[Container(510).ListItem.Duration,, $LOCALIZE[31102]  •  ]$INFO[Container(510).ListItem.Rating]</value>
-        <value condition="!StringCompare(Container(510).ListItem.Title,Container(510).ListItem.TvShowTitle) + IsEmpty(Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.Year,,  •  ]$INFO[Container(510).ListItem.Duration,, $LOCALIZE[31102]  •  ]$INFO[Container(510).ListItem.Rating]</value>
-        <value condition="StringCompare(Container(510).ListItem.Title,Container(510).ListItem.TvShowTitle)">$INFO[Container(510).ListItem.Episode,, $LOCALIZE[20360]  •  ]$INFO[Container(510).ListItem.Property(UnWatchedEpisodes),, $LOCALIZE[16101]  •  ]$INFO[Container(510).ListItem.Duration,, $LOCALIZE[31102]  •  ]$INFO[Container(510).ListItem.Rating]</value>
-    </variable>
     
     <include name="changeWidgetButton">
         <include>animation_fade_visible_hidden</include>

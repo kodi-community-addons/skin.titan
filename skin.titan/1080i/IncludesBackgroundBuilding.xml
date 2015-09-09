@@ -137,9 +137,12 @@
         <!-- theme specific diffuse -->
         <value condition="Control.IsVisible(507)">ffffffff</value>
         <value condition="Skin.String(SkinHelper.LastColorTheme, Default Modern white) + [Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]">2Fffffff</value>
-        <value condition="Skin.String(ColorTheme.name, black) + [Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Window.IsActive(home)] | [Skin.HasSetting(BackgroundOverlayHomeOnly) + SubString(Window.Property(xmlfile),Home,left)] | [!Skin.HasSetting(BackgroundOverlayMediaViewOnly) + !Skin.HasSetting(BackgroundOverlayHomeOnly)]">2F000000</value>
-        <value>aaffffff</value>
+        <value>ffffffff</value>
     </variable>
+    
+    <include name="backgroundDiffuseWhite">
+        <colordiffuse>$VAR[backgroundDiffuseVar]</colordiffuse>
+    </include>
     
 
     
@@ -149,8 +152,8 @@
         <!-- background panel -->
         <control type="image" description="Background">
             <include>DimensionsFullscreen</include>
-            <texture colordiffuse="$VAR[backgroundDiffuse]">colors/color_white.png</texture>
-            <visible>Skin.String(SkinHelper.LastColorTheme, Default Modern white)</visible>
+            <texture colordiffuse="$VAR[backgroundDiffuseVar]">colors/color_white.png</texture>
+            
         </control>
 			
 		<!-- multi image background -->
@@ -164,7 +167,7 @@
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 20)">fanartSpeed20</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 30)">fanartSpeed30</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 60)">fanartSpeed60</include>
-            <colordiffuse>$VAR[backgroundDiffuseVar]</colordiffuse>
+            <include condition="Skin.String(SkinHelper.LastColorTheme, Default Modern white)">backgroundDiffuseWhite</include>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>

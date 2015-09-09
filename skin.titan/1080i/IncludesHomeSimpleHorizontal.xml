@@ -8,15 +8,19 @@
 			<animation type="Conditional" condition="ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,0" end="0,350" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
+            
+            <animation type="Conditional" condition="!Skin.HasSetting(EnableTouchSupport) + Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)">
+                <effect type="slide" start="0,0" end="0,140" time="500" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            
 			<control type="group">
 			 
 			 <control type="image">
 			    <posx>0</posx>
-				<posy>670</posy>
+				<posy>710</posy>
 				<width>100%</width>
-				<height>180</height>
+				<height>140</height>
 				<texture border="5">diffuse/panel.png</texture>
-				
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 			  </control>
 
@@ -26,7 +30,6 @@
 				<width>100%</width>
 				<height>100</height>
 				<texture border="5">diffuse/panel.png</texture>
-				
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 			  </control>
 			</control>
@@ -77,6 +80,7 @@
 				</control>
 				<control type="button">
 					<visible>false</visible>
+                    <onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">ClearProperty(activewidget,Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(300).ListItem.Property(defaultID)],Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(300).ListItem.Property(Background)],Home)</onfocus>
 					<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(300).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>			
@@ -88,7 +92,7 @@
 			  <content><include>skinshortcuts-mainmenu</include></content>
 			</control>
 			<control type="wraplist" id="4444">
-			  <animation effect="fade" time="200" start="100" end="100" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
+			  <animation effect="fade" time="200" start="100" end="25" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
 			  <visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 			  <posx>-290</posx>
 			  <width>3000</width>
@@ -197,8 +201,14 @@
 			<animation type="Conditional" condition="!Skin.String(widgetstyle, single box) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
                 <effect type="slide" start="0,0" end="0,50" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]">
+            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![!Skin.HasSetting(EnableTouchSupport) + Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds]">
                 <effect type="slide" start="0,0" end="0,285" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="Skin.String(widgetstyle, single box) + [ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + [!Skin.HasSetting(EnableTouchSupport) + Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds]">
+                <effect type="slide" start="0,0" end="0,150" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <animation type="Conditional" condition="!Skin.HasSetting(EnableTouchSupport) + Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)">
+                <effect type="slide" start="0,0" end="0,140" time="500" tween="cubic" easing="inout" delay="0"/>
             </animation>
 			<include>HomeMenuWidget</include>
 			
