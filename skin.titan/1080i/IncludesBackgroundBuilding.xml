@@ -84,9 +84,9 @@
         <control type="image" description="panel behind bg">
             <include>DimensionsFullscreen</include>
             <texture>colors/color_white.png</texture>
-            <colordiffuse>$INFO[Skin.String(BackgroundOverlayColor.base)]</colordiffuse>
+            <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
             <visible>Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)</visible>
-            <visible>Control.IsVisible(99005) + !IsEmpty(Control.GetLabel(99005))</visible>
+            <visible>!IsEmpty(Control.GetLabel(99005)) + Control.IsVisible(99005)</visible>
         </control>
         
         <control type="multiimage" id="99005">
@@ -98,10 +98,9 @@
 			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
 			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
 			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
-            <include condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">bgColorDiffuse</include>
+            <animation effect="fade" start="100" end="30" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
-            <visible>!IsEmpty(Control.GetLabel(99005))</visible>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<!-- disabled fanart per view -->

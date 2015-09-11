@@ -154,7 +154,7 @@
 					<onleft>Dialog.Close(106)</onleft>
 					<onright>Dialog.Close(106)</onright>
 					<onclick condition="!IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[ListItem.Trailer])</onclick>
-					<onclick condition="IsEmpty(ListItem.Trailer)">XBMC.RunScript(script.skin.helper.service,action=SEARCHTRAILER,title=$INFO[ListItem.Label])</onclick>
+					<onclick condition="IsEmpty(ListItem.Trailer)">XBMC.RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[ListItem.Label] Trailer)</onclick>
 					<label>20410</label>
 					<visible>SubString(System.BuildVersion,14,left) + [System.HasAddon(plugin.video.youtube) | !IsEmpty(ListItem.Trailer)]</visible>
 					<visible>Container.Content(movies)</visible>
@@ -779,7 +779,7 @@
                 <posx>350</posx>
                 <posy>215</posy>
                 <include>mediaflags</include>
-                <visible>![Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml)]</visible>
+                <visible>!Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
             </control>
 		
 		
@@ -998,6 +998,7 @@
 			
 			<control type="group">
 				<!-- OSDLabel1 -->
+                
 				<control type="label">
 					<posx>250</posx>
 					<posy>5</posy>
@@ -1006,11 +1007,11 @@
 					<font>Light40</font>
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-					<label>$VAR[OSDLabel1]</label>
+					<label>[B]$VAR[OSDLabel1,, • ][/B]$VAR[OSDLabel2]</label>
 					<scroll>false</scroll>
-					<visible>!Window.IsActive(VideoOSD.xml) + !Window.IsActive(MusicOSD.xml)</visible>
+					<visible>!Window.IsActive(VideoOSD.xml) + !Window.IsActive(MusicOSD.xml) + !Control.IsVisible(200)</visible>
 				</control>
-                <!-- OSDLabel2 -->
+                <!-- OSDLabel2
 				<control type="label">
 					<posx>250</posx>
 					<posy>64</posy>
@@ -1021,8 +1022,16 @@
 					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
 					<label>[B]$VAR[OSDLabel2][/B]</label>
 					<scroll>false</scroll>
-					<visible>!Window.IsActive(VideoOSD.xml) + !Window.IsActive(MusicOSD.xml)</visible>
-				</control>
+					<visible>!Window.IsActive(VideoOSD.xml) + !Window.IsActive(MusicOSD.xml) + !Control.IsVisible(200)</visible>
+				</control>-->
+                
+                <!-- media flags -->
+                <control type="group">
+                    <posx>250</posx>
+					<posy>85</posy>
+                    <include>mediaflags</include>
+                    <visible>!Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
+                </control>
 
 				<control type="progress" id="1">
 					<description>ProgressbarCache</description>
@@ -1087,23 +1096,11 @@
 
 			</control>
 
-			
-		
-			<!-- media flags -->
-			<control type="grouplist">
-			<animation time="0" effect="slide" end="115" delay="0" condition="!Player.HasVideo">Conditional</animation>
-			<orientation>horizontal</orientation>
-			<right>40</right>
-			<width>575</width>
-			<posy>75</posy>
-			
-			<include>mediaflags</include>
-            </control>
 		
 			<!--Clock-->
 			<control type="grouplist">
 				<posx>1480</posx>
-				<posy>-80</posy>
+				<posy>5</posy>
 				<width>400</width>
 				<height>100</height>
 				<align>right</align>
@@ -1145,7 +1142,7 @@
 			
 		    <control type="label">
 				<right>40</right>
-				<posy>10</posy>
+				<posy>70</posy>
 				<width>890</width>
 				<align>right</align>
 				<font>Reg30</font>
@@ -2439,8 +2436,8 @@
 			<visible>Player.HasDuration</visible>
 			<action>seek</action>
 			<texturesliderbar>colors/color_transparent.png</texturesliderbar>
-			<textureslidernib border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">common/progress/nib.png</textureslidernib>
-			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">common/progress/nib_focus.png</textureslidernibfocus>
+			<textureslidernib border="5" colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">diffuse/panel.png</textureslidernib>
+			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">diffuse/panel.png</textureslidernibfocus>
 			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 		</control>
 		<!--Process/Seekbar-->
@@ -2485,8 +2482,8 @@
 			<visible>Player.HasDuration</visible>
 			<action>seek</action>
 			<texturesliderbar>colors/color_transparent.png</texturesliderbar>
-			<textureslidernib border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">common/progress/nib.png</textureslidernib>
-			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">common/progress/nib_focus.png</textureslidernibfocus>
+			<textureslidernib border="5" colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">diffuse/panel.png</textureslidernib>
+			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">diffuse/panel.png</textureslidernibfocus>
 			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 		</control>
 		<control type="image">
