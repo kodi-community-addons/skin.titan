@@ -87,6 +87,15 @@
 			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 			<aspectratio>stretch</aspectratio>
 		</control>
+        <control type="image">
+			<posy>-250</posy>
+			<posx>-20</posx>
+			<width>515</width>
+			<height>1750</height>
+			<texture border="5">diffuse/panel.png</texture>
+			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor.base)]</colordiffuse>
+			<aspectratio>stretch</aspectratio>
+		</control>
 	
 		<!-- header -->
         <control type="label">
@@ -242,6 +251,15 @@
 			<height>1750</height>
 			<texture border="5">diffuse/panel.png</texture>
 			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+			<aspectratio>stretch</aspectratio>
+		</control>
+        <control type="image">
+			<posy>-250</posy>
+			<posx>-20</posx>
+			<width>515</width>
+			<height>1750</height>
+			<texture border="5">diffuse/panel.png</texture>
+			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor.base)]</colordiffuse>
 			<aspectratio>stretch</aspectratio>
 		</control>
 
@@ -756,37 +774,32 @@
 					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				
-			
-				<!-- OSDLabel3 
-				<control type="label">
-					<posx>400</posx>
-					<posy>220</posy>
-					<width>1040</width>
-					<align>left</align>
-					<font>Light28</font>
-					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
-					<label>$VAR[OSDLabel3]</label>
-					<visible>!Window.IsActive(VideoOSD.xml)</visible>
-					<animation time="300" effect="fade" delay="300">Visible</animation>
-				</control>-->
-			</control>
-
-			
-		
 			<!-- media flags -->
 			<control type="group">
-                <posx>350</posx>
+                <posx>400</posx>
                 <posy>215</posy>
                 <include>mediaflags</include>
                 <visible>!Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
+                <visible>player.hasvideo</visible>
             </control>
+            <control type="group">
+                <posx>400</posx>
+                <posy>215</posy>
+                <include>mediaflagsAudio</include>
+                <visible>!Window.IsActive(musicosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
+                <visible>!player.hasvideo</visible>
+            </control>
+        </control>
+
+			
+		
+			
 		
 		
 		<control type="image">
 			<!--Stars music-->
 			<visible>Window.IsActive(MusicVisualisation.xml)</visible>
-			<right>280</right>
+			<right>60</right>
 			<posy>208</posy>
 			<width>200</width>
 			<height>50</height>
@@ -1011,19 +1024,6 @@
 					<scroll>false</scroll>
 					<visible>!Window.IsActive(VideoOSD.xml) + !Window.IsActive(MusicOSD.xml) + !Control.IsVisible(200)</visible>
 				</control>
-                <!-- OSDLabel2
-				<control type="label">
-					<posx>250</posx>
-					<posy>64</posy>
-					<width>1050</width>
-					<align>left</align>
-					<font>Light42</font>
-					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
-					<label>[B]$VAR[OSDLabel2][/B]</label>
-					<scroll>false</scroll>
-					<visible>!Window.IsActive(VideoOSD.xml) + !Window.IsActive(MusicOSD.xml) + !Control.IsVisible(200)</visible>
-				</control>-->
                 
                 <!-- media flags -->
                 <control type="group">
@@ -1031,6 +1031,14 @@
 					<posy>85</posy>
                     <include>mediaflags</include>
                     <visible>!Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
+                    <visible>player.hasvideo</visible>
+                </control>
+                <control type="group">
+                    <posx>250</posx>
+					<posy>85</posy>
+                    <include>mediaflagsAudio</include>
+                    <visible>!Window.IsActive(musicosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
+                    <visible>!player.hasvideo</visible>
                 </control>
 
 				<control type="progress" id="1">
@@ -1894,14 +1902,16 @@
 			  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDRepeat.png</texturefocus>
 			  <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDRepeat.png</texturenofocus>
 			  <onclick>XBMC.PlayerControl(Repeat)</onclick>
-			  <visible>!Playlist.IsRepeatOne + !Playlist.IsRepeat + Player.HasAudio</visible>
+			  <visible>!Playlist.IsRepeatOne + !Playlist.IsRepeat</visible>
+              <visible>!VideoPlayer.Content(livetv)</visible>
 			</control>
 			<control type="button" id="208">
 			  <width>100</width>
 			  <height>100</height>
 			  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDRepeatOne.png</texturefocus>
 			  <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDRepeatOne.png</texturenofocus>
-			  <visible>Playlist.IsRepeatOne + Player.HasAudio</visible>
+			  <visible>Playlist.IsRepeatOne</visible>
+              <visible>!VideoPlayer.Content(livetv)</visible>
 			  <onclick>XBMC.PlayerControl(Repeat)</onclick>
 			</control>
 			<control type="button" id="210">
@@ -1909,7 +1919,8 @@
 				<height>75</height>
 			  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDRepeatAll.png</texturefocus>
 			  <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDRepeatAll.png</texturenofocus>
-			  <visible>Playlist.IsRepeat + Player.HasAudio</visible>
+			  <visible>Playlist.IsRepeat</visible>
+              <visible>!VideoPlayer.Content(livetv)</visible>
 			  <onclick>XBMC.PlayerControl(Repeat)</onclick>
 			</control>
 			<control type="togglebutton" id="212">
@@ -2209,7 +2220,8 @@
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimRepeat.png</texturefocus>
                   <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimRepeat.png</texturenofocus>
 				  <onclick>XBMC.PlayerControl(Repeat)</onclick>
-				  <visible>!Playlist.IsRepeatOne + !Playlist.IsRepeat + Player.HasAudio</visible>
+                  <visible>!VideoPlayer.Content(livetv)</visible>
+				  <visible>!Playlist.IsRepeatOne + !Playlist.IsRepeat</visible>
 				</control>
 				<control type="button" id="208">
 				  <include>animation_fade_visible_hidden</include>
@@ -2217,7 +2229,8 @@
 				  <height>90</height>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimRepeatOne.png</texturefocus>
                   <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimRepeatOne.png</texturenofocus>
-				  <visible>Playlist.IsRepeatOne + Player.HasAudio</visible>
+				  <visible>Playlist.IsRepeatOne</visible>
+                  <visible>!VideoPlayer.Content(livetv)</visible>
 				  <onclick>XBMC.PlayerControl(Repeat)</onclick>
 				</control>
 				<control type="button" id="210">
@@ -2226,7 +2239,8 @@
 				  <height>90</height>
 				  <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimRepeatAll.png</texturefocus>
                   <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimRepeatAll.png</texturenofocus>
-				  <visible>Playlist.IsRepeat + Player.HasAudio</visible>
+				  <visible>Playlist.IsRepeat</visible>
+                  <visible>!VideoPlayer.Content(livetv)</visible>
 				  <onclick>XBMC.PlayerControl(Repeat)</onclick>
 				</control>
 				<control type="togglebutton" id="212">
