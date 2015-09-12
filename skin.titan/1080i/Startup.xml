@@ -1,64 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Titan-->
 <window>
-<!--Splash Screen-->
-	<include>defaultskinsettings</include>
-    <!-- initialize 3th party addons -->
-    <onload condition="System.HasAddon(script.artistslideshow) + Skin.HasSetting(enableArtistSlideshow)">RunScript(script.artistslideshow, daemon=True)</onload>
-    <onload condition="System.HasAddon(script.games.rom.collection.browser)">RunScript(script.games.rom.collection.browser,limit=10)</onload>
-    <onload condition="Skin.String(AutoStartPlayList)">AlarmClock(playliststart,PlayMedia($ESCINFO[Skin.String(AutoStartPlayList)]),00:08,silent)</onload>	
-    <onload>Skin.SetBool(enable.smartish.widgets)</onload>
-    <onload>SetProperty(SkinIsCompatible,true,Home)</onload>
-
-    <!-- (optional) automatic run of the artwork downloader on startup -->
-    <onload condition="Skin.HasSetting(EnableArtworkDownloader)">XBMC.runscript(script.artwork.downloader, silent=true)</onload>
-    
-	<onload condition="!Skin.HasSetting(DisableSplashScreen)">AlarmClock(loadhome,ReplaceWindow(Home),00:6,silent)</onload>
-	<onload condition="Skin.HasSetting(DisableSplashScreen)">ReplaceWindow(Home)</onload>
+    <defaultcontrol always="true">10</defaultcontrol>
+    <allowoverlay>no</allowoverlay>
+	
 	<controls>
-	<!-- splash screen -->
-	<control type="group" id="6666">
-	<visible>!Skin.HasSetting(DisableSplashScreen)</visible>
-	<include>DimensionsFullscreen</include>
-		<!-- splashscreen background -->
+        <control type="button" id="10">
+			<description>trigger</description>
+			<onfocus>ReplaceWindow($INFO[System.StartupWindow])</onfocus>
+			<texturenofocus>-</texturenofocus>
+			<texturefocus>-</texturefocus>
+			<visible>!Skin.HasSetting(AutoStartPlayList)</visible>
+		</control>
+		<control type="button" id="10">
+			<description>trigger with startup Playlist</description>
+			<onfocus>PlayMedia($INFO[Skin.String(AutoStartPlayList)])</onfocus>
+			<onfocus>ReplaceWindow($INFO[System.StartupWindow])</onfocus>
+			<texturenofocus>-</texturenofocus>
+			<texturefocus>-</texturefocus>
+			<visible>Skin.HasSetting(AutoStartPlayList)</visible>
+		</control>
         <control type="image">
             <include>DimensionsFullscreen</include>
-			<include>backgroundfade</include>
-            <texture background="true">$VAR[splashScreenImage]</texture>
-            <fadetime>800</fadetime>
+            <texture>special://skin/extras/backgrounds/splashscreen.jpg</texture>
         </control>
-		<control type="label">
-            <posx>200</posx>
-            <bottom>35</bottom>
-            <width>520</width>
-            <align>left</align>
-            <font>Reg41</font>
-            <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-            <label>20186</label>
-        </control>
-		<control type="multiimage">
-			<animation effect="fade" start="0" end="100" time="0">WindowOpen</animation>
-			<animation effect="fade" start="100" end="0" time="500" delay="500">WindowClose</animation>
-			<posx>80</posx>
-			<bottom>15</bottom>
-			<width>100</width>
-			<height>100</height>
-			<aspectratio>keep</aspectratio>
-			<imagepath>special://skin/extras/busy_spinners/default</imagepath>
-			<timeperimage>100</timeperimage>
-			<colordiffuse>$INFO[Skin.String(GeneralHighlightTextColor)]</colordiffuse>
-			<fadetime>0</fadetime>
-			<visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-		</control>
-		<control type="label">
-            <posx>1840</posx>
-            <bottom>35</bottom>
-            <width>520</width>
-            <align>right</align>
-            <font>Reg41</font>
-            <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-            <label>$INFO[Window(Home).Property(SkinHelper.skinVersion)]</label>
-        </control>
-	</control>
-	</controls>
+    </controls>
 </window>

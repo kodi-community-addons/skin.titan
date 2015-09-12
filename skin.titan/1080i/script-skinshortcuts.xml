@@ -3,10 +3,7 @@
 <window>
 
 	<allowoverlay>no</allowoverlay>
-	
 	<defaultcontrol always="true">300</defaultcontrol>
-	<onunload condition="window.isactive(home) + !Skin.String(HomeLayout, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu)</onunload>
-	<onunload condition="window.isactive(home) + Skin.String(HomeLayout, netflix) + !Skin.String(OSDPanelOpacity)">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=mainmenu|powermenu)</onunload>
 	<controls>
 	
 	 <!--Global Background-->
@@ -110,23 +107,6 @@
 							<scroll>false</scroll>
 							<visible>!Control.HasFocus(211)</visible>
 						</control>
-						
-						<control type="button">
-							<left>150</left>
-							<top>0</top>
-							<width>1</width>
-							<height>60</height>
-							<font>Reg28</font>
-							<textcolor>blue</textcolor>
-							<align>center</align>
-							<aligny>center</aligny>
-							<label>-</label>
-							<visible>false</visible>
-							<onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(menu,211,Home)</onfocus>
-							<onfocus condition="Skin.HasSetting(UseSectionBackground)">SetProperty(SectionBackground,$INFO[Container(211).ListItem.Property(defaultID)],Home)</onfocus>
-							<onfocus condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(211).ListItem.Property(Background))">SetProperty(SectionBackgroundValue,$INFO[Container(211).ListItem.Property(Background)],Home)</onfocus>
-							<onfocus condition="Skin.HasSetting(UseSectionBackground) + IsEmpty(Container(211).ListItem.Property(Background))">ClearProperty(SectionBackgroundValue,Home)</onfocus>	
-						</control>
 					</focusedlayout>
 					
 				</control>
@@ -145,7 +125,7 @@
 						<right>100</right>
 						<width>500</width>
 						<posy>20</posy>
-						<visible>!Skin.String(HomeLayout, netflix)</visible>
+						<visible>!Skin.String(HomeLayout, netflix) + StringCompare(Window.Property(groupname),mainmenu)</visible>
 				
 					<!--icon label-->
 					<control type="label">
@@ -168,37 +148,101 @@
 						<scroll>false</scroll>
 						<height>30</height>
 					</control>
-					
-					<!--widget1 label-->
-					<control type="label">
-						<label>[B]$LOCALIZE[31499] 1:[/B]</label>
-						<font>Reg26</font>
-						<scroll>false</scroll>
-						<height>40</height>
+                    
+                    <!--widget label for enhanced-->
+					<control type="button">
+                        <textoffsetx>0</textoffsetx>
+                        <font>Reg22</font>
+                        <textwidth>350</textwidth>
+                        <align>left</align>
+                        <width>500</width>
+                        <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <texturenofocus>-</texturenofocus>
+                        <label>[B]$LOCALIZE[31499]:[/B]</label>
+                        <label2 fallback="231">$INFO[Container(211).Listitem.Property(widgetName)]</label2>
+                        <enable>false</enable>
+                        <visible>Skin.String(HomeLayout, enhanced)</visible>
+					</control>
+                    
+                    <!--spotlight widget label for enhanced-->
+					<control type="button">
+                        <textoffsetx>0</textoffsetx>
+                        <font>Reg22</font>
+                        <textwidth>350</textwidth>
+                        <align>left</align>
+                        <width>500</width>
+                        <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <texturenofocus>-</texturenofocus>
+                        <label>[B]$LOCALIZE[31185] $LOCALIZE[31499]:[/B]</label>
+                        <label2 fallback="231">$INFO[Container(211).Listitem.Property(widgetName.1)]</label2>
+                        <enable>false</enable>
+                        <visible>Skin.String(HomeLayout, enhanced)</visible>
 					</control>
 					
-					<!--widget1 text-->
-					<control type="label">
-						<label fallback="231">$INFO[Container(211).Listitem.Property(widgetName)]</label>
-						<font>Reg26</font>
-						<scroll>true</scroll>
-						<height>55</height>
+					<!--widget1 label-->
+					<control type="button">
+                        <textoffsetx>0</textoffsetx>
+                        <font>Reg22</font>
+                        <textwidth>350</textwidth>
+                        <align>left</align>
+                        <width>500</width>
+                        <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <texturenofocus>-</texturenofocus>
+                        <label>[B]$LOCALIZE[31499] 1:[/B]</label>
+                        <label2 fallback="231">$INFO[Container(211).Listitem.Property(widgetName)]</label2>
+                        <enable>false</enable>
+                        <visible>!Skin.String(HomeLayout, enhanced)</visible>
 					</control>
 					
 					<!--widget2 label-->
-					<control type="label">
-						<label>[B]$LOCALIZE[31499] 2:[/B]</label>
-						<font>Reg26</font>
-						<scroll>false</scroll>
-						<height>40</height>
+					<control type="button">
+                        <textoffsetx>0</textoffsetx>
+                        <font>Reg22</font>
+                        <textwidth>350</textwidth>
+                        <align>left</align>
+                        <width>500</width>
+                        <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <texturenofocus>-</texturenofocus>
+                        <label>[B]$LOCALIZE[31499] 2:[/B]</label>
+                        <label2 fallback="231">$INFO[Container(211).Listitem.Property(widgetName.1)]</label2>
+                        <enable>false</enable>
+                        <visible>!Skin.String(HomeLayout, enhanced)</visible>
 					</control>
 					
-					<!--widget2 text-->
-					<control type="label">
-						<label fallback="231">$INFO[Container(211).Listitem.Property(widgetName.1)]</label>
-						<font>Reg26</font>
-						<scroll>true</scroll>
-						<height>40</height>
+					<!--widget3 label-->
+					<control type="button">
+                        <textoffsetx>0</textoffsetx>
+                        <font>Reg22</font>
+                        <textwidth>350</textwidth>
+                        <align>left</align>
+                        <width>500</width>
+                        <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <texturenofocus>-</texturenofocus>
+                        <label>[B]$LOCALIZE[31499] 3:[/B]</label>
+                        <label2 fallback="231">$INFO[Container(211).Listitem.Property(widgetName.2)]</label2>
+                        <enable>false</enable>
+                        <visible>!Skin.String(HomeLayout, enhanced)</visible>
+					</control>
+                    
+                    <!--widget4 label-->
+					<control type="button">
+                        <textoffsetx>0</textoffsetx>
+                        <font>Reg22</font>
+                        <textwidth>350</textwidth>
+                        <align>left</align>
+                        <width>500</width>
+                        <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <texturenofocus>-</texturenofocus>
+                        <label>[B]$LOCALIZE[31499] 3:[/B]</label>
+                        <label2 fallback="231">$INFO[Container(211).Listitem.Property(widgetName.3)]</label2>
+                        <enable>false</enable>
+                        <visible>!Skin.String(HomeLayout, enhanced)</visible>
 					</control>
 					
 					<!--blank label-->
@@ -206,7 +250,7 @@
 						<label></label>
 						<font>Reg26</font>
 						<scroll>false</scroll>
-						<height>30</height>
+						<height>25</height>
 					</control>
 					
 					<!--action label-->
@@ -372,6 +416,7 @@
 					<label>$ADDON[script.skinshortcuts 32044] 1</label>
 					<onclick>SetProperty(customWidget, normal, Home)</onclick>
                     <visible>!Skin.String(HomeLayout, netflix)</visible>
+                    <visible>!Skin.String(HomeLayout, enhanced)</visible>
 				</control>
 											
 				<control type="button" id="1407"> <!--set widget 2-->
@@ -382,6 +427,52 @@
 					<label>$ADDON[script.skinshortcuts 32044] 2</label>
 					<visible>!Skin.HasSetting(DisableAllWidgets)</visible>
                     <visible>!Skin.String(HomeLayout, netflix)</visible>
+                    <visible>!Skin.String(HomeLayout, enhanced)</visible>
+				</control>
+                
+                <control type="button" id="1408"> <!--set widget 3-->
+					<width>500</width>
+					<align>center</align>
+					<onclick>SetProperty(widgetID, 2)</onclick>
+					<onclick>SendClick(312)</onclick>
+					<label>$ADDON[script.skinshortcuts 32044] 3</label>
+					<visible>!Skin.HasSetting(DisableAllWidgets)</visible>
+                    <visible>!Skin.String(HomeLayout, netflix)</visible>
+                    <visible>!Skin.String(HomeLayout, enhanced)</visible>
+				</control>
+                
+                <control type="button" id="1409"> <!--set widget 4-->
+					<width>500</width>
+					<align>center</align>
+					<onclick>SetProperty(widgetID, 3)</onclick>
+					<onclick>SendClick(312)</onclick>
+					<label>$ADDON[script.skinshortcuts 32044] 4</label>
+					<visible>!Skin.HasSetting(DisableAllWidgets)</visible>
+                    <visible>!Skin.String(HomeLayout, netflix)</visible>
+                    <visible>!Skin.String(HomeLayout, enhanced)</visible>
+				</control>
+                
+                <control type="button" id="1410"> <!--set widget enhanced-->
+					<width>500</width>
+					<align>center</align>
+					<visible>true</visible>
+                    <onclick>SendClick(312)</onclick>
+					<label>$ADDON[script.skinshortcuts 32044]</label>
+					<onclick>SetProperty(customWidget, normal, Home)</onclick>
+                    <visible>!Skin.String(HomeLayout, netflix)</visible>
+                    <visible>Skin.String(HomeLayout, enhanced)</visible>
+				</control>
+                
+                <control type="button" id="1411"> <!--set spotlight widget enhanced-->
+					<width>500</width>
+					<align>center</align>
+					<visible>true</visible>
+					<label>31307</label>
+                    <onclick>SetProperty(widgetID, 1)</onclick>
+					<onclick>SendClick(312)</onclick>
+					<onclick>SetProperty(customWidget, normal, Home)</onclick>
+                    <visible>!Skin.String(HomeLayout, netflix)</visible>
+                    <visible>Skin.String(HomeLayout, enhanced)</visible>
 				</control>
 				
 				<control type="button" id="310"> <!--background-->

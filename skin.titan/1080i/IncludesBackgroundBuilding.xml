@@ -98,7 +98,7 @@
 			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
 			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
 			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
-            <animation effect="fade" start="100" end="30" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
+            <animation effect="fade" start="100" end="20" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
@@ -153,7 +153,7 @@
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 20)">fanartSpeed20</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 30)">fanartSpeed30</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 60)">fanartSpeed60</include>
-            <animation effect="fade" start="100" end="30" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
+            <animation effect="fade" start="100" end="8" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
             <fadetime>350</fadetime>
             <randomize>true</randomize>
 			<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
@@ -178,6 +178,8 @@
 	</variable>
 
 	<variable name="backgroundVar">
+    
+        <value condition="[Window.IsActive(LoginScreen.xml) | Window.IsActive(StartUp.xml)] + Skin.String(LoginBackground)">$INFO[Skin.String(LoginBackground)]</value>
         
         <!-- conditional background override -->
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.ConditionalBackground))">$INFO[Window(home).Property(SkinHelper.ConditionalBackground)]</value>
@@ -260,9 +262,7 @@
 		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">$INFO[Container(300).ListItem.Property(Background)]</value>
 		
 		<!-- section background when home not active -->
-		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(lastbackground))">$INFO[Window(home).Property(lastbackground)]</value>
-        <!-- section background when home not active -->
-		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(lastbackground))">$INFO[Window(home).Property(background)]</value>
+		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(lastbackground))">$INFO[Window(home).Property(SkinHelper.LastBackground)]</value>
 		
 		<!-- global background custom-->
 		<value condition="!Skin.String(CustomBackgroundSetting, default) + !Skin.String(CustomBackgroundSetting, blue) + !Skin.String(CustomBackgroundSetting, weather) + !Skin.String(CustomBackgroundSetting, fanart) + Skin.String(CustomBackgroundSetting)">$INFO[Skin.String(CustomBackgroundSetting)]</value>
@@ -271,6 +271,7 @@
 		<!-- global fanart background -->
 		<value condition="Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Window(Home).Property(SkinHelper.GlobalFanartBackground))">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]</value>
 		<!-- default backgrounds -->
+        
 		<value condition="skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
 		<value>special://skin/extras/backgrounds/global_blue.jpg</value>
    </variable>
