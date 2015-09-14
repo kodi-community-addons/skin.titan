@@ -163,6 +163,7 @@
         <!-- widgets -->
         <control type="group" id="77777">
             <defaultcontrol always="true">510</defaultcontrol>
+            <visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
             
             <!--change widget button -->
             <control type="group">
@@ -666,9 +667,7 @@
 				<label>$VAR[changeWidgetLabel]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + [StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0) | IsEmpty(Window(home).Property(SkinHelper.ActiveWidget))]">SetProperty(activewidget,1)</onclick>
-				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">SetProperty(activewidget,0)</onclick>
-				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1))">RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
+				<include>changeWidgetClickActions</include>
 				<texturenofocus>-</texturenofocus>
 			</control>
             <control type="label">
@@ -724,12 +723,6 @@
 		<onback>300</onback>
 		<onback>ClearProperty(ShowWidget, Home)</onback>
 		<orientation>horizontal</orientation>
-<!-- 		<animation effect="slide" end="0,10" time="0" condition="skin.hastheme(classic) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
-		<animation effect="slide" end="0,-30" time="0" condition="Skin.String(HomeLayout, simplehor) + StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
-		
-		<animation type="Conditional" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(HomeLayout, simplever)">
-			<effect type="slide" start="0,0" end="0,40" time="0" tween="cubic" easing="inout" delay="0"/>
-		</animation> -->
 		
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
 		<itemlayout width="370" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
@@ -858,6 +851,26 @@
 
     </include>
 
+    <include name="changeWidgetClickActions">
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],1)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">SetProperty(SkinHelper.ActiveWidget,1)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],1)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">SetProperty(SkinHelper.ActiveWidget,1)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],2)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">SetProperty(SkinHelper.ActiveWidget,2)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],3)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">SetProperty(SkinHelper.ActiveWidget,3)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],4)</onclick>
+        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">SetProperty(SkinHelper.ActiveWidget,4)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
+        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
+        <onclick condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),4)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
+        <onclick condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),4)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
+    </include>
     
     <include name="changeWidgetButton">
         <include>animation_fade_visible_hidden</include>
@@ -898,24 +911,7 @@
 				<label>$VAR[changeWidgetLabel]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],1)</onclick>
-				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">SetProperty(SkinHelper.ActiveWidget,1)</onclick>
-				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],1)</onclick>
-                <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),0)">SetProperty(SkinHelper.ActiveWidget,1)</onclick>
-                <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],2)</onclick>
-				<onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">SetProperty(SkinHelper.ActiveWidget,2)</onclick>
-				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-                <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
-                <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],3)</onclick>
-                <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">SetProperty(SkinHelper.ActiveWidget,3)</onclick>
-                <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
-				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-                <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],4)</onclick>
-                <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">SetProperty(SkinHelper.ActiveWidget,4)</onclick>
-                <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
-				<onclick condition="IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-                <onclick condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),4)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-                <onclick condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),4)">SetProperty(SkinHelper.ActiveWidget,0)</onclick>
+                <include>changeWidgetClickActions</include>
                 <texturenofocus>-</texturenofocus>
 				<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget)) + !IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
 			</control>
