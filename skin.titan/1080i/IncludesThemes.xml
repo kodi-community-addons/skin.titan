@@ -156,65 +156,6 @@
                     <description>Buttons</description>
                     <include>SubMenuButton</include>
                 </control>
-				
-				<!-- play trailer -->
-				<control type="button" id="9324">
-					<include>SubMenuButton</include>
-					<onleft>Dialog.Close(106)</onleft>
-					<onright>Dialog.Close(106)</onright>
-					<onclick condition="!IsEmpty(ListItem.Trailer)">PlayMedia($ESCINFO[ListItem.Trailer])</onclick>
-					<onclick condition="IsEmpty(ListItem.Trailer)">XBMC.RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[ListItem.Label] Trailer)</onclick>
-					<label>20410</label>
-					<visible>SubString(System.BuildVersion,14,left) + [System.HasAddon(plugin.video.youtube) | !IsEmpty(ListItem.Trailer)]</visible>
-					<visible>Container.Content(movies)</visible>
-				</control>
-				
-				<control type="button" id="9325">
-					<include>SubMenuButton</include>
-					<label>31248</label>
-					<onclick condition="Container.Content(tvshows)">XBMC.RunScript(script.artwork.downloader, mediatype=tvshow, dbid=$INFO[ListItem.DBID])</onclick>
-					<onclick condition="Container.Content(movies)">XBMC.RunScript(script.artwork.downloader, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
-					<onclick condition="Container.Content(musicvideos)">XBMC.RunScript(script.artwork.downloader, mediatype=musicvideos, dbid=$INFO[ListItem.DBID])</onclick>
-					<onclick condition="!System.HasAddon(script.artwork.downloader)">RunPlugin(plugin://script.artwork.downloader)</onclick>
-					<onclick>SetFocus(51)</onclick>
-					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
-					<visible>SubString(System.BuildVersion,14,left)</visible>
-					<visible>System.HasAddon(script.artwork.downloader) + [Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
-				</control>
-
-				<control type="button" id="9326">
-					<include>SubMenuButton</include>
-					<onleft>Dialog.Close(106)</onleft>
-					<onright>Dialog.Close(106)</onright>
-					<onclick>RunScript(script.trakt,action=contextmenu)</onclick>
-					<label>$INFO[System.AddonTitle(script.trakt)]</label>
-					<visible>System.HasAddon(script.trakt)</visible>
-					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
-					<visible>SubString(System.BuildVersion,14,left)</visible>
-					<visible>[Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos) | Container.Content(episodes)]</visible>
-				</control>
-				<control type="button" id="9327">
-					<!--Get video extras-->
-					<include>SubMenuButton</include>
-					<onleft>Dialog.Close(106)</onleft>
-					<onright>Dialog.Close(106)</onright>
-					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
-					<visible>SubString(System.BuildVersion,14,left)</visible>
-					<label>$INFO[System.AddonTitle(script.videoextras)]</label>
-					<onclick>XBMC.RunScript(script.videoextras,display,$INFO[ListItem.FilenameAndPath])</onclick>
-					<visible>System.HasAddon(script.videoextras) + !IsEmpty(ListItem.FilenameAndPath)</visible>
-					<visible>[Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)]</visible>
-				</control>
-				<control type="button" id="9328">
-					<description>Fetch TvTunes stuff</description>
-					<include>SubMenuButton</include>
-					<onleft>Dialog.Close(106)</onleft>
-					<label>31300</label>
-					<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
-					<visible>SubString(System.BuildVersion,14,left)</visible>
-					<onclick>RunScript(script.tvtunes,mode=solo)</onclick>
-					<visible>Skin.HasSetting(EnableTVTunes) + System.HasAddon(script.tvtunes) + [Container.Content(TVShows) | Container.Content(movies) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("TvTunes_HideVideoInfoButton"))</visible>
-				</control>
 			
             </control>
         </control>
@@ -2097,8 +2038,9 @@
 				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDepg.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDepg.png</texturenofocus>
 				<visible>VideoPlayer.Content(livetv)</visible>
-				<onclick>ActivateWindow(PVROSDGuide)</onclick>
 				<onclick>Dialog.Close(VideoOSD)</onclick>
+                <onclick>Dialog.Close(fullscreenvideo)</onclick>
+                <onclick>ActivateWindow(tvguide)</onclick>
 			</control>
 			<control type="button" id="808">
 				<!-- infopanel -->
@@ -2420,8 +2362,9 @@
 					<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDSlimepg.png</texturefocus>
                     <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDSlimepg.png</texturenofocus>
 					<visible>VideoPlayer.Content(livetv)</visible>
-					<onclick>ActivateWindow(PVROSDGuide)</onclick>
-					<onclick>Dialog.Close(VideoOSD)</onclick>
+                    <onclick>Dialog.Close(VideoOSD)</onclick>
+                    <onclick>Dialog.Close(fullscreenvideo)</onclick>
+                    <onclick>ActivateWindow(tvguide)</onclick>
 				</control>
 				<control type="button" id="808">
 					<!-- infopanel -->

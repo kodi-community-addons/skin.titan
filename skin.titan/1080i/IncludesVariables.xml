@@ -212,20 +212,17 @@
 		<value condition="StringCompare(Container(510).ListItem.VideoAspect,1.85)">16:9</value>
 		<value condition="!IsEmpty(Container(510).ListItem.VideoAspect)">$INFO[Container(510).ListItem.VideoAspect]</value>
 		
-		<value condition="StringCompare(VideoPlayer.VideoAspect,1.33)">4:3</value>
-		<value condition="StringCompare(VideoPlayer.VideoAspect,1.37)">4:3</value>
-		<value condition="StringCompare(VideoPlayer.VideoAspect,1.78)">16:9</value>
-		<value condition="StringCompare(VideoPlayer.VideoAspect,1.85)">16:9</value>
-		<value condition="!IsEmpty(VideoPlayer.VideoAspect)">$INFO[VideoPlayer.VideoAspect]</value>
-		
-		
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.VideoAspect,1.33)">4:3</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.VideoAspect,1.37)">4:3</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.VideoAspect,1.78)">16:9</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.VideoAspect,1.85)">16:9</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoAspect)">$INFO[VideoPlayer.VideoAspect]</value>
 
-		<value>$INFO[ListItem.VideoAspect]</value>
 	</variable>
     
     <variable name="VideoResolutionVar">
         <value condition="!IsEmpty(ListItem.VideoResolution)">$INFO[ListItem.VideoResolution]</value>
-		<value condition="!IsEmpty(VideoPlayer.VideoResolution)">$INFO[VideoPlayer.VideoResolution]</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoResolution)">$INFO[VideoPlayer.VideoResolution]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.VideoResolution)">$INFO[Container(510).ListItem.VideoResolution]</value>
 	</variable>
 	
@@ -235,61 +232,49 @@
 		<value condition="SubString(ListItem.VideoCodec,MPEG2)">MPEG2</value>
         <value condition="!IsEmpty(ListItem.VideoCodec)">$INFO[ListItem.VideoCodec]</value>
 		
-		<value condition="SubString(VideoPlayer.VideoCodec,H264)">H.264</value>
-		<value condition="SubString(VideoPlayer.VideoCodec,H265)">H.265</value>
-		<value condition="SubString(VideoPlayer.VideoCodec,MPEG2)">MPEG2</value>
-		<value condition="!IsEmpty(VideoPlayer.VideoCodec)">$INFO[VideoPlayer.VideoCodec]</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,H264)">H.264</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,H265)">H.265</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,MPEG2)">MPEG2</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoCodec)">$INFO[VideoPlayer.VideoCodec]</value>
 		
-		<value condition="SubString(Container(510).ListItem..VideoCodec,H264)">H.264</value>
-		<value condition="SubString(Container(510).ListItem..VideoCodec,H265)">H.265</value>
-		<value condition="SubString(Container(510).ListItem..VideoCodec,MPEG2)">MPEG2</value>
-		<value condition="!IsEmpty(Container(510).ListItem..VideoCodec)">$INFO[Container(510).ListItem..VideoCodec]</value>
+		<value condition="SubString(Container(510).ListItem.VideoCodec,H264)">H.264</value>
+		<value condition="SubString(Container(510).ListItem.VideoCodec,H265)">H.265</value>
+		<value condition="SubString(Container(510).ListItem.VideoCodec,MPEG2)">MPEG2</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec)">$INFO[Container(510).ListItem.VideoCodec]</value>
 
 	</variable>
-	
-	<variable name="VideoFileTypeVarFooter">
 
-	<value condition="ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)">3D</value>
-		<value condition="IntegerGreaterThan(ListItem.VideoResolution,1080) | SubString(ListItem.Filenameandpath,4k)">4K</value>
-		<value condition="[substring(ListItem.FilenameAndPath,bdmv) | substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">BD</value>
-		<value condition="SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right)">DVD</value>
-		<value condition="SubString(ListItem.Filenameandpath,WEBDL) | SubString(ListItem.Filenameandpath,WEB-DL)">WEB-DL</value>
-		<value condition="SubString(ListItem.Filenameandpath,WEBRIP) | SubString(ListItem.Filenameandpath,WEB-RIP)">WEBRIP</value>
-		<value condition="IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">HD</value>
-		<value condition="!IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">SD</value>
-		<value condition="!IsEmpty(ListItem.FileExtension)">$INFO[ListItem.FileExtension]</value>
-	</variable>
 	
 	<variable name="VideoFileTypeVar">
-		<value condition="ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)">3D</value>
-		<value condition="IntegerGreaterThan(ListItem.VideoResolution,1080)">4K</value>
-		<value condition="[substring(ListItem.FilenameAndPath,bdmv) | substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">BD</value>
-		<value condition="SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right)">DVD</value>
-		<value condition="SubString(ListItem.Filenameandpath,WEBDL) | SubString(ListItem.Filenameandpath,WEB-DL)">WEB-DL</value>
-		<value condition="SubString(ListItem.Filenameandpath,WEBRIP) | SubString(ListItem.Filenameandpath,WEB-RIP)">WEBRIP</value>
-		<value condition="IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">HD</value>
-		<value condition="!IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">SD</value>
-		<value condition="!IsEmpty(ListItem.FileExtension)">$INFO[ListItem.FileExtension]</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + [ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)]">3D</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + IntegerGreaterThan(ListItem.VideoResolution,1080)">4K</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + [substring(ListItem.FilenameAndPath,bdmv) | substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">BD</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + [SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right)]">DVD</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + [SubString(ListItem.Filenameandpath,WEBDL) | SubString(ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + [SubString(ListItem.Filenameandpath,WEBRIP) | SubString(ListItem.Filenameandpath,WEB-RIP)]">WEBRIP</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">HD</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + !IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">SD</value>
+		<value condition="!IsEmpty(ListItem.VideoCodec) + !IsEmpty(ListItem.FileExtension)">$INFO[ListItem.FileExtension]</value>
 		
-		<value condition="Container(510).ListItem.IsStereoScopic | !IsEmpty(Container(510).ListItem.Property(Video3DFormat)) | substring(Container(510).ListItem.FileName,.3d.)">3D</value>
-		<value condition="IntegerGreaterThan(Container(510).ListItem.VideoResolution,1080)">4K</value>
-		<value condition="[substring(Container(510).ListItem.FilenameAndPath,blu-ray) | substring(Container(510).ListItem.FilenameAndPath,bluray) | substring(Container(510).ListItem.FilenameAndPath,bdrip) | substring(Container(510).ListItem.FilenameAndPath,bd25) | substring(Container(510).ListItem.FilenameAndPath,bd50)]">BD</value>
-		<value condition="SubString(Container(510).ListItem.Filenameandpath,dvd) | SubString(Container(510).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(510).ListItem.Filenameandpath,.iso,Right)">DVD</value>
-		<value condition="SubString(Container(510).ListItem.Filenameandpath,WEBDL) | SubString(Container(510).ListItem.Filenameandpath,WEB-DL)">WEB-DL</value>
-		<value condition="SubString(Container(510).ListItem.Filenameandpath,WEBRIP) | SubString(Container(510).ListItem.Filenameandpath,WEB-RIP)">WEBRIP</value>
-		<value condition="IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)">HD</value>
-		<value condition="!IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)">SD</value>
-		<value condition="!IsEmpty(Container(510).ListItem.FileExtension)">$INFO[Container(510).ListItem.FileExtension]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [Container(510).ListItem.IsStereoScopic | !IsEmpty(Container(510).ListItem.Property(Video3DFormat)) | substring(Container(510).ListItem.FileName,.3d.)]">3D</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + IntegerGreaterThan(Container(510).ListItem.VideoResolution,1080)">4K</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [substring(Container(510).ListItem.FilenameAndPath,blu-ray) | substring(Container(510).ListItem.FilenameAndPath,bluray) | substring(Container(510).ListItem.FilenameAndPath,bdrip) | substring(Container(510).ListItem.FilenameAndPath,bd25) | substring(Container(510).ListItem.FilenameAndPath,bd50)]">BD</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + SubString(Container(510).ListItem.Filenameandpath,dvd) | SubString(Container(510).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(510).ListItem.Filenameandpath,.iso,Right)">DVD</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [SubString(Container(510).ListItem.Filenameandpath,WEBDL) | SubString(Container(510).ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [SubString(Container(510).ListItem.Filenameandpath,WEBRIP) | SubString(Container(510).ListItem.Filenameandpath,WEB-RIP)]">WEBRIP</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">HD</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [!IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">SD</value>
+		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + !IsEmpty(Container(510).ListItem.FileExtension)">$INFO[Container(510).ListItem.FileExtension]</value>
 		
-		<value condition="VideoPlayer.IsStereoScopic | !IsEmpty(VideoPlayer.Property(Video3DFormat)) | substring(Player.FileName,.3d.)">3D</value>
-		<value condition="IntegerGreaterThan(VideoPlayer.VideoResolution,1080)">4K</value>
-		<value condition="[substring(Player.FilenameAndPath,blu-ray) | substring(Player.FilenameAndPath,bluray) | substring(Player.FilenameAndPath,bdrip) | substring(Player.FilenameAndPath,bd25) | substring(Player.FilenameAndPath,bd50)]">BD</value>
-		<value condition="SubString(Player.Filenameandpath,dvd) | SubString(Player.Filenameandpath,.ifo,Right) | SubString(Player.Filenameandpath,.ISO,Right)">DVD</value>
-		<value condition="SubString(Player.Filenameandpath,WEBDL) | SubString(Player.Filenameandpath,WEB-DL)">WEB-DL</value>
-		<value condition="SubString(Player.Filenameandpath,WEBRIP) | SubString(Player.Filenameandpath,WEB-RIP)">WEBRIP</value>
-		<value condition="IntegerGreaterThan(VideoPlayer.VideoResolution,719) + !IsEmpty(VideoPlayer.VideoResolution)">HD</value>
-		<value condition="!IntegerGreaterThan(VideoPlayer.VideoResolution,719) + !IsEmpty(VideoPlayer.VideoResolution)">SD</value>
-		<value condition="!IsEmpty(Player.FileExtension)">$INFO[Player.FileExtension]</value>
+		<value condition="window.isactive(fullscreenvideo) + [VideoPlayer.IsStereoScopic | !IsEmpty(VideoPlayer.Property(Video3DFormat)) | substring(Player.FileName,.3d.)]">3D</value>
+		<value condition="window.isactive(fullscreenvideo) + IntegerGreaterThan(VideoPlayer.VideoResolution,1080)">4K</value>
+		<value condition="window.isactive(fullscreenvideo) + [substring(Player.FilenameAndPath,blu-ray) | substring(Player.FilenameAndPath,bluray) | substring(Player.FilenameAndPath,bdrip) | substring(Player.FilenameAndPath,bd25) | substring(Player.FilenameAndPath,bd50)]">BD</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(Player.Filenameandpath,dvd) | SubString(Player.Filenameandpath,.ifo,Right) | SubString(Player.Filenameandpath,.ISO,Right)">DVD</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(Player.Filenameandpath,WEBDL) | SubString(Player.Filenameandpath,WEB-DL)">WEB-DL</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(Player.Filenameandpath,WEBRIP) | SubString(Player.Filenameandpath,WEB-RIP)">WEBRIP</value>
+		<value condition="window.isactive(fullscreenvideo) + IntegerGreaterThan(VideoPlayer.VideoResolution,719) + !IsEmpty(VideoPlayer.VideoResolution)">HD</value>
+		<value condition="window.isactive(fullscreenvideo) + !IntegerGreaterThan(VideoPlayer.VideoResolution,719) + !IsEmpty(VideoPlayer.VideoResolution)">SD</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(Player.FileExtension)">$INFO[Player.FileExtension]</value>
 		
 	</variable>
 	
@@ -301,29 +286,29 @@
 		<value condition="SubString(ListItem.AudioCodec,dts-hd)">DTS HD</value>
 		<value condition="SubString(ListItem.AudioCodec,dtshd)">DTS HD</value>
 		<value condition="SubString(ListItem.AudioCodec,pcm)">PCM</value>
+        <value condition="!IsEmpty(ListItem.AudioCodec)">$INFO[ListItem.AudioCodec]</value>
 		
-		<value condition="!IsEmpty(MusicPlayer.Codec)">$INFO[MusicPlayer.Codec]</value>
-		<value condition="StringCompare(VideoPlayer.AudioCodec,ac3)">DOLBY D</value>
-		<value condition="StringCompare(VideoPlayer.AudioCodec,dca)">DTS</value>
-		<value condition="SubString(VideoPlayer.AudioCodec,dts-hd)">DTS HD</value>
-		<value condition="SubString(VideoPlayer.AudioCodec,dtshd)">DTS HD</value>
-		<value condition="SubString(VideoPlayer.AudioCodec,pcm)">PCM</value>
-		<value condition="!IsEmpty(VideoPlayer.AudioCodec)">$INFO[VideoPlayer.AudioCodec]</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(MusicPlayer.Codec)">$INFO[MusicPlayer.Codec]</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioCodec,ac3)">DOLBY D</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioCodec,dca)">DTS</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.AudioCodec,dts-hd)">DTS HD</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.AudioCodec,dtshd)">DTS HD</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.AudioCodec,pcm)">PCM</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.AudioCodec)">$INFO[VideoPlayer.AudioCodec]</value>
 		
-		<value condition="StringCompare(Container(510).ListItem..AudioCodec,ac3)">DOLBY D</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioCodec,dca)">DTS</value>
-		<value condition="SubString(Container(510).ListItem..AudioCodec,dts-hd)">DTS HD</value>
-		<value condition="SubString(Container(510).ListItem..AudioCodec,dtshd)">DTS HD</value>
-		<value condition="SubString(Container(510).ListItem..AudioCodec,pcm)">PCM</value>
-		<value condition="!IsEmpty(Container(510).ListItem..AudioCodec)">$INFO[Container(510).ListItem.AudioCodec]</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioCodec,ac3)">DOLBY D</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioCodec,dca)">DTS</value>
+		<value condition="SubString(Container(510).ListItem.AudioCodec,dts-hd)">DTS HD</value>
+		<value condition="SubString(Container(510).ListItem.AudioCodec,dtshd)">DTS HD</value>
+		<value condition="SubString(Container(510).ListItem.AudioCodec,pcm)">PCM</value>
+		<value condition="!IsEmpty(Container(510).ListItem.AudioCodec)">$INFO[Container(510).ListItem.AudioCodec]</value>
 
-		<value>$INFO[ListItem.AudioCodec]</value>
 	</variable>
     
     <variable name="AudioLanguageVar">
         <value condition="!IsEmpty(ListItem.AudioLanguage)">$INFO[ListItem.AudioLanguage]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.AudioLanguage)">$INFO[Container(510).ListItem.AudioLanguage]</value>
-        <value condition="!IsEmpty(VideoPlayer.AudioLanguage)">$INFO[VideoPlayer.AudioLanguage]</value>
+        <value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.AudioLanguage)">$INFO[VideoPlayer.AudioLanguage]</value>
 	</variable>
 	
 	<variable name="AudioChannelsVar">
@@ -338,38 +323,38 @@
 		<value condition="StringCompare(ListItem.AudioChannels,9)">9.1</value>
         <value condition="!IsEmpty(ListItem.Channels)">$INFO[ListItem.Channels]</value>
         
-        <value condition="StringCompare(Container(510).ListItem..AudioChannels,1)">1.0</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,2)">2.0</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,3)">2.1</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,4)">4.0</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,5)">5.0</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,6)">5.1</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,7)">6.1</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,8)">7.1</value>
-		<value condition="StringCompare(Container(510).ListItem..AudioChannels,9)">9.1</value>
-		<value condition="!IsEmpty(Container(510).ListItem..AudioChannels)">$INFO[Container(510).ListItem.AudioChannels]</value>
+        <value condition="StringCompare(Container(510).ListItem.AudioChannels,1)">1.0</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,2)">2.0</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,3)">2.1</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,4)">4.0</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,5)">5.0</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,6)">5.1</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,7)">6.1</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,8)">7.1</value>
+		<value condition="StringCompare(Container(510).ListItem.AudioChannels,9)">9.1</value>
+		<value condition="!IsEmpty(Container(510).ListItem.AudioChannels)">$INFO[Container(510).ListItem.AudioChannels]</value>
 		
-		<value condition="StringCompare(MusicPlayer.Channels,1)">1.0</value>
-		<value condition="StringCompare(MusicPlayer.Channels,2)">2.0</value>
-		<value condition="StringCompare(MusicPlayer.Channels,3)">2.1</value>
-		<value condition="StringCompare(MusicPlayer.Channels,4)">4.0</value>
-		<value condition="StringCompare(MusicPlayer.Channels,5)">5.0</value>
-		<value condition="StringCompare(MusicPlayer.Channels,6)">5.1</value>
-		<value condition="StringCompare(MusicPlayer.Channels,7)">6.1</value>
-		<value condition="StringCompare(MusicPlayer.Channels,8)">7.1</value>
-		<value condition="StringCompare(MusicPlayer.Channels,9)">9.1</value>
-		<value condition="!IsEmpty(MusicPlayer.Channels)">$INFO[MusicPlayer.Channels]</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,1)">1.0</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,2)">2.0</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,3)">2.1</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,4)">4.0</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,5)">5.0</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,6)">5.1</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,7)">6.1</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,8)">7.1</value>
+		<value condition="window.isactive(visualisation) + StringCompare(MusicPlayer.Channels,9)">9.1</value>
+		<value condition="window.isactive(visualisation) + !IsEmpty(MusicPlayer.Channels)">$INFO[MusicPlayer.Channels]</value>
 		
-		<value condition="StringCompare(VideoPlayer.AudioChannels,1)">1.0</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,2)">2.0</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,3)">2.1</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,4)">4.0</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,5)">5.0</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,6)">5.1</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,7)">6.1</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,8)">7.1</value>
-		<value condition="StringCompare(VideoPlayer.AudioChannels,9)">9.1</value>
-		<value condition="!IsEmpty(VideoPlayer.AudioChannels)">$INFO[VideoPlayer.AudioChannels]</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,1)">1.0</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,2)">2.0</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,3)">2.1</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,4)">4.0</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,5)">5.0</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,6)">5.1</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,7)">6.1</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,8)">7.1</value>
+		<value condition="window.isactive(fullscreenvideo) + StringCompare(VideoPlayer.AudioChannels,9)">9.1</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.AudioChannels)">$INFO[VideoPlayer.AudioChannels]</value>
 
 	</variable>
 	

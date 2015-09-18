@@ -5,13 +5,18 @@
 	<views>10,50,51,52,500,501,502,503,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516</views>
 </include>
 
+<include name="altEpgOnScreen">
+    <top>780</top>
+    <height>390</height>
+</include>
+
 <include name="allViews">
 	<!--Views (behind footer)-->
 	<control type="group">
 		<include>animation_window_open_close</include>
 		<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
 		<visible>IntegerGreaterThan(Container.NumItems,0)</visible>
-		<include>View_50_List</include>
+		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.50)">View_50_List</include>
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.10)">View_10_SimplePVR</include>
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.55)">View_55_BannerList</include>
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.500)">View_500_Showcase</include>
@@ -1589,7 +1594,7 @@
                 <height>30</height>
                 <label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar]</label>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
-                <visible>!IsEmpty(Control.GetLabel(44224))</visible>
+                <visible>!IsEmpty(Control.GetLabel(44223))</visible>
             </control>
 
             <control type="label">
@@ -1616,6 +1621,13 @@
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <label>$VAR[AudioCodecVar,, • ]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar, • ]</label>
                 <visible>!IsEmpty(Control.GetLabel(44224))</visible>
+            </control>
+            <control type="label">
+                <font>flags</font>
+                <width>auto</width>
+                <height>30</height>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$INFO[ListItem.AudioCodec.0]</label>
             </control>
             
             <control type="label">
@@ -1721,6 +1733,7 @@
                 <height>30</height>
                 <label>•  </label>
                 <visible>!IsEmpty(Control.GetLabel(44229))</visible>
+                <visible>Window.IsActive(fullscreenvideo)</visible>
             </control>
             
             <!-- OSD label 3 -->
