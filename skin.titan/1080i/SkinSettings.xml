@@ -9,14 +9,26 @@
     <controls>
         <!--Global Background-->
         <include>GlobalBackground</include>
-        <!--Time & Weather-->
-        <include condition="!Skin.HasSetting(DisableHeader)">TimeInfo</include>
-		<!-- Now playing -->
+        
+        <!-- Now playing -->
 		<include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
 		
         <!--Header-->
-        <include condition="!Skin.HasSetting(DisableHeader)">Header</include>
-		<control type="group">
+        <control type="group">
+            <visible>!Skin.HasSetting(DisableHeader)</visible>
+            <include>TimeInfo</include>
+        </control>
+        <control type="group">
+            <visible>!Skin.HasSetting(DisableHeader) + !Skin.HasSetting(AlwaysShowWeather)</visible>
+            <include>Header</include>
+        </control>
+        <control type="group">
+            <visible>Skin.HasSetting(AlwaysShowWeather)</visible>
+            <include>WeatherInfo</include>
+        </control>
+
+        
+        <control type="group">
 			<bottom>125</bottom>
 			<height>75%</height>
 			<control type="image">
@@ -2130,7 +2142,7 @@
 					
 					<control type="radiobutton" id="23025">
 						<description></description>
-						<!--hide power-->
+						<!--disable power-->
 						<width>1230</width>
 						<align>left</align>
 						<label>31198</label>
@@ -2139,6 +2151,18 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(DisablePowerMenu)</onclick>
 						<selected>Skin.HasSetting(DisablePowerMenu)</selected>
+					</control>
+                    <control type="radiobutton" id="23027">
+						<description></description>
+						<!--disable power-->
+						<width>1230</width>
+						<align>left</align>
+						<label>31594</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(HidePowerMenu)</onclick>
+						<selected>Skin.HasSetting(HidePowerMenu)</selected>
+                        <visible>!Skin.HasSetting(DisablePowerMenu)</visible>
 					</control>
 					
 					<control type="button" id="23026">
@@ -2538,7 +2562,6 @@
 						<align>left</align>
 						<label>$LOCALIZE[31209]</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(EnableTouchSupport)</onclick>
 						<selected>Skin.HasSetting(EnableTouchSupport)</selected>
@@ -2548,7 +2571,6 @@
 						<align>left</align>
 						<label>$LOCALIZE[31215]</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(HideMouseCursor)</onclick>
 						<selected>Skin.HasSetting(HideMouseCursor)</selected>
@@ -2559,12 +2581,12 @@
 						<align>left</align>
 						<label>$LOCALIZE[31292]</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(HideBatteryStatus)</onclick>
 						<selected>Skin.HasSetting(HideBatteryStatus)</selected>
 						<visible>Skin.HasSetting(EnableTouchSupport) + !Skin.String(HomeLayout, simplever)</visible>
 					</control>
+                    
 					<control type="radiobutton" id="5139">
 						<description></description>
 						<!--enable artwork downloader-->
@@ -2591,19 +2613,7 @@
 						<selected>Skin.HasSetting(DisableNowPlayingBackground)</selected>
 						<visible>!skin.hastheme(classic)</visible>
 					</control>
-					<control type="radiobutton" id="5142">
-						<!--Radio use path-->
-						<description>Radio</description>
-						<width>1230</width>
-						<align>left</align>
-						<label>$LOCALIZE[31020]</label>
-						<height>50</height>
-						
-						<font>Reg28</font>
-						<onclick condition="!Skin.String(HomeMenuUseRadioCollection)">Skin.SetPath(HomeMenuUseRadioCollection)</onclick>
-						<onclick condition="Skin.String(HomeMenuUseRadioCollection)">Skin.Reset(HomeMenuUseRadioCollection)</onclick>
-						<selected>Skin.String(HomeMenuUseRadioCollection)</selected>
-					</control>
+
 					<control type="radiobutton" id="5143">
 						<width>1230</width>
 						<align>left</align>
@@ -2668,7 +2678,6 @@
 						<align>left</align>
 						<label>31318</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(KioskMode.Enabled)</onclick>
 						<selected>Skin.HasSetting(KioskMode.Enabled)</selected>
@@ -2703,7 +2712,6 @@
 						<align>left</align>
 						<label>31344</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(alwaysShowScrollbars)</onclick>
 						<selected>Skin.HasSetting(alwaysShowScrollbars)</selected>
@@ -2754,6 +2762,15 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(DisableHeader)</onclick>
 						<selected>Skin.HasSetting(DisableHeader)</selected>
+					</control>
+                    <control type="radiobutton" id="5152">
+						<width>1230</width>
+						<align>left</align>
+						<label>$LOCALIZE[31593]</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(AlwaysShowWeather)</onclick>
+						<selected>Skin.HasSetting(AlwaysShowWeather)</selected>
 					</control>
 					
 					<!--LOADING SPINNER-->

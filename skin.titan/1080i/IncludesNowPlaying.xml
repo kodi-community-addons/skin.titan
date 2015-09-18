@@ -295,59 +295,65 @@
 			</control>
 			<control type="grouplist">
                 <!--OSD-->
-                <posx>1530</posx>
+                <right>60</right>
                 <posy>55</posy>
-                <width>1000</width>
+                <width>280</width>
                 <height>130</height>
                 <itemgap>0</itemgap>
 				<visible>Skin.HasSetting(EnableTouchSupport)</visible>
                 <orientation>horizontal</orientation>
-                <control type="button">
+                <control type="togglebutton">
                     <!--Skip Back-->
                     <!--visible>ControlGroup(20).HasFocus()</visible-->
                     <include>animation_fade_visible_hidden</include>
-                    <width>90</width>
-                    <height>98</height>
+                    <width>70</width>
+                    <height>70</height>
                     <label>210</label>
                     <font>-</font>
-                    <texturefocus>osd/OSDPreviousFO.png</texturefocus>
-                    <texturenofocus>osd/OSDPreviousNF.png</texturenofocus>
+                    <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDPrevTrack.png</texturefocus>
+                    <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDPrevTrack.png</texturenofocus>
+                    <usealttexture>VideoPlayer.Content(livetv)</usealttexture>
+                    <alttexturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDChannelUP.png</alttexturefocus>
+                    <alttexturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDChannelUP.png</alttexturenofocus>
                     <onclick>PlayerControl(Previous)</onclick>
                 </control>
                 <control type="togglebutton">
                     <label></label>
                     <altlabel></altlabel>
                     <include>animation_fade_visible_hidden</include>
-                    <width>90</width>
-                    <height>98</height>
+                    <width>70</width>
+                    <height>70</height>
                     <font>-</font>
-                    <texturefocus>osd/OSDPauseFO.png</texturefocus>
-                    <texturenofocus>osd/OSDPauseNF.png</texturenofocus>
+                    <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDPause.png</texturefocus>
+                    <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDPause.png</texturenofocus>
                     <usealttexture>Player.Paused | Player.Forwarding | Player.Rewinding</usealttexture>
-                    <alttexturefocus>osd/OSDPlayFO.png</alttexturefocus>
-                    <alttexturenofocus>osd/OSDPlayNF.png</alttexturenofocus>
+                    <alttexturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDPlay.png</alttexturefocus>
+                    <alttexturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDPlay.png</alttexturenofocus>
                     <onclick>PlayerControl(Play)</onclick>
                 </control>
                 <control type="button">
                     <label></label>
                     <!--Stop-->
                     <include>animation_fade_visible_hidden</include>
-                    <width>90</width>
-                    <height>98</height>
+                    <width>70</width>
+                    <height>70</height>
                     <font>-</font>
-                    <texturefocus>osd/OSDStopFO.png</texturefocus>
-                    <texturenofocus>osd/OSDStopNF.png</texturenofocus>
+                    <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDStop.png</texturefocus>
+                    <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDStop.png</texturenofocus>
                     <onclick>PlayerControl(Stop)</onclick>
                 </control>
-                <control type="button">
+                <control type="togglebutton">
                     <!--Next-->
                     <include>animation_fade_visible_hidden</include>
-                    <width>90</width>
-                    <height>98</height>
+                    <width>70</width>
+                    <height>70</height>
                     <label>209</label>
                     <font>-</font>
-                    <texturefocus>osd/OSDNextFO.png</texturefocus>
-                    <texturenofocus>osd/OSDNextNF.png</texturenofocus>
+                    <texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDNextTrack.png</texturefocus>
+                    <texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDNextTrack.png</texturenofocus>
+                    <usealttexture>VideoPlayer.Content(livetv)</usealttexture>
+                    <alttexturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDChannelDown.png</alttexturefocus>
+                    <alttexturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDChannelDown.png</alttexturenofocus>
                     <onclick>PlayerControl(Next)</onclick>
                 </control>
             </control>
@@ -359,7 +365,8 @@
 	<include name="nowplayingbackground">
 		<control type="group">
 		<visible>[!Skin.HasSetting(DisableNowPlayingBackground) + Player.HasMedia + !Control.IsVisible(507) + !Control.IsVisible(DialogVideoInfo.xml) + IsEmpty(Window(Home).Property(PlayingBackgroundMedia))] | [!IsEmpty(Window(Home).Property(PlayingBackgroundMedia)) + Player.HasVideo]</visible>
-			<!--normal artist image (fallback)-->
+			
+            <!--normal artist image (fallback)-->
 			<control type="group">
 				<visible>Player.HasAudio</visible>
 				<control type="image">
@@ -403,6 +410,15 @@
 				<include>DimensionsFullscreen</include>
 				<visible>Player.HasVideo</visible>
 			</control>
+            
+            <control type="image" description="panel behind bg">
+                <include>DimensionsFullscreen</include>
+                <texture>colors/color_white.png</texture>
+                <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
+                <visible>Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)</visible>
+                <animation effect="fade" start="100" end="40" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
+            </control>
+            
 			<!--Dialog Overlay-->
 			<control type="group">
 				<visible>Player.HasMedia + ![!IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + Player.HasAudio]</visible>
