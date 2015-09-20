@@ -374,7 +374,7 @@
 						</control>
 						
 						<control type="group">
-							<right>80</right>
+							<right>60</right>
 							<posy>246</posy>
 							<include>WatchedIndicatorLarge</include>
 						</control>
@@ -394,7 +394,7 @@
 								<posx>0</posx>
 								<posy>0</posy>
 								<width>1150</width>
-								<height>260</height>
+								<height max="260">auto</height>
 								<label>$INFO[ListItem.Plot]</label>
 								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
@@ -406,7 +406,7 @@
 								<posx>0</posx>
 								<posy>0</posy>
 								<width>1150</width>
-								<height>200</height>
+								<height max="200">auto</height>
 								<label>$INFO[ListItem.Plot]</label>
 								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
@@ -582,7 +582,127 @@
 									<visible>!IsEmpty(ListItem.Studio)</visible>
 								</control>
 							</control>
-							<control type="image">
+							
+                            <control type="group">
+								<!--videocodec and audiocodec-->
+								<width>1150</width>
+								<height>40</height>
+								<visible>!IsEmpty(ListItem.VideoCodec) + !IsEmpty(ListItem.AudioCodec)</visible>
+								<control type="image">
+									<posx>10</posx>
+									<posy>15</posy>
+									<width>30</width>
+									<height>30</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/video.png</texture>
+								</control>
+								<control type="label">
+									<posx>60</posx>
+									<posy>0</posy>
+									<width>600</width>
+									<font>flags</font>
+									<align>left</align>
+									<label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+								</control>
+                                
+								<control type="image">
+									<posx>710</posx>
+									<posy>15</posy>
+									<width>36</width>
+									<height>36</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/audio.png</texture>
+								</control>
+								<control type="label">
+									<posx>760</posx>
+									<posy>0</posy>
+									<width>370</width>
+									<font>flags</font>
+									<align>left</align>
+									<label>$INFO[Window(home).Property(SkinHelper.ListItemAllAudioStreams)]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+								</control>
+							</control>
+                            
+                            <control type="group">
+								<!--RATING and SUBTITLES-->
+								<width>1150</width>
+								<height>40</height>
+								<visible>!IsEmpty(ListItem.SubtitleLanguage) + !IsEmpty(ListItem.mpaa)</visible>
+								<control type="image">
+									<posx>8</posx>
+									<posy>15</posy>
+									<width>36</width>
+									<height>36</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/subtitles.png</texture>
+								</control>
+								<control type="label">
+									<posx>60</posx>
+									<posy>0</posy>
+									<width>600</width>
+									<font>flags</font>
+									<align>left</align>
+									<label>$INFO[ListItem.SubtitleLanguage]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+								</control>
+                                
+								<control type="image">
+									<posx>711</posx>
+									<posy>15</posy>
+									<width>30</width>
+									<height>30</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/rating.png</texture>
+								</control>
+								<control type="label">
+									<posx>760</posx>
+									<posy>0</posy>
+									<width>370</width>
+									<font>flags</font>
+									<align>left</align>
+									<label fallback="?">$INFO[ListItem.Rating]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+								</control>
+                                
+                                <control type="image">
+									<posx>820</posx>
+									<posy>15</posy>
+									<width>30</width>
+									<height>30</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/mpaa.png</texture>
+                                    <visible>!IsEmpty(ListItem.mpaa)</visible>
+								</control>
+								<control type="label">
+									<posx>860</posx>
+									<posy>0</posy>
+									<width>370</width>
+									<font>flags</font>
+									<align>left</align>
+									<label fallback="?">$VAR[RatingFlagVar]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+                                    <visible>!IsEmpty(ListItem.mpaa)</visible>
+								</control>
+                                
+                                
+                                
+							</control>
+							
+                            
+                            
+                            <control type="image">
 								<width>1150</width>
 								<height>15</height>
 								<texture>colors/color_transparent.png</texture>
@@ -640,17 +760,7 @@
 					
 					
 					</control>
-					
-					<!-- movie flags -->
-					<control type="group">
-						<posx>65</posx>
-						<bottom>245</bottom>
-						<height>50</height>
-						<width>1150</width>
-						<posy>920</posy>
-						<include>mediaflags</include>
-						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
-					</control>
+
 					<control type="group">
 						<posx>65</posx>
 						<bottom>210</bottom>
