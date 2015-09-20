@@ -4,17 +4,17 @@
     <defaultcontrol always="true">11</defaultcontrol>
 	<allowoverlay>no</allowoverlay>
 	<views>10,11,12</views>
-    <onunload>ClearProperty(LastWindow,home)</onunload>
+    <onunload>ClearProperty(pvrGuideOnFullscreenVideo,home)</onunload>
     <controls>
         <control type="group">
-            <visible>!StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+            <visible>IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
             <!--Global Background-->
             <include>GlobalBackground</include>
             <!--Header-->
             <include condition="!Skin.HasSetting(DisableHeader) + !Skin.HasSetting(AlwaysShowWeather)">Header</include>
-        <include condition="Skin.HasSetting(AlwaysShowWeather)">WeatherInfo</include>
+            <include condition="Skin.HasSetting(AlwaysShowWeather)">WeatherInfo</include>
             <!--NowPlaying-->
-            <include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
+            <include condition="!Skin.HasTheme(classic) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">NowPlayingModern</include>
             <!--Time & Weather-->
             <include condition="!Skin.HasSetting(DisableHeader)">TimeInfo</include>
             
@@ -25,7 +25,7 @@
             </control>
 		</control>
         
-        <include condition="StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">nowplayingbackground</include>
+        <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">nowplayingbackground</include>
         
         <!--Hidden-->
         <control type="label" id="29">
@@ -40,7 +40,7 @@
             <description>Empty so we can pass the values up one level</description>
             <visible allowhiddenfocus="true">False</visible>
             <onfocus>FullScreen</onfocus>
-            <onfocus>ClearProperty(LastWindow,home)</onfocus>
+            <onfocus>ClearProperty(pvrGuideOnFullscreenVideo,home)</onfocus>
         </control>
         <!--PVR Views-->
  
@@ -63,7 +63,7 @@
 					<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 					<aspectratio>stretch</aspectratio>
                     <visible>!Skin.HasSetting(PVRGuideHidepanel)</visible>
-					<visible>!Skin.HasSetting(GuideShowInfo) + !StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+					<visible>!Skin.HasSetting(GuideShowInfo) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
                 
                 <!-- background panel EPG when active as half guide on top of video -->
@@ -75,8 +75,7 @@
 					<texture border="15">diffuse/bgpanel.png</texture>
 					<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
 					<aspectratio>stretch</aspectratio>
-                    <visible>!Skin.HasSetting(PVRGuideHidepanel)</visible>
-					<visible>StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+					<visible>!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
                 <!-- background panel EPG when info enabled -->
@@ -89,7 +88,7 @@
 					<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 					<aspectratio>stretch</aspectratio>
                      <visible>!Skin.HasSetting(PVRGuideHidepanel)</visible>
-					<visible>Skin.HasSetting(GuideShowInfo) + !StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+					<visible>Skin.HasSetting(GuideShowInfo) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
 				<control type="image">
@@ -100,7 +99,7 @@
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
 					<visible>skin.string(GuideRows, 10) + control.isvisible(10)</visible>
-					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + !StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
 				<control type="image">
@@ -111,7 +110,7 @@
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
 					<visible>!skin.string(GuideRows, 10) + control.isvisible(10)</visible>
-					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + !StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
 				
@@ -123,7 +122,7 @@
 					<height>10</height>
 					<align>left</align>
 					<texture border="10">common/menu-separator.png</texture>
-                    <visible>!StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+                    <visible>IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				<control type="image">
 					<!--Seperator-->
@@ -133,14 +132,14 @@
 					<height>10</height>
 					<align>left</align>
 					<texture border="10">common/menu-separator.png</texture>
-                    <visible>!StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+                    <visible>IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
 				<!-- info panel -->
 				<control type="group">
 					<posx>60</posx>
 					<posy>965</posy>
-					<visible>Skin.HasSetting(GuideShowInfo) + !StringCompare(Window(home).Property(LastWindow),fullscreenvideo)</visible>
+					<visible>Skin.HasSetting(GuideShowInfo) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 					<control type="image">
 						<!--Icon-->
 						<right>60</right>
@@ -212,7 +211,7 @@
 				<viewtype label="19032">list</viewtype>
 				<description>EPG Grid</description>
 				<include>animation_view_change_pvr</include>
-                <include condition="StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">altEpgOnScreen</include>
+                <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">altEpgOnScreen</include>
 				<top>280</top>
 				<height>668</height>
 				<left>50</left>
@@ -222,8 +221,8 @@
 				<timeblocks>40</timeblocks>
 				<rulerunit>6</rulerunit>
 				<onleft>9000</onleft>
-				<onback condition="Skin.HasSetting(PVRGuideBackSideblade) + !StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">9000</onback>
-                <onback condition="StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">9200</onback>
+				<onback condition="Skin.HasSetting(PVRGuideBackSideblade) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9000</onback>
+                <onback condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9200</onback>
 				<include condition="!Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorNormal</include>
 				<include condition="Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorAlt</include>
 				<onleft>31</onleft>
@@ -1508,9 +1507,9 @@
 	   </control>
     
 		<!--Sub Menu-->
-        <include condition="!StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">SubMenuTabLeft</include>
-		<include condition="!StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">SubMenuTabTop</include>
-		<include condition="!StringCompare(Window(home).Property(LastWindow),fullscreenvideo)">PVRsideblade</include>
+        <include condition="IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">SubMenuTabLeft</include>
+		<include condition="IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">SubMenuTabTop</include>
+		<include condition="IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">PVRsideblade</include>
 		
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
