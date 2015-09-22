@@ -3,7 +3,7 @@
 	<include name="skinshortcuts-mainmenu">
 		<item id="1">
 			<label>$ADDON[script.skinshortcuts 32022]</label>
-			<label2>$ADDON[script.skinshortcuts 32022]</label2>
+			<label2>Live TV</label2>
 			<icon>special://skin/extras/hometiles/livetv.png</icon>
 			<thumb />
 			<property name="labelID">livetv</property>
@@ -34,7 +34,7 @@
 		</item>
 		<item id="2">
 			<label>$LOCALIZE[342]</label>
-			<label2>$LOCALIZE[342]</label2>
+			<label2>Movies</label2>
 			<icon>special://skin/extras/hometiles/movies.png</icon>
 			<thumb>$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]</thumb>
 			<property name="labelID">movies</property>
@@ -64,7 +64,7 @@
 		</item>
 		<item id="3">
 			<label>$LOCALIZE[20343]</label>
-			<label2>$LOCALIZE[20343]</label2>
+			<label2>TV shows</label2>
 			<icon>special://skin/extras/hometiles/tvseries.png</icon>
 			<thumb>$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]</thumb>
 			<property name="labelID">tvshows</property>
@@ -94,7 +94,7 @@
 		</item>
 		<item id="4">
 			<label>$LOCALIZE[10005]</label>
-			<label2>$LOCALIZE[10005]</label2>
+			<label2>Music</label2>
 			<icon>special://skin/extras/hometiles/music.png</icon>
 			<thumb>$INFO[Window(Home).Property(SkinHelper.AllMusicBackground)]</thumb>
 			<property name="labelID">music</property>
@@ -124,7 +124,7 @@
 		</item>
 		<item id="5">
 			<label>$LOCALIZE[20389]</label>
-			<label2>$LOCALIZE[20389]</label2>
+			<label2>Music videos</label2>
 			<icon>special://skin/extras/backgrounds/hover_my music.jpg</icon>
 			<thumb>$INFO[Window(Home).Property(SkinHelper.AllMusicVideosBackground)]</thumb>
 			<property name="labelID">musicvideos</property>
@@ -149,7 +149,7 @@
 		</item>
 		<item id="6">
 			<label>$LOCALIZE[12600]</label>
-			<label2>$LOCALIZE[12600]</label2>
+			<label2>Weather</label2>
 			<icon>special://skin/extras/hometiles/weather.png</icon>
 			<thumb>special://skin/extras/weather/$INFO[Window(Weather).Property(Current.FanartCode)]/weather.jpg</thumb>
 			<property name="labelID">weather</property>
@@ -200,7 +200,7 @@
 		</item>
 		<item id="8">
 			<label>$LOCALIZE[10002]</label>
-			<label2>$LOCALIZE[10002]</label2>
+			<label2>Pictures</label2>
 			<icon>special://skin/extras/hometiles/pictures.png</icon>
 			<thumb>$INFO[Window(Home).Property(SkinHelper.PicturesBackground)]</thumb>
 			<property name="labelID">pictures</property>
@@ -220,7 +220,7 @@
 		</item>
 		<item id="9">
 			<label>$LOCALIZE[10040]</label>
-			<label2>$LOCALIZE[10040]</label2>
+			<label2>Add-on browser</label2>
 			<icon>special://skin/extras/hometiles/addons.png</icon>
 			<thumb />
 			<property name="labelID">10040</property>
@@ -240,7 +240,7 @@
 		</item>
 		<item id="10">
 			<label>$LOCALIZE[10006]</label>
-			<label2>$LOCALIZE[10006]</label2>
+			<label2>Videos</label2>
 			<icon>special://skin/extras/hometiles/videos.png</icon>
 			<thumb />
 			<property name="labelID">videos</property>
@@ -260,7 +260,7 @@
 		</item>
 		<item id="11">
 			<label>$LOCALIZE[10004]</label>
-			<label2>$LOCALIZE[10004]</label2>
+			<label2>Settings</label2>
 			<icon>special://skin/extras/hometiles/settings.png</icon>
 			<thumb />
 			<property name="labelID">settings</property>
@@ -652,7 +652,10 @@
 			<property name="labelID">31127</property>
 			<property name="defaultID">135</property>
 			<visible>[Library.HasContent(Movies)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentmovies.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
 			<property name="list">videodb://recentlyaddedmovies/</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
@@ -725,7 +728,10 @@
 			<property name="labelID">20387</property>
 			<property name="defaultID">20387</property>
 			<visible>[Library.HasContent(TVShows)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentepisodes.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</property>
 			<property name="list">videodb://recentlyaddedepisodes/</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
@@ -1103,7 +1109,10 @@
 			<property name="labelID">31127</property>
 			<property name="defaultID">135</property>
 			<visible>[Library.HasContent(Movies)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentmovies.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
 			<property name="list">videodb://recentlyaddedmovies/</property>
 			<visible>StringCompare(System.ProfileName,test)</visible>
@@ -1176,7 +1185,10 @@
 			<property name="labelID">20387</property>
 			<property name="defaultID">20387</property>
 			<visible>[Library.HasContent(TVShows)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentepisodes.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</property>
 			<property name="list">videodb://recentlyaddedepisodes/</property>
 			<visible>StringCompare(System.ProfileName,test)</visible>
@@ -1740,7 +1752,10 @@
 			<property name="labelID">31127</property>
 			<property name="defaultID">135</property>
 			<visible>Library.HasContent(Movies)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentmovies.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
 			<property name="list">videodb://recentlyaddedmovies/</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
@@ -1813,7 +1828,10 @@
 			<property name="labelID">31127</property>
 			<property name="defaultID">135</property>
 			<visible>Library.HasContent(Movies)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentmovies.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
 			<property name="list">videodb://recentlyaddedmovies/</property>
 			<visible>StringCompare(System.ProfileName,test)</visible>
@@ -1888,7 +1906,10 @@
 			<property name="labelID">31127</property>
 			<property name="defaultID">135</property>
 			<visible>[Library.HasContent(Movies)] + StringCompare(Window(10000).Property(submenuVisibility),movies)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentmovies.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
 			<property name="list">videodb://recentlyaddedmovies/</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
@@ -1961,7 +1982,10 @@
 			<property name="labelID">31127</property>
 			<property name="defaultID">135</property>
 			<visible>[Library.HasContent(Movies)] + StringCompare(Window(10000).Property(submenuVisibility),movies)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentmovies.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentmovies.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedmovies/,return)</property>
 			<property name="list">videodb://recentlyaddedmovies/</property>
 			<visible>StringCompare(System.ProfileName,test)</visible>
@@ -2036,7 +2060,10 @@
 			<property name="labelID">20387</property>
 			<property name="defaultID">20387</property>
 			<visible>Library.HasContent(TVShows)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentepisodes.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</property>
 			<property name="list">videodb://recentlyaddedepisodes/</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
@@ -2094,7 +2121,10 @@
 			<property name="labelID">20387</property>
 			<property name="defaultID">20387</property>
 			<visible>Library.HasContent(TVShows)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentepisodes.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</property>
 			<property name="list">videodb://recentlyaddedepisodes/</property>
 			<visible>StringCompare(System.ProfileName,test)</visible>
@@ -2154,7 +2184,10 @@
 			<property name="labelID">20387</property>
 			<property name="defaultID">20387</property>
 			<visible>[Library.HasContent(TVShows)] + StringCompare(Window(10000).Property(submenuVisibility),tvshows)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentepisodes.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</property>
 			<property name="list">videodb://recentlyaddedepisodes/</property>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
@@ -2212,7 +2245,10 @@
 			<property name="labelID">20387</property>
 			<property name="defaultID">20387</property>
 			<visible>[Library.HasContent(TVShows)] + StringCompare(Window(10000).Property(submenuVisibility),tvshows)</visible>
-			<onclick>ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
+			<onclick condition="Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</onclick>
+			<property name="path">ActivateWindow(10025,special://skin/extras/widgetplaylists/recentepisodes.xsp,return)</property>
+			<property name="list">special://skin/extras/widgetplaylists/recentepisodes.xsp</property>
+			<onclick condition="!Skin.HasSetting(HideWatchedRecentlyAdded)">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://recentlyaddedepisodes/,return)</property>
 			<property name="list">videodb://recentlyaddedepisodes/</property>
 			<visible>StringCompare(System.ProfileName,test)</visible>
