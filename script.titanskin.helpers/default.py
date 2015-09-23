@@ -14,5 +14,9 @@ if action =="migrate":
 elif action =="migratecolors":
     migrateColorSettings()
 
-if action =="migratethemes":
+elif action =="migratethemes":
     migrateColorThemes()
+
+elif action:
+    #TEMP: issue warning about the incompatible helper script
+    xbmcgui.Dialog().ok("Titan skin - unsupported configuration", "Warning - You are using the stable version of the skin while having the beta repo installed, this is currently unsupported. Switch to the beta version of the skin or see the forums how to fix the stable version.")
