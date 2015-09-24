@@ -420,7 +420,7 @@ def migrateSkinShortcuts():
                             propertiesList.append("['mainmenu', '%s', 'widgetName', u'$LOCALIZE[359]']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetType', u'songs']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetTarget', u'music']"%defaultID)
-                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'special://skin/extras/widgetplaylists/recentalbums.xsp']"%defaultID)
+                            propertiesList.append("['mainmenu', '%s', 'widgetPath', u'plugin://script.skin.helper.service/?action=recentalbums&limit=25&reload=$INFO[Window(Home).Property(widgetreloadmusic)]']"%defaultID)
                         elif widget == "custom" and "window-home-property" in defaultID:
                             propertiesList.append("['mainmenu', '%s', 'widget', u'custom']"%defaultID)
                             propertiesList.append("['mainmenu', '%s', 'widgetName', u'%s']"%(defaultID,label.replace(".title",".recent.title")))
