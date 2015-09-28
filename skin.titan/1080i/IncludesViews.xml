@@ -15,7 +15,7 @@
 	<control type="group" id="5000">
 		<include>animation_window_open_close</include>
 		<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
-		<visible>IntegerGreaterThan(Container.NumItems,0)</visible>
+
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.50)">View_50_List</include>
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.10)">View_10_SimplePVR</include>
 		<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.55)">View_55_BannerList</include>
@@ -1591,7 +1591,7 @@
                 <font>flags</font>
                 <width>auto</width>
                 <height>30</height>
-                <label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar]</label>
+                <label>$VAR[VideoFileTypeVar,,•]$VAR[VideoCodecVar,,•]$VAR[VideoAspectVar,,•]$VAR[VideoResolutionVar]</label>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <visible>!IsEmpty(Control.GetLabel(44223))</visible>
             </control>
@@ -1617,7 +1617,7 @@
                 <width>auto</width>
                 <height>30</height>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
-                <label>$VAR[AudioCodecVar,, • ]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar, • ]</label>
+                <label>$VAR[AudioCodecVar,,•]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar,•]</label>
                 <visible>!IsEmpty(Control.GetLabel(44224))</visible>
             </control>
             
@@ -3103,6 +3103,7 @@
 	<include name="WatchedIndicatorNormal">
 		<control type="group">
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_watched_normal</include>
 		</control>
@@ -3130,6 +3131,7 @@
 		</control>
 		<control type="group">
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_progress_normal_image</include>
 			<control type="label">
@@ -3289,6 +3291,7 @@
 			<font>indicator_small</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		
 		<control type="image">
