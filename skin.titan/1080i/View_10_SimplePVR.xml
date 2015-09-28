@@ -76,38 +76,23 @@
             </control>
             <control type="label">
                 <!--Title-->
-                <visible>!IsEmpty(ListItem.Date)</visible>
-                <posx>500</posx>
+                <posx>400</posx>
                 <posy>190</posy>
-                <width>600</width>
+                <width>700</width>
                 <height>50</height>
                 <font>Bold38</font>
                 <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.Label]</label>
             </control>
-            <control type="label">
-                <!--No Info-->
-                <visible>IsEmpty(ListItem.Date)</visible>
-                <posx>0</posx>
-                <posy>270</posy>
-                <width>100%</width>
-                <height>50</height>
-                <align>center</align>
-                <font>Bold38</font>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>195</label>
-            </control>
             <control type="grouplist">
                 <!--Start, End, Duration-->
-                
-                <visible>!IsEmpty(ListItem.Date)</visible>
-                <posx>500</posx>
+                <posx>400</posx>
                 <posy>245</posy>
                 <control type="group">
                     <!-- Ground 1 -->
                     <height>40</height>
+                    <visible>!IsEmpty(ListItem.Date)</visible>
                     <control type="label">
                         <posx>0</posx>
                         <posy>0</posy>
@@ -119,10 +104,10 @@
                     <control type="label">
                         <posx>160</posx>
                         <posy>0</posy>
-                        <width>300</width>
+                        <width>500</width>
                         <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <label>$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</label>
+                        <label>$VAR[ListDateInfoPVR]</label>
                     </control>
                 </control>
                 <control type="group">
@@ -149,6 +134,7 @@
                 <control type="group">
                     <!-- Ground 3 -->
                     <height>40</height>
+                    <visible>!IsEmpty(ListItem.ChannelName)</visible>
                     <control type="label">
                         <posx>0</posx>
                         <posy>0</posy>
@@ -169,17 +155,13 @@
             </control>
             <control type="textbox">
                 <!--Info Plot-->
-                
-                <visible>!IsEmpty(ListItem.Date)</visible>
-                
-                
                 <posx>1150</posx>
                 <posy>190</posy>
                 <width>650</width>
                 <height>190</height>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label fallback="161">$INFO[ListItem.Plot]</label>
+                <label fallback="195">$INFO[ListItem.Plot]</label>
             </control>
             <control type="group">
                 <!--Top Bar-->
@@ -202,7 +184,7 @@
                 </control>
                  <control type="label">
                     <!--Time-->
-                    <posx>350</posx>
+                    <posx>370</posx>
                     <posy>30</posy>
                     <width>100</width>
                     <height>30</height>
@@ -227,14 +209,14 @@
             <control type="list" id="10">
                 <!--List ID=14-->
 				<viewtype label="31567">list</viewtype>
+                <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]</visible>
                 <visible>StringCompare(Window(Home).Property(SkinHelper.ForcedView),10) | IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
-                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
                 <posx>125</posx>
                 <posy>540</posy>
                 <width>1650</width>
                 <height>400</height>
-                <onup>15</onup>
-                <ondown>15</ondown>
+                <onup>10</onup>
+                <ondown>10</ondown>
                 <onleft>9000</onleft>
                 <onright>noop</onright>
                 <pagecontrol>-</pagecontrol>
@@ -249,7 +231,7 @@
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
-                        <label>$INFO[ListItem.ChannelNumberLabel]</label>
+                        <label>$VAR[ListChannelNumberPVR]</label>
                     </control>
                     
                     <control type="image">
@@ -267,7 +249,7 @@
                         <description>Channel Value</description>
                         <posx>100</posx>
                         <posy>0</posy>
-                        <width>300</width>
+                        <width>250</width>
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
@@ -277,13 +259,13 @@
                     
                     <control type="label">
                         <!--Date-->
-                        <posx>350</posx>
+                        <posx>370</posx>
                         <posy>0</posy>
                         <width>500</width>
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
-                        <label>$INFO[ListItem.StartDate] $INFO[ListItem.StartTime]</label>
+                        <label>$VAR[ListDatePVR]</label>
                     </control>
                     <control type="label">
                         <!--Channel Show-->
@@ -293,7 +275,7 @@
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
-                        <label>$VAR[ListTitle]</label>
+                        <label>$VAR[ListTitlePVR]</label>
                     </control>
                     <control type="image">
                         <!--Separator-->
@@ -330,7 +312,7 @@
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
-                        <label>$INFO[ListItem.ChannelNumberLabel]</label>
+                        <label>$VAR[ListChannelNumberPVR]</label>
                     </control>
                     <control type="image">
                         <posx>100</posx>
@@ -346,7 +328,7 @@
                         <!--Channel Name-->
                         <posx>100</posx>
                         <posy>0</posy>
-                        <width>300</width>
+                        <width>250</width>
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
@@ -355,14 +337,14 @@
                     </control>
                      <control type="label">
                         <!--Date-->
-                        <posx>350</posx>
+                        <posx>370</posx>
                         <posy>0</posy>
                         <width>500</width>
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
                         <scroll>true</scroll>
-                        <label>$INFO[ListItem.StartDate] $INFO[ListItem.StartTime]</label>
+                        <label>$VAR[ListDatePVR]</label>
                     </control>
                     <control type="label">
                         <!--Channel Show-->
@@ -372,7 +354,7 @@
                         <height>80</height>
                         <font>Reg28</font>
                         <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
-                        <label>$VAR[ListTitle]</label>
+                        <label>$VAR[ListTitlePVR]</label>
                     </control>
                     <control type="image">
                         <!--Separator-->

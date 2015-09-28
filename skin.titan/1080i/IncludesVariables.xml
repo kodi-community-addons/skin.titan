@@ -41,12 +41,12 @@
 		<value condition="Container.Content(episodes) + !IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TvShowTitle] $INFO[ListItem.Season,• $LOCALIZE[20373] ,]</value>
 		
 		
-		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + !IsEmpty(Window.Property(IsRadio))">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
-		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVGuide)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[22020] $INFO[Control.GetLabel(30),• ]</value>
-		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVChannels)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[19019] $INFO[Control.GetLabel(29),• ]</value>
-		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVRecordings)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[19017]</value>
-		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVTimers)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[19040]</value>
-		<value condition="SubString(Window.Property(xmlfile),MyPVR,left) + Window.IsActive(TVSearch)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[137]</value>
+		<value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + !IsEmpty(Window.Property(IsRadio))">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
+		<value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + Window.IsActive(TVGuide)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[22020] $INFO[Control.GetLabel(30),• ]</value>
+		<value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + Window.IsActive(TVChannels)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[19019] $INFO[Control.GetLabel(29),• ]</value>
+		<value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + Window.IsActive(TVRecordings)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[19017]</value>
+		<value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + Window.IsActive(TVTimers)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[19040]</value>
+		<value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + Window.IsActive(TVSearch)">[UPPERCASE]$LOCALIZE[19020][/UPPERCASE] • $LOCALIZE[137]</value>
 		
 		<value condition="Window.IsActive(MyMusicNav.xml)">[UPPERCASE]$LOCALIZE[2][/UPPERCASE] $INFO[Container.FolderName,• ,]</value>
         
@@ -480,7 +480,7 @@
 	 </variable>
 	
 	<variable name="PosterThumb">
-        <value condition="SubString(Window.Property(xmlfile),MyPVR,left)">$VAR[PVRThumb]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$VAR[PVRThumb]</value>
 		<value condition="Container.Content(seasons) + SubString(ListItem.Label,*,left)">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
@@ -599,26 +599,26 @@
     
     <variable name="PVRThumb">
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))">$INFO[Window(home).Property(SkinHelper.PVR.Poster)]</value>
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + !IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.ChannelLogo))">$INFO[Window(home).Property(SkinHelper.PVR.ChannelLogo)]</value>
         <value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + !IsEmpty(Window(home).Property(SkinHelper.PVR.ChannelLogo))">$INFO[Window(home).Property(SkinHelper.PVR.ChannelLogo)]</value>
         <value>special://skin/extras/backgrounds/pvr.jpg</value>
     </variable>
 	
 	<variable name="ListItemDuration">
 		<value condition="!IsEmpty(Window(home).Property(SkinHelper.MovieSet.Duration))">$INFO[Window(home).Property(SkinHelper.MovieSet.Duration)]$INFO[Window(home).Property(SkinHelper.MovieSet.Runtime), (, min.)]</value>
-        <value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + !SubString(ListItem.Duration,min)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)]$INFO[ListItem.Duration, (, min.)]</value>
-		<value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + SubString(ListItem.Duration,min)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)]$INFO[ListItem.Duration, (,)]</value>
-        <value condition="!IsEmpty(ListItem.Duration) + !SubString(ListItem.Duration,min)">$INFO[ListItem.Duration,, min.]</value>
-		<value condition="!IsEmpty(ListItem.Duration) + SubString(ListItem.Duration,min)">$INFO[ListItem.Duration]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + !SubString(ListItem.Duration,min) + !SubString(ListItem.Duration,:)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)]$INFO[ListItem.Duration, (, min.)]</value>
+		<value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + SubString(ListItem.Duration,min) + !SubString(ListItem.Duration,:)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)]$INFO[ListItem.Duration, (,)]</value>
+        <value condition="!IsEmpty(ListItem.Duration) + !SubString(ListItem.Duration,min) + !SubString(ListItem.Duration,:)">$INFO[ListItem.Duration,, min.]</value>
+		<value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration]</value>
     </variable>
 	
 		<variable name="ListItemExtendedDuration">
 		<value condition="!IsEmpty(Window(home).Property(SkinHelper.MovieSet.Duration))">$INFO[Window(home).Property(SkinHelper.MovieSet.Duration)] $INFO[Window(home).Property(SkinHelper.MovieSet.Runtime),(, $LOCALIZE[12391])]</value>
-        <value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + !SubString(ListItem.Duration,min)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)] $INFO[ListItem.Duration,(, $LOCALIZE[12391])]</value>
-		<value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + SubString(ListItem.Duration,min)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)] $INFO[ListItem.Duration,(, )]</value>
-        <value condition="!IsEmpty(ListItem.Duration) + !SubString(ListItem.Duration,min)">$INFO[ListItem.Duration,, $LOCALIZE[12391]]</value>
-		<value condition="!IsEmpty(ListItem.Duration) + SubString(ListItem.Duration,min)">$INFO[ListItem.Duration]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + !SubString(ListItem.Duration,min) + !SubString(ListItem.Duration,:)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)] $INFO[ListItem.Duration,(, $LOCALIZE[12391])]</value>
+		<value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + SubString(ListItem.Duration,min) + !SubString(ListItem.Duration,:)">$INFO[Window(home).Property(SkinHelper.ListItemDuration)] $INFO[ListItem.Duration,(, )]</value>
+        <value condition="!IsEmpty(ListItem.Duration) + !SubString(ListItem.Duration,min) + !SubString(ListItem.Duration,:)">$INFO[ListItem.Duration,, $LOCALIZE[12391]]</value>
+		<value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration]</value>
     </variable>
 	
 	<variable name="Details">
@@ -636,8 +636,10 @@
 		<value condition="Container.Content(Movies) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year) | !IsEmpty(ListItem.Genre)]">$INFO[ListItem.Year,, • ]$VAR[ListItemDuration]$INFO[ListItem.Genre, • ]</value>
 		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] $INFO[ListItem.Property(UnWatchedEpisodes), (,) ]</value>
 		<value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ]</value>
-		<value condition="window.isactive(mypvrchannels.xml) + !IsEmpty(ListItem.ChannelName)">$INFO[ListItem.Title,, • ]$INFO[ListItem.StartTime]-$INFO[ListItem.EndTime]</value>
-		<value condition="!IsEmpty(ListItem.ChannelName) + !IsEmpty(ListItem.StartDate)">$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartDate]</value>
+
+        <value condition="Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml)">$INFO[ListItem.Title,, • ][CR]$VAR[ListDateInfoPVR]</value>
+        <value condition="[Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName,, • ][CR]$VAR[ListDateInfoPVR]</value>
+        
 		<value condition="!IsEmpty(ListItem.Duration)">$VAR[ListItemDuration]</value>
 		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
 	</variable>
@@ -645,6 +647,28 @@
     <variable name="ListTitle">
         <value condition="!Container.Content(albums)">$INFO[ListItem.Label]</value>
         <value condition="Container.Content(albums)">$INFO[ListItem.Label2] - $INFO[ListItem.Label]</value>
+    </variable>
+    
+    <variable name="ListTitlePVR">
+        <value condition="!IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
+        <value>$INFO[ListItem.Label]</value>
+    </variable>
+    
+    <variable name="ListDatePVR">
+        <value condition="Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)">$INFO[ListItem.StartDate] $INFO[ListItem.StartTime]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml)] + !IsEmpty(ListItem.StartTime)">$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</value>
+        <value>$INFO[ListItem.StartDate] - $INFO[ListItem.StartTime]</value>
+    </variable>
+    
+    <variable name="ListDateInfoPVR">
+        <value condition="Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)">$INFO[ListItem.Date]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml)] + !IsEmpty(ListItem.StartTime)">$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</value>
+        <value condition="!IsEmpty(ListItem.Date)">$INFO[ListItem.Date]</value>
+    </variable>
+    
+    <variable name="ListChannelNumberPVR">
+        <value condition="!IsEmpty(ListItem.ChannelNumberLabel)">$INFO[ListItem.ChannelNumberLabel]</value>
+        <value>$INFO[ListItem.ChannelNumber]</value>
     </variable>
     
 	<variable name="ListDetails">
@@ -663,13 +687,10 @@
 		<value condition="Container.Content(Movies) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year) | !IsEmpty(ListItem.Genre)]">$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,, min.]$INFO[ListItem.Genre, • ]</value>
 		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: ] $INFO[ListItem.Property(UnWatchedEpisodes), (,) ]</value>
 		<value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: ]</value>
-		<value condition="SubString(Window.Property(xmlfile),MyPVRChannels,left)">$INFO[ListItem.Title,, • ]$INFO[ListItem.StartTime]-$INFO[ListItem.EndTime]</value>
-        <value condition="SubString(Window.Property(xmlfile),MyPVR,left)">$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartDate]</value>
-		<value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration, ,min. • ]</value>
-		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
-        
+
         <!-- PVR -->
-        <value condition="SubString(Window.Property(xmlfile),MyPVR,left)">$INFO[ListItem.StartDate] - $INFO[ListItem.StartTime]$INFO[ListItem.Duration, / ,]</value>
+        <value condition="Window.IsActive(MyPVRChannels.xml)">$INFO[ListItem.Title,, • ]$VAR[ListDatePVR]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName,, • ]$VAR[ListDatePVR]</value>
         <!-- movies -->
         <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + !SubString(ListItem.Path,videodb://1/7,left)">$INFO[ListItem.Duration,[B]$LOCALIZE[180]:[/B] ,min.]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
         <value condition="SubString(ListItem.Path,videodb://1/7,left)">$LOCALIZE[20457]</value>
@@ -678,7 +699,8 @@
         <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TVShowTitle] - $LOCALIZE[20360]: $INFO[ListItem.Property(TotalEpisodes)] - $LOCALIZE[16101]: $INFO[ListItem.Property(UnWatchedEpisodes)]</value>
         <value condition="Container.Content(episodes)">$LOCALIZE[180]:  $INFO[ListItem.Duration,,min.] - $INFO[ListItem.TVShowTitle]</value>
         <value condition="Container.Content(artists) + !IsEmpty(ListItem.Property(Artist_YearsActive))">$LOCALIZE[21898]: $INFO[ListItem.Property(Artist_YearsActive)]</value>
-
+        <value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration, ,min. • ]</value>
+		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
         
 	</variable>
   

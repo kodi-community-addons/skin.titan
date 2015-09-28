@@ -23,7 +23,7 @@
 				<posx>50</posx>
 				<width>510</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
-				<visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                 <visible>!Skin.HasSetting(View50_HidePanel)</visible>
 			</control>
@@ -41,7 +41,7 @@
 				<posx>50</posx>
 				<width>920</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
-				<visible>[Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
+				<visible>[Container.Content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                 <visible>!Skin.HasSetting(View50_HidePanel)</visible>
 			</control>
@@ -64,7 +64,7 @@
             </control>
 			<control type="image">
                 <!--Poster for all other-->
-                <visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)]</visible>
+                <visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]]</visible>
                 <posx>60</posx>
                 <posy>20</posy>
                 <width>470</width>
@@ -89,7 +89,7 @@
             </control>
             <control type="group">
                 <!--PVR Thumb-->
-                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
+                <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]</visible>
                 <posx>90</posx>
                 <posy>40</posy>
                 <control type="image">
@@ -234,7 +234,7 @@
             </control>
             <control type="grouplist">
                 <!-- PVR details-->
-                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
+                <visible>!IsEmpty(ListItem.Title) + [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]</visible>
                 <posx>360</posx>
                 <posy>30</posy>
                 <itemgap>0</itemgap>
@@ -250,12 +250,12 @@
                     <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
                     <disabledcolor fallback="white">$INFO[Skin.String(ViewDetailsHighlightTextColor)]</disabledcolor>
-                    <label>$INFO[ListItem.Title]</label>
+                    <label>$VAR[ListTitlePVR]</label>
                     <include>ListDetailsBtn</include>
                 </control>
                 <control type="button">
                     <include>ListDetailsBtn</include>
-                    <label>[B]$LOCALIZE[20359]</label>
+                    <label>[B]$LOCALIZE[20359][/B]</label>
                     <label2>$INFO[ListItem.Episode,, ]$INFO[ListItem.EpisodeName]</label2>
                     <visible>!IsEmpty(ListItem.EpisodeName)</visible>
                 </control>
@@ -263,24 +263,13 @@
                     <include>ListDetailsBtn</include>
                     <label>[B]$LOCALIZE[19029]:[/B]</label>
                     <label2>$INFO[ListItem.ChannelName]</label2>
+                    <visible>!IsEmpty(ListItem.ChannelName)</visible>
                 </control>
                 <control type="button">
                     <include>ListDetailsBtn</include>
-                    <label>[B]$LOCALIZE[19126]:[/B]</label>
-                    <label2>$INFO[ListItem.StartTime]</label2>
-                    <visible>SubString(Window.Property(xmlfile),MyPVRChannels,left)</visible>
-                </control>
-                <control type="button">
-                    <include>ListDetailsBtn</include>
-                    <label>[B]$LOCALIZE[19127]:[/B]</label>
-                    <label2>$INFO[ListItem.EndTime]</label2>
-                    <visible>SubString(Window.Property(xmlfile),MyPVRChannels,left)</visible>
-                </control>
-                <control type="button">
-                    <include>ListDetailsBtn</include>
-                    <label>[B]$LOCALIZE[19126]:[/B]</label>
-                    <label2>$INFO[ListItem.StartDate]</label2>
-                    <visible>SubString(Window.Property(xmlfile),MyPVRRecordings,left)</visible>
+                    <label>[B]$LOCALIZE[555]:[/B]</label>
+                    <label2>$VAR[ListDateInfoPVR]</label2>
+                    <visible>!IsEmpty(ListItem.Date)</visible>
                 </control>
                 <control type="button">
                     <include>ListDetailsBtn</include>
@@ -342,7 +331,7 @@
                 <!--PVR Plot-->
                 <posx>90</posx>
                 <posy>360</posy>
-                <visible>SubString(Window.Property(xmlfile),MyPVR,left)</visible>
+                <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]</visible>
                 <width>850</width>
                 <height>255</height>
                 <font>Light28</font>
@@ -407,7 +396,7 @@
                 <scrolltime>300</scrolltime>
 				<visible>StringCompare(Window(Home).Property(SkinHelper.ForcedView),50) | IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
                 <!-- All Other x=570 w=1180 -->
-                <itemlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)]" width="1900" height="62">
+                <itemlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]]" width="1900" height="62">
                     <control type="label">
                         <!--Label 1-->
                         <posx>630</posx>
@@ -433,7 +422,7 @@
                         <texture>common/separator.png</texture>
                     </control>
                 </itemlayout>
-                <focusedlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | SubString(Window.Property(xmlfile),MyPVR,left)]" width="1900" height="90">
+                <focusedlayout condition="![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]]" width="1900" height="90">
                     <control type="image">
 						<right>80</right>
 						<posy>0</posy>
