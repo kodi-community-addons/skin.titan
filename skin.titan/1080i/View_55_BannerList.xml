@@ -7,16 +7,14 @@
         <control type="group">
             <visible>Control.IsVisible(55)</visible>
             <include>animation_view_change</include>
-            <control type="group">
-				<visible>Control.IsVisible(55)</visible>
-				<include>MovieDetailsLeft</include>
-			</control>
+            <include>MovieDetailsLeft</include>
             <!-- ID="52" -->
             <control type="panel" id="55">
-                <posx>1093</posx>
-                <bottom>135</bottom>
-                <width>800</width>
-                <height>770</height>
+                <animation effect="slide" end="-625" time="250" condition="Skin.HasSetting(View55_ShowInfoRight)">Conditional</animation>
+                <right>20</right>
+				<bottom>122</bottom>
+                <height>738</height>
+				<width>1190</width>
                 <onup>55</onup>
                 <ondown>55</ondown>
                 <onleft>9000</onleft>
@@ -29,116 +27,54 @@
                 <preloaditems>4</preloaditems>
 				<visible>StringCompare(Window(Home).Property(SkinHelper.ForcedView),55) | IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
 				<animation effect="slide" start="0" end="-20" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-                <!-- =======-->
-                <!-- Movies -->
-                <!-- ======= -->
-                <itemlayout height="155" width="780">
+                <itemlayout height="123" width="590" condition="!Skin.HasSetting(View55_LargeBanners)">
                     <control type="group">
-					<posx>10</posx>
-					<posy>5</posy>
-						<control type="image">
-							<!--Banner-->
-							<width>758</width>
-							<height>140</height>
-							<texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="5">$VAR[BannerImage]</texture>
-							<aspectratio align="center" aligny="center">stretch</aspectratio>
-							<visible>!IsEmpty(ListItem.Art(banner)) | !IsEmpty(ListItem.Art(tvshow.banner)) | !IsEmpty(ListItem.Property(banner))</visible>
-						</control>
-						<control type="image">
-							<!--Banner fallback-->
-							<width>758</width>
-							<height>140</height>
-							<texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="0">$VAR[BannerImageFallback]</texture>
-							<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-							<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
-						</control>
-						<control type="image">
-							<left>16</left>
-							<top>12</top>
-							<width>720</width>
-							<height>110</height>
-							<aspectratio scalediffuse="false" align="left">keep</aspectratio>
-							<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
-							<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
-						</control>
-						<control type="label">
-							<centerleft>379</centerleft>
-							<top>8</top>
-							<width>758</width>
-							<height>105</height>
-							<align>center</align>
-							<label>$INFO[ListItem.Label]</label>
-							<font>Bold40</font>
-							<shadowcolor>black</shadowcolor>
-							<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(banner))</visible>
-						</control>
-						<control type="group">
-						<right>12</right>
-						<include>WatchedIndicatorNormal</include>
-						</control>
+                        <width>585</width>
+                        <height>119</height>
+                        <control type="image">
+                            <texture border="5">diffuse/banner.png</texture>
+                            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                            <aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+                        </control>
+                        <include>BannerPlexlayout</include>
 					</control>
                 </itemlayout>
-                <focusedlayout height="155" width="780">
-				<control type="group">
-					<animation type="focus">
-						<effect type="zoom" start="100" end="103" center="auto,auto" time="150" />
-					</animation>
-					<animation type="unfocus">
-						<effect type="zoom" start="103" end="100" center="auto,auto" time="150" />
-					</animation>
-					<posx>10</posx>
-					<posy>5</posy>
-					<control type="image">
-                        <!--focus image-->
-                        <width>758</width>
-                        <height>140</height>
-						<bordersize>-6</bordersize>
-                        <texture border="5">diffuse/banner.png</texture>
-                        <aspectratio align="center" aligny="center">stretch</aspectratio>
-						<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-                    </control>
-					<control type="image">
-                        <!--Banner-->
-                        <width>758</width>
-                        <height>140</height>
-                        <texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="5">$VAR[BannerImage]</texture>
-                        <aspectratio align="center" aligny="center">stretch</aspectratio>
-						<visible>!IsEmpty(ListItem.Art(banner)) | !IsEmpty(ListItem.Art(tvshow.banner)) | !IsEmpty(ListItem.Property(banner))</visible>
-                    </control>
-					<control type="image">
-                        <!--Banner fallback-->
-                        <width>758</width>
-                        <height>140</height>
-                        <texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="0">$VAR[BannerImageFallback]</texture>
-						<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-						<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
-                    </control>
-					<control type="image">
-						<left>16</left>
-						<top>12</top>
-						<width>720</width>
-						<height>110</height>
-						<aspectratio scalediffuse="false" align="left">keep</aspectratio>
-						<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
-						<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
-					</control>
-					<control type="label">
-						<centerleft>379</centerleft>
-						<top>8</top>
-						<width>758</width>
-						<height>105</height>
-						<align>center</align>
-						<label>$INFO[ListItem.Label]</label>
-						<font>Bold40</font>
-						<shadowcolor>black</shadowcolor>
-						<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(banner))</visible>
-					</control>
+                <focusedlayout height="123" width="590" condition="!Skin.HasSetting(View55_LargeBanners)">
                     <control type="group">
-						<right>12</right>
-						<include>WatchedIndicatorNormal</include>
-						</control>
-				</control>
-				
+                        <width>585</width>
+                        <height>119</height>
+                        <control type="image">
+                            <texture border="5">diffuse/banner.png</texture>
+                            <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+                            <aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+                        </control>
+                        <include>BannerPlexlayout</include>
+					</control>
+                </focusedlayout>
+                
+                <itemlayout height="246" width="1190" condition="Skin.HasSetting(View55_LargeBanners)">
+                    <control type="group">
+                        <width>1190</width>
+                        <height>238</height>
+                        <control type="image">
+                            <texture border="5">diffuse/banner.png</texture>
+                            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                            <aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+                        </control>
+                        <include>BannerPlexlayout</include>
+					</control>
+                </itemlayout>
+                <focusedlayout height="246" width="1190" condition="Skin.HasSetting(View55_LargeBanners)">
+                    <control type="group">
+                        <width>1190</width>
+                        <height>238</height>
+                        <control type="image">
+                            <texture border="5">diffuse/banner.png</texture>
+                            <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+                            <aspectratio scalediffuse="false" align="left">stretch</aspectratio>
+                        </control>
+                        <include>BannerPlexlayout</include>
+					</control>
                 </focusedlayout>
             
 			</control>

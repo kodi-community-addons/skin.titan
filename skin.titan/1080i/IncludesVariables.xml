@@ -397,12 +397,12 @@
     </variable>
     <variable name="value_ground3_label">
         <!-- Studio -->
-        <value condition="Container.Content(movies) | Window.IsVisible(VideoPlaylist) | Container.Content(musicvideos) |  Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)">$LOCALIZE[20388] :</value>
+        <value condition="Container.Content(movies) | Window.IsVisible(VideoPlaylist) | Container.Content(musicvideos) |  Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)">$LOCALIZE[345] :</value>
         <!-- Studio -->
     </variable>
     <variable name="value_ground3_value">
 		<value condition="SubString(ListItem.Path,videodb://movies/sets/)">$INFO[Window(Home).Property(SkinHelper.MovieSet.Studio)]</value>
-        <value condition="Container.Content(movies) | Window.IsVisible(VideoPlaylist) | Container.Content(musicvideos) |  Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)">$INFO[ListItem.Studio]</value>
+        <value condition="Container.Content(movies) | Window.IsVisible(VideoPlaylist) | Container.Content(musicvideos) |  Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)">$INFO[ListItem.Year]</value>
     </variable>
     <variable name="value_ground4_label">
         <!-- Regie / Episodes (counter) / Duration -->
@@ -433,15 +433,25 @@
 	
 	<variable name="DetailsFanArtImage">
 		<value condition="Container.Content(episodes) + !IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Art(tvshow.landscape))">$INFO[ListItem.Art(tvshow.landscape)]</value>
-		<value condition="!IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+		<value condition="!IsEmpty(ListItem.Art(tvshow.landscape)) + ![Control.IsVisible(505) | Control.IsVisible(512)]">$INFO[ListItem.Art(tvshow.landscape)]</value>
+		<value condition="!IsEmpty(ListItem.Art(landscape)) + ![Control.IsVisible(505) | Control.IsVisible(512)]">$INFO[ListItem.Art(landscape)]</value>
         <value condition="Container.Content(Seasons) + !IsEmpty(ListItem.Art(season.fanart)) + !substring(Container.FolderPath,plugin://plugin.video)">$INFO[ListItem.Art(season.fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
 		<value condition="Window.IsActive(tvrecordings) + !IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(home).Property(SkinHelper.PVR.FanArt)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
 		<value condition="[Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels)]">special://skin/extras/backgrounds/hover_my tv.jpg</value>
-        <value>$INFO[ListItem.Thumb]</value>
+        <value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+        <value condition="Container.Content(artists)">special://skin/extras/defaulticonswide/defaultartist.png</value>
+        <value condition="Container.Content(genres)">special://skin/extras/defaulticonswide/defaultgenre.png</value>
+        <value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
+		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
+		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
+		<value condition="Container.Content(years)">special://skin/extras/defaulticonswide/DefaultYear.png</value>
+		<value condition="Container.Content(countries)">special://skin/extras/defaulticonswide/DefaultCountry.png</value>
+		<value condition="Container.Content(tags)">special://skin/extras/defaulticonswide/DefaultTags.png</value>
     </variable>
 	
     <variable name="BannerLandscapeImage">
@@ -458,11 +468,12 @@
 		<value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
 		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
-		<value condition="Container.Content(years)">special://skin/extras/defaulticonswide/DefaultYear.png</value>
+		<value condition="Container.Content(artists)">special://skin/extras/defaulticonswide/defaultartist.png</value>
+        <value condition="Container.Content(years)">special://skin/extras/defaulticonswide/defaultyear.png</value>
+        <value condition="Container.Content(genres)">special://skin/extras/defaulticonswide/defaultgenre.png</value>
 		<value condition="Container.Content(countries)">special://skin/extras/defaulticonswide/DefaultCountry.png</value>
 		<value condition="Container.Content(tags)">special://skin/extras/defaulticonswide/DefaultTags.png</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-        <value>$INFO[ListItem.Icon]</value>
     </variable>
 	
 	<variable name="BannerLandscapeImageSeason">
@@ -493,13 +504,16 @@
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
 		<value condition="Container.Content(genres)">$INFO[ListItem.Label,special://skin/extras/moviegenres/,.jpg]</value>
-		<value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
+		<value condition="Container.Content(studios)">$INFO[Window(Home).Property(SkinHelper.ListItemStudioLogo)]</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">DefaultActorPoster.png</value>
 		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">DefaultActorPoster.png</value>
 		<value condition="Container.Content(years)">DefaultYear.png</value>
 		<value condition="Container.Content(countries)">DefaultCountry.png</value>
 		<value condition="Container.Content(tags)">DefaultTags.png</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Art(poster))">$INFO[Container(510).ListItem.Art(poster)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.poster))">$INFO[Container(510).ListItem.Art(tvshow.poster)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Thumb)">$INFO[Container(510).ListItem.Thumb]</value>
 		<value condition="Container.Content(seasons)">$INFO[ListItem.Path]season0$INFO[ListItem.Season]-poster.jpg</value>
         <value>$INFO[ListItem.FolderPath]poster.jpg</value>
     </variable>
@@ -669,6 +683,27 @@
     <variable name="ListChannelNumberPVR">
         <value condition="!IsEmpty(ListItem.ChannelNumberLabel)">$INFO[ListItem.ChannelNumberLabel]</value>
         <value>$INFO[ListItem.ChannelNumber]</value>
+    </variable>  
+    
+    <variable name="ThumbListDetails">
+        <!-- specials used in widgets -->
+		<value condition="SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) | StringCompare(Container(300).ListItem.Property(widget), music)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<value condition="StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
+        <value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">$INFO[ListItem.Property(title)][CR]$INFO[ListItem.label]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">$INFO[ListItem.label]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(widget), weather)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<!-- normal items-->
+        <value condition="container.content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">$INFO[ListItem.label]</value>
+        <value condition="container.content(seasons)">$INFO[ListItem.TvShowTitle][CR]$INFO[ListItem.label]</value>
+		<value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S0$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S0$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
+		
+        <value condition="Window.IsActive(MyPVRChannels.xml)">$INFO[ListItem.Title,[B],[/B]]$VAR[ListDatePVR,[CR]]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName,, • ]$VAR[ListDatePVR]</value>
+		<value condition="IsEmpty(ListItem.Property(DefaultID))">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<value>$INFO[ListItem.label]</value>
     </variable>
     
 	<variable name="ListDetails">
@@ -765,6 +800,9 @@
 		<value condition="!IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
         <value condition="!IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
 		<value condition="!IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
+        <value condition="!IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
+        <value condition="!IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
+		<value>DefaultVideo.png</value>
 	 </variable>
 	 
 	 <variable name="VideoPlayerClearLogo">
@@ -880,14 +918,15 @@
 	 </variable>
 	 
 	 <variable name="AudioDiscArtImage">
-		<value condition="!IsEmpty(Player.Art(discart))">$INFO[Player.Art(discart)]</value>
+        <value condition="!IsEmpty(Player.Art(discart))">$INFO[Player.Art(discart)]</value>
 		<value condition="!IsEmpty(MusicPlayer.Property(Fanart_Image)) + Skin.HasSetting(EnableFakeDiscArt)">$INFO[MusicPlayer.Property(Fanart_Image)]</value>
 		<value condition="!IsEmpty(MusicPlayer.Cover) + !SubString(MusicPlayer.Cover,Default) + Skin.HasSetting(EnableFakeDiscArt)">$INFO[MusicPlayer.Cover]</value>
 		<value condition="!substring(Player.Folderpath,plugin:)">$INFO[Player.FolderPath]cdart.png</value>
 	 </variable>
 	 
-	 <variable name="VideoDiscArtImage">
+	 <variable name="DiscArtImage">
 		<value condition="!IsEmpty(ListItem.Art(discart))">$INFO[ListItem.Art(discart)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Music.DiscArt))">$INFO[Window(Home).Property(SkinHelper.Music.DiscArt)]</value>
 		<value condition="!IsEmpty(ListItem.Art(landscape)) + Skin.HasSetting(EnableFakeDiscArt)">$INFO[ListItem.Art(landscape)]</value>
 		<value condition="!IsEmpty(ListItem.Art(fanart)) + Skin.HasSetting(EnableFakeDiscArt)">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Art(poster)) + Skin.HasSetting(EnableFakeDiscArt)">$INFO[ListItem.Art(poster)]</value>

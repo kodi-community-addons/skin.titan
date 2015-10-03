@@ -26,8 +26,7 @@ def fullMigration():
             xbmc.executebuiltin( "ActivateWindow(busydialog)" )
             try:
                 log = "TITAN SKIN --> Starting migration of Titan skin \n"
-                
-                
+
                 #first make backup
                 log += "TITAN SKIN --> Creating backup \n"
                 xbmc.executebuiltin( "RunScript(script.skin.helper.service,action=backup,silent=special://temp/titan_pre-migration_backup.zip)" )
@@ -179,7 +178,8 @@ def migrateColorSettings():
             else:
                 settingname = skinsetting.attributes['id'].nodeValue
             
-            #only get settings for the current skin                    
+            #only get settings for the current skin
+            currentskin = 
             if ( KODI_VERSION < 16 and settingname.startswith(xbmc.getSkinDir()+".")) or KODI_VERSION >= 16:
                 
                 if skinsetting.childNodes:

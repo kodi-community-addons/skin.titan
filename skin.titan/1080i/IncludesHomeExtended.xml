@@ -617,7 +617,7 @@
             <width>320</width>
             <height>100</height>
             <align>left</align>
-            <label>$VAR[HomeMenuWidgetLabel]</label>
+            <label>$VAR[ThumbListDetails]</label>
             <font>Reg22</font>
             <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
 			<shadowcolor>black</shadowcolor>
@@ -650,7 +650,7 @@
             <width>320</width>
             <height>100</height>
             <align>left</align>
-            <label>$VAR[HomeMenuWidgetLabel]</label>
+            <label>$VAR[ThumbListDetails]</label>
             <font>Reg22</font>
             <textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
 			<shadowcolor>black</shadowcolor>
@@ -686,7 +686,6 @@
 			<texture>home/home_shadow.png</texture>
 			<visible>!Skin.HasSetting(NoShadowOnHomeMenuTiles)</visible>
 		</control>
-	
 		<control type="image">
             <!--Panel Normal-->
             <posx>0</posx>
@@ -745,16 +744,41 @@
     </include>
     
 	<include name="EnhancedHomeMainLayoutFocus">
-
-        <include>EnhancedHomeMainLayout</include>
+        
+        <!-- focus bg panel -->
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>337</width>
+			<height>175</height>
+			<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
+            <texture border="5">home/home_matte2.png</texture>
+            <bordersize>-7</bordersize>
+			<visible>StringCompare(Container(300).ListItem.Label, ListItem.Label)</visible>
+        </control>
+    
+        <control type="image">
+            <!--Panel Normal-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>337</width>
+			<height>175</height>
+            <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/hometiles/addons.png">$INFO[ListItem.Icon]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+        </control>
+        <control type="image">
+            <!--Panel Ovelay-->
+            <posx></posx>
+            <posy>-10</posy>
+            <width>337</width>
+			<height>185</height>
+            <colordiffuse>ccFFFFFF</colordiffuse>
+            <texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
+			<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+			<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+        </control>
         <control type="label">
-            <!--Label focus-->
-            <animation type="Focus">
-                <effect type="fade" start="0" end="100" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <animation type="UnFocus">
-                <effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
+            <!--Label-->
             <posx>10</posx>
             <posy>93</posy>
             <width>305</width>
@@ -766,21 +790,7 @@
 			<shadowcolor>black</shadowcolor>
 			<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
         </control>
-        <control type="image">
-            <!--Panel Focus-->
-            <animation type="Focus">
-                <effect type="fade" start="0" end="100" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <animation type="UnFocus">
-                <effect type="fade" start="100" end="0" time="300" center="auto" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            <posx>0</posx>
-            <posy>0</posy>
-            <width>337</width>
-			<height>175</height>
-			<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-            <texture border="5">diffuse/border.png</texture>
-        </control>
+
     </include>
 
 </includes>

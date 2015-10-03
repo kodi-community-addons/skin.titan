@@ -866,7 +866,7 @@
             <bottom>292</bottom>
             <width>128</width>
             <height>128</height>
-            <visible>Weather.IsFetched + Skin.HasSetting(ShowWeatherVideoInfoOSD) + !window.isactive(DialogSubtitles.xml)</visible>
+            <visible>!IsEmpty(Window(Weather).Property(Current.Condition)) + Skin.HasSetting(ShowWeatherVideoInfoOSD) + !window.isactive(DialogSubtitles.xml)</visible>
 			<include>animation_fade_visible_hidden</include>
 			
             <!--Current Weather-->
@@ -884,26 +884,25 @@
                 <posx>132</posx>
                 <posy>0</posy>
                 <font>Bold30</font>
+                 <!-- colors should be hardcoded because display on video -->
                 <textcolor>white</textcolor>
                 <shadowcolor>black</shadowcolor>
                 <align>left</align>
                 <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits]</label>
-                <visible>Weather.IsFetched</visible>
-				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
             </control>
 			<!--Current Conditions-->
 			<control type="label">
-                    <width>300</width>
-                    <height>128</height>
-					<posx>132</posx>
-                    <posy>32</posy>
-					<font>Reg24</font>
-					<textcolor>white</textcolor>
-                    <shadowcolor>black</shadowcolor>
-					<align>left</align>
-					<label>$INFO[Window(Weather).Property(Current.Condition)]</label>
-                    <visible>Weather.IsFetched</visible>
-					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                <width>300</width>
+                <height>128</height>
+                <posx>132</posx>
+                <posy>32</posy>
+                <font>Reg24</font>
+                <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                <visible>Weather.IsFetched</visible>
             </control>
         </control>
     </include>
@@ -915,7 +914,7 @@
             <top>220</top>
             <width>128</width>
             <height>128</height>
-            <visible>Weather.IsFetched + Skin.HasSetting(ShowWeatherVideoInfoOSD) + !window.isactive(DialogSubtitles.xml)</visible>
+            <visible>!IsEmpty(Window(Weather).Property(Current.Condition)) + Skin.HasSetting(ShowWeatherVideoInfoOSD) + !window.isactive(DialogSubtitles.xml)</visible>
 			<include>animation_fade_visible_hidden</include>
             <animation effect="slide" start="0,0" end="0,-200" condition="!Skin.HasSetting(EnableOSDInfo)">conditional</animation>
             <animation effect="slide" start="0,0" end="0,-200" condition="Skin.HasSetting(EnableOSDInfo) + !Window.IsActive(DialogFullScreenInfo.xml) + !Window.IsActive(VideoOSD.xml)">conditional</animation>
@@ -935,24 +934,26 @@
                 <posx>132</posx>
                 <posy>0</posy>
                 <font>Bold30</font>
-                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                 <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <align>left</align>
                 <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits]</label>
                 <visible>Weather.IsFetched</visible>
-				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
             </control>
 			<!--Current Conditions-->
 			<control type="label">
-                    <width>300</width>
-                    <height>128</height>
-					<posx>132</posx>
-                    <posy>32</posy>
-					<font>Reg24</font>
-					<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
-					<align>left</align>
-					<label>$INFO[Window(Weather).Property(Current.Condition)]</label>
-                    <visible>Weather.IsFetched</visible>
-					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                <width>300</width>
+                <height>128</height>
+                <posx>132</posx>
+                <posy>32</posy>
+                <font>Reg24</font>
+                 <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                <visible>Weather.IsFetched</visible>
             </control>
         </control>
     </include>
@@ -1264,14 +1265,14 @@
 			<visible>!Window.IsActive(dialogslider.xml)</visible>
 			<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 			<visible>!Window.IsActive(DialogKaiToast.xml)</visible>
-			<!-- blue background -->
+			<!-- background -->
 			<control type="image">
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>100%</width>
-				<height>230</height>
+				<height>190</height>
 				<texture border="5">diffuse/panel.png</texture>
-				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
 			</control>
             <!-- Plot -->
             <control type="group">
@@ -1281,37 +1282,25 @@
                 <height>190</height>
 				<!--logo-->
 				<control type="image">
-					<posx>60</posx>
+					<posx>40</posx>
 					<posy>0</posy>
-					<width>240</width>
-					<height>220</height>
+					<width>260</width>
+					<height>180</height>
 					<fadetime>200</fadetime>
 					<texture background="true">$VAR[OSDInfoImage]</texture>
-					<aspectratio align="center" aligny="center">keep</aspectratio>
-					<visible>!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))</visible>
+					<aspectratio align="left" aligny="top">keep</aspectratio>
 				</control>
 
                 <control type="textbox">
                     <posx>350</posx>
                     <posy>0</posy>
                     <width>1500</width>
-                    <height>160</height>
-                    <label>[B][COLOR=white]$INFO[VideoPlayer.Year,, • ]$INFO[VideoPlayer.Duration,, min.]$INFO[VideoPlayer.MPAA, • , • ]$INFO[VideoPlayer.RatingAndVotes,, • ][/COLOR][/B][CR]$INFO[VideoPlayer.Plot]</label>
-                    <textcolor>bbwhite</textcolor>
+                    <height>180</height>
+                    <label>[B]$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Duration, • , min.]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
+                    <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
                     <align>justify</align>
                     <font>Light28</font>
-					<visible>!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))</visible>
-                </control>
-				<control type="textbox">
-                    <posx>60</posx>
-                    <posy>0</posy>
-                    <width>1790</width>
-                    <height>160</height>
-                    <label>[B][COLOR=white]$INFO[VideoPlayer.Year,, • ]$INFO[VideoPlayer.Duration,, min.]$INFO[VideoPlayer.MPAA, • , • ]$INFO[VideoPlayer.RatingAndVotes,, • ][/COLOR][/B][CR]$INFO[VideoPlayer.Plot]</label>
-                    <textcolor>bbwhite</textcolor>
-                    <align>justify</align>
-                    <font>Light28</font>
-					<visible>IsEmpty(Player.Art(clearart)) + IsEmpty(Player.Art(clearlogo)) + IsEmpty(Player.Art(tvshow.clearlogo)) + IsEmpty(Player.Art(tvshow.clearart))</visible>
                 </control>
             </control>
         </control>

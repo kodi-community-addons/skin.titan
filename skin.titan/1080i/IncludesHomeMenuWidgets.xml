@@ -2,6 +2,7 @@
 <includes>
 
 	<variable name="changeWidgetLabel">
+        <value condition="!IsEmpty(Container(510).ListItem.Property(originaltitle))">$INFO[Container(510).ListItem.Property(originaltitle),$LOCALIZE[31545] ]</value>
 		<value condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),1)">$INFO[Container(300).ListItem.Property(widgetName.1)]</value>
 		<value condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),2)">$INFO[Container(300).ListItem.Property(widgetName.2)]</value>
 		<value condition="StringCompare(Window(home).Property(SkinHelper.ActiveWidget),3)">$INFO[Container(300).ListItem.Property(widgetName.3)]</value>
@@ -453,23 +454,6 @@
 		</item>
 
 	</include>
-
-	<variable name="HomeMenuWidgetLabel">
-		<value condition="SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) | StringCompare(Container(300).ListItem.Property(widget), music)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
-		<value condition="StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
-		<value condition="container.content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">$INFO[ListItem.label]</value>
-		<value condition="container.content(seasons)">$INFO[ListItem.TvShowTitle][CR]$INFO[ListItem.label]</value>
-		<value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
-        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S0$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
-        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
-        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TvShowTitle][CR][UPPERCASE]S0$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">$INFO[ListItem.Property(title)][CR]$INFO[ListItem.label]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">$INFO[ListItem.label]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget), weather)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
-        <value condition="!IsEmpty(ListItem.Date)">$INFO[ListItem.label][CR]$INFO[ListItem.Date]</value>
-		<value condition="IsEmpty(ListItem.Property(DefaultID))">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
-		<value>$INFO[ListItem.label]</value>
-    </variable>
 	
 	<variable name="HomeMenuWidgetInfoLabel">
 		<value condition="SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube)">[B]$INFO[Container(510).ListItem.label][CR]$INFO[Container(510).ListItem.label2][/B]</value>
@@ -548,6 +532,8 @@
         <value condition="!IsEmpty(Container(510).ListItem.TvShowTitle)">[B]$INFO[Container(510).ListItem.TvShowTitle,, • ]$INFO[Container(510).ListItem.Premiered,, • ]$INFO[Container(510).ListItem.Duration,,min.][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
 		<!-- movies -->
         <value condition="!IsEmpty(Container(510).ListItem.Year)">[B]$INFO[Container(510).ListItem.Year,, • ]$INFO[Container(510).ListItem.Duration,,min. • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+        <!-- songs -->
+        <value condition="!IsEmpty(Container(510).ListItem.Artist) + !IsEmpty(Container(510).ListItem.Album)">[B]$INFO[Container(510).ListItem.Artist,, • ]$INFO[Container(510).ListItem.Album,, • ]$INFO[Container(510).ListItem.Duration][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
         <value>$VAR[HomeMenuWidgetInfoPlot]</value>
     </variable>
 	
@@ -596,9 +582,9 @@
 	</include>
 	
 	<include name="widget_layout_horizontal_poster">
-        <posx>40</posx>
+        <posx>50</posx>
 		<posy>480</posy>
-		<width>1830</width>
+		<width>1827</width>
 		<height>380</height>
 		<itemgap>5</itemgap>
 		<orientation>horizontal</orientation>
@@ -664,23 +650,9 @@
             
             <!-- poster image -->
             <control type="group">
-                <left>-15</left>
-                <top>-4</top>
-                <include>BigPanelPosterDimensions</include>
-                  <control type="image">
-                    <include>BigPanelPosterDimensions</include>
-                    <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
-                    <aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
-                    <visible>!IsEmpty(Container(510).ListItem.Art(poster)) | !IsEmpty(Container(510).ListItem.Art(tvshow.poster))</visible>
-                  </control>
-                  <control type="image">
-                    <height>250</height>
-                    <include>BigPanelPosterDimensions</include>
-                    <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$INFO[Container(510).ListItem.Icon]</texture>
-                    <aspectratio scalediffuse="false" aligny="top" align="center">scale</aspectratio>
-                    <visible>IsEmpty(Container(510).ListItem.Art(poster)) + IsEmpty(Container(510).ListItem.Art(tvshow.poster))</visible>
-                  </control>
-                  <include>BigPanelWatchedImage</include>
+                <width>240</width>
+                <height>339</height>
+                <include>PosterPanelLayout</include>
             </control>  
 
             <control type="button" id="511">
@@ -757,125 +729,48 @@
 		<orientation>horizontal</orientation>
 		
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
-		<itemlayout width="370" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
-			<include>ThumbsViewLayout</include>
+		<itemlayout width="366" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
+			<control type="group">
+                <width>354</width>
+                <height>200</height>
+                <include>ThumbsViewLayout</include>
+            </control>
 		</itemlayout>
-		<focusedlayout width="370" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape) + Control.HasFocus(510)">
+		<focusedlayout width="366" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
 			<control type="group">
-				<include>ThumbsViewLayoutFocus</include>
-			</control>
-		</focusedlayout>
-		<focusedlayout width="370" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape) + !Control.HasFocus(510)">
-			<control type="group">
-				<include>ThumbsViewLayout</include>
-			</control>
+                <width>354</width>
+                <height>200</height>
+                <include>ThumbsViewLayoutFocus</include>
+            </control>
 		</focusedlayout>
 		<itemlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
           <control type="group">
-		  <animation effect="zoom" end="93" time="0" condition="true">Conditional</animation>
-		  <posx>-8</posx>
-			  <control type="image">
-				<include>BigPanelSquareDimensions</include>
-				<include>SquareThumbBG</include>
-			  </control>
-			  <control type="image">
-				<include>BigPanelSquareDimensions</include>
-				<include>SquareThumb</include>
-			  </control>
-				<control type="label">
-					<posx>25</posx>
-					<posy>192</posy>
-					<width>220</width>
-					<height>60</height>
-					<font>Reg22</font>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
-					<visible>IsEmpty(ListItem.Thumb)</visible>
-					<visible>!StringCompare(ListItem.Label,..)</visible>
-				</control>
-			</control>
+                <width>240</width>
+                <height>240</height>
+                <include>SquarePosterPanelLayout</include>
+            </control>
         </itemlayout>
         <focusedlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
           <control type="group">
-		  <animation effect="zoom" end="93" time="0" condition="true">Conditional</animation>
-		  <posx>-8</posx>
-			  <control type="image">
-				<include>BigPanelSquareDimensions</include>
-				<include>SquareThumbFO</include>
-			  </control>
-			  <control type="image">
-				<include>BigPanelSquareDimensions</include>
-				<include>SquareThumb</include>
-			  </control>
-				<control type="label">
-					<posx>25</posx>
-					<posy>192</posy>
-					<width>220</width>
-					<height>60</height>
-					<font>Reg22</font>
-					<align>center</align>
-					<info>ListItem.Label</info>
-					<textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
-					<visible>IsEmpty(ListItem.Thumb)</visible>
-					<visible>!StringCompare(ListItem.Label,..)</visible>
-				</control>
-			</control>
+                <width>240</width>
+                <height>240</height>
+                <include>SquarePosterPanelLayoutFocus</include>
+            </control>
         </focusedlayout>
 		
 		<itemlayout height="380" width="261" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, poster)">
-          <control type="image">
-            <include>BigPanelPosterDimensions</include>
-            <include>PosterThumbBG</include>
+          <control type="group">
+            <width>250</width>
+            <height>370</height>
+            <include>PosterPanelLayout</include>
           </control>
-          <control type="image">
-            <include>BigPanelPosterDimensions</include>
-            <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
-			<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
-			<visible>Container.Content(files) | ![StringCompare(Container(300).ListItem.Property(widget),weather) | StringCompare(Container(300).ListItem.Property(widget),systeminfo) | [IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + ![SubString(ListItem.filenameandpath,plugin://plugin.video.plexbmc,left) + IsEmpty(ListItem.episode)]]]</visible>
-          </control>
-		  <control type="image">
-            <posx>18</posx>
-			<posy>7</posy>
-			<width>234</width>
-			<height>275</height>
-            <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumbFallback]</texture>
-			<aspectratio scalediffuse="false" aligny="top" align="center">scale</aspectratio>
-			<visible>!Container.Content(files) + [StringCompare(Container(300).ListItem.Property(widget),weather) | StringCompare(Container(300).ListItem.Property(widget),systeminfo) | [IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + ![SubString(ListItem.filenameandpath,plugin://plugin.video.plexbmc,left) + IsEmpty(ListItem.episode)]]]</visible>
-          </control>
-		  <include>BigPanelLabelOverlay</include>
-		  <control type="group">
-            <include>BigPanelPosterDimensions</include>
-            <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
-          </control>
-          <include>BigPanelWatchedImage</include>
         </itemlayout>
         <focusedlayout height="380" width="261" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, poster)">
-          <control type="image">
-            <include>BigPanelPosterDimensions</include>
-            <include>PosterThumbFO</include>
+          <control type="group">
+            <width>250</width>
+            <height>370</height>
+            <include>PosterPanelLayoutFocus</include>
           </control>
-         <control type="image">
-            <include>BigPanelPosterDimensions</include>
-            <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
-			<aspectratio scalediffuse="false" aligny="center" align="center">stretch</aspectratio>
-			<visible>![StringCompare(Container(300).ListItem.Property(widget),weather) | StringCompare(Container(300).ListItem.Property(widget),systeminfo) | [IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + ![SubString(ListItem.filenameandpath,plugin://plugin.video.plexbmc,left) + IsEmpty(ListItem.episode)]]]</visible>
-          </control>
-		  <control type="image">
-            <posx>18</posx>
-			<posy>7</posy>
-			<width>234</width>
-			<height>275</height>
-            <texture border="0" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumbFallback]</texture>
-			<aspectratio scalediffuse="false" aligny="top" align="center">scale</aspectratio>
-			<visible>[StringCompare(Container(300).ListItem.Property(widget),weather) | StringCompare(Container(300).ListItem.Property(widget),systeminfo) | [IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + ![SubString(ListItem.filenameandpath,plugin://plugin.video.plexbmc,left) + IsEmpty(ListItem.episode)]]]</visible>
-          </control>
-		  <include>BigPanelLabelOverlayFocus</include>
-		  <control type="group">
-            <include>BigPanelPosterDimensions</include>
-            <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
-          </control>
-          <include>BigPanelWatchedImage</include>	  
         </focusedlayout>
 	
         <itemlayout height="1" width="1" condition="Skin.String(widgetstyle, single box)" />

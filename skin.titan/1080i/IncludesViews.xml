@@ -99,19 +99,13 @@
 	
 </include>
 
-	
-<include name="PosterThumb">
-    <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
-    <aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
-	<bordersize>0</bordersize>
-  </include>
-  
+
   <include name="BigPanelLabelOverlayVisibility">
 	<visible>
 		[Control.IsVisible(57) + Skin.HasSetting(ShowLabels57)] | 
 		[Control.IsVisible(59) + Skin.HasSetting(ShowLabels59)] | 
 		[Control.IsVisible(52) + Skin.HasSetting(ShowLabels52)] | 
-		[IsEmpty(ListItem.Art(poster)) + ![SubString(ListItem.filenameandpath,plugin://plugin.video.plexbmc,left) + IsEmpty(ListItem.episode)]]
+		[[IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + IsEmpty(Container(510).ListItem.Art(poster)) + IsEmpty(Container(510).ListItem.Art(tvshow.poster))] + ![SubString(ListItem.filenameandpath,plugin://plugin.video.plexbmc,left) + IsEmpty(ListItem.episode)]]
 	</visible>
 	<visible>!SubString(ListItem.Label,..,left)</visible>
   </include>
@@ -120,12 +114,10 @@
 	<control type="group">
 		<!-- label overlay when poster cases enabled -->
 		<include>BigPanelLabelOverlayVisibility</include>
-		<include>BigPanelPosterDimensions</include>
-		<visible>Skin.HasSetting(CaseOverlays) + !IsEmpty(ListItem.Art(poster))</visible>
+		<visible>Skin.HasSetting(CaseOverlays) + [!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(Container(510).ListItem.Art(poster)) | !IsEmpty(Container(510).ListItem.Art(tvshow.poster))]</visible>
 		<!--Panel-->
 		<control type="image">
 			<bottom>-1</bottom>
-			<width>234</width>
 			<height>60</height>
 			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
 			<colordiffuse>$INFO[Skin.String(CaseOverlays.Color)]</colordiffuse>
@@ -137,7 +129,7 @@
 			<width>220</width>
 			<height>60</height>
 			<align>left</align>
-			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<label>$VAR[ThumbListDetails]</label>
 			<font>Reg22</font>
 			<textcolor>$INFO[Skin.String(CaseOverlays.TextColor)]</textcolor>
 		</control>
@@ -145,13 +137,12 @@
 	<control type="group">
 		<!-- label overlay when poster cases disabled -->
 		<include>BigPanelLabelOverlayVisibility</include>
-		<include>BigPanelPosterDimensions</include>
-		<visible>!Skin.HasSetting(CaseOverlays) | IsEmpty(ListItem.Art(poster))</visible>
+		<visible>!Skin.HasSetting(CaseOverlays) | [IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + IsEmpty(Container(510).ListItem.Art(poster)) + IsEmpty(Container(510).ListItem.Art(tvshow.poster))]</visible>
 		<!--Panel-->
 		<control type="image">
 			<bottom>-1</bottom>
-			<width>234</width>
-			<height>60</height>
+			<height>70</height>
+            <bordersize>8</bordersize>
 			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
 			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 		</control>
@@ -162,7 +153,7 @@
 			<width>220</width>
 			<height>60</height>
 			<align>left</align>
-			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<label>$VAR[ThumbListDetails]</label>
 			<font>Reg22</font>
 			<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
 		</control>
@@ -174,8 +165,7 @@
 	<control type="group">
 		<!-- label overlay when poster cases enabled -->
 		<include>BigPanelLabelOverlayVisibility</include>
-		<include>BigPanelPosterDimensions</include>
-		<visible>Skin.HasSetting(CaseOverlays) + !IsEmpty(ListItem.Art(poster))</visible>
+		<visible>Skin.HasSetting(CaseOverlays) + [!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(Container(510).ListItem.Art(poster)) | !IsEmpty(Container(510).ListItem.Art(tvshow.poster))]</visible>
 		<!--Panel-->
 		<control type="image">
 			<bottom>-1</bottom>
@@ -191,7 +181,7 @@
 			<width>220</width>
 			<height>60</height>
 			<align>left</align>
-			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<label>$VAR[ThumbListDetails]</label>
 			<font>Reg22</font>
 			<scroll>true</scroll>
 			<textcolor>$INFO[Skin.String(CaseOverlays.TextColor)]</textcolor>
@@ -200,16 +190,14 @@
 	<control type="group">
 		<!-- label overlay when poster cases disabled -->
 		<include>BigPanelLabelOverlayVisibility</include>
-		<include>BigPanelPosterDimensions</include>
-		<visible>!Skin.HasSetting(CaseOverlays) | IsEmpty(ListItem.Art(poster))</visible>
+		<visible>!Skin.HasSetting(CaseOverlays) | [IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + IsEmpty(Container(510).ListItem.Art(poster)) + IsEmpty(Container(510).ListItem.Art(tvshow.poster))]</visible>
 		<!--Panel-->
 		<control type="image">
-			<bottom>-3</bottom>
-            <left>-2</left>
-			<width>238</width>
-			<height>62</height>
-			<texture border="5">diffuse/panel_trans.png</texture>
-			<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+			<bottom>-1</bottom>
+			<height>70</height>
+            <bordersize>8</bordersize>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
 		</control>
 		<control type="label">
 		<!--Label focus-->
@@ -218,10 +206,9 @@
 			<width>220</width>
 			<height>60</height>
 			<align>left</align>
-			<label>$VAR[HomeMenuWidgetLabel]</label>
+			<label>$VAR[ThumbListDetails]</label>
 			<font>Reg22</font>
-			<scroll>true</scroll>
-			<textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
+			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
 		</control>
 	</control>
 
@@ -275,19 +262,6 @@
 	<value condition="StringCompare(Skin.String(CaseOverlays.Fallback),DVD)">cases/dvd.png</value>
 	<value condition="StringCompare(Skin.String(CaseOverlays.Fallback),Bluray)">cases/bluray.png</value>
   </variable>
-  
-  <include name="PosterThumbBG">
-    <bordersize>-6</bordersize>
-	<texture border="0">diffuse/poster.png</texture>
-	<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-	
-	
-  </include>
-  <include name="PosterThumbFO">
-    <bordersize>-6</bordersize>
-    <texture border="0">diffuse/poster.png</texture>
-	<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-  </include>
   
   
   	<!-- TV Shows Next Aired script -->
@@ -436,104 +410,340 @@
 
   <include name="MovieDetailsLeft">
      <control type="group" id="44447">
+        <visible>Control.IsVisible(53) | Control.IsVisible(55) | Control.IsVisible(59) | Control.IsVisible(505) | Control.IsVisible(510) | Control.IsVisible(512) | [Skin.HasSetting(SlimListViewShowInfo) + Control.IsVisible(516)] | [Skin.HasSetting(BigListViewShowInfo) + Control.IsVisible(51)]</visible>
+        
+     
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View512_ShowInfoRight) + Control.IsVisible(512)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View59_ShowInfoRight) + Control.IsVisible(59)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View555_ShowInfoRight) + Control.IsVisible(55)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View53_ShowInfoRight) + Control.IsVisible(53)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View55_ShowInfoRight) + Control.IsVisible(55)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View505_ShowInfoRight) + Control.IsVisible(505)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View510_ShowInfoRight) + Control.IsVisible(510)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View516_ShowInfoRight) + Control.IsVisible(516)">Conditional</animation>
+      <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View51_ShowInfoRight) + Control.IsVisible(51)">Conditional</animation>
+     
 		<control type="group">
           <visible>!Skin.HasSetting(DetailsShowFanart)</visible>
-          <posx>50</posx>
-          <bottom>125</bottom>
-		  <height>760</height>
-		  
-		  <control type="image">
-			<width>625</width>
-			<texture border="15">diffuse/bgpanel.png</texture>
-			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-			<visible>!Skin.HasSetting(DetailsLeftHidepanel)</visible>
-			<visible>!Control.IsVisible(516)</visible>
-		</control>
+          <animation effect="slide" end="0,-8" time="0" condition="[Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516)] | [Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)]">Conditional</animation>
+			<posx>50</posx>
+			<bottom>124</bottom>
+			<height>736</height>
+            <width>625</width>
+			<control type="image">
+				<texture border="15">diffuse/bgpanel.png</texture>
+				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+				<visible>[!Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516)] | [!Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)]</visible>
+			</control>
 		
-		<control type="label">
-            <posy>13</posy>
-			<posx>15</posx>
-            <height>33</height>
-            <width>585</width>
-            <font>Bold30</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</shadowcolor>
-            <label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
-			<scroll>true</scroll>
-        </control>
-		<control type="label">
-            <posy>48</posy>
-			<posx>15</posx>
-            <height>33</height>
-            <width>585</width>
-            <font>Bold30</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-            <label>[UPPERCASE]$INFO[ListItem.Artist][/UPPERCASE]</label>
-			<visible>container.content(songs)</visible>
-        </control>
-        <control type="label">
-            <posy>53</posy>
-			<posx>15</posx>
-            <height>33</height>
-            <width>585</width>
-            <font>Reg31</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-            <label>$VAR[Details]</label>
-			<animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
-          </control>
-		<control type="label">
-            <visible>Container.Content(addons)</visible>
-            <posy>53</posy>
-			<posx>15</posx>
-            <height>33</height>
-            <width>585</width>
-            <font>Reg31</font>
-			<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
-			
-            <label>$INFO[ListItem.Label2,$LOCALIZE[19114] : ]</label>
-          </control>
-          <control type="textbox">
-            <posx>15</posx>
-            <posy>107</posy>
-            <width>585</width>
-            <height>649</height>
-            <align>left</align>
-			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-            <label>$VAR[Plots]</label>
-			<animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
-          </control>
+            <control type="grouplist">
+                <posx>8</posx>
+                <posy>0</posy>
+                <width>605</width>
+                <height>733</height>
+                <orientation>vertical</orientation>
+                <!-- title -->
+                <control type="group">
+                    <height>40</height>
+                    <control type="label">
+                        <posx>7</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                        <scroll>false</scroll>
+                        <font>Bold30</font>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Year: Movies-->
+                    <height>40</height>
+                    <visible>[Container.Content(Movies) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)]] + !IsEmpty(ListItem.Year)</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>3</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/premiered-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Year]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.Years)]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Premiered: TV-Shows, Episodes-->
+                    <height>40</height>
+                    <visible>[Container.Content(TVShows) | Container.Content(episodes) | Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + !IsEmpty(ListItem.Premiered)</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>3</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/premiered-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Premiered]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Runtime: Movie, Episodes-->
+                    <height>40</height>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)]] + [!IsEmpty(ListItem.Duration) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Runtime))]</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>3</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/time-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Duration,, $LOCALIZE[12391]]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.Runtime),, $LOCALIZE[12391]]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Genre-->
+                    <width>800</width>
+                    <height>40</height>
+                    <visible>!IsEmpty(ListItem.Genre) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Genre))</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>3</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/genre-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Genre]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                        <scroll>false</scroll>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.Genre)]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Director: Movies, Episodes-->
+                    <width>800</width>
+                    <height>40</height>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)]] + [!IsEmpty(ListItem.Director) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Director))]</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>5</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/director-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Director]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.Director)]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Writer: Movies, Episodes-->
+                    <width>800</width>
+                    <height>40</height>
+                    <visible>[Container.Content(Movies) | Container.Content(episodes) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)]] + [!IsEmpty(ListItem.Writer) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Writer))]</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>2</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/writer-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Writer]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.Writer)]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                        <visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
+                    </control>
+                </control>
+                <control type="group">
+                    <!--Studio: TV-Shows-->
+                    <width>1200</width>
+                    <height>40</height>
+                    <visible>!IsEmpty(ListItem.Studio)</visible>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>3</posy>
+                        <width>49</width>
+                        <height>49</height>
+                        <texture>dialogs/videoinfo/tvstudio-icon.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                    </control>
+                    <control type="label">
+                        <posx>60</posx>
+                        <posy>0</posy>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Studio]</label>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <scroll>false</scroll>
+                    </control>
+                </control>
+                <control type="group">
+                    <height>auto</height>
+                    <!-- horizontal line -->
+                    <control type="image">
+                        <top>10</top>
+                        <height>1</height>
+                        <texture>diffuse/panel.png</texture>
+                        <colordiffuse>grey</colordiffuse>
+                    </control>
+                    <!-- plot -->
+                    <control type="textbox">
+                        <top>10</top>
+                        <posx>7</posx>
+                        <height>auto</height>
+                        <label>$VAR[Plots]</label>
+                        <font>Light28</font>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <aligny>top</aligny>
+                        <autoscroll>true</autoscroll>
+                    </control>
+                </control>
+            </control>
 
         </control>
         <control type="group">
 			<visible>Skin.HasSetting(DetailsShowFanart)</visible>
+            <animation effect="slide" end="0,-8" time="0" condition="[Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516) + !Control.IsVisible(51)] | [Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)] | [Skin.HasSetting(View51_HidePanel) + Control.IsVisible(51)]">Conditional</animation>
 			<posx>50</posx>
-			<bottom>125</bottom>
-			<height>760</height>
+			<bottom>124</bottom>
+			<height>736</height>
+            <width>625</width>
 			<control type="image">
-				<width>625</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
 				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-				<visible>!Skin.HasSetting(DetailsLeftHidepanel)</visible>
-				<visible>!Control.IsVisible(516)</visible>
+				<visible>[!Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516) + !Control.IsVisible(51)] | [!Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)] | [!Skin.HasSetting(View51_HidePanel) + Control.IsVisible(51)]</visible>
 			</control>
 
 			<control type="image">
-				<posx>15</posx>
-				<posy>15</posy>
-				<width>595</width>
-				<height>335</height>
+				<height>360</height>
+                <bordersize>8</bordersize>
 				<aspectratio align="center" aligny="center" scalediffuse="true">scale</aspectratio>
 				<texture background="true" diffuse="diffuse/landscape.png" fallback="DefaultVideo.png" border="0">$VAR[DetailsFanArtImage]</texture>
+                <visible>![[Window.IsActive(musiclibrary) | Window.IsActive(MyMusicSongs.xml)] + !IsEmpty(ListItem.Album) + !IsEmpty(ListItem.Thumb)]</visible>
 			</control>
+            
+            <control type="image">
+                <!--cdart image music-->
+                <width>360</width>
+                <height>360</height>
+                <left>180</left>
+                <texture background="true" diffuse="diffuse/cdmask_big.png" fallback="defaultcovers/cd_big.png">$VAR[DiscArtImage]</texture>
+                <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+                <animation effect="rotate" end="-90" center="auto" time="20000" loop="false" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+                <visible>Skin.HasSetting(View51_ShowCDart) + [!IsEmpty(ListItem.Thumb) + !Substring(ListItem.Thumb,Default,left)]</visible>
+                <visible>[[Window.IsActive(musiclibrary) | Window.IsActive(MyMusicSongs.xml)] + !IsEmpty(ListItem.Album) + !IsEmpty(ListItem.Thumb)]</visible>
+            </control>
 			
+            
+            <!-- music cover -->
+            <control type="image">
+				<height>360</height>
+                <width>360</width>
+                <bordersize>8</bordersize>
+				<aspectratio align="center" aligny="center" scalediffuse="true">scale</aspectratio>
+				<texture background="true" diffuse="diffuse/landscape.png" fallback="DefaultVideo.png" border="0">$INFO[ListItem.Thumb]</texture>
+                <visible>[[Window.IsActive(musiclibrary) | Window.IsActive(MyMusicSongs.xml)] + !IsEmpty(ListItem.Album) + !IsEmpty(ListItem.Thumb)]</visible>
+			</control>
+            
+            
 			<!--Video Window -->
 			<control type="videowindow">
-				<posx>15</posx>
-				<posy>15</posy>
-				<width>585</width>
-				<height>320</height>
+				<posx>8</posx>
+				<posy>8</posy>
+				<width>609</width>
+				<height>344</height>
 				<visible>VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)</visible>
 				<visible>[Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels) | Window.IsActive(mypvr.xml)]</visible>
 				<visible>!skin.hastheme(classic)</visible>
@@ -541,21 +751,20 @@
 
 			<control type="label">
 				<posy>370</posy>
-				<posx>15</posx>
+				<posx>8</posx>
 				<height>33</height>
-				<width>580</width>
-				<font>Bold30</font>
+				<width>609</width>
+				<font>Bold28</font>
 				<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
-				
 				<label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
 				<scroll>true</scroll>
 			</control>
 			<control type="label">
 				<posy>405</posy>
-				<posx>15</posx>
+				<posx>8</posx>
 				<height>33</height>
-				<width>580</width>
-				<font>Bold30</font>
+				<width>609</width>
+				<font>Bold28</font>
 				<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 				<label>[UPPERCASE]$INFO[ListItem.Artist][/UPPERCASE]</label>
@@ -563,21 +772,22 @@
 			</control>
 			<control type="label">
 				  <posy>410</posy>
-				  <posx>15</posx>
+				  <posx>8</posx>
 				  <height>33</height>
-				  <width>580</width>
-				  <font>Reg31</font>
+				  <width>609</width>
+				  <font>Reg26</font>
 				  <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 				  <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 				  <label>$VAR[Details]</label>
 				  <animation effect="slide" end="0,45" time="0" condition="container.content(songs)">Conditional</animation>
             </control>
 			<control type="textbox">
-              <posx>15</posx>
+              <posx>8</posx>
               <posy>460</posy>
-              <width>580</width>
-              <height>289</height>
+              <width>609</width>
+              <height>250</height>
               <align>left</align>
+              <font>Reg24</font>
 			  <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			  <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
               <label>$VAR[Plots]</label>
@@ -587,37 +797,51 @@
 	 </control>
   </include>
   
+  <include name="PosterThumbBG">
+	<texture border="0">diffuse/poster.png</texture>
+	<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+  </include>
+  
+  <include name="PosterThumbFO">
+    <texture border="0">diffuse/poster.png</texture>
+	<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+  </include>
+  
+    <include name="PosterThumb">
+        <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
+        <aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
+        <bordersize>8</bordersize>
+        <visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(Container(510).ListItem.Art(poster)) | !IsEmpty(Container(510).ListItem.Art(tvshow.poster))</visible>
+    </include>
+    <include name="PosterThumbFallback">
+        <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
+        <aspectratio scalediffuse="true" aligny="top" align="center">keep</aspectratio>
+        <bordersize>8</bordersize>
+        <visible>IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + IsEmpty(Container(510).ListItem.Art(poster)) + IsEmpty(Container(510).ListItem.Art(tvshow.poster))</visible>
+    </include>
+  
   <include name="SquareThumb">
+    <bordersize>8</bordersize>
     <texture background="true" diffuse="diffuse/music_cover.png" fallback="DefaultMusicRecentlyPlayed.png" border="0">$VAR[MusicSquareThumb]</texture>
     <aspectratio scalediffuse="false" aligny="center">scale</aspectratio>
   </include>
   <include name="SquareThumbBG">
-    <bordersize>-6</bordersize>
     <aspectratio aligny="top" scalediffuse="false">stretch</aspectratio>
 	<texture>diffuse/music_cover.png</texture>
 	<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
   </include>
   <include name="SquareThumbFO">
-    <bordersize>-6</bordersize>
     <aspectratio aligny="top">stretch</aspectratio>
 	<texture>diffuse/music_cover.png</texture>
 	<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
   </include>
-  <include name="BigPanelPosterDimensions">
-    <posx>18</posx>
-    <posy>7</posy>
-    <width>234</width>
-    <height>335</height>
-  </include>
   
   <include name="SmallPanelPosterDimensions">
-    <width>150</width>
-    <height>221</height>
+    <width>162</width>
+    <height>240</height>
   </include>
  
  <include name="BigPanelSquareDimensions">
-    <posx>18</posx>
-    <posy>5</posy>
     <width>236</width>
     <height>236</height>
   </include>
@@ -636,187 +860,208 @@
         <value>$INFO[ListItem.FolderPath]fanart.jpg</value>
     </variable>
   
-  <include name="ThumbsViewLayout">
-		<control type="group">
-			<width>335</width>
-            <height>195</height>
-			<control type="image">
-				<!--Panel Normal-->
-				<posx>0</posx>
-				<posy>0</posy>
-				<texture background="true">home/home_matte2.png</texture>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-			</control>
-			<control type="image">
-				<!--thumb image-->
-				<posx>0</posx>
-				<posy>0</posy>
-				<bordersize>5</bordersize>
-				<texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[ThumbViewImage]</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-			</control>
-			<control type="image">
-				<!--fallback logo image-->
-				<posx>0</posx>
-				<posy>0</posy>
-				<bordersize>30</bordersize>
-				<texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-				<visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
-			</control>
-			<control type="image">
-				<!--Panel Ovelay-->
-				<bottom>0</bottom>
-				<height>70</height>
-				<bordersize>5</bordersize>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-				<texture border="5">colors/color_white.png</texture>
-				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-			</control>
-            <control type="image">
-				<!--Panel Ovelay-->
-				<bottom>0</bottom>
-				<height>70</height>
-				<bordersize>5</bordersize>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-				<texture border="5">colors/color_white.png</texture>
-				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-			</control>
-			<control type="label">
-				<!--Label-->
-				<left>10</left>
-				<bottom>5</bottom>
-				<width>315</width>
-				<height>60</height>
-				<align>center</align>
-				<label>$VAR[HomeMenuWidgetLabel]</label>
-				<font>Light25</font>
-				<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
-				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-			</control>
-			<control type="group">
-				<!--Watched Overlay-->
-				<right>5</right>
-				<top>5</top>
-				<include>WatchedIndicatorNormal</include>
-			</control>
-			
-		</control>
+    <include name="ThumbsViewLayout">
+        <control type="image">
+            <!--Panel Normal-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <texture background="true">home/home_matte2.png</texture>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+        </control>
+        <control type="image">
+            <!--thumb image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>8</bordersize>
+            <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[ThumbViewImage]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+        </control>
+        <control type="image">
+            <!--fallback logo image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>30</bordersize>
+            <texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
+            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
+        </control>
+        <control type="image">
+            <!--Panel Ovelay-->
+            <bottom>0</bottom>
+            <height>70</height>
+            <bordersize>8</bordersize>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            <texture border="5">colors/color_white.png</texture>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+            <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+        </control>
+        <control type="image">
+            <!--Panel Ovelay-->
+            <bottom>0</bottom>
+            <height>70</height>
+            <bordersize>8</bordersize>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            <texture border="5">colors/color_white.png</texture>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+            <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+        </control>
+        <control type="label">
+            <!--Label-->
+            <left>5%</left>
+            <bottom>5</bottom>
+            <width>90%</width>
+            <height>60</height>
+            <align>left</align>
+            <label>$VAR[ThumbListDetails]</label>
+            <font>Reg20</font>
+            <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+            <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+        </control>
+        <control type="group">
+            <!--Watched Overlay-->
+            <right>8</right>
+            <top>8</top>
+            <include>WatchedIndicatorNormal</include>
+        </control>
     </include>
     <include name="ThumbsViewLayoutFocus">
-		<control type="group">
-			<width>335</width>
-            <height>195</height>
-			<control type="image">
-				<!--Panel Normal-->
-				<posx>0</posx>
-				<posy>0</posy>
-				<texture background="true">home/home_matte2.png</texture>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-			</control>
-			<control type="image">
-				<!--thumb image-->
-				<posx>0</posx>
-				<posy>0</posy>
-				<bordersize>5</bordersize>
-				<texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[ThumbViewImage]</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-			</control>
-			<control type="image">
-				<!--fallback logo image-->
-				<posx>0</posx>
-				<posy>0</posy>
-				<bordersize>30</bordersize>
-				<texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-				<visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
-			</control>
-			<control type="image">
-				<!--Panel Ovelay-->
-				<bottom>0</bottom>
-				<height>70</height>
-				<bordersize>5</bordersize>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-				<texture border="5">colors/color_white.png</texture>
-				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-			</control>
-			<control type="label">
-				<!--Label-->
-				<left>10</left>
-				<bottom>5</bottom>
-				<width>315</width>
-				<height>60</height>
-				<align>center</align>
-				<label>$VAR[HomeMenuWidgetLabel]</label>
-				<font>Light25</font>
-				<textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
-				<visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
-				<visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
-			</control>
-			<control type="group">
-				<!--Watched Overlay-->
-				<right>5</right>
-				<top>5</top>
-				<include>WatchedIndicatorNormal</include>
-			</control>
-			
+        <control type="image">
+            <!--Panel Normal-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <texture background="true">home/home_matte2.png</texture>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+        </control>
+        <control type="image">
+            <!--thumb image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>8</bordersize>
+            <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[ThumbViewImage]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+        </control>
+        <control type="image">
+            <!--fallback logo image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>30</bordersize>
+            <texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
+            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
+        </control>
+        <control type="image">
+            <!--Panel Ovelay-->
+            <bottom>0</bottom>
+            <height>70</height>
+            <bordersize>8</bordersize>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            <texture border="5">colors/color_white.png</texture>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+            <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+        </control>
+        <control type="image">
+            <!--Panel Ovelay-->
+            <bottom>0</bottom>
+            <height>70</height>
+            <bordersize>8</bordersize>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            <texture border="5">colors/color_white.png</texture>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+            <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+        </control>
+        <control type="label">
+            <!--Label-->
+            <left>5%</left>
+            <bottom>5</bottom>
+            <width>90%</width>
+            <height>60</height>
+            <align>left</align>
+            <label>$VAR[ThumbListDetails]</label>
+            <font>Reg20</font>
+            <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+            <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+        </control>
+        <control type="group">
+            <!--Watched Overlay-->
+            <right>8</right>
+            <top>8</top>
+            <include>WatchedIndicatorNormal</include>
+        </control>
+    </include>
+    
+    <include name="PosterPanelLayout">
+        <control type="image">
+            <include>PosterThumbBG</include>
+          </control>
+          <control type="image">
+            <include>PosterThumb</include>
+          </control>
+          <control type="image">
+            <include>PosterThumbFallback</include>
+          </control>
+			<include>BigPanelLabelOverlay</include>
+		  <control type="group">
+            <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
+          </control>
+          <control type="group">
+			<!--Watched Overlay-->
+			<right>8</right>
+			<top>8</top>
+			<include>WatchedIndicatorNormal</include>
+			<animation type="Conditional" condition="skin.hastheme(classic)">
+				<effect type="slide" end="3,-3" time="0"  />
+			</animation>
 		</control>
     </include>
-
-
-	
-	<include name="BannerPlexlayout">
-		<control type="image">
-			<width>590</width>
-			<height>120</height>
-			<texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="5">$VAR[BannerImage]</texture>
-			<aspectratio align="center" aligny="center">stretch</aspectratio>
-			<visible>!IsEmpty(ListItem.Art(banner)) | !IsEmpty(ListItem.Art(tvshow.banner)) | !IsEmpty(ListItem.Property(banner))</visible>
-		</control>
-		<control type="image">
-			<width>590</width>
-			<height>120</height>
-			<texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="0">$VAR[BannerImageFallback]</texture>
-			<aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
-		</control>
-		
-		
-		<control type="image">
-			<left>20</left>
-			<top>12</top>
-			<width>550</width>
-			<height>100</height>
-			<aspectratio scalediffuse="false" align="left">keep</aspectratio>
-			<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
-			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
-		</control>
-		<control type="label">
-			<centerleft>290</centerleft>
-			<top>8</top>
-			<width>580</width>
-			<height>105</height>
-			<align>center</align>
-			<label>$INFO[ListItem.Label]</label>
-			<font>Bold34</font>
-			<shadowcolor>black</shadowcolor>
-			<visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(banner))</visible>
-		</control>
-		<control type="group">
-		<right>9</right>
-		<include>WatchedIndicatorNormal</include>
-		</control>
-	</include>
-    <include name="SmallPosterViewWatchedImage">
-		<control type="group">
+    
+    <include name="PosterPanelLayoutFocus">
+        <control type="image">
+            <include>PosterThumbFO</include>
+          </control>
+          <control type="image">
+            <include>PosterThumb</include>
+          </control>
+          <control type="image">
+            <include>PosterThumbFallback</include>
+          </control>
+			<include>BigPanelLabelOverlay</include>
+		  <control type="group">
+            <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
+          </control>
+          <control type="group">
 			<!--Watched Overlay-->
-			<posx>80</posx>
-			<posy>0</posy>
-			<width>70</width>
+			<right>8</right>
+			<top>8</top>
+			<include>WatchedIndicatorNormal</include>
+			<animation type="Conditional" condition="skin.hastheme(classic)">
+				<effect type="slide" end="3,-3" time="0"  />
+			</animation>
+		</control>
+    </include>
+    
+    <include name="SmallPosterPanelLayout">
+        <control type="image">
+            <include>PosterThumbBG</include>
+          </control>
+          <control type="image">
+            <include>PosterThumb</include>
+          </control>
+		  <control type="group">
+            <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
+          </control>
+          <control type="group">
+			<!--Watched Overlay-->
+			<right>8</right>
+			<top>8</top>
 			<include>WatchedIndicatorSmall</include>
 			<animation type="Conditional" condition="skin.hastheme(classic)">
 				<effect type="slide" end="3,-3" time="0"  />
@@ -824,121 +1069,251 @@
 		</control>
     </include>
     
-	<include name="BannerViewImagesNormal">
-	<control type="group">
-		<include>BannerViewImageSizeNormal</include>
+    <include name="SmallPosterPanelLayoutFocus">
+        <control type="image">
+            <include>PosterThumbFO</include>
+          </control>
+          <control type="image">
+            <include>PosterThumb</include>
+          </control>
+		  <control type="group">
+            <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
+          </control>
+          <control type="group">
+			<!--Watched Overlay-->
+			<right>8</right>
+			<top>8</top>
+			<include>WatchedIndicatorSmall</include>
+			<animation type="Conditional" condition="skin.hastheme(classic)">
+				<effect type="slide" end="3,-3" time="0"  />
+			</animation>
+		</control>
+    </include>
+
+    <include name="SquarePosterPanelLayout">
+        <control type="image">
+            <include>SquareThumbBG</include>
+          </control>
+          <control type="image">
+            <include>SquareThumb</include>
+          </control>
+          <control type="group">
+			<!--Watched Overlay-->
+			<right>8</right>
+			<top>8</top>
+			<include>WatchedIndicatorSmall</include>
+			<animation type="Conditional" condition="skin.hastheme(classic)">
+				<effect type="slide" end="3,-3" time="0"  />
+			</animation>
+		</control>
+        <control type="group">
+			<!--Label Overlay-->
+			<include>SquarePosterLabelOverlay</include>
+			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+		</control>
+    </include>
+    
+    <include name="SquarePosterPanelLayoutFocus">
+        <control type="image">
+            <include>SquareThumbFO</include>
+          </control>
+          <control type="image">
+            <include>SquareThumb</include>
+          </control>
+          <control type="group">
+			<!--Watched Overlay-->
+			<right>8</right>
+			<top>8</top>
+			<include>WatchedIndicatorSmall</include>
+			<animation type="Conditional" condition="skin.hastheme(classic)">
+				<effect type="slide" end="3,-3" time="0"  />
+			</animation>
+		</control>
+         <control type="group">
+			<!--Label Overlay-->
+			<include>SquarePosterLabelOverlayFocus</include>
+			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)]</visible>
+            <visible>!StringCompare(ListItem.Label,..)</visible>
+		</control>
+    </include>
+    
+    <include name="SquarePosterLabelOverlay">
 		<control type="image">
-            <!--background-->
-            <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+			<bottom>0</bottom>
+			<height>70</height>
+            <bordersize>8</bordersize>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
 			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-			
-            <aspectratio>stretch</aspectratio>
+		</control>
+		<control type="label">
+			<left>4%</left>
+			<bottom>0</bottom>
+			<width>92%</width>
+			<height>60</height>
+			<align>left</align>
+			<label>$VAR[ThumbListDetails]</label>
+			<font>Reg18</font>
+			<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+		</control>
+    </include>
+    
+    <include name="SquarePosterLabelOverlayFocus">
+		<control type="image">
+			<bottom>0</bottom>
+			<height>70</height>
+            <bordersize>8</bordersize>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+		</control>
+		<control type="label">
+			<left>4%</left>
+			<bottom>0</bottom>
+			<width>92%</width>
+			<height>60</height>
+			<align>left</align>
+			<label>$VAR[ThumbListDetails]</label>
+			<font>Reg18</font>
+			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+		</control>
+    </include>
+    
+	<include name="BannerPlexlayout">
+        <control type="image">
+            <bordersize>8</bordersize>
+            <texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="5">$VAR[BannerImage]</texture>
+            <aspectratio align="center" aligny="center">stretch</aspectratio>
+            <visible>!IsEmpty(ListItem.Art(banner)) | !IsEmpty(ListItem.Art(tvshow.banner)) | !IsEmpty(ListItem.Property(banner))</visible>
         </control>
         <control type="image">
+            <bordersize>8</bordersize>
+            <texture fallback="special://skin/extras/defaulticonswide/DefaultVideo.png" diffuse="diffuse/banner.png" border="0">$VAR[BannerImageFallback]</texture>
+            <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+            <visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
+        </control>
+
+        <control type="image">
+            <left>20</left>
+            <right>20</right>
+            <top>12</top>
+            <bottom>12</bottom>
+            <aspectratio scalediffuse="false" align="left">keep</aspectratio>
+            <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+            <visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Property(banner))</visible>
+        </control>
+        <control type="label">
+            <left>5%</left>
+            <width>90%</width>
+            <height>100%</height>
+            <align>center</align>
+            <label>$INFO[ListItem.Label]</label>
+            <font>Bold34</font>
+            <shadowcolor>black</shadowcolor>
+            <visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(banner))</visible>
+        </control>
+        <control type="group">
+            <right>9</right>
+            <include>WatchedIndicatorNormal</include>
+        </control>
+	</include>
+    
+    <include name="LandscapeItemLayout">
+        <control type="image">
             <!--Panel icon image-->
-			<bordersize>5</bordersize>
+			<bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
 		<control type="image">
             <!--season image legacy-->
-			<bordersize>5</bordersize>
+			<bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png">$VAR[BannerLandscapeImageSeason]</texture>
             <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
 			<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video) + !Skin.HasSetting(DisableLandscapeThumbs)</visible>
         </control>
         <control type="image">
-            <!--Panel Overlay-->
-			<bordersize>5</bordersize>
-			<bottom>0</bottom>
-			<height>80</height>
-            <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
-			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-            <aspectratio>stretch</aspectratio>
-            <include>ShowTitleOverlay</include>
+            <!--fallback logo image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>30</bordersize>
+            <texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
+            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
         </control>
         <control type="image">
             <!--Panel Overlay-->
-			<bordersize>5</bordersize>
+			<bordersize>8</bordersize>
 			<bottom>0</bottom>
-			<height>80</height>
+			<height>95</height>
             <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
 			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
             <aspectratio>stretch</aspectratio>
             <include>ShowTitleOverlay</include>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+        </control>
+        <control type="image">
+            <!--Panel Overlay-->
+			<bordersize>8</bordersize>
+			<bottom>0</bottom>
+			<height>95</height>
+            <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <include>ShowTitleOverlay</include>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
         </control>
         <control type="label">
             <!--Label with title-->
-            <bottom>0</bottom>
+            <bottom>8</bottom>
 			<height>80</height>
-			<left>15</left>
-			<width>95%</width>
-			<font>Reg42</font>
-            <align>center</align>
-            <info>ListItem.Label</info>
+			<left>3%</left>
+			<width>94%</width>
+			<font>Reg32</font>
+            <align>left</align>
+            <label>$VAR[ThumbListDetails]</label>
 			<textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
             <include>ShowTitleOverlay</include>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
         </control>
 		<control type="group">
-			<right>5</right>
-			<top>5</top>
+			<right>8</right>
+			<top>8</top>
 			<include>WatchedIndicatorNormal</include>
 		 </control>
-		</control>
     </include>
-    <include name="BannerViewOverlayFocusNormal">
-		<control type="group">
-			<include>BannerViewImageSizeNormal</include>
-			<control type="image">
-				<!--focus image-->
-				<texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-				<aspectratio>stretch</aspectratio>
-			</control>
-			<control type="image">
-				<!--Panel icon image-->
-				<bordersize>5</bordersize>
-				<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
-				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-			</control>
-			<control type="image">
-				<!--season image legacy-->
-				<bordersize>5</bordersize>
-				<texture background="true" diffuse="home/home_matte2.png">$VAR[BannerLandscapeImageSeason]</texture>
-				<aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
-				<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video) + !Skin.HasSetting(DisableLandscapeThumbs)</visible>
-			</control>
-			<control type="image">
-				<!--Panel Overlay-->
-				<bordersize>5</bordersize>
-				<bottom>0</bottom>
-				<height>80</height>
-				<texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
-				<colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-				<aspectratio>stretch</aspectratio>
-				<include>ShowTitleOverlay</include>
-			</control>
-			<control type="label">
-				<!--Label with title-->
-				<bottom>0</bottom>
-				<height>80</height>
-				<left>15</left>
-				<width>95%</width>
-				<font>Reg42</font>
-				<align>center</align>
-				<info>ListItem.Label</info>
-				<textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
-				<include>ShowTitleOverlay</include>
-			</control>
-			<control type="group">
-				<right>5</right>
-				<top>5</top>
-				<include>WatchedIndicatorNormal</include>
-			 </control>
-		 </control>
+    
+	<include name="LandscapeLayout">
+		<control type="image">
+            <!--background-->
+            <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <include>LandscapeItemLayout</include>
+    </include>
+    <include name="LandscapeLayoutFocus">
+        <control type="image">
+            <!--focus image-->
+            <texture diffuse="home/home_matte2.png">colors/color_white.png</texture>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <include>LandscapeItemLayout</include>
+        <control type="label">
+            <!--Label with title-->
+            <bottom>8</bottom>
+			<height>80</height>
+			<left>3%</left>
+			<width>94%</width>
+			<font>Reg32</font>
+            <align>left</align>
+            <label>$VAR[ThumbListDetails]</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+            <include>ShowTitleOverlay</include>
+            <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
+        </control>
     </include>
 
-	
 	<include name="ShowTitleOverlay">
 		<visible>
 		[[IsEmpty(ListItem.Art(landscape)) | Skin.HasSetting(DisableLandscapeThumbs)] + [container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]] |
@@ -948,123 +1323,102 @@
 	</include>
 	
 	<include name="SideBladeViewCommands">
-		
-	
-		<control type="radiobutton" id="3005">
+
+		<control type="radiobutton" id="3010">
+			<!--Show info-->
+			<include>SubMenuButton</include>
+			<label>36427</label>
+			<onclick condition="Control.IsVisible(507)">Skin.ToggleSetting(FanArtViewShowInfo)</onclick>
+            <onclick condition="Control.IsVisible(500)">Skin.ToggleSetting(ShowCaseViewShowInfo)</onclick>
+            <onclick condition="Control.IsVisible(52)">Skin.ToggleSetting(PanelViewShowInfo)</onclick>
+            <onclick condition="Control.IsVisible(502)">Skin.ToggleSetting(LandscapeViewShowInfo)</onclick>
+            <onclick condition="Control.IsVisible(503)">Skin.ToggleSetting(LogoViewShowInfo)</onclick>
+            <onclick condition="Control.IsVisible(51)">Skin.ToggleSetting(BigListViewShowInfo)</onclick>
+            <onclick condition="Control.IsVisible(516)">Skin.ToggleSetting(SlimListViewShowInfo)</onclick>
+			<selected>
+            [Control.IsVisible(507) + Skin.HasSetting(FanArtViewShowInfo)] |
+            [Control.IsVisible(500) + Skin.HasSetting(ShowCaseViewShowInfo)] |
+            [Control.IsVisible(52) + Skin.HasSetting(PanelViewShowInfo)] |
+            [Control.IsVisible(502) + Skin.HasSetting(LandscapeViewShowInfo)] |
+            [Control.IsVisible(503) + Skin.HasSetting(LogoViewShowInfo)] |
+            [Control.IsVisible(51) + Skin.HasSetting(BigListViewShowInfo)] |
+            [Control.IsVisible(516) + Skin.HasSetting(SlimListViewShowInfo)]
+            </selected>
+			<visible>
+            Control.IsVisible(507) | 
+            Control.IsVisible(500) | 
+            Control.IsVisible(52) | 
+            Control.IsVisible(502) | 
+            Control.IsVisible(503) | 
+            Control.IsVisible(51) |
+            Control.IsVisible(516)
+            </visible>
+		</control>
+        
+        <control type="radiobutton" id="3005">
 			<!--show fanart thumb in details pane-->
-			<visible>Control.IsVisible(53) | Control.IsVisible(55) | Control.IsVisible(59) | Control.IsVisible(505) | Control.IsVisible(510) | Control.IsVisible(512)</visible>
+			<visible>Control.IsVisible(44447)</visible>
 			<include>SubMenuButton</include>
 			<label>31114</label>
 			<onclick>Skin.ToggleSetting(DetailsShowFanart)</onclick>
 			<selected>Skin.HasSetting(DetailsShowFanart)</selected>
 		</control>
 
-		<control type="radiobutton" id="3010">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(FanArtViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(FanArtViewShowInfo)</selected>
-			<visible>Control.IsVisible(507)</visible>
-		</control>
-		<control type="radiobutton" id="3015">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(ShowCaseViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(ShowCaseViewShowInfo)</selected>
-			<visible>Control.IsVisible(500)</visible>
-		</control>
-		<control type="radiobutton" id="3020">
+
+        <control type="radiobutton" id="3020">
 			<!--Show labels-->
 			<include>SubMenuButton</include>
 			<label>20459</label>
-			<onclick>Skin.ToggleSetting(ShowlabelsLandscape)</onclick>
-			<selected>Skin.HasSetting(ShowlabelsLandscape)</selected>
-			<visible>Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)</visible>
-			<visible>![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]</visible>
+			<onclick condition="Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)">Skin.ToggleSetting(ShowlabelsLandscape)</onclick>
+            <onclick condition="Control.IsVisible(509)">Skin.ToggleSetting(ShowLabelsSquare)</onclick>
+            <onclick condition="Control.IsVisible(510)">Skin.ToggleSetting(ShowLabelsSquareDetails)</onclick>
+            <onclick condition="Control.IsVisible(57)">Skin.ToggleSetting(ShowLabels57)</onclick>
+            <onclick condition="Control.IsVisible(52)">Skin.ToggleSetting(ShowLabels52)</onclick>
+            <onclick condition="Control.IsVisible(59)">Skin.ToggleSetting(BigListViewShowInfo)</onclick>
+			<selected>
+            [[Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)] + Skin.HasSetting(ShowlabelsLandscape)] |
+            [Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] |
+            [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] |
+            [Control.IsVisible(57) + Skin.HasSetting(ShowLabels57)] |
+            [Control.IsVisible(52) + Skin.HasSetting(ShowLabels52)] |
+            [Control.IsVisible(59) + Skin.HasSetting(ShowLabels59)]
+            </selected>
+			<visible>
+            [Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)] | 
+            Control.IsVisible(509) | 
+            Control.IsVisible(510) | 
+            Control.IsVisible(57) | 
+            Control.IsVisible(52) | 
+            Control.IsVisible(59)
+            </visible>
 		</control>
-		<control type="radiobutton" id="3025">
-			<!--Show labels-->
+	
+        
+        <control type="radiobutton" id="3045">
+			<!--Show info right-->
 			<include>SubMenuButton</include>
-			<label>20459</label>
-			<onclick>Skin.ToggleSetting(ShowLabelsSquare)</onclick>
-			<selected>Skin.HasSetting(ShowLabelsSquare)</selected>
-			<visible>Control.IsVisible(509)</visible>
+			<label>31599</label>
+			<onclick condition="Control.IsVisible(512)">Skin.ToggleSetting(View512_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(510)">Skin.ToggleSetting(View510_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(516)">Skin.ToggleSetting(View516_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(505)">Skin.ToggleSetting(View505_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(59)">Skin.ToggleSetting(View59_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(55)">Skin.ToggleSetting(View55_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(53)">Skin.ToggleSetting(View53_ShowInfoRight)</onclick>
+            <onclick condition="Control.IsVisible(51)">Skin.ToggleSetting(View51_ShowInfoRight)</onclick>
+			<selected>
+            [Control.IsVisible(512) + Skin.HasSetting(View512_ShowInfoRight)] |
+            [Control.IsVisible(516) + Skin.HasSetting(View516_ShowInfoRight)] |
+            [Control.IsVisible(510) + Skin.HasSetting(View510_ShowInfoRight)] |
+            [Control.IsVisible(505) + Skin.HasSetting(View505_ShowInfoRight)] |
+            [Control.IsVisible(51) + Skin.HasSetting(View51_ShowInfoRight)] |
+            [Control.IsVisible(59) + Skin.HasSetting(View59_ShowInfoRight)] |
+            [Control.IsVisible(55) + Skin.HasSetting(View55_ShowInfoRight)] |
+            [Control.IsVisible(53) + Skin.HasSetting(View53_ShowInfoRight)]
+            </selected>
+			<visible>Control.IsVisible(44447)</visible>
 		</control>
-		<control type="radiobutton" id="3026">
-			<!--Show labels-->
-			<include>SubMenuButton</include>
-			<label>20459</label>
-			<onclick>Skin.ToggleSetting(ShowLabelsSquareDetails)</onclick>
-			<selected>Skin.HasSetting(ShowLabelsSquareDetails)</selected>
-			<visible>Control.IsVisible(510)</visible>
-		</control>
-		<control type="radiobutton" id="3027">
-			<!--Show labels-->
-			<include>SubMenuButton</include>
-			<label>20459</label>
-			<onclick>Skin.ToggleSetting(ShowLabels57)</onclick>
-			<selected>Skin.HasSetting(ShowLabels57)</selected>
-			<visible>Control.IsVisible(57)</visible>
-		</control>
-		<control type="radiobutton" id="3028">
-			<!--Show labels-->
-			<include>SubMenuButton</include>
-			<label>20459</label>
-			<onclick>Skin.ToggleSetting(ShowLabels52)</onclick>
-			<selected>Skin.HasSetting(ShowLabels52)</selected>
-			<visible>Control.IsVisible(52)</visible>
-		</control>
-		<control type="radiobutton" id="3029">
-			<!--Show labels-->
-			<include>SubMenuButton</include>
-			<label>20459</label>
-			<onclick>Skin.ToggleSetting(ShowLabels59)</onclick>
-			<selected>Skin.HasSetting(ShowLabels59)</selected>
-			<visible>Control.IsVisible(59)</visible>
-		</control>
-		<control type="radiobutton" id="3040">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(PanelViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(PanelViewShowInfo)</selected>
-			<visible>Control.IsVisible(52)</visible>
-		</control>
-		<control type="radiobutton" id="3041">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(LandscapeViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(LandscapeViewShowInfo)</selected>
-			<visible>Control.IsVisible(502)</visible>
-		</control>
-		<control type="radiobutton" id="3042">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(LogoViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(LogoViewShowInfo)</selected>
-			<visible>Control.IsVisible(503)</visible>
-		</control>
-		<control type="radiobutton" id="3043">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(BigListViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(BigListViewShowInfo)</selected>
-			<visible>Control.IsVisible(51)</visible>
-		</control>
-		
-		<control type="radiobutton" id="3044">
-			<!--Show info-->
-			<include>SubMenuButton</include>
-			<label>36427</label>
-			<onclick>Skin.ToggleSetting(SlimListViewShowInfo)</onclick>
-			<selected>Skin.HasSetting(SlimListViewShowInfo)</selected>
-			<visible>Control.IsVisible(516)</visible>
-		</control>
+        
 		<control type="radiobutton" id="3050">
 			<!--Prefer ClearArt-->
 			<include>SubMenuButton</include>
@@ -1170,7 +1524,19 @@
 			<label>31200</label>
 			<onclick>Skin.ToggleSetting(View51_ShowCDart)</onclick>
 			<selected>Skin.HasSetting(View51_ShowCDart)</selected>
-			<visible>Control.IsVisible(51)</visible>
+			<visible>Control.IsVisible(51) + !Skin.HasSetting(BigListViewShowInfo)</visible>
+		</control>
+        <control type="radiobutton" id="3067">
+			<!--Show large banners-->
+			<include>SubMenuButton</include>
+			<label>31598</label>
+			<onclick condition="Control.IsVisible(55)">Skin.ToggleSetting(View55_LargeBanners)</onclick>
+            <onclick condition="Control.IsVisible(56)">Skin.ToggleSetting(View56_LargeBanners)</onclick>
+			<selected>
+            [Control.IsVisible(55) + Skin.HasSetting(View55_LargeBanners)] |
+            [Control.IsVisible(56) + Skin.HasSetting(View56_LargeBanners)]
+            </selected>
+			<visible>Control.IsVisible(55) | Control.IsVisible(56)</visible>
 		</control>
 		<control type="radiobutton" id="3070">
 			<!--animate discart-->
@@ -1183,7 +1549,7 @@
 			[Skin.HasSetting(View508_ShowCDart) + Control.IsVisible(508)] | 
 			[Skin.HasSetting(View513_ShowCDart) + Control.IsVisible(513)] | 
 			[Skin.HasSetting(View514_ShowCDart) + Control.IsVisible(514)] | 
-			[Skin.HasSetting(View51_ShowCDart) + Control.IsVisible(51)] | 
+			[Skin.HasSetting(View51_ShowCDart) + Control.IsVisible(51) + !Skin.HasSetting(BigListViewShowInfo)] | 
 			[Skin.HasSetting(View52_ShowCDart) + Control.IsVisible(52)]
 			</visible>
 			<visible></visible>
@@ -1469,25 +1835,6 @@
 		</control>
 	</include>
 	
-	<include name="BannerViewImageSizeNormal">
-        <width>565</width>
-        <height>320</height>
-    </include>
-
-	<include name="BigPanelWatchedImage">
-		<control type="group">
-			<!--Watched Overlay-->
-			<posx>182</posx>
-			<posy>7</posy>
-			<width>70</width>
-			<include>WatchedIndicatorNormal</include>
-			<animation type="Conditional" condition="skin.hastheme(classic)">
-				<effect type="slide" end="3,-3" time="0"  />
-			</animation>
-		</control>
-	</include>
-
-
 	 <include name="mediaflagssmall">
         <control type="image">
             <!--Video Resolution-->
@@ -2488,7 +2835,6 @@
 		</control>
     </include>
 	
-    
     <variable name="mediaFlagsFontColor">
         <value condition="substring(Window.Property(xmlfile),My,left)">$INFO[Skin.String(FooterTextColor)]</value>
         <value condition="Window.IsActive(fullscreenvideo)">$INFO[Skin.String(OSDPrimaryTextColor)]</value>
@@ -2499,7 +2845,7 @@
         <!-- movie details -->
         <control type="group" id="888">
             <include>animation_view_change</include>
-            <height>731</height>
+            <height>706</height>
 			<bottom>125</bottom>
             <control type="image">
                 <visible>!IsEmpty(ListItem.Label)</visible>
@@ -3099,7 +3445,6 @@
 		</control>
 	</include>
 	
-
 	<include name="WatchedIndicatorNormal">
 		<control type="group">
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
@@ -3458,7 +3803,6 @@
 		</control>
 
 	</include>
-
 
 	<variable name="WatchedLabel">
         <value condition="[Container.Content(TVShows) | Container.Content(Seasons) | ListItem.IsFolder] + [IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + !Skin.HasSetting(HideWatchedCounts)]">$INFO[ListItem.Property(UnWatchedEpisodes)]</value>
