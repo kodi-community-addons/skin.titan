@@ -291,7 +291,7 @@
 					<posy>18</posy>
 					<width>413</width>
 					<height>240</height>
-					<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
+					<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[LandscapeImage]</texture>
 					<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
 				</control>
 				
@@ -353,7 +353,7 @@
 					<posy>18</posy>
 					<width>413</width>
 					<height>240</height>
-					<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
+					<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[LandscapeImage]</texture>
 					<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
 				</control>
 				
@@ -837,20 +837,6 @@
     <width>236</width>
     <height>236</height>
   </include>
-
-  <variable name="ThumbViewImage">
-		<value condition="!IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
-		<value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode)  + !IsEmpty(ListItem.Season) + !IsEmpty(ListItem.Thumb) + !Skin.HasSetting(PreferTvShowThumbWidget) + !StringCompare(ListItem.TvShowTitle,ListItem.Title)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(landscape)]</value>
-		<value condition="!IsEmpty(ListItem.Art(tvshow.landscape))">$INFO[ListItem.Art(tvshow.landscape)]</value>
-		<value condition="!IsEmpty(ListItem.Property(small_fanartimage))">$INFO[ListItem.Property(small_fanartimage)]</value>
-        <value condition="!IsEmpty(ListItem.Art(fanart)) + !StringCompare(Container(300).ListItem.Property(widget),youtube)">$INFO[ListItem.Art(fanart)]</value>
-		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
-		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-		<value condition="!IsEmpty(ListItem.ActualIcon)">$INFO[ListItem.ActualIcon]</value>
-        <value>$INFO[ListItem.FolderPath]fanart.jpg</value>
-    </variable>
   
     <include name="ThumbsViewItemLayout">
         <control type="image">
@@ -858,7 +844,7 @@
             <posx>0</posx>
             <posy>0</posy>
             <bordersize>8</bordersize>
-            <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[ThumbViewImage]</texture>
+            <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[LandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
         <control type="image">
@@ -869,6 +855,16 @@
             <texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
             <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
+        </control>
+        <control type="image">
+            <!--pvr logo image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>20</bordersize>
+            <height>70%</height>
+            <texture background="true">$INFO[ListItem.Icon]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
+            <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | MyPVRSearch.xml] + !IsEmpty(Listitem.Icon)</visible>
         </control>
         <control type="image">
             <!--Panel Ovelay-->
@@ -1129,13 +1125,13 @@
         <control type="image">
             <!--Panel icon image-->
 			<bordersize>8</bordersize>
-            <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[BannerLandscapeImage]</texture>
+            <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/defaulticonswide/DefaultVideo.png">$VAR[LandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
         </control>
 		<control type="image">
             <!--season image legacy-->
 			<bordersize>8</bordersize>
-            <texture background="true" diffuse="home/home_matte2.png">$VAR[BannerLandscapeImageSeason]</texture>
+            <texture background="true" diffuse="home/home_matte2.png">$VAR[LandscapeImageSeason]</texture>
             <aspectratio scalediffuse="true" align="center" aligny="center">scale</aspectratio>
 			<visible>Container.Content(Seasons) + !substring(Container.FolderPath,plugin://plugin.video) + !Skin.HasSetting(DisableLandscapeThumbs)</visible>
         </control>
@@ -1147,6 +1143,16 @@
             <texture background="true">$INFO[listItem.Art(clearlogo)]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
             <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
+        </control>
+        <control type="image">
+            <!--pvr logo image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>20</bordersize>
+            <height>70%</height>
+            <texture background="true">$INFO[ListItem.Icon]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
+            <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | MyPVRSearch.xml] + !IsEmpty(Listitem.Icon)</visible>
         </control>
         <control type="image">
             <!--Panel Overlay-->
@@ -1203,7 +1209,7 @@
 	<include name="ShowTitleOverlay">
 		<visible>
 		[[IsEmpty(ListItem.Art(landscape)) | Skin.HasSetting(DisableLandscapeThumbs)] + [container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]] |
-		[Skin.HasSetting(ShowlabelsLandscape) + ![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]]
+		[Skin.HasSetting(ShowlabelsLandscape) + ![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)] | Window.IsActive(home)]
 		</visible>
         <visible>[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + IsEmpty(ListItem.Art(clearlogo))] | Skin.HasSetting(DisableLandscapeThumbs)</visible>
         <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
@@ -1273,7 +1279,7 @@
             [Control.IsVisible(59) + Skin.HasSetting(ShowLabels59)]
             </selected>
 			<visible>
-            [Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)] | 
+            [[Control.IsVisible(501) | Control.IsVisible(505) | Control.IsVisible(511) | Control.IsVisible(512)] + ![container.content(MusicVideos) | Container.Content(tvshows) | Container.Content(Movies) | container.content(seasons)]] | 
             Control.IsVisible(509) | 
             Control.IsVisible(510) | 
             Control.IsVisible(57) | 
