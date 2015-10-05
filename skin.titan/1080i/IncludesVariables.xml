@@ -492,14 +492,14 @@
 	
 	<variable name="PosterThumb">
         <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$VAR[PVRThumb]</value>
-		<value condition="Container.Content(seasons) + SubString(ListItem.Label,*,left)">$INFO[ListItem.Art(tvshow.poster)]</value>
+		<value condition="Container.Content(seasons) + SubString(ListItem.Label,*,left) + !IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="Container.Content(episodes) + !IsEmpty(Container.Art(season.poster))">$INFO[Container.Art(season.poster)]</value>
 		<value condition="Container.Content(episodes) + !IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(poster))">$INFO[ListItem.Property(poster)]</value>
-		<value condition="!IsEmpty(ListItem.Property(tvshow.poster))">$INFO[ListItem.Property(poster)]</value>
+		<value condition="!IsEmpty(ListItem.Property(tvshow.poster))">$INFO[ListItem.Property(tvshow.poster)]</value>
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
@@ -687,11 +687,11 @@
     
     <variable name="ThumbListDetails">
         <!-- specials used in widgets -->
-		<value condition="SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) | StringCompare(Container(300).ListItem.Property(widget), music)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
-		<value condition="StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
-        <value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">$INFO[ListItem.Property(title)][CR]$INFO[ListItem.label]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">$INFO[ListItem.label]</value>
-		<value condition="StringCompare(Container(300).ListItem.Property(widget), weather)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<value condition="IsEmpty(ListItem.Property(DefaultID)) + SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) | StringCompare(Container(300).ListItem.Property(widget), music)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<value condition="IsEmpty(ListItem.Property(DefaultID)) + StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
+        <value condition="IsEmpty(ListItem.Property(DefaultID)) + StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">$INFO[ListItem.Property(title)][CR]$INFO[ListItem.label]</value>
+		<value condition="IsEmpty(ListItem.Property(DefaultID)) + StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">$INFO[ListItem.label]</value>
+		<value condition="IsEmpty(ListItem.Property(DefaultID)) + StringCompare(Container(300).ListItem.Property(widget), weather)">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
 		<!-- normal items-->
         <value condition="container.content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">$INFO[ListItem.label]</value>
         <value condition="container.content(seasons)">$INFO[ListItem.TvShowTitle][CR]$INFO[ListItem.label]</value>
@@ -702,7 +702,8 @@
 		
         <value condition="Window.IsActive(MyPVRChannels.xml)">$INFO[ListItem.Title,[B],[/B]]$VAR[ListDatePVR,[CR]]</value>
         <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName,, • ]$VAR[ListDatePVR]</value>
-		<value condition="IsEmpty(ListItem.Property(DefaultID))">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
+		<value condition="IsEmpty(ListItem.Property(DefaultID)) + !IsEmpty(ListItem.Year)">$INFO[ListItem.label][CR]$INFO[ListItem.Year]</value>
+        <value condition="IsEmpty(ListItem.Property(DefaultID))">$INFO[ListItem.label][CR]$INFO[ListItem.label2]</value>
 		<value>$INFO[ListItem.label]</value>
     </variable>
     
@@ -785,7 +786,28 @@
 		<value condition="!IsEmpty(Container(50).ListItem.Icon)">$INFO[Container(50).ListItem.Icon]</value>
 		<value condition="!IsEmpty(ListItem.Art(characterart))">$INFO[ListItem.Art(characterart)]</value>
    </variable>
-
+   
+   <variable name="ViewDetailsFocusColor">
+        <value condition="Window.IsActive(home)">$INFO[Skin.String(HomeViewDetailsFocusColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsFocusColor)]</value>
+   </variable>
+   
+   <variable name="ViewDetailsPanelColor">
+        <value condition="Window.IsActive(home)">$INFO[Skin.String(GeneralPanelsColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsPanelColor)]</value>
+   </variable>
+   
+   <variable name="ViewDetailsTextColor">
+        <value condition="Window.IsActive(home)">$INFO[Skin.String(GeneralTextColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsTextColor)]</value>
+   </variable>
+   
+   <variable name="SpotLightWidgetTextColor">
+        <value condition="SubString(System.BuildVersion,14,left)">white</value>
+        <value condition="Window.IsActive(home)">$INFO[Skin.String(GeneralTextColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsListItemTextColor)]</value>
+   </variable>
+   
    <variable name="VideoPlayerCover">
 	<value condition="!IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
 	<value condition="!IsEmpty(Player.Art(clearart))">$INFO[Player.Art(clearart)]</value>

@@ -403,6 +403,7 @@
 				<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 				<visible>Player.HasAudio + !IsEmpty(MusicPlayer.Title) + System.HasAddon(script.artistslideshow) + Skin.HasSetting(enableArtistSlideshow)</visible>
 				<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia))</visible>
+                <visible>!IsEmpty(Window(Visualisation).Property(ArtistSlideshow)) + !Substring(Window(Visualisation).Property(ArtistSlideshow),resources/black)</visible>
 			</control>
 			<control type="visualisation" id="2">
 				<description>visualisation</description>
@@ -418,13 +419,16 @@
             <control type="image" description="panel behind bg">
                 <include>DimensionsFullscreen</include>
                 <texture>colors/color_white.png</texture>
+                <visible>!Window.IsActive(MusicVisualisation.xml)</visible>
                 <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
                 <visible>Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None) + ![Window.IsActive(MyPVRGuide.xml) + !IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))]</visible>
                 <animation effect="fade" start="100" end="80" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">Conditional</animation>
+                <visible>Player.HasMedia + ![!IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + Player.HasAudio]</visible>
             </control>
             
 			<!--Dialog Overlay-->
 			<control type="group">
+                <visible>!Window.IsActive(MusicVisualisation.xml)</visible>
 				<visible>Player.HasMedia + ![!IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + Player.HasAudio]</visible>
                 <visible>![Window.IsActive(MyPVRGuide.xml) + !IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))]</visible>
 				<include>DialogOverlay</include>

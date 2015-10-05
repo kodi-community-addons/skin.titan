@@ -67,21 +67,8 @@
 					<height>67%</height>
 					<texture border="15">diffuse/bgpanel.png</texture>
                     <visible>!Skin.HasSetting(DialogVideoInfoHidePanel)</visible>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+					<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
 				</control>
-				
-				<control type="image">
-					<right>50</right>
-					<posy>210</posy>
-					<width>510</width>
-					<height>67%</height>
-					<texture border="5">diffuse/panel.png</texture>
-					<visible>!skin.hastheme(classic)</visible>
-                    <visible>!Skin.HasSetting(DialogVideoInfoHidePanel)</visible>
-					<colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-				</control>
-				
-				
 				
 				<control type="group">
 					<!--Start Dialog-->
@@ -567,7 +554,7 @@
 									<height>49</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/tvstudio-icon.png</texture>
-									<visible>!IsEmpty(ListItem.Genre)</visible>
+									<visible>!IsEmpty(ListItem.Studio)</visible>
 								</control>
 								<control type="label">
 									<posx>760</posx>
@@ -600,9 +587,9 @@
 									<posx>60</posx>
 									<posy>0</posy>
 									<width>600</width>
-									<font>flags</font>
+									<font>Reg28</font>
 									<align>left</align>
-									<label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar]</label>
+									<label>[UPPERCASE]$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar][/UPPERCASE]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
@@ -620,9 +607,9 @@
 									<posx>760</posx>
 									<posy>0</posy>
 									<width>370</width>
-									<font>flags</font>
+									<font>Reg28</font>
 									<align>left</align>
-									<label>$INFO[Window(home).Property(SkinHelper.ListItemAllAudioStreams)]</label>
+									<label>[UPPERCASE]$INFO[Window(home).Property(SkinHelper.ListItemAllAudioStreams)][/UPPERCASE]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
@@ -633,7 +620,7 @@
 								<!--RATING and SUBTITLES-->
 								<width>1150</width>
 								<height>40</height>
-								<visible>!IsEmpty(ListItem.SubtitleLanguage) + !IsEmpty(ListItem.mpaa)</visible>
+								<visible>!IsEmpty(ListItem.SubtitleLanguage) | !IsEmpty(ListItem.mpaa) | !IsEmpty(ListItem.Rating)</visible>
 								<control type="image">
 									<posx>8</posx>
 									<posy>15</posy>
@@ -641,14 +628,15 @@
 									<height>36</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>flags/subtitles.png</texture>
+                                    <visible>!IsEmpty(ListItem.SubtitleLanguage)</visible>
 								</control>
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
 									<width>600</width>
-									<font>flags</font>
+									<font>Reg28</font>
 									<align>left</align>
-									<label>$INFO[ListItem.SubtitleLanguage]</label>
+									<label>[UPPERCASE]$INFO[ListItem.SubtitleLanguage][/UPPERCASE]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
@@ -666,7 +654,7 @@
 									<posx>760</posx>
 									<posy>0</posy>
 									<width>370</width>
-									<font>flags</font>
+									<font>Reg28</font>
 									<align>left</align>
 									<label fallback="?">$INFO[ListItem.Rating]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -687,7 +675,7 @@
 									<posx>860</posx>
 									<posy>0</posy>
 									<width>370</width>
-									<font>flags</font>
+									<font>Reg28</font>
 									<align>left</align>
 									<label fallback="?">$VAR[RatingFlagVar]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>

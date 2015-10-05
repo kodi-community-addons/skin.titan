@@ -958,17 +958,12 @@
         </control>
     </include>
     
-    <variable name="SubMenuButtonFontColor">
-        <value condition="skin.hastheme(classic)">black</value>
-        <value>$INFO[Skin.String(GeneralTextColor)]</value>
-    </variable>
- 
     <!--Sub Menu-->
     <include name="SubMenuButton">
 		<width>458</width>
 		<align>left</align>
 		<font>Reg26</font>
-		<textcolor>$VAR[SubMenuButtonFontColor]</textcolor>
+		<textcolor>$INFO[Skin.String(SideBladeTextColor)]</textcolor>
 		<focusedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</focusedcolor>
 		<disabledcolor>77585858</disabledcolor>
 		<invalidcolor>red</invalidcolor>
@@ -1289,13 +1284,28 @@
 					<fadetime>200</fadetime>
 					<texture background="true">$VAR[OSDInfoImage]</texture>
 					<aspectratio align="left" aligny="top">keep</aspectratio>
+                    <visible>[!IsEmpty(ListItem.Art(clearart)) | !IsEmpty(ListItem.Art(tvshow.clearart)) | !IsEmpty(ListItem.Art(clearlogo)) | !IsEmpty(ListItem.Art(tvshow.clearlogo))]</visible>
 				</control>
-
+                <!-- plot when clearlogo visible -->
                 <control type="textbox">
                     <posx>350</posx>
                     <posy>0</posy>
                     <width>1500</width>
                     <height>180</height>
+                    <visible>[!IsEmpty(ListItem.Art(clearart)) | !IsEmpty(ListItem.Art(tvshow.clearart)) | !IsEmpty(ListItem.Art(clearlogo)) | !IsEmpty(ListItem.Art(tvshow.clearlogo))]</visible>
+                    <label>[B]$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Duration, • , min.]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
+                    <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Light28</font>
+                </control>
+                <!-- plot when clearlogo NOT visible -->
+                <control type="textbox">
+                    <posx>40</posx>
+                    <posy>0</posy>
+                    <width>1810</width>
+                    <height>180</height>
+                    <visible>![!IsEmpty(ListItem.Art(clearart)) | !IsEmpty(ListItem.Art(tvshow.clearart)) | !IsEmpty(ListItem.Art(clearlogo)) | !IsEmpty(ListItem.Art(tvshow.clearlogo))]</visible>
                     <label>[B]$INFO[VideoPlayer.Premiered]$INFO[VideoPlayer.Duration, • , min.]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                     <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
