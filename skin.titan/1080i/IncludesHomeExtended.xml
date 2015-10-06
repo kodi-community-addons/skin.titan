@@ -37,11 +37,11 @@
 	<include name="EnhancedHomeScreen">
 	
 		<control type="image">
-			<!--Panel Shadow-->
+			<!--Panel-->
 			<posx>50</posx>
-			<posy>190</posy>
+			<posy>150</posy>
 			<width>1820</width>
-			<height>890</height>
+			<height>930</height>
 			<texture border="5">diffuse/panel.png</texture>
 			<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
 			<aspectratio>stretch</aspectratio>
@@ -62,7 +62,7 @@
 		<control type="group">
 			<height>440</height>
 			<posx>70</posx>
-			<posy>800</posy>
+			<posy>810</posy>
 			<control type="list" id="300">
 				<posx>0</posx>
 				<width>1800</width>
@@ -75,24 +75,24 @@
 				<ondown condition="!Skin.HasSetting(DisablePowerMenu)">2</ondown>
 				<itemgap>0</itemgap>
 
-				<itemlayout width="360" height="185">
+				<itemlayout width="360" height="205">
 					<control type="group">
                         <width>337</width>
-                        <height>175</height>
+                        <height>195</height>
                         <include>ThumbsViewLayout</include>
                     </control>
 				</itemlayout>
-				<focusedlayout width="360" height="185" condition="!Control.HasFocus(300)">
+				<focusedlayout width="360" height="205" condition="!Control.HasFocus(300)">
 					<control type="group">
                         <width>337</width>
-                        <height>175</height>
+                        <height>195</height>
                         <include>ThumbsViewLayout</include>
                     </control>
 				</focusedlayout>
-                <focusedlayout width="360" height="185" condition="Control.HasFocus(300)">
+                <focusedlayout width="360" height="205" condition="Control.HasFocus(300)">
 					<control type="group">
                         <width>337</width>
-                        <height>175</height>
+                        <height>195</height>
                         <include>ThumbsViewLayoutFocus</include>
                     </control>
 				</focusedlayout>
@@ -104,7 +104,7 @@
 		<!-- widgets -->
 		<control type="group">
 			<posx>60</posx>
-			<posy>190</posy>
+			<posy>150</posy>
 			<width>1790</width>
 			<height>680</height>
 			<visible>!IsEmpty(Container(300).ListItem.Property(widget)) | !IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
@@ -138,19 +138,48 @@
 			<posy>40</posy>
 			<posx>370</posx>
 			<width>1060</width>
-			<height>545</height>
+			<height>605</height>
 			<animation time="200" effect="fade">Visible</animation>
 			<animation time="200" effect="fade">Hidden</animation>
 			<visible>[!Control.IsVisible(1508) | Control.HasFocus(510)] + IntegerGreaterThan(Container(4444).NumItems,0) + !IsEmpty(Container(300).ListItem.Property(widget))</visible>
 				<include>spotLightWidgetLayoutAlt</include>
 			</control>
             
+            <!-- busy image while widget loading -->
+            <control type="multiimage">
+                <posy>300</posy>
+                <right>140</right>
+                <width>100</width>
+                <height>100</height>
+				<aspectratio>keep</aspectratio>
+                <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
+                <timeperimage>100</timeperimage>
+                <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
+                <fadetime>0</fadetime>
+				<visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
+                <visible>Container(510).IsUpdating</visible>
+            </control>
+            <!-- busy image while widget loading -->
+            <control type="multiimage">
+                <posy>300</posy>
+                <left>850</left>
+                <width>100</width>
+                <height>100</height>
+				<aspectratio>keep</aspectratio>
+                <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
+                <timeperimage>100</timeperimage>
+                <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
+                <fadetime>0</fadetime>
+				<visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
+                <visible>Container(1508).IsUpdating</visible>
+            </control>
+            
             <!-- alt spotlight no submenu+widget present-->
 			<control type="group">
 			<posy>40</posy>
 			<posx>10</posx>
 			<width>1415</width>
-			<height>545</height>
+			<height>605</height>
 			<animation time="200" effect="fade">Visible</animation>
 			<animation time="200" effect="fade">Hidden</animation>
 			<visible>[!Control.IsVisible(1508) | Control.HasFocus(510)] + !IsEmpty(Container(300).ListItem.Property(widget)) + !IntegerGreaterThan(Container(4444).NumItems,0)</visible>
@@ -163,7 +192,7 @@
 			<posy>40</posy>
 			<posx>10</posx>
 			<width>1415</width>
-			<height>545</height>
+			<height>605</height>
 			<animation time="200" effect="fade">Visible</animation>
 			<animation time="200" effect="fade">Hidden</animation>
 			<visible>!IntegerGreaterThan(Container(4444).NumItems,0) + !Control.IsVisible(1508) + !IsEmpty(Container(300).ListItem.Property(widget))</visible>
@@ -207,7 +236,7 @@
 		<!-- sub menu -->
 		<control type="group">
 			<posx>60</posx>
-			<posy>190</posy>
+			<posy>150</posy>
 			<width>1800</width>
 			<height>600</height>
 			
@@ -237,7 +266,7 @@
 			<control type="panel" id="4444">
 				<posx>10</posx>
 				<posy>40</posy>
-				<height>555</height>
+				<height>615</height>
 				<width>365</width>
 				<orientation>vertical</orientation>
 				<onright>1508</onright>
@@ -249,25 +278,25 @@
 				<onup condition="Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</onup>
 				<include>animation_fade_visible_hidden</include>
 				<visible allowhiddenfocus="true">IntegerGreaterThan(Container(4444).NumItems,0) + [!IsEmpty(Container(300).ListItem.Property(widget)) | !IsEmpty(Container(300).ListItem.Property(widget.1))]</visible>
-				<itemlayout width="362" height="185">
+				<itemlayout width="362" height="205">
 					<control type="group">
                         <width>337</width>
-                        <height>175</height>
+                        <height>195</height>
                         <include>ThumbsViewLayout</include>
                     </control>
 				</itemlayout>
-				<focusedlayout width="362" height="185" condition="!Control.HasFocus(4444)">
+				<focusedlayout width="362" height="205" condition="!Control.HasFocus(4444)">
 					<control type="group">
                         <width>337</width>
-                        <height>175</height>
+                        <height>195</height>
                         <include>ThumbsViewLayout</include>
                     </control>
 				</focusedlayout>
-				<focusedlayout width="362" height="185" condition="Control.HasFocus(4444)">
+				<focusedlayout width="362" height="205" condition="Control.HasFocus(4444)">
 					<control type="group">
 						<control type="group">
                         <width>337</width>
-                        <height>175</height>
+                        <height>195</height>
                         <include>ThumbsViewLayoutFocus</include>
                     </control>
 					</control>
@@ -283,7 +312,7 @@
 		<control type="group">
 			<control type="list" id="4445">
 				<posx>70</posx>
-				<posy>725</posy>
+				<posy>735</posy>
 				<width>1800</width>
 				<height>60</height>
 				<orientation>horizontal</orientation>
@@ -366,7 +395,7 @@
 		<control type="rss">	
 			<description>RSS Feed</description>
 			<posx>80</posx>
-			<posy>1002</posy>
+			<posy>1022</posy>
 			<width>1760</width>
 			<height>50</height>
 			<font>Reg28</font>
@@ -383,7 +412,7 @@
 		<control type="rss">	
 			<description>RSS Feed</description>
 			<posx>315</posx>
-			<posy>1010</posy>
+			<posy>1030</posy>
 			<width>1390</width>
 			<height>50</height>
 			<font>Reg28</font>
@@ -409,7 +438,7 @@
 		<posy>40</posy>
 		<posx>10</posx>
 		<width>350</width>
-		<height>555</height>
+		<height>615</height>
 		<onleft>1508</onleft>
 		<onright>Control.Move(300,1)</onright>
         <onright>300</onright>
@@ -421,24 +450,24 @@
 		<animation time="200" effect="fade">Visible</animation>
 		<animation time="200" effect="fade">Hidden</animation>
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
-		<itemlayout width="350" height="185">
+		<itemlayout width="350" height="205">
 			<control type="group">
                 <width>337</width>
-                <height>175</height>
+                <height>195</height>
                 <include>ThumbsViewLayout</include>
             </control>
 		</itemlayout>
-		<focusedlayout width="350" height="185" condition="Control.HasFocus(510)">
+		<focusedlayout width="350" height="205" condition="Control.HasFocus(510)">
 			<control type="group">
                 <width>337</width>
-                <height>175</height>
+                <height>195</height>
                 <include>ThumbsViewLayoutFocus</include>
             </control>
 		</focusedlayout>
-		<focusedlayout width="350" height="185" condition="!Control.HasFocus(510)">
+		<focusedlayout width="350" height="205" condition="!Control.HasFocus(510)">
 			<control type="group">
                 <width>337</width>
-                <height>175</height>
+                <height>195</height>
                 <include>ThumbsViewLayout</include>
             </control>
 		</focusedlayout>
@@ -448,7 +477,7 @@
 		<posy>40</posy>
 		<posx>0</posx>
 		<width>1790</width>
-		<height>547</height>
+		<height>607</height>
 		<onleft condition="IntegerGreaterThan(Container(4444).NumItems,0)">4444</onleft>
 		<onleft condition="!IntegerGreaterThan(Container(4444).NumItems,0)">300</onleft>
 		<onright condition="IntegerGreaterThan(Container(510).NumItems,0)">510</onright>
@@ -464,42 +493,42 @@
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
 		<animation time="200" effect="fade">Visible</animation>
 		<animation time="200" effect="fade">Hidden</animation>
-		<itemlayout width="1790" height="547" condition="Control.IsVisible(510) + Control.IsVisible(4444)">
+		<itemlayout width="1790" height="607" condition="Control.IsVisible(510) + Control.IsVisible(4444)">
 			<control type="group">
 				<width>1055</width>
 				<right>365</right>
 				<include>spotLightWidgetItemLayout</include>
 			</control>
 		</itemlayout>
-		<focusedlayout width="1790" height="547" condition="Control.IsVisible(510) + Control.IsVisible(4444)">
+		<focusedlayout width="1790" height="607" condition="Control.IsVisible(510) + Control.IsVisible(4444)">
 			<control type="group">
 				<width>1055</width>
 				<right>365</right>
 				<include>spotLightWidgetItemLayout</include>
 			</control>
 		</focusedlayout>
-		<itemlayout width="1790" height="547" condition="Control.IsVisible(510) + !Control.IsVisible(4444)">
+		<itemlayout width="1790" height="607" condition="Control.IsVisible(510) + !Control.IsVisible(4444)">
 			<control type="group">
 				<width>1415</width>
 				<right>360</right>
 				<include>spotLightWidgetItemLayout</include>
 			</control>
 		</itemlayout>
-		<focusedlayout width="1790" height="547" condition="Control.IsVisible(510) + !Control.IsVisible(4444)">
+		<focusedlayout width="1790" height="607" condition="Control.IsVisible(510) + !Control.IsVisible(4444)">
 			<control type="group">
 				<width>1415</width>
 				<right>360</right>
 				<include>spotLightWidgetItemLayout</include>
 			</control>
 		</focusedlayout>
-		<itemlayout width="1790" height="547" condition="!Control.IsVisible(510) + !Control.IsVisible(4444)">
+		<itemlayout width="1790" height="607" condition="!Control.IsVisible(510) + !Control.IsVisible(4444)">
 			<control type="group">
 				<width>1775</width>
 				<right>0</right>
 				<include>spotLightWidgetItemLayout</include>
 			</control>
 		</itemlayout>
-		<focusedlayout width="1790" height="547" condition="!Control.IsVisible(510) + !Control.IsVisible(4444)">
+		<focusedlayout width="1790" height="607" condition="!Control.IsVisible(510) + !Control.IsVisible(4444)">
 			<control type="group">
 				<width>1775</width>
 				<right>0</right>
@@ -530,8 +559,8 @@
 			<width>100%</width>
 			<height>100%</height>
 			<bordersize>8</bordersize>
-			<texture background="true" diffuse="diffuse/wide.png">$INFO[ListItem.Art(fanart)]</texture>
-			<aspectratio scalediffuse="false">scale</aspectratio>
+			<texture background="true" diffuse="diffuse/wide.png">$VAR[SpotLightWidgetImage]</texture>
+			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
 		</control>
 		<!--info Overlay-->
 		<control type="image">
@@ -578,7 +607,7 @@
 			<height>100%</height>
 			<bordersize>8</bordersize>
 			<texture background="true" diffuse="diffuse/wide.png">$VAR[SpotLightWidgetImage]</texture>
-			<aspectratio scalediffuse="false">scale</aspectratio>
+			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
 		</control>
 		<!--info Overlay-->
 		<control type="image">

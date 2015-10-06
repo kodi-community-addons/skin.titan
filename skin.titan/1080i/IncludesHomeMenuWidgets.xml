@@ -166,14 +166,18 @@
             <defaultcontrol always="true">510</defaultcontrol>
             <visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
             
-            <!-- busy image -->
-            <control type="image">
+            <!-- busy image while widget loading -->
+            <control type="multiimage">
                 <posy>500</posy>
                 <right>55</right>
-                <width>150</width>
-                <height>150</height>
-                <texture>special://skin/extras/busy_spinners/4 segment circle.gif</texture>
-                <aspectratio aligny="top" align="left">keep</aspectratio>
+                <width>100</width>
+                <height>100</height>
+				<aspectratio>keep</aspectratio>
+                <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
+                <timeperimage>100</timeperimage>
+                <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
+                <fadetime>0</fadetime>
+				<visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
                 <visible>Container(510).IsUpdating</visible>
             </control>
             
@@ -592,7 +596,7 @@
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
 		<animation effect="slide" start="0" end="259" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
 		<animation effect="slide" start="0" end="0,350" time="0" condition="!IntegerGreaterThan(Container(510).NumItems,5) | StringCompare(Container(510).NumItems,5)">Conditional</animation>
-		<animation effect="slide" end="0,-30" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
+		<animation effect="slide" end="10,-20" time="0" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music)">Conditional</animation>
         <include>widget_layout</include>
 	</include>
 	

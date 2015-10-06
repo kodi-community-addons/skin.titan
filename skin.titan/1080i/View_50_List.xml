@@ -21,7 +21,7 @@
 			
 			<control type="image">
 				<posx>50</posx>
-				<width>510</width>
+				<width>505</width>
 				<texture border="15">diffuse/bgpanel.png</texture>
 				<visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | container.content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]] + IntegerGreaterThan(Container(50).NumItems,0)</visible>
 				<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
@@ -46,33 +46,17 @@
                 <visible>!Skin.HasSetting(View50_HidePanel)</visible>
 			</control>
 
-			<!--Poster,Cover,Thumb-->
         <control type="group">
+            <visible>IntegerGreaterThan(Container.NumItems,0)</visible>
             <control type="image">
                 <!--Poster-->
-                <visible>[Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons)]</visible>
-                <posx>60</posx>
-                <posy>20</posy>
-                <width>420</width>
-                <height>650</height>
-                <!--1,407-->
-                <fadetime>600</fadetime>
+                <visible>!Container.Content(episodes)</visible>
+                <visible>![Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]</visible>
+                <posx>45</posx>
+				<width>510</width>
+                <bordersize>8</bordersize>
 				<texture diffuse="diffuse/poster.png" border="5" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
-				<aspectratio align="left" aligny="top" scalediffuse="false">keep</aspectratio>
-            </control>
-			<control type="image">
-                <!--Poster for all other-->
-                <visible>![Container.content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]]</visible>
-                <posx>60</posx>
-                <posy>20</posy>
-                <width>470</width>
-                <height>590</height>
-                <!--1,407-->
-                <fadetime>600</fadetime>
-				<texture diffuse="diffuse/poster.png" border="5" fallback="DefaultVideo.png">$VAR[PosterThumb]</texture>
-				<bordertexture border="20" colordiffuse="black">diffuse/poster_shadow.png</bordertexture>
-				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
-				<bordersize>20</bordersize>
+				<aspectratio align="center" aligny="top" scalediffuse="false">keep</aspectratio>
             </control>
             <control type="image">
                 <!--Episodes Thumb-->
@@ -111,7 +95,7 @@
         <!--View 50-->
         <control type="group">
             <visible>Control.IsVisible(50)</visible>
-            <visible>![Window.IsActive(DialogVideoInfo.xml)]</visible>
+            <visible>IntegerGreaterThan(Container.NumItems,0)</visible>
 			
 			 <!--Info-->
             <control type="grouplist">
@@ -124,12 +108,12 @@
                 <onleft>100</onleft>
                 <onright>noop</onright>
                 <orientation>vertical</orientation>
-                <posx>510</posx>
+                <posx>570</posx>
                 <posy>20</posy>
                 <control type="label">
                     <posx>0</posx>
                     <posy>0</posy>
-                    <width>610</width>
+                    <width>550</width>
                     <height>40</height>
                     <font>Reg32</font>
                     <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
@@ -139,7 +123,7 @@
                 <control type="label">
                     <posx>0</posx>
                     <posy>0</posy>
-                    <width>610</width>
+                    <width>550</width>
                     <height>40</height>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
@@ -149,7 +133,7 @@
                 <control type="label">
                     <posx>0</posx>
                     <posy>0</posy>
-                    <width>610</width>
+                    <width>550</width>
                     <height>40</height>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
@@ -159,7 +143,7 @@
                 <control type="label">
                     <posx>0</posx>
                     <posy>0</posy>
-                    <width>610</width>
+                    <width>550</width>
                     <height>40</height>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
@@ -169,7 +153,7 @@
                 <control type="label">
                     <posx>0</posx>
                     <posy>0</posy>
-                    <width>610</width>
+                    <width>550</width>
                     <height>40</height>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
@@ -295,9 +279,9 @@
                 </control>
             </control>
             <control type="group">
-                <posx>510</posx>
+                <posx>570</posx>
                 <posy>240</posy>
-                <width>610</width>
+                <width>550</width>
                 <height>485</height>
                 <!--Info Plot: Movies, TV-Shows, Music-Videos-->
                 <visible>Container.Content(MusicVideos) | Container.Content(movies) | container.content(tvshows) | container.content(seasons)</visible>
