@@ -50,7 +50,8 @@ def fullMigration():
                 xbmcgui.Dialog().ok(xbmc.getLocalizedString(31575), xbmc.getLocalizedString(31579))
             except:
                 log += "TITAN SKIN --> Error while Creating backup \n"
-                log += print_exc()
+                if print_exc():
+                    log += print_exc()
                 #reset all settings
                 xbmc.executebuiltin("RunScript(script.skinshortcuts,type=resetall&warning=false)")
                 xbmc.sleep(250)
@@ -63,6 +64,7 @@ def fullMigration():
                     logfile = xbmc.translatePath("special://temp/titan_pre-migration_backup.log").decode("utf-8")
                     with open(logfile, 'w') as f:
                         f.write(log)
+                        xbmc.log(log)
                 except: pass
                 xbmc.sleep(1000)
                 WINDOW.clearProperty("titanmigration")
@@ -97,7 +99,7 @@ def getMigratedSkinSetting(settingname):
 def migrateOtherSkinSettings():
     settingsList = getMigratedSkinSettings()
     for setting in settingsList:
-        currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %setting[0])
+        currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %setting[0]).decode("utf-8")
         if currentvalue:
             xbmc.executebuiltin("Skin.SetString(%s,%s)" %(setting[1],currentvalue))
             xbmc.executebuiltin("Skin.Reset(%s)" %setting[0])
@@ -106,7 +108,7 @@ def migrateSkinHelperSettings():
     #migrate string settings
     settings = ["ShowInfoAtPlaybackStart","RandomFanartDelay","SpinnerTexture","SpinnerTexturePath","ForcedViews.movies","ForcedViews.tvshows","ForcedViews.seasons","ForcedViews.episodes","ForcedViews.sets","ForcedViews.setmovies"]
     for setting in settings:
-        currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %setting)
+        currentvalue = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %setting).decode("utf-8")
         xbmc.executebuiltin("Skin.SetString(SkinHelper.%s,%s)" %(setting,currentvalue))
         xbmc.executebuiltin("Skin.Reset(%s)" %setting)
     
@@ -179,7 +181,6 @@ def migrateColorSettings():
                 settingname = skinsetting.attributes['id'].nodeValue
             
             #only get settings for the current skin
-            currentskin = 
             if ( KODI_VERSION < 16 and settingname.startswith(xbmc.getSkinDir()+".")) or KODI_VERSION >= 16:
                 
                 if skinsetting.childNodes:
@@ -212,7 +213,7 @@ def migrateColorSettings():
                     
                     #check for old opacity setting...
                     if not colorvalue == "None":
-                        opacity = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname.replace("Color","Opacity"))
+                        opacity = xbmc.getInfoLabel("$INFO[Skin.String(%s)]" %settingname.replace("Color","Opacity")).decode("utf-8")
                         if opacity:
                             xbmc.sleep(1000)
                             try:
@@ -478,7 +479,29 @@ def migrateSkinShortcuts():
                         if defaultID == "settings":
                             propertiesList.append("['mainmenu', 'settings', 'background', u'special://skin/extras/backgrounds/systeminfo.jpg']")
                             propertiesList.append("['mainmenu', 'settings', 'backgroundName', u'$LOCALIZE[10040]']")
-        
+                    
+                    #migrate thumb to icon
+                    try:
+                        icon = shortcut.getElementsByTagName( 'icon' )[0].firstChild
+                        thumb = shortcut.getElementsByTagName( 'thumb' )[0].firstChild
+                        if icon:
+                            if icon: icon = icon.data
+                            if thumb: thumb = thumb.data
+                            if icon and not thumb:
+                                textnode = doc.createTextNode(icon)
+                                shortcut.getElementsByTagName( 'thumb' ).item(0).appendChild(textnode)
+                                defaultIcon = "special://skin/extras/hometiles/addons.png"
+                                if defaultID == "movies": defaultIcon = "special://skin/extras/hometiles/movies.png"
+                                if defaultID == "tvshows": defaultIcon = "special://skin/extras/hometiles/tvseries.png"
+                                if defaultID == "music": defaultIcon = "special://skin/extras/hometiles/music.png"
+                                if defaultID == "musicvideos": defaultIcon = "special://skin/extras/backgrounds/hover_my music.jpg"
+                                if defaultID == "pictures": defaultIcon = "special://skin/extras/hometiles/pictures.png"
+                                if defaultID == "weather": defaultIcon = "special://skin/extras/hometiles/weather.png"
+                                if defaultID == "videos": defaultIcon = "special://skin/extras/hometiles/videos.png"
+                                if defaultID == "settings": defaultIcon = "special://skin/extras/hometiles/settings.png"
+                                shortcut.getElementsByTagName( 'icon' ).item(0).firstChild.data = defaultIcon
+                    except: pass
+                    
         xbmcvfs.delete(skinshortcutspath)
         with open(skinshortcutspath, 'w') as f:
             f.write(doc.toxml(encoding='utf-8'))
