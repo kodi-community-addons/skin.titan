@@ -39,7 +39,7 @@
 		<control type="image">
 			<!--Panel-->
 			<posx>50</posx>
-			<posy>150</posy>
+			<bottom>0</bottom>
 			<width>1820</width>
 			<height>930</height>
 			<texture border="5">diffuse/panel.png</texture>
@@ -48,65 +48,58 @@
 			<visible>!skin.hastheme(classic)</visible>
 			<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
 			<animation type="Conditional" condition="Control.IsVisible(4445) + IntegerGreaterThan(Container(4445).NumItems,0)">
-                <effect type="slide" start="0,0" end="0,510" time="100" tween="cubic" easing="inout" delay="0" />
+                <effect type="slide" start="0,0" end="0,530" time="100" tween="cubic" easing="inout" delay="0" />
             </animation>
             <animation type="Conditional" condition="Control.IsVisible(4445) + !IntegerGreaterThan(Container(4445).NumItems,0)">
-                <effect type="slide" start="0,0" end="0,580" time="100" tween="cubic" easing="inout" delay="0" />
+                <effect type="slide" start="0,0" end="0,620" time="100" tween="cubic" easing="inout" delay="0" />
             </animation>
 		</control>
 				
 		<!-- touchscreen support -->
 		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsHome</include>
 		
-		<!-- main menu -->
-		<control type="group">
-			<height>440</height>
-			<posx>70</posx>
-			<posy>810</posy>
-			<control type="list" id="300">
-				<posx>0</posx>
-				<width>1800</width>
-				<height>300</height>
-				<orientation>horizontal</orientation>
-				<onleft>300</onleft>
-				<onright>300</onright>
-				<pagecontrol>60</pagecontrol>
-				<onup>$VAR[EnhancedHomeButtonUpAction]</onup>
-				<ondown condition="!Skin.HasSetting(DisablePowerMenu)">2</ondown>
-				<itemgap>0</itemgap>
-
-				<itemlayout width="360" height="205">
-					<control type="group">
-                        <width>337</width>
-                        <height>195</height>
-                        <include>ThumbsViewLayout</include>
-                    </control>
-				</itemlayout>
-				<focusedlayout width="360" height="205" condition="!Control.HasFocus(300)">
-					<control type="group">
-                        <width>337</width>
-                        <height>195</height>
-                        <include>ThumbsViewLayout</include>
-                    </control>
-				</focusedlayout>
-                <focusedlayout width="360" height="205" condition="Control.HasFocus(300)">
-					<control type="group">
-                        <width>337</width>
-                        <height>195</height>
-                        <include>ThumbsViewLayoutFocus</include>
-                    </control>
-				</focusedlayout>
-				<content><include>skinshortcuts-mainmenu</include></content>
-			</control>
-			
-		</control>
-	
+        <!-- main menu -->
+        <control type="panel" id="300">
+            <posx>70</posx>
+            <bottom>70</bottom>
+            <width>1800</width>
+            <height>195</height>
+            <orientation>horizontal</orientation>
+            <onleft>300</onleft>
+            <onright>300</onright>
+            <pagecontrol>60</pagecontrol>
+            <onup>$VAR[EnhancedHomeButtonUpAction]</onup>
+            <ondown condition="!Skin.HasSetting(DisablePowerMenu)">2</ondown>
+            <itemlayout width="360" height="205">
+                <control type="group">
+                    <width>337</width>
+                    <height>195</height>
+                    <include>ThumbsViewLayout</include>
+                </control>
+            </itemlayout>
+            <focusedlayout width="360" height="205" condition="!Control.HasFocus(300)">
+                <control type="group">
+                    <width>337</width>
+                    <height>195</height>
+                    <include>ThumbsViewLayout</include>
+                </control>
+            </focusedlayout>
+            <focusedlayout width="360" height="205" condition="Control.HasFocus(300)">
+                <control type="group">
+                    <width>337</width>
+                    <height>195</height>
+                    <include>ThumbsViewLayoutFocus</include>
+                </control>
+            </focusedlayout>
+            <content><include>skinshortcuts-mainmenu</include></content>
+        </control>
+		
 		<!-- widgets -->
 		<control type="group">
 			<posx>60</posx>
-			<posy>150</posy>
+			<bottom>310</bottom>
 			<width>1790</width>
-			<height>680</height>
+			<height>615</height>
 			<visible>!IsEmpty(Container(300).ListItem.Property(widget)) | !IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
 			<!-- change spotlight widget button -->
 			<control type="button" id="513">
@@ -236,9 +229,9 @@
 		<!-- sub menu -->
 		<control type="group">
 			<posx>60</posx>
-			<posy>150</posy>
+			<bottom>310</bottom>
 			<width>1800</width>
-			<height>600</height>
+			<height>615</height>
 			
 			<!-- submenu dummy button -->
 			<control type="button" id="513">
@@ -312,7 +305,7 @@
 		<control type="group">
 			<control type="list" id="4445">
 				<posx>70</posx>
-				<posy>735</posy>
+				<bottom>300</bottom>
 				<width>1800</width>
 				<height>60</height>
 				<orientation>horizontal</orientation>
@@ -391,6 +384,7 @@
 			</control>
 		</control>
 		
+        
 		<!--RSS Text without touch-->			
 		<control type="rss">	
 			<description>RSS Feed</description>
