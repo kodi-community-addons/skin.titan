@@ -1799,11 +1799,62 @@
 			</control>
 		</control>
     </include>
-
-	<include name="mediaflags">
+    
+	<include name="StarRatingFooter">
+        <control type="group">
+            <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
+            <visible>![!Skin.hastheme(classic) + Skin.HasSetting(StudioInFooter)]</visible>
+            <visible>!IsEmpty(ListItem.Rating) + window.isactive(videolibrary)</visible>
+            <bottom>20</bottom>
+            <height>80</height>
+            <posx>1450</posx>
+            <control type="image">
+                <!--Stars classic-->
+                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <posx>60</posx>
+                <posy>18</posy>
+                <width>270</width>
+                <height>25</height>
+                <texture>$INFO[ListItem.Rating,rating/10stars_black/,.png]</texture>
+            </control>
+            <control type="image">
+                <!--Stars modern-->
+                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <posx>130</posx>
+                <posy>24</posy>
+                <width>220</width>
+                <height>45</height>
+                <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                <texture fallback="rating/0.0.png">$INFO[ListItem.Rating,rating/,.png]</texture>
+            </control>
+            <control type="label">
+                <!--Rating classic-->
+                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <posx>340</posx>
+                <posy>0</posy>
+                <width>100</width>
+                <font>Bold30</font>
+                <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+                <label>$INFO[ListItem.Rating]</label>
+            </control>
+            <control type="label">
+                <!--Rating modern-->
+                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <posx>360</posx>
+                <posy>15</posy>
+                <width>100</width>
+                <font>Reg36</font>
+                <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+                <label>$INFO[ListItem.Rating]</label>
+            </control>
+        </control>
+    </include>
+    
+    
+    
+    <include name="mediaflags">
         <control type="grouplist">
 			<orientation>horizontal</orientation>
-            <visible>!Control.IsVisible(55123)</visible>
 			<height>40</height>
             <control type="image">
                 <width>36</width>
