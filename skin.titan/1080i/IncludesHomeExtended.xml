@@ -1,6 +1,7 @@
 <includes>
 	 
 	 <variable name="SpotLightWidgetImage">
+        <value condition="!IsEmpty(ListItem.ChannelName)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
         <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
@@ -556,6 +557,15 @@
 			<texture background="true" diffuse="diffuse/wide.png">$VAR[SpotLightWidgetImage]</texture>
 			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
 		</control>
+        <!--pvr thumb image-->
+        <control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<bordersize>8</bordersize>
+			<texture background="true" diffuse="diffuse/wide.png">http://localhost:8888/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=fanart</texture>
+			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
+		</control>
 		<!--info Overlay-->
 		<control type="image">
             <!--Panel Ovelay-->
@@ -582,7 +592,7 @@
 			<right>20</right>
 			<bottom>15</bottom>
 			<width>25%</width>
-			<height>150</height>
+			<height>135</height>
 			<aspectratio align="right" aligny="center">keep</aspectratio>
 			<texture background="true">$VAR[SpotLightWidgetInfoThumb]</texture>
 		</control>
@@ -602,6 +612,15 @@
 			<bordersize>8</bordersize>
 			<texture background="true" diffuse="diffuse/wide.png">$VAR[SpotLightWidgetImage]</texture>
 			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+		</control>
+        <!--pvr thumb image-->
+        <control type="image">
+			<width>100%</width>
+			<height>100%</height>
+			<bordersize>8</bordersize>
+			<texture background="true" diffuse="diffuse/wide.png">http://localhost:8888/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[Container(510).ListItem.ChannelName]</texture>
+			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container(510).ListItem.FolderPath,pvr://)</visible>
 		</control>
 		<!--info Overlay-->
 		<control type="image">

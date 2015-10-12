@@ -816,6 +816,18 @@
     <height>236</height>
   </include>
   
+  <include name="PVRListItemThumb">
+        <control type="image">
+            <!--pvr thumb image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>8</bordersize>
+            <texture background="true" diffuse="home/home_matte2.png">http://localhost:8888/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
+        </control>
+  </include>
+  
     <include name="ThumbsViewItemLayout">
         <control type="image">
             <!--thumb image-->
@@ -834,16 +846,7 @@
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
             <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
         </control>
-        <control type="image">
-            <!--pvr logo image-->
-            <posx>0</posx>
-            <posy>0</posy>
-            <bordersize>20</bordersize>
-            <height>70%</height>
-            <texture background="true">$INFO[ListItem.Icon]</texture>
-            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-            <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | MyPVRSearch.xml] + !IsEmpty(Listitem.Icon)</visible>
-        </control>
+        <include condition="Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(home)">PVRListItemThumb</include>
         <control type="image">
             <!--Panel Ovelay-->
             <bordersize>8</bordersize>
@@ -1128,6 +1131,7 @@
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
             <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | MyPVRSearch.xml] + !IsEmpty(Listitem.Icon)</visible>
         </control>
+        <include condition="Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)">PVRListItemThumb</include>
         <control type="image">
             <!--Panel Overlay-->
 			<bordersize>8</bordersize>
@@ -1182,10 +1186,11 @@
 
 	<include name="ShowTitleOverlay">
 		<visible>
-		[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(clearlogo)) + Skin.HasSetting(ShowlabelsLandscape)] |
+		[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(clearlogo)) + ![Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
+        [Skin.HasSetting(ShowlabelsLandscape) + [Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
 		[!IsEmpty(ListItem.Episode) + !IsEmpty(ListItem.Season) + !Container.Content(seasons) + !StringCompare(ListItem.Label, ListItem.TvshowTitle)] |
         !IsEmpty(ListItem.Property(defaultID)) |
-        [Skin.HasSetting(ShowlabelsLandscape) + Skin.HasSetting(DisableLandscapeThumbs)]
+        [[!IsEmpty(ListItem.Art(landscape)) | !IsEmpty(ListItem.Art(clearlogo))] + Skin.HasSetting(DisableLandscapeThumbs)]
 		</visible>
         <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode)]</visible>
         <visible>!StringCompare(ListItem.Label,..)</visible>
@@ -3292,6 +3297,14 @@
                     <label>31566</label>
 					<selected>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</selected>
 					<onclick>Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)</onclick>
+                </control>
+                
+                <control type="button" id="3332">
+                    <!--PVR live thumbs settings-->
+                    <include>SubMenuButton</include>
+                    <label>31606</label>
+					<visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</visible>
+					<onclick>Addon.OpenSettings(script.skin.helper.service)</onclick>
                 </control>
                 
                 <control type="radiobutton" id="341">
