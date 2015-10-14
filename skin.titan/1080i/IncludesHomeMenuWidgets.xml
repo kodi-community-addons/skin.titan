@@ -475,9 +475,10 @@
 		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(Container(510).ListItem.Property(type),livechannel)">[B]$INFO[Container(510).ListItem.Property(title)][/B]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(Container(510).ListItem.Property(type),recorded)">[B]$INFO[Container(510).ListItem.label][/B]</value>
 		<value condition="StringCompare(Container(510).ListItem.Property(special), systeminfo)">[B]$INFO[Container(510).ListItem.label][/B] $INFO[Container(510).ListItem.label2]</value>
-		<value condition="container(510).Content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">[B]$INFO[Container(510).ListItem.label][/B]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.Title) + SubString(Container(510).ListItem.FolderPath, pvr://)">[B]$INFO[Container(510).ListItem.Title][/B]</value>
+        <value condition="container(510).Content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">[B]$INFO[Container(510).ListItem.label][/B]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Season) + !IsEmpty(Container(510).ListItem.Episode)">[B][UPPERCASE]S$INFO[Container(510).ListItem.Season]E$INFO[Container(510).ListItem.Episode]:[/UPPERCASE] $INFO[Container(510).ListItem.Title][/B]</value>
-		<value condition="!IsEmpty(Container(510).ListItem.Title)">[B]$INFO[Container(510).ListItem.Title][/B]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Title)">[B]$INFO[Container(510).ListItem.Title][/B]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Label)">[B]$INFO[Container(510).ListItem.Label][/B]</value>
     </variable>
 	
@@ -492,6 +493,8 @@
 		<value condition="!IsEmpty(Container(510).ListItem.Art(clearlogo))">$INFO[Container(510).ListItem.Art(clearlogo)]</value>
         <value condition="!IsEmpty(Container(510).ListItem.Property(ChannelIcon))">$INFO[Container(510).ListItem.Property(ChannelIcon)]</value>
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.Music.LogoArt))">$INFO[Window(home).Property(SkinHelper.Music.LogoArt)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Logo))">$INFO[Window(home).Property(SkinHelper.PVR.Logo)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.ChannelLogo))">$INFO[Window(home).Property(SkinHelper.PVR.ChannelLogo)]</value>
     </variable>
 	
 	<variable name="SpotLightWidgetInfoclearlogo">
@@ -550,7 +553,8 @@
 	<variable name="HomeMenuWidgetInfoPlotAlt">
 		<!-- PVR -->
         <value condition="!IsEmpty(ListItem.Property(StartTime))">[B]$INFO[ListItem.Property(ChannelName),, • ]$INFO[ListItem.Property(StartTime),, - ]$INFO[ListItem.Property(EndTime),, • ]$INFO[ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-		<!-- tvshows, seasons -->
+		<value condition="!IsEmpty(ListItem.StartTime)">[B]$INFO[ListItem.ChannelName,, • ]$INFO[ListItem.StartTime,, - ]$INFO[ListItem.EndTime,, • ]$INFO[ListItem.Genre][/B][CR]$INFO[Container(510).ListItem.EpisodeName,, • ]$VAR[HomeMenuWidgetInfoPlot]</value>
+        <!-- tvshows, seasons -->
         <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Genre)">[B]$INFO[ListItem.TvShowTitle,, • ]$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
         <!-- episodes -->
         <value condition="!IsEmpty(ListItem.TvShowTitle)">[B]$INFO[ListItem.TvShowTitle,, • ]$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration,,min.][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
@@ -561,7 +565,9 @@
         
         <!-- PVR -->
         <value condition="!IsEmpty(Container(510).ListItem.Property(StartTime))">[B]$INFO[Container(510).ListItem.Property(ChannelName),, • ]$INFO[Container(510).ListItem.Property(StartTime),, - ]$INFO[Container(510).ListItem.Property(EndTime),, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-		<!-- tvshows, seasons -->
+		<value condition="!IsEmpty(Container(510).ListItem.StartTime)">[B]$INFO[Container(510).ListItem.ChannelName,, • ]$INFO[Container(510).ListItem.StartTime,, - ]$INFO[Container(510).ListItem.EndTime,, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+		
+        <!-- tvshows, seasons -->
         <value condition="!IsEmpty(Container(510).ListItem.TvShowTitle) + !IsEmpty(Container(510).ListItem.Genre)">[B]$INFO[Container(510).ListItem.TvShowTitle,, • ]$INFO[Container(510).ListItem.Year,, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
         <!-- episodes -->
         <value condition="!IsEmpty(Container(510).ListItem.TvShowTitle)">[B]$INFO[Container(510).ListItem.TvShowTitle,, • ]$INFO[Container(510).ListItem.Premiered,, • ]$INFO[Container(510).ListItem.Duration,,min.][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
@@ -578,6 +584,11 @@
 		<value condition="!IsEmpty(Container(510).ListItem.Art(poster))">$INFO[Container(510).ListItem.Art(poster)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Property(poster))">$INFO[Container(510).ListItem.Property(poster)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Property(tvshow.poster))">$INFO[Container(510).ListItem.Property(tvshow.poster)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.PVR.Poster))">$INFO[Window(Home).Property(SkinHelper.PVR.Poster)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.PVR.CharacterArt))">$INFO[Window(Home).Property(SkinHelper.PVR.CharacterArt)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.PVR.Landscape))">$INFO[Window(Home).Property(SkinHelper.PVR.Landscape)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(Home).Property(SkinHelper.PVR.FanArt)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(Home).Property(SkinHelper.PVR.Thumb)]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Icon)">$INFO[Container(510).ListItem.Icon]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.Property(FanArt))">$INFO[Container(510).ListItem.Property(FanArt)]</value>
 		<value>ListItem.Thumb</value>
