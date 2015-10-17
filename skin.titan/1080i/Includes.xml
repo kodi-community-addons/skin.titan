@@ -160,11 +160,17 @@
 			</control>
 			
 			<!--Rating normal-->
-			<include condition="window.isactive(videolibrary) + !Skin.HasSetting(StudioInFooter)">StarRatingFooter</include>
+			<include condition="window.isactive(videolibrary) + ![Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">StarRatingFooter</include>
+            <include condition="window.isactive(videolibrary) + [Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">AltRatingFooter</include>
 			
-			<!--Rating + Studio-->
+			
+		</control>
+	</include>
+    
+    <include name="AltRatingFooter">
+        <!--Rating + Studio-->
 			<control type="group">
-				<visible>[!Skin.hastheme(classic) + Skin.HasSetting(StudioInFooter) + window.isactive(videolibrary) + !IsEmpty(ListItem.Studio)]</visible>
+				<visible>[Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]</visible>
 				<control type="image">
 					<!--studio logo -->
 					<right>50</right>
@@ -175,18 +181,64 @@
 					<fadetime>250</fadetime>
 					<colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
 					<bordersize>2</bordersize>
-					<texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
+					<texture>$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
+                    <visible>Skin.HasSetting(StudioInFooter)</visible>
+                    <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Rating) + Skin.HasSetting(IMDBRatingInFooter)">Conditional</animation>
 				</control>
+                <!-- IMDB rating -->
+                <control type="group">
+                    <visible>!IsEmpty(ListItem.Rating) + Skin.HasSetting(IMDBRatingInFooter)</visible>
+                    <control type="image">
+                        <right>50</right>
+                        <height>70</height>
+                        <width>84</width>
+                        <bottom>15</bottom>
+                        <texture border="5">diffuse/panel.png</texture>
+                        <colordiffuse>black</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="image">
+                        <right>50</right>
+                        <height>70</height>
+                        <width>85</width>
+                        <bottom>15</bottom>
+                        <bordersize>2</bordersize>
+                        <texture border="5">diffuse/panel.png</texture>
+                        <colordiffuse>darkgrey</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="image">
+                        <!--imdb logo-->
+                        <right>50</right>
+                        <bottom>45</bottom>
+                        <width>84</width>
+                        <height>40</height>
+                        <bordersize>2</bordersize>
+                        <texture>flags/imdb_logo.png</texture>
+                    </control>
+                    <control type="label">
+                        <!--Rating modern-->
+                        <right>50</right>
+                        <bottom>17</bottom>
+                        <width>84</width>
+                        <height>30</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>flags</font>
+                        <textcolor>white</textcolor>
+                        <label fallback="0.0">$INFO[ListItem.Rating]</label>
+                    </control>
+                </control>
+
 			</control>	
 
-		</control>
-	</include>
+    </include>
     
     <include name="FooterContentPVR">
         <!--Progress (PVR)-->
         <control type="group">
             <animation effect="slide" end="-30,15" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
-            <visible>window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml)</visible>
+            <visible>[window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml)] + !Skin.HasSetting(EnableTouchSupport)</visible>
             <bottom>35</bottom>
             <height>65</height>
             <control type="label">
@@ -635,7 +687,7 @@
 			<aspectratio align="right" aligny="center">keep</aspectratio>
 			<texture>$VAR[ListItemClearLogo]</texture>
 			<visible>!IsEmpty(Control.GetLabel(881)) + Skin.String(ClearLogoLocation, topright)</visible>
-            <visible>!Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)">
                 <effect type="slide" start="0,0" end="-120,0" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
@@ -651,7 +703,7 @@
 			<aspectratio align="left" aligny="center">keep</aspectratio>
 			<texture>$VAR[ListItemClearLogo]</texture>
 			<visible>!IsEmpty(Control.GetLabel(882)) + Skin.String(ClearLogoLocation, topleft)</visible>
-            <visible>!Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
 		</control>
 		
 		<!--clearlogo top center-->
@@ -663,7 +715,7 @@
 			<fadetime>600</fadetime>
 			<aspectratio align="center" aligny="center">keep</aspectratio>
 			<texture>$VAR[ListItemClearLogo]</texture>
-            <visible>!Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
 			<visible>!IsEmpty(Control.GetLabel(883)) + Skin.String(ClearLogoLocation, topcenter) + !Skin.HasSetting(ShowMovieTitleHeader)</visible>
 		</control>
 		
@@ -687,7 +739,7 @@
             <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
 			<visible>!Control.IsVisible(881)</visible>
 			<visible>!Control.IsVisible(77551)</visible>
-            <visible>!Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)">
                 <effect type="slide" start="0,0" end="-120,0" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>

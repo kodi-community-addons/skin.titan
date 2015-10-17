@@ -50,9 +50,19 @@
 					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
 				</control>
 			</control>
-			
-			<!--Time & Weather-->
-			<include condition="!Skin.HasSetting(DisableHeader)">TimeInfo</include>
+
+            <control type="image">
+                <!--studio logo -->
+                <right>60</right>
+                <width>450</width>
+                <height>160</height>
+                <posy>20</posy>
+                <aspectratio aligny="top" align="right">keep</aspectratio>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                <texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
+                <visible>!Skin.String(SkinHelper.StudioImagesPath)</visible>
+                <visible>!StringCompare(Window.Property(ShowCast),show)</visible>
+            </control>
 				
 			<control type="group">
 				<visible>!Window.IsVisible(FileBrowser)</visible>
@@ -292,7 +302,7 @@
                         <control type="radiobutton" id="3052">
                             <!--Hide panel behind moviedetails-->
                             <label>31155</label>
-                            <width>450</width>
+                            <width>530</width>
                             <textoffsetx>20</textoffsetx>
                             <align>left</align>
                             <onclick>Skin.ToggleSetting(DialogVideoInfoHidePanel)</onclick>
@@ -334,45 +344,14 @@
 						<visible>!Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + !Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)</visible>
 						<include>animation_window_open_close</include>
 						
-						<control type="image">
-							<!--cdart image-->
-							<right>50</right>
-							<posy>310</posy>
-							<width>500</width>
-							<height>500</height>
-							<texture background="true" diffuse="diffuse/cdmask_big.png" fallback="defaultcovers/cd_big.png">$VAR[DiscArtImage]</texture>
-							<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-							<animation effect="slide" start="0" end="-190" tween="cubic" easing="inout" time="600" delay="100">WindowOpen</animation>
-							<animation effect="fade" start="0" end="100" delay="0" time="2400" pulse="false">WindowOpen</animation>
-							<animation effect="fade" start="100" end="0" delay="0" time="150" pulse="false" condition="!Skin.HasSetting(VideoInfo_ShowCDart)">Conditional</animation>
-							<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-							<animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-							<visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(ListItem.Property(TVShowThumb))</visible>
-						</control>
 						
-						<control type="image">
-							<!--poster-->
-							<right>50</right>
-							<posy>210</posy>
-							<width>500</width>
-							<height>67%</height>
-							<aspectratio align="right" aligny="top" scalediffuse="true">keep</aspectratio>
-							<texture background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png" border="5">$VAR[VideoInfoPosterImage]</texture>
-						</control>
-						
-						<control type="group">
-							<right>50</right>
-							<posy>210</posy>
-							<include>WatchedIndicatorLarge</include>
-						</control>
-
 						<!--Info-->
 						<control type="grouplist">
 							<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
 							<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
 							<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
 							<posx>65</posx>
-							<posy>240</posy>
+							<posy>230</posy>
 							<width>1200</width>
 							<height>700</height>
 							<orientation>vertical</orientation>
@@ -381,35 +360,22 @@
 								<posx>0</posx>
 								<posy>0</posy>
 								<width>1150</width>
-								<height max="260">auto</height>
+								<height>215</height>
 								<label>$INFO[ListItem.Plot]</label>
 								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
-								<font>Light28</font>
-								<visible>IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
-							</control>
-							<control type="textbox">
-								<posx>0</posx>
-								<posy>0</posy>
-								<width>1150</width>
-								<height max="200">auto</height>
-								<label>$INFO[ListItem.Plot]</label>
-								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-								<align>justify</align>
-								<font>Light28</font>
-								<visible>!IsEmpty(Window(Home).Property(NextAired.NextNumber))</visible>
+								<font>Reg26</font>
 							</control>
 							<control type="image">
 								<width>1120</width>
-								<height>2</height>
+								<height>1</height>
 								<posy>10</posy>
-								<texture>colors/color_$INFO[Skin.String(GeneralTextColor)].png</texture>
+								<texture>colors/color_white.png</texture>
 							</control>
 							<control type="image">
 								<width>1150</width>
-								<height>15</height>
+								<height>10</height>
 								<posy>10</posy>
 								<texture>colors/color_transparent.png</texture>
 							</control>
@@ -430,8 +396,8 @@
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
-									<width>600</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Premiered]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -442,8 +408,8 @@
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
-									<width>600</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Year]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -452,7 +418,7 @@
 									<visible>!IsEmpty(ListItem.Year) + IsEmpty(ListItem.Premiered)</visible>
 								</control>
 								<control type="image">
-									<posx>700</posx>
+									<posx>550</posx>
 									<posy>3</posy>
 									<width>49</width>
 									<height>49</height>
@@ -461,10 +427,10 @@
 									<visible>!IsEmpty(ListItem.Duration)</visible>
 								</control>
 								<control type="label">
-									<posx>760</posx>
+									<posx>610</posx>
 									<posy>0</posy>
-									<width>400</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$VAR[ListItemExtendedDuration]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -474,7 +440,7 @@
 							</control>
 							<control type="group">
 								<!--Director and Writer -->
-								<width>600</width>
+								<width>530</width>
 								<height>40</height>
 								<visible>[Container.Content(Movies) | Container.Content(episodes)] + !IsEmpty(ListItem.Director) + !IsEmpty(ListItem.Writer)</visible>
 								<control type="image">
@@ -489,8 +455,8 @@
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
-									<width>600</width>
-									<font>Reg28</font>
+									<width>500</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Director]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -499,7 +465,7 @@
 									<visible>!IsEmpty(ListItem.Director)</visible>
 								</control>
 								<control type="image">
-									<posx>700</posx>
+									<posx>550</posx>
 									<posy>2</posy>
 									<width>49</width>
 									<height>49</height>
@@ -508,10 +474,10 @@
 									<visible>!IsEmpty(ListItem.Writer)</visible>
 								</control>
 								<control type="label">
-									<posx>760</posx>
+									<posx>610</posx>
 									<posy>0</posy>
-									<width>370</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Writer]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -538,8 +504,8 @@
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
-									<width>600</width>
-									<font>Reg28</font>
+									<width>500</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Genre]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -548,7 +514,7 @@
 									<visible>!IsEmpty(ListItem.Genre)</visible>
 								</control>
 								<control type="image">
-									<posx>700</posx>
+									<posx>550</posx>
 									<posy>2</posy>
 									<width>49</width>
 									<height>49</height>
@@ -557,10 +523,10 @@
 									<visible>!IsEmpty(ListItem.Studio)</visible>
 								</control>
 								<control type="label">
-									<posx>760</posx>
+									<posx>610</posx>
 									<posy>0</posy>
-									<width>370</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Studio]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -586,8 +552,8 @@
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
-									<width>600</width>
-									<font>Reg28</font>
+									<width>500</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>[UPPERCASE]$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar][/UPPERCASE]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -596,7 +562,7 @@
 								</control>
                                 
 								<control type="image">
-									<posx>710</posx>
+									<posx>560</posx>
 									<posy>15</posy>
 									<width>36</width>
 									<height>36</height>
@@ -604,10 +570,10 @@
 									<texture>flags/audio.png</texture>
 								</control>
 								<control type="label">
-									<posx>760</posx>
+									<posx>610</posx>
 									<posy>0</posy>
-									<width>370</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>[UPPERCASE]$INFO[Window(home).Property(SkinHelper.ListItemAllAudioStreams)][/UPPERCASE]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -617,7 +583,7 @@
 							</control>
                             
                             <control type="group">
-								<!--RATING and SUBTITLES-->
+								<!--MPAA RATING and SUBTITLES-->
 								<width>1150</width>
 								<height>40</height>
 								<visible>!IsEmpty(ListItem.SubtitleLanguage) | !IsEmpty(ListItem.mpaa) | !IsEmpty(ListItem.Rating)</visible>
@@ -633,8 +599,8 @@
 								<control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
-									<width>600</width>
-									<font>Reg28</font>
+									<width>500</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>[UPPERCASE]$INFO[ListItem.SubtitleLanguage][/UPPERCASE]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -643,27 +609,7 @@
 								</control>
                                 
 								<control type="image">
-									<posx>711</posx>
-									<posy>15</posy>
-									<width>30</width>
-									<height>30</height>
-                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-									<texture>flags/rating.png</texture>
-								</control>
-								<control type="label">
-									<posx>760</posx>
-									<posy>0</posy>
-									<width>370</width>
-									<font>Reg28</font>
-									<align>left</align>
-									<label fallback="?">$INFO[ListItem.Rating]</label>
-									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-									<scroll>false</scroll>
-								</control>
-                                
-                                <control type="image">
-									<posx>820</posx>
+									<posx>560</posx>
 									<posy>15</posy>
 									<width>30</width>
 									<height>30</height>
@@ -672,10 +618,10 @@
                                     <visible>!IsEmpty(ListItem.mpaa)</visible>
 								</control>
 								<control type="label">
-									<posx>860</posx>
+									<posx>610</posx>
 									<posy>0</posy>
-									<width>370</width>
-									<font>Reg28</font>
+									<width>530</width>
+									<font>Reg26</font>
 									<align>left</align>
 									<label fallback="?">$VAR[RatingFlagVar]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -683,12 +629,93 @@
 									<scroll>false</scroll>
                                     <visible>!IsEmpty(ListItem.mpaa)</visible>
 								</control>
-                                
-                                
-                                
 							</control>
 							
+                            <control type="group">
+								<!--Ratings-->
+								<width>1150</width>
+								<height>40</height>
+								<control type="image">
+									<posx>8</posx>
+									<posy>15</posy>
+									<width>36</width>
+									<height>36</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/rating.png</texture>
+                                    <visible>!IsEmpty(ListItem.RatingAndVotes)</visible>
+								</control>
+								<control type="label">
+									<posx>60</posx>
+									<posy>0</posy>
+									<width>500</width>
+									<font>Reg26</font>
+									<align>left</align>
+									<label>IMDB Rating: $INFO[ListItem.RatingAndVotes]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                                    <visible>!IsEmpty(ListItem.RatingAndVotes)</visible>
+									<scroll>false</scroll>
+								</control>
+								<control type="image">
+									<posx>560</posx>
+									<posy>15</posy>
+									<width>30</width>
+									<height>30</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>flags/tomato.png</texture>
+                                    <visible>!IsEmpty(Window(Home).Property(SkinHelper.RottenTomatoesRating))</visible>
+								</control>
+								<control type="label">
+									<posx>610</posx>
+									<posy>0</posy>
+									<width>530</width>
+									<font>Reg26</font>
+									<align>left</align>
+									<label>$INFO[Window(Home).Property(SkinHelper.RottenTomatoesRating),$LOCALIZE[31608]: ,%]$INFO[Window(Home).Property(SkinHelper.RottenTomatoesAudienceRating), $LOCALIZE[31609]: ,%]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+                                    <visible>!IsEmpty(Window(Home).Property(SkinHelper.RottenTomatoesRating))</visible>
+								</control>                              
+							</control>
                             
+                            <control type="image">
+								<width>1150</width>
+								<height>10</height>
+								<posy>10</posy>
+								<texture>colors/color_transparent.png</texture>
+							</control>
+                           <control type="image">
+								<width>1120</width>
+								<height>1</height>
+								<posy>10</posy>
+								<texture>colors/color_white.png</texture>
+							</control>
+							<control type="image">
+								<width>1150</width>
+								<height>10</height>
+								<posy>10</posy>
+								<texture>colors/color_transparent.png</texture>
+							</control>
+                            
+                            <control type="group">
+								<!--Rotten Tomatoes details-->
+								<width>1150</width>
+								<height>110</height>
+                                <visible>!IsEmpty(Window(Home).Property(SkinHelper.RottenTomatoesConsensus))</visible>
+								<control type="textbox">
+									<posx>8</posx>
+									<posy>15</posy>
+									<width>1150</width>
+									<font>Light26</font>
+									<align>left</align>
+									<label>[B]$LOCALIZE[31610]: [/B]$INFO[Window(Home).Property(SkinHelper.RottenTomatoesAwards)] [B]$LOCALIZE[31611]: [/B]$INFO[Window(Home).Property(SkinHelper.RottenTomatoesConsensus)]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+								</control>                            
+							</control>
+							
                             
                             <control type="image">
 								<width>1150</width>
@@ -703,7 +730,7 @@
 								<control type="label">
 									<posy>0</posy>
 									<width>1150</width>
-									<font>Reg28</font>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>$INFO[ListItem.Property(TotalEpisodes),[B]$LOCALIZE[20360]:[/B] ,  •  ]$INFO[ListItem.Property(unWatchedepisodes),[B]$LOCALIZE[31092]:[/B] ,]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -719,7 +746,7 @@
 								<control type="label">
 									<posy>0</posy>
 									<width>1150</width>
-									<font>Reg28</font>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>[B]$LOCALIZE[31214]:[/B] $INFO[Window(Home).Property(NextAired.LatestNumber)] $INFO[Window(Home).Property(NextAired.LatestTitle)] ($INFO[Window(Home).Property(NextAired.LatestDate)])</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -735,7 +762,7 @@
 								<control type="label">
 									<posy>0</posy>
 									<width>1150</width>
-									<font>Reg28</font>
+									<font>Reg26</font>
 									<align>left</align>
 									<label>[B]$LOCALIZE[31212]:[/B] $INFO[Window(Home).Property(NextAired.NextNumber)] $INFO[Window(Home).Property(NextAired.NextTitle)] ($INFO[Window(Home).Property(NextAired.NextDate)])</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
@@ -745,54 +772,54 @@
 							</control>
 
 						</control>
-					
-					
+                        
+                        <control type="image">
+							<!--cdart image-->
+							<right>50</right>
+							<posy>310</posy>
+							<width>500</width>
+							<height>500</height>
+							<texture background="true" diffuse="diffuse/cdmask_big.png" fallback="defaultcovers/cd_big.png">$VAR[DiscArtImage]</texture>
+							<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+							<animation effect="slide" start="0" end="-190" tween="cubic" easing="inout" time="600" delay="100">WindowOpen</animation>
+							<animation effect="fade" start="0" end="100" delay="0" time="2400" pulse="false">WindowOpen</animation>
+							<animation effect="fade" start="100" end="0" delay="0" time="150" pulse="false" condition="!Skin.HasSetting(VideoInfo_ShowCDart)">Conditional</animation>
+							<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+							<animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+							<visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(ListItem.Property(TVShowThumb))</visible>
+						</control>
+						<control type="image">
+							<!--poster-->
+							<right>50</right>
+							<posy>210</posy>
+							<width>530</width>
+							<height>67%</height>
+							<aspectratio align="right" aligny="top" scalediffuse="true">keep</aspectratio>
+							<texture background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png" border="5">$VAR[VideoInfoPosterImage]</texture>
+						</control>
+						<control type="group">
+							<right>50</right>
+							<posy>210</posy>
+							<include>WatchedIndicatorLarge</include>
+						</control>
+
+                        
 					</control>
 
-					<control type="group">
-						<posx>65</posx>
-						<bottom>200</bottom>
-						<!--filename-->
-						<width>1180</width>
-						<height>40</height>
-						<visible>!IsEmpty(ListItem.FileNameAndPath)</visible>
-						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
-						<control type="label">
-							<posy>0</posy>
-							<width>1180</width>
-							<font>Reg20</font>
-							<align>left</align>
-							<scroll>true</scroll>
-							<label>$INFO[ListItem.FileNameAndPath,[B]$LOCALIZE[21800]: [/B]]</label>
-							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-						</control>
-					</control>
-					
-					<!--Studio-->
-					<control type="group">
-						<width>400</width>
-						<height>120</height>
-						<bottom>220</bottom>
-						<right>680</right>
-						<visible>!IsEmpty(ListItem.Studio)</visible>
-						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
-						<control type="image">
-							<!--studio logo -->
-							<right>0</right>
-							<width>250</width>
-							<height>120</height>
-							<bottom>10</bottom>
-							<aspectratio aligny="bottom" align="right">keep</aspectratio>
-							<fadetime>250</fadetime>
-							<colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
-							<texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
-							<visible>!Skin.String(SkinHelper.StudioImagesPath)</visible>
-						</control>
-					</control>	
-						
-					
-					
+					<!--filename-->
+                    <control type="label">
+                        <posx>75</posx>
+                        <posy>880</posy>
+                        <width>1150</width>
+                        <font>Reg20</font>
+                        <align>left</align>
+                        <scroll>false</scroll>
+                        <label>$INFO[ListItem.FileNameAndPath,[B]$LOCALIZE[21800]: [/B]]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                        <visible>!IsEmpty(ListItem.FileNameAndPath)</visible>
+                        <visible>!StringCompare(Window.Property(ShowCast),show)</visible>
+                    </control>
 					
 					<!--Cast Stuff-->
 					<control type="group" id="9002">
@@ -813,13 +840,12 @@
 							<texturefocus>-</texturefocus>
 							<texturenofocus>-</texturenofocus>
 						</control>
-
-						<control type="list" id="50">
-							<!--List 50 Cast-->
-							<posx>63</posx>
+                        
+                        <control type="panel" id="50">
+                            <posx>63</posx>
 							<posy>220</posy>
-							<width>1684</width>
-							<height>660</height>
+							<width>1200</width>
+							<height>714</height>
 							<onup>noop</onup>
 							<ondown>9000</ondown>
 							<onleft>ClearProperty(ShowCast)</onleft>
@@ -829,46 +855,86 @@
 							<orientation>vertical</orientation>
 							<focusposition>0</focusposition>
 							<viewtype label="actor list">list</viewtype>
-							<itemlayout height="60">
-								<control type="label">
-									<posx>0</posx>
-									<posy>0</posy>
-									<width>950</width>
-									<height>50</height>
-									<label>$INFO[ListItem.label,[B],[/B]] $INFO[ListItem.label2,(,)]</label>
-									<font>Reg28</font>
-									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-									<align>left</align>
-									<aligny>center</aligny>
-									<scroll>no</scroll>
-								</control>
-							</itemlayout>
-							<focusedlayout height="60">
-								<control type="label">
-									<posx>0</posx>
-									<posy>0</posy>
-									<width>950</width>
-									<height>50</height>
-									<label>$INFO[ListItem.label,[B],[/B]] $INFO[ListItem.label2,(,)]</label>
-									<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
-                                    <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
-									<font>Reg28</font>
-									<align>left</align>
-									<aligny>center</aligny>
-								</control>
-							</focusedlayout>
-						</control>
-                        
+                            <!-- itemlayout movies -->
+                            <itemlayout height="238" width="168">
+                                <control type="group">
+                                    <width>162</width>
+                                    <height>230</height>
+                                    <control type="image">
+                                        <include>PosterThumbBG</include>
+                                      </control>
+                                      <control type="image">
+                                        <texture border="1" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[ActorThumbImage]</texture>
+                                        <aspectratio scalediffuse="true" aligny="bottom" align="center">scale</aspectratio>
+                                        <bordersize>8</bordersize>
+                                      </control>
+                                   <!--Panel-->
+                                    <control type="image">
+                                        <bottom>-1</bottom>
+                                        <height>80</height>
+                                        <bordersize>8</bordersize>
+                                        <texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+                                        <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+                                    </control>
+                                    <control type="label">
+                                        <left>10</left>
+                                        <bottom>0</bottom>
+                                        <width>93%</width>
+                                        <height>70</height>
+                                        <align>left</align>
+                                        <label>$INFO[ListItem.Label2,[B],[/B][CR]]$INFO[ListItem.Label]</label>
+                                        <font>Reg18</font>
+                                        <scroll>StringCompare(Container.ListItem.Label,ListItem.Label)</scroll>
+                                        <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                                        <visible>!Skin.HasSetting(CaseOverlays)</visible>
+                                    </control>
+                                  </control>
+                            </itemlayout>
+                            <focusedlayout height="238" width="165">
+                                <control type="group">
+                                    <width>162</width>
+                                    <height>230</height>
+                                    <control type="image">
+                                        <include>PosterThumbFO</include>
+                                      </control>
+                                      <control type="image">
+                                        <texture border="1" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[ActorThumbImage]</texture>
+                                        <aspectratio scalediffuse="true" aligny="bottom" align="center">scale</aspectratio>
+                                        <bordersize>8</bordersize>
+                                      </control>
+                                      <!--Panel-->
+                                    <control type="image">
+                                        <bottom>-1</bottom>
+                                        <height>80</height>
+                                        <bordersize>8</bordersize>
+                                        <texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+                                        <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+                                    </control>
+                                    <control type="label">
+                                        <left>10</left>
+                                        <bottom>0</bottom>
+                                        <width>93%</width>
+                                        <height>70</height>
+                                        <align>left</align>
+                                        <label>$INFO[ListItem.Label2,[B],[/B][CR]]$INFO[ListItem.Label]</label>
+                                        <font>Reg18</font>
+                                        <scroll>StringCompare(Container.ListItem.Label,ListItem.Label)</scroll>
+                                        <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                                        <visible>!Skin.HasSetting(CaseOverlays)</visible>
+                                    </control>
+                                  </control>
+                            </focusedlayout>
+                        </control>
+
 						<control type="image">
 							<!--Actor Image-->
 							<description>Actor image</description>
 							<right>50</right>
 							<posy>210</posy>
-							<width>500</width>
+							<width>530</width>
 							<height>67%</height>
                             <aspectratio align="center" aligny="center" scalediffuse="true">scale</aspectratio>
-							<texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[actorImage]</texture>
+							<texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[ActorThumbBig]</texture>
 							<fadetime>300</fadetime>
 						</control>
 					</control>

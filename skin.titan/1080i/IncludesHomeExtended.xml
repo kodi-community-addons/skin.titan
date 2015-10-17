@@ -1,6 +1,8 @@
 <includes>
 	 
 	 <variable name="SpotLightWidgetImage">
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(home).Property(SkinHelper.PVR.FanArt)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
         <value condition="!IsEmpty(ListItem.ChannelName)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
         <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
@@ -562,7 +564,7 @@
 			<width>100%</width>
 			<height>100%</height>
 			<bordersize>8</bordersize>
-			<texture background="true" diffuse="diffuse/wide.png">http://localhost:8888/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=fanart+thumb</texture>
+			<texture background="true" diffuse="diffuse/wide.png">$VAR[PVRListItemThumb]</texture>
 			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
             <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
 		</control>
@@ -612,15 +614,6 @@
 			<bordersize>8</bordersize>
 			<texture background="true" diffuse="diffuse/wide.png">$VAR[SpotLightWidgetImage]</texture>
 			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-		</control>
-        <!--pvr thumb image-->
-        <control type="image">
-			<width>100%</width>
-			<height>100%</height>
-			<bordersize>8</bordersize>
-			<texture background="true" diffuse="diffuse/wide.png">http://localhost:8888/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[Container(510).ListItem.ChannelName]</texture>
-			<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container(510).ListItem.FolderPath,pvr://)</visible>
 		</control>
 		<!--info Overlay-->
 		<control type="image">
