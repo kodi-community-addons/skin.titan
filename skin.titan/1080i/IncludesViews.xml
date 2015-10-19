@@ -791,15 +791,16 @@
   
   <variable name="PVRListItemThumb">
         <!-- use pvr provided thumb at episode level in pvr recordings -->
-        <value condition="SubString(Container.FolderPath,pvr://recordings/) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+        <value condition="SubString(Container.FolderPath,pvr://recordings/) + !IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
         <!-- use rich artwork at main level -->
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=landscape+fanart+thumb</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container.FolderPath, pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=landscape,fanart,thumb</value>
   </variable>
   <variable name="PVRListItemThumbPoster">
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=poster+fanart+thumb</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=poster,fanart,thumb</value>
   </variable>
   <variable name="PVRListItemThumbBanner">
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=banner</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://) + IsEmpty(ListItem.Art(banner))">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=banner</value>
+        <value condition="Container.Content(artists) + !IsEmpty(ListItem.DBID) + IsEmpty(ListItem.Art(banner))">http://localhost:52307/getmusicart&amp;dbid=$INFO[Listitem.DBID]&amp;type=banner,clearlogo&amp;contenttype=artists</value>
   </variable>
   
   <include name="PVRListItemThumb">
@@ -810,7 +811,7 @@
             <bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png">$VAR[PVRListItemThumb]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
+            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container.FolderPath,pvr://)</visible>
         </control>
   </include>
   
@@ -819,7 +820,6 @@
             <bordersize>8</bordersize>
             <texture diffuse="diffuse/banner.png" border="5">$VAR[PVRListItemThumbBanner]</texture>
             <aspectratio align="center" aligny="center">stretch</aspectratio>
-            <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
         </control>
   </include>
   
@@ -841,7 +841,17 @@
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
             <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
         </control>
-        <include condition="SubString(Container.FolderPath, pvr://) | SubString(Container(510).FolderPath, pvr://)">PVRListItemThumb</include>
+        <control type="image">
+            <!--pvr logo image-->
+            <posx>0</posx>
+            <posy>0</posy>
+            <bordersize>10</bordersize>
+            <height>80%</height>
+            <texture background="true">$INFO[ListItem.Thumb]</texture>
+            <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
+            <visible>SubString(ListItem.FolderPath,pvr://channels) + !IsEmpty(Listitem.Thumb)</visible>
+        </control>
+        <include condition="SubString(Window.Property(xmlfile),MyPVR,left)">PVRListItemThumb</include>
         <control type="image">
             <!--Panel Ovelay-->
             <bordersize>8</bordersize>
@@ -1102,7 +1112,7 @@
             <shadowcolor>black</shadowcolor>
             <visible>IsEmpty(ListItem.Art(banner)) + IsEmpty(ListItem.Art(tvshow.banner)) + IsEmpty(ListItem.Art(clearlogo)) + IsEmpty(ListItem.Property(banner))</visible>
         </control>
-        <include condition="SubString(Container.FolderPath, pvr://)">PVRListItemThumbBanner</include>
+        <include condition="Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyMusicNav.xml)">PVRListItemThumbBanner</include>
         <control type="group">
             <right>8</right>
             <top>8</top>
@@ -1139,11 +1149,11 @@
             <posy>0</posy>
             <bordersize>20</bordersize>
             <height>70%</height>
-            <texture background="true">$INFO[ListItem.Icon]</texture>
+            <texture background="true">$INFO[ListItem.Thumb]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-            <visible>[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRTimers.xml) | MyPVRSearch.xml] + !IsEmpty(Listitem.Icon)</visible>
+            <visible>SubString(ListItem.FolderPath,pvr://channels) + !IsEmpty(Listitem.Thumb)</visible>
         </control>
-        <include condition="SubString(Container.FolderPath, pvr://)">PVRListItemThumb</include>
+        <include condition="SubString(Window.Property(xmlfile),MyPVR,left)">PVRListItemThumb</include>
         <control type="image">
             <!--Panel Overlay-->
 			<bordersize>8</bordersize>
@@ -1880,14 +1890,14 @@
                 <font>flags</font>
                 <width>auto</width>
                 <height>30</height>
-                <label>$VAR[VideoFileTypeVar,,•]$VAR[VideoCodecVar,,•]$VAR[VideoAspectVar,,•]$VAR[VideoResolutionVar]</label>
+                <label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar]</label>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <visible>!IsEmpty(Control.GetLabel(44223))</visible>
             </control>
 
             <control type="label">
                 <!-- whitespace -->
-                <width>3</width>
+                <width>8</width>
                 <height>30</height>
                 <label></label>
                 <visible>!IsEmpty(Control.GetLabel(44224))</visible>
@@ -1906,10 +1916,18 @@
                 <width>auto</width>
                 <height>30</height>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
-                <label>$VAR[AudioCodecVar,,•]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar,•]</label>
+                <label>$VAR[AudioCodecVar,, • ]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar, • ]</label>
                 <visible>!IsEmpty(Control.GetLabel(44224))</visible>
             </control>
             
+            <control type="label">
+                <!-- whitespace -->
+                <width>8</width>
+                <height>30</height>
+                <label></label>
+                <visible>!IsEmpty(Control.GetLabel(44224))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
+            </control>
             
             <control type="image">
                 <width>36</width>
@@ -1928,6 +1946,15 @@
                 <label>$VAR[SubtitleLanguageVar]</label>
                 <visible>!IsEmpty(Control.GetLabel(44230))</visible>
                 <visible>![Window.IsActive(home) + Skin.String(widgetstyle, single box)]</visible>
+            </control>
+            
+            <control type="label">
+                <!-- whitespace -->
+                <width>8</width>
+                <height>30</height>
+                <label></label>
+                <visible>!IsEmpty(Control.GetLabel(44230))</visible>
+                <visible>!SubString(ListItem.Path,videodb://movies/sets/,left)</visible>
             </control>
                        
             <control type="image">
@@ -1951,7 +1978,7 @@
             
             <control type="label">
                 <!-- whitespace -->
-                <width>5</width>
+                <width>8</width>
                 <height>30</height>
                 <label></label>
                 <visible>!IsEmpty(Control.GetLabel(44226))</visible>

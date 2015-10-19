@@ -433,13 +433,13 @@
     
     <variable name="ActorThumbImage">
         <value condition="!IsEmpty(ListItem.Thumb) + !IsEmpty(ListItem.Label)">$INFO[ListItem.Thumb]</value>
-        <value condition="!IsEmpty(ListItem.Label)">http://localhost:52307/getthumb&title=$INFO[ListItem.Label]&channel=None&type=thumb</value>
+        <value condition="!IsEmpty(ListItem.Label)">http://localhost:52307/getpvrthumb&amp;title=$INFO[ListItem.Label]&amp;channel=None&amp;type=thumb</value>
     </variable>
     
     <variable name="ActorThumbBig">
         <value condition="!IsEmpty(Container(50).ListItem.Thumb) + !IsEmpty(Container(50).ListItem.Label)">$INFO[Container(50).ListItem.Thumb]</value>
         <value condition="!IsEmpty(Container(50).ListItem.Art(characterart))">$INFO[Container(50).ListItem.Art(characterart)]</value>
-        <value condition="!IsEmpty(Container(50).ListItem.Label)">http://localhost:52307/getthumb&title=$INFO[Container(50).ListItem.Label]&channel=None&type=thumb</value>
+        <value condition="!IsEmpty(Container(50).ListItem.Label)">http://localhost:52307/getpvrthumb&amp;title=$INFO[Container(50).ListItem.Label]&amp;channel=None&amp;type=thumb</value>
     </variable>
 	
 	<variable name="DetailsFanArtImage">
@@ -477,7 +477,8 @@
         <value condition="Container.Content(genres) + Skin.String(GenreImagesPath)">$INFO[Skin.String(GenreImagesPath)]$INFO[ListItem.Label,,.jpg]</value>
 		<value condition="Container.Content(genres)">$INFO[ListItem.Label,special://skin/extras/moviegenres/,.jpg]</value>
 		<value condition="Window.IsActive(tvrecordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Thumb]</value>
-		<value condition="SubString(Container.FolderPath,pvr://)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
+        <value condition="SubString(Container(510).ListItem.FolderPath,pvr://recordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+		<value condition="SubString(Container.FolderPath,pvr://) | SubString(ListItem.FolderPath,pvr://)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
 		<value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
 		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
@@ -512,7 +513,7 @@
 		<value condition="!IsEmpty(ListItem.Property(poster))">$INFO[ListItem.Property(poster)]</value>
 		<value condition="!IsEmpty(ListItem.Property(tvshow.poster))">$INFO[ListItem.Property(tvshow.poster)]</value>
         <value condition="SubString(Container.FolderPath,pvr://) + StringCompare(Container.ListItem.Label,ListItem.Label)">$VAR[PVRThumb]</value>
-        <value condition="SubString(Container.FolderPath,pvr://) + !StringCompare(Container.ListItem.Label,ListItem.Label)">http://localhost:52307/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=fanart+thumb</value>
+        <value condition="SubString(Container.FolderPath,pvr://) + !StringCompare(Container.ListItem.Label,ListItem.Label)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=fanart,thumb</value>
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
@@ -538,7 +539,7 @@
         <value condition="Container.Content(episodes) + !IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="!IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
-        <value condition="SubString(Container.FolderPath,pvr://recordings)">http://localhost:52307/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=poster+fanart+thumb</value>
+        <value condition="SubString(Container.FolderPath,pvr://recordings)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=poster,fanart,thumb</value>
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
@@ -636,7 +637,7 @@
 	<variable name="BannerImageFallback">
         <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(FanArt.image)">$INFO[FanArt.image]</value>
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://) + IsEmpty(ListItem.Thumb)">http://localhost:52307/getthumb&title=$VAR[ListTitlePVR]&channel=$INFO[ListItem.ChannelName]&type=banner+fanart+thumb</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://) + IsEmpty(ListItem.Thumb)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=banner,fanart,thumb</value>
 		<value>$INFO[ListItem.Thumb]</value>
     </variable>
 	
@@ -699,9 +700,7 @@
 		<value condition="Container.Content(Movies) + [!IsEmpty(ListItem.Duration) | !IsEmpty(ListItem.Year) | !IsEmpty(ListItem.Genre)]">$INFO[ListItem.Year,, • ]$VAR[ListItemDuration]$INFO[ListItem.Genre, • ]</value>
 		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] $INFO[ListItem.Property(UnWatchedEpisodes), (,) ]</value>
 		<value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ]</value>
-
-        <value condition="Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml)">$INFO[ListItem.Title,, • ][CR]$VAR[ListDateInfoPVR]</value>
-        <value condition="[Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName,, • ][CR]$VAR[ListDateInfoPVR]</value>
+        <value condition="SubString(Window.Property(xmlfile),MyPVR,left)">[B]$INFO[ListItem.ChannelName,, • ][/B]$VAR[ListDateInfoPVR]</value>
         
 		<value condition="!IsEmpty(ListItem.Duration)">$VAR[ListItemDuration]</value>
 		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
