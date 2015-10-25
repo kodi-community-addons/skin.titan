@@ -3,24 +3,14 @@
 <window>
     <defaultcontrol always="true">10</defaultcontrol>
     <allowoverlay>no</allowoverlay>
-    
-    <onload>AlarmClock(starthome,ReplaceWindow($INFO[System.StartupWindow]),00:01,silent)</onload>
-	
+     <include>defaultskinsettings</include>
 	<controls>
         <control type="button" id="10">
 			<description>trigger</description>
-			<onfocus>ReplaceWindow($INFO[System.StartupWindow])</onfocus>
+            <onfocus>AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:01,silent,false)</onfocus>
+            <onfocus condition="!IsEmpty(Skin.String(AutoStartPlayList))">PlayMedia($INFO[Skin.String(AutoStartPlayList)])</onfocus>
 			<texturenofocus>-</texturenofocus>
 			<texturefocus>-</texturefocus>
-			<visible>!Skin.HasSetting(AutoStartPlayList)</visible>
-		</control>
-		<control type="button" id="10">
-			<description>trigger with startup Playlist</description>
-			<onfocus>PlayMedia($INFO[Skin.String(AutoStartPlayList)])</onfocus>
-			<onfocus>ReplaceWindow($INFO[System.StartupWindow])</onfocus>
-			<texturenofocus>-</texturenofocus>
-			<texturefocus>-</texturefocus>
-			<visible>Skin.HasSetting(AutoStartPlayList)</visible>
 		</control>
         <control type="image">
             <include>DimensionsFullscreen</include>
