@@ -169,7 +169,7 @@
         </control>
         
         <!-- optional extrafanart -->
-		<include condition="[Window.IsActive(videolibrary) | Window.IsActive(musiclibrary) | Window.IsActive(movieinformation)] + Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(SkinHelper.EnableExtraFanart)">extraFanartBackground</include>
+		<include condition="[Window.IsActive(videolibrary) | Window.IsActive(musiclibrary) | Window.IsActive(movieinformation) | [SubString(Window.Property(xmlfile),pvr) + Skin.HasSetting(SkinHelper.EnablePVRThumbs)]] + Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(SkinHelper.EnableExtraFanart)">extraFanartBackground</include>
         <include>DialogOverlay</include>
     </include>
 
@@ -228,9 +228,11 @@
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container.Art(tvshow.fanart))">$INFO[Container.Art(tvshow.fanart)]</value>
+        <value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(home).Property(SkinHelper.Music.FanArt))">$INFO[Window(home).Property(SkinHelper.Music.FanArt)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container.Art(artist.fanart))">$INFO[Container.Art(artist.fanart)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container.Art(albumartist.fanart))">$INFO[Container.Art(albumartist.fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)] + !IsEmpty(Window(home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(home).Property(SkinHelper.PVR.FanArt)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(home).Property(SkinHelper.PVR.FanArt)]</value>
+        
 		
    </variable>
     
@@ -270,9 +272,11 @@
    
    <variable name="extraFanartBackground">
 		<!-- extra fanart backgrounds -->
-		<value condition="[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)]  + Skin.HasSetting(ShowFanartBackground) + substring(ListItem.Path,plugin://plugin.video.emby) + Skin.HasSetting(SkinHelper.EnableExtraFanart)">$INFO[ListItem.Path]extrafanart/</value>
-		<value condition="[Window.IsActive(videolibrary) | Window.IsActive(musiclibrary) | Window.IsActive(movieinformation)] + Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.ExtraFanArtPath))">$INFO[Window(Home).Property(SkinHelper.ExtraFanArtPath)]</value>
-		<value>colors/color_transparent.png</value>
+		<value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + substring(ListItem.Path,plugin://plugin.video.emby)">$INFO[ListItem.Path]extrafanart/</value>
+		<value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.ExtraFanArtPath))">$INFO[Window(Home).Property(SkinHelper.ExtraFanArtPath)]</value>
+		<value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.Music.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.Music.ExtraFanArt)]</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.PVR.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.PVR.ExtraFanArt)]</value>
+        <value>colors/color_transparent.png</value>
    </variable>
    
 

@@ -490,8 +490,8 @@
 			<control type="image">
 				<posx>140</posx>
 				<posy>20</posy>
-				<width>240</width>
-				<height>240</height>
+				<width>270</width>
+				<height>270</height>
 				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 				<fadetime>300</fadetime>
 				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
@@ -515,13 +515,13 @@
 
 			<control type="image">
 				<!--Music-->
-				<posx>60</posx>
-				<posy>20</posy>
-				<width>240</width>
-				<height>240</height>
+				<posx>20</posx>
+				<posy>10</posy>
+				<width>280</width>
+				<height>280</height>
 				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover_cd_medium.png" border="5">$INFO[MusicPlayer.Cover]</texture>
-				<aspectratio align="left" aligny="center">keep</aspectratio>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$VAR[AudioCoverImage]</texture>
+				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
 				<visible>Player.HasAudio</visible>
 			</control>
 			
@@ -567,7 +567,7 @@
 			</control>
 			
 			<control type="group">
-				<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
+				<animation effect="slide" end="50" time="0" condition="player.hasaudio">Conditional</animation>
 				<!-- OSDLabel1 -->
 				<control type="label">
 					<posx>400</posx>
@@ -679,16 +679,12 @@
             </control>
         </control>
 
-			
-		
-			
-		
-		
+
 		<control type="image">
 			<!--Stars music-->
 			<visible>Window.IsActive(MusicVisualisation.xml)</visible>
-			<right>60</right>
-			<posy>208</posy>
+			<right>65</right>
+			<posy>200</posy>
 			<width>200</width>
 			<height>50</height>
 			<aspectratio aligny="top" align="right">keep</aspectratio>
@@ -827,7 +823,8 @@
 					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
 				</control>
 			</control>
-
+           
+            
 		</control>
     </include>
 	
@@ -853,7 +850,7 @@
 				<width>190</width>
 				<height>190</height>
 				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover.png" border="5">$INFO[Player.Art(thumb)]</texture>
+				<texture background="true" diffuse="diffuse/music_cover.png" border="5">$VAR[AudioCoverImage]</texture>
 				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
 				<visible>Player.HasAudio</visible>
 			</control>
@@ -1205,7 +1202,7 @@
 				<width>220</width>
 				<height>220</height>
 				<fadetime>200</fadetime>
-				<texture background="true" fallback="colors/color_keyboard.png" diffuse="diffuse/music_cover.png">$INFO[MusicPlayer.Cover]</texture>
+				<texture background="true" fallback="colors/color_keyboard.png" diffuse="diffuse/music_cover.png">$VAR[AudioCoverImage]</texture>
 				<aspectratio align="left" aligny="top">stretch</aspectratio>
 				<visible>!IsEmpty(MusicPlayer.Cover)</visible>
 			</control>
@@ -1633,6 +1630,7 @@
 			<control type="grouplist" id="1410">
 				<visible>StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 				<animation effect="slide" end="-110,110" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
+                <animation effect="slide" end="50" time="0" condition="player.hasaudio">Conditional</animation>
 				<description>Header</description>
 				<animation effect="fade" time="200">VisibleChange</animation>
 				<left>340</left>
@@ -1693,7 +1691,7 @@
 	
 	<include name="OSDButtons_Large">
 		<control type="grouplist" id="200">
-			<posx>340</posx>
+			<posx>390</posx>
 			<bottom>10</bottom>
 			<width>1100</width>
 			<height>75</height>
@@ -1705,8 +1703,8 @@
 			<orientation>horizontal</orientation>
 			<defaultcontrol always="true">203</defaultcontrol>
 			<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
-			<animation effect="slide" end="-90,-70" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
-			<animation effect="slide" end="60" time="0" condition="!player.hasvideo">Conditional</animation>
+			<animation effect="slide" end="-150,-70" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
+			<animation effect="slide" end="50" time="0" condition="player.hasaudio + !Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
 			
 			<control type="togglebutton" id="201">
 				<!--Skip Back or previous channel-->
@@ -2001,7 +1999,7 @@
 		
 	<include name="OSDButtons_Small">
 		<control type="grouplist" id="200">
-                <posx>330</posx>
+                <posx>380</posx>
                 <bottom>10</bottom>
                 <width>1100</width>
                 <height>90</height>
@@ -2014,7 +2012,7 @@
 				<defaultcontrol always="true">104</defaultcontrol>
 				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
 				<animation effect="slide" end="-90,-60" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
-                <animation effect="slide" end="60" time="0" condition="!player.hasvideo">Conditional</animation>
+                <animation effect="slide" end="50" time="0" condition="player.hasaudio + !Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
 				
 				<control type="togglebutton" id="201">
                     <!--Skip Back or previous channel-->
@@ -2370,7 +2368,6 @@
 	<include name="SeekBar_Normal">
 		<control type="slider" id="87">
 			<description>Seekbar</description>
-			<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
 			<posx>540</posx>
 			<bottom>120</bottom>
 			<height>10</height>
@@ -2382,10 +2379,10 @@
 			<textureslidernib border="5" colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">diffuse/panel.png</textureslidernib>
 			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">diffuse/panel.png</textureslidernibfocus>
 			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+            <animation effect="slide" end="50" time="0" condition="player.hasaudio">Conditional</animation>
 		</control>
 		<control type="image">
 			<description>Progress Bar Border</description>
-			<animation effect="slide" end="-50" time="0" condition="player.hasvideo">Conditional</animation>
 			<posx>540</posx>
 			<bottom>110</bottom>
 			<height>20</height>
@@ -2393,6 +2390,7 @@
 			<visible>Player.HasDuration</visible>
 			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
 			<texture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarBorderColor)]">diffuse/thinborder.png</texture>
+            <animation effect="slide" end="50" time="0" condition="player.hasaudio">Conditional</animation>
 		</control>
 	</include>
 	
