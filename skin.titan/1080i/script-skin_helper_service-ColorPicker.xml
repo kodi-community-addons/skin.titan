@@ -38,6 +38,7 @@
 			<ondown>3010</ondown>
 			<preloaditems>4</preloaditems>
 			<pagecontrol>60</pagecontrol>
+            <visible>![!IsEmpty(Window.Property(color_chosen)) + Skin.HasSetting(EnableTouchSupport)]</visible>
 			<itemlayout height="41" width="41">
 				<control type="image">
 					<width>92%</width>
@@ -65,6 +66,18 @@
 				</control>
 			</focusedlayout>
 		</control>
+        
+        <control type="button">
+			<!-- lock the color picker when color has chosen when navigating with a  mouse -->
+			<posx>60</posx>
+			<posy>165</posy>
+			<width>1836</width>
+			<height>800</height>
+            <texturefocus colordiffuse="$INFO[Window.Property(colorstring)]" border="5">diffuse/panel.png</texturefocus>
+            <texturenofocus colordiffuse="$INFO[Window.Property(colorstring)]" border="5">diffuse/panel.png</texturenofocus>
+            <visible>!IsEmpty(Window.Property(color_chosen)) + Skin.HasSetting(EnableTouchSupport)</visible>
+            <onclick>ClearProperty(color_chosen)</onclick>
+        </control>
 		
 		<!--current color name-->
         <control type="label">
@@ -78,7 +91,7 @@
 			<shadowcolor>black</shadowcolor>
         </control>
 		
-		<control type="grouplist">
+		<control type="grouplist" id="2000">
 			<orientation>horizontal</orientation>
 			<itemgap>20</itemgap>
 			<left>60</left>

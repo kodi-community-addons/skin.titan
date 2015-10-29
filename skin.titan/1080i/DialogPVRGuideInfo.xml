@@ -19,6 +19,7 @@
 			<animation type="WindowClose">
 				<effect type="slide" start="0" end="1200" time="250" tween="cubic" easing="inout" />
 			</animation>
+            
             <!--Panel-->
             <control type="image">
                 <posx>640</posx>
@@ -45,6 +46,18 @@
                 <visible>Window.IsActive(VideoFullScreen.xml)</visible>
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
             </control>
+            
+            <!-- pvr info image -->
+			<control type="image">
+				<width>300</width>
+				<height>180</height>
+				<right>60</right>
+                <posy>40</posy>
+				<font>-</font>
+				<texture>$VAR[PVRInfoThumb]</texture>
+                <aspectratio align="right" aligny="top">keep</aspectratio>
+				<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+			</control>
 
 			<!-- close dialog -->
 			<control type="button">
@@ -165,7 +178,7 @@
                 <texture border="5">dialogs/default/inner.png</texture>
             </control>
             <control type="textbox" id="400">
-                <description>Plot value</description>
+                <description>Plot value with no poster present</description>
                 <posx>700</posx>
                 <posy>506</posy>
                 <width>1160</width>
@@ -174,7 +187,29 @@
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                 <pagecontrol>60</pagecontrol>
-                <label fallback="161">$INFO[ListItem.EpisodeName,[B],[/B][CR]]$INFO[ListItem.Plot]</label>
+                <label fallback="161">$VAR[Plots]</label>
+                <visible>IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))</visible>
+            </control>
+            <control type="textbox" id="400">
+                <description>Plot value with poster present</description>
+                <posx>700</posx>
+                <posy>506</posy>
+                <width>820</width>
+                <height>380</height>
+                <align>justify</align>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <pagecontrol>60</pagecontrol>
+                <label fallback="161">$VAR[Plots]</label>
+                <visible>!IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))</visible>
+            </control>
+            <control type="image">
+                <right>50</right>
+                <posy>496</posy>
+                <width>300</width>
+                <height>410</height>
+                <texture>$INFO[Window(home).Property(SkinHelper.PVR.Poster)]</texture>
+                <aspectratio align="right" aligny="top">keep</aspectratio>
             </control>
             <!--Button Group-->
             <control type="grouplist" id="8000">
