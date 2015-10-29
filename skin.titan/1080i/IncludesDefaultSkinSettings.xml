@@ -2,7 +2,7 @@
 <includes>
 
     <include name="defaultskinsettings">
-        <include condition="!Skin.HasSetting(HomeMenuDefaults38) | IsEmpty(Window(Home).Property(startupDone))">defaultskinsettingsValues</include>
+        <include condition="!Skin.HasSetting(HomeMenuDefaults39) | IsEmpty(Window(Home).Property(startupDone))">defaultskinsettingsValues</include>
         <!-- run migration if an old setting is found -->
         <onload condition="Skin.String(ColorTheme) | Skin.String(GadgetRows)">RunScript(script.titanskin.helpers,migrate)</onload>
         <!-- initialize some addons on startup -->
@@ -19,16 +19,14 @@
         <!-- (optional) automatic run of the artwork downloader on startup -->
         <onload condition="Skin.HasSetting(EnableArtworkDownloader)">XBMC.runscript(script.artwork.downloader, silent=true)</onload>
         <onload>SetProperty(startupDone,loaded,Home)</onload>
-        <onload condition="Skin.String(HomeLayout, netflix)">SetFocus(51)</onload>
-        <onload condition="!Skin.String(HomeLayout, netflix)">AlarmClock(focushome,Control.SetFocus(300),00:01,silent)</onload>
     </include>
 	
 	<include name="defaultskinsettingsValues">
 		
 		<!-- various default settings  -->
-		<onclick condition="!Skin.HasSetting(HomeMenuDefaults32)">RunScript(script.skinshortcuts,type=resetall&amp;warning=false)</onclick>
+		<onload condition="!Skin.HasSetting(HomeMenuDefaults32)">RunScript(script.skinshortcuts,type=resetall&amp;warning=false)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults32)">Skin.SetString(CustomBackgroundSetting, default)</onload>
-        <onload condition="!Skin.String(HomeLayout)">Skin.SetBool(OpenSubMenuOnClick)</onload>
+        <onload condition="!Skin.String(HomeLayout) + !Skin.String(GadgetRows)">Skin.SetBool(OpenSubMenuOnClick)</onload>
         <onload condition="!Skin.String(HomeLayout)">Skin.SetString(HomeLayout, 2)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults32)">Skin.SetBool(UseSectionBackground)</onload>
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults32)">Skin.SetBool(ShowFanartBackground)</onload>
@@ -63,6 +61,8 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults35) + [Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]">Skin.SetBool(OpenSubMenuOnClick)</onload>
         <onload condition="!Skin.HasSetting(HomeMenuDefaults36)">Skin.SetBool(SkinHelper.EnablePVRThumbs)</onload>
         <onload condition="!Skin.HasSetting(HomeMenuDefaults38)">Skin.SetBool(enableMusicWall)</onload>
+        <onload condition="!Skin.HasSetting(HomeMenuDefaults38)">Skin.SetBool(pvrGuideOnFullscreenVideo)</onload>
+        <onload condition="!Skin.HasSetting(HomeMenuDefaults39)">Skin.SetString(SkinHelper.AutoCloseVideoOSD, 4)</onload>
         <onload condition="!Skin.String(RSSScrollSpeed)">Skin.SetString(RSSScrollSpeed, 40)</onload>
         <onload condition="!Skin.String(WeatherIconPack)">Skin.SetString(WeatherIconPack, set1)</onload>
         <onload condition="!Skin.String(extrafanartdelay)">Skin.SetString(extrafanartdelay,6)</onload>
@@ -82,7 +82,6 @@
         <onload condition="!Skin.String(SkinHelper.SpinnerTexture)">Skin.SetString(SkinHelper.SpinnerTexture,default)</onload>
 		<onload condition="!Skin.String(SkinHelper.SpinnerTexturePath)">Skin.SetString(SkinHelper.SpinnerTexturePath,special://skin/extras/busy_spinners/default)</onload>
 		<onload condition="!Skin.String(SpinnerTextureColor)">Skin.SetString(SpinnerTextureColor, FF00b8ff)</onload>
-
 		<onload condition="!Skin.String(widgetstyle) + Skin.String(HomeLayout, vertical)">Skin.SetString(widgetstyle,poster)</onload>
 		<onload condition="!Skin.String(widgetstyle) + !Skin.String(HomeLayout, vertical)">Skin.SetString(widgetstyle,landscape)</onload>
 		
@@ -259,6 +258,7 @@
 		<onload condition="!Skin.HasSetting(HomeMenuDefaults35)">Skin.SetBool(HomeMenuDefaults35)</onload>
         <onload condition="!Skin.HasSetting(HomeMenuDefaults36)">Skin.SetBool(HomeMenuDefaults36)</onload>
         <onload condition="!Skin.HasSetting(HomeMenuDefaults38)">Skin.SetBool(HomeMenuDefaults38)</onload>
+        <onload condition="!Skin.HasSetting(HomeMenuDefaults39)">Skin.SetBool(HomeMenuDefaults39)</onload>
 
 		<!-- correct some stuff -->
 		<onload condition="Skin.HasSetting(AutoFocusUnwatchedEpisode) + !SubString(System.BuildVersion,14,left)">Skin.Reset(AutoFocusUnwatchedEpisode)</onload>

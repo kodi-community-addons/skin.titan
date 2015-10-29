@@ -338,6 +338,7 @@
         <control type="group">
             <!--Title-->
             <visible>!Window.IsActive(DialogVideoInfo.xml) + !Window.IsVisible(DialogFavourites.xml)</visible>
+            <animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
             <height>80</height>
             <bottom>20</bottom>
             <control type="label">
@@ -350,9 +351,8 @@
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.label]</label>
-                <animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
                 <visible>!Control.IsVisible(884)</visible>
-                <visible>skin.hastheme(classic)</visible>
+                <visible>!Window.IsActive(MyVideoNav.xml) | ListItem.IsCollection | Skin.HasTheme(classic)</visible>
             </control>
             <control type="label">
                 <visible>Container.Content(songs)</visible>
@@ -366,7 +366,6 @@
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.Album]</label>
-                <animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
             </control>
             
             <control type="label">
@@ -380,7 +379,6 @@
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.Artist]</label>
-                <animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
             </control>
             
             <control type="label">
@@ -394,7 +392,6 @@
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[Container.Totaltime,$LOCALIZE[31597]: ]</label>
-                <animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
             </control>
             
             <!-- repo last updated label -->
@@ -407,8 +404,7 @@
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$LOCALIZE[31334]: $INFO[Window().Property(Updated)]</label>
-                <animation effect="slide" end="0,16" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
-                <visible>Window.IsActive(AddonBrowser) + !SubString(System.BuildVersion,14,left)</visible>
+                <visible>Window.IsActive(AddonBrowser)</visible>
                 <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
             </control>
         </control>
@@ -615,6 +611,7 @@
 			<fadetime>600</fadetime>
 			<aspectratio>keep</aspectratio>
 			<texture>$VAR[ListItemClearLogo]</texture>
+            <visible>!skin.hassetting(nofooterbar)</visible>
 			<visible>!IsEmpty(Control.GetLabel(884)) + Skin.String(ClearLogoLocation, footer) + !skin.hastheme(classic) + !StringCompare(Window(Home).Property(showinfopanel),show)</visible>
 		</control>
 		
@@ -1095,7 +1092,13 @@
         <disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
     </include>
 
-
+    <include name ="textcolorworkaround">
+        <!--hardcoded colors for use in some controls (edit for example) that didn't support dynamic coloring pre Kodi 15.2 -->
+        <textcolor>white</textcolor>
+        <disabledcolor>grey</disabledcolor>
+        <focusedcolor>white</focusedcolor>
+        <shadowcolor>black</shadowcolor>
+    </include>
 	
 	<include name="DialogButtonOther">
         <!--Dialog Button OK Cancel-->

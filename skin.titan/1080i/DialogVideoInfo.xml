@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Titan-->
 <window>
-    <defaultcontrol always="true">9000</defaultcontrol>
+    <defaultcontrol always="true">9005</defaultcontrol>
     <allowoverlay>no</allowoverlay>
-	<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>
-	<onload condition="!IsEmpty(ListItem.Cast)">RunScript(script.metadata.actors,dialogbackend)</onload>
 	
-	<onload condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onload>
-	<onload condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onload>
-	<onload condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + !IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onload>
-	<onload condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)">close</onload>
 	<onunload>ClearProperty(ShowCast)</onunload>
 	
     <controls>
+    
+        <!-- fake button with actions -->
+        <control type="button" id="9005">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + !IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)">close</onfocus>
+            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)]">SetFocus(9000)</onfocus>
+            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)]">SetFocus(9000)</onfocus>
+        </control>
+    
 		<control type="group">
 			<visible>![Skin.HasSetting(UseExtendedInfoDialog) + System.HasAddon(script.extendedinfo)]</visible>
 	
@@ -104,6 +111,7 @@
 						<orientation>horizontal</orientation>
 						<animation effect="fade" start="100" end="0" time="10" condition="true">Conditional</animation>
 					</control>
+
 					<!--Butons 9000-->			
 					<control type="grouplist" id="9000">
 						<posx>60</posx>
@@ -111,13 +119,13 @@
 						<width>1800</width>
 						<height>60</height>
 						<itemgap>15</itemgap>
-						<onup>50</onup>
+						<onup>51</onup>
 						<ondown>noop</ondown>
 						<onleft>9000</onleft>
 						<onright>9000</onright>
 						<pagecontrol>60</pagecontrol>
 						<orientation>horizontal</orientation>
-						
+						<visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
 						
 						<control type="button" id="208">
 							<label></label>
@@ -321,7 +329,7 @@
 							<height>60</height>
 							<aspectratio>keep</aspectratio>
 							<texture>dialogs/videoinfo/arrow.png</texture>
-							<visible>!Control.HasFocus(50)</visible>
+							<visible>!Control.HasFocus(51)</visible>
 							<colordiffuse>white</colordiffuse>
 							<visible>Container(9000).HasNext</visible>
 						</control>
@@ -334,7 +342,7 @@
 							<height>60</height>
 							<aspectratio>keep</aspectratio>
 							<texture flipx="true">dialogs/videoinfo/arrow.png</texture>
-							<visible>!Control.HasFocus(50)</visible>
+							<visible>!Control.HasFocus(51)</visible>
 							<colordiffuse>white</colordiffuse>
 							<visible>Container(9000).HasPrevious</visible>
 						</control>
@@ -827,7 +835,7 @@
 						<include>animation_window_open_close</include>
 						<control type="button" id="9001">
 							<!--Hidden Button-->
-							<onfocus>SetFocus(50)</onfocus>
+							<onfocus>SetFocus(51)</onfocus>
 							<onleft>noop</onleft>
 							<ondown>noop</ondown>
 							<onup>noop</onup>
@@ -841,7 +849,14 @@
 							<texturenofocus>-</texturenofocus>
 						</control>
                         
-                        <control type="panel" id="50">
+                         <control type="panel" id="50">
+                        <!-- fake list with cast details -->
+                         <itemlayout />
+                         <focusedlayout />
+                         <visible>false</visible>
+                         </control>
+                        
+                        <control type="panel" id="51">
                             <posx>63</posx>
 							<posy>220</posy>
 							<width>1200</width>
@@ -856,16 +871,16 @@
 							<focusposition>0</focusposition>
 							<viewtype label="actor list">list</viewtype>
                             <!-- itemlayout movies -->
-                            <itemlayout height="238" width="168">
+                            <itemlayout height="357" width="240">
                                 <control type="group">
-                                    <width>162</width>
-                                    <height>230</height>
+                                    <width>233</width>
+                                    <height>342</height>
                                     <control type="image">
                                         <include>PosterThumbBG</include>
                                       </control>
                                       <control type="image">
-                                        <texture border="1" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[ActorThumbImage]</texture>
-                                        <aspectratio scalediffuse="true" aligny="bottom" align="center">scale</aspectratio>
+                                        <texture border="1" diffuse="diffuse/poster.png" background="true" fallback="DefaultActor.png">$INFO[ListItem.Thumb]</texture>
+                                        <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
                                         <bordersize>8</bordersize>
                                       </control>
                                    <!--Panel-->
@@ -884,22 +899,22 @@
                                         <align>left</align>
                                         <label>$INFO[ListItem.Label2,[B],[/B][CR]]$INFO[ListItem.Label]</label>
                                         <font>Reg18</font>
-                                        <scroll>StringCompare(Container.ListItem.Label,ListItem.Label)</scroll>
+                                        <scroll>false</scroll>
                                         <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
                                         <visible>!Skin.HasSetting(CaseOverlays)</visible>
                                     </control>
                                   </control>
                             </itemlayout>
-                            <focusedlayout height="238" width="165">
+                            <focusedlayout height="357" width="240">
                                 <control type="group">
-                                    <width>162</width>
-                                    <height>230</height>
+                                    <width>233</width>
+                                    <height>342</height>
                                     <control type="image">
                                         <include>PosterThumbFO</include>
                                       </control>
                                       <control type="image">
-                                        <texture border="1" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[ActorThumbImage]</texture>
-                                        <aspectratio scalediffuse="true" aligny="bottom" align="center">scale</aspectratio>
+                                        <texture border="1" diffuse="diffuse/poster.png" background="true" fallback="DefaultActor.png">$INFO[ListItem.Thumb]</texture>
+                                        <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
                                         <bordersize>8</bordersize>
                                       </control>
                                       <!--Panel-->
@@ -918,26 +933,46 @@
                                         <align>left</align>
                                         <label>$INFO[ListItem.Label2,[B],[/B][CR]]$INFO[ListItem.Label]</label>
                                         <font>Reg18</font>
-                                        <scroll>StringCompare(Container.ListItem.Label,ListItem.Label)</scroll>
+                                        <scroll>true</scroll>
                                         <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-                                        <visible>!Skin.HasSetting(CaseOverlays)</visible>
                                     </control>
                                   </control>
                             </focusedlayout>
+                            <content>plugin://script.skin.helper.service/?action=getcast&title=$INFO[ListItem.Title]&downloadthumbs=true</content>
                         </control>
-
-						<control type="image">
-							<!--Actor Image-->
-							<description>Actor image</description>
-							<right>50</right>
-							<posy>210</posy>
-							<width>530</width>
-							<height>67%</height>
-                            <aspectratio align="center" aligny="center" scalediffuse="true">scale</aspectratio>
-							<texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$VAR[ActorThumbBig]</texture>
-							<fadetime>300</fadetime>
-						</control>
-					</control>
+                        
+                        <control type="group">
+                                <right>50</right>
+                                <posy>210</posy>
+                                <width>530</width>
+                                <height>67%</height>
+                            <control type="image">
+                                <!--Actor Image-->
+                                <description>Actor image</description>
+                                <aspectratio align="center" aligny="top" scalediffuse="true">scale</aspectratio>
+                                <texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$INFO[Container(51).ListItem.Thumb]</texture>
+                                <fadetime>300</fadetime>
+                            </control>
+                             <!--Panel-->
+                            <control type="image">
+                                <bottom>-1</bottom>
+                                <height>120</height>
+                                <bordersize>0</bordersize>
+                                <texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+                                <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+                            </control>
+                            <control type="label">
+                                <left>10</left>
+                                <bottom>0</bottom>
+                                <width>93%</width>
+                                <height>120</height>
+                                <align>left</align>
+                                <label>$INFO[Container(51).ListItem.Label2,[B],[/B][CR]]$INFO[Container(51).ListItem.Label]</label>
+                                <font>Reg32</font>
+                                <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                            </control>
+                        </control>
+                    </control>
 
 				
 				</control>

@@ -3,7 +3,7 @@
     <defaultcontrol always="true">9000</defaultcontrol>
     <controls>
         <control type="group">
-
+            <visible>!Player.HasVideo</visible>
 			<!-- default animation -->
 			<include>animation_window_open_close</include>
             
@@ -154,6 +154,18 @@
 						<onclick>XBMC.RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=$INFO[Window.Property(movie.imdb_id)])</onclick>
 						<visible>IsEmpty(Window.Property(movie.PercentPlayed)) + System.HasAddon(plugin.video.couchpotato_manager)</visible>
 					</control>
+                    
+                    <control type="button" id="101">
+                        <!--Get Thumb Artwork Downloader-->
+                        <label>13511</label>
+                        <width>285</width>
+                        <height>60</height>
+                        <align>center</align>
+                        <textoffsetx>0</textoffsetx>
+                        <enable>!Skin.HasSetting(KioskMode.Enabled)</enable>
+                        <onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
+                        <onclick condition="!System.HasAddon(script.artwork.downloader)">RunPlugin(plugin://script.artwork.downloader)</onclick>
+                    </control>
 					
 					<!-- manage button -->
 					<control type="button" id="445">
