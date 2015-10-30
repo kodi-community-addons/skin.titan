@@ -139,7 +139,7 @@
 		<!-- multi image background -->
         <control type="multiimage" id="99004">
             <include>DimensionsFullscreen</include>
-            <imagepath fallback="special://skin/extras/backgrounds/global_blue.jpg">$VAR[backgroundVar]</imagepath>
+            <imagepath background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$VAR[backgroundVar]</imagepath>
             <aspectratio>scale</aspectratio>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 5)">fanartSpeed5</include>
             <include condition="skin.string(SkinHelper.RandomFanartDelay, 10)">fanartSpeed10</include>
@@ -236,7 +236,9 @@
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container.Art(albumartist.fanart))">$INFO[Container.Art(albumartist.fanart)]</value>
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Window(home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(home).Property(SkinHelper.PVR.FanArt)]</value>
         
-		
+        <!-- section background single gif image when home active -->
+		<value condition="Skin.HasSetting(UseSectionBackground) + SubString(Container(300).ListItem.Property(Background),.gif,right)">$INFO[Container(300).ListItem.Property(Background)]</value>
+
    </variable>
     
 	<variable name="backgroundVar">
@@ -281,30 +283,5 @@
         <value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.PVR.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.PVR.ExtraFanArt)]</value>
         <value>colors/color_transparent.png</value>
    </variable>
-   
-
-	<include name="PVRpanelBackground">
-
-		<!-- Background Panel-->
-		<control type="image">
-			<posx>50</posx>
-			<posy>320</posy>
-			<width>1820</width>
-			<height>640</height>
-			<texture border="15">diffuse/bgpanel.png</texture>
-			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-		</control>
-		
-		<control type="image">
-			<posx>982</posx>
-			<posy>320</posy>
-			<width>885</width>
-			<height>640</height>
-			<texture border="15">diffuse/bgpanel.png</texture>
-			<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-		</control>
-	</include>
-	
-	
-	
+   	
 </includes>
