@@ -633,7 +633,8 @@
 		<itemgap>5</itemgap>
 		<orientation>horizontal</orientation>
         <ondown>300</ondown>
-        <onup>511</onup>
+        <onup>$VAR[changeWidgetClickActions]</onup>
+        <onup>RunScript(script.skin.helper.service,action=setfocus,control=510)</onup>
 		<animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)]">
 			<effect type="slide" start="0,0" end="0,-160" time="300" tween="cubic" easing="inout" delay="0"/>
 		</animation>
@@ -654,7 +655,8 @@
 		<width>1830</width>
 		<height>245</height>
         <ondown>300</ondown>
-        <onup>511</onup>
+        <onup>$VAR[changeWidgetClickActions]</onup>
+        <onup>RunScript(script.skin.helper.service,action=setfocus,control=510)</onup>
         <orientation>horizontal</orientation>
         <include>widget_layout</include>
 	</include>
@@ -665,7 +667,8 @@
 		<width>1</width>
 		<height>1</height>
         <ondown>300</ondown>
-        <onup>511</onup>
+        <onup>$VAR[changeWidgetClickActions]</onup>
+        <onup>RunScript(script.skin.helper.service,action=setfocus,control=510)</onup>
         <onleft>510</onleft>
         <onright>510</onright>
         <orientation>horizontal</orientation>
@@ -727,7 +730,7 @@
 				<ondown>510</ondown>
 				<label>$VAR[changeWidgetLabel]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
-				<include>changeWidgetClickActions</include>
+				<onclick>$VAR[changeWidgetClickActions]</onclick>
 				<texturenofocus>-</texturenofocus>
 			</control>
             <control type="label">
@@ -767,8 +770,21 @@
 		<ondown>ClearProperty(ShowWidget, Home)</ondown>
 		<onback>300</onback>
 		<onback>ClearProperty(ShowWidget, Home)</onback>
+        <onfocus>Setproperty(ShowWidget,show)</onfocus>
 		<orientation>horizontal</orientation>
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
+        
+        <animation condition="!Control.HasFocus(510)" reversible="false" type="Visible">
+			<effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
+			<effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide" />
+			<effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade" />
+		</animation>
+		<animation condition="!Control.HasFocus(510)" reversible="false" type="Hidden">
+			<effect center="960,540" easing="out" end="98" start="100" time="180" tween="linear" type="zoom" />
+			<effect easing="out" end="0" start="100" time="180" tween="linear" type="fade" />
+		</animation>
+
+        
 		<itemlayout width="366" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
 			<control type="group">
                 <width>354</width>
@@ -818,17 +834,18 @@
 
     </include>
 
-    <include name="changeWidgetClickActions">
-        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Control.GetLabel(600),widget-0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],1)</onclick>
-        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Control.GetLabel(600),widget-0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Control.GetLabel(600),widget-1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],2)</onclick>
-        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Control.GetLabel(600),widget-1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Control.GetLabel(600),widget-2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],3)</onclick>
-        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Control.GetLabel(600),widget-2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-        <onclick condition="!IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Control.GetLabel(600),widget-3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],4)</onclick>
-        <onclick condition="IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Control.GetLabel(600),widget-3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-        <onclick condition="StringCompare(Control.GetLabel(600),widget-4)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</onclick>
-    </include>
+    <variable name="changeWidgetClickActions">
+        <value condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Control.GetLabel(600),widget-0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],1)</value>
+        <value condition="IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Control.GetLabel(600),widget-0)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</value>
+        <value condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Control.GetLabel(600),widget-1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],2)</value>
+        <value condition="IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Control.GetLabel(600),widget-1)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</value>
+        <value condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Control.GetLabel(600),widget-2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],3)</value>
+        <value condition="IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Control.GetLabel(600),widget-2)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</value>
+        <value condition="!IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Control.GetLabel(600),widget-3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],4)</value>
+        <value condition="IsEmpty(Container(300).ListItem.Property(widget.4)) + StringCompare(Control.GetLabel(600),widget-3)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</value>
+        <value condition="StringCompare(Control.GetLabel(600),widget-4)">Skin.SetString(widgetvalue-$INFO[Container(300).ListItem.Property(defaultID)],0)</value>
+    </variable>
+    
     
     <include name="changeWidgetButton">
         <include>animation_fade_visible_hidden</include>
@@ -869,7 +886,7 @@
 				<label>$VAR[changeWidgetLabel]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <include>changeWidgetClickActions</include>
+                <onclick>$VAR[changeWidgetClickActions]</onclick>
                 <texturenofocus>-</texturenofocus>
 				<visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget)) + !IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
 			</control>

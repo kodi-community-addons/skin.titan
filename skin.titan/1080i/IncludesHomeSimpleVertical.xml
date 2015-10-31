@@ -4,7 +4,7 @@
 	<include name="verticalhome_focusedmainmenuitem">
 		<!-- menu label -->
 		<control type="label">
-			<right>0</right>
+			<right>5</right>
 			<width>350</width>
 			<height>80</height>
 			<align>right</align>
@@ -12,6 +12,7 @@
 			<textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
 			<label>[B]$INFO[ListItem.Label][/B]</label>
 			<font>Reg38</font>
+            <animation effect="zoom" start="100" end="105" center="auto" time="300" tween="cubic" easing="inout" pulse="true">Focus</animation>
 		</control>
 	  <control type="button">
 			<visible>false</visible>	
@@ -66,6 +67,13 @@
 		<height>850</height>
    </include>
    
+   <include name="customlogo_align_center">
+        <aspectratio align="center">keep</aspectratio>
+   </include>
+   <include name="customlogo_align_left">
+        <aspectratio align="left">keep</aspectratio>
+   </include>
+   
    <include name="simplehome_vertical">
 		
     <control type="group">
@@ -85,10 +93,12 @@
 	
 	<!-- kodi logo -->
 	<control type="image">
-		<posx>85</posx>
+		<right>1520</right>
 		<posy>10</posy>
-		<height>140</height>
-		<width>310</width>
+		<height>120</height>
+		<width>375</width>
+        <include condition="Skin.String(CustomLogoImage) + Skin.String(LogoImageAlignment,center)">customlogo_align_center</include>
+        <include condition="Skin.String(CustomLogoImage) + Skin.String(LogoImageAlignment,left)">customlogo_align_left</include>
 		<aspectratio align="right">keep</aspectratio>
 		<texture>$VAR[LogoImage]</texture>
         <colordiffuse>$INFO[Skin.String(ViewDetailsListItemTextColor)]</colordiffuse>
@@ -101,6 +111,7 @@
 	<!-- Main menu -->
     <control type="list" id="300">
         <animation effect="fade" time="200" start="100" end="70" reversible="true" condition="!Control.HasFocus(300)">Conditional</animation>
+        <animation effect="fade" time="200" start="100" end="20" reversible="true" condition="Control.HasFocus(4444) + Skin.HasSetting(VerticalHomeInlineSubmenu)">Conditional</animation>
         <posx>10</posx>
         <posy>160</posy>
         <width>375</width>
@@ -116,7 +127,7 @@
         <onleft condition="!Skin.HasSetting(VerticalHomeInlineSubmenu) + !Skin.HasSetting(DisablePowerMenu)">2</onleft>
 		<onright condition="IntegerGreaterThan(Container(4444).NumItems,0) + !Skin.HasSetting(VerticalHomeInlineSubmenu)">SetProperty(submenu,show,home)</onright>
 		<onright condition="IntegerGreaterThan(Container(4444).NumItems,0) + !Skin.HasSetting(VerticalHomeInlineSubmenu)">Control.SetFocus(4444,0)</onright>
-		
+		<scrolltime tween="quadratic">200</scrolltime>
         <movement>0</movement>
         <preloaditems>4</preloaditems>
         <itemlayout height="80" width="370" condition="!Skin.HasSetting(VerticalHomeTiles)">
