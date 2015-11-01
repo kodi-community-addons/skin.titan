@@ -556,11 +556,12 @@
         <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Genre)">[B]$INFO[ListItem.TvShowTitle,, • ]$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
         <!-- episodes -->
         <value condition="!IsEmpty(ListItem.TvShowTitle)">[B]$INFO[ListItem.TvShowTitle,, • ]$INFO[ListItem.Premiered,, • ]$INFO[ListItem.Duration,,min.][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-		<!-- movies -->
-        <value condition="!IsEmpty(ListItem.Year)">[B]$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,,min. • ]$INFO[ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-        <!-- songs -->
+		<!-- songs -->
         <value condition="!IsEmpty(ListItem.Artist) + !IsEmpty(ListItem.Album)">[B]$INFO[ListItem.Artist,, • ]$INFO[ListItem.Album,, • ]$INFO[ListItem.Duration][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
-        
+        <!-- albums -->
+        <value condition="!IsEmpty(ListItem.Artist)">[B]$INFO[ListItem.Artist,, • [/B]][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
+        <!-- movies -->
+        <value condition="!IsEmpty(ListItem.Year)">[B]$INFO[ListItem.Year,, • ]$INFO[ListItem.Duration,,min. • ]$INFO[ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
         <!-- PVR -->
         <value condition="!IsEmpty(Container(510).ListItem.Property(StartTime))">[B]$INFO[Container(510).ListItem.Property(ChannelName),, • ]$INFO[Container(510).ListItem.Property(StartTime),, - ]$INFO[Container(510).ListItem.Property(EndTime),, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
 		<value condition="!IsEmpty(Container(510).ListItem.StartTime)">[B]$INFO[Container(510).ListItem.ChannelName,, • ]$INFO[Container(510).ListItem.StartTime,, - ]$INFO[Container(510).ListItem.EndTime,, • ]$INFO[Container(510).ListItem.Genre][/B][CR]$VAR[HomeMenuWidgetInfoPlot]</value>
@@ -774,17 +775,17 @@
 		<orientation>horizontal</orientation>
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
         
-        <animation condition="!Control.HasFocus(510)" reversible="false" type="Visible">
+        <animation condition="!Control.HasFocus(510) + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
 			<effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
 			<effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide" />
 			<effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade" />
 		</animation>
-		<animation condition="!Control.HasFocus(510)" reversible="false" type="Hidden">
+		<animation condition="!Control.HasFocus(510) + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Hidden">
 			<effect center="960,540" easing="out" end="98" start="100" time="180" tween="linear" type="zoom" />
 			<effect easing="out" end="0" start="100" time="180" tween="linear" type="fade" />
 		</animation>
+        <animation time="300" effect="fade" start="0" end="100" reversible="true" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
 
-        
 		<itemlayout width="366" height="210" condition="!StringCompare(Container(300).ListItem.Property(widgetTarget),music) + Skin.String(widgetstyle, landscape)">
 			<control type="group">
                 <width>354</width>
@@ -797,6 +798,10 @@
                 <width>354</width>
                 <height>200</height>
                 <include>ThumbsViewLayoutFocus</include>
+                <control type="button">
+					<visible>false</visible>
+					<onfocus>Setproperty(ShowWidget,show)</onfocus>
+				</control>
             </control>
 		</focusedlayout>
 		<itemlayout height="265" width="262" condition="StringCompare(Container(300).ListItem.Property(widgetTarget),music) + !Skin.String(widgetstyle, single box)">
@@ -811,6 +816,10 @@
                 <width>240</width>
                 <height>240</height>
                 <include>SquarePosterPanelLayoutFocus</include>
+                <control type="button">
+					<visible>false</visible>
+					<onfocus>Setproperty(ShowWidget,show)</onfocus>
+				</control>
             </control>
         </focusedlayout>
 		
@@ -826,6 +835,10 @@
             <width>250</width>
             <height>370</height>
             <include>PosterPanelLayoutFocus</include>
+            <control type="button">
+					<visible>false</visible>
+					<onfocus>Setproperty(ShowWidget,show)</onfocus>
+				</control>
           </control>
         </focusedlayout>
 	

@@ -2,9 +2,7 @@
 <!--Titan-->
 <window>
     <defaultcontrol always="true">9005</defaultcontrol>
-    <allowoverlay>no</allowoverlay>
-	
-	<onunload>ClearProperty(ShowCast)</onunload>
+	<onunload>ClearProperty(AdditionalInfo)</onunload>
 	
     <controls>
     
@@ -68,12 +66,24 @@
                 <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
                 <texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
                 <visible>!Skin.String(SkinHelper.StudioImagesPath)</visible>
-                <visible>!StringCompare(Window.Property(ShowCast),show)</visible>
+                <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
             </control>
+            <control type="label">
+                <!-- additional info subtitle -->
+				<include>animation_fade_visible_hidden</include>
+				<right>61</right>
+				<posy>10</posy>
+				<width min="80" max="1400">auto</width>
+				<height>100</height>
+				<font>Bold45</font>
+				<align>right</align>
+				<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<label>$INFO[Window.Property(subtitle)]</label>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+			</control>
 				
 			<control type="group">
 				<visible>!Window.IsVisible(FileBrowser)</visible>
-
 				<include>animation_window_open_close</include>
 				
 				<!-- Background Panel-->
@@ -88,8 +98,6 @@
 				</control>
 				
 				<control type="group">
-					<!--Start Dialog-->
-					<visible>Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes)</visible>
 					<!--Info Stuff-->
 					<control type="image">
 						<posx>0</posx>
@@ -119,7 +127,7 @@
 						<width>1800</width>
 						<height>60</height>
 						<itemgap>15</itemgap>
-						<onup>51</onup>
+						<onup condition="!IsEmpty(Window.Property(AdditionalInfo))">SetFocus(9001)</onup>
 						<ondown>noop</ondown>
 						<onleft>9000</onleft>
 						<onright>9000</onright>
@@ -217,9 +225,22 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
-							<onclick>SetProperty(ShowCast, show)</onclick>
-							<onclick>SetFocus(9002)</onclick>
-							<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
+							<onclick>SetProperty(AdditionalInfo, cast)</onclick>
+                            <onclick>SetProperty(subtitle, $LOCALIZE[206])</onclick>
+							<onclick>SetFocus(9001)</onclick>
+							<visible>!StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+						</control>
+                        <control type="button" id="31622">
+							<!--Similar Button-->
+							<label>31622</label>
+							<width>285</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<onclick>SetProperty(AdditionalInfo, similar)</onclick>
+                            <onclick>SetProperty(subtitle, $LOCALIZE[31622])</onclick>
+							<onclick>SetFocus(9001)</onclick>
+							<visible>!StringCompare(Window.Property(AdditionalInfo),similar)</visible>
 						</control>
 						<control type="button" id="116">
 							<!--Info Button-->
@@ -228,8 +249,8 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
-							<onclick>ClearProperty(ShowCast)</onclick>
-							<visible>StringCompare(Window.Property(ShowCast),show)</visible>
+							<onclick>ClearProperty(AdditionalInfo)</onclick>
+							<visible>!IsEmpty(Window.Property(AdditionalInfo))</visible>
 						</control>
 						<control type="button" id="115">
 							<!--Extended Info Button-->
@@ -325,8 +346,7 @@
                             <selected>Skin.HasSetting(DialogVideoInfoHidePanel)</selected>
                         </control>
 					</control>
-					
-					
+									
 					<!--Arrow-->
 						<control type="image">
 							<animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
@@ -356,16 +376,13 @@
 						</control>
 						
 					<control type="group">
-						<visible>!StringCompare(Window.Property(ShowCast),show)</visible>
+						<visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
 						<visible>!Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + !Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)</visible>
 						<include>animation_window_open_close</include>
 						
 						
 						<!--Info-->
 						<control type="grouplist">
-							<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="300" easing="in">WindowOpen</animation>
-							<animation effect="fade" start="0" end="100" time="300" tween="sine" delay="500" easing="in">Visible</animation>
-							<animation effect="fade" start="100" end="0" time="300" tween="sine" delay="500" easing="out">Hidden</animation>
 							<posx>65</posx>
 							<posy>230</posy>
 							<width>1200</width>
@@ -834,29 +851,30 @@
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <visible>!IsEmpty(ListItem.FileNameAndPath)</visible>
-                        <visible>!StringCompare(Window.Property(ShowCast),show)</visible>
+                        <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
+                    </control>
+                    
+                    <control type="button" id="9001">
+                        <!--Hidden Button-->
+                        <onfocus condition="StringCompare(Window.Property(AdditionalInfo),cast)">SetFocus(51)</onfocus>
+                        <onfocus condition="StringCompare(Window.Property(AdditionalInfo),similar)">SetFocus(52)</onfocus>
+                        <onleft>noop</onleft>
+                        <ondown>noop</ondown>
+                        <onup>noop</onup>
+                        <onclick>noop</onclick>
+                        <font>-</font>
+                        <label>-</label>
+                        <textcolor>-</textcolor>
+                        <focusedcolor>-</focusedcolor>
+                        <disabledcolor>-</disabledcolor>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
                     </control>
 					
-					<!--Cast Stuff-->
-					<control type="group" id="9002">
-						<visible allowhiddenfocus="true">StringCompare(Window.Property(ShowCast),show)</visible>
+					<!--Cast List-->
+					<control type="group">
+						<visible allowhiddenfocus="true">StringCompare(Window.Property(AdditionalInfo),cast)</visible>
 						<include>animation_window_open_close</include>
-						<control type="button" id="9001">
-							<!--Hidden Button-->
-							<onfocus>SetFocus(51)</onfocus>
-							<onleft>noop</onleft>
-							<ondown>noop</ondown>
-							<onup>noop</onup>
-							<onclick>noop</onclick>
-							<font>-</font>
-							<label>-</label>
-							<textcolor>-</textcolor>
-							<focusedcolor>-</focusedcolor>
-							<disabledcolor>-</disabledcolor>
-							<texturefocus>-</texturefocus>
-							<texturenofocus>-</texturenofocus>
-						</control>
-                        
                          <control type="panel" id="50">
                         <!-- fake list with cast details -->
                          <itemlayout />
@@ -871,8 +889,8 @@
 							<height>714</height>
 							<onup>noop</onup>
 							<ondown>9000</ondown>
-							<onleft>ClearProperty(ShowCast)</onleft>
-							<onback>ClearProperty(ShowCast)</onback>
+							<onleft>ClearProperty(AdditionalInfo)</onleft>
+							<onback>ClearProperty(AdditionalInfo)</onback>
 							<onleft>SetFocus(9000)</onleft>
 							<scrolltime>200</scrolltime>
 							<orientation>vertical</orientation>
@@ -943,7 +961,75 @@
                         </control>
                     </control>
 
-				
+                    <!--Similar List-->
+					<control type="group">
+						<visible allowhiddenfocus="true">StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+						<include>animation_window_open_close</include>
+
+                        <control type="panel" id="52">
+                            <posx>63</posx>
+							<posy>220</posy>
+							<width>1200</width>
+							<height>714</height>
+							<onup>noop</onup>
+							<ondown>9000</ondown>
+							<onleft>ClearProperty(AdditionalInfo)</onleft>
+							<onback>ClearProperty(AdditionalInfo)</onback>
+							<onleft>SetFocus(9000)</onleft>
+							<scrolltime>200</scrolltime>
+							<orientation>vertical</orientation>
+							<focusposition>0</focusposition>
+							<viewtype label="actor list">list</viewtype>
+                            <!-- itemlayout movies -->
+                            <itemlayout height="357" width="240">
+                                <control type="group">
+                                    <width>233</width>
+                                    <height>342</height>
+                                    <include>PosterPanelLayout</include>
+                                  </control>
+                            </itemlayout>
+                            <focusedlayout height="357" width="240">
+                                <control type="group">
+                                    <width>233</width>
+                                    <height>342</height>
+                                    <include>PosterPanelLayoutFocus</include>
+                                  </control>
+                            </focusedlayout>
+                            <content>plugin://script.skin.helper.service/?action=similarmovies&imdbid=$INFO[ListItem.IMDBNumber]&limit=10</content>
+                        </control>
+                        
+                        <control type="group">
+                                <right>50</right>
+                                <posy>210</posy>
+                                <width>530</width>
+                                <height>67%</height>
+                            <control type="image">
+                                <aspectratio align="center" aligny="top" scalediffuse="true">scale</aspectratio>
+                                <texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$INFO[Container(52).ListItem.Art(poster)]</texture>
+                                <fadetime>300</fadetime>
+                            </control>
+                             <!--Panel-->
+                            <control type="image">
+                                <bottom>-1</bottom>
+                                <height>120</height>
+                                <bordersize>0</bordersize>
+                                <texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+                                <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+                            </control>
+                            <control type="label">
+                                <left>10</left>
+                                <bottom>0</bottom>
+                                <width>93%</width>
+                                <height>120</height>
+                                <align>left</align>
+                                <label>$INFO[Container(52).ListItem.Label2,[B],[/B][CR]]$INFO[Container(52).ListItem.Label]</label>
+                                <font>Reg32</font>
+                                <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                            </control>
+                        </control>
+                    </control>
+
+                    
 				</control>
 			</control>
 		</control>
