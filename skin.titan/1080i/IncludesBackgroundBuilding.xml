@@ -220,12 +220,12 @@
 		
 		<!-- HOME widgets -->
         <value condition="Skin.HasSetting(ShowFanartBackground) + !Skin.HasSetting(NetflixHomeDisableFanArt) + Window.IsActive(Home) + Skin.String(HomeLayout, netflix)">$INFO[Container(510).ListItem.Art(fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [Control.HasFocus(510) | Skin.String(widgetstyle, single box)] + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(510).ListItem.Art(fanart))">$INFO[Container(510).ListItem.Art(fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [Control.HasFocus(510) | Skin.String(widgetstyle, single box)] + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(510).ListItem.Art(tvshow.fanart))">$INFO[Container(510).ListItem.Art(tvshow.fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [Control.HasFocus(510) | Skin.String(widgetstyle, single box)] + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(510).ListItem.Property(fanart))">$INFO[Container(510).ListItem.Property(fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + Control.HasFocus(1508) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(1508).ListItem.Art(fanart))">$INFO[Container(1508).ListItem.Art(fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + Control.HasFocus(1508) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(1508).ListItem.Art(tvshow.fanart))">$INFO[Container(1508).ListItem.Art(tvshow.fanart)]</value>
-		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + Control.HasFocus(1508) + Skin.HasSetting(ShowFanartBackground) + !IsEmpty(Container(1508).ListItem.Property(fanart))">$INFO[Container(1508).ListItem.Property(fanart)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [[Control.HasFocus(510) + Skin.HasSetting(ShowFanartBackground)] | StringCompare(Container(300).ListItem.Property(Background),widgetfanart)] + !IsEmpty(Container(510).ListItem.Art(fanart))">$INFO[Container(510).ListItem.Art(fanart)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [[Control.HasFocus(510) + Skin.HasSetting(ShowFanartBackground)] | StringCompare(Container(300).ListItem.Property(Background),widgetfanart)] + !IsEmpty(Container(510).ListItem.Art(tvshow.fanart))">$INFO[Container(510).ListItem.Art(tvshow.fanart)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [[Control.HasFocus(510) + Skin.HasSetting(ShowFanartBackground)] | StringCompare(Container(300).ListItem.Property(Background),widgetfanart)] + !IsEmpty(Container(510).ListItem.Property(fanart))">$INFO[Container(510).ListItem.Property(fanart)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [[Control.HasFocus(1508) + Skin.HasSetting(ShowFanartBackground)] | StringCompare(Container(300).ListItem.Property(Background),widgetfanart)] + !IsEmpty(Container(1508).ListItem.Art(fanart))">$INFO[Container(1508).ListItem.Art(fanart)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [[Control.HasFocus(1508) + Skin.HasSetting(ShowFanartBackground)] | StringCompare(Container(300).ListItem.Property(Background),widgetfanart)] + !IsEmpty(Container(1508).ListItem.Art(tvshow.fanart))">$INFO[Container(1508).ListItem.Art(tvshow.fanart)]</value>
+		<value condition="Skin.HasSetting(ShowFanartBackground) + Window.IsActive(Home) + [[Control.HasFocus(1508) + Skin.HasSetting(ShowFanartBackground)] | StringCompare(Container(300).ListItem.Property(Background),widgetfanart)] + !IsEmpty(Container(1508).ListItem.Property(fanart))">$INFO[Container(1508).ListItem.Property(fanart)]</value>
 		
 		<!-- normal fanart backgrounds -->
 		<value condition="Skin.HasSetting(ShowFanartBackground) + !IsEmpty(ListItem.PicturePath)">$INFO[ListItem.PicturePath]</value>
@@ -258,19 +258,14 @@
 		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Container(300).ListItem.Property(Background))">$INFO[Container(300).ListItem.Property(Background)]</value>
 		
 		<!-- section background when home not active -->
-		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(SectionBackground))">$INFO[Window(home).Property(SectionBackground)]</value>
+		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(SectionBackground)) + !Window.IsActive(script-skinshortcuts.xml) + !Window.IsActive(home)">$INFO[Window(home).Property(SectionBackground)]</value>
 		
 		<!-- global background custom-->
 		<value condition="!Skin.String(CustomBackgroundSetting, default) + !Skin.String(CustomBackgroundSetting, blue) + !Skin.String(CustomBackgroundSetting, weather) + !Skin.String(CustomBackgroundSetting, fanart) + Skin.String(CustomBackgroundSetting)">$INFO[Skin.String(CustomBackgroundSetting)]</value>
 		<!-- global weather background -->
 		<value condition="Skin.String(CustomBackgroundSetting, weather)">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Current.FanartCode)]</value>
 		<!-- global fanart background -->
-		<value condition="Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Window(Home).Property(SkinHelper.GlobalFanartBackground))">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]</value>
-		<!-- default backgrounds -->
-        <value condition="Skin.HasSetting(UseSectionBackground) + StringCompare(Container(300).ListItem.Property(defaultID),movies)">special://skin/extras/backgrounds/hover_moving pictures.jpg</value>
-        <value condition="Skin.HasSetting(UseSectionBackground) + StringCompare(Container(300).ListItem.Property(defaultID),tvshows)">special://skin/extras/backgrounds/hover_my tv series.jpg</value>
-        <value condition="Skin.HasSetting(UseSectionBackground) + StringCompare(Container(300).ListItem.Property(defaultID),music)">special://skin/extras/backgrounds/hover_my radio.jpg</value>
-		
+		<value condition="Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Window(Home).Property(SkinHelper.GlobalFanartBackground))">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]</value>		
         <value condition="skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
 		<value>special://skin/extras/backgrounds/global_blue.jpg</value>
    </variable>
