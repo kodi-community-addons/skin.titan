@@ -13,69 +13,50 @@ WINDOW = xbmcgui.Window(10000)
 def fullMigration():
     #migrate function
     # to migrate all current user settings to the new skinhelper and skinshortcuts
-    # applied only once
     migrateLog = ""
     xbmc.sleep(500)
     while WINDOW.getProperty( "skinshortcuts-isrunning" ) == "True":
         xbmc.sleep(500)
     
     if not WINDOW.getProperty("titanmigration"):
-        if not xbmcgui.Dialog().yesno(xbmc.getLocalizedString(31575),xbmc.getLocalizedString(31576), nolabel=xbmc.getLocalizedString(31578),yeslabel=xbmc.getLocalizedString(31577)):
-            #user choose to perform the migration
-            WINDOW.setProperty("titanmigration","running")
-            xbmc.executebuiltin( "ActivateWindow(busydialog)" )
-            try:
-                log = "TITAN SKIN --> Starting migration of Titan skin \n"
+        #user choose to perform the migration
+        WINDOW.setProperty("titanmigration","running")
+        xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+        try:
+            log = "TITAN SKIN --> Starting migration of Titan skin \n"
 
-                #first make backup
-                log += "TITAN SKIN --> Creating backup \n"
-                xbmc.executebuiltin( "RunScript(script.skin.helper.service,action=backup,silent=special://temp/titan_pre-migration_backup.zip)" )
-                
-                while xbmc.getCondVisibility("Window.IsActive(busydialog)"):
-                    xbmc.sleep(500)
-                xbmc.sleep(500)    
-                xbmc.executebuiltin( "ActivateWindow(busydialog)" )
-                
-                log += "TITAN SKIN --> migrate color settings... \n"
-                migrateColorSettings()
-                log += "TITAN SKIN --> migrate color themes... \n"
-                migrateColorThemes()
-                log += "TITAN SKIN --> migrate other skin settings... \n"
-                migrateOtherSkinSettings()
-                log += "TITAN SKIN --> migrate skin helper settings... \n"
-                migrateSkinHelperSettings()
-                log += "TITAN SKIN --> migrate skin shortcuts... \n"
-                migrateSkinShortcuts()
-                xbmc.sleep(2000)
-                xbmcgui.Dialog().ok(xbmc.getLocalizedString(31575), xbmc.getLocalizedString(31579))
-            except:
-                log += "TITAN SKIN --> Error while Creating backup \n"
-                if print_exc():
-                    log += print_exc()
-                #reset all settings
-                xbmc.executebuiltin("RunScript(script.skinshortcuts,type=resetall&warning=false)")
-                xbmc.sleep(250)
-                xbmc.executebuiltin("Skin.ResetSettings")
-                xbmcgui.Dialog().ok(xbmc.getLocalizedString(31575), xbmc.getLocalizedString(31580))
-                xbmc.sleep(500)
-                xbmc.executebuiltin("ReloadSkin")                
-            finally:
-                try:
-                    logfile = xbmc.translatePath("special://temp/titan_pre-migration_backup.log").decode("utf-8")
-                    with open(logfile, 'w') as f:
-                        f.write(log)
-                        xbmc.log(log)
-                except: pass
-                xbmc.sleep(1000)
-                WINDOW.clearProperty("titanmigration")
-                xbmc.executebuiltin( "Dialog.Close(busydialog)" )
-        else:
-            #user choose to start fresh
-            xbmc.executebuiltin("RunScript(script.skinshortcuts,type=resetall&warning=false)")
-            xbmc.sleep(250)
+            #first make backup
+            log += "TITAN SKIN --> Creating backup \n"
+            xbmc.executebuiltin( "RunScript(script.skin.helper.service,action=backup,silent=special://temp/titan_pre-migration_backup.zip)" )
+            xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+            
+            log += "TITAN SKIN --> migrate color settings... \n"
+            migrateColorSettings()
+            log += "TITAN SKIN --> migrate color themes... \n"
+            migrateColorThemes()
+            log += "TITAN SKIN --> migrate other skin settings... \n"
+            migrateOtherSkinSettings()
+            log += "TITAN SKIN --> migrate skin helper settings... \n"
+            migrateSkinHelperSettings()
+            log += "TITAN SKIN --> migrate skin shortcuts... \n"
+            migrateSkinShortcuts()
+        except:
+            log += "TITAN SKIN --> Error while Creating backup \n"
+            print_exc():
+            #reset all settings to defaults
             xbmc.executebuiltin("Skin.ResetSettings")
-            xbmc.sleep(250)
-            xbmc.executebuiltin("ReloadSkin")
+            xbmc.executebuiltin("RunScript(script.skinshortcuts,type=resetall&warning=false)")
+            xbmc.sleep(500)
+            xbmc.executebuiltin("ReloadSkin")                
+        finally:
+            try:
+                logfile = xbmc.translatePath("special://temp/titan_pre-migration_backup.log").decode("utf-8")
+                with open(logfile, 'w') as f:
+                    f.write(log)
+                    xbmc.log(log)
+            except: pass
+            WINDOW.clearProperty("titanmigration")
+            xbmc.executebuiltin( "Dialog.Close(busydialog)" )
 
 
 def getMigratedSkinSettings():
