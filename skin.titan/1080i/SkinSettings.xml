@@ -61,6 +61,7 @@
 				<!--home menu layout-->
 				<control type="togglebutton" id="12">
 					<label>31115</label>
+                    <altlabel>31115</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -68,12 +69,12 @@
 					<font>Reg28</font>
 					<alttexturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel.png</alttexturefocus>
 					<alttexturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel_trans.png</alttexturenofocus>
-					<usealttexture>StringCompare(Window(Home).Property(currentButton),12)</usealttexture>
+					<usealttexture>StringCompare(Window(Home).Property(currentButton),12)</usealttexture>   
 				</control>
 				<!--tile settings-->
 				<control type="togglebutton" id="9">
 					<label>31013</label>
-                    
+                    <altlabel>31013</altlabel>
 					<onclick>RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)</onclick>
                     <onclick>ActivateWindow(busydialog)</onclick>
 					<width>440</width>
@@ -87,6 +88,7 @@
 				<!--background settings-->
 				<control type="togglebutton" id="8">
 					<label>31022</label>
+                    <altlabel>31022</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -100,6 +102,7 @@
 				<control type="togglebutton" id="17">
 					<!--media library-->
 					<label>$LOCALIZE[31221]</label>
+                    <altlabel>31221</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -112,6 +115,7 @@
                 <control type="togglebutton" id="7">
 					<!--media library-->
 					<label>$LOCALIZE[31518]</label>
+                    <altlabel>31518</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -124,6 +128,7 @@
 				<control type="togglebutton" id="16">
 					<!--osd settings-->
 					<label>$LOCALIZE[478]</label>
+                    <altlabel>478</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -136,6 +141,7 @@
 				<control type="togglebutton" id="18">
 					<!--PVR settings-->
 					<label>$LOCALIZE[31088]</label>
+                    <altlabel>31088</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -149,6 +155,7 @@
 				<control type="togglebutton" id="6">
 					<!--skin settings ID=5000-->
 					<label>31005</label>
+                    <altlabel>31005</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -161,6 +168,7 @@
 				<!-- smart shortcuts -->
 				<control type="togglebutton" id="19">
 					<label>31531</label>
+                    <altlabel>31531</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -173,6 +181,7 @@
 				<!-- advanced settings -->
 				<control type="togglebutton" id="14">
 					<label>31270</label>
+                    <altlabel>31270</altlabel>
 					<onclick>noop</onclick>
 					<width>440</width>
 					<align>left</align>
@@ -184,6 +193,7 @@
 				</control>
 				<control type="togglebutton" id="15">
 					<label>31462</label>
+                    <altlabel>31462</altlabel>
 					<onclick>noop</onclick>
 					<onfocus>SetProperty(currentButton,15,Home)</onfocus>
 					<width>440</width>
@@ -2727,30 +2737,26 @@
 						<selected>Skin.String(AutoStartPlayList)</selected>
 					</control>
 
-					<control type="radiobutton" id="5153">
+					<control type="button" id="5153">
 						<description></description>
 						<width>1230</width>
 						<align>left</align>
-						<label>31087</label>
+						<label>$LOCALIZE[31087]: $INFO[Skin.String(LyricScript_Path)]</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
-						<onclick condition="System.HasAddon(script.cu.lrclyrics)">Skin.ToggleSetting(showlyrics)</onclick>
-						<onclick condition="System.HasAddon(script.cu.lrclyrics)">Notification($LOCALIZE[24074],$LOCALIZE[31546])</onclick>
-						<onclick condition="!System.HasAddon(script.cu.lrclyrics)">RunPlugin(plugin://script.cu.lrclyrics)</onclick>
-						<selected>Skin.HasSetting(showlyrics)</selected>
+						<onclick condition="!Skin.String(LyricScript_Path)">Skin.SetAddon(LyricScript_Path,xbmc.python.lyrics)</onclick>
+						<onclick condition="Skin.String(LyricScript_Path)">Addon.OpenSettings($INFO[Skin.String(LyricScript_Path)])</onclick>
 					</control>
 					<control type="radiobutton" id="5161">
 						<description>disable backgroundoverlay lyrics dialog</description>
 						<width>1230</width>
 						<align>left</align>
-						<label>--- $LOCALIZE[31332]</label>
+						<label>31332</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(DisableLyricsOverlay)</onclick>
 						<selected>Skin.HasSetting(DisableLyricsOverlay)</selected>
-						<visible>Skin.HasSetting(showlyrics)</visible>
+						<visible>System.HasAddon(script.cu.lrclyrics)</visible>
 					</control>
 					
 					<control type="radiobutton" id="5158">
