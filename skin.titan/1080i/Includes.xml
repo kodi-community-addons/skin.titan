@@ -45,6 +45,7 @@
 	<include file="IncludesAnimations.xml" />
 	<include file="IncludesWeather.xml" />
 	<include file="script-skinshortcuts-includes.xml"/>
+    <include file="IncludesDebugInfo.xml" condition="Skin.HasSetting(DebugGrid) | Skin.HasSetting(DebugInfo)" />
 
 	<!--Titan Version-->
     <include name="TitanVersion">
@@ -171,7 +172,7 @@
 			<control type="group">
 				<visible>[Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]</visible>
 				<control type="image">
-					<!--studio logo -->
+					<!--studio logo default -->
 					<right>50</right>
 					<bottom>5</bottom>
 					<width>400</width>
@@ -183,6 +184,21 @@
 					<texture>$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
                     <visible>Skin.HasSetting(StudioInFooter)</visible>
                     <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Rating) + Skin.HasSetting(IMDBRatingInFooter)">Conditional</animation>
+                    <visible>![System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos) + !IsEmpty(Window(home).Property(SkinHelper.ListItemStudioLogoColor))]</visible>
+				</control>
+                <control type="image">
+					<!--studio logo color -->
+					<right>50</right>
+					<bottom>5</bottom>
+					<width>400</width>
+					<height>90</height>
+					<aspectratio aligny="center" align="right">keep</aspectratio>
+					<fadetime>250</fadetime>
+					<bordersize>2</bordersize>
+					<texture>$INFO[Window(home).Property(SkinHelper.ListItemStudioLogoColor)]</texture>
+                    <visible>Skin.HasSetting(StudioInFooter)</visible>
+                    <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Rating) + Skin.HasSetting(IMDBRatingInFooter)">Conditional</animation>
+                    <visible>System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos) + !IsEmpty(Window(home).Property(SkinHelper.ListItemStudioLogoColor))</visible>
 				</control>
                 <!-- IMDB rating -->
                 <control type="group">
@@ -824,9 +840,9 @@
 			<include>animation_fade_visible_hidden</include>
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(WeatherOnHome) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
-            <control type="image">
+            <control type="multiimage">
                 <!--Icon-->
-                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$VAR[WeatherIconsExtension]</imagepath>
                 <width>125</width>
                 <height>125</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
@@ -871,9 +887,9 @@
 			<include>animation_fade_visible_hidden</include>
 			
             <!--Current Weather-->
-            <control type="image">
+            <control type="multiimage">
                 <!--Current Weather Icon-->
-                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$VAR[WeatherIconsExtension]</imagepath>
                 <width>128</width>
                 <height>128</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
@@ -921,9 +937,9 @@
             <animation effect="slide" start="0,0" end="0,-200" condition="Skin.HasSetting(EnableOSDInfo) + !Window.IsActive(DialogFullScreenInfo.xml) + !Window.IsActive(VideoOSD.xml)">conditional</animation>
 			<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
             <!--Current Weather-->
-            <control type="image">
+            <control type="multiimage">
                 <!--Current Weather Icon-->
-                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$VAR[WeatherIconsExtension]</imagepath>
                 <width>128</width>
                 <height>128</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>

@@ -76,16 +76,17 @@
         <value condition="Window.IsActive(MyMusicPlaylistEditor.xml)">[UPPERCASE]$LOCALIZE[10503][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyMusicPlaylistEditor.xml)">[UPPERCASE]$LOCALIZE[10503][/UPPERCASE]</value>
 		<value condition="window.isactive(myvideoplaylist.xml)">$LOCALIZE[13350]</value>
+        <value condition="window.isactive(EventLog.xml)">$LOCALIZE[14111]</value>
 	</variable>
 	
 	<variable name="value_subheader">
-		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)">[CR]</value>
+		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml) | window.isactive(EventLog.xml)">[CR]</value>
 		<value condition="Window.IsActive(MyWeather.xml)">$INFO[Control.GetLabel(3)]</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml) | window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml) | window.isactive(mypvr.xml)] + !IsEmpty(Pvr.NowRecordingTitle)">$INFO[Pvr.NowRecordingTitle,$LOCALIZE[19158]: ] ($INFO[Pvr.NowRecordingChannel])</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml) | window.isactive(mypvrguide.xml) | window.isactive(mypvr.xml)] + !IsEmpty(Pvr.NextRecordingTitle)">$INFO[Pvr.NextRecordingTitle,$LOCALIZE[19025]: ] ($INFO[Pvr.NextRecordingDateTime])</value>
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Season)">$LOCALIZE[20373] $INFO[ListItem.Season] $LOCALIZE[20452] $INFO[ListItem.Episode]: $INFO[ListItem.Title]</value>
 		<value condition="window.isactive(movieinformation)">$INFO[ListItem.TagLine]</value>
-		<value condition="!IsEmpty(Container.NumItems) + ![Window.IsActive(tvchannels) | Window.IsActive(radiochannels)]">$INFO[Container.NumItems,, $LOCALIZE[31034]] $INFO[Control.GetLabel(3),• ]</value>
+		<value condition="!IsEmpty(Container.NumItems) + ![Window.IsActive(tvchannels) | Window.IsActive(radiochannels)]">$INFO[Container.NumItems,, $LOCALIZE[31034]]$INFO[Container.TotalUnwatched, • , $LOCALIZE[16101]] $INFO[Control.GetLabel(3),• ]</value>
 	</variable>
 	
 	<variable name="mediatitle">
@@ -417,11 +418,6 @@
         <value condition="Container.Content(tvshows)">$INFO[ListItem.Property(TotalEpisodes)] ($LOCALIZE[16101]: $INFO[ListItem.Property(UnwatchedEpisodes)])</value>
         <value condition="Container.Content(episodes) + !IsEmpty(ListItem.Duration)">$VAR[ListItemDuration]</value>
     </variable>
-	
-	<variable name="WeatherFanArtPath">
-		<value condition="Skin.String(CustomWeatherFanArtPath)">$INFO[Skin.String(CustomWeatherFanArtPath)]</value>
-        <value>special://skin/extras/weather/</value>
-	</variable>
 
 	<variable name="NextAiredThumb">
         <value condition="!IsEmpty(Window(Home).Property(NextAired.0.Art(fanart)))">$INFO[Window(Home).Property(NextAired.0.Art(fanart))]</value>
@@ -455,7 +451,8 @@
 		<value condition="SubString(Container.FolderPath,pvr://)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
         <value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
         <value condition="Container.Content(artists)">special://skin/extras/defaulticonswide/defaultartist.png</value>
-        <value condition="Container.Content(genres)">special://skin/extras/defaulticonswide/defaultgenre.png</value>
+        <value condition="Container.Content(genres) + window.isactive(MyMusicNav.xml)">$VAR[MusicGenreIconVar]</value>
+        <value condition="Container.Content(genres)">$VAR[MovieGenreIconVar]</value>
         <value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
 		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
@@ -473,8 +470,10 @@
 		<value condition="!IsEmpty(ListItem.Property(landscape))">$INFO[ListItem.Property(landscape)]</value>
 		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
-        <value condition="Container.Content(genres) + Skin.String(GenreImagesPath)">$INFO[Skin.String(GenreImagesPath)]$INFO[ListItem.Label,,.jpg]</value>
-		<value condition="Container.Content(genres)">$INFO[ListItem.Label,special://skin/extras/moviegenres/,.jpg]</value>
+        <value condition="Container.Content(genres) + window.isactive(MyMusicNav.xml)">$VAR[MusicGenreIconVar]</value>
+        <value condition="Container.Content(genres)">$VAR[MovieGenreIconVar]</value>
+		<value condition="Container.Content(studios) + System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos)">http://localhost:52307/getstudiologocolor&amp;studio=$INFO[ListItem.Label]</value>
+        <value condition="Container.Content(studios)">http://localhost:52307/getstudiologo&amp;studio=$INFO[ListItem.Label]</value>
 		<value condition="Window.IsActive(tvrecordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Thumb]</value>
         <value condition="SubString(Container(510).ListItem.FolderPath,pvr://recordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
 		<value condition="SubString(Container.FolderPath,pvr://) | SubString(ListItem.FolderPath,pvr://)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
@@ -516,9 +515,10 @@
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
-        <value condition="Container.Content(genres) + Skin.String(GenreImagesPath)">$INFO[Skin.String(GenreImagesPath)]$INFO[ListItem.Label,,.jpg]</value>
-		<value condition="Container.Content(genres)">$INFO[ListItem.Label,special://skin/extras/moviegenres/,.jpg]</value>
-		<value condition="Container.Content(studios)">$INFO[Window(Home).Property(SkinHelper.ListItemStudioLogo)]</value>
+		<value condition="Container.Content(genres) + window.isactive(MyMusicNav.xml)">$INFO[Skin.String(MusicGenreIconPack.path)]$INFO[ListItem.Label,,.jpg]</value>
+        <value condition="Container.Content(genres)">$INFO[Skin.String(MovieGenreIconPack.path)]$INFO[ListItem.Label,,.jpg]</value>
+		<value condition="Container.Content(studios) + System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos)">resource://resource.images.studios.coloured/$INFO[ListItem.Label].png</value>
+        <value condition="Container.Content(studios)">resource://resource.images.studios.white/$INFO[ListItem.Label].png</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">DefaultActorPoster.png</value>
 		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">DefaultActorPoster.png</value>
 		<value condition="Container.Content(years)">DefaultYear.png</value>
@@ -542,8 +542,10 @@
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
-		<value condition="Container.Content(genres)">$INFO[ListItem.Label,special://skin/extras/moviegenres/,.jpg]</value>
-		<value condition="Container.Content(studios)">$INFO[Window(Home).Property(SkinHelper.ListItemStudioLogo)]</value>
+		<value condition="Container.Content(genres) + window.isactive(MyMusicNav.xml)">$VAR[MusicGenreIconVar]</value>
+        <value condition="Container.Content(genres)">$VAR[MovieGenreIconVar]</value>
+		<value condition="Container.Content(studios) + System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos)">resource://resource.images.studios.coloured/$INFO[ListItem.Label,,.png]</value>
+        <value condition="Container.Content(studios)">resource://resource.images.studios.white/$INFO[ListItem.Label,,.png]</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">DefaultActorPoster.png</value>
 		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">DefaultActorPoster.png</value>
 		<value condition="Container.Content(years)">DefaultYear.png</value>
@@ -564,7 +566,10 @@
 	
 	
 	<variable name="MusicSquareThumb">
-		<value condition="Container.Content(genres)">DefaultMusicGenres.png</value>
+		<value condition="Container.Content(genres) + window.isactive(MyMusicNav.xml)">$VAR[MusicGenreIconVar]</value>
+        <value condition="Container.Content(genres)">$VAR[MovieGenreIconVar]</value>
+		<value condition="Container.Content(studios) + System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos)">http://localhost:52307/getstudiologocolor&amp;studio=$INFO[ListItem.Label]</value>
+        <value condition="Container.Content(studios)">http://localhost:52307/getstudiologo&amp;studio=$INFO[ListItem.Label]</value>
 		<value condition="!IsEmpty(ListItem.Thumb) + Container.Content(Episodes) + !Window.IsActive(dialogvideoinfo.xml)">$INFO[ListItem.Thumb]</value>
 		<value condition="!IsEmpty(ListItem.Art(fanart)) + [Container.Content(movies) | Container.Content(seasons) | Container.Content(tvshows)]">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!IsEmpty(ListItem.Property(ArtistThumb))">$INFO[ListItem.Property(ArtistThumb)]</value>
@@ -1047,5 +1052,66 @@
 		<value condition="Skin.HasSetting(ShowEpgGenreColors)">$INFO[Skin.String(ViewDetailsTextColor)]</value>
 		<value>$INFO[Skin.String(ButtonTextColor)]</value>
 	 </variable>
+     
+     <variable name="WeatherIconsExtension">
+       <value condition="Skin.HasSetting(WeatherIconPack.multi)">/</value>
+       <value>.png</value>
+     </variable>
+     
+     <variable name="WeatherFanArtExtension">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">/</value>
+       <value>.jpg</value>
+     </variable>
+     
+     <variable name="WeatherFanArtSingleImage_Day0">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day0.fanartCode)]/weather-$INFO[Window(Weather).Property(Day0.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day0.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Day1">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day1.fanartCode)]/weather-$INFO[Window(Weather).Property(Day1.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day1.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Day2">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day2.fanartCode)]/weather-$INFO[Window(Weather).Property(Day2.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day2.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Day3">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day3.fanartCode)]/weather-$INFO[Window(Weather).Property(Day3.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day3.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Day4">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day4.fanartCode)]/weather-$INFO[Window(Weather).Property(Day4.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day4.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Day5">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day5.fanartCode)]/weather-$INFO[Window(Weather).Property(Day5.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day5.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Day6">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day6.fanartCode)]/weather-$INFO[Window(Weather).Property(Day6.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Day6.fanartCode)].jpg</value>
+     </variable>
+     <variable name="WeatherFanArtSingleImage_Current">
+       <value condition="Skin.HasSetting(WeatherFanArtPack.multi)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Current.fanartCode)]/weather-$INFO[Window(Weather).Property(Current.fanartCode)]-00.jpg</value>
+       <value>$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Current.fanartCode)].jpg</value>
+     </variable>
+     
+     <variable name="MovieGenreIconVar">
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.poster/)">resource://resource.images.moviegenreicons.poster/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.coloured/)">resource://resource.images.moviegenreicons.coloured/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.white/)">resource://resource.images.moviegenreicons.white/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.transparent/)">resource://resource.images.moviegenreicons.transparent/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.grey/)">resource://resource.images.moviegenreicons.grey/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.filmstrip/)">resource://resource.images.moviegenreicons.filmstrip/$INFO[ListItem.Label].jpg</value>
+       <value>http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MovieGenreIconPack.path)}$INFO[ListItem.Label,,.jpg]</value>
+     </variable>
+     
+     <variable name="MusicGenreIconVar">
+       <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.text/)">resource://resource.images.musicgenreicons.text/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.grey/)">resource://resource.images.musicgenreicons.grey/$INFO[ListItem.Label].jpg</value>
+       <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.poster/)">resource://resource.images.musicgenreicons.poster/$INFO[ListItem.Label].jpg</value>
+       <value>http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MusicGenreIconPack.path)}$INFO[ListItem.Label,,.jpg]</value>
+     </variable>
+     
      	 
 </includes>
