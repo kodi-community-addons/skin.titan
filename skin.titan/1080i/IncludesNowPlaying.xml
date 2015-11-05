@@ -473,20 +473,6 @@
 	<include name="nowplayingbackground">
 		<control type="group">
 		<visible>[!Skin.HasSetting(DisableNowPlayingBackground) + Player.HasMedia + !Control.IsVisible(507) + !Control.IsVisible(DialogVideoInfo.xml) + IsEmpty(Window(Home).Property(PlayingBackgroundMedia))] | [!IsEmpty(Window(Home).Property(PlayingBackgroundMedia)) + Player.HasVideo]</visible>
-			
-            <!--normal artist image (fallback)-->
-			<control type="group">
-				<visible>Player.HasAudio</visible>
-				<control type="image">
-					<include>DimensionsFullscreen</include>
-					<include>backgroundfade</include>
-					<texture background="true" fallback="special://skin/extras/backgrounds/hover_my music.jpg">$INFO[Window(Home).Property(SkinHelper.Player.Music.FanArt)]</texture>
-					<fadetime>800</fadetime>
-					<animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-					<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-					<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + ![Skin.HasSetting(enableMusicWall) + !IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))]</visible>
-				</control>
-			</control>
             
 			<control type="visualisation" id="2">
 				<description>visualisation</description>
@@ -505,7 +491,8 @@
                     <height>1180</height>
 					<fadetime>5500</fadetime>
 					<texture background="true">$INFO[Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall)]</texture>
-                    <visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + [Skin.HasSetting(enableMusicWall) + !IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))]</visible>
+                    <visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + Skin.HasSetting(enableMusicWall) + !IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))</visible>
+                    <visible>![Skin.HasSetting(enableArtistSlideshow) + [!IsEmpty(Window(Home).Property(SkinHelper.Player.Music.ExtraFanArt)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Music.FanArt)) | !IsEmpty(Player.Art(fanart))]]</visible>
                     <animation effect="fade" start="100" end="20" time="0" condition="![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum) | IsEmpty(Visualisation.Name)]">Conditional</animation>
                     <animation effect="zoom" start="110" end="160" center="auto" time="20000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicWall)">Skin.HasSetting(animateMusicWall)</animation>
                     <animation effect="slide" start="-100,0" end="100,0" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicWall)">Skin.HasSetting(animateMusicWall)</animation>
@@ -513,7 +500,7 @@
                 </control>
 			</control>
             
-			<!-- artist extrafanart -->
+			<!-- artist (extra)fanart -->
 			<control type="multiimage">
 				<aspectratio>scale</aspectratio>
 				<include>DimensionsFullscreen</include>
@@ -521,11 +508,11 @@
 				<randomize>true</randomize>
 				<fadetime>600</fadetime>
 				<loop>yes</loop>
-				<imagepath background="true">$INFO[Window(Home).Property(SkinHelper.Player.Music.ExtraFanArt)]</imagepath>
+				<imagepath background="true">$VAR[artist_fanart]</imagepath>
 				<animation effect="fade" start="100" end="20" time="0" condition="![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum) | IsEmpty(Visualisation.Name)]">Conditional</animation>
                 <animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 				<animation effect="slide" start="-10,-10" end="10,10" time="5000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-				<visible>Player.HasAudio + !IsEmpty(MusicPlayer.Title) + Skin.HasSetting(enableArtistSlideshow) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Music.ExtraFanArt))</visible>
+				<visible>Player.HasAudio + !IsEmpty(MusicPlayer.Title) + Skin.HasSetting(enableArtistSlideshow)</visible>
 				<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia))</visible>
 			</control>
 			<control type="visualisation" id="2">
@@ -557,8 +544,13 @@
 				<include>DialogOverlay</include>
 			</control>
 		</control>
-
-
 	</include>
+    
+    <variable name="artist_fanart">
+        <value condition="Skin.HasSetting(enableArtistSlideshow) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Music.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.Player.Music.ExtraFanArt)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.Music.FanArt))">$INFO[Window(Home).Property(SkinHelper.Player.Music.FanArt)]</value>
+        <value condition="!IsEmpty(Player.Art(fanart))">$INFO[Player.Art(fanart)]</value>
+        <value>-</value>
+    </variable>
 	
-	</includes>
+</includes>
