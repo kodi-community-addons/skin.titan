@@ -2,19 +2,16 @@
 <!--Titan-->
 <window>
     <defaultcontrol always="true">10</defaultcontrol>
+    <onload condition="Skin.String(SplashScreen)">RunScript(script.skin.helper.service,action=splashscreen,file=$INFO[Skin.String(SplashScreen)])</onload>
     <allowoverlay>no</allowoverlay>
     <include>defaultskinsettings</include>
 	<controls>
         <control type="button" id="10">
 			<description>trigger</description>
-            <onfocus>AlarmClock(GoHome,ReplaceWindow($INFO[System.StartupWindow]),00:01,silent,false)</onfocus>
+            <onfocus condition="!Skin.String(SplashScreen)">ReplaceWindow($INFO[System.StartupWindow])</onfocus>
             <onfocus condition="!IsEmpty(Skin.String(AutoStartPlayList))">PlayMedia($INFO[Skin.String(AutoStartPlayList)])</onfocus>
 			<texturenofocus>-</texturenofocus>
 			<texturefocus>-</texturefocus>
 		</control>
-        <control type="image">
-            <include>DimensionsFullscreen</include>
-            <texture>special://skin/extras/backgrounds/splashscreen.jpg</texture>
-        </control>
     </controls>
 </window>
