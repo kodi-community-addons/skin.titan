@@ -2,11 +2,15 @@
 <!--Titan-->
 <window  >
     
-    <defaultcontrol>1000</defaultcontrol>
+    <defaultcontrol always="true">1000</defaultcontrol>
     <include>defaultskinsettings</include>
     <onload condition="![Skin.String(ColorTheme) | Skin.String(GadgetRows)]">RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu|netflixmenu)</onload>
 	<onunload>CancelAlarm(SpotlightMove,true)</onunload>
     <onunload>SetProperty(SectionBackground,$INFO[Control.GetLabel(99004)])</onunload>
+    <!-- auto close homemenu and focus mainmenu when home is unloaded -->
+    <onunload condition="!Skin.String(SubmenuLayout, subpage) + !Skin.String(HomeLayout, netflix)">SetFocus(300)</onunload>
+    <onunload condition="!Skin.String(SubmenuLayout, subpage)">ClearProperty(submenu)</onunload>
+    <onunload>ClearProperty(ShowWidget)</onunload>
 	<controls>
 	
 	<!--Global Background-->
@@ -19,8 +23,14 @@
             <onfocus condition="Skin.String(HomeLayout, netflix)">AlarmClock(SpotlightMove,Control.Move(510,1),00:30,silent,loop)</onfocus>
             <onfocus condition="Skin.String(HomeLayout, netflix)">SetFocus(51)</onfocus>
             <onfocus condition="!Skin.String(HomeLayout, netflix)">SetFocus(300)</onfocus>
+            <onfocus condition="!IsEmpty(Window(Home).Property(submenu))">SetFocus(4444)</onfocus>
 			<texturenofocus>-</texturenofocus>
 			<texturefocus>-</texturefocus>
+            <onleft>300</onleft>
+            <onright>300</onright>
+            <onup>300</onup>
+            <ondown>300</ondown>
+            <visible allowhiddenfocus="true">false</visible>
 		</control>
 
 		<!-- Header -->
