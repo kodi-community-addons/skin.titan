@@ -14,8 +14,8 @@
 			<property name="widgetType">pvr</property>
 			<property name="widgetPath">plugin://script.skin.helper.service/?action=pvrrecordings&amp;limit=25&amp;reload=$INFO[Window(home).Property(widgetreload2)]</property>
 			<property name="widgetTarget">pvr</property>
-			<property name="background">smb://homeserver/pictures/7th Sunday 2013/</property>
-			<property name="backgroundName">smb://homeserver/pictures/7th Sunday 2013/</property>
+			<property name="background">$INFO[Window(Home).Property(SkinHelper.PvrBackground)]</property>
+			<property name="backgroundName">Random PVR fanart background</property>
 			<property name="widget.1">tvrecordings</property>
 			<property name="widgetTarget.1">pvr</property>
 			<property name="widgetType.1">pvr</property>
@@ -133,6 +133,11 @@
 			<property name="widgetType.99">episodes</property>
 			<property name="widgetPath.99">plugin://script.skin.helper.service/?action=nextepisodes&amp;limit=25</property>
 			<property name="widgetName.99">Next Episodes</property>
+			<property name="widget.2">Addon</property>
+			<property name="widgetName.2">PleXBMC - Recently Added</property>
+			<property name="widgetType.2">episodes</property>
+			<property name="widgetTarget.2">video</property>
+			<property name="widgetPath.2">plugin://plugin.video.plexbmc/?url=http%3A//192.168.1.2%3A32400/library/sections/2/recentlyAdded&amp;mode=0</property>
 			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0)]">ActivateWindow(10025,videodb://tvshows/titles/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://tvshows/titles/,return)</property>
 			<property name="list">videodb://tvshows/titles/</property>
@@ -18022,6 +18027,31 @@
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
 			<include>SpotLightWidgetLayout</include>
 			<content target="video">special://skin/extras/widgetplaylists/randommovies.xsp</content>
+		</control>
+	</include>
+	<include name="skinshortcuts-template-widget.2">
+		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-widget.2-Master user</include>
+	</include>
+	<include name="skinshortcuts-template-widget.2-Master user">
+		<control id="600" type="label">
+			<label>widget-2</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,2)</visible>
+		</control>
+		<control id="510" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,2)</visible>
+			<include condition="!Skin.String(HomeLayout, enhanced) + Skin.String(widgetstyle, poster) + Skin.String(HomeLayout, simplever)">widget_layout_vertical_poster</include>
+			<include condition="!Skin.String(HomeLayout, enhanced) + Skin.String(widgetstyle, landscape) + Skin.String(HomeLayout, simplever)">widget_layout_vertical_landscape</include>
+			<include condition="!Skin.String(HomeLayout, enhanced) + Skin.String(widgetstyle, poster) + !Skin.String(HomeLayout, simplever)">widget_layout_horizontal_poster</include>
+			<include condition="!Skin.String(HomeLayout, enhanced) + Skin.String(widgetstyle, landscape) + !Skin.String(HomeLayout, simplever)">widget_layout_horizontal_landscape</include>
+			<include condition="!Skin.String(HomeLayout, enhanced) + Skin.String(widgetstyle, single box)">widget_layout_single_box</include>
+			<include condition="Skin.String(HomeLayout, enhanced)">panel_layout_enhanced</include>
+			<content target="video">plugin://plugin.video.plexbmc/?url=http%3A//192.168.1.2%3A32400/library/sections/2/recentlyAdded&amp;mode=0</content>
 		</control>
 	</include>
 </includes>
