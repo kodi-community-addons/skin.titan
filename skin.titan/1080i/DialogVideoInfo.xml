@@ -908,6 +908,7 @@
 							<scrolltime>200</scrolltime>
 							<orientation>vertical</orientation>
 							<focusposition>0</focusposition>
+                            <animation effect="fade" start="100" end="25" time="0" condition="Container(51).IsUpdating">Conditional</animation>
 							<viewtype label="actor list">list</viewtype>
                             <!-- itemlayout movies -->
                             <itemlayout height="357" width="240">
@@ -938,8 +939,24 @@
                                       </control>
                                   </control>
                             </focusedlayout>
-                            <content>plugin://script.skin.helper.service/?action=getcast&title=$INFO[ListItem.Title]&downloadthumbs=true</content>
+                            <content>plugin://script.skin.helper.service/?action=getcast&title=$INFO[ListItem.Title]&downloadthumbs=$INFO[Skin.String(actorthumbslookup)]</content>
                         </control>
+                        
+                        <!-- busy image while widget loading -->
+                        <control type="multiimage">
+                            <posy>520</posy>
+                            <left>663</left>
+                            <width>100</width>
+                            <height>100</height>
+                            <aspectratio>keep</aspectratio>
+                            <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
+                            <timeperimage>100</timeperimage>
+                            <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
+                            <fadetime>0</fadetime>
+                            <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
+                            <visible>Container(51).IsUpdating</visible>
+                        </control>
+                        
                         
                         <control type="group">
                                 <right>50</right>
