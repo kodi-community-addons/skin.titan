@@ -172,20 +172,6 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
-							<visible>!substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
-							<onclick>Dialog.Close(MovieInformation)</onclick>
-						</control>
-						
-						<control type="button" id="1008">
-							<!--Play-->
-							<label>208</label>
-							<width>285</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<onclick condition="!StringCompare(Window(home).Property(MB3.Action),None) + !IsEmpty(Window(home).Property(MB3.Action))">$INFO[Window(home).Property(MB3.Action)]</onclick>
-							<onclick condition="StringCompare(Window(home).Property(MB3.Action),None) | IsEmpty(Window(home).Property(MB3.Action))">PlayMedia($ESCINFO[ListItem.FileNameAndPath])</onclick>
-							<visible>substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
 							<onclick>Dialog.Close(MovieInformation)</onclick>
 						</control>
 
@@ -196,7 +182,7 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
-							<visible>ListItem.IsResumable + !substring(Container.FolderPath,plugin://plugin.video.xbmb3c)</visible>
+							<visible>ListItem.IsResumable</visible>
 						</control>
 						
 						<control type="button" id="103">
@@ -230,6 +216,7 @@
 							<onclick>SetProperty(AdditionalInfo, cast)</onclick>
                             <onclick>SetProperty(subtitle, $LOCALIZE[206])</onclick>
 							<onclick>SetFocus(9001)</onclick>
+                            <visible>IntegerGreaterThan(Container(50).NumItems,0)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),cast)</visible>
 						</control>
                         <control type="button" id="31622">
@@ -242,6 +229,7 @@
 							<onclick>SetProperty(AdditionalInfo, similar)</onclick>
                             <onclick>SetProperty(subtitle, $LOCALIZE[31622])</onclick>
 							<onclick>SetFocus(9001)</onclick>
+                            <visible>!IsEmpty(ListItem.IMDBNumber)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),similar)</visible>
 						</control>
 						<control type="button" id="116">
@@ -1014,7 +1002,7 @@
                                     <include>PosterPanelLayoutFocus</include>
                                   </control>
                             </focusedlayout>
-                            <content>plugin://script.skin.helper.service/?action=similarmovies&imdbid=$INFO[ListItem.IMDBNumber]&limit=10</content>
+                            <content>$VAR[SimilarInfo]</content>
                         </control>
                         
                         <control type="group">
