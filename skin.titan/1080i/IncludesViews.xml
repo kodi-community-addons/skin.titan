@@ -814,7 +814,7 @@
         <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container.FolderPath, pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=landscape,fanart,thumb</value>
   </variable>
   <variable name="PVRListItemThumbPoster">
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=poster,fanart,thumb</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=poster&amp;fallback=$INFO[ListItem.Thumb]</value>
   </variable>
   <variable name="PVRListItemThumbBanner">
         <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://) + IsEmpty(ListItem.Art(banner))">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=banner</value>
@@ -943,13 +943,7 @@
                 <include>PosterThumbFallback</include>
                 <visible>IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + !StringCompare(ListItem.Label,..)</visible>
               </control>
-              <!--pvr thumb image-->
-            <control type="image">
-                <bordersize>8</bordersize>
-                <texture border="1" background="true" diffuse="diffuse/poster.png">$VAR[PVRListItemThumbPoster]</texture>
-                <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
-                <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
-            </control>
+
               <include>PanelLabelOverlay</include>
               <control type="group">
                 <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
