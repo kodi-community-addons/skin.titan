@@ -369,7 +369,16 @@
       <animation effect="slide" end="1193" time="0" condition="Skin.HasSetting(View51_ShowInfoRight) + Control.IsVisible(51)">Conditional</animation>
      
 		<control type="group">
-          <visible>!Skin.HasSetting(DetailsShowFanart)</visible>
+          <visible>
+            ![[Control.IsVisible(512) + Skin.HasSetting(View512_DetailsShowFanart)] |
+            [Control.IsVisible(516) + Skin.HasSetting(View516_DetailsShowFanart)] |
+            [Control.IsVisible(510) + Skin.HasSetting(View510_DetailsShowFanart)] |
+            [Control.IsVisible(505) + Skin.HasSetting(View505_DetailsShowFanart)] |
+            [Control.IsVisible(51) + Skin.HasSetting(View51_DetailsShowFanart)] |
+            [Control.IsVisible(59) + Skin.HasSetting(View59_DetailsShowFanart)] |
+            [Control.IsVisible(55) + Skin.HasSetting(View55_DetailsShowFanart)] |
+            [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)]]
+            </visible>
           <animation effect="slide" end="0,-8" time="0" condition="[Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516)] | [Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)]">Conditional</animation>
 			<posx>50</posx>
 			<bottom>124</bottom>
@@ -639,7 +648,16 @@
 
         </control>
         <control type="group">
-			<visible>Skin.HasSetting(DetailsShowFanart)</visible>
+			<visible>
+            [Control.IsVisible(512) + Skin.HasSetting(View512_DetailsShowFanart)] |
+            [Control.IsVisible(516) + Skin.HasSetting(View516_DetailsShowFanart)] |
+            [Control.IsVisible(510) + Skin.HasSetting(View510_DetailsShowFanart)] |
+            [Control.IsVisible(505) + Skin.HasSetting(View505_DetailsShowFanart)] |
+            [Control.IsVisible(51) + Skin.HasSetting(View51_DetailsShowFanart)] |
+            [Control.IsVisible(59) + Skin.HasSetting(View59_DetailsShowFanart)] |
+            [Control.IsVisible(55) + Skin.HasSetting(View55_DetailsShowFanart)] |
+            [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)]
+            </visible>
             <animation effect="slide" end="0,-8" time="0" condition="[Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516) + !Control.IsVisible(51)] | [Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)] | [Skin.HasSetting(View51_HidePanel) + Control.IsVisible(51)]">Conditional</animation>
 			<posx>50</posx>
 			<bottom>124</bottom>
@@ -796,7 +814,7 @@
         <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container.FolderPath, pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=landscape,fanart,thumb</value>
   </variable>
   <variable name="PVRListItemThumbPoster">
-        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=poster,fanart,thumb</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=poster&amp;fallback=$INFO[ListItem.Thumb]</value>
   </variable>
   <variable name="PVRListItemThumbBanner">
         <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://) + IsEmpty(ListItem.Art(banner))">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=banner</value>
@@ -925,13 +943,7 @@
                 <include>PosterThumbFallback</include>
                 <visible>IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + !StringCompare(ListItem.Label,..)</visible>
               </control>
-              <!--pvr thumb image-->
-            <control type="image">
-                <bordersize>8</bordersize>
-                <texture border="1" background="true" diffuse="diffuse/poster.png">$VAR[PVRListItemThumbPoster]</texture>
-                <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
-                <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
-            </control>
+
               <include>PanelLabelOverlay</include>
               <control type="group">
                 <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
@@ -1320,8 +1332,35 @@
 			<visible>Control.IsVisible(44447)</visible>
 			<include>SubMenuButton</include>
 			<label>31114</label>
-			<onclick>Skin.ToggleSetting(DetailsShowFanart)</onclick>
-			<selected>Skin.HasSetting(DetailsShowFanart)</selected>
+
+            <onclick condition="Control.IsVisible(512)">Skin.ToggleSetting(View512_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(510)">Skin.ToggleSetting(View510_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(516)">Skin.ToggleSetting(View516_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(505)">Skin.ToggleSetting(View505_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(59)">Skin.ToggleSetting(View59_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(55)">Skin.ToggleSetting(View55_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(53)">Skin.ToggleSetting(View53_DetailsShowFanart)</onclick>
+            <onclick condition="Control.IsVisible(51)">Skin.ToggleSetting(View51_DetailsShowFanart)</onclick>
+			<selected>
+            [Control.IsVisible(512) + Skin.HasSetting(View512_DetailsShowFanart)] |
+            [Control.IsVisible(516) + Skin.HasSetting(View516_DetailsShowFanart)] |
+            [Control.IsVisible(510) + Skin.HasSetting(View510_DetailsShowFanart)] |
+            [Control.IsVisible(505) + Skin.HasSetting(View505_DetailsShowFanart)] |
+            [Control.IsVisible(51) + Skin.HasSetting(View51_DetailsShowFanart)] |
+            [Control.IsVisible(59) + Skin.HasSetting(View59_DetailsShowFanart)] |
+            [Control.IsVisible(55) + Skin.HasSetting(View55_DetailsShowFanart)] |
+            [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)]
+            </selected>
+		</control>
+        
+        <control type="radiobutton" id="3006">
+			<!--horizontal navigation ion landscape view-->
+			<visible>Control.IsVisible(501)</visible>
+			<include>SubMenuButton</include>
+			<label>31635</label>
+			<onclick>Skin.ToggleSetting(View_501_HorizontalNavigation)</onclick>
+            <onclick>ReloadSkin()</onclick>
+			<selected>Skin.HasSetting(View_501_HorizontalNavigation)</selected>
 		</control>
 
 
@@ -1644,9 +1683,12 @@
 	</include>
     
     <include name="mediaflags">
-        <include condition="Skin.String(mediaflagsstyle,classic)">mediaflags_classic</include>
-        <include condition="Skin.String(mediaflagsstyle,boxed)">mediaflags_boxed</include>
-        <include condition="Skin.String(mediaflagsstyle,textbased - full info)">mediaflags_text</include> 
+        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,classic)">mediaflags_classic</include>
+        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,boxed)">mediaflags_boxed</include>
+        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,textbased - full info)">mediaflags_text</include> 
+        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,classic)">mediaflags_classic</include>
+        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,boxed)">mediaflags_boxed</include>
+        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,textbased - full info)">mediaflags_text</include> 
     </include>
 	
 	 <include name="mediaflags_classic">

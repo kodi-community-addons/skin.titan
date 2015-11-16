@@ -129,8 +129,7 @@
     <!-- ========== -->
 	
 	<variable name="RatingFlagVar">
-	
-	<value condition="window.isactive(home) + [SubString(Container(510).ListItem.mpaa,US:G) | SubString(Container(510).ListItem.mpaa,USA:G) | SubString(Container(510).ListItem.mpaa,Rated G)]">G</value>
+        <value condition="window.isactive(home) + [SubString(Container(510).ListItem.mpaa,US:G) | SubString(Container(510).ListItem.mpaa,USA:G) | SubString(Container(510).ListItem.mpaa,Rated G)]">G</value>
         <!-- home widgets -->
 		<value condition="window.isactive(home) + SubString(Container(510).ListItem.mpaa,PG-13)">PG-13</value>
         <value condition="window.isactive(home) + Substring(Container(510).ListItem.mpaa,Rated PG) | StringCompare(Container(510).ListItem.Mpaa,PG)">US-PG</value>
@@ -163,7 +162,7 @@
 		<value condition="window.isactive(home) + [substring(Container(510).ListItem.mpaa,Brazil:14) | substring(Container(510).ListItem.mpaa,14 anos)]">14</value>
 		<value condition="window.isactive(home) + [substring(Container(510).ListItem.mpaa,Brazil:16) | substring(Container(510).ListItem.mpaa,16 anos)]">16</value>
 		<value condition="window.isactive(home) + [substring(Container(510).ListItem.mpaa,Brazil:18) | substring(Container(510).ListItem.mpaa,18 anos)]">18</value>
-		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.mpaa)">$INFO[Container(510).ListItem.MPAA]</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.mpaa) + !SubString(Container(510).ListItem.mpaa,not rated)">$INFO[Container(510).ListItem.MPAA]</value>
 		<!-- normal listitems -->
         <value condition="SubString(ListItem.mpaa,US:G) | SubString(ListItem.mpaa,USA:G) | SubString(ListItem.mpaa,Rated G)">G</value>
         <value condition="SubString(ListItem.mpaa,PG-13)">PG-13</value>
@@ -197,7 +196,7 @@
 		<value condition="substring(ListItem.mpaa,Brazil:14) | substring(ListItem.mpaa,14 anos)">14</value>
 		<value condition="substring(ListItem.mpaa,Brazil:16) | substring(ListItem.mpaa,16 anos)">16</value>
 		<value condition="substring(ListItem.mpaa,Brazil:18) | substring(ListItem.mpaa,18 anos)">18</value>
-		<value condition="!IsEmpty(ListItem.mpaa)">$INFO[ListItem.MPAA]</value>
+		<value condition="!IsEmpty(ListItem.mpaa) + !SubString(ListItem.mpaa,not rated) + !SubString(ListItem.mpaa,n/a)">$INFO[ListItem.MPAA]</value>
 	</variable>
 	
 	<variable name="VideoAspectVar">
@@ -325,9 +324,9 @@
 	</variable>
     
     <variable name="SubtitleLanguageVar">
-        <value condition="!IsEmpty(ListItem.SubtitleLanguage)">$INFO[ListItem.SubtitleLanguage]</value>
-		<value condition="!IsEmpty(Container(510).ListItem.SubtitleLanguage)">$INFO[Container(510).ListItem.SubtitleLanguage]</value>
-        <value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.SubtitleLanguage)">$INFO[VideoPlayer.SubtitleLanguage]</value>
+        <value condition="!IsEmpty(ListItem.SubtitleLanguage) + !StringCompare(ListItem.SubtitleLanguage,unknown)">$INFO[ListItem.SubtitleLanguage]</value>
+		<value condition="!IsEmpty(Container(510).ListItem.SubtitleLanguage) + !StringCompare(Container(510).ListItem.SubtitleLanguage,unknown)">$INFO[Container(510).ListItem.SubtitleLanguage]</value>
+        <value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.SubtitleLanguage) + !StringCompare(VideoPlayer.SubtitleLanguage,unknown)">$INFO[VideoPlayer.SubtitleLanguage]</value>
 	</variable>
 	
 	<variable name="AudioChannelsVar">
@@ -596,7 +595,6 @@
 		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
 		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
 		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
-		
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
         <value condition="Window.IsActive(MyMusicNav.xml) | Container.Content(albums) | Container.Content(songs)">dialogs/filebrowser/DefaultAudio.png</value>
 		<value condition="!IsEmpty(ListItem.Property(FanArt))">$INFO[ListItem.Property(FanArt)]</value>
@@ -1139,5 +1137,10 @@
        <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.poster/)">resource://resource.images.musicgenreicons.poster/$INFO[ListItem.Label].jpg</value>
        <value>http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MusicGenreIconPack.path)}$INFO[ListItem.Label,,.jpg]</value>
      </variable>
+     
+     <variable name="SimilarInfo">
+		<value condition="!IsEmpty(ListItem.IMDBNumber) + !IsEmpty(ListItem.TvShowTitle)">plugin://script.skin.helper.service/?action=similarshows&amp;imdbid=$INFO[ListItem.IMDBNumber]&amp;limit=10</value>
+		<value condition="!IsEmpty(ListItem.IMDBNumber)">plugin://script.skin.helper.service/?action=similarmovies&amp;imdbid=$INFO[ListItem.IMDBNumber]&amp;limit=10</value>
+	 </variable>
      	 
 </includes>
