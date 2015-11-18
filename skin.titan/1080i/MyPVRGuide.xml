@@ -219,7 +219,7 @@
 				<width>1800</width>
 				<pagecontrol>10</pagecontrol>
 				<timeblocks>40</timeblocks>
-				<rulerunit>17</rulerunit>
+				<rulerunit>6</rulerunit>
 				<onleft>9000</onleft>
                 <scrolltime tween="quadratic">300</scrolltime>
 				<onback condition="Skin.HasSetting(PVRGuideBackSideblade) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9000</onback>
@@ -385,7 +385,7 @@
 				
 				<itemlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
 					<!--EPG UNFOCUS-->
-					<control type="image" id="14">
+					<control type="image" id="2">
 						<!--Button NF-->
 						<posx>1</posx>
 						<posy>0</posy>
@@ -394,7 +394,7 @@
 						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
 						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
 					</control>
-					<control type="image" id="14">
+					<control type="image" id="2">
 						<!--Button NF-->
 						<posx>1</posx>
 						<posy>0</posy>
@@ -405,11 +405,21 @@
 					</control>
 					<control type="label" id="1">
 						<!--Channel Now Playing-->
-						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
-						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
+						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
 						<posx>20</posx>
 						<posy>0</posy>
-						<width>0</width>
+						<height>55</height>
+						<font>Reg24</font>
+						<aligny>center</aligny>
+						<textoffsetx>0</textoffsetx>
+						<textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+                    <control type="label" id="1">
+						<!--Channel Now Playing (with recording or timer active)-->
+						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>45</posx>
+						<posy>0</posy>
 						<height>55</height>
 						<font>Reg24</font>
 						<aligny>center</aligny>
@@ -418,23 +428,13 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="image">
-						<!--Icon PVR Recording-->
-						<posx>5</posx>
+						<!--Icon PVR Recording or timer-->
+						<posx>0</posx>
 						<posy>3</posy>
 						<width>50</width>
 						<height>50</height>
 						<texture>pvr/icons/pvr_record.png</texture>
-						<visible>ListItem.IsRecording</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-					</control>
-					<control type="image">
-						<!--Icon PVR Timer-->
-						<posx>5</posx>
-						<posy>0</posy>
-						<width>50</width>
-						<height>50</height>
-						<texture>pvr/icons/pvr_record.png</texture>
-						<visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<visible>ListItem.IsRecording | ListItem.HasTimer</visible>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
 					</control>
 				</itemlayout>
@@ -444,41 +444,42 @@
 						<!--Button FO-->
 						<posx>1</posx>
 						<posy>0</posy>
-						<width>50</width>
+						<width>55</width>
 						<height>55</height>
 						<texture diffuse="diffuse/panel.png" border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
 					</control>
-					<control type="fadelabel" id="1">
+                    <control type="fadelabel" id="1">
 						<!--Channel Now Playing-->
-						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
-						<animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
+						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
 						<posx>20</posx>
 						<posy>0</posy>
-						<width>0</width>
 						<height>55</height>
 						<font>Reg24</font>
 						<aligny>center</aligny>
+						<textoffsetx>0</textoffsetx>
+						<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+                    <control type="fadelabel" id="1">
+						<!--Channel Now Playing (with recording or timer active)-->
+						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>45</posx>
+						<posy>0</posy>
+						<height>55</height>
+						<font>Reg24</font>
+						<aligny>center</aligny>
+						<textoffsetx>0</textoffsetx>
 						<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="image">
 						<!--Icon PVR Recording-->
-						<posx>5</posx>
+						<posx>0</posx>
 						<posy>3</posy>
 						<width>50</width>
 						<height>55</height>
 						<texture>pvr/icons/pvr_record.png</texture>
-						<visible>ListItem.IsRecording</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-					</control>
-					<control type="image">
-						<!--Icon PVR Timer-->
-						<posx>5</posx>
-						<posy>0</posy>
-						<width>50</width>
-						<height>55</height>
-						<texture>pvr/icons/pvr_timer.png</texture>
-						<visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+						<visible>ListItem.IsRecording | ListItem.HasTimer</visible>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
 					</control>
 				</focusedlayout>
@@ -696,11 +697,10 @@
 						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
                     </control>
                     <control type="label" id="1">
-                        <!--Channel Now Playing-->
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
-                        <posx>20</posx>
-                        <posy>0</posy>
+						<!--Channel Now Playing-->
+						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>20</posx>
+						<posy>0</posy>
                         <width>0</width>
                         <height>80</height>
                         <font>Reg31</font>
@@ -708,25 +708,28 @@
                         <textoffsetx>0</textoffsetx>
                         <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                    </control>
+					</control>
+                    <control type="label" id="1">
+						<!--Channel Now Playing (with recording or timer active)-->
+						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>45</posx>
+						<posy>0</posy>
+                        <width>0</width>
+                        <height>80</height>
+                        <font>Reg31</font>
+                        <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
+                        <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+					</control>
                     <control type="image">
                         <!--Icon PVR Recording-->
-                        <posx>5</posx>
+                        <posx>0</posx>
                         <posy>15</posy>
                         <width>50</width>
                         <height>50</height>
                         <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <!--Icon PVR Timer-->
-                        <posx>5</posx>
-                        <posy>15</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                 </itemlayout>
@@ -740,38 +743,42 @@
                         <height>80</height>
                         <texture diffuse="diffuse/panel.png" border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
                     </control>
-                    <control type="fadelabel" id="1">
-                        <!--Channel Now Playing-->
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
-                        <posx>20</posx>
-                        <posy>0</posy>
+                    <control type="label" id="1">
+						<!--Channel Now Playing-->
+						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>20</posx>
+						<posy>0</posy>
                         <width>0</width>
                         <height>80</height>
                         <font>Reg31</font>
                         <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
                         <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
                         <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
                         <label>$INFO[ListItem.Label]</label>
-                    </control>
+					</control>
+                    <control type="label" id="1">
+						<!--Channel Now Playing (with recording or timer active)-->
+						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>45</posx>
+						<posy>0</posy>
+                        <width>0</width>
+                        <height>80</height>
+                        <font>Reg31</font>
+                        <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
+                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
+                        <label>$INFO[ListItem.Label]</label>
+					</control>
                     <control type="image">
                         <!--Icon PVR Recording-->
-                        <posx>5</posx>
+                        <posx>0</posx>
                         <posy>15</posy>
                         <width>50</width>
                         <height>50</height>
                         <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <!--Icon PVR Timer-->
-                        <posx>5</posx>
-                        <posy>15</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_timer.png</texture>
-                        <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                 </focusedlayout>
@@ -960,38 +967,39 @@
 						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
                     </control>
                     <control type="label" id="1">
-                        <!--Channel Now Playing-->
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
-                        <posx>20</posx>
-                        <posy>0</posy>
+						<!--Channel Now Playing-->
+						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>20</posx>
+						<posy>0</posy>
                         <width>0</width>
                         <height>65</height>
                         <font>Reg24</font>
                         <aligny>center</aligny>
                         <textoffsetx>0</textoffsetx>
                         <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-                        
                         <label>$INFO[ListItem.Label]</label>
-                    </control>
+					</control>
+                    <control type="label" id="1">
+						<!--Channel Now Playing (with recording or timer active)-->
+						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>45</posx>
+						<posy>0</posy>
+                        <width>0</width>
+                        <height>65</height>
+                        <font>Reg24</font>
+                        <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
+                        <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
+                        <label>$INFO[ListItem.Label]</label>
+					</control>
                     <control type="image">
                         <!--Icon PVR Recording-->
-                        <posx>5</posx>
+                        <posx>0</posx>
                         <posy>10</posy>
                         <width>50</width>
                         <height>50</height>
                         <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <!--Icon PVR Timer-->
-                        <posx>5</posx>
-                        <posy>10</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                 </itemlayout>
@@ -1005,20 +1013,34 @@
                         <height>65</height>
                         <texture diffuse="diffuse/panel.png" border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
                     </control>
-                    <control type="fadelabel" id="1">
-                        <!--Channel Now Playing-->
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.IsRecording">Conditional</animation>
-                        <animation effect="slide" start="0" end="40" time="0" reversible="false" condition="ListItem.HasTimer + !ListItem.IsRecording">Conditional</animation>
-                        <posx>20</posx>
-                        <posy>0</posy>
+                    <control type="label" id="1">
+						<!--Channel Now Playing-->
+						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>20</posx>
+						<posy>0</posy>
                         <width>0</width>
                         <height>65</height>
                         <font>Reg24</font>
                         <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
                         <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
                         <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
                         <label>$INFO[ListItem.Label]</label>
-                    </control>
+					</control>
+                    <control type="label" id="1">
+						<!--Channel Now Playing (with recording or timer active)-->
+						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+						<posx>45</posx>
+						<posy>0</posy>
+                        <width>0</width>
+                        <height>65</height>
+                        <font>Reg24</font>
+                        <aligny>center</aligny>
+                        <textoffsetx>0</textoffsetx>
+                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
+                        <label>$INFO[ListItem.Label]</label>
+					</control>
                     <control type="image">
                         <!--Icon PVR Recording-->
                         <posx>5</posx>
@@ -1026,17 +1048,7 @@
                         <width>50</width>
                         <height>50</height>
                         <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <!--Icon PVR Timer-->
-                        <posx>5</posx>
-                        <posy>10</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_timer.png</texture>
-                        <visible>ListItem.HasTimer + !ListItem.IsRecording</visible>
+                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
 						<aspectratio align="center" aligny="center">keep</aspectratio>
                     </control>
                 </focusedlayout>
