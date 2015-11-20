@@ -495,7 +495,6 @@
 		<value condition="Container.Content(studios) + System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos)">http://localhost:52307/getstudiologocolor&amp;studio=$INFO[ListItem.Label]</value>
         <value condition="Container.Content(studios)">http://localhost:52307/getstudiologo&amp;studio=$INFO[ListItem.Label]</value>
 		<value condition="Window.IsActive(tvrecordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Thumb]</value>
-        <value condition="SubString(Container(510).ListItem.FolderPath,pvr://recordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
 		<value condition="SubString(Container.FolderPath,pvr://) | SubString(ListItem.FolderPath,pvr://)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
 		<value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
 		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
@@ -505,6 +504,12 @@
 		<value condition="Container.Content(countries)">special://skin/extras/defaulticonswide/DefaultCountry.png</value>
 		<value condition="Container.Content(tags)">special://skin/extras/defaulticonswide/DefaultTags.png</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+        <value condition="SubString(Container(510).ListItem.FolderPath,pvr://recordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Art(landscape))">$INFO[Container(510).ListItem.Art(landscape)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.landscape))">$INFO[Container(510).ListItem.Art(tvshow.landscape)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Art(fanart))">$INFO[Container(510).ListItem.Art(fanart)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.fanart))">$INFO[Container(510).ListItem.Art(tvshow.fanart)]</value>
+        <value condition="!IsEmpty(Container(510).ListItem.Thumb)">$INFO[Container(510).ListItem.Thumb]</value>
     </variable>
 	
 	<variable name="LandscapeImageSeason">
@@ -853,13 +858,14 @@
   </variable>
     
    <variable name="HomeButtonDownAction">
-		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5) | StringCompare(Container(300).Position,7) | StringCompare(Container(300).Position,9)]]">SetFocus(77777)</value>
-		<value condition="!IsEmpty(Container(300).ListItem.Property(hasSubmenu)) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + [IntegerGreaterThan(Container(4444).NumItems,0) | IntegerGreaterThan(Container(4445).NumItems,0)] + Skin.String(HomeLayout, 1)">Control.SetFocus(4444)</value>
+		<value condition="!Skin.HasSetting(DisableAllSubmenus) + !IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5) | StringCompare(Container(300).Position,7) | StringCompare(Container(300).Position,9)]]">SetFocus(77777)</value>
+		<value condition="!Skin.HasSetting(DisableAllSubmenus) + !IsEmpty(Container(300).ListItem.Property(hasSubmenu)) + SubString(Container(300).ListItem.Property(hasSubmenu), True) + [IntegerGreaterThan(Container(4444).NumItems,0) | IntegerGreaterThan(Container(4445).NumItems,0)] + Skin.String(HomeLayout, 1)">Control.SetFocus(4444)</value>
 		<value condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</value>
    </variable>
    
    <variable name="HomeButtonUpAction">
-		<value condition="!IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4) | StringCompare(Container(300).Position,6) | StringCompare(Container(300).Position,8)]] | Skin.String(HomeLayout, 1)]">SetFocus(77777)</value>
+		<value condition="!Skin.HasSetting(DisableAllWidgets) + !IsEmpty(Container(300).ListItem.Property(widget)) + [[Skin.String(HomeLayout, 2) + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4) | StringCompare(Container(300).Position,6) | StringCompare(Container(300).Position,8)]] | Skin.String(HomeLayout, 1)]">SetFocus(77777)</value>
+        <value condition="!Skin.HasSetting(DisableAllWidgets) + !IsEmpty(Container(300).ListItem.Property(widget)) + Skin.String(HomeLayout, simplehor)">SetFocus(77777)</value>
 		<value condition="Skin.HasSetting(ShowProfile)">Control.SetFocus(891,0)</value>
    </variable>
   

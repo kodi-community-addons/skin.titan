@@ -278,7 +278,7 @@
 					<posy>360</posy>
 					<width>400</width>
 					<height>270</height>
-					<label>[B]$LOCALIZE[126]:[/B][CR]$INFO[ListItem.Property(Status)][CR][CR][B]$LOCALIZE[31212]:[/B][CR]$INFO[ListItem.Property(NextNumber),,. ]$INFO[ListItem.Property(NextTitle)][CR][CR][B]$LOCALIZE[31213]:[/B][CR]$INFO[ListItem.Property(ShortTime)]$INFO[ListItem.Property(Network), @ ]</label>
+					<label>[B]$LOCALIZE[31212]:[/B][CR]$INFO[ListItem.Property(NextNumber),,. ]$INFO[ListItem.Property(NextTitle)][CR][CR][B]$LOCALIZE[31213]:[/B][CR]$INFO[ListItem.Property(NextDate)] $INFO[ListItem.Property(ShortTime)]$INFO[ListItem.Property(Network), @ ][CR][CR][B]$LOCALIZE[126]:[/B][CR]$INFO[ListItem.Property(Status)]</label>
 					<font>Reg24</font>
 					<textcolor>$VAR[ViewDetailsTextColor]</textcolor>
 					<aligny>top</aligny>
@@ -326,7 +326,7 @@
 					<posy>360</posy>
 					<width>400</width>
 					<height>270</height>
-					<label>[B]$LOCALIZE[126]:[/B][CR]$INFO[ListItem.Property(Status)][CR][CR][B]$LOCALIZE[31212]:[/B][CR]$INFO[ListItem.Property(NextNumber),,. ]$INFO[ListItem.Property(NextTitle)][CR][CR][B]$LOCALIZE[31213]:[/B][CR]$INFO[ListItem.Property(ShortTime)]$INFO[ListItem.Property(Network), @ ]</label>
+					<label>[B]$LOCALIZE[31212]:[/B][CR]$INFO[ListItem.Property(NextNumber),,. ]$INFO[ListItem.Property(NextTitle)][CR][CR][B]$LOCALIZE[31213]:[/B][CR]$INFO[ListItem.Property(NextDate)] $INFO[ListItem.Property(ShortTime)]$INFO[ListItem.Property(Network), @ ][CR][CR][B]$LOCALIZE[126]:[/B][CR]$INFO[ListItem.Property(Status)]</label>
 					<font>Reg24</font>
 					<textcolor>$VAR[ViewDetailsTextColor]</textcolor>
 					<aligny>top</aligny>
@@ -918,6 +918,7 @@
             <include condition="Skin.String(thumbsborder_unfocused, 2)">thumbborder_2</include>
             <include condition="Skin.String(thumbsborder_unfocused, 4)">thumbborder_4</include>
             <include condition="Skin.String(thumbsborder_unfocused, 6)">thumbborder_6</include>
+            <visible>![Window.IsActive(Home) + Skin.HasSetting(Home_TransParentTiles)]</visible>
         </control>
         <include>ThumbsViewItemLayout</include>
     </include>
@@ -932,6 +933,15 @@
             <include condition="Skin.String(thumbsborder_focused, 2)">thumbborder_2</include>
             <include condition="Skin.String(thumbsborder_focused, 4)">thumbborder_4</include>
             <include condition="Skin.String(thumbsborder_focused, 6)">thumbborder_6</include>
+            <visible>![Window.IsActive(Home) + Skin.HasSetting(Home_TransParentTiles)]</visible>
+        </control>
+        <control type="image">
+            <!--focus image-->
+            <texture border="5">home/home_focus.png</texture>
+            <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+            <visible>[Window.IsActive(Home) + Skin.HasSetting(Home_TransParentTiles)]</visible>
+            <bordersize>-4</bordersize>
         </control>
         <include>ThumbsViewItemLayout</include>
     </include>
@@ -1079,7 +1089,7 @@
         <control type="group">
 			<!--Label Overlay-->
 			<include>SquarePosterLabelOverlay</include>
-			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)]</visible>
+			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
             <visible>!StringCompare(ListItem.Label,..)</visible>
 		</control>
     </include>
@@ -1106,7 +1116,7 @@
          <control type="group">
 			<!--Label Overlay-->
 			<include>SquarePosterLabelOverlay</include>
-			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)]</visible>
+			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
             <visible>!StringCompare(ListItem.Label,..)</visible>
 		</control>
     </include>
@@ -1712,6 +1722,30 @@
 	
 	 <include name="mediaflags_classic">
         <include>mediaflags_sets</include>
+        <!-- nextaired info -->
+        <control type="group">
+            <width>400</width>
+            <height>36</height>
+            <visible>!IsEmpty(Control.GetLabel(44240))</visible>
+            <visible>Container.content(tvshows) | Container.content(seasons)</visible>
+            <control type="image">
+                <posx>-6</posx>
+                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+                <texture border="50,5,5,5">flags/flag_box_rating_classic.png</texture>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="label" id="44240">
+                <font>flags</font>
+                <posx>40</posx>
+                <width>360</width>
+                <right>0</right>
+                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+                <label>$INFO[Window(Home).Property(NextAired.Status),, ]$INFO[Window(Home).Property(NextAired.NextDate)]</label>
+                <align>center</align>
+                <aligny>center</aligny>
+                <height>36</height>
+            </control>
+        </control>
         <control type="group">
             <visible>!IsEmpty(Control.GetLabel(44223))</visible>
             <control type="image">
@@ -2084,6 +2118,32 @@
                 <visible>Window.IsActive(fullscreenvideo)</visible>
             </control>
 			
+            
+            <!-- nextaired info -->
+            <control type="group">
+				<width>400</width>
+				<height>36</height>
+				<visible>!IsEmpty(Control.GetLabel(44240))</visible>
+                <visible>Container.content(tvshows) | Container.content(seasons)</visible>
+				<control type="image">
+					<posx>-6</posx>
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture>flags/flag_box.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label" id="44240">
+					<font>flags</font>
+					<posx>-6</posx>
+					<width>400</width>
+					<right>0</right>
+					<textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+					<label>$INFO[Window(Home).Property(NextAired.Status),, ]$INFO[Window(Home).Property(NextAired.NextDate)]</label>
+                	<align>center</align>
+					<aligny>center</aligny>
+					<height>36</height>
+				</control>
+			</control>
+            
 		</control>
     </include>
  
