@@ -62,9 +62,12 @@
 		<!-- all widgets -->
 		<control type="grouplist" id="9000">
 			<posx>0</posx>
-			<top>160</top>
+			<height>82%</height>
 			<width>100%</width>
-			<bottom>0</bottom>
+			<bottom>10</bottom>
+            <ondown>9000</ondown>
+            <onleft>300</onleft>
+            <onup>9000</onup>
 			<defaultcontrol always="true">51</defaultcontrol>
 			<pagecontrol>317</pagecontrol>
 			<!-- ROW1: spotlight -->
@@ -227,6 +230,48 @@
 			
 			</control>
 			
+            <!-- ROW1 (when spotlight disabled) -->
+			<control type="group" id="504">
+				<width>1920</width>
+				<height>70</height>
+                <visible>Skin.HasSetting(NetflixHomeDisableFirstRow)</visible>
+                <visible>!IsEmpty(Container(999).ListItemNoWrap.Label)</visible>
+				<!-- top bar -->
+				<control type="image">
+					<posx>50</posx>
+					<posy>0</posy>
+					<width>1820</width>
+					<height>55</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+				</control>
+				<control type="label">
+					<height>40</height>
+					<posx>60</posx>
+					<font>Bold36</font>
+					<align>left</align>
+					<aligny>top</aligny>
+					<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+					<label>$INFO[Container(999).ListItemNoWrap.Label]</label>
+                    <visible>IsEmpty(Container(505).ListItem.Property(similartitle))</visible>
+				</control>
+                <control type="label">
+					<height>40</height>
+					<posx>60</posx>
+					<font>Bold36</font>
+					<align>left</align>
+					<aligny>top</aligny>
+					<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+					<label>$LOCALIZE[31545] $INFO[Container(505).ListItem.Property(similartitle)]</label>
+                    <visible>!IsEmpty(Container(505).ListItem.Property(similartitle))</visible>
+				</control>
+			</control>
+            <control type="panel" id="505">
+                <include>widgetlayout</include>
+                <visible>Skin.HasSetting(NetflixHomeDisableFirstRow)</visible>
+                <content target="video">$INFO[Container(999).ListItemNoWrap.Property(list)]</content> 
+            </control>
+            
 			<!-- whitespace -->
 			<control type="group" id="514">
 				<width>1920</width>
@@ -271,9 +316,6 @@
 				</control>
 			</control>	
             <control type="panel" id="520">
-                <ondown>530</ondown>
-                <onleft>300</onleft>
-                <onup>51</onup>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(1).Property(list)]</content> 
             </control>
@@ -322,9 +364,6 @@
 				</control>
             </control>
             <control type="panel" id="530">
-                <ondown>540</ondown>
-                <onleft>300</onleft>
-                <onup>520</onup>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(2).Property(list)]</content> 
             </control>
@@ -366,9 +405,6 @@
 				</control>
 			</control>	
             <control type="panel" id="540">
-                <onleft>300</onleft>
-                <onup>530</onup>
-                <ondown>550</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(3).Property(list)]</content> 
             </control>
@@ -410,9 +446,6 @@
 				</control>
 			</control>	
             <control type="panel" id="550">
-                <onleft>300</onleft>
-                <onup>540</onup>
-                <ondown>560</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(4).Property(list)]</content> 
             </control>
@@ -454,9 +487,6 @@
 				</control>
 			</control>	
             <control type="panel" id="560">
-                <onleft>300</onleft>
-                <onup>550</onup>
-                <ondown>570</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(5).Property(list)]</content> 
             </control>
@@ -498,9 +528,6 @@
 				</control>
 			</control>	
             <control type="panel" id="570">
-                <onleft>300</onleft>
-                <onup>560</onup>
-                <ondown>580</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(6).Property(list)]</content> 
             </control>
@@ -542,9 +569,6 @@
 				</control>
 			</control>	
             <control type="panel" id="580">
-                <onleft>300</onleft>
-                <onup>570</onup>
-                <ondown>590</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(7).Property(list)]</content> 
             </control>
@@ -586,9 +610,6 @@
 				</control>
 			</control>	
             <control type="panel" id="590">
-                <onleft>300</onleft>
-                <onup>580</onup>
-                <ondown>600</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(8).Property(list)]</content> 
             </control>
@@ -630,12 +651,17 @@
 				</control>
 			</control>	
             <control type="panel" id="600">
-                <onleft>300</onleft>
-                <onup>590</onup>
-                <ondown>51</ondown>
                 <include>widgetlayout</include>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(9).Property(list)]</content> 
             </control>
+            
+            <!-- whitespace -->
+			<control type="button" id="605">
+				<width>1920</width>
+				<height>10</height>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+			</control>
 
 		</control>
 		
