@@ -94,6 +94,11 @@
 			<property name="widgetType.99">tvshows</property>
 			<property name="widgetPath.99">special://skin/extras/widgetplaylists/randomtvshows.xsp</property>
 			<property name="widgetName.99">Spotlight</property>
+			<property name="widget.2">addon</property>
+			<property name="widgetName.2">My TV Shows Airing today</property>
+			<property name="widgetType.2">episodes</property>
+			<property name="widgetTarget.2">video</property>
+			<property name="widgetPath.2">plugin://script.skin.helper.service/?action=nextairedtvshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
 			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0)]">ActivateWindow(10025,videodb://tvshows/titles/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://tvshows/titles/,return)</property>
 			<property name="list">videodb://tvshows/titles/</property>
@@ -222,7 +227,7 @@
 			<label>$LOCALIZE[10002]</label>
 			<label2>Pictures</label2>
 			<icon>special://skin/extras/hometiles/pictures.png</icon>
-			<thumb>special://skin/extras/hometiles/pictures.png</thumb>
+			<thumb>$INFO[Window(Home).Property(SkinHelper.PicturesBackground)]</thumb>
 			<property name="labelID">pictures</property>
 			<property name="defaultID">pictures</property>
 			<property name="background">$INFO[Window(Home).Property(SkinHelper.PicturesBackground)]</property>
@@ -17194,6 +17199,27 @@
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<include>SpotLightWidgetLayout</include>
 			<content target="video">special://skin/extras/widgetplaylists/randomtvshows.xsp</content>
+		</control>
+	</include>
+	<include name="skinshortcuts-template-widget.2">
+		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-widget.2-Master user</include>
+	</include>
+	<include name="skinshortcuts-template-widget.2-Master user">
+		<control id="600" type="label">
+			<label>widget-2</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,2)</visible>
+		</control>
+		<control id="510" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,2)</visible>
+			<include condition="Skin.String(HomeLayout, enhanced)">panel_layout_enhanced</include>
+			<include condition="!Skin.String(HomeLayout, enhanced)">widgetlayout</include>
+			<content target="video">plugin://script.skin.helper.service/?action=nextairedtvshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 		</control>
 	</include>
 </includes>
