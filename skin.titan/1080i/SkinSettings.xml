@@ -679,6 +679,18 @@
 						<selected>Skin.HasSetting(expandsnow)</selected>
 						<visible>Skin.HasSetting(enablesnow) + !Skin.HasSetting(DisableHeader) + !Skin.HasSetting(AlwaysShowWeather)</visible>
 					</control>
+                    
+                    <control type="radiobutton" id="8023">
+                        <!-- prefer clearart over landscapes -->
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>31652</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(PreferClearArtOverLandscape)</onclick>
+						<selected>Skin.HasSetting(PreferClearArtOverLandscape)</selected>
+					</control>
 					
 				</control>
 
@@ -1936,20 +1948,6 @@
 						<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=HomeLayout,header=$LOCALIZE[31124])</onclick>
 					</control>
 
-					<!--use small home tiles-->
-					<control type="radiobutton" id="23006">
-						<description></description>
-						<width>1230</width>
-						<align>left</align>
-						<label>31263</label>
-						<height>50</height>
-						<font>Reg28</font>
-						<textoffsetx>100</textoffsetx>
-						<onclick>Skin.ToggleSetting(UseSmallHomeTiles)</onclick>
-						<onclick condition="Skin.String(SubmenuLayout, vertical)">Skin.SetString(SubmenuLayout, horizontal)</onclick>
-						<selected>Skin.HasSetting(UseSmallHomeTiles)</selected>
-						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]</visible>
-					</control>
 					<!--fixed focus home panel-->
 					<control type="radiobutton" id="23018">
 						<description></description>
@@ -1961,24 +1959,9 @@
 						<textoffsetx>100</textoffsetx>
 						<onclick>Skin.ToggleSetting(UseFixedHomeFocus)</onclick>
 						<selected>Skin.HasSetting(UseFixedHomeFocus)</selected>
-						<visible>Skin.String(HomeLayout, 1)</visible>
+						<visible>Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)</visible>
 					</control>
-					
-                    <!--vertical tiles-->
-					<control type="radiobutton" id="23516">
-						<description></description>
-						<width>1230</width>
-						<textoffsetx>100</textoffsetx>
-						<align>left</align>
-						<label>31523</label>
-						<height>50</height>
-						<font>Reg28</font>
-						<onclick>Skin.ToggleSetting(VerticalHomeTiles)</onclick>
-						<selected>Skin.HasSetting(VerticalHomeTiles)</selected>
-						<visible>Skin.String(HomeLayout, simplever)</visible>
-						<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
-					</control>
-                    
+					                    
                     <control type="button" id="23602">
 						<description></description>
 						<!--change netflix rows-->
@@ -2024,7 +2007,7 @@
 						<height>50</height>
 						<font>Reg28</font>
 						<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=SubmenuLayout,header=$LOCALIZE[31312])</onclick>
-                        <visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3)]</visible>
+                        <visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 3small)]</visible>
 					</control>
                     
                     <!-- widget layout-->
@@ -2036,7 +2019,7 @@
 						<height>50</height>
 						<font>Reg28</font>
 						<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=widgetstyle,header=$LOCALIZE[31507])</onclick>
-                        <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, enhanced)</visible>
+                        <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small) + !Skin.String(HomeLayout, enhanced)</visible>
 					</control>
 
                     <!-- HOMESCREEN OPTIONS -->
@@ -2087,7 +2070,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(AutoShowWidgets)</onclick>
 						<selected>Skin.HasSetting(AutoShowWidgets)</selected>
-						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, simplehor)]</visible>
+						<visible>[Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, simplehor)]</visible>
 					</control>
 
 					<!--enable auto show submenus-->
@@ -2100,7 +2083,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(AutoShowSubmenu)</onclick>
 						<selected>Skin.HasSetting(AutoShowSubmenu)</selected>
-						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, simplever)]</visible>
+						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
 					</control>
 					
 					<!--open submenu inline in vertical home-->
@@ -2113,7 +2096,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(VerticalHomeInlineSubmenu)</onclick>
 						<selected>Skin.HasSetting(VerticalHomeInlineSubmenu)</selected>
-						<visible>Skin.String(HomeLayout, simplever)</visible>
+						<visible>[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
 						<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 					</control>
 
@@ -2166,7 +2149,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(Vertical_Home_Animation)</onclick>
 						<selected>Skin.HasSetting(Vertical_Home_Animation)</selected>
-						<visible>Skin.String(HomeLayout, simplever)</visible>
+						<visible>[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
 					</control>
                     
                     <!--enable widgets animation-->
@@ -2189,7 +2172,6 @@
 						<align>left</align>
 						<label>31030</label>
 						<height>50</height>
-						
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(WeatherOnHome)</onclick>
 						<onclick>Skin.Reset(ShowProfile)</onclick>
@@ -2218,7 +2200,7 @@
 						<onclick condition="!Skin.String(CustomLogoImage)">Skin.SetImage(CustomLogoImage)</onclick>
 						<onclick condition="Skin.String(CustomLogoImage)">Skin.Reset(CustomLogoImage)</onclick>
 						<selected>Skin.String(CustomLogoImage)</selected>
-						<visible>![Skin.HasSetting(WeatherOnHome) | Skin.HasSetting(ShowProfile)] | Skin.String(HomeLayout, simplever)</visible>
+						<visible>![Skin.HasSetting(WeatherOnHome) | Skin.HasSetting(ShowProfile)] | [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
 					</control>
                     <control type="button" id="123023">
 						<description></description>
@@ -2232,7 +2214,7 @@
                         <onclick condition="Skin.String(LogoImageAlignment,center)">Skin.SetString(LogoImageAlignment,left)</onclick>
 						<onclick condition="Skin.String(LogoImageAlignment,left)">Skin.SetString(LogoImageAlignment,right)</onclick>
                         <onclick condition="!Skin.String(LogoImageAlignment)">Skin.SetString(LogoImageAlignment,right)</onclick>
-						<visible>Skin.String(CustomLogoImage) + Skin.String(HomeLayout, simplever)</visible>
+						<visible>Skin.String(CustomLogoImage) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
 					</control>
 					
 					<control type="label" id="23024">
@@ -2306,7 +2288,7 @@
 						<align>left</align>
 						<label>31086</label>
 						<height>50</height>
-						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, enhanced)]</visible>
+						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 3small) | Skin.String(HomeLayout, enhanced)]</visible>
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(NoTitleOnHomeMenuTiles)</onclick>
 						<selected>Skin.HasSetting(NoTitleOnHomeMenuTiles)</selected>
@@ -2322,7 +2304,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(HideWidgetPanelBackground)</onclick>
 						<selected>Skin.HasSetting(HideWidgetPanelBackground)</selected>
-						<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3)</visible>
+						<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small)</visible>
 					</control>
 					
 					<!--prefer tv show art for episodes-->
@@ -2335,11 +2317,24 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(PreferTvShowThumbWidget)</onclick>
 						<selected>Skin.HasSetting(PreferTvShowThumbWidget)</selected>
-						<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3)</visible>
+						<visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small)</visible>
+					</control>
+                    
+                    <!--show labels for episodes-->
+					<control type="radiobutton" id="13006">
+						<description></description>
+						<width>1230</width>
+						<align>left</align>
+						<label>31648</label>
+						<height>50</height>
+						<font>Reg28</font>
+						<onclick>Skin.ToggleSetting(ShowLabelsPosterEpisodes)</onclick>
+						<selected>Skin.HasSetting(ShowLabelsPosterEpisodes)</selected>
+						<visible>!Skin.HasSetting(DisableAllWidgets)</visible>
 					</control>
 					
 					<!--hide indicators on home tiles-->
-					<control type="radiobutton" id="13006">
+					<control type="radiobutton" id="13007">
 						<description></description>
 						<width>1230</width>
 						<align>left</align>
@@ -2348,7 +2343,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(HideHomeTileIndicators)</onclick>
 						<selected>Skin.HasSetting(HideHomeTileIndicators)</selected>
-						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2)]</visible>
+						<visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small)]</visible>
 						<visible>![Skin.HasSetting(DisableAllWidgets) + Skin.HasSetting(DisableAllSubmenus)]</visible>
 					</control>
 					
@@ -2584,7 +2579,7 @@
 						<font>Reg28</font>
 						<onclick>Skin.ToggleSetting(HideBatteryStatus)</onclick>
 						<selected>Skin.HasSetting(HideBatteryStatus)</selected>
-						<visible>Skin.HasSetting(EnableTouchSupport) + !Skin.String(HomeLayout, simplever)</visible>
+						<visible>Skin.HasSetting(EnableTouchSupport) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
 					</control>
                     
 					<control type="radiobutton" id="5139">
@@ -3231,6 +3226,5 @@
         <include condition="!skin.hassetting(nofooterbar)">Footer</include>
 		<!--Titan Version-->
         <include>TitanVersion</include>
-        <include condition="Skin.HasSetting(DebugGrid) | Skin.HasSetting(DebugInfo)">DebugInfo</include>
 	</controls>
 </window>
