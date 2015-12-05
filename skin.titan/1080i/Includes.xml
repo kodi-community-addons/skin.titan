@@ -506,59 +506,61 @@
 			<visible>Pvr.IsRecording + window.isactive(home)</visible>
 		</control>
 		
-        <control type="image">
-            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
-			<posx>61</posx>
-            <posy>41</posy>
-            <height>64</height>
-            <width>64</width>
-            <aligny>center</aligny>
-            <colordiffuse>$INFO[Skin.String(HeaderTextShadowColor)]</colordiffuse>
-            <texture>$VAR[value_header_icon]</texture>
-			<visible>!Control.IsVisible(882)</visible>
+        <control type="group">
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !StringCompare(Window(Home).Property(ShowWidget),show)</visible>
+            <control type="image">
+                <visible>skin.hastheme(classic)</visible>
+                <posx>61</posx>
+                <posy>41</posy>
+                <height>64</height>
+                <width>64</width>
+                <aligny>center</aligny>
+                <colordiffuse>$INFO[Skin.String(HeaderTextShadowColor)]</colordiffuse>
+                <texture>$VAR[value_header_icon]</texture>
+                <visible>!Control.IsVisible(882)</visible>
+            </control>
+            <control type="image">
+                <visible>skin.hastheme(classic)</visible>
+                <posx>60</posx>
+                <posy>40</posy>
+                <height>64</height>
+                <width>64</width>
+                <aligny>center</aligny>
+                <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
+                <texture>$VAR[value_header_icon]</texture>
+                <visible>!Control.IsVisible(882)</visible>
+            </control>
+            <control type="label">
+                <posx>61</posx>
+                <posy>10</posy>
+                <width min="80" max="1400">auto</width>
+                <height>100</height>
+                <font>Bold45</font>
+                <align>left</align>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <label>$VAR[value_header]</label>
+                <visible>!Control.IsVisible(882)</visible>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                <animation effect="slide" end="80,15" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+            </control>
+             <control type="label">
+                <visible>!skin.hastheme(classic)</visible>
+                <posy>85</posy>
+                <posx>61</posx>
+                <width min="0" max="1400">auto</width>
+                <height>50</height>
+                <label>$VAR[value_subheader]</label>
+                <font>Reg30</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                <visible>![Skin.HasSetting(EnableTouchSupport) + Window.IsActive(MyVideoNav.xml)]</visible>
+                <visible>!Control.IsVisible(882)</visible>
+            </control>
         </control>
-		<control type="image">
-            <visible>skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget)) +window.isactive(home)]</visible>
-            <posx>60</posx>
-            <posy>40</posy>
-            <height>64</height>
-            <width>64</width>
-            <aligny>center</aligny>
-            <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
-            <texture>$VAR[value_header_icon]</texture>
-			<visible>!Control.IsVisible(882)</visible>
-        </control>
-        <control type="label">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget)) +window.isactive(home)]</visible>
-            <posx>61</posx>
-            <posy>10</posy>
-            <width min="80" max="1400">auto</width>
-            <height>100</height>
-            <font>Bold45</font>
-            <align>left</align>
-            <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
-            <label>$VAR[value_header]</label>
-			<visible>!Control.IsVisible(882)</visible>
-			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-			<animation effect="slide" end="80,15" time="0" condition="skin.hastheme(classic)">Conditional</animation>
-        </control>
-		 <control type="label">
-			<visible>!skin.hastheme(classic) + !Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + ![Skin.HasSetting(AutoShowWidgets) + !IsEmpty(Container(300).ListItem.Property(widget)) +window.isactive(home)]</visible>
-			<posy>85</posy>
-			<posx>61</posx>
-			<width min="0" max="1400">auto</width>
-			<height>50</height>
-			<label>$VAR[value_subheader]</label>
-			<font>Reg30</font>
-			<textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
-			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-			<visible>![Skin.HasSetting(EnableTouchSupport) + Window.IsActive(MyVideoNav.xml)]</visible>
-			<visible>!Control.IsVisible(882)</visible>
-		</control>
 
 		<!-- Snow Effect Expansion -->
 		<control type="group">
-        <include condition="Skin.HasSetting(enablesnow) + Skin.HasSetting(expandsnow)">snow</include>
+            <include condition="Skin.HasSetting(enablesnow) + Skin.HasSetting(expandsnow)">snow</include>
 		</control>
 
     </include>
@@ -624,7 +626,7 @@
 	<include name="TimeInfo">
 		
         <control type="group">
-            <visible>![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)]</visible>
+            <visible>!StringCompare(Window(Home).Property(ShowWidget),show)</visible>
 			<visible>!Control.IsVisible(881)</visible>
 			<visible>!Control.IsVisible(77551)</visible>
             <visible>!Control.IsVisible(88888)</visible>
