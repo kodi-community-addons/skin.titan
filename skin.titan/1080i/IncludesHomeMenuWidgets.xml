@@ -155,9 +155,6 @@
             <include>mediaflags</include>
             <visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
         </control>
-
-            
-
         
     </control>    
         
@@ -207,14 +204,6 @@
             <include>skinshortcuts-template-widget.1</include>
             <include>skinshortcuts-template-widget.2</include>
             <include>skinshortcuts-template-widget.3</include>
-            
-            <control type="group">
-                <posy>650</posy>
-                <right>55</right>
-                <width>1810</width>
-                <height>341</height>
-                <include>widgetpanel_boxed</include>
-            </control>
             
             <!-- busy image while widget loading -->
             <control type="multiimage">
@@ -473,6 +462,14 @@
 	</include>
 	
 	<variable name="HomeMenuWidgetInfoLabel">
+        <value condition="SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) + !IsEmpty(ListItem.Label2)">[B]$INFO[ListItem.label][CR]$INFO[ListItem.label2][/B]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">[B]$INFO[ListItem.Property(title)][/B]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">[B]$INFO[ListItem.label][/B]</value>
+		<value condition="StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
+		<value condition="!IsEmpty(ListItem.Title) + SubString(ListItem.FolderPath, pvr://)">[B]$INFO[ListItem.Title][/B]</value>
+        <value condition="!IsEmpty(ListItem.Season) + !IsEmpty(ListItem.Episode) + !StringCompare(ListItem.TvShowTitle,ListItem.Title)">[B][UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode]:[/UPPERCASE] $INFO[ListItem.Title][/B]</value>
+        <value condition="!IsEmpty(ListItem.Title)">[B]$INFO[ListItem.Title][/B]</value>
+		<value condition="!IsEmpty(ListItem.Label)">[B]$INFO[ListItem.Label][/B]</value>
 		<value condition="SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube)">[B]$INFO[Container(510).ListItem.label][CR]$INFO[Container(510).ListItem.label2][/B]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(Container(510).ListItem.Property(type),livechannel)">[B]$INFO[Container(510).ListItem.Property(title)][/B]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(Container(510).ListItem.Property(type),recorded)">[B]$INFO[Container(510).ListItem.label][/B]</value>
@@ -680,8 +677,8 @@
     <include name="widgetlayout">
         <include condition="Skin.String(widgetstyle, poster)">widget_layout_poster</include>
         <include condition="Skin.String(widgetstyle, landscape)">widget_layout_landscape</include>
-        <include condition="Skin.String(widgetstyle, single box)">widget_layout_boxed</include>
-        <include condition="Skin.String(widgetstyle, wide box)">widget_layout_boxed</include>
+        <include condition="Skin.String(widgetstyle, single box)">widget_layout_singlebox</include>
+        <include condition="Skin.String(widgetstyle, wide box)">widget_layout_widebox</include>
         <include condition="Skin.String(widgetstyle, small poster)">widget_layout_small_poster</include>
         <include condition="Skin.String(widgetstyle, square)">widget_layout_square</include>
     </include>
@@ -861,12 +858,12 @@
 		<animation effect="slide" start="0" end="366" time="0" condition="!Skin.String(HomeLayout, simplever) + !Skin.String(HomeLayout, simplever_tiles) + !Skin.String(HomeLayout, netflix) + !IntegerGreaterThan(Container(510).NumItems,2)">Conditional</animation>
 		<animation effect="slide" start="0" end="366" time="0" condition="!Skin.String(HomeLayout, simplever) + !Skin.String(HomeLayout, simplever_tiles) + !Skin.String(HomeLayout, netflix) + !IntegerGreaterThan(Container(510).NumItems,1)">Conditional</animation>
 	</include>
-	
-    <include name="widget_layout_boxed">
-        <posx>10</posx>
-		<posy>10</posy>
-		<width>1</width>
-		<height>1</height>
+	    
+    <include name="widget_layout_singlebox">
+        <width>940</width>
+        <height>340</height>
+        <right>55</right>
+        <bottom>50</bottom>
         <ondown condition="!Skin.String(HomeLayout, netflix)">300</ondown>
         <onup condition="!Skin.String(HomeLayout, netflix)">$VAR[changeWidgetClickActions]</onup>
         <onup condition="!Skin.String(HomeLayout, netflix)">RunScript(script.skin.helper.service,action=setfocus,control=510)</onup>
@@ -874,25 +871,27 @@
         <onright>510</onright>
         <orientation>horizontal</orientation>
         <include>widget_layout_general</include>
-        <itemlayout height="1" width="1" />
-        <focusedlayout height="1" width="1">
+        <itemlayout height="340" width="940">
+            <include>itemlayout_singlebox</include>
+        </itemlayout>
+        <focusedlayout height="340" width="940">
             <control type="button">
                 <visible>false</visible>
                 <onfocus condition="!Skin.String(HomeLayout, netflix)">Setproperty(ShowWidget,show)</onfocus>
-                <onfocus>Setproperty(widgetstyle,single)</onfocus>
+                <onfocus>Setproperty(widgetstyle,single box)</onfocus>
+            </control>
+            <include>itemlayout_singlebox</include>
+            <control type="image">
+                <bordersize>0</bordersize>
+                <texture border="5">diffuse/border.png</texture>
+                <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
             </control>
         </focusedlayout>
     </include>
-        
-    <include name="widgetpanel_boxed">
-        
+    
+    <include name="itemlayout_singlebox">
         <!-- single box widget -->
-        <control type="group" id="55123">
-            <visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
-            <visible>Skin.String(widgetstyle, single box) + [StringCompare(Container(300).ListItem.Property(widgetstyle),Global) | IsEmpty(Container(300).ListItem.Property(widgetstyle))] | StringCompare(Container(300).ListItem.Property(widgetstyle),single box)</visible>
-            <width>940</width>
-            <height>340</height>
-            <right>0</right>
+        <control type="group">
             <control type="image">
                 <texture border="5">diffuse/panel.png</texture>
                 <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
@@ -901,13 +900,6 @@
                 <texture border="5">diffuse/thinborder.png</texture>
                 <colordiffuse>darkgrey</colordiffuse>
             </control>
-            <control type="image">
-                <bordersize>-3</bordersize>
-                <texture border="5">diffuse/border.png</texture>
-                <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
-                <visible>Control.HasFocus(510)</visible>
-            </control>
-            
             <!-- poster image -->
             <control type="image">
                 <width>240</width>
@@ -917,18 +909,7 @@
                 <bordersize>8</bordersize>
                 <visible>!Container(510).IsUpdating</visible>
             </control> 
-            
-            <!-- busy image -->
-            <control type="image">
-                <width>200</width>
-                <height>200</height>
-                <texture>special://skin/extras/busy_spinners/4 segment circle.gif</texture>
-                <aspectratio aligny="top" align="left">keep</aspectratio>
-                <bordersize>30</bordersize>
-                <visible>Container(510).IsUpdating</visible>
-            </control>
-
-            <control type="button" id="511">
+            <control type="button">
 				<left>251</left>
                 <top>5</top>
                 <width>650</width>
@@ -937,14 +918,12 @@
                 <textoffsetx>0</textoffsetx>
                 <height>50</height>
                 <font>Reg30</font>
-				<onleft>300</onleft>
-                <onright>300</onright>
-				<onup>300</onup>
-				<ondown>510</ondown>
 				<label>$VAR[changeWidgetLabel]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
-				<onclick>$VAR[changeWidgetClickActions]</onclick>
-				<texturenofocus>-</texturenofocus>
+                <focusedcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</focusedcolor>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]</visible>
 			</control>
             <control type="image">
 				<right>10</right>
@@ -952,7 +931,7 @@
 				<width>30</width>
 				<height>30</height>
 				<texture colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">home/home_arrow_up.png</texture>
-				<visible>Control.IsVisible(511) + !IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
+				<visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]</visible>
 			</control>
             <control type="label">
                 <left>251</left>
@@ -963,6 +942,7 @@
                 <font>Reg30</font>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <label>$VAR[HomeMenuWidgetInfoLabel]</label>
+                <animation effect="slide" end="0,-60" time="0" delay="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]">Conditional</animation>
             </control>
             <control type="textbox">
                 <left>251</left>
@@ -975,24 +955,75 @@
                 <autoscroll delay="4000" time="3000" repeat="10000" condition="Control.HasFocus(510)" />
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                <animation effect="slide" end="0,-60" time="0" delay="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]">Conditional</animation>
             </control>
             <control type="group">
 				<height>36</height>
 				<left>251</left>
 				<bottom>10</bottom>
-				<include>mediaflags</include>
-				<visible>!StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
+				<control type="label">
+                    <font>flags</font>
+                    <width>auto</width>
+                    <height>30</height>
+                    <label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar,, • ]$VAR[AudioCodecVar,, • ]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar, • ]</label>
+                    <textcolor>white</textcolor>
+                </control>
+                <animation effect="slide" end="0,-60" time="0" delay="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]">Conditional</animation>
 			</control>
-            
         </control>
-        
+    </include>
+    
+    <include name="widget_layout_widebox">
+        <include condition="Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)">widebox_altwidth</include>
+        <width>1800</width>
+        <height>255</height>
+        <right>55</right>
+        <bottom>50</bottom>
+        <ondown condition="!Skin.String(HomeLayout, netflix)">300</ondown>
+        <onup condition="!Skin.String(HomeLayout, netflix)">$VAR[changeWidgetClickActions]</onup>
+        <onup condition="!Skin.String(HomeLayout, netflix)">RunScript(script.skin.helper.service,action=setfocus,control=510)</onup>
+        <onleft>510</onleft>
+        <onright>510</onright>
+        <orientation>horizontal</orientation>
+        <include>widget_layout_general</include>
+        <itemlayout height="255" width="1800" condition="![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]">
+            <include>itemlayout_widebox</include>
+        </itemlayout>
+        <focusedlayout height="255" width="1800" condition="![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]">
+            <control type="button">
+                <visible>false</visible>
+                <onfocus condition="!Skin.String(HomeLayout, netflix)">Setproperty(ShowWidget,show)</onfocus>
+                <onfocus>Setproperty(widgetstyle,wide box)</onfocus>
+            </control>
+            <include>itemlayout_widebox</include>
+            <control type="image">
+                <bordersize>0</bordersize>
+                <texture border="5">diffuse/border.png</texture>
+                <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+            </control>
+        </focusedlayout>
+        <itemlayout height="255" width="1418" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]">
+            <include>itemlayout_widebox</include>
+        </itemlayout>
+        <focusedlayout height="255" width="1418" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]">
+            <control type="button">
+                <visible>false</visible>
+                <onfocus condition="!Skin.String(HomeLayout, netflix)">Setproperty(ShowWidget,show)</onfocus>
+                <onfocus>Setproperty(widgetstyle,wide box)</onfocus>
+            </control>
+            <include>itemlayout_widebox</include>
+            <control type="image">
+                <bordersize>0</bordersize>
+                <texture border="5">diffuse/border.png</texture>
+                <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+            </control>
+        </focusedlayout>
+
+    </include>
+    
+    <include name="itemlayout_widebox">
         <!-- wide box widget -->
-        <control type="group" id="55123">
-            <visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
-            <visible>Skin.String(widgetstyle, wide box) + [StringCompare(Container(300).ListItem.Property(widgetstyle),Global) | IsEmpty(Container(300).ListItem.Property(widgetstyle))] | StringCompare(Container(300).ListItem.Property(widgetstyle),wide box)</visible>
-            <width>100%</width>
-            <height>74%</height>
-            <bottom>0</bottom>
+        <control type="group">
             <control type="image">
                 <texture border="5">diffuse/panel.png</texture>
                 <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
@@ -1001,13 +1032,6 @@
                 <texture border="5">diffuse/thinborder.png</texture>
                 <colordiffuse>darkgrey</colordiffuse>
             </control>
-            <control type="image">
-                <bordersize>-3</bordersize>
-                <texture border="5">diffuse/border.png</texture>
-                <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
-                <visible>Control.HasFocus(510)</visible>
-            </control>
-            
             <!-- poster image -->
             <control type="image">
                 <width>24%</width>
@@ -1015,20 +1039,8 @@
                 <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[LandscapeImage]</texture>
                 <aspectratio scalediffuse="true" aligny="top" align="left">keep</aspectratio>
                 <bordersize>8</bordersize>
-                <visible>!Container(510).IsUpdating</visible>
             </control> 
-            
-            <!-- busy image -->
-            <control type="image">
-                <width>200</width>
-                <height>200</height>
-                <texture>special://skin/extras/busy_spinners/4 segment circle.gif</texture>
-                <aspectratio aligny="top" align="left">keep</aspectratio>
-                <bordersize>30</bordersize>
-                <visible>Container(510).IsUpdating</visible>
-            </control>
-
-            <control type="button" id="511">
+            <control type="button">
 				<right>60</right>
                 <top>5</top>
                 <width>650</width>
@@ -1037,14 +1049,12 @@
                 <textoffsetx>0</textoffsetx>
                 <height>50</height>
                 <font>Reg30</font>
-				<onleft>300</onleft>
-                <onright>300</onright>
-				<onup>300</onup>
-				<ondown>510</ondown>
 				<label>$VAR[changeWidgetLabel]</label>
                 <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
-				<onclick>$VAR[changeWidgetClickActions]</onclick>
-				<texturenofocus>-</texturenofocus>
+                <focusedcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</focusedcolor>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]</visible>
 			</control>
             <control type="image">
 				<right>10</right>
@@ -1052,7 +1062,8 @@
 				<width>30</width>
 				<height>30</height>
 				<texture colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">home/home_arrow_up.png</texture>
-				<visible>Control.IsVisible(511) + !IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
+				<visible>!IsEmpty(Container(300).ListItem.Property(widget.1))</visible>
+                <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]</visible>
 			</control>
             <control type="label">
                 <left>26%</left>
@@ -1078,8 +1089,9 @@
                 <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
             </control>
         </control>
+    
     </include>
-	
+    
 	<include name="widget_layout_general">
         <animation effect="slide" start="0" end="50" time="0" condition="Skin.String(HomeLayout, netflix)">Conditional</animation>
 		<ondown condition="!Skin.String(HomeLayout, netflix) + ![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)] + Skin.HasSetting(VerticalHomeMultiWidget)]">ClearProperty(ShowWidget, Home)</ondown>
@@ -1162,4 +1174,7 @@
 			</control>
     </include>
 
+    <include name="widebox_altwidth">
+        <width>1418</width>
+    </include>
 </includes>
