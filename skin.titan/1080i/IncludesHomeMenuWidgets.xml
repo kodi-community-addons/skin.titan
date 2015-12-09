@@ -11,13 +11,14 @@
 	</variable>
 
 	<include name="HomeMenuWidget">
+
 		<!-- infopanel -->
 		<control type="group">
 			<top>-1100</top>
             <left>0</left>
             <height>100%</height>
             <width>100%</width>
-            <visible>!Control.IsVisible(55123)</visible>
+            <visible>!SubString(Control.GetLabel(17888),box)</visible>
             <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
             <animation type="Visible">
                 <effect type="slide" start="0,0" end="0,1000" time="400" tween="cubic" easing="inout" delay="0"/>
@@ -35,7 +36,7 @@
 				<aspectratio>stretch</aspectratio>
 				<height>970</height>
 				<visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                <visible>!Control.IsVisible(55123)</visible>
+                <visible>!StringCompare(Control.GetLabel(17888),single box)</visible>
 				<animation type="Conditional" condition="StringCompare(Window.Property(widgetstyle), poster)">
                  <effect type="slide" start="0,0" end="0,100" time="0" delay="0"/>
 			</animation>
@@ -51,7 +52,7 @@
             <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <label>$VAR[HomeMenuWidgetInfoLabel]</label>
-            <visible>!Control.IsVisible(55123)</visible>
+            <visible>!StringCompare(Control.GetLabel(17888),single box)</visible>
 			<animation effect="slide" end="-355,0" time="0" condition="StringCompare(Container(300).ListItem.Property(widget),weather)">Conditional</animation>
         </control>
 		<control type="fadelabel">
@@ -103,7 +104,7 @@
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
-            <visible>!Control.IsVisible(55123)</visible>
+            <visible>!StringCompare(Control.GetLabel(17888),single box)</visible>
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<texture background="true" fallback="DefaultMusicSongs.png" diffuse="diffuse/music_cover.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<visible>StringCompare(Container(300).ListItem.Property(widgetTarget),music)</visible>
@@ -113,7 +114,7 @@
 			<posy>125</posy>
 			<width>330</width>
 			<height>465</height>
-            <visible>!Control.IsVisible(55123)</visible>
+            <visible>!StringCompare(Control.GetLabel(17888),single box)</visible>
 			<texture fallback="DefaultAddonWeather.png">$VAR[HomeMenuWidgetInfoPoster]</texture>
 			<aspectratio align="left" aligny="top">keep</aspectratio>
 			<visible>StringCompare(Container(300).ListItem.Property(widget),weather)</visible>
@@ -170,36 +171,37 @@
                 <height>60</height>
                 <top>430</top>
                 <include>changeWidgetButton</include>
-                <visible>!Control.IsVisible(55123)</visible>
+                <visible>!SubString(Control.GetLabel(17888),box)</visible>
                 <visible allowhiddenfocus="true">ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)</visible>
             </control>
+            
+            <!-- hide to top when no focus on widget and autoshow widget disabled -->
             <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,0" end="0,-1000" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
+            <!-- show widget at default position if widget focused -->
             <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,-1000" end="0,0" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-            <animation type="Conditional" condition="!Skin.String(HomeLayout, simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
+            
+            <!-- show widget at top of screen when 2 rows of tiles -->
+            <animation type="Conditional" condition="[Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,0" end="0,-350" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-            <animation type="Conditional" condition="!Control.IsVisible(55123) + Skin.String(HomeLayout, simplehor) + !StringCompare(Window(Home).Property(ShowWidget),show) + Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)">
-                <effect type="slide" start="0,0" end="0,180" time="400" tween="cubic" easing="inout" delay="0"/>
+            
+            <!-- show widget above tiles when 1 row of tiles -->
+            <animation type="Conditional" condition="[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + !StringCompare(Control.GetLabel(17888),poster)">
+                <effect type="slide" start="0,0" end="0,-100" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-            <animation type="Conditional" condition="!Control.IsVisible(55123) + Skin.String(HomeLayout, simplehor) + !StringCompare(Window(Home).Property(ShowWidget),show) + ![Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
-                <effect type="slide" start="0,0" end="0,50" time="400" tween="cubic" easing="inout" delay="0"/>
+            <animation type="Conditional" condition="[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + StringCompare(Control.GetLabel(17888),poster)">
+                <effect type="slide" start="0,0" end="0,-220" time="400" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+                        
+            <!-- slide widget up for single and wide box widgets non focused -->
+            <animation type="Conditional" condition="!StringCompare(Window(Home).Property(ShowWidget),show) + SubString(Control.GetLabel(17888),box)">
+                <effect type="slide" start="0,0" end="0,-300" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
             
-            <animation type="Conditional" condition="[Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + Control.IsVisible(55123) + !StringCompare(Window(Home).Property(ShowWidget),show) + ![Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
-                <effect type="slide" start="0,0" end="0,-280" time="400" tween="cubic" easing="inout" delay="0"/>
-            </animation>
-            
-            <animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + Control.IsVisible(55123) + !StringCompare(Window(Home).Property(ShowWidget),show) + [Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
-                <effect type="slide" start="0,0" end="0,-80" time="400" tween="cubic" easing="inout" delay="0"/>
-            </animation>
-            <animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + Control.IsVisible(55123) + !StringCompare(Window(Home).Property(ShowWidget),show) + ![Skin.HasSetting(DisablePowerMenu) + !system.getbool(lookandfeel.enablerssfeeds)]">
-                <effect type="slide" start="0,0" end="0,-250" time="400" tween="cubic" easing="inout" delay="0"/>
-            </animation>
-
             <include>skinshortcuts-template-widget</include>
             <include>skinshortcuts-template-widget.1</include>
             <include>skinshortcuts-template-widget.2</include>

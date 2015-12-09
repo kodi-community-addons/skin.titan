@@ -163,6 +163,7 @@
         <preloaditems>4</preloaditems>
         <scrolltime tween="quadratic" easing="out">300</scrolltime>
         <oninfo>$VAR[widgetoninfoaction]</oninfo>
+        <onup>50</onup>
         <animation time="300" effect="fade" start="0" end="100" reversible="true" easing="inout">Visible</animation>
     </include>
     
@@ -228,7 +229,9 @@
             <posx>40</posx>
             <top>20</top>
             <ondown>9000</ondown>
-            <onright>890</onright>
+            <onup>9000</onup>
+            <onright condition="Skin.HasSetting(DisablePowerMenu)">890</onright>
+            <onright condition="!Skin.HasSetting(DisablePowerMenu)">2</onright>
 			<include>animation_fade_visible_hidden</include>
 			<width>60</width>
 			<height>60</height>
@@ -240,6 +243,24 @@
             <onclick>SetFocus(300)</onclick>
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
 		</control>
+        
+        <control type="button" id="2">
+            <description>powerbutton</description>
+            <posx>120</posx>
+            <top>25</top>
+            <width>50</width>
+            <height>50</height>
+            <onup>9000</onup>
+            <ondown>9000</ondown>
+            <onright>890</onright>
+            <onleft>50</onleft>
+            <texturefocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/shutdown2.png</texturefocus>
+            <texturenofocus colordiffuse="$INFO[Skin.String(HeaderTextColor)]">common/shutdown2.png</texturenofocus>
+            <onclick>ActivateWindow(111)</onclick>
+            <visible>!Skin.HasSetting(DisablePowerMenu)</visible>
+            <visible allowhiddenfocus="true">!Skin.HasSetting(HidePowerMenu)</visible>
+            <include>animation_fade_visible_hidden</include>		
+        </control>
         
         <!-- Clock -->
         <control type="label">
@@ -334,7 +355,8 @@
             <onup>50</onup>
             <orientation>horizontal</orientation>
 			<pagecontrol>317</pagecontrol>
-            <animation effect="slide" end="480" time="300" delay="0" tween="cubic" easing="inout" condition="Control.HasFocus(300) | StringCompare(Window(Home).Property(ShowViewSubMenu),show)">Conditional</animation>
+            <onfocus>ClearProperty(ShowViewSubMenu)</onfocus>
+            <animation effect="slide" end="420" time="300" delay="0" tween="cubic" easing="inout" condition="Control.HasFocus(300) | StringCompare(Window(Home).Property(ShowViewSubMenu),show)">Conditional</animation>
             <animation effect="slide" end="0,30" time="300" delay="0" tween="cubic" easing="inout" condition="Window.IsActive(DialogKaiToast.xml) | Window.IsActive(DialogExtendedProgressBar.xml) | Control.IsVisible(88888)">Conditional</animation>
             
             <!--white space -->
@@ -345,7 +367,7 @@
             <!-- submenu -->
             <control type="group" id="100">
                 <width>470</width>
-                <visible>IntegerGreaterThan(Container(4445).NumItems,0)</visible>
+                <visible>IntegerGreaterThan(Container(4445).NumItems,0) | IsEmpty(Container(300).ListItem.Property(widget))</visible>
                 <control type="label">
                     <posx>0</posx>
 					<height>40</height>
@@ -363,9 +385,12 @@
                     <width>440</width>
                     <height>880</height>
                     <onright>510</onright>
+                    <onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget))">Control.Move(300,1)</onright>
+                    <onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget))">SetFocus(4444)</onright>
                     <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
                     <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">Control.Move(300,-1)</onleft>
                     <onup>50</onup>
+                    <onfocus>ClearProperty(ShowViewSubMenu)</onfocus>
                     <orientation>vertical</orientation>
                     <preloaditems>4</preloaditems>
                     <scrolltime tween="quadratic" easing="out">300</scrolltime>
@@ -382,8 +407,21 @@
                             <height>220</height>
                             <include>SquarePosterPanelLayoutFocus</include>
                         </control>
+                        <control type="button">
+                        <visible>false</visible>
+                        <onfocus>ClearProperty(ShowViewSubMenu)</onfocus>
+                    </control>
                     </focusedlayout>
-                    <content><include>skinshortcuts-submenu</include></content>
+                    <content>
+                        <include>skinshortcuts-submenu</include>
+                        <item id="9999">
+                            <label>$INFO[Container(300).ListItem.Label]</label>
+                            <icon>$INFO[Container(300).ListItem.Icon]</icon>
+                            <onclick>SetFocus(300)</onclick>
+                            <onclick>SendClick(300)</onclick>
+                            <visible>!IntegerGreaterThan(Container(4445).NumItems,0) + IsEmpty(Container(300).ListItem.Property(widget))</visible>
+                        </item>
+                    </content>
                 </control>
             </control>
             
@@ -723,99 +761,55 @@
             </animation>
 			<!--Panel-->
             <control type="image">
-                <posy>-250</posy>
+                <posy>-20</posy>
                 <posx>-20</posx>
-                <width>520</width>
-                <height>1750</height>
+                <width>425</width>
+                <height>1100</height>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
             </control>
             <control type="image">
-                <posy>-250</posy>
+                <posy>-20</posy>
                 <posx>-20</posx>
-                <width>515</width>
-                <height>1750</height>
+                <width>420</width>
+                <height>1100</height>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
             </control>
             <control type="image">
-                <posy>-250</posy>
+                <posy>-20</posy>
                 <posx>-20</posx>
-                <width>515</width>
-                <height>1750</height>
+                <width>420</width>
+                <height>1100</height>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
             </control>
 
-			<!-- header -->
-			<control type="label">
-				<posx>61</posx>
-				<posy>10</posy>
-				<width min="80" max="1100">auto</width>
-				<height>100</height>
-				<font>Bold45</font>
-				<align>left</align>
-				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-				<label>[UPPERCASE]$LOCALIZE[33061][/UPPERCASE]</label>
-				<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
-			</control>
-			<control type="image">
-				<!--Seperator-->
-				<posx>21</posx>
-				<posy>160</posy>
-				<width>458</width>
-				<height>20</height>
-				<align>left</align>
-				<texture>common/menu-separator.png</texture>
-			</control>
-			<control type="image">
-				<!--Seperator-->
-				<posx>21</posx>
-				<bottom>80</bottom>
-				<width>458</width>
-				<height>20</height>
-				<align>left</align>
-				<texture>common/menu-separator.png</texture>
-			</control>
-			<!-- close dialog -->
-			<control type="button">
-				<label></label>
-				<width>60</width>
-				<height>60</height>
-				<posx>160</posx>
-				<bottom>20</bottom>
-				<font>-</font>
-				<texturefocus colordiffuse="white">touchcontrols/icon_close.png</texturefocus>
-				<texturenofocus colordiffuse="bbwhite">touchcontrols/icon_close.png</texturenofocus>
-				<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
-				<visible>StringCompare(Window(Home).Property(ShowViewSubMenu),show)</visible>
-			</control>
-			<control type="button" id="2">
-				<description>powerbutton</description>
-				<posx>60</posx>
-				<bottom>20</bottom>
-				<width>60</width>
-				<height>60</height>
-				<onup>9000</onup>
-				<onright>300</onright>
-				<onleft>300</onleft>
-				<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">common/shutdown2.png</texturefocus>
-				<texturenofocus colordiffuse="white">common/shutdown2.png</texturenofocus>
-				<onclick>ActivateWindow(111)</onclick>
-				<visible>!Skin.HasSetting(DisablePowerMenu)</visible>
-                <visible allowhiddenfocus="true">!Skin.HasSetting(HidePowerMenu)</visible>
-				<include>animation_fade_visible_hidden</include>		
-			</control>
+            <!-- menu button -->
+            <control type="button">
+                <label></label>
+                <posx>40</posx>
+                <top>20</top>
+                <include>animation_fade_visible_hidden</include>
+                <width>60</width>
+                <height>60</height>
+                <font>-</font>
+                <texturefocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/menu.png</texturefocus>
+                <texturenofocus colordiffuse="$INFO[Skin.String(SideBladeTextColor)]">common/menu.png</texturenofocus>
+                <onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
+                <onclick>SetFocus(9000)</onclick>
+                <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
+            </control>
 
             <!--main menu 300-->
 			<control type="list" id="300">
-				<posx>21</posx>
-				<posy>190</posy>
-				<width>458</width>
-				<height>780</height>
+				<posx>15</posx>
+				<posy>15%</posy>
+				<width>370</width>
+				<height>85%</height>
 				<itemgap>0</itemgap>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
@@ -829,12 +823,11 @@
 				<orientation>vertical</orientation>
 				<itemlayout height="70" width="370">
 					<control type="label">
-						<width>458</width>
-						<left>50</left>
+						<width>100%</width>
+						<left>25</left>
 						<align>left</align>
-						<font>Reg26</font>
-						<textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
+						<font>Reg24</font>
+						<textcolor>$INFO[Skin.String(SideBladeTextColor)]</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</itemlayout>
@@ -844,12 +837,11 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<width>458</width>
-						<left>50</left>
+						<width>100%</width>
+						<left>25</left>
 						<align>left</align>
-						<font>Reg26</font>
+						<font>Reg24</font>
 						<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-						<shadowcolor>black</shadowcolor>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</focusedlayout>
@@ -857,6 +849,8 @@
 			</control>
             
 		</control>
-	</include>
 	
+    
+    </include>
+    
 </includes>
