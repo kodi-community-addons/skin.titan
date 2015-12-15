@@ -179,21 +179,22 @@
             <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,0" end="0,-1000" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
+            
             <!-- show widget at default position if widget focused -->
             <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,-1000" end="0,0" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
             
             <!-- show widget at top of screen when 2 rows of tiles -->
-            <animation type="Conditional" condition="[Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
+            <animation type="Conditional" condition="[[Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] | [[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + !Skin.HasSetting(LowerWidgets)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
                 <effect type="slide" start="0,0" end="0,-350" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
             
             <!-- show widget above tiles when 1 row of tiles -->
-            <animation type="Conditional" condition="[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + !StringCompare(Control.GetLabel(17888),poster)">
+            <animation type="Conditional" condition="[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + Skin.HasSetting(AutoShowWidgets) + Skin.HasSetting(LowerWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + !StringCompare(Control.GetLabel(17888),poster)">
                 <effect type="slide" start="0,0" end="0,-100" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
-            <animation type="Conditional" condition="[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + StringCompare(Control.GetLabel(17888),poster)">
+            <animation type="Conditional" condition="[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)] + Skin.HasSetting(AutoShowWidgets) + Skin.HasSetting(LowerWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + StringCompare(Control.GetLabel(17888),poster)">
                 <effect type="slide" start="0,0" end="0,-220" time="400" tween="cubic" easing="inout" delay="0"/>
             </animation>
                         
@@ -796,7 +797,7 @@
 	</include>
     
     <include name="widget_layout_vertical_square">
-		<bottom>110</bottom>
+		<bottom>80</bottom>
         <right>40</right>
 		<width>1315</width>
 		<height>789</height>
