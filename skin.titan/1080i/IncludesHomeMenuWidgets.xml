@@ -945,10 +945,27 @@
                 <animation effect="slide" end="0,-60" time="0" delay="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]">Conditional</animation>
             </control>
             <control type="textbox">
+                <!--description with mediaflags present -->
+                <visible>!IsEmpty(ListItem.VideoCodec)</visible>
                 <left>251</left>
                 <width>650</width>
                 <top>132</top>
                 <height>145</height>
+                <font>Reg24</font>
+                <align>justify</align>
+                <autoscroll delay="4000" time="3000" repeat="10000" condition="!Control.HasFocus(510)" />
+                <autoscroll delay="4000" time="3000" repeat="10000" condition="Control.HasFocus(510)" />
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                <animation effect="slide" end="0,-60" time="0" delay="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]">Conditional</animation>
+            </control>
+            <control type="textbox">
+                <!--description with no mediaflags -->
+                <visible>IsEmpty(ListItem.VideoCodec)</visible>
+                <left>251</left>
+                <width>650</width>
+                <top>132</top>
+                <height>200</height>
                 <font>Reg24</font>
                 <align>justify</align>
                 <autoscroll delay="4000" time="3000" repeat="10000" condition="!Control.HasFocus(510)" />
@@ -965,8 +982,9 @@
                     <font>flags</font>
                     <width>auto</width>
                     <height>30</height>
+                    <visible>!IsEmpty(ListItem.VideoCodec)</visible>
                     <label>$VAR[VideoFileTypeVar,, • ]$VAR[VideoCodecVar,, • ]$VAR[VideoAspectVar,, • ]$VAR[VideoResolutionVar,, • ]$VAR[AudioCodecVar,, • ]$VAR[AudioChannelsVar]$VAR[AudioLanguageVar, • ]</label>
-                    <textcolor>white</textcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 </control>
                 <animation effect="slide" end="0,-60" time="0" delay="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, netflix)]">Conditional</animation>
 			</control>
@@ -1126,12 +1144,16 @@
 				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
 				<texture flipy="true">dialogs/default/separator.png</texture>
 				<visible>!IsEmpty(Control.GetLabel(511))</visible>
+                <right>0</right>
+				<width>600</width>
 			</control>
             <control type="image">
 				<colordiffuse>$INFO[Skin.String(ButtonTextColor)]</colordiffuse>
 				<texture>dialogs/default/separator.png</texture>
 				<visible>!IsEmpty(Control.GetLabel(511))</visible>
                 <height>45</height>
+                <right>0</right>
+				<width>600</width>
 			</control>
             <control type="label" id="512">
 				<right>0</right>
