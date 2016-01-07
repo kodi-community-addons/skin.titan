@@ -552,7 +552,7 @@
 				<visible>Player.HasAudio</visible>
 			</control>
 
-			<control type="image">
+			<control type="image" id="13333">
 				<!--Music-->
 				<posx>20</posx>
 				<posy>10</posy>
@@ -563,6 +563,20 @@
 				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
 				<visible>Player.HasAudio</visible>
                 <visible>!Skin.HasSetting(HideOSDDisc)</visible>
+                <visible>!IsEmpty(Control.GetLabel(13333))</visible>
+			</control>
+            <control type="image">
+				<!--Music-->
+				<posx>20</posx>
+				<posy>10</posy>
+				<width>280</width>
+				<height>280</height>
+				<fadetime>200</fadetime>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Music.Thumb)]</texture>
+				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
+				<visible>Player.HasAudio</visible>
+                <visible>!Skin.HasSetting(HideOSDDisc)</visible>
+                <visible>IsEmpty(Control.GetLabel(13333))</visible>
 			</control>
             <control type="image">
 				<!--Music-->
@@ -916,21 +930,34 @@
                 <shadowcolor>black</shadowcolor>
                 <font>Reg30</font>
                 <scrollspeed>80</scrollspeed>
-                <label>$ESCINFO[Window(Home).Property(SkinHelper.Player.Music.Info)]</label>
+                <label>$INFO[Window(Home).Property(SkinHelper.Player.Music.Info)]</label>
                 <visible>!Window.IsActive(script-cu-lrclyrics-main.xml)</visible>
                 <visible>Skin.HasSetting(enableArtistBio)</visible>
             </control>
 
-			<control type="image">
+			<control type="image" id="13333">
 				<!--Music-->
 				<posx>40</posx>
-				<bottom>20</bottom>
+				<bottom>15</bottom>
 				<width>190</width>
 				<height>190</height>
 				<fadetime>200</fadetime>
 				<texture background="true" diffuse="diffuse/music_cover.png" border="5">$VAR[AudioPlayerCoverImage]</texture>
 				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
 				<visible>Player.HasAudio</visible>
+                <visible>!IsEmpty(Control.GetLabel(13333))</visible>
+			</control>
+            <control type="image">
+				<!--Music-->
+				<posx>40</posx>
+				<bottom>15</bottom>
+				<width>190</width>
+				<height>190</height>
+				<fadetime>200</fadetime>
+				<texture background="true" diffuse="diffuse/music_cover.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Music.Thumb)]</texture>
+				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
+				<visible>Player.HasAudio</visible>
+                <visible>IsEmpty(Control.GetLabel(13333))</visible>
 			</control>
 			
 			<!--Cover movies - poster-->
@@ -993,9 +1020,22 @@
                     <visible>!Window.IsActive(videoosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
                     <visible>player.hasvideo</visible>
                 </control>
-                <control type="group">
+                
+                <control type="image">
+                    <!--Stars music-->
+                    <visible>Window.IsActive(MusicVisualisation.xml)</visible>
+                    <visible>!Window.IsActive(musicosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
                     <posx>250</posx>
-					<posy>85</posy>
+					<posy>77</posy>
+                    <width>200</width>
+                    <height>50</height>
+                    <aspectratio aligny="top" align="left">keep</aspectratio>
+                    <colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
+                    <texture fallback="leftrating/rating0.png">$INFO[Player.StarRating,leftrating/]</texture>
+                </control>
+                <control type="group">
+                    <posx>470</posx>
+					<posy>87</posy>
                     <include>mediaflagsAudio</include>
                     <visible>!Window.IsActive(musicosd) + !Window.IsActive(DialogSeekBar.xml) + !Control.IsVisible(200)</visible>
                     <visible>!player.hasvideo</visible>
