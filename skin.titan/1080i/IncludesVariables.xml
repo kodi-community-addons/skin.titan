@@ -849,6 +849,28 @@
 		<value>$INFO[ListItem.label]</value>
     </variable>
     
+    <variable name="ThumbListDetailsPoster">
+        <!-- specials used in widgets -->
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) | StringCompare(Container(300).ListItem.Property(widget), music)">$INFO[ListItem.label] $INFO[ListItem.label2]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
+        <value condition="IsEmpty(ListItem.Property(submenuVisibility)) + StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">$INFO[ListItem.Property(title)] $INFO[ListItem.label]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">$INFO[ListItem.label]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + SubString(Container(300).ListItem.Property(widgetPath), weather)">$INFO[ListItem.label] $INFO[ListItem.label2]</value>
+		<!-- normal items-->
+        <value condition="container.content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">$INFO[ListItem.label]</value>
+        <value condition="container.content(seasons)">$INFO[ListItem.label]</value>
+		<value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S0$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S0$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
+		
+        <value condition="Window.IsActive(MyPVRChannels.xml)">$INFO[ListItem.Title,[B],[/B]] $VAR[ListDatePVR]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName] $VAR[ListDatePVR]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + !IsEmpty(ListItem.Year)">$INFO[ListItem.label] $INFO[ListItem.Year]</value>
+        <value condition="IsEmpty(ListItem.Property(submenuVisibility))">$INFO[ListItem.label] $INFO[ListItem.label2]</value>
+		<value>$INFO[ListItem.label]</value>
+    </variable>
+    
 	<variable name="ListDetails">
 		<value condition="!Container.content(Addons) + Window.IsActive(MyPics.xml)">$INFO[ListItem.Date,, • ]$INFO[ListItem.Size]</value>
 		<value condition="Container.content(Albums)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Artist]</value>
