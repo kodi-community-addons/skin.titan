@@ -109,7 +109,7 @@
             <control type="grouplist">
                 <posx>680</posx>
                 <posy>220</posy>
-
+                <width>800</width>
                 <control type="button">
                     <description>Artist</description>
                     <width>800</width>
@@ -137,7 +137,7 @@
 					<disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
                 </control>
                 <control type="button">
-                    <description>Rating</description>
+                    <description>Year</description>
                     <width>800</width>
                     <height>60</height>
                     <align>left</align>
@@ -148,19 +148,27 @@
                     <label2>$INFO[ListItem.Year]</label2>
                     <enable>false</enable>
 					<disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                    <visible>Container.Content(albums)</visible>
                 </control>
-                <control type="button">
-                    <description>Genre</description>
-                    <width>800</width>
-                    <height>60</height>
-                    <align>left</align>
-                    <textoffsetx>20</textoffsetx>
-                    <textwidth>540</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <label>$LOCALIZE[563]:</label>
-                    <label2 fallback="161">$INFO[ListItem.Rating]</label2>
-                    <enable>false</enable>
-					<disabledcolor>$INFO[Skin.String(GeneralTextColor)]</disabledcolor>
+                <control type="group">
+                    <!-- Rating -->
+                    <control type="label">
+                        <description>Rating</description>
+                        <posx>20</posx>
+                        <width>515</width>
+                        <height>60</height>
+                        <align>left</align>
+                        <label>$LOCALIZE[563]:</label>
+                    </control>
+                    <control type="image">
+                        <!--Stars music-->
+                        <right>10</right>
+                        <width>200</width>
+                        <height>60</height>
+                        <aspectratio aligny="center" align="center">keep</aspectratio>
+                        <colordiffuse>$INFO[Skin.String(GeneralTextColor)]</colordiffuse>
+                        <texture fallback="leftrating/rating0.png">$INFO[ListItem.StarRating,leftrating/]</texture>
+                    </control>
                 </control>
             </control>
             <control type="image">
@@ -178,7 +186,19 @@
                 <height>388</height>
                 <align>justify</align>
                 <pagecontrol>60</pagecontrol>
-                <label fallback="19055">$INFO[ListItem.Plot]</label>
+                <label>$INFO[ListItem.Plot]</label>
+                <visible>!StringCompare(Control.Getlabel(4),$LOCALIZE[547]) + !StringCompare(Control.Getlabel(4),$LOCALIZE[414])</visible>
+            </control>
+            <control type="textbox">
+                <description>Plot value fallback</description>
+                <posx>700</posx>
+                <posy>506</posy>
+                <width>1160</width>
+                <height>388</height>
+                <align>justify</align>
+                <pagecontrol>60</pagecontrol>
+                <label fallback="19055">$INFO[Window(Home).Property(SkinHelper.Music.Info)]</label>
+                <visible>!Control.IsVisible(4) + !Control.IsVisible(50)</visible>
             </control>
 			<control type="list" id="50">
                 <description>Tracks</description>

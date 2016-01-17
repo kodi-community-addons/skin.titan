@@ -718,10 +718,10 @@
 			</animation>
 		
 			<control type="list" id="4444">
-				<visible allowhiddenfocus="true">SubString(Window(Home).Property(submenu),show)</visible>
+				<visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | control.hasfocus(4444)] + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
+				<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 				<animation effect="slide" end="-580" time="0" condition="!SubString(Window(Home).Property(submenu),show)">Conditional</animation>
 				<animation effect="slide" start="0" end="0,80" time="0" reversible="false" condition="Skin.HasSetting(VerticalHomeInlineSubmenu)">Conditional</animation>
-				<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 				<width>350</width>
 				<posx>0</posx>
 				<posy>0</posy>
@@ -776,6 +776,11 @@
                   <scroll>true</scroll>
 				  <visible>Control.HasFocus(4444)</visible>
 				</control>
+                    <control type="button">
+                        <label>-</label>
+                        <visible>false</visible>
+                        <onfocus>SetProperty(submenu,show,home)</onfocus>
+                    </control>
 				</focusedlayout>
 				<content>
 				<include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
