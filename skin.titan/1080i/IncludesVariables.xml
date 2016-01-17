@@ -23,9 +23,9 @@
         <value condition="Window.IsActive(Home.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile)">[UPPERCASE]$LOCALIZE[10000][/UPPERCASE]</value>
         <value condition="substring(Container.FolderPath,Radio)">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
         
-		<value condition="Container.Content(movies) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[ListItem.Title,• ,]</value>
-		<value condition="Container.Content(tvshows) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.Title,• ,]</value>
-
+		<!-- <value condition="Container.Content(movies) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[ListItem.Title,• ,]</value>
+		<value condition="Container.Content(tvshows) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.Title,• ,]</value> -->
+        <value condition="[Container.Content(movies) | Container.Content(tvshows)] + Skin.HasSetting(ShowMovieTitleHeader) + !IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
 		
 		<value condition="Container.Content(movies) + StringCompare(Container.FolderName,$LOCALIZE[369])">[UPPERCASE]$LOCALIZE[342][/UPPERCASE]</value>
 		<value condition="Container.Content(tvshows) + StringCompare(Container.FolderName,$LOCALIZE[369])">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE]</value>
@@ -856,6 +856,28 @@
 		<value>$INFO[ListItem.label]</value>
     </variable>
     
+    <variable name="ThumbListDetailsPoster">
+        <!-- specials used in widgets -->
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + SubString(Container(300).ListItem.Property(widgetPath), plugin.video.youtube) | StringCompare(Container(300).ListItem.Property(widget), music)">$INFO[ListItem.label] $INFO[ListItem.label2]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + StringCompare(ListItem.Property(special), systeminfo)">[B]$INFO[ListItem.label][/B] $INFO[ListItem.label2]</value>
+        <value condition="IsEmpty(ListItem.Property(submenuVisibility)) + StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),livechannel)">$INFO[ListItem.Property(title)] $INFO[ListItem.label]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + StringCompare(Container(300).ListItem.Property(widget), smart-pvr) + StringCompare(ListItem.Property(type),recorded)">$INFO[ListItem.label]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + SubString(Container(300).ListItem.Property(widgetPath), weather)">$INFO[ListItem.label] $INFO[ListItem.label2]</value>
+		<!-- normal items-->
+        <value condition="container.content(tvshows) | StringCompare(ListItem.TvShowTitle,ListItem.Title)">$INFO[ListItem.label]</value>
+        <value condition="container.content(seasons)">$INFO[ListItem.label]</value>
+		<value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Episode,9)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S0$INFO[ListItem.Season]E$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode) + IntegerGreaterThan(ListItem.Season,9)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
+        <value condition="!IsEmpty(ListItem.TvShowTitle) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TvShowTitle] [UPPERCASE]S0$INFO[ListItem.Season]E0$INFO[ListItem.Episode][/UPPERCASE]</value>
+		
+        <value condition="Window.IsActive(MyPVRChannels.xml)">$INFO[ListItem.Title,[B],[/B]] $VAR[ListDatePVR]</value>
+        <value condition="[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(MyPVRRecordings.xml)]">$INFO[ListItem.ChannelName] $VAR[ListDatePVR]</value>
+		<value condition="IsEmpty(ListItem.Property(submenuVisibility)) + !IsEmpty(ListItem.Year)">$INFO[ListItem.label] $INFO[ListItem.Year]</value>
+        <value condition="IsEmpty(ListItem.Property(submenuVisibility))">$INFO[ListItem.label] $INFO[ListItem.label2]</value>
+		<value>$INFO[ListItem.label]</value>
+    </variable>
+    
 	<variable name="ListDetails">
 		<value condition="!Container.content(Addons) + Window.IsActive(MyPics.xml)">$INFO[ListItem.Date,, • ]$INFO[ListItem.Size]</value>
 		<value condition="Container.content(Albums)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Artist]</value>
@@ -909,14 +931,14 @@
     <value condition="Container.Content(songs) + !IsEmpty(ListItem.Comment)">$INFO[ListItem.Comment]</value>
 	<value condition="Container.Content(songs) + !IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
 	<value condition="Container.Content(songs) + !IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
+    <value condition="Window.IsActive(MyPVRChannels.xml) + !IsEmpty(ListItem.Plot)">$INFO[ListItem.Season,S,]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.EpisodeName,,[CR]]$INFO[ListItem.Plot]$INFO[Container.ListItem.NextTitle,[CR][CR][B]$LOCALIZE[19031]:[/B] ]</value>
 	<value condition="!IsEmpty(Window(home).Property(SkinHelper.Music.Info))">$INFO[Window(home).Property(SkinHelper.Music.Info)]</value>
     <value condition="Window.IsActive(MyPics.xml) + !IsEmpty(ListItem.PictureDesc)">$INFO[ListItem.PictureDesc]</value>
     <value condition="Window.IsActive(MyPics.xml) + !IsEmpty(ListItem.PictureComment)">$INFO[ListItem.PictureComment]</value>
     <value condition="Window.IsActive(MyPics.xml) + !IsEmpty(ListItem.PictureKeywords)">$INFO[ListItem.PictureKeywords]</value>
-    <value condition="Window.IsActive(MyPics.xml)">[CR][B]$LOCALIZE[21821]:[/B][CR]$LOCALIZE[416]</value>
     <value condition="!IsEmpty(ListItem.Plot) + !IsEmpty(ListItem.EpisodeName)">$INFO[ListItem.Season,$LOCALIZE[20373] , - ]$INFO[ListItem.Episode,$LOCALIZE[36906] , - ]$INFO[ListItem.EpisodeName,,[CR]]$INFO[ListItem.Plot]$INFO[Container.ListItem.NextTitle,[CR][CR][B]$LOCALIZE[19031]:[/B] ]</value>
-	<value condition="Window.IsActive(MyPVRChannels.xml) + !IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]$INFO[Container.ListItem.NextTitle,[CR][CR][B]$LOCALIZE[19031]:[/B] ]</value>
-    <value condition="!IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
+	<value condition="!IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
+    <value condition="!IsEmpty(ListItem.Property(Plot))">$INFO[ListItem.Property(Plot)]</value>
 	<value condition="!IsEmpty(ListItem.Comment)">$INFO[ListItem.Comment]</value>
     <value condition="!IsEmpty(Window(home).property(SkinHelper.PVR.Plot))">$INFO[Window(home).property(SkinHelper.PVR.Plot)]</value>
   </variable>
@@ -1084,14 +1106,6 @@
 		<value condition="player.rewinding16x">[B]$LOCALIZE[31254][/B] x16</value>
 		<value condition="player.rewinding32x">[B]$LOCALIZE[31254][/B] x32</value>
 		<value condition="player.paused">[B]$LOCALIZE[31251][/B]</value>
-	 </variable>
-	 
-	 <variable name="ClearLogoLocation">
-		<value condition="Skin.String(ClearLogoLocation, footer)">$LOCALIZE[31328]</value>
-		<value condition="Skin.String(ClearLogoLocation, topleft)">$LOCALIZE[31329]</value>
-		<value condition="Skin.String(ClearLogoLocation, topcenter)">$LOCALIZE[31330]</value>
-		<value condition="Skin.String(ClearLogoLocation, topright)">$LOCALIZE[31331]</value>
-		<value condition="!Skin.String(ClearLogoLocation)">$LOCALIZE[1223]</value>
 	 </variable>
 	 
 	 <variable name="SubtitleButton">

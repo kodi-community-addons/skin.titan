@@ -117,7 +117,7 @@
 				
 				<control type="image">
 					<!--Seperator-->
-					<posy>312</posy>
+					<posy>307</posy>
 					<posx>-68</posx>
 					<width>2040</width>
 					<height>10</height>
@@ -127,7 +127,7 @@
 				</control>
 				<control type="image">
 					<!--Seperator-->
-					<posy>947</posy>
+					<posy>949</posy>
 					<posx>-68</posx>
 					<width>2040</width>
 					<height>10</height>
@@ -213,8 +213,8 @@
 				<description>EPG Grid</description>
 				<include>animation_view_change_pvr</include>
                 <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">altEpgOnScreen</include>
-				<top>280</top>
-				<height>666</height>
+				<top>275</top>
+				<height>674</height>
 				<left>50</left>
 				<width>1800</width>
 				<pagecontrol>10</pagecontrol>
@@ -932,7 +932,105 @@
                     </control>
                 </focusedchannellayout>
 				
-                <channellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
+                <channellayout height="70" width="450" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                    <!--Channel left side UNFOCUS-->
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>0</posx>
+						<width>450</width>
+						<height>65</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
+					</control>
+					
+					<control type="label">
+                        <!--Channel Nummber-->
+                        <posx>5</posx>
+                        <posy>0</posy>
+                        <width>65</width>
+                        <height>65</height>
+                        <font>Reg26</font>
+						<align>center</align>
+                        <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                        <info>ListItem.ChannelNumberLabel</info>
+                        <visible>!Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+                    </control>
+                    <control type="image">
+                        <!--Channel Icon-->
+                        <posx>65</posx>
+                        <posy>10</posy>
+                        <width>100</width>
+                        <height>50</height>
+                        <texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
+                    </control>
+                    <control type="label" id="1">
+                        <!--Channel Name-->
+                        <posx>170</posx>
+                        <posy>0</posy>
+                        <width>275</width>
+                        <height>65</height>
+                        <font>Reg27</font>
+                        <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                        <label>$INFO[ListItem.ChannelName]</label>
+                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
+                    </control>
+                </channellayout>
+                <focusedchannellayout height="70" width="450" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                    <!--Channel left side FOCUS-->
+                    <animation effect="fade" end="80" time="200">OnFocus</animation>
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>0</posx>
+						<width>450</width>
+						<height>65</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
+					</control>
+					<control type="label">
+                        <!--Channel Nummber-->
+                        <posx>5</posx>
+                        <posy>0</posy>
+                        <width>65</width>
+                        <height>65</height>
+                        <font>Reg26</font>
+						<align>center</align>
+                        <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
+                        <visible>!Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+                        <info>ListItem.ChannelNumberLabel</info>
+                    </control>
+                    <control type="image">
+                        <!--Channel Icon-->
+                        <posx>65</posx>
+                        <posy>10</posy>
+                        <width>100</width>
+                        <height>50</height>
+                        <texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
+                    </control>
+                    <control type="label" id="1">
+                        <!--Channel Name-->
+                        <posx>170</posx>
+                        <posy>0</posy>
+                        <width>275</width>
+                        <height>65</height>
+                        <font>Reg27</font>
+                        <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
+                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
+                        <label>$INFO[ListItem.ChannelName]</label>
+                    </control>
+                </focusedchannellayout>
+				
+                
+                <channellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide) + !Skin.HasSetting(HideChannelNumbersInGuide)">
                     <!--Channel left side UNFOCUS-->
                     <animation effect="fade" end="80" time="200">UnFocus</animation>
                     <control type="image">
@@ -955,7 +1053,6 @@
                         <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
                         <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
                         <info>ListItem.ChannelNumberLabel</info>
-                        <visible>!Skin.HasSetting(HideChannelNumbersInGuide)</visible>
                     </control>
                     <control type="image">
                         <!--Channel Icon-->
@@ -967,7 +1064,7 @@
 						<aspectratio align="left" aligny="center">keep</aspectratio>
                     </control>
                 </channellayout>
-				<focusedchannellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
+				<focusedchannellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide) + !Skin.HasSetting(HideChannelNumbersInGuide)">
                     <!--Channel left side FOCUS-->
                     <animation effect="fade" end="80" time="200">OnFocus</animation>
                     <animation effect="fade" end="80" time="200">UnFocus</animation>
@@ -990,7 +1087,6 @@
 						<align>left</align>
                         <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
                         <info>ListItem.ChannelNumberLabel</info>
-                        <visible>!Skin.HasSetting(HideChannelNumbersInGuide)</visible>
                     </control>
                     <control type="image">
                         <!--Channel Icon-->
@@ -1003,6 +1099,53 @@
                     </control>
                 </focusedchannellayout>
 				
+                <channellayout height="70" width="100" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide) + Skin.HasSetting(HideChannelNumbersInGuide)">
+                    <!--Channel left side UNFOCUS-->
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>0</posx>
+						<width>90</width>
+						<height>65</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
+					</control>
+                    <control type="image">
+                        <!--Channel Icon-->
+                        <posx>5</posx>
+                        <posy>10</posy>
+                        <width>80</width>
+                        <height>50</height>
+                        <texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                </channellayout>
+				<focusedchannellayout height="70" width="100" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide) + Skin.HasSetting(HideChannelNumbersInGuide)">
+                    <!--Channel left side FOCUS-->
+                    <animation effect="fade" end="80" time="200">OnFocus</animation>
+                    <animation effect="fade" end="80" time="200">UnFocus</animation>
+                    <control type="image">
+						<!--Seperator-->
+						<posy>0</posy>
+						<posx>0</posx>
+						<width>90</width>
+						<height>65</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
+					</control>
+                    <control type="image">
+                        <!--Channel Icon-->
+                        <posx>5</posx>
+                        <posy>10</posy>
+                        <width>80</width>
+                        <height>50</height>
+                        <texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                </focusedchannellayout>
+				
+                
                 <itemlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
                     <!--EPG UNFOCUS-->
                     <control type="image" id="14">

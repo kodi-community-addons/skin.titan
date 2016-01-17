@@ -36,6 +36,7 @@
 	<include file="View_516_SlimList.xml" />
     <include file="View_517_Cards.xml" />
     <include file="View_518_Wide.xml" />
+    <include file="View_519_BigPanel_Wall.xml" />
     <include file="IncludesViews.xml" />
 	<include file="IncludesThemes.xml" />
 	<include file="IncludesHomeExtended.xml" />
@@ -160,7 +161,8 @@
 			<!--Rating normal-->
 			<include condition="window.isactive(videolibrary) + !skin.hastheme(classic) + ![Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">StarRatingFooter</include>
             <include condition="window.isactive(videolibrary) + !skin.hastheme(classic) + [Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">AltRatingFooter</include>
-			
+			<include condition="window.isactive(musiclibrary)">StarRatingMusicFooter</include>
+            
 			
 		</control>
 	</include>
@@ -371,7 +373,7 @@
             
             <control type="label">
                 <!--Artist-->
-                <visible>Container.Content(albums) | Container.Content(songs)</visible>
+                <visible>[Container.Content(albums) | Container.Content(songs)] + IsEmpty(ListItem.Rating)</visible>
                 <right>60</right>
                 <posy>0</posy>
                 <width>500</width>
@@ -1301,9 +1303,7 @@
         <!--OSD Info Panel-->
         <!--Info Stuff-->
         <control type="group">
-			<visible>!Window.IsActive(dialogslider.xml)</visible>
-			<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
-			<visible>!Window.IsActive(DialogKaiToast.xml)</visible>
+			<visible>Skin.HasSetting(EnableOSDInfo)</visible>
 			<!-- background -->
 			<control type="image">
 				<posx>0</posx>

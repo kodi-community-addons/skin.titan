@@ -2,7 +2,7 @@
 <includes>
 
 <include name="allViewIds">
-	<views>10,50,51,52,500,501,502,503,504,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516,517,518</views>
+	<views>10,50,51,52,500,501,502,503,504,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516,517,518,519</views>
 </include>
 
 <include name="altEpgOnScreen">
@@ -51,11 +51,15 @@
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.508)">View_508_SinglePoster</include>
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.517)">View_517_Cards</include>
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.518)">View_518_Wide</include>
+        <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.519)">View_519_BigPanel_Wall</include>
         
 
         <!-- footer bar -->
-        <include condition="!skin.hassetting(nofooterbar)">Footer</include>
-        <include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
+        <control type="group">
+            <visible>!Control.IsVisible(519)</visible>
+            <include condition="!skin.hassetting(nofooterbar)">Footer</include>
+            <include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
+        </control>
         
         <!--Scrolling Letter-->
         <control type="image">
@@ -132,11 +136,11 @@
 			<height>57</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
 			<align>left</align>
-			<label>$VAR[ThumbListDetails]</label>
+			<label>$VAR[ThumbListDetailsPoster]</label>
 			<font>Reg22</font>
-            <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
+            <autoscroll delay="2000" time="2000" repeat="500">false</autoscroll>
 			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <visible>!StringCompare(Container.ListItem.Label,ListItem.Label)</visible>
+            <visible>!StringCompare(System.CurrentControl,ListItem.Label)</visible>
 		</control>
         <control type="textbox">
 			<left>6%</left>
@@ -146,11 +150,52 @@
 			<height>57</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
 			<align>left</align>
-			<label>$VAR[ThumbListDetails]</label>
+			<label>$VAR[ThumbListDetailsPoster]</label>
 			<font>Reg22</font>
             <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
 			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <visible>StringCompare(Container.ListItem.Label,ListItem.Label)</visible>
+            <visible>StringCompare(System.CurrentControl,ListItem.Label)</visible>
+		</control>
+	</control>
+  </include>
+  
+  <include name="SmallPanelLabelOverlay">
+	<control type="group">
+		<include>PosterLabelOverlayVisibility</include>
+		<!--Panel-->
+		<control type="image">
+			<bottom>-1</bottom>
+			<height>80</height>
+            <bordersize>8</bordersize>
+			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+			<colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+		</control>
+		<control type="textbox">
+			<left>6%</left>
+			<bottom>10</bottom>
+			<width>88%</width>
+			<height>57</height>
+            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+			<align>left</align>
+			<label>$VAR[ThumbListDetailsPoster]</label>
+			<font>Reg18</font>
+            <autoscroll delay="2000" time="2000" repeat="500">false</autoscroll>
+			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+            <visible>!StringCompare(System.CurrentControl,ListItem.Label)</visible>
+		</control>
+        <control type="textbox">
+			<left>6%</left>
+            <right>10</right>
+			<bottom>10</bottom>
+			<width>88%</width>
+			<height>57</height>
+            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+			<align>left</align>
+			<label>$VAR[ThumbListDetailsPoster]</label>
+			<font>Reg18</font>
+            <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
+			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+            <visible>StringCompare(System.CurrentControl,ListItem.Label)</visible>
 		</control>
 	</control>
   </include>
@@ -1034,7 +1079,7 @@
           <control type="image">
             <include>PosterThumb</include>
           </control>
-          <include>PanelLabelOverlay</include>
+          <include>SmallPanelLabelOverlay</include>
           <control type="group">
             <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
           </control>
@@ -1059,7 +1104,7 @@
           <control type="image">
             <include>PosterThumb</include>
           </control>
-          <include>PanelLabelOverlay</include>
+          <include>SmallPanelLabelOverlay</include>
           <control type="group">
             <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
           </control>
@@ -1144,11 +1189,11 @@
 			<height>48</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
 			<align>left</align>
-			<label>$VAR[ThumbListDetails]</label>
+			<label>$VAR[ThumbListDetailsPoster]</label>
 			<font>Reg18</font>
-            <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
+            <autoscroll>false</autoscroll>
 			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <visible>!StringCompare(Container.ListItem.Label,ListItem.Label)</visible>
+            <visible>!StringCompare(System.CurrentControl,ListItem.Label)</visible>
 		</control>
         <control type="textbox">
 			<left>6%</left>
@@ -1158,11 +1203,11 @@
 			<height>48</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
 			<align>left</align>
-			<label>$VAR[ThumbListDetails]</label>
+			<label>$VAR[ThumbListDetailsPoster]</label>
 			<font>Reg18</font>
             <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
 			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <visible>StringCompare(Container.ListItem.Label,ListItem.Label)</visible>
+            <visible>StringCompare(System.CurrentControl,ListItem.Label)</visible>
 		</control>
         
     </include>
@@ -1991,6 +2036,35 @@
                 <font>Reg36</font>
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <label>$INFO[ListItem.Rating]</label>
+            </control>
+        </control>
+    </include>
+    
+    <include name="StarRatingMusicFooter">
+        <control type="group">
+            <bottom>20</bottom>
+            <height>80</height>
+            <right>60</right>
+            <control type="image">
+                <!--Stars classic-->
+                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <right>0</right>
+                <posy>18</posy>
+                <width>270</width>
+                <height>25</height>
+                <texture fallback="leftrating/rating0.png">$INFO[ListItem.StarRating,leftrating/]</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
+            <control type="image">
+                <!--Stars modern-->
+                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <right>0</right>
+                <posy>20</posy>
+                <width>220</width>
+                <height>55</height>
+                <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                <texture fallback="leftrating/rating0.png">$INFO[ListItem.StarRating,leftrating/]</texture>
+                <aspectratio>keep</aspectratio>
             </control>
         </control>
     </include>
