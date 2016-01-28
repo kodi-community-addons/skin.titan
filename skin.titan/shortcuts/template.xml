@@ -285,14 +285,14 @@
         </controls>
 	</other>
     
-	    
-    <other include="advancedwidgets.1">
+    <other include="advancedwidgets">
 		<condition tag="property" attribute="name|widget"></condition>
 		<match>any</match>
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
+        
+        <!-- widget 1 -->
 		<property name="content" tag="property" attribute="name|widgetPath" />
 		<property name="target" tag="property" attribute="name|widgetTarget" />
-        <property name="id" tag="property" attribute="name|id" />
         <property name="widgetprefix" tag="property" attribute="name|widget" value="Addon">$VAR[widgetprefix]</property>
         <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="poster">widget_layout_poster</property>
         <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="landscape">widget_layout_landscape</property>
@@ -301,49 +301,67 @@
         <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="small poster">widget_layout_small_poster</property>
         <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="square">widget_layout_square</property>
         <property name="widgetstyle">widgetlayout</property> 
+        
+        <!-- widget 2 -->
+		<property name="content.1" tag="property" attribute="name|widgetPath.1" />
+		<property name="target.1" tag="property" attribute="name|widgetTarget.1" />
+        <property name="widgetprefix.1" tag="property" attribute="name|widget.1" value="Addon">$VAR[widgetprefix]</property>
+        <property name="widgetstyle.1" tag="property" attribute="name|widgetstyle.1" value="poster">widget_layout_poster</property>
+        <property name="widgetstyle.1" tag="property" attribute="name|widgetstyle.1" value="landscape">widget_layout_landscape</property>
+        <property name="widgetstyle.1" tag="property" attribute="name|widgetstyle.1" value="single box">widget_layout_singlebox</property>
+        <property name="widgetstyle.1" tag="property" attribute="name|widgetstyle.1" value="wide box">widget_layout_widebox</property>
+        <property name="widgetstyle.1" tag="property" attribute="name|widgetstyle.1" value="small poster">widget_layout_small_poster</property>
+        <property name="widgetstyle.1" tag="property" attribute="name|widgetstyle.1" value="square">widget_layout_square</property>
+        <property name="widgetstyle.1">widgetlayout</property> 
+        
+        <!-- widget 3 -->
+		<property name="content.2" tag="property" attribute="name|widgetPath.2" />
+		<property name="target.2" tag="property" attribute="name|widgetTarget.2" />
+        <property name="widgetprefix.2" tag="property" attribute="name|widget.2" value="Addon">$VAR[widgetprefix]</property>
+        <property name="widgetstyle.2" tag="property" attribute="name|widgetstyle.2" value="poster">widget_layout_poster</property>
+        <property name="widgetstyle.2" tag="property" attribute="name|widgetstyle.2" value="landscape">widget_layout_landscape</property>
+        <property name="widgetstyle.2" tag="property" attribute="name|widgetstyle.2" value="single box">widget_layout_singlebox</property>
+        <property name="widgetstyle.2" tag="property" attribute="name|widgetstyle.2" value="wide box">widget_layout_widebox</property>
+        <property name="widgetstyle.2" tag="property" attribute="name|widgetstyle.2" value="small poster">widget_layout_small_poster</property>
+        <property name="widgetstyle.2" tag="property" attribute="name|widgetstyle.2" value="square">widget_layout_square</property>
+        <property name="widgetstyle.2">widgetlayout</property> 
+        
+        <!-- widget 4 -->
+		<property name="content.3" tag="property" attribute="name|widgetPath.3" />
+		<property name="target.3" tag="property" attribute="name|widgetTarget.3" />
+        <property name="widgetprefix.3" tag="property" attribute="name|widget.3" value="Addon">$VAR[widgetprefix]</property>
+        <property name="widgetstyle.3" tag="property" attribute="name|widgetstyle.3" value="poster">widget_layout_poster</property>
+        <property name="widgetstyle.3" tag="property" attribute="name|widgetstyle.3" value="landscape">widget_layout_landscape</property>
+        <property name="widgetstyle.3" tag="property" attribute="name|widgetstyle.3" value="single box">widget_layout_singlebox</property>
+        <property name="widgetstyle.3" tag="property" attribute="name|widgetstyle.3" value="wide box">widget_layout_widebox</property>
+        <property name="widgetstyle.3" tag="property" attribute="name|widgetstyle.3" value="small poster">widget_layout_small_poster</property>
+        <property name="widgetstyle.3" tag="property" attribute="name|widgetstyle.3" value="square">widget_layout_square</property>
+        <property name="widgetstyle.3">widgetlayout</property> 
+        
         <controls>
-            <control type="group" id="1001$SKINSHORTCUTS[id]">
-                <width>1920</width>
-                <include>advanced$SKINSHORTCUTS[widgetstyle]</include>
-                <skinshortcuts>visibility</skinshortcuts>
-                <visible>!IsEmpty(Container(300).Listitem.Property(widget))</visible>
-                <animation condition="Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
-                    <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
-                    <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide" />
-                    <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade" />
+            <control type="grouplist" id="77777">
+                <bottom>0</bottom>
+                <left>500</left>
+                <height>85%</height>
+                <width>1460</width>
+                <!-- use fade effect to hide non active widget to prevent issues -->
+                <animation time="300" effect="fade" start="100" end="0" reversible="true" easing="inout" condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuVisibility])">Conditional</animation>
+                <!-- slide when submenu active -->
+                <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !Skin.HasSetting(VerticalHomeInlineSubmenu)">
+                    <effect type="slide" start="0" end="310" time="300" delay="0" tween="cubic" easing="inout" />
                 </animation>
-                <animation time="300" effect="fade" start="0" end="100" reversible="true" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>1820</width>
-                    <height>45</height>
-                    <texture border="5">diffuse/panel.png</texture>
-                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                    <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$INFO[Container(300).ListItem.Property(widgetName)]</label>
-                    <visible>IsEmpty(Container(510).ListItem.Property(similartitle))</visible>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$LOCALIZE[31545] $INFO[Container(510).ListItem.Property(similartitle)]</label>
-                    <visible>!IsEmpty(Container(510).ListItem.Property(similartitle))</visible>
-                </control>
+                
+                <!--  widget 1 -->
+                <include name="verticalhome_widgets_advanced_header">
+                    <param name="id" value="509" />
+                    <param name="containerid" value="510" />
+                    <param name="widgetidprefix" value="" />
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget))</visible>
+                </include>
                 <control type="panel" id="510">
                     <skinshortcuts>visibility</skinshortcuts>
+                    <include>widgets_animation</include>
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget))</visible>
                     <left>0</left>
                     <top>55</top>
                     <ondown>520</ondown>
@@ -352,222 +370,70 @@
                     <include>$SKINSHORTCUTS[widgetstyle]</include>
                     <content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]$SKINSHORTCUTS[widgetprefix]</content>
                 </control>
-            </control>
-        </controls>
-	</other>
-    
-    <other include="advancedwidgets.2">
-		<condition tag="property" attribute="name|widget.1"></condition>
-		<match>any</match>
-        <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
-		<property name="content" tag="property" attribute="name|widgetPath.1" />
-		<property name="target" tag="property" attribute="name|widgetTarget.1" />
-        <property name="id" tag="property" attribute="name|id" />
-        <property name="widgetprefix" tag="property" attribute="name|widget.1" value="Addon">$VAR[widgetprefix]</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.1" value="poster">widget_layout_poster</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.1" value="landscape">widget_layout_landscape</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.1" value="single box">widget_layout_singlebox</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.1" value="wide box">widget_layout_widebox</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.1" value="small poster">widget_layout_small_poster</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.1" value="square">widget_layout_square</property>
-        <property name="widgetstyle">widgetlayout</property> 
-        <controls>
-            <control type="group" id="1002$SKINSHORTCUTS[id]">
-                <width>1920</width>
-                <include>advanced$SKINSHORTCUTS[widgetstyle]</include>
-                <skinshortcuts>visibility</skinshortcuts>
-                <visible>!IsEmpty(Container(300).Listitem.Property(widget.1))</visible>
-                <animation condition="Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
-                    <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
-                    <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide" />
-                    <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade" />
-                </animation>
-                <animation time="300" effect="fade" start="0" end="100" reversible="true" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>1820</width>
-                    <height>45</height>
-                    <texture border="5">diffuse/panel.png</texture>
-                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                    <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$INFO[Container(300).ListItem.Property(widgetName.1)]</label>
-                    <visible>IsEmpty(Container(520).ListItem.Property(similartitle))</visible>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$LOCALIZE[31545] $INFO[Container(510).ListItem.Property(similartitle)]</label>
-                    <visible>!IsEmpty(Container(520).ListItem.Property(similartitle))</visible>
-                </control>
+                <!--  widget 2 -->
+                <include name="verticalhome_widgets_advanced_header">
+                    <param name="id" value="519" />
+                    <param name="containerid" value="520" />
+                    <param name="widgetidprefix" value=".1" />
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget.1))</visible>
+                </include>
                 <control type="panel" id="520">
                     <skinshortcuts>visibility</skinshortcuts>
+                    <include>widgets_animation</include>
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget.1))</visible>
                     <left>0</left>
                     <top>55</top>
-                    <onleft>300</onleft>
-                    <onup>510</onup>
                     <ondown>530</ondown>
+                    <onup>510</onup>
+                    <onleft>300</onleft>
                     <width>1460</width>
-                    <include>$SKINSHORTCUTS[widgetstyle]</include>
-                    <content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]$SKINSHORTCUTS[widgetprefix]</content>
+                    <include>$SKINSHORTCUTS[widgetstyle.1]</include>
+                    <content target="$SKINSHORTCUTS[target.1]">$SKINSHORTCUTS[content.1]$SKINSHORTCUTS[widgetprefix.1]</content>
                 </control>
-            </control>
-        </controls>
-	</other>
-    
-    <other include="advancedwidgets.3">
-		<condition tag="property" attribute="name|widget.2"></condition>
-		<match>any</match>
-        <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
-		<property name="content" tag="property" attribute="name|widgetPath.2" />
-		<property name="target" tag="property" attribute="name|widgetTarget.2" />
-        <property name="id" tag="property" attribute="name|id" />
-        <property name="widgetprefix" tag="property" attribute="name|widget.2" value="Addon">$VAR[widgetprefix]</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.2" value="poster">widget_layout_poster</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.2" value="landscape">widget_layout_landscape</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.2" value="single box">widget_layout_singlebox</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.2" value="wide box">widget_layout_widebox</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.2" value="small poster">widget_layout_small_poster</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.2" value="square">widget_layout_square</property>
-        <property name="widgetstyle">widgetlayout</property> 
-        <controls>
-            <control type="group" id="1003$SKINSHORTCUTS[id]">
-                <width>1920</width>
-                <include>advanced$SKINSHORTCUTS[widgetstyle]</include>
-                <skinshortcuts>visibility</skinshortcuts>
-                <visible>!IsEmpty(Container(300).Listitem.Property(widget.2))</visible>
-                <animation condition="Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
-                    <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
-                    <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide" />
-                    <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade" />
-                </animation>
-                <animation time="300" effect="fade" start="0" end="100" reversible="true" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>1820</width>
-                    <height>45</height>
-                    <texture border="5">diffuse/panel.png</texture>
-                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                    <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$INFO[Container(300).ListItem.Property(widgetName.2)]</label>
-                    <visible>IsEmpty(Container(530).ListItem.Property(similartitle))</visible>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$LOCALIZE[31545] $INFO[Container(530).ListItem.Property(similartitle)]</label>
-                    <visible>!IsEmpty(Container(530).ListItem.Property(similartitle))</visible>
-                </control>
+                <!--  widget 3 -->
+                <include name="verticalhome_widgets_advanced_header">
+                    <param name="id" value="529" />
+                    <param name="containerid" value="530" />
+                    <param name="widgetidprefix" value=".2" />
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget.2))</visible>
+                </include>
                 <control type="panel" id="530">
                     <skinshortcuts>visibility</skinshortcuts>
+                    <include>widgets_animation</include>
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget.2))</visible>
                     <left>0</left>
                     <top>55</top>
-                    <onleft>300</onleft>
-                    <onup>520</onup>
                     <ondown>540</ondown>
+                    <onup>520</onup>
+                    <onleft>300</onleft>
                     <width>1460</width>
-                    <include>$SKINSHORTCUTS[widgetstyle]</include>
-                    <content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]$SKINSHORTCUTS[widgetprefix]</content>
+                    <include>$SKINSHORTCUTS[widgetstyle.2]</include>
+                    <content target="$SKINSHORTCUTS[target.2]">$SKINSHORTCUTS[content.2]$SKINSHORTCUTS[widgetprefix.2]</content>
                 </control>
-            </control>
-        </controls>
-	</other>
-    
-    <other include="advancedwidgets.4">
-		<condition tag="property" attribute="name|widget.3"></condition>
-		<match>any</match>
-        <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
-		<property name="content" tag="property" attribute="name|widgetPath.3" />
-		<property name="target" tag="property" attribute="name|widgetTarget.3" />
-        <property name="id" tag="property" attribute="name|id" />
-        <property name="widgetprefix" tag="property" attribute="name|widget.3" value="Addon">$VAR[widgetprefix]</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.3" value="poster">widget_layout_poster</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.3" value="landscape">widget_layout_landscape</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.3" value="single box">widget_layout_singlebox</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.3" value="wide box">widget_layout_widebox</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.3" value="small poster">widget_layout_small_poster</property>
-        <property name="widgetstyle" tag="property" attribute="name|widgetstyle.3" value="square">widget_layout_square</property>
-        <property name="widgetstyle">widgetlayout</property> 
-        <controls>
-            <control type="group" id="1004$SKINSHORTCUTS[id]">
-                <width>1920</width>
-                <include>advanced$SKINSHORTCUTS[widgetstyle]</include>
-                <skinshortcuts>visibility</skinshortcuts>
-                <visible>!IsEmpty(Container(300).Listitem.Property(widget.3))</visible>
-                <animation condition="Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
-                    <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
-                    <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide" />
-                    <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade" />
-                </animation>
-                <animation time="300" effect="fade" start="0" end="100" reversible="true" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>1820</width>
-                    <height>45</height>
-                    <texture border="5">diffuse/panel.png</texture>
-                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                    <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$INFO[Container(300).ListItem.Property(widgetName.3)]</label>
-                    <visible>IsEmpty(Container(540).ListItem.Property(similartitle))</visible>
-                </control>
-                <control type="label">
-                    <height>40</height>
-                    <posx>10</posx>
-                    <font>Bold30</font>
-                    <align>left</align>
-                    <aligny>top</aligny>
-                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                    <label>$LOCALIZE[31545] $INFO[Container(540).ListItem.Property(similartitle)]</label>
-                    <visible>!IsEmpty(Container(540).ListItem.Property(similartitle))</visible>
-                </control>
+                 <!--  widget 4 -->
+                <include name="verticalhome_widgets_advanced_header">
+                    <param name="id" value="539" />
+                    <param name="containerid" value="540" />
+                    <param name="widgetidprefix" value=".3" />
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget.3))</visible>
+                </include>
                 <control type="panel" id="540">
                     <skinshortcuts>visibility</skinshortcuts>
+                    <include>widgets_animation</include>
+                    <visible>!IsEmpty(Container(300).Listitem.Property(widget.3))</visible>
                     <left>0</left>
                     <top>55</top>
-                    <onleft>300</onleft>
-                    <onup>530</onup>
                     <ondown>510</ondown>
+                    <onup>530</onup>
+                    <onleft>300</onleft>
                     <width>1460</width>
-                    <include>$SKINSHORTCUTS[widgetstyle]</include>
-                    <content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]$SKINSHORTCUTS[widgetprefix]</content>
+                    <include>$SKINSHORTCUTS[widgetstyle.3]</include>
+                    <content target="$SKINSHORTCUTS[target.3]">$SKINSHORTCUTS[content.3]$SKINSHORTCUTS[widgetprefix.3]</content>
                 </control>
+                
+
             </control>
         </controls>
 	</other>
-    
-    
+
 </template>
