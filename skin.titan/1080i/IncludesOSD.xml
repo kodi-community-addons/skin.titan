@@ -1,241 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <includes>
 
-    <include name="DialogContextMenuClassic">
-        <control type="group">
-            <posx>710</posx>
-            <posy>200</posy>
-            <!--Panel-->
-            <control type="image">
-                <width>500</width>
-                <height>800</height>
-                <texture border="15">diffuse/bgpanel.png</texture>
-                <bordersize>20</bordersize>
-                <colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
-            </control>
-            <!--Label Menu: -->
-            <control type="label" id="200">
-                <!--Label Menu-->
-                <posx>21</posx>
-                <posy>60</posy>
-                <width>458</width>
-                <align>left</align>
-                <textoffsetx>50</textoffsetx>
-                <font>Bold40</font>
-                <textcolor>$INFO[Skin.String(SideBladeTextColor)]</textcolor>
-                <label>$LOCALIZE[33061]:</label>
-            </control>
-            <control type="image">
-                <!--Seperator-->
-                <posx>21</posx>
-                <posy>120</posy>
-                <width>458</width>
-                <height>20</height>
-                <align>left</align>
-                <texture>common/menu-separator.png</texture>
-            </control>
-            <control type="grouplist" id="996">
-                <width></width>
-                <posx>21</posx>
-                <posy>140</posy>
-                <height>630</height>
-                <itemgap>3</itemgap>
-                <!--Buttons-->
-               <control type="button" id="1000">
-                    <description>Buttons</description>
-                    <include>SubMenuButton</include>
-                </control>
-            </control>
-        </control>
-	</include>
-		
-	<include name="DialogContextMenuModern">
-		<control type="group">
-			<posx>-660</posx>
-			<posy>0</posy>
-			<animation effect="slide" start="0" end="0,210" time="0" condition="Window.IsActive(MusicVisualisation.xml)">Conditional</animation>
-			<animation type="WindowOpen">
-				<effect type="slide" start="0" end="660" time="250" tween="cubic" easing="inout" />
-			</animation>
-			<animation type="WindowClose">
-				<effect type="slide" start="660" end="0" time="250" tween="cubic" easing="inout" />
-			</animation>
-		<!--Panel-->
-		<control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>520</width>
-			<height>1750</height>
-			<texture border="5">diffuse/panel.png</texture>
-			<colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
-			<aspectratio>stretch</aspectratio>
-		</control>
-
-		<!-- header -->
-        <control type="label">
-            <posx>61</posx>
-            <posy>10</posy>
-            <width min="80" max="1100">auto</width>
-            <height>100</height>
-            <font>Bold45</font>
-            <align>left</align>
-            <textcolor>$INFO[Skin.String(SideBladeTextColor)]</textcolor>
-            <label>[UPPERCASE]$LOCALIZE[33061][/UPPERCASE]</label>
-			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
-        </control>
-            <!--Label Menu: -->
-            <control type="image">
-                <!--Seperator-->
-                <posx>21</posx>
-                <posy>160</posy>
-                <width>458</width>
-                <height>20</height>
-                <align>left</align>
-                <texture>common/menu-separator.png</texture>
-            </control>
-			<control type="image">
-                <!--Seperator-->
-                <posx>21</posx>
-                <posy>980</posy>
-                <width>458</width>
-                <height>20</height>
-                <align>left</align>
-                <texture>common/menu-separator.png</texture>
-            </control>
-			<!-- close dialog -->
-			<control type="group">
-				<include>animation_fade_visible_hidden</include>
-				<posx>60</posx>
-                <posy>1005</posy>
-				<include condition="Skin.HasSetting(EnableTouchSupport)">close_button</include>
-			</control>
-			
-			
-            <control type="grouplist" id="996">
-                <width>458</width>
-                <posx>21</posx>
-                <posy>180</posy>
-				<onright>Dialog.Close(contextmenu)</onright>
-                <height>850</height>
-                <itemgap>3</itemgap>
-                <!--Buttons-->
-                <control type="button" id="1000">
-                    <description>Buttons</description>
-                    <include>SubMenuButton</include>
-                </control>
-			
-            </control>
-        </control>
-	</include>	
-	
-	<include name="SideBladeModern">
-		<posx>-660</posx>
-		<posy>0</posy>
-		<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
-		<include>animation_sub_menu</include>
-        
-         <!-- invisible button to close sideblade -->
-        <control type="button">
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>100%</width>
-			<height>100%</height>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>Light28</font>
-			<label>-</label>
-			<textcolor>-</textcolor>
-			<focusedcolor>-</focusedcolor>
-			<disabledcolor>-</disabledcolor>
-			<texturefocus>colors/color_transparent.png</texturefocus>
-			<texturenofocus>-</texturenofocus>
-			<onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
-            <onback>ClearProperty(ShowViewSubMenu, Home)</onback>
-			<visible>Skin.HasSetting(EnableTouchSupport) + StringCompare(Window(Home).Property(ShowViewSubmenu),show)</visible>
-		</control>
-        
-		<!--Panel-->
-        <control type="image">
-			<posy>-250</posy>
-			<posx>-20</posx>
-			<width>520</width>
-			<height>1750</height>
-			<texture border="5">diffuse/panel.png</texture>
-			<colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
-			<aspectratio>stretch</aspectratio>
-		</control>
-
-		<!-- header -->
-        <control type="label">
-            <posx>61</posx>
-            <posy>10</posy>
-            <width min="80" max="1100">auto</width>
-            <height>100</height>
-            <font>Bold45</font>
-            <align>left</align>
-            <textcolor>$INFO[Skin.String(SideBladeTextColor)]</textcolor>
-            <label>[UPPERCASE]$LOCALIZE[33063][/UPPERCASE]</label>
-			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
-        </control>
-		<control type="image">
-			<!--Seperator-->
-			<posx>21</posx>
-			<posy>160</posy>
-			<width>458</width>
-			<height>20</height>
-			<align>left</align>
-			<texture>common/menu-separator.png</texture>
-		</control>
-		<control type="image">
-			<!--Seperator-->
-			<posx>21</posx>
-			<posy>980</posy>
-			<width>458</width>
-			<height>20</height>
-			<align>left</align>
-			<texture>common/menu-separator.png</texture>
-		</control>
-        <!-- close dialog -->
-        <control type="group">
-            <include>animation_fade_visible_hidden</include>
-            <posx>60</posx>
-			<posy>1005</posy>
-            <include condition="Skin.HasSetting(EnableTouchSupport)">close_button</include>
-        </control>
-		
-		<!-- back -->
-        <control type="group">
-            <include>animation_fade_visible_hidden</include>
-            <posx>130</posx>
-			<posy>1005</posy>
-            <include condition="Skin.HasSetting(EnableTouchSupport)">back_button</include>
-        </control>
-	</include>
-	
-	<include name="SideBladeClassic">
-		<posx>-635</posx>
-		<posy>-15</posy>
-		<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
-		<include>animation_sub_menu</include>
-		<!--Panel-->
-		<control type="image">
-			<posx>-19</posx>
-			<posy>525</posy>
-			<width>80</width>
-			<height>60</height>
-			<texture>dialogs/default/arrow.png</texture>
-            <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-		</control>
-		<control type="image">
-			<posy>150</posy>
-			<width>500</width>
-			<height>840</height>
-            <bordersize>20</bordersize>
-			<texture border="15">diffuse/bgpanel.png</texture>
-            <colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
-		</control>
-	</include>	
-		
     <include name="OSDPanelClassic">
 
 		<control type="group">
@@ -790,7 +555,7 @@
 				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
 					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
 				</animation>
-				<posx>1850</posx>
+				<right>60</right>
 				<posy>90</posy>
 				<width>890</width>
 				<align>right</align>
@@ -806,7 +571,7 @@
 				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
 					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
 				</animation>
-				<posx>1850</posx>
+				<right>60</right>
 				<posy>140</posy>
 				<width>940</width>
 				<align>right</align>
@@ -868,54 +633,25 @@
 				</animation>
             </control>
 
-			
 			<!--Clock-->
-			<control type="grouplist">
-				<posx>1450</posx>
-				<posy>10</posy>
-				<width>400</width>
-				<height>100</height>
-				<align>right</align>
-				<itemgap>4</itemgap>
-				<orientation>horizontal</orientation>
-				<usecontrolcoords>true</usecontrolcoords>
-				<visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+            <control type="label">
+                <right>55</right>
+                <posy>10</posy>
+                <width>400</width>
+                <height>100</height>
+                <align>right</align>
+                <info>System.Time</info>
+                <font>Light60</font>
+                <aligny>center</aligny>
+                <textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
+                <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
                 <visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
-				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
-					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
-				</animation>
-				<control type="label">
-					<width min="0" max="150">auto</width>
-					<height>80</height>
-					<info>System.Time(hh:mm)</info>
-					<font>Light60</font>
-					<aligny>center</aligny>
-					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
-				</control>
-				<control type="label">
-					<visible>substring(system.time,AM,right)</visible>
-					<width min="0" max="150">auto</width>
-					<height>80</height>
-					<label>378</label>
-					<font>Light60</font>
-					<aligny>center</aligny>
-					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
-				</control>
-				<control type="label">
-					<visible>substring(system.time,PM,right)</visible>
-					<width min="0" max="150">auto</width>
-					<height>80</height>
-					<label>379</label>
-					<font>Light60</font>
-					<aligny>center</aligny>
-					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
-					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
-				</control>
-			</control>
-           
-            
+                <animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
+                    <effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+                </animation>
+            </control>
+
 		</control>
     </include>
 	
@@ -2719,4 +2455,165 @@
 		</control>
     </include>
 	
+    <include name="WeatherInfoOSD">
+        <!-- weather info displayed in video OSD and video info -->
+        <control type="group">
+            <posx>50</posx>
+            <bottom>292</bottom>
+            <width>128</width>
+            <height>128</height>
+            <visible>!IsEmpty(Window(Weather).Property(Current.Condition)) + Skin.HasSetting(ShowWeatherVideoInfoOSD) + !window.isactive(DialogSubtitles.xml)</visible>
+			<include>animation_fade_visible_hidden</include>
+			
+            <!--Current Weather-->
+            <control type="image">
+                <!--Current Weather Icon-->
+                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <width>128</width>
+                <height>128</height>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+            </control>
+            <control type="label">
+                <!--Current Temp-->
+                <width>300</width>
+                <height>128</height>
+                <posx>132</posx>
+                <posy>0</posy>
+                <font>Bold30</font>
+                 <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits]</label>
+            </control>
+			<!--Current Conditions-->
+			<control type="label">
+                <width>300</width>
+                <height>128</height>
+                <posx>132</posx>
+                <posy>32</posy>
+                <font>Reg24</font>
+                <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                <visible>Weather.IsFetched</visible>
+            </control>
+        </control>
+    </include>
+
+	<include name="WeatherInfoOSDSlim">
+        <!-- weather info displayed in video OSD and video info changes made for Slim OSD option -->
+        <control type="group">
+            <posx>20</posx>
+            <top>220</top>
+            <width>128</width>
+            <height>128</height>
+            <visible>!IsEmpty(Window(Weather).Property(Current.Condition)) + Skin.HasSetting(ShowWeatherVideoInfoOSD) + !window.isactive(DialogSubtitles.xml)</visible>
+			<include>animation_fade_visible_hidden</include>
+            <animation effect="slide" start="0,0" end="0,-200" condition="!Skin.HasSetting(EnableOSDInfo)">conditional</animation>
+            <animation effect="slide" start="0,0" end="0,-200" condition="Skin.HasSetting(EnableOSDInfo) + !Window.IsActive(DialogFullScreenInfo.xml) + !Window.IsActive(VideoOSD.xml)">conditional</animation>
+			<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+            <!--Current Weather-->
+            <control type="image">
+                <!--Current Weather Icon-->
+                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <width>128</width>
+                <height>128</height>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+            </control>
+            <control type="label">
+                <!--Current Temp-->
+                <width>300</width>
+                <height>128</height>
+                <posx>132</posx>
+                <posy>0</posy>
+                <font>Bold30</font>
+                 <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits]</label>
+                <visible>Weather.IsFetched</visible>
+            </control>
+			<!--Current Conditions-->
+			<control type="label">
+                <width>300</width>
+                <height>128</height>
+                <posx>132</posx>
+                <posy>32</posy>
+                <font>Reg24</font>
+                 <!-- colors should be hardcoded because display on video -->
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                <visible>Weather.IsFetched</visible>
+            </control>
+        </control>
+    </include>
+    
+    <include name="OSDInfoPanel">
+        <!--OSD Info Panel-->
+        <!--Info Stuff-->
+        <control type="group">
+			<visible>Skin.HasSetting(EnableOSDInfo)</visible>
+			<!-- background -->
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>100%</width>
+				<height>190</height>
+				<texture border="5">diffuse/panel.png</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+			</control>
+            <!-- Plot -->
+            <control type="group">
+                <posx>0</posx>
+                <posy>20</posy>
+                <width>1780</width>
+                <height>190</height>
+				<!--logo-->
+				<control type="image">
+					<posx>40</posx>
+					<posy>0</posy>
+					<width>260</width>
+					<height>160</height>
+					<fadetime>200</fadetime>
+					<texture background="true">$VAR[OSDInfoImage]</texture>
+					<aspectratio align="left" aligny="top">keep</aspectratio>
+                    <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+				</control>
+                <!-- plot when clearlogo visible -->
+                <control type="textbox">
+                    <posx>350</posx>
+                    <posy>0</posy>
+                    <width>1500</width>
+                    <height>160</height>
+                    <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                    <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
+                    <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Light28</font>
+                </control>
+                <!-- plot when clearlogo NOT visible -->
+                <control type="textbox">
+                    <posx>40</posx>
+                    <posy>0</posy>
+                    <width>1810</width>
+                    <height>160</height>
+                    <visible>![!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
+                    <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
+                    <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Light28</font>
+                </control>
+            </control>
+        </control>
+    </include>
+    
+    
 </includes>
