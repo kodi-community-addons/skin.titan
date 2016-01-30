@@ -5,9 +5,8 @@
     <!-- Header -->
     <!-- ====== -->
     <variable name="value_header">
-        <value condition="[Window.IsActive(SkinSettings.xml) | Window.IsActive(Custom_SkinSettings.xml)]">$VAR[value_header_skinsettings]</value>
+        <value condition="[Window.IsActive(SkinSettings.xml) | Window.IsActive(Custom_SkinSettings.xml)]">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE]</value>
 		<value condition="window.isactive(dialogfavourites.xml)">$LOCALIZE[1036]</value>
-		<value condition="window.isactive(home) + [[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)]">$INFO[Container(300).ListItem.Label]</value>
 		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml) + !IsEmpty(Window(Home).Property(actor.title))">$INFO[Window(Home).Property(actor.title)]</value>
 		
 		<value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.TvShowTitle)">$INFO[ListItem.TvShowTitle]</value>
@@ -20,10 +19,9 @@
 		
 		<value condition="Window.IsActive(script-skinshortcuts.xml)">$LOCALIZE[31014]</value>
 		<value condition="Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)">$INFO[System.AddonTitle(script.tv.show.next.aired)]</value>
-        <value condition="Window.IsActive(Home.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile)">[UPPERCASE]$LOCALIZE[10000][/UPPERCASE]</value>
+        <value condition="Window.IsActive(Home.xml)">[UPPERCASE]$LOCALIZE[10000][/UPPERCASE]</value>
         <value condition="substring(Container.FolderPath,Radio)">[UPPERCASE]$LOCALIZE[19021][/UPPERCASE]</value>
-        
-		<!-- <value condition="Container.Content(movies) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[ListItem.Title,• ,]</value>
+ 		<!-- <value condition="Container.Content(movies) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[342][/UPPERCASE] $INFO[ListItem.Title,• ,]</value>
 		<value condition="Container.Content(tvshows) + Skin.HasSetting(ShowMovieTitleHeader) + !StringCompare(ListItem.Title,..)">[UPPERCASE]$LOCALIZE[20343][/UPPERCASE] $INFO[ListItem.Title,• ,]</value> -->
         <value condition="[Container.Content(movies) | Container.Content(tvshows)] + Skin.HasSetting(ShowMovieTitleHeader) + !IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
 		
@@ -69,8 +67,7 @@
         <value condition="Window.IsActive(MyMusicSongs.xml)">[UPPERCASE]$LOCALIZE[2]-$LOCALIZE[1214][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyPrograms.xml)">[UPPERCASE]$LOCALIZE[10001][/UPPERCASE]</value>
         <value condition="Window.IsActive(Settings.xml)">[UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
-        
-        <value condition="Window.IsActive(SettingsCategory.xml)">[UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
+         <value condition="Window.IsActive(SettingsCategory.xml)">[UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
         <value condition="Window.IsActive(SettingsSystemInfo.xml)">[UPPERCASE]$LOCALIZE[5][/UPPERCASE]</value>
         <value condition="Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)">[UPPERCASE]$LOCALIZE[31088][/UPPERCASE] $INFO[ListItem.ChannelGroup,• ]</value>
         <value condition="Window.IsActive(MyMusicPlaylistEditor.xml)">[UPPERCASE]$LOCALIZE[10503][/UPPERCASE]</value>
@@ -79,8 +76,10 @@
 	</variable>
 	
 	<variable name="value_subheader">
+        <value condition="[Window.IsActive(SkinSettings.xml) | Window.IsActive(Custom_SkinSettings.xml)]">$VAR[value_header_skinsettings]</value>
 		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)">[CR]</value>
 		<value condition="Window.IsActive(MyWeather.xml)">$INFO[Control.GetLabel(3)]</value>
+        <value condition="Window.IsActive(Home)">$INFO[Container(300).ListItem.Label]</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml) | window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml) | window.isactive(mypvr.xml)] + !IsEmpty(Pvr.NowRecordingTitle)">$INFO[Pvr.NowRecordingTitle,$LOCALIZE[19158]: ] ($INFO[Pvr.NowRecordingChannel])</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml) | window.isactive(mypvrguide.xml) | window.isactive(mypvr.xml)] + !IsEmpty(Pvr.NextRecordingTitle)">$INFO[Pvr.NextRecordingTitle,$LOCALIZE[19025]: ] ($INFO[Pvr.NextRecordingDateTime])</value>
 		<value condition="[window.isactive(mypvrrecordings.xml) | window.isactive(mypvrtimers.xml)] + !IsEmpty(PVR.backenddiskspace) + Skin.HasSetting(EnableTouchSupport)">$INFO[Pvr.backenddiskspace]</value>
@@ -88,22 +87,22 @@
         <value condition="window.isactive(movieinformation) + !IsEmpty(ListItem.Season)">$LOCALIZE[20373] $INFO[ListItem.Season] $LOCALIZE[20452] $INFO[ListItem.Episode]: $INFO[ListItem.Title]</value>
 		<value condition="window.isactive(movieinformation)">$INFO[ListItem.TagLine]</value>
 		<value condition="!IsEmpty(Container.NumItems) + ![Window.IsActive(tvchannels) | Window.IsActive(radiochannels)]">$INFO[Container.NumItems,, $LOCALIZE[31034]] $INFO[Control.GetLabel(3),• ]</value>
-	</variable>
+        <value>$INFO[System.CurrentWindow]</value>
+    </variable>
     
     <variable name="value_header_skinsettings">
-		<value condition="StringCompare(Window(Home).Property(SkinSettingSection),12)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31121]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),9)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31013]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),8)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31022]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),17)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31221]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),7)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31518]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),16)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31668]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),18)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31088]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),6)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31005]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),19)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31531]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),14)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31271]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),15)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31462]</value>
-        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),20)">[UPPERCASE]$LOCALIZE[20077][/UPPERCASE] • $LOCALIZE[31667]</value>
-        <value>[UPPERCASE]$LOCALIZE[20077][/UPPERCASE]</value>
+		<value condition="StringCompare(Window(Home).Property(SkinSettingSection),12)">$LOCALIZE[31121]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),9)">$LOCALIZE[31013]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),8)">$LOCALIZE[31022]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),17)">$LOCALIZE[31221]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),7)">$LOCALIZE[31518]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),16)">$LOCALIZE[31668]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),18)">$LOCALIZE[31088]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),6)">$LOCALIZE[31005]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),19)">$LOCALIZE[31531]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),14)">$LOCALIZE[31271]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),15)">$LOCALIZE[31462]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinSettingSection),20)">$LOCALIZE[31667]</value>
     </variable>
 	
 	<variable name="mediatitle">
@@ -253,20 +252,17 @@
         <value condition="Skin.String(mediaflagsstyle,classic) + !IsEmpty(Container(510).ListItem.VideoAspect)">$INFO[Container(510).ListItem.VideoAspect]</value>
         <value condition="Skin.String(mediaflagsstyle,classic) + !IsEmpty(Container(999).ListItem.Property(VideoAspect))">$INFO[Container(999).ListItem.Property(VideoAspect)]</value>
         <value condition="Skin.String(mediaflagsstyle,classic) + window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoAspect)">$INFO[VideoPlayer.VideoAspect]</value>
-        
-		<value condition="StringCompare(ListItem.VideoAspect,1.33)">4:3</value>
+ 		<value condition="StringCompare(ListItem.VideoAspect,1.33)">4:3</value>
 		<value condition="StringCompare(ListItem.VideoAspect,1.37)">4:3</value>
 		<value condition="StringCompare(ListItem.VideoAspect,1.78)">16:9</value>
 		<value condition="StringCompare(ListItem.VideoAspect,1.85)">16:9</value>
         <value condition="!IsEmpty(ListItem.VideoAspect)">$INFO[ListItem.VideoAspect]</value>
-        
-        <value condition="StringCompare(Container(510).ListItem.VideoAspect,1.33)">4:3</value>
+         <value condition="StringCompare(Container(510).ListItem.VideoAspect,1.33)">4:3</value>
 		<value condition="StringCompare(Container(510).ListItem.VideoAspect,1.37)">4:3</value>
 		<value condition="StringCompare(Container(510).ListItem.VideoAspect,1.78)">16:9</value>
 		<value condition="StringCompare(Container(510).ListItem.VideoAspect,1.85)">16:9</value>
 		<value condition="!IsEmpty(Container(510).ListItem.VideoAspect)">$INFO[Container(510).ListItem.VideoAspect]</value>
-        
-        <value condition="StringCompare(Container(999).ListItem.Property(VideoAspect),1.33)">4:3</value>
+         <value condition="StringCompare(Container(999).ListItem.Property(VideoAspect),1.33)">4:3</value>
 		<value condition="StringCompare(Container(999).ListItem.Property(VideoAspect),1.37)">4:3</value>
 		<value condition="StringCompare(Container(999).ListItem.Property(VideoAspect),1.78)">16:9</value>
 		<value condition="StringCompare(Container(999).ListItem.Property(VideoAspect),1.85)">16:9</value>
@@ -307,8 +303,7 @@
 		<value condition="SubString(Container(510).ListItem.VideoCodec,H265)">H.265</value>
 		<value condition="SubString(Container(510).ListItem.VideoCodec,MPEG2)">MPEG2</value>
 		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec)">$INFO[Container(510).ListItem.VideoCodec]</value>
-        
-        <value condition="SubString(Container(999).ListItem.Property(VideoCodec),H264)">H.264</value>
+         <value condition="SubString(Container(999).ListItem.Property(VideoCodec),H264)">H.264</value>
 		<value condition="SubString(Container(999).ListItem.Property(VideoCodec),H265)">H.265</value>
 		<value condition="SubString(Container(999).ListItem.Property(VideoCodec),MPEG2)">MPEG2</value>
 		<value condition="!IsEmpty(Container(999).ListItem.Property(VideoCodec))">$INFO[Container(999).ListItem.VideoCodec]</value>
@@ -336,8 +331,7 @@
 		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">HD</value>
 		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [!IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">SD</value>
 		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + !IsEmpty(Container(510).ListItem.FileExtension)">$INFO[Container(510).ListItem.FileExtension]</value>
-        
-        <value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [Container(999).ListItem.IsStereoScopic | !IsEmpty(Container(999).ListItem.Property(Video3DFormat)) | substring(Container(999).ListItem.FileName,.3d.)]">3D</value>
+         <value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [Container(999).ListItem.IsStereoScopic | !IsEmpty(Container(999).ListItem.Property(Video3DFormat)) | substring(Container(999).ListItem.FileName,.3d.)]">3D</value>
 		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + IntegerGreaterThan(Container(999).ListItem.VideoResolution,1080)">4K</value>
 		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [substring(Container(999).ListItem.FilenameAndPath,blu-ray) | substring(Container(999).ListItem.FilenameAndPath,bluray) | substring(Container(999).ListItem.FilenameAndPath,bdrip) | substring(Container(999).ListItem.FilenameAndPath,bd25) | substring(Container(999).ListItem.FilenameAndPath,bd50)]">BD</value>
 		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + SubString(Container(999).ListItem.Filenameandpath,dvd) | SubString(Container(999).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(999).ListItem.Filenameandpath,.iso,Right)">DVD</value>
@@ -407,8 +401,7 @@
         <value condition="Skin.String(mediaflagsstyle,classic) + !IsEmpty(Container(510).ListItem.AudioChannels)">$INFO[Container(510).ListItem.AudioChannels]</value>
         <value condition="Skin.String(mediaflagsstyle,classic) + window.isactive(visualisation) + !IsEmpty(MusicPlayer.Channels)">$INFO[MusicPlayer.Channels]</value>
         <value condition="Skin.String(mediaflagsstyle,classic) + window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.AudioChannels)">$INFO[VideoPlayer.AudioChannels]</value>
-        
-		<value condition="StringCompare(ListItem.AudioChannels,1)">1.0</value>
+ 		<value condition="StringCompare(ListItem.AudioChannels,1)">1.0</value>
 		<value condition="StringCompare(ListItem.AudioChannels,2)">2.0</value>
 		<value condition="StringCompare(ListItem.AudioChannels,3)">2.1</value>
 		<value condition="StringCompare(ListItem.AudioChannels,4)">4.0</value>
@@ -419,8 +412,7 @@
 		<value condition="StringCompare(ListItem.AudioChannels,9)">8.1</value>
         <value condition="StringCompare(ListItem.AudioChannels,10)">9.1</value>
         <value condition="!IsEmpty(ListItem.Channels)">$INFO[ListItem.Channels]</value>
-        
-        <value condition="StringCompare(Container(510).ListItem.AudioChannels,1)">1.0</value>
+         <value condition="StringCompare(Container(510).ListItem.AudioChannels,1)">1.0</value>
 		<value condition="StringCompare(Container(510).ListItem.AudioChannels,2)">2.0</value>
 		<value condition="StringCompare(Container(510).ListItem.AudioChannels,3)">2.1</value>
 		<value condition="StringCompare(Container(510).ListItem.AudioChannels,4)">4.0</value>
@@ -808,8 +800,7 @@
 		<value condition="IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ] $INFO[ListItem.Property(UnWatchedEpisodes), (,) ]</value>
 		<value condition="!IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + [Container.Content(Seasons) | Container.Content(TVShows)] + [!IsEmpty(ListItem.Year) | !IsEmpty(ListItem.MPAA) | !IsEmpty(ListItem.Property(TotalEpisodes))]">$INFO[ListItem.Year,, • ]$INFO[ListItem.MPAA,, • ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360] • ]</value>
         <value condition="SubString(Window.Property(xmlfile),MyPVR,left)">[B]$INFO[ListItem.ChannelName,, • ][/B]$VAR[ListDateInfoPVR]</value>
-        
-		<value condition="!IsEmpty(ListItem.Duration)">$VAR[ListItemDuration]</value>
+ 		<value condition="!IsEmpty(ListItem.Duration)">$VAR[ListItemDuration]</value>
 		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
 	</variable>
 	
@@ -919,8 +910,7 @@
         <value condition="Container.Content(artists) + !IsEmpty(ListItem.Property(Artist_YearsActive))">$LOCALIZE[21898]: $INFO[ListItem.Property(Artist_YearsActive)]</value>
         <value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration, ,min. • ]</value>
 		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
-        
-	</variable>
+ 	</variable>
     
     <variable name="PVRChannelName">
         <value condition="!IsEmpty(ListItem.ChannelName)">$INFO[ListItem.ChannelName]</value>

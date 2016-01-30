@@ -90,7 +90,7 @@
 	<!-- Footer -->
 	<include name="Footer">
 		<control type="group">
-			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Skin.HasSetting(EnableTouchSupport)">
+			<animation type="Conditional" condition="[ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(99123)">
                 <effect type="slide" start="0,0" end="0,800" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
 			<animation type="Conditional" condition="skin.hastheme(classic)">
@@ -138,8 +138,7 @@
 
             <!--RSS feed on home -->
             <include condition="Window.IsActive(Home) + system.getbool(lookandfeel.enablerssfeeds) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, simplehor)]">FooterContentHome</include>
-            
-			<!-- codec info normal-->
+            <!-- codec info normal-->
 			<control type="group">
 				<posx>60</posx>
 				<height>50</height>
@@ -148,7 +147,8 @@
                 <animation type="Conditional" condition="skin.hastheme(classic)">
                     <effect type="slide" start="0,0" end="0,-12" time="0" tween="cubic" easing="inout" delay="0" />
                 </animation>
-                <animation type="Conditional" condition="Skin.HasSetting(EnableTouchSupport)">
+                <!-- slide if touchcontrols present -->
+                <animation type="Conditional" condition="Control.IsVisible(99123)">
                     <effect type="slide" start="0" end="280" time="0" tween="cubic" easing="inout" delay="0" />
                 </animation>
             </control>
@@ -157,8 +157,7 @@
 			<include condition="window.isactive(videolibrary) + !skin.hastheme(classic) + ![Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">StarRatingFooter</include>
             <include condition="window.isactive(videolibrary) + !skin.hastheme(classic) + [Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">AltRatingFooter</include>
 			<include condition="window.isactive(musiclibrary)">StarRatingMusicFooter</include>
-            
-			
+     			
 		</control>
 	</include>
     
@@ -240,7 +239,7 @@
         <!--Progress (PVR)-->
         <control type="group">
             <animation effect="slide" end="-30,15" time="0" condition="!skin.hastheme(classic)">Conditional</animation>
-            <visible>[window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml)] + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>[window.isactive(mypvrchannels.xml) | window.isactive(mypvrguide.xml)] + !Control.IsVisible(99123)</visible>
             <bottom>35</bottom>
             <height>65</height>
             <control type="label">
@@ -298,8 +297,7 @@
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.ChannelName]</label>
             </control>
-            
-            <control type="label">
+                 <control type="label">
                 <!--live tv programname-->
                 <posx>610</posx>
                 <posy>16</posy>
@@ -311,8 +309,7 @@
                 <label>$INFO[ListItem.Title]</label>
                 <visible>!Control.IsVisible(884)</visible>
             </control>
-            
-            <control type="image" id="44123">
+                 <control type="image" id="44123">
                 <visible>!skin.hastheme(classic)</visible>
                 <right>60</right>
                 <posy>0</posy>
@@ -332,10 +329,9 @@
                 <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[PVR.backenddiskspace]</label>
-                <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+                <visible>!Control.IsVisible(99123)</visible>
             </control>
-            
-        </control>
+             </control>
     </include>
 
     <include name="FooterContentGeneral">
@@ -360,7 +356,7 @@
             </control>
             <control type="label">
                 <visible>Container.Content(songs)</visible>
-                <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+                <visible>!Control.IsVisible(99123)</visible>
                 <!--Album, Songs-->
                 <left>60</left>
                 <align>left</align>
@@ -371,8 +367,7 @@
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.Album]</label>
             </control>
-            
-            <control type="label">
+                 <control type="label">
                 <!--Artist-->
                 <visible>[Container.Content(albums) | Container.Content(songs)] + IsEmpty(ListItem.Rating)</visible>
                 <right>60</right>
@@ -384,8 +379,7 @@
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[ListItem.Artist]</label>
             </control>
-            
-            <control type="label">
+                 <control type="label">
                 <!--Playlist length-->
                 <visible>Window.IsActive(MyVideoPlaylist.xml)</visible>
                 <right>60</right>
@@ -397,7 +391,6 @@
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$INFO[Container.Totaltime,$LOCALIZE[31597]: ]</label>
             </control>
-            
             <!-- repo last updated label -->
             <control type="label">
                 <right>60</right>
@@ -409,7 +402,7 @@
                 <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
                 <label>$LOCALIZE[31334]: $INFO[Window().Property(Updated)]</label>
                 <visible>Window.IsActive(AddonBrowser)</visible>
-                <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+                <visible>!Control.IsVisible(99123)</visible>
             </control>
         </control>
     </include>
@@ -429,7 +422,7 @@
             <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
             <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
             <visible>skin.hastheme(classic)</visible>
-            <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>!Control.IsVisible(99123)</visible>
             <visible>!Window.IsVisible(DialogButtonMenu.xml)</visible>
             <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
         </control>
@@ -448,9 +441,9 @@
             <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
             <visible>!skin.hastheme(classic)</visible>
             <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
-            <visible>!Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>!Window.IsVisible(DialogButtonMenu.xml) + !Control.IsVisible(99123)</visible>
         </control>
-        <!--RSS Text with touch-->
+        <!--RSS Text with touchcontrols (99123) visible-->
         <control type="rss">	
             <description>RSS Feed</description>
             <posx>380</posx>
@@ -466,7 +459,7 @@
             <visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
             <visible>!StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
             <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
-            <visible>!Window.IsVisible(DialogButtonMenu.xml) + Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>!Window.IsVisible(DialogButtonMenu.xml) + Control.IsVisible(99123)</visible>
             <animation effect="slide" start="0,0" end="-15,-2" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
         </control>
     </include>
@@ -495,12 +488,16 @@
 			<!-- <visible allowhiddenfocus="true">[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)] + Skin.HasSetting(VerticalHomeInlineSubmenu)</visible> -->
 		</control>
 	</include>
-	
-	<!--Header-->
+    
     <include name="Header">
-	
-		<!-- touchscreen workaround for windows tablets -->
+    
+        <!-- touchscreen workaround for windows tablets -->
 		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchScreenWorkaround</include>
+        
+        <!-- Snow Effect Expansion -->
+		<control type="group">
+            <include condition="Skin.HasSetting(enablesnow) + Skin.HasSetting(expandsnow)">snow</include>
+		</control>
 		
 		<!-- PVR recording icon -->
 		<control type="image">
@@ -511,9 +508,231 @@
 			<texture>home/basichome_isrecording_bg.png</texture>
 			<visible>Pvr.IsRecording + window.isactive(home)</visible>
 		</control>
+        
+        <include condition="Window.IsActive(Home) + !Skin.String(homelayout,win10)">HeaderLogo</include>
 		
         <control type="group">
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !StringCompare(Window(Home).Property(ShowWidget),show)</visible>
+            <visible>![!Window.IsActive(Home) + Skin.HasSetting(DisableHeader)]</visible>
+            <control type="group">
+                <visible>!Skin.HasSetting(CompactHeader)</visible>
+                <include>HeaderNormal</include>
+                <include>TimeInfo</include>
+                <include condition="Window.IsActive(Home)">ProfileInfo</include>
+                <include>WeatherInfo</include>
+            </control>
+            <control type="group">
+                <visible>Skin.HasSetting(CompactHeader)</visible>
+                <include>HeaderCompact</include>
+            </control>
+        </control>
+    </include>
+    
+    <include name="HeaderCompact">
+        <!-- menu buttons -->
+        <control type="grouplist" id="5555">
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(882)</visible>
+            <visible>![Window.IsActive(Home) + Skin.String(homelayout,simplever) + Skin.HasSetting(EnableTouchSupport]</visible>
+            <include>animation_fade_visible_hidden</include>		
+            <orientation>horizontal</orientation>
+            <itemgap>25</itemgap>
+            <posx>50</posx>
+            <top>20</top>
+            <onright>890</onright>
+            <ondown>9000</ondown>
+            <onup>9000</onup>
+            <control type="radiobutton" id="99223">
+                <width>60</width>
+                <height>60</height>
+                <font>-</font>
+                <selected>Control.HasFocus(99223)</selected>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/menu.png</textureradiofocus>
+                <textureradionofocus colordiffuse="$INFO[Skin.String(HeaderTextColor)]">common/menu.png</textureradionofocus>
+                <radiowidth>60</radiowidth>
+                <radioheight>60</radioheight>
+                <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show) + [Skin.String(HomeLayout,win10) | Skin.String(HomeLayout,netflix)]">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+                <onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show) + [Skin.String(HomeLayout,win10) | Skin.String(HomeLayout,netflix)]">ClearProperty(ShowViewSubMenu, Home)</onclick>
+                <onclick condition="[Skin.String(HomeLayout,win10) | Skin.String(HomeLayout,netflix)]">SetFocus(300)</onclick>
+                <onclick condition="![Skin.String(HomeLayout,win10) | Skin.String(HomeLayout,netflix)]">SetFocus(4444)</onclick>
+                <visible>!Skin.String(HomeLayout,enhanced) + !Skin.String(HomeLayout,simplehor)</visible>
+                <visible>Skin.HasSetting(EnableTouchSupport) | [Skin.String(homelayout,win10) + Window.IsActive(Home)]</visible>
+                <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
+            </control>
+            <control type="radiobutton" id="99227">
+                <width>60</width>
+                <height>60</height>
+                <font>-</font>
+                <selected>Control.HasFocus(99227)</selected>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">touchcontrols/widget.png</textureradiofocus>
+                <textureradionofocus colordiffuse="$INFO[Skin.String(HeaderTextColor)]">touchcontrols/widget.png</textureradionofocus>
+                <radiowidth>50</radiowidth>
+                <radioheight>50</radioheight>
+                <onclick condition="StringCompare(Window(Home).Property(ShowWidget),show)">Control.SetFocus(300)</onclick>
+                <onclick condition="!StringCompare(Window(Home).Property(ShowWidget),show)">SetProperty(ShowWidget, show, Home)</onclick>
+                <onclick condition="StringCompare(Window(Home).Property(ShowWidget),show)">ClearProperty(ShowWidget, Home)</onclick>
+                <visible>Window.IsActive(Home) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,2) | Skin.String(HomeLayout,1small) | Skin.String(HomeLayout,2small)] </visible>
+                <visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
+                <visible>Skin.HasSetting(EnableTouchSupport)</visible>
+                <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
+            </control>
+             <control type="radiobutton" id="99224">
+                <description>powerbutton</description>
+                <width>60</width>
+                <height>60</height>
+                <selected>Control.HasFocus(99224)</selected>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/shutdown2.png</textureradiofocus>
+                <textureradionofocus colordiffuse="$INFO[Skin.String(HeaderTextColor)]">common/shutdown2.png</textureradionofocus>
+                <radiowidth>50</radiowidth>
+                <radioheight>50</radioheight>
+                <onclick>ActivateWindow(111)</onclick>
+                <visible>Skin.HasSetting(EnableTouchSupport) | Skin.String(homelayout,win10)</visible>
+                <visible>!Skin.HasSetting(DisablePowerMenu) + Window.IsActive(Home)</visible>
+                <visible allowhiddenfocus="true">!Skin.HasSetting(HidePowerMenu)</visible>
+            </control>
+            <control type="radiobutton" id="99225">
+                <description>back button</description>
+                <width>60</width>
+                <height>60</height>
+                <selected>Control.HasFocus(99225)</selected>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">touchcontrols/back.png</textureradiofocus>
+                <textureradionofocus colordiffuse="$INFO[Skin.String(HeaderTextColor)]">touchcontrols/back.png</textureradionofocus>
+                <radiowidth>50</radiowidth>
+                <radioheight>50</radioheight>
+                <onclick>Back</onclick>
+                <onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
+                <onclick>ClearProperty(ShowWidget, Home)</onclick>
+                <visible>Skin.HasSetting(EnableTouchSupport) | [Skin.String(homelayout,win10) + Window.IsActive(Home)]</visible>
+                <visible>!Window.IsActive(Home) | [Window.IsActive(Home) + Player.HasMedia]</visible>		
+            </control>
+            <!-- Header -->
+            <control type="group" id="99226">
+                <control type="label">
+                    <top>-15</top>
+                    <align>left</align>
+                    <width>300</width>
+                    <label>$VAR[value_header]</label>
+                    <font>Bold30</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <top>15</top>
+                    <align>left</align>
+                    <width>500</width>
+                    <label>$VAR[value_subheader]</label>
+                    <font>Reg26</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+            </control>
+        
+        </control>
+            
+        <!-- Clock -->
+        <control type="group">
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(881)</visible>
+            <visible>[Window.IsActive(Home) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile)] | [!Window.IsActive(Home) + !Skin.HasSetting(AlwaysShowWeather)]</visible>
+            <control type="label">
+                <right>50</right>
+                <top>10</top>
+                <align>right</align>
+                <width>300</width>
+                <info>System.Time</info>
+                <font>Bold30</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+            <control type="label">
+                <right>50</right>
+                <top>40</top>
+                <align>right</align>
+                <width>500</width>
+                <info>System.Date</info>
+                <font>Reg26</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+        </control>
+         <!--Profile button -->
+        <control type="radiobutton" id="890">
+            <right>30</right>
+            <top>20</top>
+            <ondown>9000</ondown>
+            <onleft>5555</onleft>
+            <width>600</width>
+            <height>60</height>
+            <radiowidth>60</radiowidth>
+            <radioheight>60</radioheight>
+            <align>right</align>
+            <aligny>center</aligny>
+            <font>Reg26</font>
+            <label>$VAR[ProfileLabel]</label>
+            <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+            <focusedcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</focusedcolor>
+            <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/profil/avatar.png</textureradiofocus>
+            <textureradionofocus colordiffuse="$INFO[Skin.String(HeaderTextColor)]">common/profil/avatar.png</textureradionofocus>
+            <textoffsetx>70</textoffsetx>
+            <radioposx>0</radioposx>
+            <pulseonselect>false</pulseonselect>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+            <onclick>System.LogOff</onclick>
+            <selected>Control.HasFocus(890)</selected>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
+            <visible>Window.IsActive(Home) + !Skin.HasSetting(WeatherOnHome) + Skin.HasSetting(ShowProfile)</visible>
+        </control>
+         <!--Weather -->
+        <control type="group">
+            <visible>[Window.IsActive(Home) + Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile)] | [!Window.IsActive(Home) + Skin.HasSetting(AlwaysShowWeather)]</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(881)</visible>
+            <control type="image">
+                <right>20</right>
+                <top>0</top>
+                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <width>100</width>
+                <height>100</height>
+                <aspectratio>keep</aspectratio>
+            </control>
+            <!-- time + date -->
+            <control type="label">
+                <right>130</right>
+                <top>5</top>
+                <align>right</align>
+                <width>400</width>
+                <label>[B]$INFO[System.Date], $INFO[System.Time][/B]</label>
+                <visible>Weather.IsFetched</visible>
+                <font>Reg26</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+            <!-- weather conditions -->
+            <control type="label">
+                <right>130</right>
+                <top>35</top>
+                <align>right</align>
+                <width>400</width>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits], $INFO[Window(Weather).Property(Current.Condition)]</label>
+                <visible>Weather.IsFetched</visible>
+                <font>Reg26</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+        </control>
+    </include>
+	
+	<!--Header-->
+    <include name="HeaderNormal">
+	
+        <control type="group">
+            <visible>!Window.IsActive(Home)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !StringCompare(Window(Home).Property(ShowWidget),show) + !Control.IsVisible(667711)</visible>
             <control type="image">
                 <visible>skin.hastheme(classic)</visible>
                 <posx>61</posx>
@@ -563,18 +782,13 @@
             </control>
         </control>
 
-		<!-- Snow Effect Expansion -->
-		<control type="group">
-            <include condition="Skin.HasSetting(enablesnow) + Skin.HasSetting(expandsnow)">snow</include>
-		</control>
-
     </include>
     
 	<include name="ClearLogo">
 		<!--clearlogo top right-->
 		<control type="image" id="881">
 			<right>60</right>
-			<top>20</top>
+			<top>0</top>
 			<width>550</width>
 			<height>110</height>
 			<fadetime>600</fadetime>
@@ -590,7 +804,7 @@
 		<!--clearlogo top left-->
 		<control type="image" id="882">
 			<left>60</left>
-			<top>20</top>
+			<top>0</top>
 			<width>550</width>
 			<height>110</height>
 			<fadetime>600</fadetime>
@@ -603,7 +817,7 @@
 		<!--clearlogo top center-->
 		<control type="image" id="883">
 			<left>760</left>
-			<top>20</top>
+			<top>0</top>
 			<width>400</width>
 			<height>110</height>
 			<fadetime>600</fadetime>
@@ -824,17 +1038,18 @@
 
 	<include name="WeatherInfo">
         <!-- weather info -->
-        <control type="group">
+        <control type="group" id="667711">
 			<animation effect="slide" end="400" time="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)] + Window.IsActive(home)">Conditional</animation>
             <posx>30</posx>
-            <posy>15</posy>
+            <posy>0</posy>
             <width>350</width>
             <height>300</height>
 			<visible>!Control.IsVisible(882)</visible>
 			<visible>!Control.IsVisible(77551)</visible>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + [Skin.HasSetting(WeatherOnHome) | Skin.HasSetting(AlwaysShowWeather)] + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
+            <visible>[Skin.HasSetting(WeatherOnHome) + Window.IsActive(Home)] | Skin.HasSetting(AlwaysShowWeather)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="image">
                 <!--Icon-->
@@ -869,6 +1084,36 @@
                 <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
                 <visible>Weather.IsFetched</visible>
             </control>
+        </control>
+    </include>
+    
+    <include name="HeaderLogo">
+        <!-- Kodi Logo image -->
+        <control type="image">
+            <posx>35</posx>
+            <posy>10</posy>
+            <height>110</height>
+            <aspectratio align="left">keep</aspectratio>
+            <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
+            <texture>home/kodi_logo_light.png</texture>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
+            <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
+            <visible>!Skin.HasSetting(CompactHeader)</visible>
+            <visible>!Skin.String(CustomLogoImage)</visible>
+            <visible>!Skin.String(HomeLayout, win10)</visible>
+        </control>
+        <!-- custom Logo image -->
+        <control type="image">
+            <posx>35</posx>
+            <posy>10</posy>
+            <height>110</height>
+            <aspectratio align="left">keep</aspectratio>
+            <texture>$INFO[Skin.String(CustomLogoImage)]</texture>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
+            <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
+            <visible>!Skin.HasSetting(CompactHeader)</visible>
+            <visible>Skin.String(CustomLogoImage)</visible>
+            <visible>!Skin.String(HomeLayout, win10)</visible>
         </control>
     </include>
     
@@ -974,8 +1219,7 @@
         <pulseonselect>false</pulseonselect>
         <texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="15">dialogs/keyboard/key.png</texturefocus>
         <texturenofocus colordiffuse="$INFO[Skin.String(ButtonColor)]" border="15">dialogs/keyboard/key.png</texturenofocus>
-        
-    </include>
+     </include>
     <include name="KeyBoardKeyRadio">
         <align>left</align>
         <textoffsetx>20</textoffsetx>
