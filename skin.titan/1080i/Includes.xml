@@ -144,21 +144,14 @@
 				<posx>60</posx>
 				<height>50</height>
 				<bottom>20</bottom>
-				<include condition="[Window.IsActive(MyVideoNav.xml) | Window.IsActive(MyVideoPlaylist.xml)] + !Skin.HasSetting(EnableTouchSupport)">mediaflags</include>
+				<include condition="[Window.IsActive(MyVideoNav.xml) | Window.IsActive(MyVideoPlaylist.xml)]">mediaflags</include>
                 <animation type="Conditional" condition="skin.hastheme(classic)">
                     <effect type="slide" start="0,0" end="0,-12" time="0" tween="cubic" easing="inout" delay="0" />
                 </animation>
+                <animation type="Conditional" condition="Skin.HasSetting(EnableTouchSupport)">
+                    <effect type="slide" start="0" end="280" time="0" tween="cubic" easing="inout" delay="0" />
+                </animation>
             </control>
-			
-			<!-- codec info with touch enabled-->
-			<control type="group">
-				<posx>60</posx>
-				<height>50</height>
-				<top>100</top>
-				<include condition="[Window.IsActive(MyVideoNav.xml) | Window.IsActive(MyVideoPlaylist.xml)] + !skin.hastheme(classic) + Skin.HasSetting(EnableTouchSupport)">mediaflags</include>
-				<visible>!Window.IsActive(DialogKaiToast.xml)</visible>
-                <visible>!Control.IsVisible(88888)</visible>
-			</control>
 			
 			<!--Rating normal-->
 			<include condition="window.isactive(videolibrary) + !skin.hastheme(classic) + ![Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]">StarRatingFooter</include>
@@ -566,7 +559,6 @@
                 <font>Reg30</font>
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-                <visible>![Skin.HasSetting(EnableTouchSupport) + Window.IsActive(MyVideoNav.xml)]</visible>
                 <visible>!Control.IsVisible(882)</visible>
             </control>
         </control>
