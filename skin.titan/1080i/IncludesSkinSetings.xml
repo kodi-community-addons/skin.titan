@@ -40,14 +40,14 @@
                 <visible>Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small) | [Skin.String(HomeLayout, simplehor) + !Skin.HasSetting(EnhancedHome_Circular)]</visible>
             </control>
             
-            <!--change netflix rows-->            
-            <control type="button" id="23602">
-                <include>SkinSettings_Button</include>
-                <label>--- $LOCALIZE[31595]</label>
-                <onclick>SetProperty(netflixmenu, active, Home)</onclick>
-                <onclick>RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)</onclick>
-                <visible>Skin.String(HomeLayout, netflix)</visible>
-            </control>
+            <!--change netflix rows-->
+            <include name="SkinSettings_ActionButton">
+                <param name="id" value="23602" />
+                <param name="label" value="--- $LOCALIZE[31595]" />
+                <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)" />
+                <param name="action2" value="SetProperty(netflixmenu, active, Home)" />
+                <param name="visible" value="Skin.String(HomeLayout, netflix)" />
+            </include>
             
             <!--disable fanart on netflix home-->
             <control type="radiobutton" id="23603">
@@ -269,6 +269,7 @@
                 <param name="id" value="23026" />
                 <param name="label" value="31204" />
                 <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=powermenu)" />
+                <param name="action2" value="SetProperty(powermenu, active, Home)" />
                 <param name="visible" value="true" />
             </include>
                                 
@@ -641,13 +642,18 @@
                 <selected>Skin.String(actorthumbslookup,true)</selected>
             </control>
             
-            <control type="radiobutton" id="5151">
-                <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31187]</label>
-                <onclick condition="System.HasAddon(script.tvtunes)">Addon.OpenSettings(script.tvtunes)</onclick>
-                <onclick condition="!System.HasAddon(script.tvtunes)">RunPlugin(plugin://script.tvtunes)</onclick>
-                <selected>Control.HasFocus(5151)</selected>
-            </control>
+            <include name="SkinSettings_ActionButton">
+                <param name="id" value="5151" />
+                <param name="label" value="31187" />
+                <param name="action" value="Addon.OpenSettings(script.tvtunes)" />
+                <param name="visible" value="System.HasAddon(script.tvtunes)" />
+            </include>
+            <include name="SkinSettings_ActionButton">
+                <param name="id" value="85151" />
+                <param name="label" value="31187" />
+                <param name="action" value="RunPlugin(plugin://script.tvtunes)" />
+                <param name="visible" value="!System.HasAddon(script.tvtunes)" />
+            </include>
             
             <control type="radiobutton" id="8014">
                 <include>SkinSettings_Button</include>
@@ -1560,6 +1566,7 @@
                 <param name="id" value="96009" />
                 <param name="label" value="31595" />
                 <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)" />
+                <param name="action2" value="SetProperty(netflixmenu, active, Home)" />
                 <param name="visible" value="Skin.String(HomeLayout, netflix)" />
             </include>
             
@@ -1567,6 +1574,7 @@
                 <param name="id" value="96008" />
                 <param name="label" value="31204" />
                 <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=powermenu)" />
+                <param name="action2" value="SetProperty(powermenu, active, Home)" />
                 <param name="visible" value="true" />
             </include>
 
@@ -2390,6 +2398,7 @@
             <radioposx>0</radioposx>
             <radioposy>5</radioposy>
             <label>$PARAM[label]</label>
+            <onclick>$PARAM[action2]</onclick>
             <onclick>$PARAM[action]</onclick>
             <selected>Control.HasFocus($PARAM[id])</selected>
             <visible>$PARAM[visible]</visible>
