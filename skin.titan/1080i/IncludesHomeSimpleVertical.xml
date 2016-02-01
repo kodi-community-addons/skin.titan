@@ -133,7 +133,7 @@
 				<visible>StringCompare(Container(300).ListItem.Property(widget),music)</visible>
 			</control>
 		</control>
-        <control type="group" id="77552">
+        <control type="group" id="77551">
             <visible>SubString(Window.Property(widgetstyle), landscape)</visible>
 			<visible>[Control.HasFocus(510) | Control.HasFocus(511)] + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
 			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
@@ -194,11 +194,16 @@
             <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
             <fadetime>0</fadetime>
             <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-            <visible>Container(510).IsUpdating</visible>
+            <visible>[Control.IsVisible(510) + Container(510).IsUpdating]</visible>
         </control>
  	</control>
 	
    </include>
+   
+   <variable name="verticalhome_widgets_advanced_header_textcolor">
+        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">$INFO[Skin.String(ViewDetailsListItemTextColor)]</value>
+        <value>$INFO[Skin.String(GeneralTextColor)]</value>
+   </variable>
       
    <include name="verticalhome_widgets_advanced_header">
         <control type="group" id="$PARAM[id]">
@@ -221,7 +226,7 @@
                 <font>Bold30</font>
                 <align>left</align>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                <textcolor>$VAR[verticalhome_widgets_advanced_header_textcolor]</textcolor>
                 <label>$INFO[Container(300).ListItem.Property(widgetName$PARAM[widgetidprefix])]</label>
                 <visible>IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
             </control>
@@ -231,7 +236,7 @@
                 <font>Bold30</font>
                 <align>left</align>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                <textcolor>$VAR[verticalhome_widgets_advanced_header_textcolor]</textcolor>
                 <label>$LOCALIZE[31545] $INFO[Container($PARAM[containerid]).ListItem.Property(similartitle)]</label>
                 <visible>!IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
             </control>

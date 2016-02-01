@@ -4393,6 +4393,160 @@
 		<value condition="ListItem.IsResumable">$INFO[ListItem.PercentPlayed]%</value>
 		<value>??</value>
     </variable>
+    
+    <include name="Font_Reg26">
+        <font>Reg26</font>
+    </include>
+    <include name="Font_Reg31">
+        <font>Reg31</font>
+    </include>
+    
+    <include name="PVRGuideChannelItemLayout">
+        <!--Channel left side UNFOCUS-->
+        <animation effect="fade" end="100" time="200">OnFocus</animation>
+        <animation effect="fade" end="80" time="200">UnFocus</animation>
+        <control type="group">
+            <width>98%</width>
+            <height>92%</height>
+            
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
+            </control>
+            
+            <control type="image">
+                <!--Channel Icon with channel name or number present-->
+                <left>2%</left>
+                <width>20%</width>
+                <height>100%</height>
+                <texture>$INFO[ListItem.Icon]</texture>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+                <visible>!Skin.HasSetting(HideChannelLogosInGuide)</visible>
+                <visible>[!Skin.HasSetting(HideChannelNamesInGuide) + !Skin.HasSetting(HideChannelNumbersInGuide)] | [!Skin.HasSetting(HideChannelNamesInGuide) + Skin.HasSetting(HideChannelNumbersInGuide)]</visible>
+            </control>
+            <control type="image">
+                <!--Channel Icon with channel name and number both NOT present-->
+                <left>2%</left>
+                <width>98%</width>
+                <height>100%</height>
+                <texture>$INFO[ListItem.Icon]</texture>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+                <visible>!Skin.HasSetting(HideChannelLogosInGuide)</visible>
+                <visible>Skin.HasSetting(HideChannelNamesInGuide) + Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+            </control>
+            <control type="image">
+                <!--Channel Icon with only channel number present-->
+                <left>2%</left>
+                <width>46%</width>
+                <height>100%</height>
+                <texture>$INFO[ListItem.Icon]</texture>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+                <visible>!Skin.HasSetting(HideChannelLogosInGuide)</visible>
+                <visible>Skin.HasSetting(HideChannelNamesInGuide) + !Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Nummber with logo and channelname present-->
+                <left>24%</left>
+                <width>20%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <align>center</align>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <info>ListItem.ChannelNumberLabel</info>
+                <visible>!Skin.HasSetting(HideChannelNumbersInGuide) + !Skin.HasSetting(HideChannelLogosInGuide) + !Skin.HasSetting(HideChannelNamesInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Number with logo disabled and channelname present-->
+                <left>2%</left>
+                <width>20%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <align>center</align>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <info>ListItem.ChannelNumberLabel</info>
+                <visible>!Skin.HasSetting(HideChannelNumbersInGuide) + Skin.HasSetting(HideChannelLogosInGuide) + !Skin.HasSetting(HideChannelNamesInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Number with logo enabled and channelname not present-->
+                <left>50%</left>
+                <width>50%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <align>center</align>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <info>ListItem.ChannelNumberLabel</info>
+                <visible>!Skin.HasSetting(HideChannelNumbersInGuide) + !Skin.HasSetting(HideChannelLogosInGuide) + Skin.HasSetting(HideChannelNamesInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Number with logo disabled and channelname disabled-->
+                <left>2%</left>
+                <width>98%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <align>center</align>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <info>ListItem.ChannelNumberLabel</info>
+                <visible>!Skin.HasSetting(HideChannelNumbersInGuide) + Skin.HasSetting(HideChannelLogosInGuide) + Skin.HasSetting(HideChannelNamesInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Name with logo and channel number enabled-->
+                <left>46%</left>
+                <width>54%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <label>$INFO[ListItem.ChannelName]</label>
+                <visible>!Skin.HasSetting(HideChannelNamesInGuide) + !Skin.HasSetting(HideChannelLogosInGuide) + !Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Name with logo disabled and channel number enabled-->
+                <left>26%</left>
+                <width>74%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <label>$INFO[ListItem.ChannelName]</label>
+                <visible>!Skin.HasSetting(HideChannelNamesInGuide) + Skin.HasSetting(HideChannelLogosInGuide) + !Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Name with logo enabled and channel number disabled-->
+                <left>26%</left>
+                <width>74%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <label>$INFO[ListItem.ChannelName]</label>
+                <visible>!Skin.HasSetting(HideChannelNamesInGuide) + !Skin.HasSetting(HideChannelLogosInGuide) + Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+            </control>
+            <control type="label">
+                <!--Channel Name with logo disabled and channel number disabled-->
+                <left>2%</left>
+                <width>98%</width>
+                <height>100%</height>
+                <include condition="!skin.string(GuideRows, 7)">Font_Reg26</include>
+                <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+                <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
+                <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
+                <label>$INFO[ListItem.ChannelName]</label>
+                <visible>!Skin.HasSetting(HideChannelNamesInGuide) + Skin.HasSetting(HideChannelLogosInGuide) + Skin.HasSetting(HideChannelNumbersInGuide)</visible>
+            </control>
+        </control>
+    </include>
 	
 	
 

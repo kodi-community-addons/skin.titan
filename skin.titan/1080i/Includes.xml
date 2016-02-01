@@ -138,7 +138,7 @@
             <include condition="![Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)] + !Window.IsActive(home)">FooterContentGeneral</include>
 
             <!--RSS feed on home -->
-            <include condition="Window.IsActive(Home) + system.getbool(lookandfeel.enablerssfeeds) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, simplehor)]">FooterContentHome</include>
+            <include condition="Window.IsActive(Home) + system.getbool(lookandfeel.enablerssfeeds) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 3small) | Skin.String(HomeLayout, simplehor)]">FooterContentHome</include>
             <!-- codec info normal-->
 			<control type="group">
 				<posx>60</posx>
@@ -511,11 +511,12 @@
 			<visible>Pvr.IsRecording + window.isactive(home)</visible>
 		</control>
         
-        <include condition="Window.IsActive(Home) + !Skin.String(homelayout,win10)">HeaderLogo</include>
+        <include condition="Window.IsActive(Home) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(homelayout,win10)]">HeaderLogo</include>
 		
         <control type="group">
             <visible>![!Window.IsActive(Home) + Skin.HasSetting(DisableHeader)] + !Control.IsVisible(507)</visible>
             <control type="group">
+                <!-- normal header -->
                 <visible>!Skin.HasSetting(CompactHeader)</visible>
                 <include>HeaderNormal</include>
                 <include>TimeInfo</include>
@@ -533,7 +534,7 @@
         <!-- menu buttons -->
         <control type="grouplist" id="5555">
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !Control.IsVisible(882)</visible>
-            <visible>![Window.IsActive(Home) + Skin.String(homelayout,simplever) + Skin.HasSetting(EnableTouchSupport)]</visible>
+            <visible>!Window.IsActive(Home) | Skin.String(homelayout,win10)</visible>
             <include>animation_fade_visible_hidden</include>		
             <orientation>horizontal</orientation>
             <itemgap>25</itemgap>
@@ -615,6 +616,7 @@
             </control>
             <!-- Header -->
             <control type="group" id="99226">
+                <visible>!Window.IsActive(Home)</visible>
                 <control type="label">
                     <top>-15</top>
                     <align>left</align>
@@ -734,7 +736,9 @@
 	
         <control type="group">
             <visible>!Window.IsActive(Home)</visible>
+            <visible>!Skin.HasSetting(CompactHeader)</visible>
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888) + !StringCompare(Window(Home).Property(ShowWidget),show) + !Control.IsVisible(667711)</visible>
+            <include>animation_fade_visible_hidden</include>
             <control type="image">
                 <visible>skin.hastheme(classic)</visible>
                 <posx>61</posx>
@@ -847,12 +851,10 @@
 	<include name="TimeInfo">
 		
         <control type="group">
-            <visible>![StringCompare(Window(Home).Property(ShowWidget),show) + Control.IsVisible(77777)]</visible>
 			<visible>!Control.IsVisible(881)</visible>
-			<visible>!Control.IsVisible(77551)</visible>
-            <visible>!Control.IsVisible(88888)</visible>
-            <visible>![Skin.HasSetting(AutoShowWidgets) + SubString(Control.GetLabel(17888),single box) + [Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)]]</visible>
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
+            <visible>!Skin.HasSetting(CompactHeader)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(77551) + !Control.IsVisible(88888)</visible>
+            <include>animation_fade_visible_hidden</include>
 			<animation type="Conditional" condition="Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)">
                 <effect type="slide" start="0,0" end="-120,0" time="400" tween="cubic" easing="inout" delay="0" />
             </animation>
@@ -976,9 +978,10 @@
 			<defaultcontrol>890</defaultcontrol>
 			<posx>60</posx>
 			<posy>30</posy>
-			<visible>!Control.IsVisible(882)</visible>
-			<visible>!Control.IsVisible(77551)</visible>
-			<visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
+            <visible>!Skin.HasSetting(CompactHeader)</visible>
+            <include>animation_fade_visible_hidden</include>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(77551) + !Control.IsVisible(88888)</visible>
+			<visible>Skin.HasSetting(ShowProfile)</visible>
             <width>150</width>
 			<height>80</height>
 			<control type="image">
@@ -1047,11 +1050,11 @@
             <width>350</width>
             <height>300</height>
 			<visible>!Control.IsVisible(882)</visible>
-			<visible>!Control.IsVisible(77551)</visible>
+            <visible>!Skin.HasSetting(CompactHeader)</visible>
             <visible>Weather.IsFetched</visible>
 			<include>animation_fade_visible_hidden</include>
             <visible>[Skin.HasSetting(WeatherOnHome) + Window.IsActive(Home)] | Skin.HasSetting(AlwaysShowWeather)</visible>
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(77551) + !Control.IsVisible(88888)</visible>
             <!--Weather Today-->
             <control type="multiimage">
                 <!--Icon-->
@@ -1098,11 +1101,10 @@
             <aspectratio align="left">keep</aspectratio>
             <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
             <texture>home/kodi_logo_light.png</texture>
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
-            <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
-            <visible>!Skin.HasSetting(CompactHeader)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(77551) + !Control.IsVisible(88888)</visible>
+            <visible>!Control.IsVisible(5555) + !Control.IsVisible(891) + !Control.IsVisible(667711)</visible>
             <visible>!Skin.String(CustomLogoImage)</visible>
-            <visible>!Skin.String(HomeLayout, win10)</visible>
+            <include>animation_fade_visible_hidden</include>
         </control>
         <!-- custom Logo image -->
         <control type="image">
@@ -1111,11 +1113,10 @@
             <height>110</height>
             <aspectratio align="left">keep</aspectratio>
             <texture>$INFO[Skin.String(CustomLogoImage)]</texture>
-            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Skin.HasSetting(WeatherOnHome) + !Skin.HasSetting(ShowProfile) + ![ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)] + !Control.IsVisible(88888)</visible>
-            <visible>![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
-            <visible>!Skin.HasSetting(CompactHeader)</visible>
+            <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(77551) + !Control.IsVisible(88888)</visible>
+            <visible>!Control.IsVisible(5555) + !Control.IsVisible(891) + !Control.IsVisible(667711)</visible>
             <visible>Skin.String(CustomLogoImage)</visible>
-            <visible>!Skin.String(HomeLayout, win10)</visible>
+            <include>animation_fade_visible_hidden</include>
         </control>
     </include>
     
