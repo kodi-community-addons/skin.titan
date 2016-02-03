@@ -10,6 +10,7 @@
 			<texture>$VAR[ColorOverlayTexture]</texture>
 			<include condition="Skin.String(BackgroundOverlayColor) + !Skin.String(BackgroundOverlayColor,None)">bgOverlayDiffuse</include>
 			<visible>!Control.IsVisible(507)</visible>
+            <visible>Skin.String(BackgroundOverlayTexture) + !Skin.String(BackgroundOverlayTexture, None)</visible>
             <visible>![SubString(Control.GetLabel(17888),box) + [Control.HasFocus(510) | Control.HasFocus(520) | Control.HasFocus(530) | Control.HasFocus(540)] + !Skin.HasSetting(VerticalHomeMultiWidget)]</visible>
 		</control>
     </include>
@@ -27,7 +28,6 @@
     <include name="bgOverlayDiffuse">
         <colordiffuse>$INFO[Skin.String(BackgroundOverlayColor)]</colordiffuse>
     </include>
-	
     
     <include name="DialogOverlayExtra">
 		<!-- dim screen overlay used in certain dialogs -->
@@ -110,11 +110,12 @@
     
 	<!--Global Background -->
     <include name="GlobalBackground">
-         <!-- background panel -->
+    
+        <!-- background panel -->
         <control type="image" description="panel behind bg">
             <include>DimensionsFullscreen</include>
             <texture>colors/color_white.png</texture>
-            <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor)]</colordiffuse>
+            <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
             <visible>Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)</visible>
         </control>
 			
@@ -123,8 +124,8 @@
             <include>DimensionsFullscreen</include>
             <imagepath background="true" fallback="special://skin/extras/backgrounds/global_blue.jpg">$VAR[backgroundVar]</imagepath>
             <aspectratio>scale</aspectratio>
-            <animation effect="fade" start="100" end="11" time="150" condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None) + !Control.IsVisible(507)">Conditional</animation>
             <fadetime>350</fadetime>
+            <include condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None)">bgColorDiffuse</include>
             <include condition="skin.string(SkinHelper.RandomFanartDelay, 6)">fanartSpeed6</include>
             <include condition="skin.string(SkinHelper.RandomFanartDelay, 5)">fanartSpeed5</include>
 			<include condition="skin.string(SkinHelper.RandomFanartDelay, 8)">fanartSpeed8</include>
