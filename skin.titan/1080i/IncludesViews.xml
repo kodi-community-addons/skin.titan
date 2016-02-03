@@ -105,6 +105,11 @@
 
   <include name="PosterLabelOverlayVisibility">
 	<visible>
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),enable)] |
+		[Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),enable)] |
 		[[!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster))] + Skin.HasSetting(ShowLabelsPoster)] | 
         [Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + IsEmpty(ListItem.Art(fanart))] | 
 		[IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster))] | 
@@ -112,6 +117,7 @@
 	</visible>
 	<visible>!StringCompare(ListItem.Label,..)</visible>
     <visible>!Window.IsActive(script-skin_helper_service-CustomSearch.xml)</visible>
+    <include condition="Window.IsActive(Home) + !Skin.String(Widgets_DisplayTags,auto)">WidgetTitleOverlayOverride</include>
   </include>
   
   <include name="PanelLabelOverlay">
@@ -1142,6 +1148,7 @@
         <control type="group">
 			<!--Label Overlay-->
 			<include>SquarePosterLabelOverlay</include>
+            <include>SquarePosterLabelOverlayVisibility</include>
 			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
             <visible>!StringCompare(ListItem.Label,..)</visible>
 		</control>
@@ -1169,10 +1176,28 @@
          <control type="group">
 			<!--Label Overlay-->
 			<include>SquarePosterLabelOverlay</include>
+            <include>SquarePosterLabelOverlayVisibility</include>
 			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
             <visible>!StringCompare(ListItem.Label,..)</visible>
 		</control>
     </include>
+    
+    <include name="SquarePosterLabelOverlayVisibility">
+		<visible>
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),enable)] |
+		[Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),enable)] |
+		[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | 
+        [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | 
+        Window.IsActive(Home)
+        </visible>
+        <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode) + window.isactive(home)]</visible>
+        <visible>!StringCompare(ListItem.Label,..)</visible>
+        <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+        <include condition="!Skin.String(Widgets_DisplayTags,auto)">WidgetTitleOverlayOverride</include>
+	</include>
     
     <include name="SquarePosterLabelOverlay">
 		<control type="image">
@@ -1367,7 +1392,12 @@
 
 	<include name="ShowTitleOverlay">
 		<visible>
-		[IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(clearlogo)) + ![Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),enable)] |
+		[Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),enable)] |
+        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),enable)] |
+        [IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(clearlogo)) + ![Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
         [Skin.HasSetting(ShowlabelsLandscape) + [Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
 		[!IsEmpty(ListItem.Episode) + !IsEmpty(ListItem.Season) + !Container.Content(seasons) + !StringCompare(ListItem.Label, ListItem.TvshowTitle) + IsEmpty(ListItem.Property(airtime))] |
         !IsEmpty(ListItem.Property(defaultID)) |
@@ -1376,7 +1406,16 @@
         <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode) + window.isactive(home)]</visible>
         <visible>!StringCompare(ListItem.Label,..)</visible>
         <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+        <include condition="Window.IsActive(Home) + !Skin.String(Widgets_DisplayTags,auto)">WidgetTitleOverlayOverride</include>
 	</include>
+    
+    <include name="WidgetTitleOverlayOverride">
+        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,disable) + IsEmpty(ListItem.Property(defaultID))]</visible>
+        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),disable)]</visible>
+        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),disable)]</visible>
+        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),disable)]</visible>
+        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),disable)]</visible>
+    </include>
 	
 	<include name="SideBladeViewCommands">
          <control type="button" id="308">
