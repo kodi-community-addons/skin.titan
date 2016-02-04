@@ -252,150 +252,54 @@
 				<onright>31</onright>
 				<onup>10</onup>
 				<ondown>10</ondown>
-				<rulerlayout height="44" width="60" condition="skin.string(GuideRows, 10)">
+				<rulerlayout height="35" width="60" condition="skin.string(GuideRows, 10)">
 					<!--Date, Time Top Line-->
 					<control type="label" id="2">
 						<!--Date, Time-->
 						<posx>0</posx>
 						<width>60</width>
-						<height>44</height>
+						<height>30</height>
 						<align>left</align>
-						<posy>-10</posy>
 						<font>Reg24</font>
 						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</rulerlayout>
-				<rulerlayout height="44" width="60" condition="!skin.string(GuideRows, 10)">
+				<rulerlayout height="35" width="60" condition="!skin.string(GuideRows, 10)">
 					<!--Date, Time Top Line-->
 					<control type="label" id="2">
 						<!--Date, Time-->
 						<posx>0</posx>
 						<width>60</width>
-						<height>44</height>
+						<height>30</height>
 						<align>left</align>
-						<posy>-10</posy>
 						<font>Reg28</font>
 						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</rulerlayout>
 				
+                <!-- guide 10 rows -->
 				<channellayout height="63" width="400" condition="skin.string(GuideRows, 10) + !Skin.HasSetting(HideChannelNamesInGuide)">
 					<include>PVRGuideChannelItemLayout</include>
 				</channellayout>
 				<focusedchannellayout height="63" width="400" condition="skin.string(GuideRows, 10) + !Skin.HasSetting(HideChannelNamesInGuide)">
 					<include>PVRGuideChannelItemLayout</include>
 				</focusedchannellayout>
-				
 				<channellayout height="63" width="200" condition="skin.string(GuideRows, 10) + Skin.HasSetting(HideChannelNamesInGuide)">
 					<include>PVRGuideChannelItemLayout</include>
 				</channellayout>
 				<focusedchannellayout height="63" width="200" condition="skin.string(GuideRows, 10) + Skin.HasSetting(HideChannelNamesInGuide)">
 					<include>PVRGuideChannelItemLayout</include>
 				</focusedchannellayout>
-				
 				<itemlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
-					<!--EPG UNFOCUS-->
-					<control type="image" id="2">
-						<!--Button NF-->
-						<posx>1</posx>
-						<posy>0</posy>
-						<width>50</width>
-						<height>55</height>
-						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
-						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
-					</control>
-					<control type="image" id="2">
-						<!--Button NF-->
-						<posx>1</posx>
-						<posy>0</posy>
-						<width>50</width>
-						<height>55</height>
-						<visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
-						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
-					</control>
-					<control type="label" id="1">
-						<!--Channel Now Playing-->
-						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>20</posx>
-						<posy>0</posy>
-						<height>55</height>
-						<font>Reg24</font>
-						<aligny>center</aligny>
-						<textoffsetx>0</textoffsetx>
-						<textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing (with recording or timer active)-->
-						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>45</posx>
-						<posy>0</posy>
-						<height>55</height>
-						<font>Reg24</font>
-						<aligny>center</aligny>
-						<textoffsetx>0</textoffsetx>
-						<textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control>
-					<control type="image">
-						<!--Icon PVR Recording or timer-->
-						<posx>0</posx>
-						<posy>3</posy>
-						<width>50</width>
-						<height>50</height>
-						<texture>pvr/icons/pvr_record.png</texture>
-						<visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-					</control>
+					<include>PVRGuideItemLayout</include>
 				</itemlayout>
 				<focusedlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
-					<!--EPG FOCUS-->
-					<control type="image" id="14">
-						<!--Button FO-->
-						<posx>1</posx>
-						<posy>0</posy>
-						<width>55</width>
-						<height>55</height>
-						<texture diffuse="diffuse/panel.png" border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
-					</control>
-                    <control type="fadelabel" id="1">
-						<!--Channel Now Playing-->
-						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>20</posx>
-						<posy>0</posy>
-						<height>55</height>
-						<font>Reg24</font>
-						<aligny>center</aligny>
-						<textoffsetx>0</textoffsetx>
-						<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="fadelabel" id="1">
-						<!--Channel Now Playing (with recording or timer active)-->
-						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>45</posx>
-						<posy>0</posy>
-						<height>55</height>
-						<font>Reg24</font>
-						<aligny>center</aligny>
-						<textoffsetx>0</textoffsetx>
-						<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control>
-					<control type="image">
-						<!--Icon PVR Recording-->
-						<posx>0</posx>
-						<posy>3</posy>
-						<width>50</width>
-						<height>55</height>
-						<texture>pvr/icons/pvr_record.png</texture>
-						<visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-					</control>
+					<include>PVRGuideItemLayoutFocus</include>
 				</focusedlayout>
-			
+                
+                <!-- guide 7 rows -->
 				<channellayout height="89" width="500" condition="skin.string(GuideRows, 7) + !Skin.HasSetting(HideChannelNamesInGuide)">
                     <include>PVRGuideChannelItemLayout</include>
                 </channellayout>
@@ -408,217 +312,26 @@
                 <focusedchannellayout height="89" width="250" condition="skin.string(GuideRows, 7) + Skin.HasSetting(HideChannelNamesInGuide)">
                     <include>PVRGuideChannelItemLayout</include>
                 </focusedchannellayout>
-				
-                <itemlayout height="89" width="60" condition="skin.string(GuideRows, 7)">
-                    <!--EPG UNFOCUS-->
-                    <control type="image" id="14">
-                        <!--Button NF-->
-                        <posx>1</posx>
-                        <posy>0</posy>
-                        <width>50</width>
-                        <height>80</height>
-                        <texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
-						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
-                    </control>
-					<control type="image" id="14">
-                        <!--Button NF-->
-                        <posx>1</posx>
-                        <posy>0</posy>
-                        <width>50</width>
-                        <height>80</height>
-                        <visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
-						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
-                    </control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing-->
-						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>20</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>80</height>
-                        <font>Reg31</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing (with recording or timer active)-->
-						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>45</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>80</height>
-                        <font>Reg31</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="image">
-                        <!--Icon PVR Recording-->
-                        <posx>0</posx>
-                        <posy>15</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
+                <itemlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
+                    <include>PVRGuideItemLayout</include>
                 </itemlayout>
-                <focusedlayout height="89" width="60" condition="skin.string(GuideRows, 7)">
-                    <!--EPG FOCUS-->
-                    <control type="image" id="14">
-                        <!--Button FO-->
-                        <posx>1</posx>
-                        <posy>0</posy>
-                        <width>50</width>
-                        <height>80</height>
-                        <texture diffuse="diffuse/panel.png" border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
-                    </control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing-->
-						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>20</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>80</height>
-                        <font>Reg31</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing (with recording or timer active)-->
-						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>45</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>80</height>
-                        <font>Reg31</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="image">
-                        <!--Icon PVR Recording-->
-                        <posx>0</posx>
-                        <posy>15</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
+                <focusedlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
+                    <include>PVRGuideItemLayoutFocus</include>
                 </focusedlayout>
+                
+                <!-- guide 9 rows -->
                 <channellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
                     <include>PVRGuideChannelItemLayout</include>
                 </channellayout>
                 <focusedchannellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
                     <include>PVRGuideChannelItemLayout</include>
                 </focusedchannellayout>
-				
                 <channellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <!--Channel left side UNFOCUS-->
-                    <animation effect="fade" end="80" time="200">UnFocus</animation>
-                    <control type="image">
-						<!--Seperator-->
-						<posy>0</posy>
-						<posx>0</posx>
-						<width>450</width>
-						<height>65</height>
-						<align>left</align>
-						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
-					</control>
-					
-					<control type="label">
-                        <!--Channel Nummber-->
-                        <posx>5</posx>
-                        <posy>0</posy>
-                        <width>65</width>
-                        <height>65</height>
-                        <font>Reg26</font>
-						<align>center</align>
-                        <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
-                        <info>ListItem.ChannelNumberLabel</info>
-                        <visible>!Skin.HasSetting(HideChannelNumbersInGuide)</visible>
-                    </control>
-                    <control type="image">
-                        <!--Channel Icon-->
-                        <posx>65</posx>
-                        <posy>10</posy>
-                        <width>100</width>
-                        <height>50</height>
-                        <texture>$INFO[ListItem.Icon]</texture>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
-                    </control>
-                    <control type="label" id="1">
-                        <!--Channel Name-->
-                        <posx>170</posx>
-                        <posy>0</posy>
-                        <width>275</width>
-                        <height>65</height>
-                        <font>Reg27</font>
-                        <textcolor>$INFO[Skin.String(ButtonTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ButtonTextColor)]</selectedcolor>
-                        <label>$INFO[ListItem.ChannelName]</label>
-                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
-                    </control>
+                    <include>PVRGuideChannelItemLayout</include>
                 </channellayout>
                 <focusedchannellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <!--Channel left side FOCUS-->
-                    <animation effect="fade" end="80" time="200">OnFocus</animation>
-                    <animation effect="fade" end="80" time="200">UnFocus</animation>
-                    <control type="image">
-						<!--Seperator-->
-						<posy>0</posy>
-						<posx>0</posx>
-						<width>450</width>
-						<height>65</height>
-						<align>left</align>
-						<texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
-					</control>
-					<control type="label">
-                        <!--Channel Nummber-->
-                        <posx>5</posx>
-                        <posy>0</posy>
-                        <width>65</width>
-                        <height>65</height>
-                        <font>Reg26</font>
-						<align>center</align>
-                        <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
-                        <visible>!Skin.HasSetting(HideChannelNumbersInGuide)</visible>
-                        <info>ListItem.ChannelNumberLabel</info>
-                    </control>
-                    <control type="image">
-                        <!--Channel Icon-->
-                        <posx>65</posx>
-                        <posy>10</posy>
-                        <width>100</width>
-                        <height>50</height>
-                        <texture>$INFO[ListItem.Icon]</texture>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
-                    </control>
-                    <control type="label" id="1">
-                        <!--Channel Name-->
-                        <posx>170</posx>
-                        <posy>0</posy>
-                        <width>275</width>
-                        <height>65</height>
-                        <font>Reg27</font>
-                        <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
-                        <animation effect="slide" end="-65" time="0" condition="Skin.HasSetting(HideChannelNumbersInGuide)">Conditional</animation>
-                        <label>$INFO[ListItem.ChannelName]</label>
-                    </control>
+                    <include>PVRGuideChannelItemLayout</include>
                 </focusedchannellayout>
-				
                 <channellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
                     <include>PVRGuideChannelItemLayout</include>
                 </channellayout>
@@ -627,110 +340,10 @@
                 </focusedchannellayout>
 				
                 <itemlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
-                    <!--EPG UNFOCUS-->
-                    <control type="image" id="14">
-                        <!--Button NF-->
-                        <posx>1</posx>
-                        <posy>0</posy>
-                        <width>50</width>
-                        <height>65</height>
-                        <texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
-						<visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
-                    </control>
-					<control type="image" id="14">
-                        <!--Button NF-->
-                        <posx>1</posx>
-                        <posy>0</posy>
-                        <width>50</width>
-                        <height>65</height>
-                        <visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
-						<texture border="6">epg-genres/$INFO[ListItem.Property(GenreType)].png</texture>
-                    </control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing-->
-						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>20</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>65</height>
-                        <font>Reg24</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing (with recording or timer active)-->
-						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>45</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>65</height>
-                        <font>Reg24</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="image">
-                        <!--Icon PVR Recording-->
-                        <posx>0</posx>
-                        <posy>10</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
+                    <include>PVRGuideItemLayout</include>
                 </itemlayout>
                 <focusedlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
-                    <!--EPG FOCUS-->
-                    <control type="image" id="14">
-                        <!--Button FO-->
-                        <posx>1</posx>
-                        <posy>0</posy>
-                        <width>50</width>
-                        <height>65</height>
-                        <texture diffuse="diffuse/panel.png" border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texture>
-                    </control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing-->
-						<visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>20</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>65</height>
-                        <font>Reg24</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="label" id="1">
-						<!--Channel Now Playing (with recording or timer active)-->
-						<visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
-						<posx>45</posx>
-						<posy>0</posy>
-                        <width>0</width>
-                        <height>65</height>
-                        <font>Reg24</font>
-                        <aligny>center</aligny>
-                        <textoffsetx>0</textoffsetx>
-                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</selectedcolor>
-                        <label>$INFO[ListItem.Label]</label>
-					</control>
-                    <control type="image">
-                        <!--Icon PVR Recording-->
-                        <posx>5</posx>
-                        <posy>10</posy>
-                        <width>50</width>
-                        <height>50</height>
-                        <texture>pvr/icons/pvr_record.png</texture>
-                        <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-						<aspectratio align="center" aligny="center">keep</aspectratio>
-                    </control>
+                    <include>PVRGuideItemLayoutFocus</include>
                 </focusedlayout>
      			
 			</control>
@@ -1230,5 +843,6 @@
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
         <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
+        <include condition="Skin.HasSetting(DebugGrid) | Skin.HasSetting(DebugInfo)">DebugInfo</include>
 	</controls>
 </window>
