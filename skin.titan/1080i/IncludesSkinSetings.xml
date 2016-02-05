@@ -1351,18 +1351,13 @@
             <pagecontrol>316</pagecontrol>
             <orientation>vertical</orientation>
             <visible>StringCompare(Window(Home).Property(SkinSettingSection),18)</visible>
-                 <!-- PVR appearance settings -->
+            <!-- PVR appearance settings -->
             <control type="label" id="13040">
                 <include>SkinSettings_Header</include>
                 <label>$LOCALIZE[31088]</label>
                 <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
             </control>
-            <control type="radiobutton" id="13041">
-                <include>SkinSettings_Button</include>
-                <label>31237</label>
-                <onclick>Skin.ToggleSetting(ShowEpgGenreColors)</onclick>
-                <selected>Skin.HasSetting(ShowEpgGenreColors)</selected>
-            </control>
+            
             <!-- number of rows guide -->
             <control type="button" id="13043">
                 <include>SkinSettings_Button</include>
@@ -1420,6 +1415,29 @@
                 <onclick>Skin.ToggleSetting(pvrGuideOnFullscreenVideo)</onclick>
                 <selected>Skin.HasSetting(pvrGuideOnFullscreenVideo)</selected>
             </control>
+            
+            <control type="radiobutton" id="13041">
+                <include>SkinSettings_Button</include>
+                <label>31237</label>
+                <onclick>Skin.ToggleSetting(ShowEpgGenreColors)</onclick>
+                <selected>Skin.HasSetting(ShowEpgGenreColors)</selected>
+            </control>
+            <control type="radiobutton" id="31677">
+                <include>SkinSettings_Button</include>
+                <label>31677</label>
+                <onclick>Skin.ToggleSetting(CustomEPGGenreImages)</onclick>
+                <onclick condition="!Skin.HasSetting(CustomEPGGenreImages)">RunScript(script.skin.helper.service,action=dialogok,header=$LOCALIZE[31677],message=$LOCALIZE[31678])</onclick>
+                <selected>Skin.HasSetting(CustomEPGGenreImages)</selected>
+                <visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
+            </control>
+            <control type="button" id="31676">
+                <include>SkinSettings_Button</include>
+                <label>31676</label>
+                <label2>$INFO[Skin.String(pvrgenretype.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=pvrgenretype,header=$LOCALIZE[31676])</onclick>
+                <visible>Skin.HasSetting(ShowEpgGenreColors) + Skin.HasSetting(CustomEPGGenreImages)</visible>
+            </control>
+            
         </control>
 				
     </include>
@@ -1596,7 +1614,8 @@
             <ondown>20000</ondown>
             <onleft condition="!Window.IsActive(Custom_SkinSettings.xml)">100</onleft>
             <onleft condition="Window.IsActive(Custom_SkinSettings.xml)">2000</onleft>
-            <onright>320</onright>
+            <onright>326</onright>
+            <pagecontrol>326</pagecontrol>
             <orientation>vertical</orientation>
             <visible>StringCompare(Window(Home).Property(SkinSettingSection),20)</visible>
 

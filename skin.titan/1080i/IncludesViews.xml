@@ -3840,7 +3840,6 @@
                 <itemgap>3</itemgap>
                 <onleft>5000</onleft>
                 <onright>5000</onright>
-				<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 				<onright>ClearProperty(ShowViewSubMenu, Home)</onright>
 				<onleft>ClearProperty(ShowViewSubMenu, Home)</onleft>
 				<onback>ClearProperty(ShowViewSubMenu, Home)</onback>
@@ -3933,6 +3932,7 @@
 					<include>SideBladeMenuButton</include>
 					<label>19270</label>
 					<visible>Window.IsActive(TVRecordings) | Window.IsActive(RadioRecordings)</visible>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 				</control>
 				<control type="button" id="400">
 					<description>View As button</description>
@@ -3943,12 +3943,14 @@
 					<label>$LOCALIZE[31305]: $INFO[Container.Viewmode]</label>
 					<onclick condition="!Window.IsActive(MyPVRGuide.xml)">XBMC.RunScript(script.skin.helper.service,action=SETVIEW)</onclick>
                     <onclick condition="Window.IsActive(MyPVRGuide.xml)">Container.NextViewMode</onclick>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 				</control>
 				
 				<control type="button" id="3">
 					<description>Sort by button</description>
 					<include>SideBladeMenuButton</include>
 					<label>103</label>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 				</control>
 				<control type="togglebutton" id="4">
 					<description>Sort asc</description>
@@ -3958,12 +3960,14 @@
 					<label>21431</label>
 					<altlabel>21430</altlabel>
 					<usealttexture>Container.SortDirection(Ascending)</usealttexture>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 				</control>
 				<control type="radiobutton" id="6">
                     <!--Show hidden channels-->
                     <include>SideBladeMenuButton</include>
                     <label>$VAR[showHiddenPVRLabel]</label>
 					<visible>Window.IsActive(TVChannels) | Window.IsActive(RadioChannels) | Window.IsActive(TVRecordings) | Window.IsActive(RadioRecordings)</visible>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
 				<control type="radiobutton" id="31">
                     <!--filter-->
@@ -3972,30 +3976,34 @@
 					<selected>Container.Filtered</selected>
 					<onclick>right</onclick>
 					<visible>Window.IsActive(TVChannels) | Window.IsActive(RadioChannels)</visible>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
-                         <control type="radiobutton" id="3331">
+                <control type="radiobutton" id="3331">
                     <!--show PVR live thumbs-->
                     <include>SideBladeMenuButton</include>
                     <label>31566</label>
 					<selected>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</selected>
 					<onclick>Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)</onclick>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
-                         <control type="button" id="3332">
+                <control type="button" id="3332">
                     <!--PVR live thumbs settings-->
                     <include>SideBladeMenuButton</include>
                     <label>31606</label>
 					<visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs)</visible>
 					<onclick>Addon.OpenSettings(script.skin.helper.service)</onclick>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
-                         <control type="radiobutton" id="341">
+                <control type="radiobutton" id="341">
                     <!--Show info-->
                     <include>SideBladeMenuButton</include>
                     <label>36427</label>
                     <onclick>Skin.ToggleSetting(GuideShowInfo)</onclick>
                     <selected>Skin.HasSetting(GuideShowInfo)</selected>
 					<visible>Window.IsActive(MyPVRGuide.xml)</visible>
+                    <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                 </control>
-                         <include>SideBladeViewCommands</include>
+                <include condition="!Skin.HasSetting(KioskMode.Enabled)">SideBladeViewCommands</include>
 				
             </control>
          </control>
@@ -4433,11 +4441,132 @@
 		<value>??</value>
     </variable>
     
+    <include name="Font_Reg24">
+        <font>Reg24</font>
+    </include>
     <include name="Font_Reg26">
         <font>Reg26</font>
     </include>
     <include name="Font_Reg31">
         <font>Reg31</font>
+    </include>
+
+    
+    <variable name="PVRGuideGenreColorsVar">
+        <value condition="Skin.String(pvrgenretype,genre) + !Skin.HasSetting(CustomEPGGenreImages)">epg-genres/$INFO[ListItem.Genre].png</value>
+        <value condition="Skin.String(pvrgenretype,genretype) + !Skin.HasSetting(CustomEPGGenreImages)">epg-genres/$INFO[ListItem.Property(GenreType)].png</value>
+        <value condition="Skin.String(pvrgenretype,genre) + Skin.HasSetting(CustomEPGGenreImages)">special://profile/addon_data/custom-epg-genres/$INFO[ListItem.Genre].png</value>
+        <value condition="Skin.String(pvrgenretype,genretype) + Skin.HasSetting(CustomEPGGenreImages)">special://profile/addon_data/custom-epg-genres/$INFO[ListItem.Property(GenreType)].png</value>
+    </variable>
+    
+    <include name="PVRGuideItemLayout">
+        <!--EPG UNFOCUS-->
+        <control type="image" id="14">
+            <!--Button NF-->
+            <posx>1</posx>
+            <posy>0</posy>
+            <width>50</width>
+            <height>92%</height>
+            <texture colordiffuse="$INFO[Skin.String(ButtonColor)]" border="5">diffuse/panel_trans.png</texture>
+            <visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
+        </control>
+        <control type="image" id="14">
+            <!--Button NF epg genre-->
+            <posx>1</posx>
+            <posy>0</posy>
+            <width>50</width>
+            <height>92%</height>
+            <visible>Skin.HasSetting(ShowEpgGenreColors)</visible>
+            <texture border="6" fallback="diffuse/panel_trans.png">$VAR[PVRGuideGenreColorsVar]</texture>
+        </control>
+        
+        <control type="image">
+            <!--Icon PVR Recording-->
+            <height>92%</height>
+            <texture>pvr/icons/pvr_record.png</texture>
+            <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
+            <aspectratio align="left" aligny="center">keep</aspectratio>
+        </control>
+        
+        <control type="label" id="1">
+            <!--Channel Now Playing (with recording or timer active)-->
+            <visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <posx>55</posx>
+            <posy>0</posy>
+            <width>0</width>
+            <height>92%</height>
+            <include condition="!skin.string(GuideRows, 7)">Font_Reg24</include>
+            <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+            <aligny>center</aligny>
+            <textoffsetx>0</textoffsetx>
+            <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
+            <label>$INFO[ListItem.Label]</label>
+        </control>
+        
+        <control type="label" id="1">
+            <!--Channel Now Playing-->
+            <visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <posx>20</posx>
+            <posy>0</posy>
+            <width>0</width>
+            <height>92%</height>
+            <include condition="!skin.string(GuideRows, 7)">Font_Reg24</include>
+            <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+            <aligny>center</aligny>
+            <textoffsetx>0</textoffsetx>
+            <textcolor>$VAR[PVRGuideListItemTextColor]</textcolor>
+            <label>$INFO[ListItem.Label]</label>
+        </control>
+    </include>
+    
+    <include name="PVRGuideItemLayoutFocus">
+        <!--EPG FOCUS-->
+        <control type="image" id="14">
+            <!--Button FO-->
+            <posx>1</posx>
+            <posy>0</posy>
+            <width>50</width>
+            <height>92%</height>
+            <texture border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">diffuse/panel.png</texture>
+        </control>
+        
+        <control type="image">
+            <!--Icon PVR Recording-->
+            <height>92%</height>
+            <texture>pvr/icons/pvr_record.png</texture>
+            <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
+            <aspectratio align="left" aligny="center">keep</aspectratio>
+        </control>
+        
+        <control type="label" id="1">
+            <!--Channel Now Playing (with recording or timer active)-->
+            <visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <posx>55</posx>
+            <posy>0</posy>
+            <width>0</width>
+            <height>92%</height>
+            <include condition="!skin.string(GuideRows, 7)">Font_Reg24</include>
+            <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+            <aligny>center</aligny>
+            <textoffsetx>0</textoffsetx>
+            <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+            <label>$INFO[ListItem.Label]</label>
+        </control>
+        
+        <control type="label" id="1">
+            <!--Channel Now Playing-->
+            <visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <posx>20</posx>
+            <posy>0</posy>
+            <width>0</width>
+            <height>92%</height>
+            <include condition="!skin.string(GuideRows, 7)">Font_Reg24</include>
+            <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
+            <aligny>center</aligny>
+            <textoffsetx>0</textoffsetx>
+            <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+            <label>$INFO[ListItem.Label]</label>
+        </control>
     </include>
     
     <include name="PVRGuideChannelItemLayout">
