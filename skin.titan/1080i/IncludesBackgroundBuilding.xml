@@ -307,14 +307,26 @@
 		<!-- section background when home not active -->
 		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(SectionBackground)) + !Window.IsActive(script-skinshortcuts.xml) + !Window.IsActive(home)">$INFO[Window(home).Property(SectionBackground)]</value>
 		
-		<!-- global background custom-->
-		<value condition="!Skin.String(CustomBackgroundSetting, default) + !Skin.String(CustomBackgroundSetting, blue) + !Skin.String(CustomBackgroundSetting, weather) + !Skin.String(CustomBackgroundSetting, fanart) + Skin.String(CustomBackgroundSetting)">$INFO[Skin.String(CustomBackgroundSetting)]</value>
-		<!-- global weather background -->
-		<value condition="Skin.String(CustomBackgroundSetting, weather)">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Current.FanartCode)]</value>
-		<!-- global fanart background -->
-		<value condition="Skin.String(CustomBackgroundSetting, fanart) + !IsEmpty(Window(Home).Property(SkinHelper.GlobalFanartBackground))">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]</value>		
-        <value condition="skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
-		<value>special://skin/extras/backgrounds/global_blue.jpg</value>
+		<!-- global background: weather -->
+		<value condition="Skin.String(CustomBackgroundSetting, weather) + !IsEmpty(Window(Weather).Property(Current.FanartCode))">$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(Current.FanartCode)]</value>
+        <value condition="Skin.String(CustomBackgroundSetting, weather) + IsEmpty(Window(Weather).Property(Current.FanartCode))">special://skin/extras/backgrounds/weather.jpg</value>
+		<!-- global background: global fanart -->
+		<value condition="Skin.String(CustomBackgroundSetting, fanart)">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]</value>
+        <!-- global background: movies -->
+		<value condition="Skin.String(CustomBackgroundSetting, movies)">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]</value>
+        <!-- global background: tvshows -->
+		<value condition="Skin.String(CustomBackgroundSetting, tvshows)">$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]</value>
+        <!-- global background: pictures -->
+		<value condition="Skin.String(CustomBackgroundSetting, pictures)">$INFO[Window(Home).Property(SkinHelper.PicturesBackground)]</value>
+        <!-- global background: videos -->
+		<value condition="Skin.String(CustomBackgroundSetting, videos)">$INFO[Window(Home).Property(SkinHelper.AllVideosBackground)]</value> 
+        <!-- global background: movieswall -->
+		<value condition="Skin.String(CustomBackgroundSetting, movieswall)">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground.Wall)]</value>        
+        <!-- global background: default -->
+        <value condition="Skin.String(CustomBackgroundSetting, default) + skin.hastheme(classic)">special://skin/extras/backgrounds/global.jpg</value>
+		<value condition="Skin.String(CustomBackgroundSetting, default)">special://skin/extras/backgrounds/global_blue.jpg</value>
+        <!-- global background custom-->
+		<value condition="Skin.String(CustomBackgroundSetting)">$INFO[Skin.String(CustomBackgroundSetting)]</value>
    </variable>
     
     <variable name="extraFanartBackground">
