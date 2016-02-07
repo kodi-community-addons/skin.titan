@@ -4142,16 +4142,16 @@
 			<include>indicator_sets_normal</include>
 		</control>
         <control type="image">
-			<!--PVR is recording-->
+			<!--PVR is recording or has single timer-->
 			<right>0</right>
 			<top>0</top>
 			<width>65</width>
 			<height>60</height>
 			<texture>pvr/icons/pvr_record.png</texture>
-			<visible>ListItem.IsRecording</visible>
+			<visible>[ListItem.IsRecording | ListItem.HasTimer | StringCompare(ListItem.Comment,$LOCALIZE[305])] + ![!IsEmpty(ListItem.TimerType) + StringCompare(ListItem.TimerType,$LOCALIZE[823])]</visible>
 		</control>
         <control type="image">
-			<!--PVR is playing-->
+			<!--Is playing-->
 			<right>0</right>
 			<top>0</top>
 			<width>65</width>
@@ -4159,15 +4159,33 @@
 			<texture>pvr/icons/pvr_play.png</texture>
 			<visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
-        <control type="image">
-			<!--PVR has timer-->
-			<right>0</right>
-			<top>0</top>
-			<width>65</width>
-			<height>60</height>
-			<texture>pvr/icons/pvr_timer.png</texture>
-			<visible>[StringCompare(ListItem.Comment,$LOCALIZE[305]) | ListItem.HasTimer] + !ListItem.IsRecording</visible>
-		</control>
+        <control type="group">
+            <!--PVR has recurring timer-->
+            <visible>!IsEmpty(ListItem.TimerType) + StringCompare(ListItem.TimerType,$LOCALIZE[823])</visible>
+            <control type="image">
+                <right>-4</right>
+                <top>5</top>
+                <width>55</width>
+                <height>50</height>
+                <texture>pvr/icons/pvr_record.png</texture>
+                <animation effect="fade" start="100" end="60" time="0" condition="true">Conditional</animation>
+            </control>
+            <control type="image">
+                <right>4</right>
+                <top>5</top>
+                <width>55</width>
+                <height>50</height>
+                <texture>pvr/icons/pvr_record.png</texture>
+                <animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>
+            </control>
+            <control type="image">
+                <right>12</right>
+                <top>5</top>
+                <width>55</width>
+                <height>50</height>
+                <texture>pvr/icons/pvr_record.png</texture>
+            </control>
+        </control>
 	</include>
 	
 	<include name="WatchedIndicatorSmall">
@@ -4480,17 +4498,17 @@
             <texture border="6" fallback="diffuse/panel_trans.png">$VAR[PVRGuideGenreColorsVar]</texture>
         </control>
         
-        <control type="image">
-            <!--Icon PVR Recording-->
-            <height>92%</height>
-            <texture>pvr/icons/pvr_record.png</texture>
-            <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-            <aspectratio align="left" aligny="center">keep</aspectratio>
+        <control type="group">
+            <!--Watched Overlay-->
+            <posx>20</posx>
+            <top>4</top>
+            <visible>ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying</visible>
+            <include>WatchedIndicatorNormal</include>
         </control>
         
         <control type="label" id="1">
             <!--Channel Now Playing (with recording or timer active)-->
-            <visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <visible>[ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying]</visible>
             <posx>55</posx>
             <posy>0</posy>
             <width>0</width>
@@ -4505,7 +4523,7 @@
         
         <control type="label" id="1">
             <!--Channel Now Playing-->
-            <visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <visible>![ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying]</visible>
             <posx>20</posx>
             <posy>0</posy>
             <width>0</width>
@@ -4530,17 +4548,17 @@
             <texture border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">diffuse/panel.png</texture>
         </control>
         
-        <control type="image">
-            <!--Icon PVR Recording-->
-            <height>92%</height>
-            <texture>pvr/icons/pvr_record.png</texture>
-            <visible>ListItem.IsRecording | ListItem.HasTimer</visible>
-            <aspectratio align="left" aligny="center">keep</aspectratio>
+        <control type="group">
+            <!--Watched Overlay-->
+            <posx>20</posx>
+            <top>4</top>
+            <visible>ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying</visible>
+            <include>WatchedIndicatorNormal</include>
         </control>
         
         <control type="label" id="1">
             <!--Channel Now Playing (with recording or timer active)-->
-            <visible>[ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <visible>[ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying]</visible>
             <posx>55</posx>
             <posy>0</posy>
             <width>0</width>
@@ -4555,7 +4573,7 @@
         
         <control type="label" id="1">
             <!--Channel Now Playing-->
-            <visible>![ListItem.IsRecording | ListItem.HasTimer]</visible>
+            <visible>![ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying]</visible>
             <posx>20</posx>
             <posy>0</posy>
             <width>0</width>
