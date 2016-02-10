@@ -1837,6 +1837,19 @@
 				<visible>VideoPlayer.Content(livetv)</visible>
                 <onclick>ActivateWindow(pvrosdguide)</onclick>
 			</control>
+            <control type="button" id="811">
+				<!-- playlist -->
+				<width>75</width>
+				<height>75</height>
+				<label>12006</label>
+				<font>-</font>
+				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">osd/OSDepg.png</texturefocus>
+				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">osd/OSDepg.png</texturenofocus>
+				<visible>!StringCompare(Playlist.Length(music),0)</visible>
+                <onclick>SetProperty(playlistdialog,show,Home)</onclick>
+                <onclick>Dialog.Close(MusicOSD)</onclick>
+                <onclick>ActivateWindow(musicplaylist)</onclick>
+			</control>
 			<control type="button" id="808">
 				<!-- infopanel -->
 				<width>75</width>
@@ -2680,5 +2693,225 @@
 		<value condition="!VideoPlayer.SubtitlesEnabled">$LOCALIZE[24022]</value>
 		<value>$LOCALIZE[209]</value>
 	 </variable>
+     
+     <include name="CurrentPlaylistSideBar">
+        <!--fallback background -->
+        <control type="group">
+			<include>GlobalBackground</include>
+            <visible>[!Control.IsVisible(3333) | IsEmpty(Control.GetLabel(3333))] + [!Control.IsVisible(3334) | IsEmpty(Control.GetLabel(3334))]</visible>
+		</control>
+         <include>nowplayingbackground</include>
+
+        <control type="group">
+			<include condition="skin.hastheme(classic)">MusicOSDClassic</include>
+			<include condition="!Skin.HasTheme(classic) + !Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModern</include>
+			<include condition="!Skin.HasTheme(classic) + Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModernSlim</include>
+			<visible>[Skin.HasSetting(AlwaysShowMusicInfo) | Player.ShowInfo | Window.IsActive(MusicOSD)] + ![Window.IsVisible(AddonSettings) | Window.IsVisible(SelectDialog) | Window.IsVisible(VisualisationPresetList)]</visible>
+			<animation effect="slide" start="0,400" end="0,0" tween="cubic" easing="out" delay="300" time="250" reversible="false">Visible</animation>
+			<animation effect="slide" start="0,0" end="0,400" tween="cubic" easing="out" delay="300" time="250" reversible="false">Hidden</animation>
+		</control>
+		
+		<!--clearlogo top right-->
+		<control type="image">
+			<right>40</right>
+			<top>20</top>
+			<width>550</width>
+			<height>180</height>
+			<fadetime>600</fadetime>
+			<aspectratio align="right" aligny="top">keep</aspectratio>
+			<texture>$INFO[Window(Home).Property(SkinHelper.Player.Music.ClearLogo)]</texture>
+            <visible>Skin.String(MusicArtistLogo,enabled) | [Skin.String(MusicArtistLogo,osd) + [Player.ShowInfo | Window.IsActive(MusicOSD)]]</visible>
+            <include>animation_fade_visible_hidden_delayed</include>
+		</control>
+     
+        <!-- current playlist -->
+        <control type="group">
+			<posx>-660</posx>
+			<posy>0</posy>
+			<animation type="WindowOpen">
+				<effect type="slide" start="0" end="660" time="250" tween="cubic" easing="inout" />
+			</animation>
+			<animation type="WindowClose">
+				<effect type="slide" start="660" end="0" time="250" tween="cubic" easing="inout" />
+			</animation>
+			<!--Panel-->
+			<control type="image">
+                <posy>0</posy>
+                <posx>0</posx>
+                <width>555</width>
+                <height>100%</height>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posy>0</posy>
+                <posx>0</posx>
+                <width>550</width>
+                <height>100%</height>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posy>0</posy>
+                <posx>0</posx>
+                <width>550</width>
+                <height>100%</height>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+
+		
+            <!-- header -->
+            <control type="label">
+                <posx>40</posx>
+                <posy>10</posy>
+                <width min="80" max="1100">auto</width>
+                <height>100</height>
+                <font>Bold45</font>
+                <align>left</align>
+                <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                <label>[UPPERCASE]$LOCALIZE[13350][/UPPERCASE]</label>
+                <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml)</visible>
+            </control>
+            <control type="label">
+                <!--playlist info-->
+                <posx>40</posx>
+                <posy>80</posy>
+                <width>600</width>
+                <height>50</height>
+                <font>Reg28</font>
+                <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
+                <label>$INFO[Container.NumItems,, $LOCALIZE[31034]] - $INFO[Container.TotalTime]</label>
+            </control>
+		
+		
+            <!--Label Menu: -->
+            <control type="image">
+                <!--Seperator-->
+                <posx>0</posx>
+                <posy>140</posy>
+                <width>500</width>
+                <height>20</height>
+                <align>left</align>
+                <texture>common/menu-separator.png</texture>
+            </control>
+             <!-- Scollbar behind panel for touch control-->
+            <control type="scrollbar" id="60">
+                <posx>0</posx>
+                <posy>160</posy>
+                <width>540</width>
+                <height>900</height>
+                <onup>60</onup>
+                <ondown>60</ondown>
+                <onleft>5000</onleft>
+                <animation effect="fade" start="100" end="0" time="10" condition="true">Conditional</animation>
+            </control>
+            
+            <!--List ID=5000-->
+            <control type="list" id="5000">
+                <posx>0</posx>
+                <posy>180</posy>
+                <width>530</width>
+                <height>875</height>
+                <onleft>Close</onleft>
+                <onright>Close</onright>
+                <onup>5000</onup>
+                <ondown>5000</ondown>
+                <viewtype label="535">list</viewtype>
+                <pagecontrol>60</pagecontrol>
+                <scrolltime>200</scrolltime>
+                <itemlayout height="110" width="530">
+                    <control type="label">
+                        <posx>100</posx>
+                        <posy>10</posy>
+                        <height>40</height>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Title]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <font>Reg36</font>
+                    </control>
+                    <!--Details-->
+                    <control type="label">
+                        <posx>100</posx>
+                        <posy>50</posy>
+                        <height>60</height>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Artist]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <font>Light28</font>
+                    </control>
+                    <control type="image">
+                        <bottom>0</bottom>
+                        <posy>0</posy>
+                        <height>1</height>
+                        <texture>diffuse/panel.png</texture>
+                        <colordiffuse>grey</colordiffuse>
+                    </control>
+                    <include>WatchedIndicatorNormal</include>
+                    <control type="image">
+                        <!--icon-->
+                        <posy>5%</posy>
+                        <left>8</left>
+                        <width>70</width>
+                        <height>90%</height>
+                        <texture>$VAR[PosterThumbList]</texture>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="110" width="530">
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <texture border="5">diffuse/panel.png</texture>
+                        <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+                    </control>
+                    <!--Title-->
+                    <control type="label">
+                        <posx>100</posx>
+                        <posy>10</posy>
+                        <height>40</height>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Title]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
+                        <font>Reg36</font>
+                        <scroll>true</scroll>
+                    </control>
+                    <!--Details-->
+                    <control type="label">
+                        <posx>100</posx>
+                        <posy>50</posy>
+                        <height>60</height>
+                        <align>left</align>
+                        <label>$INFO[ListItem.Artist]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextFocusColor)]</textcolor>
+                        <font>Light28</font>
+                        <scroll>true</scroll>
+                    </control>
+                    <control type="image">
+                        <bottom>0</bottom>
+                        <posy>0</posy>
+                        <height>1</height>
+                        <texture>diffuse/panel.png</texture>
+                        <colordiffuse>grey</colordiffuse>
+                    </control>
+                    <include>WatchedIndicatorNormal</include>
+                    <control type="image">
+                        <!--icon-->
+                        <posy>5%</posy>
+                        <left>8</left>
+                        <width>70</width>
+                        <height>90%</height>
+                        <texture>$VAR[PosterThumbList]</texture>
+                        <aspectratio align="center" aligny="center">keep</aspectratio>
+                    </control>
+                </focusedlayout>
+            </control>
+
+		</control>
+		
+     </include>
     
 </includes>
