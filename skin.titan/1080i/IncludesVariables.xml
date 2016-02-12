@@ -76,6 +76,10 @@
 	</variable>
 	
 	<variable name="value_subheader">
+        <value condition="Skin.String(infoline) + !Skin.String(infoline,auto)">$VAR[infolinevar]</value>
+        <value condition="StringCompare(Container.FolderPath,videodb://movies/titles/)">$LOCALIZE[20342]: $INFO[Window(Home).Property(Movies.Count)]  •  $LOCALIZE[16102]: $INFO[Window(Home).Property(Movies.Watched)]  •  $LOCALIZE[16101]: $INFO[Window(Home).Property(Movies.UnWatched)]  •   $INFO[Control.GetLabel(3)]</value>
+        <value condition="StringCompare(Container.FolderPath,videodb://tvshows/titles/)">$LOCALIZE[20343]: $INFO[Window(Home).Property(TVShows.Count)]  •  $LOCALIZE[20360]: $INFO[Window(Home).Property(Episodes.Count)]  •  $LOCALIZE[16101]: $INFO[Window(Home).Property(Episodes.UnWatched)]  •   $INFO[Control.GetLabel(3)]</value>
+        
         <value condition="[Window.IsActive(SkinSettings.xml) | Window.IsActive(Custom_SkinSettings.xml)]">$VAR[value_header_skinsettings]</value>
 		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)">[CR]</value>
 		<value condition="Window.IsActive(MyWeather.xml)">$INFO[Control.GetLabel(3)]</value>
@@ -1152,6 +1156,21 @@
      <variable name="osdpanelimage">
         <value condition="Skin.HasSetting(osdgradientstyle)">diffuse/gradient.png</value>
         <value>diffuse/panel.png</value>
+     </variable>
+     
+     <variable name="infolinevar">
+        <value condition="StringCompare(Container(300).ListItem.Property(infoline),library_info) | Skin.String(infoline,library_info)">[B]$LOCALIZE[20342]: [/B]$INFO[Window(Home).Property(Movies.Count)]  •  [B]$LOCALIZE[20343]: [/B]$INFO[Window(Home).Property(TVShows.Count)]  •  [B]$LOCALIZE[24001]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalAddons)]</value>
+        <value condition="StringCompare(Container(300).ListItem.Property(InfoLine),movie_library) | Skin.String(infoline,movie_library)">[B]$LOCALIZE[20342]: [/B]$INFO[Window(Home).Property(Movies.Count)][B]  •  $LOCALIZE[16102]: [/B]$INFO[Window(Home).Property(Movies.Watched)][B]  •  $LOCALIZE[16101]: [/B]$INFO[Window(Home).Property(Movies.UnWatched)]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),tvshows_library) | Skin.String(infoline,tvshows_library)">[B]$LOCALIZE[20343]: [/B]$INFO[Window(Home).Property(TVShows.Count)][B]  •  $LOCALIZE[20360]: [/B]$INFO[Window(Home).Property(Episodes.Count)][B]  •  $LOCALIZE[16101]: [/B]$INFO[Window(Home).Property(Episodes.UnWatched)]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),music_library) | Skin.String(infoline,music_library)">[B]$LOCALIZE[133]: [/B]$INFO[Window(Home).Property(Music.ArtistsCount)][B]  •  $LOCALIZE[132]: [/B]$INFO[Window(Home).Property(Music.AlbumsCount)][B]  •  $LOCALIZE[134]: [/B]$INFO[Window(Home).Property(Music.SongsCount)]</value>
+		<value condition="[StringCompare(Container(300).ListItem.Property(InfoLine),pvr) | Skin.String(infoline,pvr)] + PVR.IsRecording">[B]$LOCALIZE[19158]: [/B]$INFO[PVR.NowRecordingDateTime][B]  •  $LOCALIZE[19029]: [/B]$INFO[PVR.NowRecordingTitle] ($INFO[PVR.NowRecordingChannel])</value>
+		<value condition="[StringCompare(Container(300).ListItem.Property(InfoLine),pvr) | Skin.String(infoline,pvr)] + PVR.HasNonRecordingTimer">[B]$LOCALIZE[19157]: [/B]$INFO[PVR.NextRecordingDateTime][B]  •  $LOCALIZE[19029]: [/B]$INFO[PVR.NextRecordingTitle] ($INFO[PVR.NextRecordingChannel])</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),pvr) | Skin.String(infoline,pvr)">[B]$LOCALIZE[19019]: [/B]$INFO[Pvr.BackendChannels][B]  •  $LOCALIZE[19163]: [/B]$INFO[Pvr.BackendRecordings]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),weather) | Skin.String(infoline,weather)">[B]$INFO[Weather.Location]: [/B]$INFO[Weather.Conditions]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),musicvideo_library) | Skin.String(infoline,musicvideo_library)">[B]$LOCALIZE[20389]: [/B]$INFO[Window(Home).Property(MusicVideos.Count)][B]  •  $LOCALIZE[16102]: [/B]$INFO[Window(Home).Property(MusicVideos.Watched)][B]  •  $LOCALIZE[16101]: [/B]$INFO[Window(Home).Property(MusicVideos.UnWatched)]</value>
+		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),sysinfo) | Skin.String(infoline,sysinfo)">[B]$LOCALIZE[31257] [/B]$INFO[System.memory(used.percent)][B]  •  $LOCALIZE[13271] [/B]$INFO[System.CPUUsage]</value>
+        <value condition="StringCompare(Container(300).ListItem.Property(InfoLine),addonsinfo) | Skin.String(infoline,addonsinfo)">[B]$LOCALIZE[20161] $LOCALIZE[24001]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalAddons)][B]  •  [/B][B]$LOCALIZE[1036]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalFavourites)]</value>
+        <value condition="Skin.String(infoline,title)">$INFO[ListItem.Title]</value>
      </variable>
      	 
 </includes>
