@@ -77,8 +77,10 @@
 	
 	<variable name="value_subheader">
         <value condition="Skin.String(infoline) + !Skin.String(infoline,auto)">$VAR[infolinevar]</value>
-        <value condition="StringCompare(Container.FolderPath,videodb://movies/titles/)">$LOCALIZE[20342]: $INFO[Window(Home).Property(Movies.Count)]  •  $LOCALIZE[16102]: $INFO[Window(Home).Property(Movies.Watched)]  •  $LOCALIZE[16101]: $INFO[Window(Home).Property(Movies.UnWatched)]  •   $INFO[Control.GetLabel(3)]</value>
-        <value condition="StringCompare(Container.FolderPath,videodb://tvshows/titles/)">$LOCALIZE[20343]: $INFO[Window(Home).Property(TVShows.Count)]  •  $LOCALIZE[20360]: $INFO[Window(Home).Property(Episodes.Count)]  •  $LOCALIZE[16101]: $INFO[Window(Home).Property(Episodes.UnWatched)]  •   $INFO[Control.GetLabel(3)]</value>
+        <value condition="StringCompare(Container.FolderPath,videodb://movies/titles/) + Container.HasFolders">$LOCALIZE[20342]: $INFO[Window(Home).Property(Movies.Count)] • $LOCALIZE[16101]: $INFO[Window(Home).Property(Movies.UnWatched)] • $LOCALIZE[20434]: $INFO[Window(Home).Property(SkinHelper.TotalMovieSets)] ($INFO[Window(Home).Property(SkinHelper.TotalMoviesInSets)] $LOCALIZE[20342])</value>
+        <value condition="StringCompare(Container.FolderPath,videodb://movies/titles/)">$LOCALIZE[20342]: $INFO[Window(Home).Property(Movies.Count)] • $LOCALIZE[16102]: $INFO[Window(Home).Property(Movies.Watched)] • $LOCALIZE[16101]: $INFO[Window(Home).Property(Movies.UnWatched)] • $INFO[Control.GetLabel(3)]</value>
+        
+        <value condition="StringCompare(Container.FolderPath,videodb://tvshows/titles/)">$LOCALIZE[20343]: $INFO[Window(Home).Property(TVShows.Count)] • $LOCALIZE[20360]: $INFO[Window(Home).Property(Episodes.Count)] • $LOCALIZE[16101]: $INFO[Window(Home).Property(Episodes.UnWatched)] • $INFO[Control.GetLabel(3)]</value>
         
         <value condition="[Window.IsActive(SkinSettings.xml) | Window.IsActive(Custom_SkinSettings.xml)]">$VAR[value_header_skinsettings]</value>
 		<value condition="Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)">[CR]</value>
@@ -1171,6 +1173,8 @@
 		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),sysinfo) | Skin.String(infoline,sysinfo)">[B]$LOCALIZE[31257] [/B]$INFO[System.memory(used.percent)][B]  •  $LOCALIZE[13271] [/B]$INFO[System.CPUUsage]</value>
         <value condition="StringCompare(Container(300).ListItem.Property(InfoLine),addonsinfo) | Skin.String(infoline,addonsinfo)">[B]$LOCALIZE[20161] $LOCALIZE[24001]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalAddons)][B]  •  [/B][B]$LOCALIZE[1036]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalFavourites)]</value>
         <value condition="Skin.String(infoline,title)">$INFO[ListItem.Title]</value>
+        <value condition="Skin.String(infoline,totalsortby)">$INFO[Container.NumItems,, $LOCALIZE[31034]] $INFO[Control.GetLabel(3),• ]</value>
+        <value condition="Skin.String(infoline,total)">$INFO[Container.NumItems,, $LOCALIZE[31034]]</value>
      </variable>
      	 
 </includes>
