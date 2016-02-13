@@ -806,7 +806,8 @@
                     </control>
                     <control type="button" id="9001">
                         <!--Hidden Button-->
-                        <onfocus condition="StringCompare(Window.Property(AdditionalInfo),cast)">SetFocus(51)</onfocus>
+                        <onfocus condition="StringCompare(Window.Property(AdditionalInfo),cast) + Skin.String(videoinfo_castaction,library)">SetFocus(50)</onfocus>
+                        <onfocus condition="StringCompare(Window.Property(AdditionalInfo),cast) + Skin.String(videoinfo_castaction,extendedinfo)">SetFocus(51)</onfocus>
                         <onfocus condition="StringCompare(Window.Property(AdditionalInfo),similar)">SetFocus(52)</onfocus>
                         <onleft>noop</onleft>
                         <ondown>noop</ondown>
@@ -825,13 +826,8 @@
 					<control type="group">
 						<visible allowhiddenfocus="true">StringCompare(Window.Property(AdditionalInfo),cast)</visible>
 						<include>animation_window_open_close</include>
-                         <control type="panel" id="50">
-                        <!-- fake list with cast details -->
-                         <itemlayout />
-                         <focusedlayout />
-                         <visible>false</visible>
-                         </control>
-                                         <control type="panel" id="51">
+                        <!-- normal cast details -->
+                        <control type="panel" id="50">
                             <posx>63</posx>
 							<posy>220</posy>
 							<width>1200</width>
@@ -844,6 +840,59 @@
 							<scrolltime>200</scrolltime>
 							<orientation>vertical</orientation>
 							<focusposition>0</focusposition>
+                            <visible>Skin.String(videoinfo_castaction,library)</visible>
+                            <animation effect="fade" start="100" end="25" time="0" condition="Container(50).IsUpdating">Conditional</animation>
+							<viewtype label="actor list">list</viewtype>
+                            <!-- itemlayout movies -->
+                            <itemlayout height="357" width="240">
+                                <control type="group">
+                                    <width>233</width>
+                                    <height>342</height>
+                                    <control type="image">
+                                        <include>PosterThumbBG</include>
+                                      </control>
+                                      <control type="image">
+                                        <texture border="1" diffuse="diffuse/poster.png" background="true" fallback="DefaultActor.png">$INFO[ListItem.Thumb]</texture>
+                                        <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
+                                        <bordersize>8</bordersize>
+                                      </control>
+                                  </control>
+                            </itemlayout>
+                            <focusedlayout height="357" width="240">
+                                <control type="group">
+                                    <width>233</width>
+                                    <height>342</height>
+                                    <control type="image">
+                                        <include>PosterThumbFO</include>
+                                      </control>
+                                      <control type="image">
+                                        <texture border="1" diffuse="diffuse/poster.png" background="true" fallback="DefaultActor.png">$INFO[ListItem.Thumb]</texture>
+                                        <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
+                                        <bordersize>8</bordersize>
+                                      </control>
+                                  </control>
+                                  <control type="button">
+                                    <label>-</label>
+                                    <visible>false</visible>
+                                    <onfocus>SetProperty(actordbid,$INFO[ListItem.Property(DBID)],home)</onfocus>
+                                </control>
+                            </focusedlayout>
+                        </control>
+                        <!-- extendedinfo cast list -->
+                        <control type="panel" id="51">
+                            <posx>63</posx>
+							<posy>220</posy>
+							<width>1200</width>
+							<height>714</height>
+							<onup>noop</onup>
+							<ondown>9000</ondown>
+							<onleft>ClearProperty(AdditionalInfo)</onleft>
+							<onback>ClearProperty(AdditionalInfo)</onback>
+							<onleft>SetFocus(9000)</onleft>
+							<scrolltime>200</scrolltime>
+							<orientation>vertical</orientation>
+							<focusposition>0</focusposition>
+                            <visible>Skin.String(videoinfo_castaction,extendedinfo)</visible>
                             <animation effect="fade" start="100" end="25" time="0" condition="Container(51).IsUpdating">Conditional</animation>
 							<viewtype label="actor list">list</viewtype>
                             <!-- itemlayout movies -->
@@ -882,7 +931,7 @@
                             </focusedlayout>
                             <content>plugin://script.skin.helper.service/?action=getcast&amp;title=$INFO[ListItem.Title]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]</content>
                         </control>
-                                         <!-- busy image while widget loading -->
+                        <!-- busy image while widget loading -->
                         <control type="multiimage">
                             <posy>520</posy>
                             <left>663</left>
@@ -894,9 +943,9 @@
                             <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
                             <fadetime>0</fadetime>
                             <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-                            <visible>Container(51).IsUpdating</visible>
+                            <visible>Control.IsVisible(51) + Container(51).IsUpdating</visible>
                         </control>
-                                                          <control type="group">
+                        <control type="group">
                                 <right>50</right>
                                 <posy>210</posy>
                                 <width>530</width>
@@ -905,8 +954,17 @@
                                 <!--Actor Image-->
                                 <description>Actor image</description>
                                 <aspectratio align="center" aligny="top" scalediffuse="true">scale</aspectratio>
+                                <texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$INFO[Container(50).ListItem.Thumb]</texture>
+                                <fadetime>300</fadetime>
+                                <visible>Skin.String(videoinfo_castaction,library)</visible>
+                            </control>
+                            <control type="image">
+                                <!--Actor Image-->
+                                <description>Actor image</description>
+                                <aspectratio align="center" aligny="top" scalediffuse="true">scale</aspectratio>
                                 <texture background="true" diffuse="diffuse/poster.png" fallback="DefaultActor.png">$INFO[Container(51).ListItem.Thumb]</texture>
                                 <fadetime>300</fadetime>
+                                <visible>Skin.String(videoinfo_castaction,extendedinfo)</visible>
                             </control>
                              <!--Panel-->
                             <control type="image">
@@ -922,9 +980,21 @@
                                 <width>93%</width>
                                 <height>120</height>
                                 <align>left</align>
+                                <label>$INFO[Container(50).ListItem.Label2,[B],[/B][CR]]$INFO[Container(50).ListItem.Label]</label>
+                                <font>Reg32</font>
+                                <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                                <visible>Skin.String(videoinfo_castaction,library)</visible>
+                            </control>
+                            <control type="label">
+                                <left>10</left>
+                                <bottom>0</bottom>
+                                <width>93%</width>
+                                <height>120</height>
+                                <align>left</align>
                                 <label>$INFO[Container(51).ListItem.Label2,[B],[/B][CR]]$INFO[Container(51).ListItem.Label]</label>
                                 <font>Reg32</font>
                                 <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                                <visible>Skin.String(videoinfo_castaction,extendedinfo)</visible>
                             </control>
                         </control>
                     </control>
@@ -965,7 +1035,7 @@
                             </focusedlayout>
                             <content>$VAR[SimilarInfo]</content>
                         </control>
-                                         <control type="group">
+                            <control type="group">
                                 <right>50</right>
                                 <posy>210</posy>
                                 <width>530</width>
@@ -996,7 +1066,7 @@
                         </control>
                     </control>
 
-             				</control>
+                </control>
 			</control>
 		</control>
 	</controls>
