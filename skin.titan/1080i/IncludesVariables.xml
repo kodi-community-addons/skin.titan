@@ -284,9 +284,9 @@
 	</variable>
     
     <variable name="VideoResolutionVar">
-        <value condition="!IsEmpty(ListItem.VideoResolution)">$INFO[ListItem.VideoResolution]</value>
 		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoResolution)">$INFO[VideoPlayer.VideoResolution]</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoResolution)">$INFO[Container(510).ListItem.VideoResolution]</value>
+        <value condition="!window.isactive(fullscreenvideo) + !IsEmpty(ListItem.VideoResolution)">$INFO[ListItem.VideoResolution]</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoResolution)">$INFO[Container(510).ListItem.VideoResolution]</value>
         <value condition="!IsEmpty(Container(999).ListItem.Property(VideoResolution))">$INFO[Container(999).ListItem.Property(VideoResolution)]</value>
 	</variable>
 	
@@ -295,22 +295,23 @@
         <value condition="Skin.String(mediaflagsstyle,classic) + window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoCodec)">$INFO[VideoPlayer.VideoCodec]</value>
         <value condition="Skin.String(mediaflagsstyle,classic) + !IsEmpty(Container(510).ListItem.VideoCodec)">$INFO[Container(510).ListItem.VideoCodec]</value>
         <value condition="Skin.String(mediaflagsstyle,classic) + !IsEmpty(Container(999).ListItem.Property(VideoCodec))">$INFO[Container(510).ListItem.Property(VideoCodec)]</value>
-    
+        
+        <value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,H264)">H.264</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,H265)">H.265</value>
+		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,MPEG2)">MPEG2</value>
+		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoCodec)">$INFO[VideoPlayer.VideoCodec]</value>
+        
 		<value condition="SubString(ListItem.VideoCodec,H264)">H.264</value>
 		<value condition="SubString(ListItem.VideoCodec,H265)">H.265</value>
 		<value condition="SubString(ListItem.VideoCodec,MPEG2)">MPEG2</value>
         <value condition="!IsEmpty(ListItem.VideoCodec)">$INFO[ListItem.VideoCodec]</value>
 		
-		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,H264)">H.264</value>
-		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,H265)">H.265</value>
-		<value condition="window.isactive(fullscreenvideo) + SubString(VideoPlayer.VideoCodec,MPEG2)">MPEG2</value>
-		<value condition="window.isactive(fullscreenvideo) + !IsEmpty(VideoPlayer.VideoCodec)">$INFO[VideoPlayer.VideoCodec]</value>
-		
-		<value condition="SubString(Container(510).ListItem.VideoCodec,H264)">H.264</value>
-		<value condition="SubString(Container(510).ListItem.VideoCodec,H265)">H.265</value>
-		<value condition="SubString(Container(510).ListItem.VideoCodec,MPEG2)">MPEG2</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec)">$INFO[Container(510).ListItem.VideoCodec]</value>
-         <value condition="SubString(Container(999).ListItem.Property(VideoCodec),H264)">H.264</value>
+		<value condition="window.isactive(home) + SubString(Container(510).ListItem.VideoCodec,H264)">H.264</value>
+		<value condition="window.isactive(home) + SubString(Container(510).ListItem.VideoCodec,H265)">H.265</value>
+		<value condition="window.isactive(home) + SubString(Container(510).ListItem.VideoCodec,MPEG2)">MPEG2</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec)">$INFO[Container(510).ListItem.VideoCodec]</value>
+        
+        <value condition="SubString(Container(999).ListItem.Property(VideoCodec),H264)">H.264</value>
 		<value condition="SubString(Container(999).ListItem.Property(VideoCodec),H265)">H.265</value>
 		<value condition="SubString(Container(999).ListItem.Property(VideoCodec),MPEG2)">MPEG2</value>
 		<value condition="!IsEmpty(Container(999).ListItem.Property(VideoCodec))">$INFO[Container(999).ListItem.VideoCodec]</value>
@@ -320,7 +321,7 @@
 	
 	<variable name="VideoFileTypeVar">
 		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + [ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)]">3D</value>
-		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + IntegerGreaterThan(ListItem.VideoResolution,1080)">4K</value>
+		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + [IntegerGreaterThan(ListItem.VideoResolution,1080) | StringCompare(ListItem.VideoResolution,4K)]">4K</value>
 		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + [substring(ListItem.FilenameAndPath,bdmv) | substring(ListItem.FilenameAndPath,blu-ray) | substring(ListItem.FilenameAndPath,bluray) | substring(ListItem.FilenameAndPath,bdrip) | substring(ListItem.FilenameAndPath,bd25) | substring(ListItem.FilenameAndPath,bd50)]">BD</value>
 		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + [SubString(ListItem.Filenameandpath,dvd) | SubString(ListItem.Filenameandpath,.ifo,Right) | SubString(ListItem.Filenameandpath,.iso,Right)]">DVD</value>
 		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + [SubString(ListItem.Filenameandpath,WEBDL) | SubString(ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
@@ -329,27 +330,27 @@
 		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + !IntegerGreaterThan(ListItem.VideoResolution,719) + !IsEmpty(ListItem.VideoResolution)">SD</value>
 		<value condition="!Control.IsVisible(884) + !IsEmpty(ListItem.VideoCodec) + !IsEmpty(ListItem.FileExtension)">$INFO[ListItem.FileExtension]</value>
 		
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [Container(510).ListItem.IsStereoScopic | !IsEmpty(Container(510).ListItem.Property(Video3DFormat)) | substring(Container(510).ListItem.FileName,.3d.)]">3D</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + IntegerGreaterThan(Container(510).ListItem.VideoResolution,1080)">4K</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [substring(Container(510).ListItem.FilenameAndPath,blu-ray) | substring(Container(510).ListItem.FilenameAndPath,bluray) | substring(Container(510).ListItem.FilenameAndPath,bdrip) | substring(Container(510).ListItem.FilenameAndPath,bd25) | substring(Container(510).ListItem.FilenameAndPath,bd50)]">BD</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + SubString(Container(510).ListItem.Filenameandpath,dvd) | SubString(Container(510).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(510).ListItem.Filenameandpath,.iso,Right)">DVD</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [SubString(Container(510).ListItem.Filenameandpath,WEBDL) | SubString(Container(510).ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [SubString(Container(510).ListItem.Filenameandpath,WEBRIP) | SubString(Container(510).ListItem.Filenameandpath,WEB-RIP)]">WEBRIP</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">HD</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + [!IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">SD</value>
-		<value condition="!IsEmpty(Container(510).ListItem.VideoCodec) + !IsEmpty(Container(510).ListItem.FileExtension)">$INFO[Container(510).ListItem.FileExtension]</value>
-         <value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [Container(999).ListItem.IsStereoScopic | !IsEmpty(Container(999).ListItem.Property(Video3DFormat)) | substring(Container(999).ListItem.FileName,.3d.)]">3D</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + IntegerGreaterThan(Container(999).ListItem.VideoResolution,1080)">4K</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [substring(Container(999).ListItem.FilenameAndPath,blu-ray) | substring(Container(999).ListItem.FilenameAndPath,bluray) | substring(Container(999).ListItem.FilenameAndPath,bdrip) | substring(Container(999).ListItem.FilenameAndPath,bd25) | substring(Container(999).ListItem.FilenameAndPath,bd50)]">BD</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + SubString(Container(999).ListItem.Filenameandpath,dvd) | SubString(Container(999).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(999).ListItem.Filenameandpath,.iso,Right)">DVD</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [SubString(Container(999).ListItem.Filenameandpath,WEBDL) | SubString(Container(999).ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [SubString(Container(999).ListItem.Filenameandpath,WEBRIP) | SubString(Container(999).ListItem.Filenameandpath,WEB-RIP)]">WEBRIP</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [IntegerGreaterThan(Container(999).ListItem.VideoResolution,719) + !IsEmpty(Container(999).ListItem.VideoResolution)]">HD</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + [!IntegerGreaterThan(Container(999).ListItem.VideoResolution,719) + !IsEmpty(Container(999).ListItem.VideoResolution)]">SD</value>
-		<value condition="!IsEmpty(Container(999).ListItem.VideoCodec) + !IsEmpty(Container(999).ListItem.FileExtension)">$INFO[Container(999).ListItem.FileExtension]</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [Container(510).ListItem.IsStereoScopic | !IsEmpty(Container(510).ListItem.Property(Video3DFormat)) | substring(Container(510).ListItem.FileName,.3d.)]">3D</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [IntegerGreaterThan(Container(510).ListItem.VideoResolution,1080) | StringCompare(Container(510).ListItem.VideoResolution,4K)]">4K</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [substring(Container(510).ListItem.FilenameAndPath,blu-ray) | substring(Container(510).ListItem.FilenameAndPath,bluray) | substring(Container(510).ListItem.FilenameAndPath,bdrip) | substring(Container(510).ListItem.FilenameAndPath,bd25) | substring(Container(510).ListItem.FilenameAndPath,bd50)]">BD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + SubString(Container(510).ListItem.Filenameandpath,dvd) | SubString(Container(510).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(510).ListItem.Filenameandpath,.iso,Right)">DVD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [SubString(Container(510).ListItem.Filenameandpath,WEBDL) | SubString(Container(510).ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [SubString(Container(510).ListItem.Filenameandpath,WEBRIP) | SubString(Container(510).ListItem.Filenameandpath,WEB-RIP)]">WEBRIP</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">HD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + [!IntegerGreaterThan(Container(510).ListItem.VideoResolution,719) + !IsEmpty(Container(510).ListItem.VideoResolution)]">SD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(510).ListItem.VideoCodec) + !IsEmpty(Container(510).ListItem.FileExtension)">$INFO[Container(510).ListItem.FileExtension]</value>
+        <value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + [Container(999).ListItem.IsStereoScopic | !IsEmpty(Container(999).ListItem.Property(Video3DFormat)) | substring(Container(999).ListItem.FileName,.3d.)]">3D</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + IntegerGreaterThan(Container(999).ListItem.VideoResolution,1080)">4K</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + [substring(Container(999).ListItem.FilenameAndPath,blu-ray) | substring(Container(999).ListItem.FilenameAndPath,bluray) | substring(Container(999).ListItem.FilenameAndPath,bdrip) | substring(Container(999).ListItem.FilenameAndPath,bd25) | substring(Container(999).ListItem.FilenameAndPath,bd50)]">BD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + SubString(Container(999).ListItem.Filenameandpath,dvd) | SubString(Container(999).ListItem.Filenameandpath,.ifo,Right) | SubString(Container(999).ListItem.Filenameandpath,.iso,Right)">DVD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + [SubString(Container(999).ListItem.Filenameandpath,WEBDL) | SubString(Container(999).ListItem.Filenameandpath,WEB-DL)]">WEB-DL</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + [SubString(Container(999).ListItem.Filenameandpath,WEBRIP) | SubString(Container(999).ListItem.Filenameandpath,WEB-RIP)]">WEBRIP</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + [IntegerGreaterThan(Container(999).ListItem.VideoResolution,719) + !IsEmpty(Container(999).ListItem.VideoResolution)]">HD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + [!IntegerGreaterThan(Container(999).ListItem.VideoResolution,719) + !IsEmpty(Container(999).ListItem.VideoResolution)]">SD</value>
+		<value condition="window.isactive(home) + !IsEmpty(Container(999).ListItem.VideoCodec) + !IsEmpty(Container(999).ListItem.FileExtension)">$INFO[Container(999).ListItem.FileExtension]</value>
 		
 		<value condition="window.isactive(fullscreenvideo) + [VideoPlayer.IsStereoScopic | !IsEmpty(VideoPlayer.Property(Video3DFormat)) | substring(Player.FileName,.3d.)]">3D</value>
-		<value condition="window.isactive(fullscreenvideo) + IntegerGreaterThan(VideoPlayer.VideoResolution,1080)">4K</value>
+		<value condition="window.isactive(fullscreenvideo) + [IntegerGreaterThan(VideoPlayer.VideoResolution,1080) | StringCompare(VideoPlayer.VideoResolution,4K)]">4K</value>
 		<value condition="window.isactive(fullscreenvideo) + [substring(Player.FilenameAndPath,blu-ray) | substring(Player.FilenameAndPath,bluray) | substring(Player.FilenameAndPath,bdrip) | substring(Player.FilenameAndPath,bd25) | substring(Player.FilenameAndPath,bd50)]">BD</value>
 		<value condition="window.isactive(fullscreenvideo) + SubString(Player.Filenameandpath,dvd) | SubString(Player.Filenameandpath,.ifo,Right) | SubString(Player.Filenameandpath,.ISO,Right)">DVD</value>
 		<value condition="window.isactive(fullscreenvideo) + SubString(Player.Filenameandpath,WEBDL) | SubString(Player.Filenameandpath,WEB-DL)">WEB-DL</value>
