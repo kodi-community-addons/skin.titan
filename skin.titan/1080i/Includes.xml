@@ -139,8 +139,9 @@
             <!-- Normal Content -->
             <include condition="![Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)] + !Window.IsActive(home)">FooterContentGeneral</include>
 
-            <!--RSS feed on home -->
-            <include condition="Window.IsActive(Home) + system.getbool(lookandfeel.enablerssfeeds) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 3small) | Skin.String(HomeLayout, simplehor)]">FooterContentHome</include>
+            <!--footer on home -->
+            <include condition="Window.IsActive(Home)">FooterContentHome</include>
+            
             <!-- codec info normal-->
 			<control type="group">
 				<posx>60</posx>
@@ -410,64 +411,82 @@
             </control>
         </control>
     </include>
-
     <include name="FooterContentHome">
-        <!--RSS Text without touch classic-->			
+        
+        <!-- RSS Feed -->
         <control type="rss">	
-            <description>RSS Feed</description>
-            <posx>80</posx>
+            <description>RSS Feed Normal - normal or touch with disabled battery</description>
+            <posx>0</posx>
             <bottom>20</bottom>
-            <width>1760</width>
+            <width>1920</width>
             <height>50</height>
-            <font>rss</font>
-            <urlset>1</urlset>
-            <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
-            <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
-            <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
-            <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
-            <visible>skin.hastheme(classic)</visible>
-            <visible>!Control.IsVisible(99123)</visible>
-            <visible>!Window.IsVisible(DialogButtonMenu.xml)</visible>
-            <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
-        </control>
-        <!--RSS Text without touch normal-->
-        <control type="rss">	
-            <description>RSS Feed</description>
-            <posx>50</posx>
-            <bottom>22</bottom>
-            <width>1820</width>
-            <height>50</height>
-            <font>rss</font>
-            <urlset>1</urlset>
-            <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
-            <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
-            <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
-            <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
-            <visible>!skin.hastheme(classic)</visible>
-            <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
-            <visible>!Window.IsVisible(DialogButtonMenu.xml) + !Control.IsVisible(99123)</visible>
-        </control>
-        <!--RSS Text with touchcontrols (99123) visible-->
-        <control type="rss">	
-            <description>RSS Feed</description>
-            <posx>380</posx>
-            <bottom>19</bottom>
-            <width>1340</width>
-            <height>50</height>
-            <font>rss</font>
+            <font>Reg28</font>
             <urlset>1</urlset>
             <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
             <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
             <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
             <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
             <visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
-            <visible>!StringCompare(Window(home).Property(ShowFastAllMovies), show)</visible>
+            <visible>!Skin.HasTheme(classic) + ![Control.IsVisible(99123) + !Skin.HasSetting(HideBatteryStatus)]</visible>
             <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
-            <visible>!Window.IsVisible(DialogButtonMenu.xml) + Control.IsVisible(99123)</visible>
-            <animation effect="slide" start="0,0" end="-15,-2" center="auto" easing="out" tween="back" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+            <visible>!Window.IsVisible(DialogButtonMenu.xml) + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
+            <animation effect="slide" start="0,0" end="-15,-2" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+            <animation effect="slide" start="0" end="400" time="0" condition="Control.IsVisible(99123)">Conditional</animation>
         </control>
+        <control type="rss">	
+            <description>RSS Feed Normal or Classic - With touch buttons enabled</description>
+            <posx>400</posx>
+            <bottom>20</bottom>
+            <width>1300</width>
+            <height>50</height>
+            <font>Reg28</font>
+            <urlset>1</urlset>
+            <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
+            <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
+            <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
+            <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
+            <visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
+            <visible>Control.IsVisible(99123) + !Skin.HasSetting(HideBatteryStatus)</visible>
+            <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
+            <visible>!Window.IsVisible(DialogButtonMenu.xml) + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
+            <animation effect="slide" start="0,0" end="-15,-2" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+        </control>
+        <control type="rss">	
+            <description>RSS Feed Classic theme</description>
+            <posx>80</posx>
+            <bottom>18</bottom>
+            <width>1765</width>
+            <height>50</height>
+            <font>Reg28</font>
+            <urlset>1</urlset>
+            <titlecolor>$INFO[Skin.String(FooterTextColor)]</titlecolor>
+            <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
+            <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+            <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
+            <visible>system.getbool(lookandfeel.enablerssfeeds)</visible>
+            <visible>Skin.HasTheme(classic) + !Control.IsVisible(99123)</visible>
+            <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
+            <visible>IsEmpty(Container(300).ListItem.Property(infoline))</visible>
+        </control>
+            
+        <!--infoline-->
+        <control type="label">	
+            <description>InfoLine</description>
+            <posx>20%</posx>
+            <bottom>28</bottom>
+            <width>60%</width>
+            <height>50</height>
+            <font>Reg28</font>
+            <align>center</align>
+            <label>$VAR[infolinevar]</label>
+            <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+            <shadowcolor>$INFO[Skin.String(FooterTextShadowColor)]</shadowcolor>
+            <visible>![Window.IsVisible(DialogButtonMenu.xml) + !Skin.HasTheme(classic)]</visible>
+            <visible>![[Control.IsVisible(4444) + IntegerGreaterThan(Container(4444).NumItems,0)] + [Skin.String(SubmenuLayout, horizontal) | Skin.String(SubmenuLayout, tiles)]] | Skin.String(HomeLayout, simplehor)</visible>
+        </control>        
+        
     </include>
-    
+
     <!-- Power button -->
 	<include name="PowerButton">
 		<control type="button" id="2">
@@ -783,7 +802,7 @@
                 <width min="0" max="1400">auto</width>
                 <height>50</height>
                 <label>$VAR[value_subheader]</label>
-                <font>Reg30</font>
+                <font>Reg28</font>
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 <visible>!Control.IsVisible(882)</visible>

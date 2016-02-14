@@ -538,7 +538,7 @@
             <pagecontrol>317</pagecontrol>
             <orientation>vertical</orientation>
             <visible>StringCompare(Window(Home).Property(SkinSettingSection),17)</visible>
-                 <!-- media library views -->
+            <!-- media library views -->
             <control type="label" id="13020">
                 <include>SkinSettings_Header</include>
                 <label>$LOCALIZE[31221]</label>
@@ -568,7 +568,6 @@
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=extrafanartdelay,header=$LOCALIZE[31296])</onclick>
                 <visible>Skin.HasSetting(ShowFanartBackground) + Skin.HasSetting(SkinHelper.EnableExtraFanart)</visible>
             </control>
-
             <!-- prefer fanart in landscaped views -->
             <control type="radiobutton" id="13026">
                 <include>SkinSettings_Button</include>
@@ -597,15 +596,8 @@
                 <label2>$INFO[Skin.String(mediaflagsstyle.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=mediaflagsstyle,header=$LOCALIZE[31632])</onclick>
             </control>
-            <!-- missing actor thumbs lookup -->
-            <control type="radiobutton" id="31633">
-                <include>SkinSettings_Button</include>
-                <label>31633</label>
-                <onclick condition="Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,false)</onclick>
-                <onclick condition="!Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,true)</onclick>
-                <selected>Skin.String(actorthumbslookup,true)</selected>
-            </control>
-                 <include name="SkinSettings_ActionButton">
+            
+            <include name="SkinSettings_ActionButton">
                 <param name="id" value="5151" />
                 <param name="label" value="31187" />
                 <param name="action" value="Addon.OpenSettings(script.tvtunes)" />
@@ -630,13 +622,6 @@
                 <onclick>Skin.ToggleSetting(EnableFakeDiscArt)</onclick>
                 <selected>Skin.HasSetting(EnableFakeDiscArt)</selected>
             </control>
-            <control type="radiobutton" id="17119">
-                <include>SkinSettings_Button</include>
-                <label>31508</label>
-                <onclick condition="System.HasAddon(script.extendedinfo)">Skin.ToggleSetting(UseExtendedInfoDialog)</onclick>
-                <onclick condition="!System.HasAddon(script.extendedinfo)">RunPlugin(plugin://script.extendedinfo)</onclick>
-                <selected>Skin.HasSetting(UseExtendedInfoDialog)</selected>
-            </control>
             <control type="radiobutton" id="17120">
                 <include>SkinSettings_Button</include>
                 <label>31509</label>
@@ -657,6 +642,46 @@
                 <onclick>Skin.ToggleSetting(DisableSideBladeIndicator)</onclick>
                 <selected>Skin.HasSetting(DisableSideBladeIndicator)</selected>
             </control>
+            
+            <!-- video information dialog -->
+            <control type="label" id="20159">
+                <include>SkinSettings_Header</include>
+                <label>$LOCALIZE[20159]</label>
+                <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+            </control>
+            <control type="radiobutton" id="17119">
+                <include>SkinSettings_Button</include>
+                <label>31508</label>
+                <onclick condition="System.HasAddon(script.extendedinfo)">Skin.ToggleSetting(UseExtendedInfoDialog)</onclick>
+                <onclick condition="!System.HasAddon(script.extendedinfo)">RunPlugin(plugin://script.extendedinfo)</onclick>
+                <selected>Skin.HasSetting(UseExtendedInfoDialog)</selected>
+            </control>
+            <!-- actor list behaviour in videoinfo -->
+            <control type="button" id="31689">
+                <include>SkinSettings_Button</include>
+                <label>31689</label>
+                <label2>$INFO[Skin.String(videoinfo_castaction.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=videoinfo_castaction,header=$LOCALIZE[31689])</onclick>
+                <visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
+            </control>
+            <!-- missing actor thumbs lookup -->
+            <control type="radiobutton" id="31633">
+                <include>SkinSettings_Button</include>
+                <label>31633</label>
+                <onclick condition="Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,false)</onclick>
+                <onclick condition="!Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,true)</onclick>
+                <selected>Skin.String(actorthumbslookup,true)</selected>
+                <visible>Skin.String(videoinfo_castaction,extendedinfo)</visible>
+            </control>
+            <!-- trailer behaviour in videoinfo -->
+            <control type="button" id="31694">
+                <include>SkinSettings_Button</include>
+                <label>31694</label>
+                <label2>$INFO[Skin.String(videoinfo_traileraction.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=videoinfo_traileraction,header=$LOCALIZE[31694])</onclick>
+                <visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
+            </control>
+            
             <!-- watched indicators -->
             <control type="label" id="17130">
                 <include>SkinSettings_Header</include>
@@ -1821,6 +1846,15 @@
                 <onclick>Skin.ToggleSetting(CompactHeader)</onclick>
                 <selected>Skin.HasSetting(CompactHeader)</selected>
             </control>
+            <!--set subheader infoline-->
+            <control type="button" id="31688">
+                <include>SkinSettings_Button</include>
+                <label>31688</label>
+                <label2>$INFO[Skin.String(infoline.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=infoline,header=$LOCALIZE[31688])</onclick>
+                <visible>!Skin.Hastheme(classic)</visible>
+            </control>
+            <!-- always show weather -->
             <control type="radiobutton" id="5152">
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31593]</label>
