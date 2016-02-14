@@ -10,7 +10,7 @@
             <visible>!Window.IsActive(Settings.xml) + !Window.IsActive(SettingsCategory.xml)  + !Window.IsActive(SettingsSystemInfo.xml) + !Window.IsActive(SkinSettings.xml) + !Control.IsVisible(57)</visible>
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Window.IsActive(DialogVideoInfo.xml)</visible>
 			<visible>IsEmpty(Window(Home).Property(ThemeMediaMB3IsAlive))</visible>
-			<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia))</visible>
+			<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
             <posx>650</posx>
             <posy>-30</posy>
             <control type="image">
@@ -95,7 +95,7 @@
             <visible>!Window.IsActive(Settings.xml) + !Window.IsActive(SettingsCategory.xml)  + !Window.IsActive(SettingsSystemInfo.xml) + !Window.IsActive(SkinSettings.xml) + !Control.IsVisible(57)</visible>
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Window.IsActive(DialogVideoInfo.xml)</visible>
 			<visible>IsEmpty(Window(Home).Property(ThemeMediaMB3IsAlive))</visible>
-			<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia))</visible>
+			<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
             <posx>590</posx>
             <posy>-30</posy>
             <control type="image">
@@ -194,7 +194,7 @@
             <visible>!Skin.HasSetting(DisableNowPlayingInfoBar)</visible>
             <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !ControlGroup(400).HasFocus() + !ControlGroup(77777).HasFocus</visible>
 			<visible>[[Player.HasVideo + !IsEmpty(VideoPlayer.Title)] | [Player.HasAudio + !IsEmpty(MusicPlayer.Title)] | Player.IsInternetStream]</visible>
-			<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia))</visible>
+			<visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 			<include>DimensionsFullscreen</include>
 			<animation effect="slide" start="0,-400" end="0,0" tween="cubic" easing="out" delay="0" time="250" reversible="false">Visible</animation>
 			<animation effect="slide" start="0,0" end="0,-400" tween="cubic" easing="out" delay="0" time="250" reversible="false">Hidden</animation>
@@ -472,6 +472,7 @@
     
 	<include name="NowPlayingBackground">
 		<control type="group">
+        <visible>![!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
 		<visible>[!Skin.HasSetting(DisableNowPlayingBackground) + Player.HasMedia + !Control.IsVisible(507) + !Control.IsVisible(DialogVideoInfo.xml) + IsEmpty(Window(Home).Property(PlayingBackgroundMedia))] | [!IsEmpty(Window(Home).Property(PlayingBackgroundMedia)) + Player.HasVideo]</visible>
             <!-- black background -->
             <control type="image">
@@ -479,7 +480,7 @@
                 <texture>colors/color_black.png</texture>
                 <visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + Player.HasVideo</visible>
             </control>
-     			<control type="visualisation" id="2">
+            <control type="visualisation" id="2">
 				<description>visualisation</description>
 				<include>DimensionsFullscreen</include>
 				<visible>Player.HasAudio + ![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)]</visible>

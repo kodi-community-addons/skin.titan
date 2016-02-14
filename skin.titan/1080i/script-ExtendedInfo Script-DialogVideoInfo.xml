@@ -5,8 +5,8 @@
         <control type="group">
 			<!-- default animation -->
 			<include>animation_window_open_close</include>
-                 <include>GlobalBackground</include>
-                 <!--NowPlaying-->
+            <include>GlobalBackground</include>
+            <!--NowPlaying-->
             <include condition="!Skin.HasTheme(classic) + !Skin.HasSetting(LowPerformanceMode)">NowPlayingModern</include>
      			<!-- touchscreen workaround for windows tablets -->
 			<include condition="Skin.HasSetting(EnableTouchSupport)">TouchScreenWorkaround</include>
@@ -125,7 +125,7 @@
 						<onclick>XBMC.RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=$INFO[Window.Property(movie.imdb_id)])</onclick>
 						<visible>IsEmpty(Window.Property(movie.PercentPlayed)) + System.HasAddon(plugin.video.couchpotato_manager)</visible>
 					</control>
-                                 <control type="button" id="101">
+                    <control type="button" id="101">
                         <!--Get Thumb Artwork Downloader-->
                         <label>13511</label>
                         <width>285</width>
@@ -147,16 +147,29 @@
 						<visible>!Skin.HasSetting(kioskmode)</visible>
 					</control>
 					
-					<!--Search Trailer on Youtube-->
+					<control type="button" id="244">
+                        <!--Go Fullscreen-->
+                        <label>244</label>
+                        <width>285</width>
+                        <height>60</height>
+                        <align>center</align>
+                        <textoffsetx>0</textoffsetx>
+                        <visible>Player.HasVideo</visible>
+                        <onclick>Close</onclick>
+                        <onclick>ClearProperty(TrailerPlaying,Home)</onclick>
+                        <onclick>FullScreen</onclick>
+                    </control>
+					
+					<!-- Trailer on Youtube-->
 					<control type="button" id="2356">
 						<width>285</width>
 						<height>60</height>
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
-						<label>YouTube $LOCALIZE[20410]</label>
-						<onclick condition="System.HasAddon(plugin.video.youtube)">XBMC.RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[Window.Property(movie.Title)] Trailer)</onclick>
-						<onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
-						<visible>!IsEmpty(Window.Property(movie.imdb_id))</visible>
+						<label>$LOCALIZE[20410]</label>
+                        <onclick>SetFocus(1150,0)</onclick>
+                        <onclick>SetProperty(TrailerPlaying,Playing,Home)</onclick>
+						<visible>IntegerGreaterThan(Container(1150).NumItems,0)</visible>
 					</control>
 					
 					<!--video extras -->
@@ -170,7 +183,7 @@
 						<visible>System.HasAddon(script.videoextras) + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
 						<visible>!IsEmpty(Window.Property(movie.FilenameAndPath))</visible>
 					</control>
-                                 <control type="radiobutton" id="3052">
+                    <control type="radiobutton" id="3052">
                         <!--Hide panel behind moviedetails-->
                         <label>31155</label>
                         <width>450</width>
