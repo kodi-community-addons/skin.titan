@@ -6,11 +6,13 @@
     <onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">PlayerControl(Stop)</onunload>
 	<onunload>ClearProperty(AdditionalInfo)</onunload>
 	<onunload>ClearProperty(TrailerPlaying,Home)</onunload>
+    <onunload>ClearProperty(filename_formatted,Home)</onunload>
     <controls>
     
         <!-- fake button with actions -->
         <control type="button" id="9005">
             <visible allowhiddenfocus="true">false</visible>
+            <onfocus>RunScript(script.skin.helper.service,action=GETFILENAME,output=filename_formatted)</onfocus>
             <onfocus condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onfocus>
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onfocus>
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
@@ -148,6 +150,7 @@
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
 							<onclick>Dialog.Close(MovieInformation)</onclick>
+                            <visible>Skin.HasSetting(videoinfo_button_play)</visible>
 						</control>
 
 						<control type="button" id="9">
@@ -158,6 +161,7 @@
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
 							<visible>ListItem.IsResumable</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_play)</visible>
 						</control>
                         
                         <control type="button" id="244">
@@ -183,6 +187,7 @@
 							<onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[ListItem.Trailer])</onclick>
                             <onclick condition="!Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[ListItem.Trailer],1)</onclick>
                             <onclick>SetProperty(TrailerPlaying,Playing,Home)</onclick>
+                            <visible>Skin.HasSetting(videoinfo_button_trailer)</visible>
 							<visible>!IsEmpty(ListItem.Trailer) + Container.Content(movies) + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
 						<control type="button" id="100">
@@ -195,7 +200,8 @@
 							<onclick condition="System.HasAddon(plugin.video.youtube) + Skin.String(videoinfo_traileraction,fullscreen)">RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onclick>
                             <onclick condition="System.HasAddon(plugin.video.youtube) + !Skin.String(videoinfo_traileraction,fullscreen)">RunScript(script.skin.helper.service,action=searchyoutube,windowed=true,title=$INFO[ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onclick>
                             <onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
-							<visible>[Container.Content(movies) | Container.Content(tvshows) | stringcompare(ListItem.Property(ItemType),Movie)] + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
+							<visible>Skin.HasSetting(videoinfo_button_youtubetrailer)</visible>
+                            <visible>[Container.Content(movies) | Container.Content(tvshows) | stringcompare(ListItem.Property(ItemType),Movie)] + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
 						<control type="button" id="114">
 							<!--Cast Button-->
@@ -209,6 +215,7 @@
 							<onclick>SetFocus(9001)</onclick>
                             <visible>IntegerGreaterThan(Container(50).NumItems,0)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_cast)</visible>
 						</control>
                         <control type="button" id="31622">
 							<!--Similar Button-->
@@ -222,6 +229,7 @@
 							<onclick>SetFocus(9001)</onclick>
                             <visible>!IsEmpty(ListItem.IMDBNumber)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_similar)</visible>
 						</control>
 						<control type="button" id="116">
 							<!--Info Button-->
@@ -240,6 +248,7 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
+                            <visible>Skin.HasSetting(videoinfo_button_similar)</visible>
 							<onclick condition="!System.HasAddon(script.extendedinfo)">RunPlugin(plugin://script.extendedinfo)</onclick>
 							<onclick condition="IsEmpty(ListItem.TvShowTitle) + !Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onclick>
 							<onclick condition="Container.Content(tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onclick>
@@ -251,6 +260,7 @@
                              <label>CinemaVision</label>
                              <onclick>Dialog.Close(MovieInformation)</onclick>
                              <onclick>RunScript(script.cinemavision,experience)</onclick>
+                             <visible>Skin.HasSetting(videoinfo_button_cinemavision)</visible>
                              <visible>System.HasAddon(script.cinemavision) + [Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)]</visible>
 						</control>
 						<control type="button" id="113">
@@ -260,6 +270,7 @@
 							<onclick>Playlist.Clear</onclick>
 							<onclick>Dialog.Close(MovieInformation)</onclick>
 							<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
+                            <visible>Skin.HasSetting(videoinfo_button_cinemaexperience)</visible>
 							<visible>System.HasAddon(script.cinema.experience) + Container.Content(movies) + !SubString(Container.FolderPath,plugin)</visible>
 						</control>
                         
@@ -282,6 +293,7 @@
 							 + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows)
 							 | Container.Content(musicvideos)]
 							 + IsEmpty(Window(movieinformation).Property("HideVideoExtrasButton"))</visible>
+                             <visible>Skin.HasSetting(videoinfo_button_videoextras)</visible>
 						</control>
 						<control type="button" id="211">
 							<description>Fetch TvTunes stuff</description>
@@ -292,6 +304,7 @@
 							<label>31300</label>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
 							<onclick>RunScript(script.tvtunes,mode=solo)</onclick>
+                            <visible>Skin.HasSetting(videoinfo_button_tvtunes)</visible>
 							<visible>System.HasAddon(script.tvtunes) + [Container.Content(TVShows) | Container.Content(movies) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("TvTunes_HideVideoInfoButton"))</visible>
 						</control>
 						
@@ -303,6 +316,7 @@
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_artwork)</visible>
 							<onclick condition="System.HasAddon(script.artwork.downloader)">ActivateWindow(3004)</onclick>
 							<onclick condition="!System.HasAddon(script.artwork.downloader)">RunPlugin(plugin://script.artwork.downloader)</onclick>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
@@ -315,6 +329,7 @@
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_refresh)</visible>
 						</control>
 						<control type="radiobutton" id="9300">
 							<!--discart-->
@@ -326,6 +341,7 @@
 							<onclick>Skin.ToggleSetting(VideoInfo_ShowCDart)</onclick>
 							<selected>Skin.HasSetting(VideoInfo_ShowCDart)</selected>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_discart)</visible>
 						</control>
                         <control type="radiobutton" id="3052">
                             <!--Hide panel behind moviedetails-->
@@ -336,6 +352,7 @@
                             <onclick>Skin.ToggleSetting(DialogVideoInfoHidePanel)</onclick>
                             <selected>Skin.HasSetting(DialogVideoInfoHidePanel)</selected>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_panel)</visible>
                         </control>
 					</control>
 									
@@ -879,7 +896,7 @@
                         <font>Reg20</font>
                         <align>left</align>
                         <scroll>false</scroll>
-                        <label>$INFO[ListItem.FileNameAndPath,[B]$LOCALIZE[21800]: [/B]]</label>
+                        <label>$INFO[Window(Home).Property(filename_formatted),[B]$LOCALIZE[21800]: [/B]]</label>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <visible>!IsEmpty(ListItem.FileNameAndPath) + !Skin.HasSetting(DialogVideoInfo_HideFileName)</visible>
