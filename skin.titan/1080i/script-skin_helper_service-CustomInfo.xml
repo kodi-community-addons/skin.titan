@@ -6,7 +6,7 @@
 	<onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">PlayerControl(Stop)</onunload>
 	<onunload>ClearProperty(AdditionalInfo)</onunload>
 	<onunload>ClearProperty(TrailerPlaying,Home)</onunload>
-
+    <onunload>ClearProperty(filename_formatted,Home)</onunload>
     <controls>
         <!--fake list used as container -->
 		<!-- use Container(999).ListItem to get all info -->
@@ -21,6 +21,7 @@
         <!-- fake button with actions -->
         <control type="button" id="9005">
             <visible allowhiddenfocus="true">false</visible>
+            <onfocus>RunScript(script.skin.helper.service,action=GETFILENAME,output=filename_formatted)</onfocus>
             <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + !IsEmpty(Container(999).ListItem.Trailer) + !Player.HasMedia">PlayMedia($ESCINFO[Container(999).ListItem.Trailer],1)</onfocus>
             <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + IsEmpty(Container(999).ListItem.Trailer) + !Player.HasMedia + [StringCompare(Container(999).ListItem.Property(type),movie) | StringCompare(Container(999).ListItem.Property(type),tvshow)]">RunScript(script.skin.helper.service,action=searchyoutube,windowed=true,autoplay=true,title=$INFO[Container(999).ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onfocus>
             <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + !IsEmpty(Container(999).ListItem.Trailer) + !Player.HasMedia">SetProperty(TrailerPlaying,Playing,Home)</onfocus>
@@ -145,6 +146,7 @@
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
+                            <visible>Skin.HasSetting(videoinfo_button_play)</visible>
 						</control>
                         
                         <control type="button" id="244">
@@ -173,7 +175,8 @@
                             <onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[Container(999).ListItem.Trailer])</onclick>
                             <onclick condition="!Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[Container(999).ListItem.Trailer],1)</onclick>
                             <onclick condition="!Skin.String(videoinfo_traileraction,fullscreen)">SetProperty(TrailerPlaying,Playing,Home)</onclick>
-							<visible>!IsEmpty(Container(999).ListItem.Trailer) + Container.Content(movies) + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
+							<visible>Skin.HasSetting(videoinfo_button_trailer)</visible>
+                            <visible>!IsEmpty(Container(999).ListItem.Trailer) + Container.Content(movies) + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
                         
                         <control type="button" id="100">
@@ -201,6 +204,7 @@
 							<onclick>SetFocus(9001)</onclick>
                             <visible>IntegerGreaterThan(Container(998).NumItems,0)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_youtubetrailer)</visible>
 						</control>
                         <control type="button" id="31622">
 							<!--Similar Button-->
@@ -214,6 +218,7 @@
 							<onclick>SetFocus(9001)</onclick>
                             <visible>IntegerGreaterThan(Container(997).NumItems,0)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_similar)</visible>
 						</control>
 						<control type="button" id="116">
 							<!--Info Button-->
@@ -236,7 +241,8 @@
 							<onclick condition="StringCompare(Container(999).ListItem.Property(type),movie)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[Container(999).ListItem.Property(DBID)],name=$INFO[Container(999).ListItem.Title])</onclick>
 							<onclick condition="StringCompare(Container(999).ListItem.Property(type),tvshow)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[Container(999).ListItem..Property(DBID)],name=$INFO[Container(999).ListItem.TvShowTitle])</onclick>
 							<onclick condition="StringCompare(Container(999).ListItem.Property(type),episode)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[Container(999).ListItem.TvShowTitle],season=$INFO[Container(999).ListItem.Season],silent=True)</onclick>
-						</control>
+                            <visible>Skin.HasSetting(videoinfo_button_extendedinfo)</visible>
+                        </control>
                         <control type="radiobutton" id="9300">
 							<!--discart-->
 							<width>340</width>
@@ -246,7 +252,19 @@
 							<textoffsetx>20</textoffsetx>
 							<onclick>Skin.ToggleSetting(VideoInfo_ShowCDart)</onclick>
 							<selected>Skin.HasSetting(VideoInfo_ShowCDart)</selected>
+                            <visible>Skin.HasSetting(videoinfo_button_discart)</visible>
 						</control>
+                        <control type="radiobutton" id="3052">
+                            <!--Hide panel behind moviedetails-->
+                            <label>31155</label>
+                            <width>530</width>
+                            <textoffsetx>20</textoffsetx>
+                            <align>left</align>
+                            <onclick>Skin.ToggleSetting(DialogVideoInfoHidePanel)</onclick>
+                            <selected>Skin.HasSetting(DialogVideoInfoHidePanel)</selected>
+                            <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_panel)</visible>
+                        </control>
 					</control>
 									
 					<!--Arrow-->
@@ -780,7 +798,7 @@
                         <font>Reg20</font>
                         <align>left</align>
                         <scroll>false</scroll>
-                        <label>$INFO[Container(999).ListItem.FileNameAndPath,[B]$LOCALIZE[21800]: [/B]]</label>
+                        <label>$INFO[Window(Home).Property(filename_formatted),[B]$LOCALIZE[21800]: [/B]]</label>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <visible>!IsEmpty(Container(999).ListItem.FileNameAndPath)</visible>
