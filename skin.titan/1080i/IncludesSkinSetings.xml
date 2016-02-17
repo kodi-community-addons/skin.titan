@@ -203,7 +203,6 @@
                 <include>SkinSettings_Button</include>
                 <label>31030</label>
                 <onclick>Skin.ToggleSetting(WeatherOnHome)</onclick>
-                <onclick>Skin.Reset(ShowProfile)</onclick>
                 <selected>Skin.HasSetting(WeatherOnHome)</selected>
             </control>
             <!--show profile button on home-->
@@ -211,7 +210,6 @@
                 <include>SkinSettings_Button</include>
                 <label>31134</label>
                 <onclick>Skin.ToggleSetting(ShowProfile)</onclick>
-                <onclick>Skin.Reset(WeatherOnHome)</onclick>
                 <selected>Skin.HasSetting(ShowProfile)</selected>
             </control>
             <!--custom logo-->
@@ -930,7 +928,7 @@
                 <param name="action" value="RunScript(script.skin.helper.service,action=ENABLEVIEWS)" />
                 <param name="visible" value="true" />
             </include>
-                 <!-- white space -->
+            <!-- white space -->
             <control type="label" id="6025">
                 <height>50</height>
             </control>
@@ -1093,13 +1091,6 @@
                 <onclick>Skin.ToggleSetting(OSDShowInfoOnPause)</onclick>
                 <selected>Skin.HasSetting(OSDShowInfoOnPause)</selected>
             </control>
-            <control type="radiobutton" id="13055">
-                <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31232]</label>
-                <onclick>Skin.ToggleSetting(AlwaysShowMusicInfo)</onclick>
-                <selected>Skin.HasSetting(AlwaysShowMusicInfo)</selected>
-            </control>
-
             <control type="button" id="31662">
                 <description>Default OSD button</description>
                 <include>SkinSettings_Button</include>
@@ -1141,12 +1132,12 @@
                 <selected>Skin.HasSetting(UseSlimOSDPanel)</selected>
                 <visible>!Skin.HasTheme(classic)</visible>
             </control>
-            <control type="radiobutton" id="13061">
+            <control type="button" id="31698">
                 <include>SkinSettings_Button</include>
-                <label>31493</label>
-                <onclick>Skin.ToggleSetting(OSDUseLargeIcons)</onclick>
-                <selected>Skin.HasSetting(OSDUseLargeIcons)</selected>
-                <visible>!Skin.HasTheme(classic)</visible>
+                <label>$LOCALIZE[31698]</label>
+                <label2>$INFO[Skin.String(osd_buttonstyle.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=osd_buttonstyle,header=$LOCALIZE[31698])</onclick>
+                <visible>!skin.hastheme(classic)</visible>
             </control>
             <control type="radiobutton" id="13062">
                 <include>SkinSettings_Button</include>
@@ -1165,7 +1156,7 @@
             <control type="button" id="13064">
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31632]</label>
-                <label2>$INFO[Skin.String(osdmediaflagsstyle)]</label2>
+                <label2>$INFO[Skin.String(osdmediaflagsstyle.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=osdmediaflagsstyle,header=$LOCALIZE[31632])</onclick>
                 <visible>!skin.hastheme(classic)</visible>
             </control>
@@ -1222,6 +1213,12 @@
                 <label>$LOCALIZE[31179]</label>
                 <onclick>Skin.ToggleSetting(FullscreenMusic)</onclick>
                 <selected>Skin.HasSetting(FullscreenMusic)</selected>
+            </control>
+            <control type="radiobutton" id="13055">
+                <include>SkinSettings_Button</include>
+                <label>$LOCALIZE[31232]</label>
+                <onclick>Skin.ToggleSetting(AlwaysShowMusicInfo)</onclick>
+                <selected>Skin.HasSetting(AlwaysShowMusicInfo)</selected>
             </control>
             <control type="button" id="5153">
                 <description></description>
@@ -2194,6 +2191,108 @@
 
     </include>
     
+    <include name="SkinSettings_Addons">
+        <!-- supported Addons -->
+        <control type="grouplist" id="31000">
+            <description>Control Area</description>
+            <width>100%</width>
+            <height>96%</height>
+            <itemgap>5</itemgap>
+            <onup>31000</onup>
+            <ondown>31000</ondown>
+            <onleft condition="!Window.IsActive(Custom_SkinSettings.xml)">100</onleft>
+            <onleft condition="Window.IsActive(Custom_SkinSettings.xml)">2000</onleft>
+            <onright>3199</onright>
+            <orientation>vertical</orientation>
+            <pagecontrol>3199</pagecontrol>
+            <visible>StringCompare(Window(Home).Property(SkinSettingSection),31)</visible>
+            <control type="label" id="31696">
+                <include>SkinSettings_Header</include>
+                <label>31696</label>
+            </control>
+
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31001" />
+                <param name="addon" value="script.skin.helper.service" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31002" />
+                <param name="addon" value="script.skinshortcuts" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31003" />
+                <param name="addon" value="script.extendedinfo" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31004" />
+                <param name="addon" value="script.artwork.downloader" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31005" />
+                <param name="addon" value="script.tv.show.next.aired" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31006" />
+                <param name="addon" value="script.tvtunes" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31007" />
+                <param name="addon" value="service.nextup.notification" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31008" />
+                <param name="addon" value="script.cinema.experience" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31009" />
+                <param name="addon" value="script.cinemavision" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31010" />
+                <param name="addon" value="script.videoextras" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31011" />
+                <param name="addon" value="script.cinemavision" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31012" />
+                <param name="addon" value="screensaver.digitalclock" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31013" />
+                <param name="addon" value="script.games.rom.collection.browser" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31014" />
+                <param name="addon" value="plugin.video.couchpotato_manager" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31015" />
+                <param name="addon" value="plugin.video.youtube" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31016" />
+                <param name="addon" value="plugin.video.emby" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31017" />
+                <param name="addon" value="plugin.video.plexbmc" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31018" />
+                <param name="addon" value="plugin.video.netflixbmc" />
+            </include>
+        </control>
+        <control type="scrollbar" id="3199"> 
+            <right>-45</right>
+            <height>96%</height>
+            <onleft>31000</onleft>
+            <showonepage>false</showonepage>
+            <visible>StringCompare(Window(Home).Property(SkinSettingSection),31)</visible>
+        </control>
+    </include>
+    
     <include name="SkinSettings_Button">
         <width>100%</width>
         <align>left</align>
@@ -2320,6 +2419,14 @@
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
             <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),14)</usealttexture>
         </control>
+        <control type="togglebutton" id="31">
+            <label>31696</label>
+            <altlabel>31696</altlabel>
+            <onfocus>SetProperty(SkinSettingSection,31,Home)</onfocus>
+            <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
+            <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
+            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),31)</usealttexture>
+        </control>
     </include>
     
     <include name="SkinSettings_MenuButtonLarge">
@@ -2366,10 +2473,35 @@
         </control>
     </include>
     
+    <include name="SkinSettings_AddonButton">
+        <control type="radiobutton" id="$PARAM[id]">
+            <include>SkinSettings_Button</include>
+            <textureradiofocus colordiffuse="$INFO[Skin.String(ButtonFocusTextColor)]">common/settings1.png</textureradiofocus>
+            <textureradionofocus colordiffuse="$INFO[Skin.String(ButtonTextColor)]">common/settings1.png</textureradionofocus>
+            <radiowidth>125</radiowidth>
+            <radioheight>40</radioheight>
+            <radioposx>0</radioposx>
+            <radioposy>5</radioposy>
+            <include name="SkinSettings_AddonButton_Label" condition="System.HasAddon($PARAM[addon])">
+                <param name="label" value="$INFO[System.AddonTitle($PARAM[addon])]" />
+            </include>
+            <include name="SkinSettings_AddonButton_Label" condition="!System.HasAddon($PARAM[addon])">
+                <param name="label" value="$PARAM[addon]" />
+            </include>
+            <onclick condition="System.HasAddon($PARAM[addon])">Addon.OpenSettings($PARAM[addon])</onclick>
+            <onclick condition="!System.HasAddon($PARAM[addon])">RunPlugin(plugin://$PARAM[addon])</onclick>
+            <selected>Control.HasFocus($PARAM[id])</selected>
+            <animation effect="fade" start="100" end="40" time="0" condition="!System.HasAddon($PARAM[addon])">Conditional</animation>
+        </control>
+    </include>
+    <include name="SkinSettings_AddonButton_Label">
+        <label>$PARAM[label]</label>
+    </include>
+    
     <include name="SkinSettings_ColorButton">
         <control type="button" id="$PARAM[id]">
             <include>SkinSettings_Button</include>
-            <label>$PARAM[labelprefix]$PARAM[label]</label>
+            <label>$INFO[labelprefix]$PARAM[label]</label>
             <label2>$INFO[Skin.String($PARAM[skinsetting].name)]  [COLOR=$INFO[Skin.String($PARAM[skinsetting])]]███[/COLOR]</label2>
             <onclick>RunScript(script.skin.helper.service,action=COLORPICKER,skinstring=$PARAM[skinsetting],header=$PARAM[label])</onclick>
             <visible>$PARAM[visible]</visible>
