@@ -1926,7 +1926,6 @@
 		<width>135</width>
 		<height>90</height>
 		<aspectratio alignx="center" aligny="center">keep</aspectratio>
-		<fadetime>250</fadetime>
         <include condition="!Skin.String(mediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
 		<animation effect="fade" time="200">VisibleChange</animation>
 	</include>
@@ -1970,23 +1969,22 @@
                 <texture>$VAR[mediaflags_large_path]/cc.png</texture>
                 <visible>!IsEmpty(ListItem.SubtitleLanguage) + !Skin.String(mediaflagsstyle,large_color)</visible>
             </control>
-            <control type="image">
+            <control type="image" >
                 <height>95</height>
                 <include>mediaflags_large_layout</include>
-                <texture>special://skin/extras/flags/language/$INFO[ListItem.AudioLanguage].png</texture>
-                <visible>!IsEmpty(ListItem.SubtitleLanguage) + Skin.String(mediaflagsstyle,large_color)</visible>
+                <texture>$INFO[ListItem.AudioLanguage,special://skin/extras/flags/language/,.png]</texture>
+                <visible>!IsEmpty(ListItem.AudioLanguage) + Skin.String(mediaflagsstyle,large_color)</visible>
             </control>
             <control type="image">
                 <height>95</height>
                 <include>mediaflags_large_layout</include>
-                <texture>special://skin/extras/flags/language/$INFO[ListItem.SubtitleLanguage].png</texture>
+                <texture>$INFO[ListItem.SubtitleLanguage,special://skin/extras/flags/language/,.png]</texture>
                 <visible>!IsEmpty(ListItem.SubtitleLanguage) + Skin.String(mediaflagsstyle,large_color)</visible>
             </control>
-
             <control type="image">
                 <include>mediaflags_large_layout</include>
-                <texture fallback="$VAR[mediaflags_large_path]/mpaa/NR.png">$VAR[mediaflags_large_rating]</texture>
-                <visible>!IsEmpty(ListItem.MPAA)</visible>
+                <texture fallback="flags/flags_large/mpaa/NR.png">$VAR[mediaflags_large_rating]</texture>
+                <visible>!IsEmpty(ListItem.MPAA) + ![Skin.HasSetting(EnableTouchSupport) + Skin.String(mediaflagsstyle,large_color)]</visible>
             </control>
             <include>mediaflags_sets</include>
         </control>
@@ -2099,7 +2097,7 @@
 		<value condition="substring(ListItem.mpaa,Brazil:16) | substring(ListItem.mpaa,16 anos)">$VAR[mediaflags_large_path]/mpaa/MPAA_Brazil_16.png</value>
 		<value condition="substring(ListItem.mpaa,Brazil:18) | substring(ListItem.mpaa,18 anos)">$VAR[mediaflags_large_path]/mpaa/MPAA_Brazil_18.png</value>
 		<value condition="substring(ListItem.mpaa,Australia:)">$INFO[ListItem.MPAA,$VAR[mediaflags_large_path]/mpaa/australia_,.png]</value>
-		<value condition="!IsEmpty(ListItem.MPAA)">$INFO[ListItem.MPAA,$VAR[mediaflags_large_path]/mpaa/,.png]</value>
+		<value condition="!IsEmpty(ListItem.MPAA)">$VAR[mediaflags_large_path]/mpaa/$INFO[ListItem.MPAA].png</value>
 		<value condition="SubString(VideoPlayer.mpaa,US:G) | SubString(VideoPlayer.mpaa,USA:G) | SubString(VideoPlayer.mpaa,Rated G)">$VAR[mediaflags_large_path]/mpaa/G.png</value>
 		<value condition="SubString(VideoPlayer.mpaa,PG-13)">$VAR[mediaflags_large_path]/mpaa/PG-13.png</value>
 		<value condition="Substring(VideoPlayer.mpaa,Rated PG) | StringCompare(VideoPlayer.Mpaa,PG)">$VAR[mediaflags_large_path]/mpaa/PG.png</value>
@@ -2137,9 +2135,9 @@
 		<value condition="substring(VideoPlayer.mpaa,Brazil:14) | substring(VideoPlayer.mpaa,14 anos)">$VAR[mediaflags_large_path]/mpaa/MPAA_Brazil_14.png</value>
 		<value condition="substring(VideoPlayer.mpaa,Brazil:16) | substring(VideoPlayer.mpaa,16 anos)">$VAR[mediaflags_large_path]/mpaa/MPAA_Brazil_16.png</value>
 		<value condition="substring(VideoPlayer.mpaa,Brazil:18) | substring(VideoPlayer.mpaa,18 anos)">$VAR[mediaflags_large_path]/mpaa/MPAA_Brazil_18.png</value>
-		<value>$INFO[VideoPlayer.MPAA,$VAR[mediaflags_large_path]/mpaa/,.png]</value>
+		<value condition="!IsEmpty(VideoPlayer.MPAA)">$VAR[mediaflags_large_path]/mpaa/$INFO[VideoPlayer.MPAA].png</value>
 	</variable>
-	
+    
 	<include name="mediaflags_classic">
         <include>mediaflags_sets</include>
         <!-- nextaired info -->
