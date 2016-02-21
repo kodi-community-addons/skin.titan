@@ -380,10 +380,10 @@
             </control>
             <control type="radiobutton" id="19014">
                 <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31533] (netflixbmc)</label>
+                <label>$LOCALIZE[31533] (Flix2Kodi)</label>
                 <onclick>Skin.ToggleSetting(SmartShortcuts.netflix)</onclick>
-                <selected>Skin.HasSetting(SmartShortcuts.netflix) + System.HasAddon(plugin.video.netflixbmc)</selected>
-                <enable>System.HasAddon(plugin.video.netflixbmc)</enable>
+                <selected>Skin.HasSetting(SmartShortcuts.netflix) + System.HasAddon(plugin.video.flix2kodi)</selected>
+                <enable>System.HasAddon(plugin.video.flix2kodi)</enable>
                 <onclick>Notification($LOCALIZE[24074],$LOCALIZE[31546])</onclick>
                 <animation effect="fade" start="100" end="40" time="0" condition="!Control.IsEnabled(19014)">Conditional</animation>
             </control>
@@ -1476,6 +1476,12 @@
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=pvrgenretype,header=$LOCALIZE[31676])</onclick>
                 <visible>Skin.HasSetting(ShowEpgGenreColors) + Skin.HasSetting(CustomEPGGenreImages)</visible>
             </control>
+            <control type="radiobutton" id="31700">
+                <include>SkinSettings_Button</include>
+                <label>31700</label>
+                <onclick>Skin.ToggleSetting(Home_RecordingIndicator)</onclick>
+                <selected>Skin.HasSetting(Home_RecordingIndicator)</selected>
+            </control>
             
         </control>
 				
@@ -1752,6 +1758,8 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31209]</label>
                 <onclick>Skin.ToggleSetting(EnableTouchSupport)</onclick>
+                <onclick condition="Skin.String(ClearLogoLocation,footer)">Skin.SetString(ClearLogoLocation.label,Top Center)</onclick>
+                <onclick condition="Skin.String(ClearLogoLocation,footer)">Skin.SetString(ClearLogoLocation,topcenter)</onclick>
                 <selected>Skin.HasSetting(EnableTouchSupport)</selected>
             </control>
             <control type="radiobutton" id="5149">
@@ -2253,7 +2261,7 @@
             </include>
             <include name="SkinSettings_AddonButton">
                 <param name="id" value="31011" />
-                <param name="addon" value="script.cinemavision" />
+                <param name="addon" value="script.trakt" />
             </include>
             <include name="SkinSettings_AddonButton">
                 <param name="id" value="31012" />
@@ -2281,7 +2289,7 @@
             </include>
             <include name="SkinSettings_AddonButton">
                 <param name="id" value="31018" />
-                <param name="addon" value="plugin.video.netflixbmc" />
+                <param name="addon" value="plugin.video.flix2kodi" />
             </include>
         </control>
         <control type="scrollbar" id="3199"> 
@@ -2454,8 +2462,6 @@
         <alttexturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="20">dialogs/keyboard/key-nf.png</alttexturenofocus>
     </include>
     
-    <include>DialogButtonOther</include>
-    
     <include name="SkinSettings_ActionButton">
         <control type="radiobutton" id="$PARAM[id]">
             <include>SkinSettings_Button</include>
@@ -2483,7 +2489,7 @@
             <radioposx>0</radioposx>
             <radioposy>5</radioposy>
             <include name="SkinSettings_AddonButton_Label" condition="System.HasAddon($PARAM[addon])">
-                <param name="label" value="$INFO[System.AddonTitle($PARAM[addon])]" />
+                <param name="label" value="$INFO[System.AddonTitle($PARAM[addon])] ($INFO[System.AddonVersion($PARAM[addon])])" />
             </include>
             <include name="SkinSettings_AddonButton_Label" condition="!System.HasAddon($PARAM[addon])">
                 <param name="label" value="$PARAM[addon]" />
