@@ -15,8 +15,6 @@
         <!--Footer-->
         <include condition="!skin.hassetting(nofooterbar) + Skin.String(HomeLayout, simplehor)">Footer</include>
 		
-		<!-- Power button -->
-		<include condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">PowerButton</include>
     </include>
     
     <!-- Simple Horizontal Home Includes -->
@@ -158,7 +156,8 @@
 			  </content>
 			</control>
 		  </control>
-		
+          <!-- Power button -->
+          <include condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">PowerButton</include>
 		</control>
 	</include>
     <include name="HomeSimpleHorizontalNormal">
@@ -293,9 +292,9 @@
             
             <!-- submenu -->
             <control type="group" id="9001">
-				<animation effect="fade" start="100" end="0" time="200" condition="system.getbool(lookandfeel.enablerssfeeds) + !Control.HasFocus(4444)">Conditional</animation>
+				<animation effect="fade" start="100" end="0" time="200" condition="[system.getbool(lookandfeel.enablerssfeeds) + !Control.HasFocus(4444)] | [!IsEmpty(Container(300).ListItem.Property(infoline)) + !Control.HasFocus(4444)]">Conditional</animation>
                 <animation effect="fade" start="100" end="50" time="300" condition="!Control.HasFocus(4444)">conditional</animation>
-				<control type="fixedlist" id="4444">
+                <control type="fixedlist" id="4444">
 					<include>animation_fade_visible_hidden</include>
 					<left>0</left>
 					<top>120</top>
@@ -396,6 +395,7 @@
                 <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                 <visible>!Window.IsVisible(DialogButtonMenu.xml)</visible>
                 <visible>!Control.HasFocus(4444)</visible>
+                <include>animation_fade_visible_hidden</include>
             </control>
 		</control>
 	</include>
