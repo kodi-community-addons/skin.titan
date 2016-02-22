@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-	<defaultcontrol>1</defaultcontrol>
-    <visible>[Window.IsActive(videoosd) | Window.IsVisible(musicosd) | Player.Paused | Player.ShowInfo | Player.Seeking | Player.DisplayAfterSeek | Player.Forwarding | Player.Rewinding] + VideoPlayer.IsFullscreen</visible>
+    <visible>[Window.IsActive(videoosd) | Player.ShowInfo | Player.Seeking | Player.DisplayAfterSeek | Player.Paused | Player.Forwarding | Player.Rewinding] + Window.IsActive(fullscreenvideo)</visible>
 	<controls>
         <control type="group">
-            <include>HideOsdConditions</include>
+            
+            <!--Info Panel-->
+            <include condition="Skin.HasSetting(EnableOSDInfo)">OSDInfoPanel</include>
+            
             <!--OSD Panel-->
             <control type="group">
-                <visible>[[Player.Paused | Player.ShowInfo | Player.Seeking | Player.DisplayAfterSeek | Player.Forwarding | Player.Rewinding] + Skin.HasSetting(OSDShowInfoOnPause)]
-                | Window.IsActive(videoosd) | Window.IsVisible(musicosd)
-                | [[Player.Paused | Player.ShowInfo | Player.Seeking | Player.DisplayAfterSeek | Player.Forwarding | Player.Rewinding] + VideoPlayer.Content(livetv)]</visible>
-                <animation effect="slide" start="0,400" end="0,0" time="200" condition="!Window.IsActive(fullscreeninfo)">WindowOpen</animation>
-                <animation effect="slide" start="0,0" end="0,400" time="200" condition="!Window.IsActive(fullscreeninfo)">WindowClose</animation>
-                <animation effect="slide" start="0,400" end="0,0" time="200" condition="!Window.IsActive(fullscreeninfo)">VisibleChange</animation>
-                <animation effect="fade" start="100" end="0" time="0" condition="Window.IsActive(fullscreeninfo)">Conditional</animation>
+                <visible>Skin.HasSetting(OSDShowInfoOnPause) | VideoPlayer.Content(livetv)</visible>
+                <visible>!Window.IsActive(sliderdialog)</visible>
+                <animation effect="slide" start="0,400" end="0,0" time="200" condition="!Skin.HasSetting(LowPerformanceMode)">WindowOpen</animation>
+                <animation effect="slide" start="0,0" end="0,400" time="200" condition="!Skin.HasSetting(LowPerformanceMode)">WindowClose</animation>
                 <include condition="!Skin.HasTheme(classic) + !Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModern</include>
                 <include condition="!Skin.HasTheme(classic) + Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModernSlim</include>
                 <include condition="Skin.HasTheme(classic)">OSDPanelClassic</include>
-                <!--Weather on Video Info and OSD-->
-                <include condition="Skin.HasSetting(ShowWeatherVideoInfoOSD) + !Skin.HasSetting(UseSlimOSDPanel) + !Skin.HasTheme(classic)">WeatherInfoOSD</include>
-                <include condition="Skin.HasSetting(ShowWeatherVideoInfoOSD) + Skin.HasSetting(UseSlimOSDPanel) + !Skin.HasTheme(classic)">WeatherInfoOSDSlim</include>
+                
+                <!-- weather on OSD -->
+                <include condition="!Skin.HasTheme(classic) + !Skin.HasSetting(UseSlimOSDPanel) + Skin.HasSetting(ShowWeatherVideoInfoOSD)">WeatherInfoOSD</include>
+                <include condition="!Skin.HasTheme(classic) + Skin.HasSetting(UseSlimOSDPanel) + Skin.HasSetting(ShowWeatherVideoInfoOSD)">WeatherInfoOSDSlim</include>
+                
             </control>
             
             <!-- large forward and rewind labels -->
@@ -33,14 +34,13 @@
                 <font>Bold120</font>
                 <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                 <label>$VAR[PlayerActionLabelLarge]</label>
-                <animation effect="fade" start="0" end="100" tween="cubic" easing="out" delay="300" time="250" reversible="false" condition="!Window.IsActive(fullscreeninfo)">WindowOpen</animation>
-                <animation effect="slide" start="100" end="0" tween="cubic" easing="out" delay="2000" time="250" reversible="false" condition="!Window.IsActive(fullscreeninfo)">WindowClose</animation>
-                <visible>Skin.HasSetting(OSDLargeSeekingLabel) + ![VideoPlayer.Content(livetv) + Player.Caching] + !Window.IsActive(DialogSubtitles.xml)</visible>
+                <visible>Skin.HasSetting(OSDLargeSeekingLabel) + ![VideoPlayer.Content(livetv) + Player.Caching]</visible>
+                <visible>![Player.Paused + Skin.HasSetting(EnableOSDInfo) + Skin.HasSetting(EnableOSDInfoLarge)]</visible>
             </control>
             
             <!-- small panel if OSD disabled on seek -->
             <control type="group">
-                <visible>!Window.IsActive(fullscreeninfo) + !Window.IsActive(videoosd) + !Window.IsActive(musicosd) + !VideoPlayer.Content(livetv)</visible>
+                <visible>!VideoPlayer.Content(livetv)</visible>
                 <include condition="!Skin.HasSetting(OSDShowInfoOnPause)">Small_OSD_Seek_Panel</include>
             </control>
         </control>
