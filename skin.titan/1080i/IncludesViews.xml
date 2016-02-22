@@ -15,8 +15,17 @@
 </include>
 
 <include name="allViews">
-	<!--Views (behind footer)-->
+	<!--Views (and footer)-->
 	<control type="group" id="5000">
+        
+        <!-- footer bar (in back) -->
+        <control type="group">
+            <visible>!Control.IsVisible(519) + !Control.IsVisible(520)</visible>
+            <visible>![Control.IsVisible(507) | Control.IsVisible(513) | Control.IsVisible(514)]</visible>
+            <include condition="!skin.hassetting(nofooterbar)">Footer</include>
+            <include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
+        </control>
+    
 		<include>animation_window_open_close</include>
 		<visible>!Window.IsActive(DialogKeyboard.xml)</visible>
         <animation effect="slide" end="0,100" time="0" condition="skin.hassetting(nofooterbar)">Conditional</animation>
@@ -58,12 +67,14 @@
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.520)">View_520_Panel_Wall</include>
         <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.521)">View_521_Panel_Low</include>
  
-        <!-- footer bar -->
+        
+        <!-- footer bar (in front) -->
         <control type="group">
-            <visible>!Control.IsVisible(519) + !Control.IsVisible(520)</visible>
+            <visible>Control.IsVisible(507) | Control.IsVisible(513) | Control.IsVisible(514)</visible>
             <include condition="!skin.hassetting(nofooterbar)">Footer</include>
             <include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
         </control>
+        
          <!--Scrolling Letter-->
         <control type="image">
             <visible>Container.Scrolling + [StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])]</visible>
@@ -455,7 +466,7 @@
         [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)]]
         </visible>
         <animation effect="slide" end="0,-8" time="0" condition="[Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516) + !Control.IsVisible(51) + !Control.IsVisible(504)] | [Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)] | [Skin.HasSetting(View51_HidePanel) + Control.IsVisible(51)] | [Skin.HasSetting(View504_HidePanel) + Control.IsVisible(504)]">Conditional</animation><posx>50</posx>
-        <bottom>124</bottom>
+        <bottom>13%</bottom>
         <height>736</height>
         <control type="image">
             <texture border="15">diffuse/bgpanel.png</texture>
@@ -731,7 +742,7 @@
         </visible>
 
         <posx>50</posx>
-        <bottom>124</bottom>
+        <bottom>13%</bottom>
         <height>736</height>
         <control type="image">
             <texture border="15">diffuse/bgpanel.png</texture>
@@ -3475,7 +3486,7 @@
             <include>animation_view_change</include>
             <visible>IntegerGreaterThan(Container.NumItems,0)</visible>
             <height>740</height>
-			<bottom>125</bottom>
+			<bottom>13%</bottom>
             <control type="image">
                 <visible>!IsEmpty(ListItem.Label)</visible>
                 <posx>50</posx>
