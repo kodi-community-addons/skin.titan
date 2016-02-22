@@ -122,11 +122,6 @@
 
   <include name="PosterLabelOverlayVisibility">
 	<visible>
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),enable)] |
-		[Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),enable)] |
 		[[!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster))] + Skin.HasSetting(ShowLabelsPoster)] | 
         [Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + IsEmpty(ListItem.Art(fanart))] | 
 		[IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster))] | 
@@ -134,12 +129,11 @@
 	</visible>
 	<visible>!StringCompare(ListItem.Label,..)</visible>
     <visible>!Window.IsActive(script-skin_helper_service-CustomSearch.xml)</visible>
-    <include condition="Window.IsActive(Home) + !Skin.String(Widgets_DisplayTags,auto)">WidgetTitleOverlayOverride</include>
   </include>
   
   <include name="PanelLabelOverlay">
 	<control type="group">
-		<include>PosterLabelOverlayVisibility</include>
+		<include condition="!Window.IsActive(Home)">PosterLabelOverlayVisibility</include>
 		<!--Panel-->
 		<control type="image">
 			<bottom>-1</bottom>
@@ -180,7 +174,7 @@
   
   <include name="SmallPanelLabelOverlay">
 	<control type="group">
-		<include>PosterLabelOverlayVisibility</include>
+		<include condition="!Window.IsActive(Home)">PosterLabelOverlayVisibility</include>
 		<!--Panel-->
 		<control type="image">
 			<bottom>-1</bottom>
@@ -929,6 +923,29 @@
         </control>
   </include>
   
+    <include name="ThumbsLabelOverlay">
+        <control type="image">
+            <!--Panel Ovelay-->
+            <bordersize>8</bordersize>
+            <texture diffuse="home/home_matte2.png">diffuse/home_overlay.png</texture>
+            <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
+            <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+        </control>
+        <control type="label">
+            <!--Label-->
+            <left>5%</left>
+            <bottom>5%</bottom>
+            <width>90%</width>
+            <height>60</height>
+            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+            <align>left</align>
+            <label>$VAR[ThumbListDetails]</label>
+            <font>Reg20</font>
+            <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+            <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
+        </control>
+    </include>
+  
     <include name="ThumbsViewItemLayout">
         <control type="image">
             <!--thumb image-->
@@ -958,26 +975,7 @@
             <visible>SubString(ListItem.FolderPath,pvr://channels) + !IsEmpty(Listitem.Thumb)</visible>
         </control>
         <include condition="SubString(Window.Property(xmlfile),MyPVR,left)">PVRListItemThumb</include>
-        <control type="image">
-            <!--Panel Ovelay-->
-            <bordersize>8</bordersize>
-            <texture diffuse="home/home_matte2.png">diffuse/home_overlay.png</texture>
-            <include>ShowTitleOverlay</include>
-            <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
-        </control>
-        <control type="label">
-            <!--Label-->
-            <left>5%</left>
-            <bottom>5%</bottom>
-            <width>90%</width>
-            <height>60</height>
-            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
-            <align>left</align>
-            <label>$VAR[ThumbListDetails]</label>
-            <font>Reg20</font>
-            <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <include>ShowTitleOverlay</include>
-        </control>
+        <include condition="!Window.IsActive(Home)">ThumbsLabelOverlay</include>
         <control type="group">
             <!--Watched Overlay-->
             <right>8</right>
@@ -1040,7 +1038,7 @@
                 <visible>IsEmpty(ListItem.Art(poster)) + IsEmpty(ListItem.Art(tvshow.poster)) + !StringCompare(ListItem.Label,..)</visible>
               </control>
 
-              <include>PanelLabelOverlay</include>
+              <include condition="!Window.IsActive(Home)">PanelLabelOverlay</include>
               <control type="group">
                 <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
               </control>
@@ -1076,7 +1074,7 @@
                 <aspectratio scalediffuse="true" aligny="top" align="center">scale</aspectratio>
                 <visible>Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://)</visible>
             </control>
-			<include>PanelLabelOverlay</include>
+			<include condition="!Window.IsActive(Home)">PanelLabelOverlay</include>
 		  <control type="group">
             <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
           </control>
@@ -1102,7 +1100,7 @@
           <control type="image">
             <include>PosterThumb</include>
           </control>
-          <include>SmallPanelLabelOverlay</include>
+          <include condition="!Window.IsActive(Home)">SmallPanelLabelOverlay</include>
           <control type="group">
             <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
           </control>
@@ -1127,7 +1125,7 @@
           <control type="image">
             <include>PosterThumb</include>
           </control>
-          <include>SmallPanelLabelOverlay</include>
+          <include condition="!Window.IsActive(Home)">SmallPanelLabelOverlay</include>
           <control type="group">
             <include condition="Skin.HasSetting(CaseOverlays)">PosterOverlay</include>
           </control>
@@ -1162,13 +1160,8 @@
 				<effect type="slide" end="3,-3" time="0"  />
 			</animation>
 		</control>
-        <control type="group">
-			<!--Label Overlay-->
-			<include>SquarePosterLabelOverlay</include>
-            <include>SquarePosterLabelOverlayVisibility</include>
-			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
-            <visible>!StringCompare(ListItem.Label,..)</visible>
-		</control>
+        <!--Label Overlay-->
+        <include condition="!Window.IsActive(Home)">SquarePosterLabelOverlay</include>
     </include>
     
     <include name="SquarePosterPanelLayoutFocus">
@@ -1190,67 +1183,58 @@
 				<effect type="slide" end="3,-3" time="0"  />
 			</animation>
 		</control>
-         <control type="group">
-			<!--Label Overlay-->
-			<include>SquarePosterLabelOverlay</include>
-            <include>SquarePosterLabelOverlayVisibility</include>
-			<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
-            <visible>!StringCompare(ListItem.Label,..)</visible>
-		</control>
+        <!--Label Overlay-->
+        <include condition="!Window.IsActive(Home)">SquarePosterLabelOverlay</include>
+
     </include>
     
     <include name="SquarePosterLabelOverlayVisibility">
-		<visible>
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),enable)] |
-		[Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),enable)] |
-		[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | 
-        [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | 
-        Window.IsActive(Home)
-        </visible>
+		<visible>[Control.IsVisible(509) + Skin.HasSetting(ShowLabelsSquare)] | 
+        [Control.IsVisible(510) + Skin.HasSetting(ShowLabelsSquareDetails)] | Window.IsActive(Home)</visible>
         <visible>![Skin.HasSetting(PreferTvShowThumbWidget) + !IsEmpty(ListItem.Episode) + window.isactive(home)]</visible>
         <visible>!StringCompare(ListItem.Label,..)</visible>
+        <visible>!SubString(ListItem.Thumb,icon.png)</visible>
         <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-        <include condition="!Skin.String(Widgets_DisplayTags,auto)">WidgetTitleOverlayOverride</include>
 	</include>
     
     <include name="SquarePosterLabelOverlay">
-		<control type="image">
-			<bottom>0</bottom>
-			<height>70</height>
-            <bordersize>8</bordersize>
-			<texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
-			<colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
-		</control>
-        <control type="textbox">
-			<left>6%</left>
-			<bottom>10</bottom>
-			<width>88%</width>
-			<height>48</height>
-            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
-			<align>left</align>
-			<label>$VAR[ThumbListDetailsPoster]</label>
-			<font>Reg18</font>
-            <autoscroll>false</autoscroll>
-			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <visible>!StringCompare(System.CurrentControl,ListItem.Label)</visible>
-		</control>
-        <control type="textbox">
-			<left>6%</left>
-            <right>10</right>
-			<bottom>10</bottom>
-			<width>88%</width>
-			<height>48</height>
-            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
-			<align>left</align>
-			<label>$VAR[ThumbListDetailsPoster]</label>
-			<font>Reg18</font>
-            <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
-			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <visible>StringCompare(System.CurrentControl,ListItem.Label)</visible>
-		</control>
+        <control type="group">
+            <include condition="!Window.IsActive(Home)">SquarePosterLabelOverlayVisibility</include>
+            <control type="image">
+                <bottom>0</bottom>
+                <height>70</height>
+                <bordersize>8</bordersize>
+                <texture diffuse="diffuse/poster.png">colors/color_white.png</texture>
+                <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+            </control>
+            <control type="textbox">
+                <left>6%</left>
+                <bottom>10</bottom>
+                <width>88%</width>
+                <height>48</height>
+                <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+                <align>left</align>
+                <label>$VAR[ThumbListDetailsPoster]</label>
+                <font>Reg18</font>
+                <autoscroll>false</autoscroll>
+                <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                <visible>!StringCompare(System.CurrentControl,ListItem.Label)</visible>
+            </control>
+            <control type="textbox">
+                <left>6%</left>
+                <right>10</right>
+                <bottom>10</bottom>
+                <width>88%</width>
+                <height>48</height>
+                <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+                <align>left</align>
+                <label>$VAR[ThumbListDetailsPoster]</label>
+                <font>Reg18</font>
+                <autoscroll delay="2000" time="2000" repeat="500">true</autoscroll>
+                <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+                <visible>StringCompare(System.CurrentControl,ListItem.Label)</visible>
+            </control>
+        </control>
      </include>
     
 	<include name="BannerPlexlayout">
@@ -1291,6 +1275,31 @@
         </control>
 	</include>
     
+    <include name="LandscapeLabelOverlay">
+        <control type="image">
+            <!--Panel Overlay-->
+			<bordersize>8</bordersize>
+            <texture diffuse="home/home_matte2.png">diffuse/home_overlay.png</texture>
+            <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
+            <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+        </control>
+
+        <control type="label">
+            <!--Label with title-->
+            <bottom>8</bottom>
+			<height>33%</height>
+			<left>3%</left>
+			<width>94%</width>
+			<font>Reg38</font>
+            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+            <align>left</align>
+            <aligny>center</aligny>
+            <label>$VAR[ThumbListDetails]</label>
+			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+            <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
+        </control>
+    </include>
+    
     <include name="LandscapeItemLayout">
         <control type="image">
             <!--Panel icon image-->
@@ -1325,28 +1334,7 @@
             <visible>SubString(ListItem.FolderPath,pvr://channels) + !IsEmpty(Listitem.Thumb)</visible>
         </control>
         <include condition="SubString(Window.Property(xmlfile),MyPVR,left)">PVRListItemThumb</include>
-        <control type="image">
-            <!--Panel Overlay-->
-			<bordersize>8</bordersize>
-            <texture diffuse="home/home_matte2.png">diffuse/home_overlay.png</texture>
-            <include>ShowTitleOverlay</include>
-            <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
-        </control>
-
-        <control type="label">
-            <!--Label with title-->
-            <bottom>8</bottom>
-			<height>33%</height>
-			<left>3%</left>
-			<width>94%</width>
-			<font>Reg38</font>
-            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
-            <align>left</align>
-            <aligny>center</aligny>
-            <label>$VAR[ThumbListDetails]</label>
-			<textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
-            <include>ShowTitleOverlay</include>
-        </control>
+        <include condition="!Window.IsActive(Home)">LandscapeLabelOverlay</include>
 		<control type="group">
 			<right>8</right>
 			<top>8</top>
@@ -1407,13 +1395,8 @@
         <include>LandscapeItemLayout</include>
     </include>
 
-	<include name="ShowTitleOverlay">
+	<include name="LandscapeLabelOverlayVisibility">
 		<visible>
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),enable)] |
-		[Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),enable)] |
-        [Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),enable)] |
         [IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(clearlogo)) + ![Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
         [Skin.HasSetting(ShowlabelsLandscape) + [Container.Content(files) | Container.Content(programs) | Container.Content(addons)]] |
 		[!IsEmpty(ListItem.Episode) + !IsEmpty(ListItem.Season) + !Container.Content(seasons) + !StringCompare(ListItem.Label, ListItem.TvshowTitle) + IsEmpty(ListItem.Property(airtime))] |
@@ -1425,14 +1408,6 @@
         <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
         <include condition="Window.IsActive(Home) + !Skin.String(Widgets_DisplayTags,auto)">WidgetTitleOverlayOverride</include>
 	</include>
-    
-    <include name="WidgetTitleOverlayOverride">
-        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,disable) + IsEmpty(ListItem.Property(defaultID))]</visible>
-        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(510) + StringCompare(Container(300).ListItem.Property(widgetTags),disable)]</visible>
-        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(520) + StringCompare(Container(300).ListItem.Property(widgetTags.1),disable)]</visible>
-        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(530) + StringCompare(Container(300).ListItem.Property(widgetTags.2),disable)]</visible>
-        <visible>![Window.IsActive(Home) + Skin.String(Widgets_DisplayTags,override) + IsEmpty(ListItem.Property(defaultID)) + Control.IsVisible(540) + StringCompare(Container(300).ListItem.Property(widgetTags.3),disable)]</visible>
-    </include>
 	
 	<include name="SideBladeViewCommands">
          <control type="button" id="308">
