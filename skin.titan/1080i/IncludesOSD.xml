@@ -1847,7 +1847,6 @@
 				<altclick>Close</altclick>
 				<altclick>RunScript($INFO[Skin.String(LyricScript_iconspath)])</altclick>
 				<usealttexture>!Skin.String(LyricScript_iconspath)</usealttexture>
-				<visible>![Window.IsVisible(AddonSettings) | Window.IsVisible(SelectDialog) | Window.IsVisible(VisualisationPresetList)]</visible>
 				<visible>Player.hasaudio</visible>
 				<visible>System.HasAddon(script.cu.lrclyrics)</visible>
 			</control>
@@ -1859,8 +1858,29 @@
 				<font>-</font>
 				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]Viz.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]Viz.png</texturenofocus>
-				<visible>![Window.IsVisible(AddonSettings) | Window.IsVisible(SelectDialog) | Window.IsVisible(VisualisationPresetList)]</visible>
 				<visible>Player.hasaudio</visible>
+			</control>
+            <control type="button" id="21417">
+				<description> vizualisation settings </description>
+				<width>$PARAM[size]</width>
+				<height>$PARAM[size]</height>
+				<label>$LOCALIZE[250] $LOCALIZE[21417]</label>
+				<font>-</font>
+				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]Settings.png</texturefocus>
+				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]Settings.png</texturenofocus>
+				<visible>Player.hasaudio + Visualisation.Enabled </visible>
+                <onclick>Addon.Default.OpenSettings(xbmc.player.musicviz)</onclick>
+			</control>
+            <control type="button" id="703">
+				<description> vizualisation presets </description>
+				<width>$PARAM[size]</width>
+				<height>$PARAM[size]</height>
+				<label>$LOCALIZE[250] $LOCALIZE[21417]</label>
+				<font>-</font>
+				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]epg.png</texturefocus>
+				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]epg.png</texturenofocus>
+				<visible>Player.hasaudio + Visualisation.Enabled + [StringCompare(Visualisation.Name,milkdrop) | StringCompare(Visualisation.Name,vortex) | Visualisation.HasPresets ]</visible>
+                <onclick>ActivateWindow(122)</onclick>
 			</control>
 			<control type="button" id="806">
 				<description> pvr </description>
@@ -1890,8 +1910,8 @@
 				<height>$PARAM[size]</height>
 				<label>12006</label>
 				<font>-</font>
-				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]epg.png</texturefocus>
-				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]epg.png</texturenofocus>
+				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]TeleText.png</texturefocus>
+				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]TeleText.png</texturenofocus>
 				<visible>!StringCompare(Playlist.Length(music),0) + Player.HasAudio</visible>
                 <onclick>SetProperty(playlistdialog,show,Home)</onclick>
                 <onclick>Dialog.Close(MusicOSD)</onclick>
@@ -2150,6 +2170,7 @@
             <width>128</width>
             <height>128</height>
             <visible>!IsEmpty(Window(Weather).Property(Current.Condition))</visible>
+            <include>HideOsdConditions</include>
 			
             <!--Current Weather-->
             <control type="multiimage">
@@ -2192,11 +2213,12 @@
 	<include name="WeatherInfoOSDSlim">
         <!-- weather info displayed in video OSD and video info changes made for Slim OSD option -->
         <control type="group">
-            <posx>20</posx>
-            <top>220</top>
+            <right>140</right>
+            <bottom>200</bottom>
             <width>128</width>
             <height>128</height>
             <visible>!IsEmpty(Window(Weather).Property(Current.Condition))</visible>
+            <include>HideOsdConditions</include>
 
             <!--Current Weather-->
             <control type="image">
@@ -2241,8 +2263,8 @@
         
         <control type="group">
             <visible>Skin.HasSetting(EnableOSDInfo)</visible>
-            <visible>[[Player.Paused | Window.IsActive(videoosd)] + Skin.HasSetting(OSDShowInfoOnPause)] | Player.ShowInfo</visible>
-            <visible>![Window.IsActive(OSDVideoSettings) | Window.IsActive(OSDAudioSettings) | Window.IsActive(subtitlesearch) | Window.IsActive(sliderdialog)]</visible>
+            <visible>[Player.Paused + Skin.HasSetting(OSDShowInfoOnPause)] | Player.ShowInfo | Window.IsActive(videoosd)</visible>
+            <include>HideOsdConditions</include>
             <include condition="!Skin.HasSetting(EnableOSDInfoLarge)">OSDInfoPanelSmall</include>
             <include condition="Skin.HasSetting(EnableOSDInfoLarge)">OSDInfoPanelLarge</include>
         </control>
@@ -2601,7 +2623,7 @@
                         <height>40</height>
                         <align>left</align>
                         <label>$INFO[ListItem.Title]</label>
-                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                         <font>Reg36</font>
                     </control>
                     <!--Details-->
@@ -2611,7 +2633,7 @@
                         <height>60</height>
                         <align>left</align>
                         <label>$INFO[ListItem.Artist]</label>
-                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                         <font>Light28</font>
                     </control>
                     <control type="image">
@@ -2687,8 +2709,9 @@
      
      <include name="HideOsdConditions">
         <visible>
-            ![Window.IsVisible(PVROSDGuide) | Window.IsVisible(PVROSDTeletext) | Window.IsVisible(PVROSDChannels) | Window.IsVisible(videobookmarks) | Window.IsVisible(sliderdialog) | 
-            Window.IsActive(script.pseudotv.TVOverlay.xml) | Window.IsActive(script.pseudotv.live.TVOverlay.xml) | Window.IsVisible(selectdialog) | Window.IsVisible(MyMusicPlayList.xml)]
+            !Window.IsActive(PVROSDGuide) + !Window.IsActive(PVROSDTeletext) + !Window.IsActive(PVROSDChannels) + !Window.IsActive(videobookmarks) + 
+            !Window.IsActive(sliderdialog) + !Window.IsActive(subtitlesearch) + !Window.IsActive(script.pseudotv.TVOverlay.xml) + !Window.IsActive(osdaudiodspsettings) + 
+            !Window.IsActive(script.pseudotv.live.TVOverlay.xml) + !Window.IsActive(selectdialog) + !Window.IsActive(MyMusicPlayList.xml)
         </visible>
      </include>
     
