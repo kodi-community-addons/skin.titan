@@ -198,37 +198,6 @@
                 <selected>Skin.HasSetting(Widgets_Animation)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, netflix) + !Skin.String(HomeLayout, win10)</visible>
             </control>
-            <!--weather on home-->
-            <control type="radiobutton" id="23021">
-                <include>SkinSettings_Button</include>
-                <label>31030</label>
-                <onclick>Skin.ToggleSetting(WeatherOnHome)</onclick>
-                <selected>Skin.HasSetting(WeatherOnHome)</selected>
-            </control>
-            <!--show profile button on home-->
-            <control type="radiobutton" id="23022">
-                <include>SkinSettings_Button</include>
-                <label>31134</label>
-                <onclick>Skin.ToggleSetting(ShowProfile)</onclick>
-                <selected>Skin.HasSetting(ShowProfile)</selected>
-            </control>
-            <!--custom logo-->
-            <control type="radiobutton" id="23023">
-                <include>SkinSettings_Button</include>
-                <label>31337</label>
-                <onclick condition="!Skin.String(CustomLogoImage)">Skin.SetImage(CustomLogoImage)</onclick>
-                <onclick condition="Skin.String(CustomLogoImage)">Skin.Reset(CustomLogoImage)</onclick>
-                <selected>Skin.String(CustomLogoImage)</selected>
-                <visible>![Skin.HasSetting(WeatherOnHome) | Skin.HasSetting(ShowProfile) | Skin.String(HomeLayout, win10)] | [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
-            </control>
-            <!-- logo alignment-->
-            <control type="button" id="123023">
-                <include>SkinSettings_Button</include>
-                <label>31618</label>
-                <label2>$INFO[Skin.String(LogoImageAlignment)]</label2>
-                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=LogoImageAlignment,header=$LOCALIZE[31618])</onclick>
-                <visible>Skin.String(CustomLogoImage) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
-            </control>
             <!--hide power warning-->
             <control type="label" id="23024">
                 <include>SkinSettings_Button</include>
@@ -1485,12 +1454,6 @@
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=pvrgenretype,header=$LOCALIZE[31676])</onclick>
                 <visible>Skin.HasSetting(ShowEpgGenreColors) + Skin.HasSetting(CustomEPGGenreImages)</visible>
             </control>
-            <control type="radiobutton" id="31700">
-                <include>SkinSettings_Button</include>
-                <label>31700</label>
-                <onclick>Skin.ToggleSetting(Home_RecordingIndicator)</onclick>
-                <selected>Skin.HasSetting(Home_RecordingIndicator)</selected>
-            </control>
             
         </control>
 				
@@ -1767,8 +1730,7 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31209]</label>
                 <onclick>Skin.ToggleSetting(EnableTouchSupport)</onclick>
-                <onclick condition="Skin.String(ClearLogoLocation,footer)">Skin.SetString(ClearLogoLocation.label,Top Center)</onclick>
-                <onclick condition="Skin.String(ClearLogoLocation,footer)">Skin.SetString(ClearLogoLocation,topcenter)</onclick>
+                <onclick>ReloadSkin</onclick>
                 <selected>Skin.HasSetting(EnableTouchSupport)</selected>
             </control>
             <control type="radiobutton" id="5149">
@@ -1783,16 +1745,8 @@
                 <label>$LOCALIZE[31292]</label>
                 <onclick>Skin.ToggleSetting(HideBatteryStatus)</onclick>
                 <selected>Skin.HasSetting(HideBatteryStatus)</selected>
-                <visible>Skin.HasSetting(EnableTouchSupport) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
+                <visible>Skin.HasSetting(EnableTouchSupport) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.HasSetting(CompactHeader)]</visible>
             </control>
-            <control type="radiobutton" id="5139">
-                <include>SkinSettings_Button</include>
-                <label>31099</label>
-                <onclick condition="System.HasAddon(script.artwork.downloader)">Skin.ToggleSetting(EnableArtworkDownloader)</onclick>
-                <onclick condition="!System.HasAddon(script.artwork.downloader)">RunPlugin(plugin://script.artwork.downloader)</onclick>
-                <selected>Skin.HasSetting(EnableArtworkDownloader)</selected>
-            </control>
-
             <control type="radiobutton" id="5144">
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[21398]</label>
@@ -1801,12 +1755,6 @@
                 <selected>Skin.String(AutoStartPlayList)</selected>
             </control>
 
-            <control type="radiobutton" id="5158">
-                <include>SkinSettings_Button</include>
-                <label>31258</label>
-                <onclick>Skin.ToggleSetting(HideWatchedRecentlyAdded)</onclick>
-                <selected>Skin.HasSetting(HideWatchedRecentlyAdded)</selected>
-            </control>
             <control type="radiobutton" id="5159">
                 <description>Kiosk mode</description>
                 <include>SkinSettings_Button</include>
@@ -1814,16 +1762,6 @@
                 <onclick>Skin.ToggleSetting(KioskMode.Enabled)</onclick>
                 <selected>Skin.HasSetting(KioskMode.Enabled)</selected>
             </control>
-            <control type="radiobutton" id="5160">
-                <description>Low performance systems</description>
-                <include>SkinSettings_Button</include>
-                <label>31326</label>
-                <onclick>Skin.ToggleSetting(LowPerformanceMode)</onclick>
-                <onclick>Skin.Reset(SkinHelper.EnableExtraFanart)</onclick>
-                <onclick>Skin.SetString(SkinHelper.ShowInfoAtPlaybackStart,0)</onclick>
-                <selected>Skin.HasSetting(LowPerformanceMode)</selected>
-            </control>
-
             <control type="radiobutton" id="5162">
                 <description>show scrollbars</description>
                 <include>SkinSettings_Button</include>
@@ -1852,35 +1790,6 @@
                 <onclick>Skin.ToggleSetting(NoFooterBarOnHome)</onclick>
                 <selected>Skin.HasSetting(NoFooterBarOnHome)</selected>
                 <visible>!Skin.HasSetting(NoFooterBar)</visible>
-            </control>
-            <!--disable header-->
-            <control type="radiobutton" id="13119">
-                <include>SkinSettings_Button</include>
-                <label>31345</label>
-                <onclick>Skin.ToggleSetting(DisableHeader)</onclick>
-                <selected>Skin.HasSetting(DisableHeader)</selected>
-            </control>
-            <!--compact header-->
-            <control type="radiobutton" id="31671">
-                <include>SkinSettings_Button</include>
-                <label>31671</label>
-                <onclick>Skin.ToggleSetting(CompactHeader)</onclick>
-                <selected>Skin.HasSetting(CompactHeader)</selected>
-            </control>
-            <!--set subheader infoline-->
-            <control type="button" id="31688">
-                <include>SkinSettings_Button</include>
-                <label>31688</label>
-                <label2>$INFO[Skin.String(infoline.label)]</label2>
-                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=infoline,header=$LOCALIZE[31688])</onclick>
-                <visible>!Skin.Hastheme(classic)</visible>
-            </control>
-            <!-- always show weather -->
-            <control type="radiobutton" id="5152">
-                <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31593]</label>
-                <onclick>Skin.ToggleSetting(AlwaysShowWeather)</onclick>
-                <selected>Skin.HasSetting(AlwaysShowWeather)</selected>
             </control>
             <!--LOADING SPINNER-->
             <control type="button" id="5165">
@@ -1932,6 +1841,69 @@
                 <selected>Skin.HasSetting(Home_TransParentTiles)</selected>
                 <visible>Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small) | Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small) | Skin.String(HomeLayout,enhanced)</visible>
             </control>
+            
+            <!-- header settings -->
+            <control type="label" id="31704">
+                <include>SkinSettings_Header</include>
+                <label>31704</label>
+                <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+            </control>
+            <control type="button" id="31702">
+                <include>SkinSettings_Button</include>
+                <label>31702</label>
+                <label2>$INFO[Skin.String(general_header.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=general_header,header=$LOCALIZE[31702])</onclick>
+            </control>
+            <control type="button" id="31703">
+                <include>SkinSettings_Button</include>
+                <label>31703</label>
+                <label2>$INFO[Skin.String(home_header.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=home_header,header=$LOCALIZE[31703])</onclick>
+            </control>
+            
+            <!--compact header-->
+            <control type="radiobutton" id="31671">
+                <include>SkinSettings_Button</include>
+                <label>31671</label>
+                <onclick>Skin.ToggleSetting(CompactHeader)</onclick>
+                <selected>Skin.HasSetting(CompactHeader)</selected>
+            </control>
+            <!--set subheader infoline-->
+            <control type="button" id="31688">
+                <include>SkinSettings_Button</include>
+                <label>31688</label>
+                <label2>$INFO[Skin.String(infoline.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=infoline,header=$LOCALIZE[31688])</onclick>
+                <visible>!Skin.Hastheme(classic)</visible>
+                <visible>SubString(Skin.String(general_header),title) | SubString(Skin.String(home_header),title)</visible>
+            </control>
+            
+            <!--custom logo-->
+            <control type="radiobutton" id="23023">
+                <include>SkinSettings_Button</include>
+                <label>31337</label>
+                <onclick condition="!Skin.String(CustomLogoImage)">Skin.SetImage(CustomLogoImage)</onclick>
+                <onclick condition="Skin.String(CustomLogoImage)">Skin.Reset(CustomLogoImage)</onclick>
+                <selected>Skin.String(CustomLogoImage)</selected>
+                <visible>SubString(Skin.String(general_header),logo) | SubString(Skin.String(home_header),logo)</visible>
+            </control>
+            <!-- logo alignment-->
+            <control type="button" id="123023">
+                <include>SkinSettings_Button</include>
+                <label>31618</label>
+                <label2>$INFO[Skin.String(LogoImageAlignment)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=LogoImageAlignment,header=$LOCALIZE[31618])</onclick>
+                <visible>SubString(Skin.String(home_header),logo) + SubString(Skin.String(HomeLayout),simplever)</visible>
+                <visible>Skin.String(CustomLogoImage)</visible>
+            </control>
+            
+            <control type="radiobutton" id="31700">
+                <include>SkinSettings_Button</include>
+                <label>31700</label>
+                <onclick>Skin.ToggleSetting(Home_RecordingIndicator)</onclick>
+                <selected>Skin.HasSetting(Home_RecordingIndicator)</selected>
+            </control>
+            
             <!-- advanced settings -->
             <control type="label" id="8010">
                 <include>SkinSettings_Header</include>
@@ -1959,7 +1931,29 @@
                 <onclick condition="!Skin.String(GenreImagesPath)">Skin.SetPath(GenreImagesPath)</onclick>
                 <selected>Skin.String(GenreImagesPath)</selected>
             </control>
-
+            
+            <control type="radiobutton" id="5158">
+                <include>SkinSettings_Button</include>
+                <label>31258</label>
+                <onclick>Skin.ToggleSetting(HideWatchedRecentlyAdded)</onclick>
+                <selected>Skin.HasSetting(HideWatchedRecentlyAdded)</selected>
+            </control>
+            <control type="radiobutton" id="5139">
+                <include>SkinSettings_Button</include>
+                <label>31099</label>
+                <onclick condition="System.HasAddon(script.artwork.downloader)">Skin.ToggleSetting(EnableArtworkDownloader)</onclick>
+                <onclick condition="!System.HasAddon(script.artwork.downloader)">RunPlugin(plugin://script.artwork.downloader)</onclick>
+                <selected>Skin.HasSetting(EnableArtworkDownloader)</selected>
+            </control>
+            <control type="radiobutton" id="5160">
+                <description>Low performance systems</description>
+                <include>SkinSettings_Button</include>
+                <label>31326</label>
+                <onclick>Skin.ToggleSetting(LowPerformanceMode)</onclick>
+                <onclick>Skin.Reset(SkinHelper.EnableExtraFanart)</onclick>
+                <onclick>Skin.SetString(SkinHelper.ShowInfoAtPlaybackStart,0)</onclick>
+                <selected>Skin.HasSetting(LowPerformanceMode)</selected>
+            </control>
             <control type="radiobutton" id="8015">
                 <include>SkinSettings_Button</include>
                 <label>31303</label>
@@ -2005,7 +1999,7 @@
                 <label>     ----- $LOCALIZE[31645]</label>
                 <onclick>Skin.ToggleSetting(expandsnow)</onclick>
                 <selected>Skin.HasSetting(expandsnow)</selected>
-                <visible>Skin.HasSetting(enablesnow) + !Skin.HasSetting(DisableHeader) + !Skin.HasSetting(AlwaysShowWeather)</visible>
+                <visible>Skin.HasSetting(enablesnow) + !Skin.String(general_header,disable) + !Skin.HasSetting(AlwaysShowWeather)</visible>
             </control>
             <control type="radiobutton" id="8023">
                 <!-- prefer clearart over landscapes -->
