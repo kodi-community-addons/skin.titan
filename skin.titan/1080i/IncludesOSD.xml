@@ -603,21 +603,6 @@
 				<texture flipx="true">osd/osd_ff.png</texture>
 				<colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
 			</control>
-            <!-- close dialog -->
-            <control type="group">
-                <include>animation_fade_visible_hidden</include>
-                <right>70</right>
-				<posx>1450</posx>
-				<posy>35</posy>
-                <width>60</width>
-                <include condition="Skin.HasSetting(EnableTouchSupport)">close_button</include>
-                <visible>Skin.HasSetting(EnableTouchSupport)</visible>
-				<visible>!Window.IsActive(DialogSubtitles.xml)</visible>
-				<visible>!Window.IsActive(DialogSlider.xml)</visible>
-				<animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
-					<effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
-				</animation>
-            </control>
 
 			<!--Clock-->
             <control type="label">
@@ -1487,6 +1472,24 @@
 	</include>
 	
 	<include name="OSDButtonsModern">
+        
+        <!-- close dialog -->
+        <control type="group">
+            <include>animation_fade_visible_hidden</include>
+            <right>65</right>
+            <bottom>210</bottom>
+            <width>60</width>
+            <height>60</height>
+            <include condition="Skin.HasSetting(EnableTouchSupport)">close_button</include>
+            <visible>Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>!Window.IsActive(DialogSubtitles.xml)</visible>
+            <visible>!Window.IsActive(DialogSlider.xml)</visible>
+            <animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
+                <effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
+            </animation>
+            <animation effect="slide" end="22" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
+        </control>
+        
         <!-- subtitle selection -->
         <control type="grouplist" id="1410">
             <visible>StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
@@ -2257,6 +2260,67 @@
     </include>
     
     <include name="OSDInfoPanelSmall">
+        <!--OSD Info Panel-->
+        <!--Info Stuff-->
+        <control type="group">
+             <!-- background -->
+             <control type="image">
+                 <posx>0</posx>
+                 <posy>0</posy>
+                 <width>100%</width>
+                 <height>250</height>
+                 <texture border="5">diffuse/panel.png</texture>
+                 <colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+             </control>
+             <!-- Plot -->
+             <control type="group">
+                 <posx>0</posx>
+                 <posy>20</posy>
+                 <width>1780</width>
+                 <height>190</height>
+                 <!--logo-->
+                 <control type="image">
+                     <posx>1520</posx>
+                     <posy>20</posy>
+                     <width>356</width>
+                     <height>200</height>
+                     <fadetime>200</fadetime>
+                     <texture background="true">$VAR[OSDInfoImage]</texture>
+                     <aspectratio align="left" aligny="top">keep</aspectratio>
+                     <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                 </control>
+                 <!-- plot when clearlogo visible -->
+                 <control type="textbox">
+                     <posx>38</posx>
+                     <posy>10</posy>
+                     <width>1450</width>
+                     <height>200</height>
+                     <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                     <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
+                     <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+                     <shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+                     <align>justify</align>
+                     <font>Light28</font>
+                 </control>
+                 <!-- plot when clearlogo NOT visible -->
+                 <control type="textbox">
+                     <posx>38</posx>
+                     <posy>10</posy>
+                     <width>1810</width>
+                     <height>190</height>
+                     <visible>![!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
+                     <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
+                     <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+                     <shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+                     <align>justify</align>
+                     <font>Light28</font>
+                 </control>
+             </control>
+         </control>
+     </include> 
+    
+    
+    <include name="OSDInfoPanelSmallOrg">
         <!--OSD Info Panel-->
         <!--Info Stuff-->
         <control type="group">

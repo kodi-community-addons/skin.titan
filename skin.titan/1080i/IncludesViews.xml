@@ -20,10 +20,8 @@
         
         <!-- footer bar (in back) -->
         <control type="group">
-            <visible>!Control.IsVisible(519) + !Control.IsVisible(520)</visible>
-            <visible>![Control.IsVisible(507) | Control.IsVisible(513) | Control.IsVisible(514)]</visible>
+            <visible>![Control.IsVisible(507) | Control.IsVisible(513) | Control.IsVisible(514) | Control.IsVisible(519) | Control.IsVisible(520)]</visible>
             <include condition="!skin.hassetting(nofooterbar)">Footer</include>
-            <include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
         </control>
         
         <!-- the views -->
@@ -75,10 +73,15 @@
         <control type="group">
             <visible>Control.IsVisible(507) | Control.IsVisible(513) | Control.IsVisible(514)</visible>
             <include condition="!skin.hassetting(nofooterbar)">Footer</include>
-            <include condition="Skin.String(ClearLogoLocation)">ClearLogo</include>
         </control>
         
-         <!--Scrolling Letter-->
+        <!-- clearlogo -->
+        <control type="group">
+            <visible>![Control.IsVisible(519) | Control.IsVisible(520)]</visible>
+            <include condition="Skin.String(ClearLogoLocation) + ![skin.hassetting(nofooterbar) + Skin.String(ClearLogoLocation,footer)]">ClearLogo</include>
+        </control>
+        
+        <!--Scrolling Letter-->
         <control type="image">
             <visible>Container.Scrolling + [StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])]</visible>
             <posx>910</posx>
@@ -1913,8 +1916,8 @@
     </include>
     
     <include name="mediaflags_large_layout">
-		<width>135</width>
-		<height>90</height>
+		<width>125</width>
+		<height>80</height>
 		<aspectratio alignx="center" aligny="center">keep</aspectratio>
         <include condition="!window.isactive(fullscreenvideo) + !Skin.String(mediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
         <include condition="window.isactive(fullscreenvideo) + !Skin.String(osdmediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
@@ -1975,7 +1978,7 @@
             <control type="image">
                 <include>mediaflags_large_layout</include>
                 <texture fallback="flags/flags_large/mpaa/NR.png">$VAR[mediaflags_large_rating]</texture>
-                <visible>!IsEmpty(ListItem.MPAA) + ![Skin.HasSetting(EnableTouchSupport) + Skin.String(mediaflagsstyle,large_color)]</visible>
+                <visible>!IsEmpty(ListItem.MPAA) + ![Skin.HasSetting(EnableTouchSupport) + Skin.String(mediaflagsstyle,large_color) + !Skin.HasSetting(CompactHeader)]</visible>
             </control>
             <include>mediaflags_sets</include>
         </control>
