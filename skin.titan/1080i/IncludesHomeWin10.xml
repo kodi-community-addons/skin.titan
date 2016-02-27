@@ -403,6 +403,10 @@
         </control>
 
 		<!--Side Menu-->
+        <include>SideBladeMainMenu</include>
+    </include>
+    
+    <include name="SideBladeMainMenu">
         <control type="group" id="9001">
             <posx>-660</posx>
 			<posy>0</posy>
@@ -440,7 +444,7 @@
             </control>
 
             <!-- menu button -->
-            <control type="button">
+            <control type="button" id="1">
                 <label></label>
                 <posx>40</posx>
                 <top>20</top>
@@ -448,12 +452,32 @@
                 <width>60</width>
                 <height>60</height>
                 <font>-</font>
+                <onright>2</onright>
+                <ondown>300</ondown>
+                <onup>300</onup>
                 <texturefocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/menu.png</texturefocus>
                 <texturenofocus colordiffuse="$INFO[Skin.String(SideBladeTextColor)]">common/menu.png</texturenofocus>
                 <onclick>ClearProperty(ShowViewSubMenu, Home)</onclick>
                 <onclick>SetFocus(9000)</onclick>
                 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
             </control>
+            
+            <control type="button" id="2">
+				<description>powerbutton</description>
+				<posx>115</posx>
+				<top>25</top>
+				<width>50</width>
+				<height>50</height>
+				<onup>300</onup>
+                <ondown>300</ondown>
+				<onleft>1</onleft>
+				<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">common/shutdown2.png</texturefocus>
+				<texturenofocus colordiffuse="white">common/shutdown2.png</texturenofocus>
+				<onclick>ActivateWindow(111)</onclick>
+				<visible>!Skin.HasSetting(DisablePowerMenu)</visible>
+                <visible allowhiddenfocus="true">!Skin.HasSetting(HidePowerMenu)</visible>
+				<include>animation_fade_visible_hidden</include>		
+			</control>
 
             <!--main menu 300-->
 			<control type="list" id="300">
@@ -468,7 +492,7 @@
 				<onleft>ClearProperty(ShowViewSubMenu, Home)</onleft>
 				<onback>ClearProperty(ShowViewSubMenu, Home)</onback>
 				<onback>9000</onback>
-				<onup>300</onup>
+				<onup>1</onup>
 				<ondown condition="Skin.HasSetting(DisablePowerMenu)">300</ondown>
 				<ondown condition="!Skin.HasSetting(DisablePowerMenu)">2</ondown>
 				<orientation>vertical</orientation>
@@ -503,6 +527,7 @@
 				<content><include>skinshortcuts-mainmenu</include></content>
 			</control>
         </control>
+    
     </include>
     
 	<include name="HomeWin10WidgetPosFull">

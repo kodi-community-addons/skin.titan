@@ -15,6 +15,7 @@
     <onunload>ClearProperty(submenu)</onunload>
     <onunload>ClearProperty(ShowWidget)</onunload>
     <onunload>ClearProperty(ShowViewSubMenu)</onunload>
+    <onunload>ClearProperty(SkinHelper.WidgetContainer)</onunload>
     <menucontrol>300</menucontrol>
 	<controls>
 	
@@ -26,8 +27,9 @@
             <include name="WidgetsAutoRotate" condition="Skin.String(widgets_rotate) + !Skin.String(widgets_rotate,disabled)">
                 <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
             </include>
-            <onfocus condition="Skin.String(HomeLayout, netflix) | Skin.String(HomeLayout, win10)">SetFocus(9000)</onfocus>
-            <onfocus condition="!Skin.String(HomeLayout, netflix) + !Skin.String(HomeLayout, win10)">SetFocus(300)</onfocus>
+            <onfocus condition="SubString(Skin.String(HomeLayout), netflix) | Skin.String(HomeLayout, win10)">SetFocus(9000)</onfocus>
+            <onfocus condition="!SubString(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)">SetFocus(300)</onfocus>
+            <onfocus condition="Control.IsVisible(510)">SetProperty(SkinHelper.WidgetContainer,510)</onfocus>
             <onfocus>SetProperty(HomeFirstLoadDone,done)</onfocus>
 			<texturenofocus>-</texturenofocus>
 			<texturefocus>-</texturefocus>
@@ -62,10 +64,11 @@
         <include condition="Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)">VerticalHome</include>
         <include condition="Skin.String(HomeLayout, enhanced)">EnhancedHome</include>
         <include condition="Skin.String(HomeLayout, netflix)">HomeNetflix</include>
+        <include condition="Skin.String(HomeLayout, netflix2)">HomeNetflix2</include>
         <include condition="Skin.String(HomeLayout, win10)">HomeWin10</include>
 		
         <!-- Header -->
-		<include>Header</include>
+		<include condition="!Skin.String(HomeLayout, netflix2)">Header</include>
         
         <!--NowPlaying-->
 		<include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
