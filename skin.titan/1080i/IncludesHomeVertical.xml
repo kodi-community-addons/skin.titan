@@ -490,6 +490,11 @@
                         <label>[B]$INFO[ListItem.Label][/B]</label>
                         <scroll>true</scroll>
                     </control>
+                    <control type="button">
+                        <label>-</label>
+                        <visible>false</visible>
+                        <onfocus>SetProperty(submenu,show,home)</onfocus>
+                    </control>
 				</focusedlayout>
 				<content>
                     <include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
@@ -702,8 +707,8 @@
 					<animation effect="slide" time="150" tween="cubic" easing="inout" start="0" end="0,336" condition="Container(300).Position(9) + [StringCompare(Container(4444).NumItems,12)]">Conditional</animation>
 					<animation effect="slide" time="150" tween="cubic" easing="inout" start="0" end="0,264" condition="Container(300).Position(9) + [StringCompare(Container(4444).NumItems,13)]">Conditional</animation>
 					<animation effect="slide" time="150" tween="cubic" easing="inout" start="0" end="0,192" condition="Container(300).Position(9) + [StringCompare(Container(4444).NumItems,14)]">Conditional</animation>
-					<animation effect="slide" time="150" start="0" end="818" condition="Control.HasFocus(4444)">Conditional</animation>
-					<animation effect="fade" start="0" end="100" time="50" delay="250" condition="Control.HasFocus(4444)">Conditional</animation>
+					<animation effect="slide" time="150" start="0" end="818" condition="Control.HasFocus(4444) | SubString(Window(Home).Property(submenu),show)">Conditional</animation>
+					<animation effect="fade" start="0" end="100" time="50" delay="250" condition="Control.HasFocus(4444) | SubString(Window(Home).Property(submenu),show)">Conditional</animation>
 					<left>-384</left>
 					<top>0</top>
 					<width>384</width>
@@ -711,6 +716,9 @@
 					<onup>4444</onup>
 					<ondown>4444</ondown>
 					<onleft>300</onleft>
+                    <onback>ClearProperty(submenu, Home)</onback>
+                    <onleft>ClearProperty(submenu, Home)</onleft>
+                    <onright>ClearProperty(submenu, Home)</onright>
 					<onright>77777</onright>
 					<onback>300</onback>
 					<pagecontrol>-</pagecontrol>
@@ -740,7 +748,7 @@
                             <!-- focus sub menu -->
                             <texture>colors/color_white.png</texture>
                             <colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-                            <visible>Control.HasFocus(4444)</visible>
+                            <visible>Control.HasFocus(4444) | SubString(Window(Home).Property(submenu),show)</visible>
                         </control>
                         <control type="label">
                             <width>94%</width>
@@ -752,6 +760,11 @@
                             <aligny>center</aligny>
                             <scroll>true</scroll>
                             <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+                        </control>
+                        <control type="button">
+                            <label>-</label>
+                            <visible>false</visible>
+                            <onfocus>SetProperty(submenu,show,home)</onfocus>
                         </control>
                     </focusedlayout>
                     <content>
