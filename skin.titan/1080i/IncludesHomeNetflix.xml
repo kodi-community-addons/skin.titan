@@ -191,6 +191,7 @@
             <include condition="Window.IsActive(Home)">skinshortcuts-group-netflixmenu</include>
             <include condition="Window.IsActive(3017)">netflix_items_tvshows</include>
             <include condition="Window.IsActive(3018)">netflix_items_movies</include>
+            <include condition="Window.IsActive(3019)">netflix_items_flix2kodi</include>
         </content>
         </control>
         
@@ -481,7 +482,33 @@
 		
 		<!--Side Menu-->
         <include condition="Window.IsActive(Home)">SideBladeMainMenu</include>
-    
+        
+        <!-- busy spinner overlay -->
+        <control type="group">
+            <include>DialogOverlayExtra</include>
+            <visible>Container(510).IsUpdating</visible>
+            <control type="group">
+                <posx>960</posx>
+                <!--Center-->
+                <posy>540</posy>
+                <!--Center-->
+                <control type="multiimage">
+                    <animation effect="fade" start="0" end="100" time="0">Visible</animation>
+                    <animation effect="fade" start="100" end="0" time="500" delay="500">Hidden</animation>
+                    <posx>-75</posx>
+                    <posy>-75</posy>
+                    <width>150</width>
+                    <height>150</height>
+                    <aspectratio>keep</aspectratio>
+                    <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
+                    <timeperimage>100</timeperimage>
+                    <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
+                    <fadetime>0</fadetime>
+                    <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
+                </control>
+            </control>
+        </control>
+        
     </include>
     
     <include name="widgetlayout_netflix">
@@ -998,6 +1025,63 @@
         <item>
 			<label>342</label>
 			<property name="list">videodb://movies/titles/</property>
+			<onclick>noop</onclick>
+		</item>
+    </include>
+    <include name="netflix_items_flix2kodi">
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.mylist.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.mylist.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.inprogress.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.inprogress.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.recommended.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.recommended.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.recent.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.recent.content)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.trending.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.trending.content)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.0.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.0.content)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.1.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.1.content)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.2.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.2.content)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.3.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.3.content)]</property>
+			<onclick>noop</onclick>
+		</item>
+        <item>
+			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.4.title)]</label>
+			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.4.content)]</property>
 			<onclick>noop</onclick>
 		</item>
     </include>
