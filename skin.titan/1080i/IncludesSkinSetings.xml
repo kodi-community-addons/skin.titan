@@ -43,22 +43,14 @@
                 <param name="label" value="--- $LOCALIZE[31595]" />
                 <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)" />
                 <param name="action2" value="SetProperty(netflixmenu, active, Home)" />
-                <param name="visible" value="Skin.String(HomeLayout, netflix)" />
+                <param name="visible" value="SubString(Skin.String(HomeLayout), netflix)" />
             </include>
-            <!--disable fanart on netflix home-->
-            <control type="radiobutton" id="23603">
-                <include>SkinSettings_Button</include>
-                <label>--- $LOCALIZE[31268]</label>
-                <onclick>Skin.ToggleSetting(NetflixHomeDisableFanArt)</onclick>
-                <selected>Skin.HasSetting(NetflixHomeDisableFanArt)</selected>
-                <visible>Skin.String(HomeLayout, netflix)</visible>
-            </control>
             <!--disable top row on netflix home-->
             <control type="radiobutton" id="23604">
                 <include>SkinSettings_Button</include>
                 <label>--- $LOCALIZE[31639]</label>
                 <onclick>Skin.ToggleSetting(NetflixHomeDisableFirstRow)</onclick>
-                <visible>Skin.String(HomeLayout, netflix)</visible>
+                <visible>SubString(Skin.String(HomeLayout), netflix)</visible>
                 <selected>Skin.HasSetting(NetflixHomeDisableFirstRow)</selected>
             </control>
             <!-- advanced widgets on vertical home -->
@@ -562,6 +554,7 @@
                 <label>31632</label>
                 <label2>$INFO[Skin.String(mediaflagsstyle.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=mediaflagsstyle,header=$LOCALIZE[31632])</onclick>
+                <visible>!Skin.HasTheme(classic)</visible>
             </control>
             
             <include name="SkinSettings_ActionButton">
@@ -638,6 +631,7 @@
                 <onclick condition="Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,false)</onclick>
                 <onclick condition="!Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,true)</onclick>
                 <selected>Skin.String(actorthumbslookup,true)</selected>
+                <visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
                 <visible>Skin.String(videoinfo_castaction,extendedinfo)</visible>
             </control>
             <!-- trailer behaviour in videoinfo -->
@@ -648,12 +642,20 @@
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=videoinfo_traileraction,header=$LOCALIZE[31694])</onclick>
                 <visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
             </control>
+            <control type="radiobutton" id="31674">
+                <!-- hide filename in videoinfo -->
+                <description></description>
+                <include>SkinSettings_Button</include>
+                <label>31674</label>
+                <onclick>Skin.ToggleSetting(DialogVideoInfo_HideFileName)</onclick>
+                <selected>Skin.HasSetting(DialogVideoInfo_HideFileName)</selected>
+            </control>
             <!-- Select which buttons to show in videoinfo -->
             <include name="SkinSettings_ActionButton">
                 <param name="id" value="31695" />
                 <param name="label" value="31695" />
                 <param name="action" value="RunScript(script.skin.helper.service,action=setskinsetting,setting=videoinfo_buttons,header=$LOCALIZE[31695])" />
-                <param name="visible" value="true" />
+                <param name="visible" value="!Skin.HasSetting(UseExtendedInfoDialog)" />
             </include>
             
             <!-- watched indicators -->
@@ -2050,14 +2052,6 @@
                 <label>31656</label>
                 <onclick>Skin.ToggleSetting(DialogYesNo_FocusNO)</onclick>
                 <selected>Skin.HasSetting(DialogYesNo_FocusNO)</selected>
-            </control>
-            <control type="radiobutton" id="31674">
-                <!-- hide filename in videoinfo -->
-                <description></description>
-                <include>SkinSettings_Button</include>
-                <label>31674</label>
-                <onclick>Skin.ToggleSetting(DialogVideoInfo_HideFileName)</onclick>
-                <selected>Skin.HasSetting(DialogVideoInfo_HideFileName)</selected>
             </control>
         </control>
 

@@ -2,18 +2,7 @@
 <!--Titan-->
 <includes>
     <include name="Header">
-    
-        <!-- touchscreen workaround for windows tablets -->
-		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchScreenWorkaround</include>
-        
-        <!-- Snow Effect Expansion -->
-		<control type="group">
-            <include condition="Skin.HasSetting(enablesnow) + Skin.HasSetting(expandsnow)">snow</include>
-		</control>
-        
-        <!--ClearLogo -->
-        <include>ClearLogo</include>
-        
+     
         <!-- Header Normal -->
         <control type="group">
             <visible>!Skin.HasSetting(CompactHeader)</visible>
@@ -159,7 +148,7 @@
                 <include>WeatherInfoCompact</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible_hidden</include>
                 <visible>![Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml) | Control.IsVisible(881)]</visible>
-                <animation type="slide" end="-180,0" time="400" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)">Conditional</animation>
+                <animation effect="slide" end="-180,0" time="400" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)">Conditional</animation>
                 <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weather)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weather)]</visible>
             </control>           
         </control>
@@ -198,7 +187,7 @@
             <onclick condition="StringCompare(Window(Home).Property(ShowWidget),show)">Control.SetFocus(300)</onclick>
             <onclick condition="!StringCompare(Window(Home).Property(ShowWidget),show)">SetProperty(ShowWidget, show, Home)</onclick>
             <onclick condition="StringCompare(Window(Home).Property(ShowWidget),show)">ClearProperty(ShowWidget, Home)</onclick>
-            <visible>Window.IsActive(Home)</visible>
+            <visible>Window.IsActive(Home) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,2) | Skin.String(HomeLayout,1small) | Skin.String(HomeLayout,2small) | SubString(Skin.String(HomeLayout),hor)]</visible>
             <visible>!IsEmpty(Container(300).ListItem.Property(widget))</visible>
         </control>
         <control type="radiobutton" id="99224">
@@ -354,6 +343,7 @@
 			<visible>!IsEmpty(Control.GetLabel(884)) + Skin.String(ClearLogoLocation, footer) + !skin.hastheme(classic) + !StringCompare(Window(Home).Property(showinfopanel),show)</visible>
             <animation effect="slide" start="0,0" end="150,0" time="0" condition="[Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)] + ![Skin.HasSetting(StudioInFooter) + Skin.HasSetting(IMDBRatingInFooter)]">Conditional</animation>
             <animation effect="slide" start="0,0" end="60,0" time="0" condition="[Skin.HasSetting(StudioInFooter) + Skin.HasSetting(IMDBRatingInFooter)]">Conditional</animation>
+            <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Top250)">Conditional</animation>
         </control>
 		
 	</include>

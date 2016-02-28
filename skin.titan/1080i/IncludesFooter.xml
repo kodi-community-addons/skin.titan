@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Titan-->
 <includes>
-    
-    <include condition="FooterAltPos">
-        <bottom>17%</bottom>
-        <height>84</height>
-    </include>
 	
 	<!-- Footer -->
 	<include name="Footer">
@@ -92,10 +87,61 @@
         <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
     </include>
     
+    <include name="ImdbTop250">
+        <!-- IMDB Top 250 -->
+        <control type="group">
+            <height>70</height>
+            <width>85</width>
+            <control type="image">
+                <height>70</height>
+                <width>84</width>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>black</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <height>70</height>
+                <width>85</width>
+                <bordersize>2</bordersize>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>darkgrey</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <!--imdb logo-->
+                <top>0</top>
+                <width>84</width>
+                <height>40</height>
+                <bordersize>2</bordersize>
+                <texture>flags/imdb_logo_250.png</texture>
+            </control>
+            <control type="label">
+                <!--Rating modern-->
+                <top>38</top>
+                <width>84</width>
+                <height>30</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>flags</font>
+                <textcolor>white</textcolor>
+                <label>$INFO[ListItem.Top250]</label>
+            </control>
+        </control>
+    </include>
+    
     <include name="AltRatingFooter">
         <!--Rating + Studio-->
 			<control type="group">
 				<visible>[Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter)]</visible>
+                <!-- IMDB Top 250 -->
+                <control type="group">
+                    <height>70</height>
+                    <width>85</width>
+                    <bottom>15</bottom>
+                    <right>50</right>
+                    <include>ImdbTop250</include>
+                    <visible>!IsEmpty(ListItem.Top250)</visible>
+                </control>
 				<control type="image">
 					<!--studio logo -->
 					<right>50</right>
@@ -106,13 +152,15 @@
 					<fadetime>250</fadetime>
 					<include condition="!Skin.HasSetting(PreferColorStudioLogos) + !Skin.String(SkinHelper.StudioImagesPath)">footerColorDiffuse</include>
 					<bordersize>2</bordersize>
-					<texture>$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
+					<texture>$VAR[studiologo]</texture>
                     <visible>Skin.HasSetting(StudioInFooter)</visible>
                     <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Rating) + Skin.HasSetting(IMDBRatingInFooter)">Conditional</animation>
+                    <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Top250)">Conditional</animation>
 				</control>
                 <!-- IMDB rating -->
                 <control type="group">
                     <visible>!IsEmpty(ListItem.Rating) + Skin.HasSetting(IMDBRatingInFooter)</visible>
+                    <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Top250)">Conditional</animation>
                     <control type="image">
                         <right>50</right>
                         <height>70</height>
