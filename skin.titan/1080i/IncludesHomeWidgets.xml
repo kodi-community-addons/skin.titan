@@ -21,10 +21,10 @@
             <visible>!SubString(Control.GetLabel(17888),box) + !IsEmpty(Window(home).property(HomeFirstLoadDone))</visible>
             <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
             <animation type="Visible">
-                <effect type="slide" start="0,0" end="0,1000" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,1000" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <animation type="Hidden">
-                <effect type="slide" start="0,1000" end="0,0" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,1000" end="0,0" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
      			<control type="image">
 				<posx>0</posx>
@@ -68,7 +68,8 @@
 			<scrollout>true</scrollout>
 			<pauseatend>0</pauseatend>
 			<visible>IsEmpty(Control.GetLabel(8821)) + !Skin.HasSetting(EnableTouchSupport)</visible>
-			<animation time="400" effect="fade" delay="1000">Visible</animation>
+            <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
+			<animation time="300" effect="fade" delay="500">Visible</animation>
 			<animation time="0" effect="fade" delay="0">Hidden</animation>
         </control>
 		
@@ -127,9 +128,10 @@
             <height>160</height>
             <aspectratio align="center" aligny="bottom">keep</aspectratio>
             <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-            <visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
-            <animation time="400" effect="fade" delay="1000">Visible</animation>
-            <animation time="0" effect="fade" delay="0">Hidden</animation>
+            <visible>Control.IsVisible(77551) + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
+			<animation time="300" effect="fade" delay="500">Visible</animation>
+			<animation time="0" effect="fade" delay="0">Hidden</animation>
             <animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
             <visible>!Skin.String(widgetstyle, poster)</visible>
         </control>
@@ -140,9 +142,10 @@
             <height>110</height>
             <aspectratio align="center" aligny="bottom">keep</aspectratio>
             <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-            <visible>ControlGroup(77777).HasFocus + !Skin.HasSetting(EnableTouchSupport)</visible>
-            <animation time="400" effect="fade" delay="1000">Visible</animation>
-            <animation time="0" effect="fade" delay="0">Hidden</animation>
+            <visible>Control.IsVisible(77551) + !Skin.HasSetting(EnableTouchSupport)</visible>
+            <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
+			<animation time="300" effect="fade" delay="500">Visible</animation>
+			<animation time="0" effect="fade" delay="0">Hidden</animation>
             <animation effect="slide" end="0,-25" time="0" condition="skin.hastheme(classic)">Conditional</animation>
             <visible>Skin.String(widgetstyle, poster)</visible>
         </control>
@@ -168,23 +171,23 @@
                 <top>430</top>
                 <include>changeWidgetButton</include>
                 <visible>!SubString(Control.GetLabel(17888),box)</visible>
-                <visible allowhiddenfocus="true">ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show)</visible>
+                <visible allowhiddenfocus="true">Control.IsVisible(77551) | StringCompare(Window(Home).Property(ShowWidget),show)</visible>
             </control>
             <!-- hide to top when no focus on widget and autoshow widget disabled -->
             <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
-                <effect type="slide" start="0,0" end="0,-1000" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,-1000" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <!-- show widget at default position if widget focused -->
             <animation type="Conditional" condition="!Skin.HasSetting(AutoShowWidgets) + StringCompare(Window(Home).Property(ShowWidget),show)">
-                <effect type="slide" start="0,-1000" end="0,0" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,-1000" end="0,0" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <!-- show widget at top of screen when 2 rows titan tiles or 1 row not lowered -->
             <animation type="Conditional" condition="[SubString(Skin.String(HomeLayout), 2) | [SubString(Skin.String(HomeLayout), 1) + !Skin.HasSetting(LowerWidgets)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
-                <effect type="slide" start="0,0" end="0,-350" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,-350" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <!-- show widget above tiles when 1 row lowered - if not poster style widget -->
             <animation type="Conditional" condition="SubString(Skin.String(HomeLayout), 1) + Skin.HasSetting(AutoShowWidgets) + Skin.HasSetting(LowerWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + !StringCompare(Control.GetLabel(17888),poster)">
-                <effect type="slide" start="0,0" end="0,-100" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,-100" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <!-- slide widget up for single and wide box widgets (titan tiles home) -->
             <animation type="Conditional" condition="[SubString(Skin.String(HomeLayout), 1) | SubString(Skin.String(HomeLayout), 2)] + SubString(Control.GetLabel(17888),box)">
@@ -196,20 +199,20 @@
             </animation>
             <!-- slide box widget up for hor. home -->
             <animation type="Conditional" condition="Skin.String(HomeLayout, simplehor) + SubString(Control.GetLabel(17888),box)">
-                <effect type="slide" start="0,0" end="0,-300" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,-300" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <!-- show widget above menu when big horizontal home -->
             <animation type="Conditional" condition="Skin.String(HomeLayout, lowhorizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + SubString(Control.GetLabel(17888),landscape)">
-                <effect type="slide" start="0,0" end="0,150" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,150" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <animation type="Conditional" condition="Skin.String(HomeLayout, lowhorizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + SubString(Control.GetLabel(17888),small)">
-                <effect type="slide" start="0,0" end="0,120" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,120" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <animation type="Conditional" condition="Skin.String(HomeLayout, lowhorizontal) + SubString(Control.GetLabel(17888),box)">
                 <effect type="slide" start="0,0" end="0,-200" time="0" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <animation type="Conditional" condition="Skin.String(HomeLayout, lowhorizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show) + SubString(Control.GetLabel(17888),square)">
-                <effect type="slide" start="0,0" end="0,100" time="400" tween="cubic" easing="inout" delay="0"/>
+                <effect type="slide" start="0,0" end="0,100" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             
             <include>skinshortcuts-template-widget</include>
@@ -1180,12 +1183,12 @@
         <!-- vertical slide if not enough rows -->
         <animation effect="slide" start="0" end="0,380" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
         <!--slide widgets to right if not enough items -->
-        <animation effect="slide" start="0" end="261" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="261" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="261" time="0" condition="Control.IsVisible($PARAM[widgetid]) +  !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
-		<animation effect="slide" start="0" end="261" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
-		<animation effect="slide" start="0" end="261" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
-		<animation effect="slide" start="0" end="261" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
+        <animation effect="slide" start="0" end="261" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="261" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="261" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) +  !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
+		<animation effect="slide" start="0" end="261" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
+		<animation effect="slide" start="0" end="261" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="261" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
         <itemlayout height="380" width="261">
           <control type="group">
             <width>250</width>
@@ -1263,15 +1266,15 @@
         <animation effect="slide" start="0" end="0,253" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,12) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
         
         <!--slide widgets to right if not enough items -->
-        <animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,9) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,8) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,7) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6)">Conditional</animation>
-        <animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5)">Conditional</animation>
-        <animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
-		<animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
-		<animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
-		<animation effect="slide" start="0" end="182" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
+        <animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,9) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,8) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,7) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6)">Conditional</animation>
+        <animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5)">Conditional</animation>
+        <animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
+		<animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
+		<animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="182" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
         
         <itemlayout height="253" width="182">
           <control type="group">
@@ -1346,12 +1349,12 @@
         <animation effect="slide" start="0" end="0,263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
         <animation effect="slide" start="0" end="0,263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,10) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
         <!--slide widgets to right if not enough items -->
-        <animation effect="slide" start="0" end="263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Control.IsVisible($PARAM[widgetid]) +  !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
-		<animation effect="slide" start="0" end="263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
-		<animation effect="slide" start="0" end="263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
-		<animation effect="slide" start="0" end="263" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
+        <animation effect="slide" start="0" end="263" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="263" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+        <animation effect="slide" start="0" end="263" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) +  !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
+		<animation effect="slide" start="0" end="263" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
+		<animation effect="slide" start="0" end="263" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="263" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
         <itemlayout height="263" width="263">
           <control type="group">
                 <width>240</width>
@@ -1426,13 +1429,13 @@
         <include condition="![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">widget_layout_horizontal_landscape</include>
         <include>widget_layout_general</include>
         <!-- vertical slide if not enough rows -->
-        <animation effect="slide" start="0" end="0,210" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="0,210" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="0,210" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="0,210" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + [Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
         <!--slide widgets to right if not enough items -->
-        <animation effect="slide" start="0" end="366" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-		<animation effect="slide" start="0" end="366" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
-		<animation effect="slide" start="0" end="366" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
-		<animation effect="slide" start="0" end="366" time="0" condition="Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
+        <animation effect="slide" start="0" end="366" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+		<animation effect="slide" start="0" end="366" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)]">Conditional</animation>
+		<animation effect="slide" start="0" end="366" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
+		<animation effect="slide" start="0" end="366" time="0" condition="!SubString(Skin.String(HomeLayout), netflix) + Control.IsVisible($PARAM[widgetid]) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
         <itemlayout width="366" height="210">
 			<control type="group">
                 <width>354</width>

@@ -52,7 +52,8 @@
             <!-- sub menu -->
             <control type="list" id="4444">
 			  <animation effect="fade" time="200" start="100" end="25" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
-			  <visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
+			  <animation effect="fade" time="200" start="100" end="0" reversible="true" condition="!Control.HasFocus(4444) + !Skin.HasSetting(AutoShowSubmenu)">Conditional</animation>
+              <visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 			  <posx>0</posx>
 			  <width>1920</width>
 			  <posy>803</posy>
@@ -153,9 +154,25 @@
 			</control>
 		  </control>
           <!--Footer-->
-            <include condition="!skin.hassetting(nofooterbar)">Footer</include>
+          <include condition="!skin.hassetting(nofooterbar)">Footer</include>
           <!-- Power button -->
-          <include condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">PowerButton</include>
+          <control type="button" id="2">
+            <description>powerbutton</description>
+            <posx>930</posx>
+            <bottom>5</bottom>
+            <width>60</width>
+            <height>60</height>
+            <onup>300</onup>
+            <onright>300</onright>
+            <onleft>300</onleft>
+            <texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">common/shutdown2.png</texturefocus>
+            <texturenofocus colordiffuse="white">common/shutdown2.png</texturenofocus>
+            <onclick>ActivateWindow(111)</onclick>
+            <onfocus>ActivateWindow(111)</onfocus>
+            <include>animation_fade_visible_hidden</include>
+            <visible>!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)</visible>
+            <visible allowhiddenfocus="true">![!IsEmpty(Container(300).ListItem.Property(infoline)) + !StringCompare(Container(300).ListItem.Property(infoline),disabled)] + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(HidePowerMenu)</visible>
+        </control>
 		</control>
 	</include>
     <include name="HomeSimpleHorizontalNormal">
@@ -290,7 +307,7 @@
             
             <!-- submenu -->
             <control type="group" id="9001">
-				<animation effect="fade" start="100" end="0" time="200" condition="[system.getbool(lookandfeel.enablerssfeeds) + !Control.HasFocus(4444)] | [!IsEmpty(Container(300).ListItem.Property(infoline)) + !Control.HasFocus(4444)]">Conditional</animation>
+				<animation effect="fade" start="100" end="0" time="200" condition="[system.getbool(lookandfeel.enablerssfeeds) + !Control.HasFocus(4444) + !Skin.HasSetting(AutoShowSubmenu)] | [!IsEmpty(Container(300).ListItem.Property(infoline)) + !Control.HasFocus(4444)] | [!Skin.HasSetting(AutoShowSubmenu) + !Control.HasFocus(4444)]">Conditional</animation>
                 <animation effect="fade" start="100" end="50" time="300" condition="!Control.HasFocus(4444)">conditional</animation>
                 <control type="fixedlist" id="4444">
 					<include>animation_fade_visible_hidden</include>
@@ -378,6 +395,7 @@
                 <visible>System.getbool(lookandfeel.enablerssfeeds)</visible>
                 <visible>!Window.IsVisible(DialogButtonMenu.xml)</visible>
                 <visible>!Control.HasFocus(4444) + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
+                <visible>![Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)]</visible>
             </control>
             <!--infoline-->
             <control type="label">	
