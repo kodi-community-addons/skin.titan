@@ -8,21 +8,6 @@
             <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !Skin.HasSetting(VerticalHomeInlineSubmenu)">
                 <effect type="fade" start="100" end="20" time="150" delay="0" tween="cubic" easing="inout" />
             </animation>
-            <!-- slide when widget has focus -->
-            <animation type="Conditional" condition="ControlGroup(77777).HasFocus() + !Skin.HasSetting(VerticalHomeMultiWidget)">
-                <effect type="slide" start="0" end="35" time="150" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            
-            <!-- logo -->
-            <control type="image">
-                <left>-20</left>
-                <posy>0</posy>
-                <height>200</height>
-                <width>565</width>
-                <aspectratio align="center">keep</aspectratio>
-                <texture>$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-                <visible>ControlGroup(77777).HasFocus() + !Skin.HasSetting(VerticalHomeMultiWidget)</visible>
-            </control>
             
             <!-- infopanel -->
             <control type="group" id="77551">
@@ -119,9 +104,9 @@
         </control>
         
         <control type="group">
-            <!-- slide when widget has focus -->
-            <animation type="Conditional" condition="ControlGroup(77777).HasFocus() + !Skin.HasSetting(VerticalHomeMultiWidget)">
-                <effect type="slide" start="0" end="-450" time="150" delay="0" tween="cubic" easing="inout" />
+            <!-- fade when widget active -->
+            <animation type="Conditional" condition="ControlGroup(77777).HasFocus">
+                <effect type="fade" start="100" end="80" time="150" delay="0" tween="cubic" easing="inout" />
             </animation>
             <include condition="Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)">HomeSimpleVertical</include>
             <include condition="Skin.String(HomeLayout, verticalbig)">HomeBigVertical</include>
@@ -412,6 +397,9 @@
 			</animation>
 			<animation type="Conditional" condition="!Control.IsVisible(4444)">
 				<effect type="fade" start="100" end="0" time="250" delay="0" />
+			</animation>
+            <animation type="Conditional" condition="!Control.IsVisible(4444)">
+				<effect type="slide" start="0" end="0,-700" time="0" delay="0" />
 			</animation>
 			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,0) + !Skin.String(HomeLayout, simplever_tiles)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
