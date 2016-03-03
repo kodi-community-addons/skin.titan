@@ -5,15 +5,15 @@
         <!-- widgets -->
         <control type="group">
             <!-- fade when submenu active -->
-            <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !Skin.HasSetting(VerticalHomeInlineSubmenu)">
+            <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]">
                 <effect type="fade" start="100" end="20" time="150" delay="0" tween="cubic" easing="inout" />
             </animation>
             
             <!-- infopanel -->
             <control type="group" id="77551">
-                
+                <visible>!Skin.HasSetting(VerticalHomeMultiWidget)</visible>
                 <visible>SubString(Control.GetLabel(17888), poster) | SubString(Control.GetLabel(17888), square)</visible>
-                <visible>Control.IsVisible(77551)() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget) + !Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
                 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
                 <control type="image">
                     <right>0</right>
@@ -62,8 +62,9 @@
                 </control>
             </control>
             <control type="group" id="77551">
+                <visible>!Skin.HasSetting(VerticalHomeMultiWidget)</visible>
                 <visible>SubString(Control.GetLabel(17888), landscape)</visible>
-                <visible>Control.IsVisible(77551)() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget) + !Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
                 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
                 <control type="image">
                     <right>0</right>
@@ -98,7 +99,33 @@
                     <font>Reg24</font>
                 </control>
             </control>
-
+            <control type="group" id="77551">
+                <visible>Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
+                <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
+                <control type="image">
+                    <right>0</right>
+                    <top>0</top>
+                    <width>1355</width>
+                    <texture border="15">diffuse/bgpanel.png</texture>
+                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                    <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                    <height>1300</height>
+                </control>
+                <control type="textbox">
+                    <right>65</right>
+                    <top>10</top>
+                    <width>1270</width>
+                    <height>145</height>
+                    <label fallback="19055">$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Reg24</font>
+                </control>
+            </control>
+            
             <include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(VerticalHomeMultiWidget)">VerticalHomeWidgetsNormal</include>
             <include condition="!Skin.HasSetting(DisableAllWidgets) + Skin.HasSetting(VerticalHomeMultiWidget)">skinshortcuts-template-VerticalHomeAdvancedWidgets</include>
         </control>
