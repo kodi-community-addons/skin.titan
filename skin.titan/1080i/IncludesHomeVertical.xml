@@ -5,30 +5,16 @@
         <!-- widgets -->
         <control type="group">
             <!-- fade when submenu active -->
-            <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !Skin.HasSetting(VerticalHomeInlineSubmenu)">
+            <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)]">
                 <effect type="fade" start="100" end="20" time="150" delay="0" tween="cubic" easing="inout" />
             </animation>
-            <!-- slide when widget has focus -->
-            <animation type="Conditional" condition="ControlGroup(77777).HasFocus() + !Skin.HasSetting(VerticalHomeMultiWidget)">
-                <effect type="slide" start="0" end="35" time="150" delay="0" tween="cubic" easing="inout" />
-            </animation>
-            
-            <!-- logo -->
-            <control type="image">
-                <left>-20</left>
-                <posy>0</posy>
-                <height>200</height>
-                <width>565</width>
-                <aspectratio align="center">keep</aspectratio>
-                <texture>$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-                <visible>ControlGroup(77777).HasFocus() + !Skin.HasSetting(VerticalHomeMultiWidget)</visible>
-            </control>
             
             <!-- infopanel -->
             <control type="group" id="77551">
-                
+                <visible>!Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>!Skin.HasSetting(HideWidgetDetailsPanel)</visible>
                 <visible>SubString(Control.GetLabel(17888), poster) | SubString(Control.GetLabel(17888), square)</visible>
-                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget) + !Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
                 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
                 <control type="image">
                     <right>0</right>
@@ -77,8 +63,10 @@
                 </control>
             </control>
             <control type="group" id="77551">
+                <visible>!Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>!Skin.HasSetting(HideWidgetDetailsPanel)</visible>
                 <visible>SubString(Control.GetLabel(17888), landscape)</visible>
-                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget) + !Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
                 <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
                 <control type="image">
                     <right>0</right>
@@ -113,15 +101,42 @@
                     <font>Reg24</font>
                 </control>
             </control>
-
+            <control type="group" id="77551">
+                <visible>Skin.HasSetting(VerticalHomeMultiWidget)</visible>
+                <visible>!Skin.HasSetting(HideWidgetDetailsPanel)</visible>
+                <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
+                <visible>!Window.IsActive(DialogKaiToast.xml) + !Window.IsActive(DialogExtendedProgressBar.xml) + !Control.IsVisible(88888)</visible>
+                <control type="image">
+                    <right>0</right>
+                    <top>0</top>
+                    <width>1355</width>
+                    <texture border="15">diffuse/bgpanel.png</texture>
+                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                    <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                    <height>1300</height>
+                </control>
+                <control type="textbox">
+                    <right>65</right>
+                    <top>10</top>
+                    <width>1270</width>
+                    <height>145</height>
+                    <label fallback="19055">$VAR[HomeMenuWidgetInfoLabel][CR]$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Reg24</font>
+                </control>
+            </control>
+            
             <include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(VerticalHomeMultiWidget)">VerticalHomeWidgetsNormal</include>
             <include condition="!Skin.HasSetting(DisableAllWidgets) + Skin.HasSetting(VerticalHomeMultiWidget)">skinshortcuts-template-VerticalHomeAdvancedWidgets</include>
         </control>
         
         <control type="group">
-            <!-- slide when widget has focus -->
-            <animation type="Conditional" condition="ControlGroup(77777).HasFocus() + !Skin.HasSetting(VerticalHomeMultiWidget)">
-                <effect type="slide" start="0" end="-450" time="150" delay="0" tween="cubic" easing="inout" />
+            <!-- fade when widget active -->
+            <animation type="Conditional" condition="Control.IsVisible(77551)">
+                <effect type="fade" start="100" end="80" time="150" delay="0" tween="cubic" easing="inout" />
             </animation>
             <include condition="Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)">HomeSimpleVertical</include>
             <include condition="Skin.String(HomeLayout, verticalbig)">HomeBigVertical</include>
@@ -139,7 +154,7 @@
             <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
             <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
             <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
-            <visible>system.getbool(lookandfeel.enablerssfeeds) + !ControlGroup(77777).HasFocus() + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
+            <visible>system.getbool(lookandfeel.enablerssfeeds) + !Control.IsVisible(77551)() + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
             <visible>![Skin.HasSetting(VerticalHomeMultiWidget) + !IsEmpty(Container(300).ListItem.Property(widget.2))]</visible>
         </control>
         <control type="label">	
@@ -318,7 +333,23 @@
             <!--submenu inline-->
             <include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(VerticalHomeInlineSubmenu)">HomeSimpleVerticalSubMenuInline</include>
             <!-- Power button -->
-            <include condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">PowerButton</include>
+            <control type="button" id="2">
+                <description>powerbutton</description>
+                <posx>20</posx>
+                <bottom>5</bottom>
+                <width>60</width>
+                <height>60</height>
+                <onup>300</onup>
+                <onright>300</onright>
+                <onleft>300</onleft>
+                <texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">common/shutdown2.png</texturefocus>
+                <texturenofocus colordiffuse="white">common/shutdown2.png</texturenofocus>
+                <onclick>ActivateWindow(111)</onclick>
+                <onfocus>ActivateWindow(111)</onfocus>
+                <include>animation_fade_visible_hidden</include>
+                <visible>!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)</visible>
+                <visible allowhiddenfocus="true">!Skin.HasSetting(HidePowerMenu)</visible>
+            </control>
             <!-- touchscreen support -->
             <include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsFooter</include>
         
@@ -412,6 +443,9 @@
 			</animation>
 			<animation type="Conditional" condition="!Control.IsVisible(4444)">
 				<effect type="fade" start="100" end="0" time="250" delay="0" />
+			</animation>
+            <animation type="Conditional" condition="!Control.IsVisible(4444)">
+				<effect type="slide" start="0" end="0,-700" time="0" delay="0" />
 			</animation>
 			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,0) + !Skin.String(HomeLayout, simplever_tiles)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
@@ -887,7 +921,7 @@
     <include name="VerticalHomeWidgetsNormal">
         <!-- widgets -->   
         <control type="group" id="77777">
-            <right>-15</right>
+            <right>0</right>
             <posx>570</posx>
             <width>1000</width>
             <visible>!IsEmpty(Container(300).ListItem.Property(widget)) + !Skin.HasSetting(DisableAllWidgets)</visible>

@@ -138,7 +138,7 @@
                 <label>31113</label>
                 <onclick>Skin.ToggleSetting(AutoShowSubmenu)</onclick>
                 <selected>Skin.HasSetting(AutoShowSubmenu)</selected>
-                <visible>[Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]</visible>
+                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, netflix) + !Skin.String(HomeLayout, win10)</visible>
             </control>
             <!--open submenu inline in vertical home-->
             <control type="radiobutton" id="23515">
@@ -229,6 +229,14 @@
                 <onclick>Skin.ToggleSetting(HideWidgetPanelBackground)</onclick>
                 <selected>Skin.HasSetting(HideWidgetPanelBackground)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small) + !Skin.String(HomeLayout, win10)</visible>
+            </control>
+            <!--hide widget details-->
+            <control type="radiobutton" id="31707">
+                <include>SkinSettings_Button</include>
+                <label>31707</label>
+                <onclick>Skin.ToggleSetting(HideWidgetDetailsPanel)</onclick>
+                <selected>Skin.HasSetting(HideWidgetDetailsPanel)</selected>
+                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small) + !Skin.String(HomeLayout, win10) + !SubString(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--prefer tv show art for episodes-->
             <control type="radiobutton" id="31304">
@@ -555,6 +563,13 @@
                 <label2>$INFO[Skin.String(mediaflagsstyle.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=mediaflagsstyle,header=$LOCALIZE[31632])</onclick>
                 <visible>!Skin.HasTheme(classic)</visible>
+            </control>
+            <!-- animated posters -->
+            <control type="radiobutton" id="31706">
+                <include>SkinSettings_Button</include>
+                <label>31706</label>
+                <onclick>Skin.ToggleSetting(SkinHelper.EnableAnimatedPosters)</onclick>
+                <selected>Skin.HasSetting(SkinHelper.EnableAnimatedPosters)</selected>
             </control>
             
             <include name="SkinSettings_ActionButton">
@@ -2227,6 +2242,10 @@
             <include name="SkinSettings_AddonButton">
                 <param name="id" value="31003" />
                 <param name="addon" value="script.extendedinfo" />
+            </include>
+            <include name="SkinSettings_AddonButton">
+                <param name="id" value="31019" />
+                <param name="addon" value="plugin.program.autocompletion" />
             </include>
             <include name="SkinSettings_AddonButton">
                 <param name="id" value="31004" />
