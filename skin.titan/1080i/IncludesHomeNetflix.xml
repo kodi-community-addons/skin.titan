@@ -519,7 +519,8 @@
                 <width>1820</width>
                 <height>55</height>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+                <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
             </control>
             <control type="label">
                 <height>55</height>
@@ -560,6 +561,7 @@
                 <align>left</align>
                 <aligny>top</aligny>
                 <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <label>$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Label]</label>
                 <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
@@ -570,6 +572,7 @@
                 <align>left</align>
                 <aligny>top</aligny>
                 <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <label>$LOCALIZE[31545] $INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
                 <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
@@ -650,6 +653,7 @@
                 <posy>490</posy>
                 <height>60</height>
                 <orientation>horizontal</orientation>
+                <onleft>300</onleft>
                 <visible allowhiddenfocus="true">ControlGroup(505).HasFocus()</visible>
                 <control type="button" id="51">
                     <description>Play</description>
@@ -714,28 +718,6 @@
                 </control>
             </control>
             
-            <!-- spotlight image  -->
-            <control type="group">
-                <right>60</right>
-                <top>10</top>
-                <width>960</width>
-                <height>555</height>
-                <control type="image">
-                    <bordersize>5</bordersize>
-                    <texture background="true" diffuse="diffuse/wide.png">$VAR[fanartBackground]</texture>
-                    <aspectratio scalediffuse="false">scale</aspectratio>
-                    <fadetime>350</fadetime>
-                </control>
-                <control type="image">
-                    <right>20</right>
-                    <bottom>25</bottom>
-                    <width>70%</width>
-                    <height>350</height>
-                    <aspectratio align="right" aligny="bottom">keep</aspectratio>
-                    <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-                </control>
-            </control>
-            
             <!-- spotlight widget -->
             <control type="panel" id="510">
                 <right>60</right>
@@ -749,7 +731,7 @@
                 <onfocus>51</onfocus>
                 <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid])</onfocus>
                 <scrolltime tween="cubic" easing="inout">500</scrolltime>
-                <visible>ControlGroup(505).HasFocus()</visible>
+                <visible>ControlGroup(505).HasFocus() | Control.HasFocus(300)</visible>
                 <itemlayout width="960" height="555">
                     <!-- spotlight image -->
                     <control type="image">
@@ -787,7 +769,28 @@
                 </focusedlayout>
                 <content target="video">$INFO[Container(999).ListItemNoWrap(0).Property(list)]</content>
             </control>
-        
+            
+            <!-- spotlight image  -->
+            <control type="group">
+                <right>60</right>
+                <top>10</top>
+                <width>960</width>
+                <height>555</height>
+                <control type="image">
+                    <bordersize>5</bordersize>
+                    <texture background="true" diffuse="diffuse/wide.png">$VAR[fanartBackground]</texture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <fadetime>350</fadetime>
+                </control>
+                <control type="image">
+                    <right>20</right>
+                    <bottom>25</bottom>
+                    <width>70%</width>
+                    <height>350</height>
+                    <aspectratio align="right" aligny="bottom">keep</aspectratio>
+                    <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+                </control>
+            </control>
         </control>
 			
     </include>
