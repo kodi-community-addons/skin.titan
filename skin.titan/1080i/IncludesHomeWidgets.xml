@@ -20,6 +20,7 @@
             <width>100%</width>
             <visible>!SubString(Control.GetLabel(17888),box) + !IsEmpty(Window(home).property(HomeFirstLoadDone))</visible>
             <visible>ControlGroup(77777).HasFocus | StringCompare(Window(Home).Property(ShowWidget),show) | Control.HasFocus(511)</visible>
+            <visible>!Skin.HasSetting(HideWidgetDetailsPanel)</visible>
             <animation type="Visible">
                 <effect type="slide" start="0,0" end="0,1000" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
@@ -183,6 +184,10 @@
             </animation>
             <!-- show widget at top of screen when 2 rows titan tiles or 1 row not lowered -->
             <animation type="Conditional" condition="[SubString(Skin.String(HomeLayout), 2) | [SubString(Skin.String(HomeLayout), 1) + !Skin.HasSetting(LowerWidgets)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">
+                <effect type="slide" start="0,0" end="0,-350" time="300" tween="cubic" easing="inout" delay="0"/>
+            </animation>
+            <!-- show widget at top of screen when 2 rows titan tiles or 1 row with disabled detailspanel -->
+            <animation type="Conditional" condition="[SubString(Skin.String(HomeLayout), 2) | SubString(Skin.String(HomeLayout), 1)] + !Skin.HasSetting(AutoShowWidgets) + StringCompare(Window(Home).Property(ShowWidget),show) + Skin.HasSetting(HideWidgetDetailsPanel)">
                 <effect type="slide" start="0,0" end="0,-350" time="300" tween="cubic" easing="inout" delay="0"/>
             </animation>
             <!-- show widget above tiles when 1 row lowered - if not poster style widget -->
