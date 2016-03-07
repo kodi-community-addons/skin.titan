@@ -491,7 +491,8 @@
                     <posy>0</posy>
                     <align>left</align>
                     <label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
-                    <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
                     <scroll>false</scroll>
                     <font>Bold30</font>
                 </control>
@@ -586,7 +587,7 @@
             </control>
             <control type="group">
                 <!--Genre-->
-                <width>800</width>
+                <width>100%</width>
                 <height>40</height>
                 <visible>!IsEmpty(ListItem.Genre) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Genre))</visible>
                 <control type="image">
@@ -609,7 +610,7 @@
             </control>
             <control type="group">
                 <!--Director: Movies, Episodes-->
-                <width>800</width>
+                <width>100%</width>
                 <height>40</height>
                 <visible>[Container.Content(Movies) | Container.Content(episodes) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)]] + [!IsEmpty(ListItem.Director) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Director))]</visible>
                 <control type="image">
@@ -643,7 +644,7 @@
             </control>
             <control type="group">
                 <!--Writer: Movies, Episodes-->
-                <width>800</width>
+                <width>100%</width>
                 <height>40</height>
                 <visible>[Container.Content(Movies) | Container.Content(episodes) | [Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)]] + [!IsEmpty(ListItem.Writer) | !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Writer))]</visible>
                 <control type="image">
@@ -677,7 +678,7 @@
             </control>
             <control type="group">
                 <!--Studio: TV-Shows-->
-                <width>1200</width>
+                <width>100%</width>
                 <height>40</height>
                 <visible>!IsEmpty(ListItem.Studio)</visible>
                 <control type="image">
@@ -693,6 +694,56 @@
                     <posy>0</posy>
                     <align>left</align>
                     <label>$INFO[ListItem.Studio]</label>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <scroll>false</scroll>
+                </control>
+            </control>
+            <control type="group">
+                <!--Addons: author-->
+                <width>100%</width>
+                <height>40</height>
+                <visible>Container.Content(Addons)</visible>
+                <control type="label">
+                    <posx>5</posx>
+                    <posy>0</posy>
+                    <align>left</align>
+                    <label>$LOCALIZE[21863]:</label>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <scroll>false</scroll>
+                </control>
+                <control type="label">
+                    <right>10</right>
+                    <posy>0</posy>
+                    <align>right</align>
+                    <width>250</width>
+                    <label>$INFO[ListItem.Property(Addon.Creator)]</label>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <scroll>false</scroll>
+                </control>
+            </control>
+            <control type="group">
+                <!--Addons: version-->
+                <width>100%</width>
+                <height>40</height>
+                <visible>Container.Content(Addons)</visible>
+                <control type="label">
+                    <posx>5</posx>
+                    <posy>0</posy>
+                    <align>left</align>
+                    <label>$LOCALIZE[24051]:</label>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <scroll>false</scroll>
+                </control>
+                <control type="label">
+                    <right>10</right>
+                    <posy>0</posy>
+                    <align>right</align>
+                    <width>250</width>
+                    <label>$INFO[ListItem.Property(Addon.Version)]</label>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <scroll>false</scroll>
@@ -901,7 +952,7 @@
   </variable>
   <variable name="PVRListItemThumbBanner">
         <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FolderPath,pvr://) + IsEmpty(ListItem.Art(banner))">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=banner</value>
-        <value condition="Container.Content(artists) + !IsEmpty(ListItem.DBID) + IsEmpty(ListItem.Art(banner))">http://localhost:52307/getmusicart&amp;dbid=$INFO[Listitem.DBID]&amp;type=banner,clearlogo&amp;contenttype=artists</value>
+        <value condition="[Container.Content(artists) | Container.Content(albums) | Container.Content(songs)] + IsEmpty(ListItem.Art(banner)) + !IsEmpty(ListItem.Artist)">http://localhost:52307/getmusicart&amp;artist=$INFO[Listitem.Artist]&amp;type=banner</value>
   </variable>
   
   <include name="PVRListItemThumb">
