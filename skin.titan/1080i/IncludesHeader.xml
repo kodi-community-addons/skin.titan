@@ -37,6 +37,7 @@
             <!-- Weather left -->
             <control type="group">
                 <include>WeatherInfoLeft</include>
+                <animation effect="slide" end="400" time="0" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(Home) + SubString(Skin.String(home_header),slideweather)">Conditional</animation>
                 <visible>![Window.IsActive(Home) + Skin.String(HomeLayout,verticalbig)]</visible>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible_hidden</include>
                 <visible>![StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.IsVisible(882)]</visible>
@@ -50,13 +51,31 @@
                 <visible>![Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml) | Control.IsVisible(881)]</visible>
                 <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weather)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weather)]</visible>
             </control>
+            
+            <!-- Weather + clock right -->
+            <control type="group">
+                <include>WeatherClockInfoRight</include>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible_hidden</include>
+                <visible>![Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml) | Control.IsVisible(881)]</visible>
+                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weathclock)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weathclock)]</visible>
+            </control>
 
             <!-- Profile right -->
             <control type="group">
+                <right>60</right>
                 <include>ProfileInfo</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible_hidden</include>
                 <visible>![Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)]</visible>
                 <visible>Window.IsActive(Home) + SubString(Skin.String(home_header),-profile)</visible>
+            </control>
+            
+            <!-- Profile left -->
+            <control type="group">
+                <left>60</left>
+                <include>ProfileInfo</include>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible_hidden</include>
+                <visible>![Window.IsActive(DialogMuteBug.xml) | Window.IsActive(DialogVolumeBar.xml)]</visible>
+                <visible>Window.IsActive(Home) + SubString(Skin.String(home_header),profile-)</visible>
             </control>
             
         </control>
@@ -489,7 +508,6 @@
 	<include name="ProfileInfo">
 		<control type="group" id="891">
 			<defaultcontrol>890</defaultcontrol>
-			<right>60</right>
 			<posy>15</posy>
             <width>150</width>
             <height>110</height>
@@ -574,7 +592,7 @@
         <!-- weather info -->
         <control type="group" id="667711">
             <posx>30</posx>
-            <posy>0</posy>
+            <posy>10</posy>
             <width>350</width>
             <height>300</height>
             <!--Weather Today-->
@@ -690,6 +708,75 @@
             </control>
         </control>
     </include>
+    
+    <include name="WeatherClockInfoRight">
+        <control type="group">
+            <control type="grouplist">
+                <!--Time Grouplist Line 1-->
+                <right>190</right>
+                <posy>0</posy>
+                <width>600</width>
+                <height>100</height>
+                <align>right</align>
+                <itemgap>4</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="label">
+                    <!--Time-->
+                    <width min="0" max="300">auto</width>
+                    <height>100</height>
+                    <info>System.Time(hh:mm)</info>
+                    <font>Bold55</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <!--AM-->
+                    <visible>substring(system.time,AM,right)</visible>
+                    <width min="0" max="150">auto</width>
+                    <height>100</height>
+                    <label>378</label>
+                    <font>Bold55</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <!--PM-->
+                    <visible>substring(system.time,PM,right)</visible>
+                    <width min="0" max="150">auto</width>
+                    <height>100</height>
+                    <label>379</label>
+                    <font>Bold55</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+            </control>
+            <control type="label">
+                <!--weather info-->
+                <right>190</right>
+                <posy>75</posy>
+                <width>600</width>
+                <height>50</height>
+                <align>right</align>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits] $INFO[Window(Weather).Property(Current.Condition)]</label>
+                <font>Reg30</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+        </control>
+        <!--Weather Today-->
+        <control type="image">
+            <!--Icon-->
+            <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+            <width>125</width>
+            <height>125</height>
+            <right>40</right>
+            <posy>10</posy>
+            <aspectratio align="right" aligny="bottom">keep</aspectratio>
+        </control>
+    
+	</include>
+    
     
     <include name="HeaderLogo">
         <!-- Kodi Logo image -->
