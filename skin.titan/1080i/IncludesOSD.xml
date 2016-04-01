@@ -328,7 +328,7 @@
 				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
 				<visible>Player.HasAudio</visible>
                 <visible>!Skin.HasSetting(HideOSDDisc)</visible>
-                <visible>!IsEmpty(Control.GetLabel(13333))</visible>
+                <visible>!IsEmpty(Control.GetLabel(13333)) + !SubString(Control.GetLabel(13333),Default)</visible>
 			</control>
             <control type="image">
 				<!--Music-->
@@ -341,7 +341,7 @@
 				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
 				<visible>Player.HasAudio</visible>
                 <visible>!Skin.HasSetting(HideOSDDisc)</visible>
-                <visible>IsEmpty(Control.GetLabel(13333))</visible>
+                <visible>IsEmpty(Control.GetLabel(13333)) | SubString(Control.GetLabel(13333),Default)</visible>
 			</control>
             <control type="image">
 				<!--Music-->
@@ -892,7 +892,259 @@
 
 		</control>
     </include>
+	
+    <include name="OSDPanelModernSlimMusic">
+		<control type="group">
+			<bottom>0</bottom>
+			<height>200</height>
+			<!--Panel-->
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>100%</width>
+				<height>200</height>
+				<texture border="5">$VAR[osdpanelimage]</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+			</control>
+            <!--artist BIO-->
+            <control type="fadelabel">
+                <bottom>220</bottom>
+                <left>400</left>
+                <width>1520</width>
+                <height>20</height>
+                <scroll>!Player.Paused</scroll>
+                <scrollout>false</scrollout>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <font>Reg30</font>
+                <scrollspeed>80</scrollspeed>
+                <label>$INFO[Window(Home).Property(SkinHelper.Player.Music.Info)]</label>
+                <visible>!Window.IsActive(script-cu-lrclyrics-main.xml)</visible>
+                <visible>Skin.HasSetting(enableArtistBio)</visible>
+            </control>
+
+			<!-- cd art -->
+			<control type="image">
+				<posx>140</posx>
+				<bottom>11</bottom>
+				<width>270</width>
+				<height>270</height>
+				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+				<fadetime>300</fadetime>
+				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+				<texture background="true" fallback="defaultcovers/cd_medium.png" diffuse="diffuse/cdmask_big.png">$VAR[AudioDiscArtImage]</texture>
+			</control>
+			
+			<control type="image">
+				<!--Music bg-->
+				<posx>20</posx>
+				<bottom>10</bottom>
+				<width>280</width>
+				<height>280</height>
+				<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+				<texture border="5">diffuse/music_cover_cd.png</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+			</control>
+            <control type="image">
+				<!--Music bg-->
+				<posx>20</posx>
+				<bottom>10</bottom>
+				<width>280</width>
+				<height>280</height>
+				<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+				<texture border="5">diffuse/music_cover_cd.png</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+			</control>
+            <control type="image">
+				<!--Music bg-->
+				<posx>20</posx>
+				<bottom>10</bottom>
+				<width>280</width>
+				<height>280</height>
+				<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+				<texture border="5">diffuse/music_cover_cd.png</texture>
+				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+			</control>
+
+			<control type="image" id="13333">
+				<!--Music-->
+				<posx>20</posx>
+				<bottom>10</bottom>
+				<width>280</width>
+				<height>280</height>
+				<fadetime>200</fadetime>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$VAR[AudioPlayerCoverImage]</texture>
+				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
+                <visible>!IsEmpty(Control.GetLabel(13333)) + !SubString(Control.GetLabel(13333),Default)</visible>
+			</control>
+            <control type="image">
+				<!--Music-->
+				<posx>20</posx>
+				<bottom>10</bottom>
+				<width>280</width>
+				<height>280</height>
+				<fadetime>200</fadetime>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Music.Thumb)]</texture>
+				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
+                <visible>IsEmpty(Control.GetLabel(13333)) | SubString(Control.GetLabel(13333),Default)</visible>
+			</control>
+
+			<control type="group">
+				<!-- OSDLabel1 -->
+                <control type="label">
+					<posx>430</posx>
+					<posy>5</posy>
+					<width>900</width>
+					<align>left</align>
+					<font>Light40</font>
+					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+					<label>[B]$VAR[OSDLabel1,, • ][/B]$VAR[OSDLabel2]</label>
+					<scroll>false</scroll>
+					<visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
+				</control>
+                <!-- media flags -->
+                <control type="group">
+                    <posx>430</posx>
+					<posy>87</posy>
+                    <include>mediaflagsAudio</include>
+                    <visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
+                </control>
+
+				<control type="progress" id="1">
+					<description>ProgressbarCache</description>
+					<left>430</left>
+					<right>40</right>
+					<width>1450</width>
+					<posy>150</posy>
+					<height>33</height>
+					<info>Player.ProgressCache</info>
+					<texturebg border="5" colordiffuse="00ffffff">diffuse/panel.png</texturebg>
+					<lefttexture>-</lefttexture>
+					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarCacheColor)]">diffuse/panel.png</midtexture>
+					<righttexture>-</righttexture>
+					<overlaytexture>-</overlaytexture>
+					<visible>!IsEmpty(Player.Duration)</visible>
+                    <visible>!Skin.String(OSDProgressBarCacheColor,None)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+				<control type="progress" id="23">
+					<description>Progress Bar</description>
+					<left>430</left>
+					<right>40</right>
+					<width>1450</width>
+					<posy>150</posy>
+					<height>33</height>
+					<info>Player.Progress</info>
+					<texturebg border="5" colordiffuse="$VAR[OSDProgressBarBackgroundColor]">diffuse/panel_trans.png</texturebg>
+					<lefttexture>-</lefttexture>
+					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">diffuse/panel.png</midtexture>
+					<righttexture>-</righttexture>
+					<overlaytexture>-</overlaytexture>
+					<visible>!IsEmpty(Player.Duration)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+                <control type="slider" id="401">
+                    <description>Seek Slider</description>
+                    <left>430</left>
+					<right>40</right>
+					<width>1450</width>
+					<posy>140</posy>
+					<height>25</height>
+                    <texturesliderbar>colors/color_transparent.png</texturesliderbar>
+                    <textureslidernib border="5" colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">diffuse/seekslider.png</textureslidernib>
+                    <textureslidernibfocus>colors/color_white.png</textureslidernibfocus>
+                    <visible>Player.Seeking</visible>
+                </control>
+
+				<!--Process/Seekbar-->
+				<control type="label">
+					<!--Play Time-->
+					<posx>434</posx>
+					<posy>133</posy>
+					<width>400</width>
+					<align>left</align>
+					<font>Light28</font>
+					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+					<label>$INFO[Player.Time]</label>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+				<control type="label">
+					<!--Play Time-->
+					<right>42</right>
+					<posy>133</posy>
+					<width>400</width>
+					<align>right</align>
+					<font>Light28</font>
+					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
+					<label>$INFO[Player.TimeRemaining]</label>
+					<visible>!IsEmpty(Player.Duration)</visible>
+					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				</control>
+
+			</control>
+
 		
+			<!--Clock-->
+			<control type="grouplist">
+				<posx>1480</posx>
+				<posy>5</posy>
+				<width>400</width>
+				<height>100</height>
+				<align>right</align>
+				<itemgap>4</itemgap>
+				<orientation>horizontal</orientation>
+				<usecontrolcoords>true</usecontrolcoords>
+				<control type="label">
+					<width min="0" max="150">auto</width>
+					<height>80</height>
+					<info>System.Time(hh:mm)</info>
+					<font>Light60</font>
+					<aligny>center</aligny>
+					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
+				</control>
+				<control type="label">
+					<visible>substring(system.time,AM,right)</visible>
+					<width min="0" max="150">auto</width>
+					<height>80</height>
+					<label>378</label>
+					<font>Light60</font>
+					<aligny>center</aligny>
+					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
+				</control>
+				<control type="label">
+					<visible>substring(system.time,PM,right)</visible>
+					<width min="0" max="150">auto</width>
+					<height>80</height>
+					<label>379</label>
+					<font>Light60</font>
+					<aligny>center</aligny>
+					<textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
+				</control>
+			</control>
+
+            <!--Stars music-->
+            <control type="image">
+                <visible>Window.IsActive(visualisation)</visible>
+                <visible>![Window.IsActive(musicosd) + !Window.IsVisible(OSDAudioSettings)]</visible>
+                <right>30</right>
+				<posy>80</posy>
+                <width>200</width>
+                <height>50</height>
+                <aspectratio aligny="top" align="left">keep</aspectratio>
+                <colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
+                <texture fallback="leftrating/rating0.png">$INFO[Player.StarRating,leftrating/]</texture>
+            </control>
+
+		</control>
+    </include>
+		
+        
 	<include name="MusicOSDClassic">
 		<include>animation_fade_visible_hidden</include>
 		
@@ -2465,7 +2717,7 @@
 		<value>DefaultVideo.png</value>
 	 </variable>
 
-	 <variable name="OSDLabel1">
+	<variable name="OSDLabel1">
         <value condition="Player.HasVideo + StringCompare(Window(Home).Property(subtitlemenu), show)">$LOCALIZE[287]</value>
         <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv)">$INFO[VideoPlayer.ChannelNumber,, - ]$INFO[VideoPlayer.ChannelName]</value>
 		<value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + Player.IsInternetStream + !IsEmpty(Window(Home).Property(SkinHelper.Player.AddonName)) + IsEmpty(VideoPlayer.TvShowTitle)">$INFO[Window(Home).Property(SkinHelper.Player.AddonName)]</value>
