@@ -143,6 +143,14 @@
 					<onclick>XBMC.RunScript(script.skin.helper.service,action=SETVIEW)</onclick>
                     <onclick>ActivateWindow(busydialog)</onclick>
 				</control>
+                
+                <control type="radiobutton" id="31719">
+                    <!--Enable info overlay-->
+                    <include>SideBladeMenuButton</include>
+                    <label>31719</label>
+                    <onclick>Skin.ToggleSetting(EnableInfoOverlay)</onclick>
+                    <selected>Skin.HasSetting(EnableInfoOverlay)</selected>
+                </control>
 				
 				<include>SideBladeViewCommands</include>
 				
@@ -154,13 +162,56 @@
 					<selected>system.ismaster</selected>
 					<visible>system.haslocks</visible>
 				</control>
-                     </control>
+             </control>
         </control>
 		
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
         <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
-    
+        
+        <!-- info overlay -->
+        <control type="group" id="77999">
+            <visible>Skin.HasSetting(EnableInfoOverlay) + System.IdleTime(3)</visible>
+            <animation time="300" effect="fade" delay="0">Visible</animation>
+            <include>DialogOverlayExtra</include>
+            <width>100%</width>
+            <height>100%</height>
+            <control type="label">
+                <top>4%</top>
+                <left>60</left>
+                <width>1800</width>
+                <height>100</height>
+                <font>Bold75</font>
+                <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                <label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
+                <scroll>true</scroll>
+            </control>
+            <control type="label">
+                <top>12%</top>
+                <left>60</left>
+                <width>1800</width>
+                <height>100</height>
+                <font>Reg64</font>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <label>$VAR[Details]</label>
+            </control>
+            <control type="textbox">
+                <bottom>4%</bottom>
+                <left>60</left>
+                <width>1800</width>
+                <height>70%</height>
+                <font>Reg64</font>
+                <align>justify</align>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <label>$VAR[Plots]</label>
+                <autoscroll delay="15000" time="6000" repeat="20000">Control.IsVisible(77999)</autoscroll>
+            </control>
+            
+        </control>
+        
 	
 	</controls>
 </window>
