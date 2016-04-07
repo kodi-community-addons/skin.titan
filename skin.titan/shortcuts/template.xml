@@ -6,7 +6,7 @@
 	<other include="widget">
 		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
 		<condition tag="property" attribute="name|widgetTarget"></condition>
-		<match>any</match>
+		<match>all</match>
 
 		<!-- For nodes, set the content property to the value of widgetPath -->
 		
@@ -54,7 +54,7 @@
 	<other include="widget.1">
 		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
 		<condition tag="property" attribute="name|widgetTarget.1"></condition>
-		<match>any</match>
+		<match>all</match>
 		<!-- For nodes, set the content property to the value of widgetPath -->
 		<property name="target" tag="property" attribute="name|widgetTarget.1" />
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
@@ -100,7 +100,7 @@
     <other include="widget.2">
 		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
 		<condition tag="property" attribute="name|widgetTarget.2"></condition>
-		<match>any</match>
+		<match>all</match>
 		<!-- For nodes, set the content property to the value of widgetPath -->
 		<property name="target" tag="property" attribute="name|widgetTarget.2" />
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
@@ -146,7 +146,7 @@
     <other include="widget.3">
 		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
 		<condition tag="property" attribute="name|widgetTarget.3"></condition>
-		<match>any</match>
+		<match>all</match>
 		<!-- For nodes, set the content property to the value of widgetPath -->
 		<property name="target" tag="property" attribute="name|widgetTarget.3" />
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
@@ -192,7 +192,7 @@
 	<other include="spotlightwidget">
 		<!-- Match our custom widgets with a widgetType of media, or a node with mediaType of movies or tvshows -->
 		<condition tag="property" attribute="name|widgetTarget.99"></condition>
-		<match>any</match>
+		<match>all</match>
 
 		<!-- For nodes, set the content property to the value of widgetPath -->
 		<property name="target" tag="property" attribute="name|widgetTarget.99" />
@@ -211,7 +211,7 @@
 
     <other include="win10widget.1">
 		<condition tag="property" attribute="name|widget"></condition>
-		<match>any</match>
+		<match>all</match>
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
 		
 		<property name="target" tag="property" attribute="name|widgetTarget" />
@@ -246,7 +246,7 @@
 	</other>
     <other include="win10widget.2">
 		<condition tag="property" attribute="name|widget.1"></condition>
-		<match>any</match>
+		<match>all</match>
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
 		
 		<property name="target" tag="property" attribute="name|widgetTarget.1" />
@@ -281,7 +281,7 @@
 	</other>
     <other include="win10widget.3">
 		<condition tag="property" attribute="name|widget.2"></condition>
-		<match>any</match>
+		<match>all</match>
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
 		
 		<property name="target" tag="property" attribute="name|widgetTarget.2" />
@@ -316,7 +316,7 @@
 	</other>
     <other include="win10widget.4">
 		<condition tag="property" attribute="name|widget.3"></condition>
-		<match>any</match>
+		<match>all</match>
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
 		<property name="target" tag="property" attribute="name|widgetTarget.3" />
         <property name="content" tag="property" attribute="name|widgetForceRefresh.3" value="refresh">$VAR[widget540]</property>
@@ -349,9 +349,44 @@
         </controls>
 	</other>
     
+    <other include="VerticalHomeAdvancedWidgetFallBack">
+		<condition tag="property" attribute="name|widgetTarget"></condition>
+		<match>all</match>
+		<property name="target" tag="property" attribute="name|widgetTarget" />
+        <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
+        <property name="widgetcontroltype" tag="property" attribute="name|widget.1"></property>
+        <property name="widgetcontroltype">panel</property>
+        <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="poster">widget_layout_poster</property>
+        <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="landscape">widget_layout_landscape</property>
+        <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="single box">widget_layout_singlebox</property>
+        <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="wide box">widget_layout_widebox</property>
+        <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="small poster">widget_layout_small_poster</property>
+        <property name="widgetstyle" tag="property" attribute="name|widgetstyle" value="square">widget_layout_square</property>
+        <property name="content" tag="property" attribute="name|widgetForceRefresh" value="refresh">$VAR[widget510]</property>
+        <property name="content" tag="property" attribute="name|widgetPath" />
+        <property name="widgetstyle">widgetlayout</property>
+        <property name="widgetLabelVisibility" tag="property" attribute="name|widgetTags" value="enable">WidgetLabelOverlayEnable</property>
+        <property name="widgetLabelVisibility" tag="property" attribute="name|widgetTags" value="disable">WidgetLabelOverlayDisable</property>
+        <property name="widgetLabelVisibility">WidgetLabelOverlayAuto</property>
+
+		<controls>
+            <!-- workaround by postfixing the control type, needs to be fixed -->
+			<control type="$SKINSHORTCUTS[widgetcontroltype]" id="510">
+				<skinshortcuts>visibility</skinshortcuts>
+                <include name="$SKINSHORTCUTS[widgetstyle]">
+                    <param name="widgetid" value="510" />
+                    <param name="widgetLabelVisibility" value="$SKINSHORTCUTS[widgetLabelVisibility]" />
+                </include>
+				<content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]</content>
+			</control>
+		</controls>
+	</other>
+	
+    
     <other include="VerticalHomeAdvancedWidgets">
 		<condition tag="property" attribute="name|widget"></condition>
-		<match>any</match>
+        <condition tag="property" attribute="name|widget.1"></condition>
+		<match>all</match>
         <property name="submenuVisibility" tag="property" attribute="name|submenuVisibility" />
         <property name="id" tag="mainmenuid" /> 
         
@@ -421,10 +456,11 @@
         
         <controls>
             <control type="grouplist" id="77777">
-                <bottom>0</bottom>
                 <right>0</right>
+                <width>100%</width>
+                <bottom>0</bottom>
                 <usecontrolcoords>true</usecontrolcoords>
-                <height>85%</height>
+                <height>83%</height>
                 <width>1920</width>
                 <pagecontrol>688$SKINSHORTCUTS[id]</pagecontrol>
                 <include>animation_window_open_close</include>
@@ -446,6 +482,7 @@
                     <onleft>300</onleft>
                     <include name="$SKINSHORTCUTS[widgetstyle]">
                         <param name="widgetid" value="510" />
+                        <param name="multiprefix" value="_multi" />
                         <param name="widgetLabelVisibility" value="$SKINSHORTCUTS[widgetLabelVisibility]" />
                     </include>
                     <content target="$SKINSHORTCUTS[target]">$SKINSHORTCUTS[content]</content>
@@ -466,6 +503,7 @@
                     <onleft>300</onleft>
                     <include name="$SKINSHORTCUTS[widgetstyle.1]">
                         <param name="widgetid" value="520" />
+                        <param name="multiprefix" value="_multi" />
                         <param name="widgetLabelVisibility" value="$SKINSHORTCUTS[widgetLabelVisibility.1]" />
                     </include>
                     <content target="$SKINSHORTCUTS[target.1]">$SKINSHORTCUTS[content.1]</content>
@@ -486,6 +524,7 @@
                     <onleft>300</onleft>
                     <include name="$SKINSHORTCUTS[widgetstyle.2]">
                         <param name="widgetid" value="530" />
+                        <param name="multiprefix" value="_multi" />
                         <param name="widgetLabelVisibility" value="$SKINSHORTCUTS[widgetLabelVisibility.2]" />
                     </include>
                     <content target="$SKINSHORTCUTS[target.2]">$SKINSHORTCUTS[content.2]</content>
@@ -506,6 +545,7 @@
                     <onleft>300</onleft>
                     <include name="$SKINSHORTCUTS[widgetstyle.3]">
                         <param name="widgetid" value="540" />
+                        <param name="multiprefix" value="_multi" />
                         <param name="widgetLabelVisibility" value="$SKINSHORTCUTS[widgetLabelVisibility.3]" />
                     </include>
                     <content target="$SKINSHORTCUTS[target.3]">$SKINSHORTCUTS[content.3]</content>

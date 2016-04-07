@@ -16,6 +16,7 @@ ECHO Creating XBT File...
 
 START /B /WAIT TexturePacker -dupecheck -input ..\skin.titan\media\ -output ..\skin.titan\media\Textures.xbt
 START /B /WAIT TexturePacker -dupecheck -input ..\skin.titan\themes\classic\ -output ..\skin.titan\media\classic.xbt
+START /B /WAIT TexturePacker -dupecheck -input ..\skin.titan\themes\modern_rounded\ -output ..\skin.titan\media\modern_rounded.xbt
 
 del exclude.txt
 
