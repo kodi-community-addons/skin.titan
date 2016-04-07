@@ -17,9 +17,34 @@
 			<include condition="!Skin.HasTheme(classic) + !Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModern</include>
 			<include condition="!Skin.HasTheme(classic) + Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModernSlimMusic</include>
 			<visible>[Skin.HasSetting(AlwaysShowMusicInfo) | Player.ShowInfo | Window.IsActive(MusicOSD)]</visible>
+            <animation effect="slide" end="0,-50" time="0" condition="Skin.HasSetting(enableArtistBio) + Window.IsActive(visualisation)">Conditional</animation>
 			<animation effect="slide" start="0,400" end="0,0" tween="cubic" easing="out" delay="300" time="250" reversible="false">Visible</animation>
 			<animation effect="slide" start="0,0" end="0,400" tween="cubic" easing="out" delay="300" time="250" reversible="false">Hidden</animation>
 		</control>
+        
+        <!--artist BIO-->
+        <control type="image">
+            <bottom>0</bottom>
+            <width>100%</width>
+            <height>50</height>
+            <texture border="5">$VAR[osdpanelimage]</texture>
+            <colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
+        </control>
+        <control type="fadelabel">
+            <bottom>17</bottom>
+            <left>0</left>
+            <width>1920</width>
+            <height>20</height>
+            <scroll>true</scroll>
+            <scrollout>false</scrollout>
+            <textcolor>white</textcolor>
+            <shadowcolor>black</shadowcolor>
+            <font>Reg30</font>
+            <scrollspeed>80</scrollspeed>
+            <label>$INFO[Window(Home).Property(SkinHelper.Player.Music.Info)]</label>
+            <visible>!Window.IsActive(script-cu-lrclyrics-main.xml)</visible>
+            <visible>Skin.HasSetting(enableArtistBio)</visible>
+        </control>
 		
 		<!--clearlogo top right-->
 		<control type="image">
