@@ -248,10 +248,21 @@
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>100%</width>
-				<height>350</height>
+				<height>290</height>
 				<texture border="5">$VAR[osdpanelimage]</texture>
 				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
 			</control>
+            
+            <control type="image">
+                <right>50</right>
+                <bottom>300</bottom>
+                <width>450</width>
+                <height>210</height>
+                <fadetime>600</fadetime>
+                <aspectratio align="right" aligny="bottom">keep</aspectratio>
+                <texture>$VAR[VideoPlayerClearArt]</texture>
+                <visible>!Skin.HasSetting(ShowWeatherVideoInfoOSD)</visible>
+            </control>
 
 			<!-- cd art -->
 			<control type="image">
@@ -886,7 +897,7 @@
 				<posx>0</posx>
 				<posy>0</posy>
 				<width>100%</width>
-				<height>250</height>
+				<height>200</height>
 				<texture border="5">$VAR[osdpanelimage]</texture>
 				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
 			</control>
@@ -941,9 +952,9 @@
 				<width>280</width>
 				<height>280</height>
 				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$VAR[AudioPlayerCoverImage]</texture>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5" fallback="imagenotfound.png">$VAR[AudioPlayerCoverImage]</texture>
 				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
-                <visible>!IsEmpty(Control.GetLabel(13333)) + !SubString(Control.GetLabel(13333),Default)</visible>
+                <visible>!SubString(Control.GetLabel(13333),imagenotfound) + !SubString(Control.GetLabel(13333),Default)</visible>
 			</control>
             <control type="image">
 				<!--Music-->
@@ -954,7 +965,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Music.Thumb)]</texture>
 				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
-                <visible>IsEmpty(Control.GetLabel(13333)) | SubString(Control.GetLabel(13333),Default)</visible>
+                <visible>SubString(Control.GetLabel(13333),imagenotfound) | SubString(Control.GetLabel(13333),Default)</visible>
 			</control>
 
 			<control type="group">
