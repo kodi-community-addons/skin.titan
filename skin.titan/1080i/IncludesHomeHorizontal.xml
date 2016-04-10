@@ -209,7 +209,8 @@
           <movement>1</movement>
           <preloaditems>4</preloaditems>
           <orientation>horizontal</orientation>
-          <itemlayout height="70" width="519">
+          <animation effect="slide" time="0" start="0" end="0,-10" delay="0" condition="Skin.HasSetting(UseSingleShortcut)">Conditional</animation>
+          <itemlayout height="70" width="519" condition="!Skin.HasSetting(UseSingleShortcut)">
             <control type="label">
               <posx>0</posx>
               <posy>0</posy>
@@ -225,7 +226,7 @@
               <font>Reg50</font>
             </control>
           </itemlayout>
-          <focusedlayout height="70" width="519">
+          <focusedlayout height="70" width="519" condition="!Skin.HasSetting(UseSingleShortcut)">
             <control type="label">
                   <posx>0</posx>
                   <posy>0</posy>
@@ -239,12 +240,43 @@
                   <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
                   <font>Reg50</font>
             </control>
-            <control type="button">
-                <visible>false</visible>
-                <onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + skin.hastheme(classic)">SetFocus(4444)</onfocus>
-                <onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + !skin.hastheme(classic)">SetProperty(submenu,show,home)</onfocus>
-            </control>
+            <include>HiddenHomeMenuButton</include>
           </focusedlayout>
+          
+          <itemlayout height="70" width="1920" condition="Skin.HasSetting(UseSingleShortcut)">
+            <control type="label">
+              <posx>0</posx>
+              <posy>0</posy>
+              <width>100%</width>
+              <textcolor>grey</textcolor>
+              <shadowcolor>black</shadowcolor>
+              <height>70</height>
+              <align>center</align>
+              <aligny>top</aligny>
+              <textoffsety>2</textoffsety>
+              <scroll>false</scroll>
+              <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
+              <font>Reg64</font>
+            </control>
+          </itemlayout>
+          <focusedlayout height="70" width="1920" condition="Skin.HasSetting(UseSingleShortcut)">
+            <control type="label">
+                  <posx>0</posx>
+                  <posy>0</posy>
+                  <width>100%</width>
+                  <textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
+                  <shadowcolor>black</shadowcolor>
+                  <height>70</height>
+                  <align>center</align>
+                  <aligny>top</aligny>
+                  <textoffsety>2</textoffsety>
+                  <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
+                  <font>Reg64</font>
+            </control>
+            <include>HiddenHomeMenuButton</include>
+          </focusedlayout>
+          
+          
           <content><include>skinshortcuts-mainmenu</include></content>
     </include>
     
@@ -378,6 +410,12 @@
 					<onclick>Control.Move(4444,1)</onclick>
 				</control>
 			</control>
+            
+            <control type="group">
+                <height>60</height>
+                <bottom>180</bottom>
+                <include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsFooter</include>
+            </control>
             <control type="rss">	
                 <description>RSS Feed</description>
                 <posx>0</posx>
@@ -480,10 +518,7 @@
                 <scroll>true</scroll>
 				<label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
 			</control>
-            <control type="button">
-                <visible>false</visible>
-                <onfocus>ClearProperty(SkinHelper.WidgetContainer)</onfocus>
-            </control>
+            <include>HiddenHomeMenuButton</include>
 		</focusedlayout>
 		<itemlayout height="120" width="590" condition="Skin.HasSetting(HomeLowHorizontal.LargeMenu)">
 			<control type="group">
@@ -522,10 +557,7 @@
 					<label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
 				</control>
 			</control>
-            <control type="button">
-                <visible>false</visible>
-                <onfocus>ClearProperty(SkinHelper.WidgetContainer)</onfocus>
-            </control>
+            <include>HiddenHomeMenuButton</include>
 		</focusedlayout>
         <content><include>skinshortcuts-mainmenu</include></content>
 	</include>
