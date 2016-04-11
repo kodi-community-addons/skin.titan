@@ -17,9 +17,9 @@
                 <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
                 <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(88888)</visible>
                 <control type="image">
-                    <right>40</right>
+                    <right>55</right>
                     <top>0</top>
-                    <width>1320</width>
+                    <width>1290</width>
                     <texture border="15">diffuse/bgpanel.png</texture>
                     <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
                     <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
@@ -30,8 +30,8 @@
                     <right>65</right>
                     <top>10</top>
                     <width>1270</width>
-                    <height>151</height>
-                    <label fallback="19055">$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                    <height>145</height>
+                    <label fallback="19055">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[HomeMenuWidgetInfoLabel][/COLOR]$VAR[HomeMenuWidgetInfoPlotAlt, • ]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                     <align>justify</align>
@@ -743,7 +743,8 @@
                 <onleft condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</onleft>
                 <ondown>300</ondown>
                 <onup>300</onup>
-                <onright>SetFocus(4444,0)</onright>
+                <onright condition="IntegerGreaterThan(Container(4444).NumItems,0)">SetFocus(4444,0)</onright>
+                <onright condition="!IntegerGreaterThan(Container(4444).NumItems,0)">77777</onright>
                 <pagecontrol>-</pagecontrol>
                 <scrolltime tween="quadratic" easing="out">150</scrolltime>
                 <orientation>Vertical</orientation>
@@ -784,8 +785,9 @@
         <!-- widgets -->   
         <control type="group" id="77777">
             <right>0</right>
-            <posx>570</posx>
-            <width>1000</width>
+            <width>100%</width>
+            <height>83%</height>
+            <bottom>0</bottom>
             <visible>!IsEmpty(Container(300).ListItem.Property(widget)) + !Skin.HasSetting(DisableAllWidgets)</visible>
             <include>animation_window_open_close</include>
             
@@ -798,41 +800,76 @@
                 <include condition="Skin.HasSetting(VerticalHomeMultiWidget)">skinshortcuts-template-VerticalHomeAdvancedWidgetFallBack</include>
             </control>
             
-            <!--change widget button -->
+             <!--change widget button -->
             <control type="group">
-                <right>65</right>
-                <bottom>60</bottom>
-                <width>800</width>
-                <height>45</height>
-                <visible>!Skin.String(DisableAllWidgets)</visible>
-                <visible>![Skin.HasSetting(VerticalHomeMultiWidget) + !IsEmpty(Container(300).ListItem.Property(widget.1))]</visible>
-                <include condition="!Skin.String(HomeLayout, verticalbig)">changeWidgetButton</include>
-            </control>
-            
-            <control type="group">
-                <right>65</right>
-                <bottom>60</bottom>
-                <width>800</width>
+                <right>50</right>
+                <posy>0</posy>
+                <width>1290</width>
                 <height>45</height>
                 <visible>![Skin.HasSetting(VerticalHomeMultiWidget) + !IsEmpty(Container(300).ListItem.Property(widget.1))]</visible>
                 <visible>!Skin.String(DisableAllWidgets) + Skin.String(HomeLayout, verticalbig)</visible>
+                <control type="image">
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                </control>
                 <control type="button" id="511">
-                    <right>0</right>
-                    <width>600</width>
+                    <width>1290</width>
                     <height>45</height>
                     <align>right</align>
-                    <font>Light28</font>
+                    <font>Light32</font>
                     <onleft>300</onleft>
                     <onright>300</onright>
                     <ondown>510</ondown>
                     <textoffsetx>50</textoffsetx>
-                    <label>[UPPERCASE]$VAR[changeWidgetLabel][/UPPERCASE]</label>
-                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <label></label>
+                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                     <onclick>$VAR[changeWidgetClickActions]</onclick>
                     <onup>$VAR[focusWidget]</onup>
                     <texturenofocus>-</texturenofocus>
                     <visible allowhiddenfocus="true">!IsEmpty(Container(300).ListItem.Property(widget))</visible>
+                </control>
+                <control type="label">
+                    <height>40</height>
+                    <right>45</right>
+                    <width>100%</width>
+                    <font>Bold30</font>
+                    <align>right</align>
+                    <aligny>top</aligny>
+                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                    <label>$VAR[changeWidgetLabel]</label>
+                    <visible>!Skin.String(HomeLayout, verticalbig) + !Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
+                </control>
+                <control type="label">
+                    <height>40</height>
+                    <posx>10</posx>
+                    <font>Bold30</font>
+                    <align>left</align>
+                    <aligny>top</aligny>
+                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                    <label>$VAR[changeWidgetLabel]</label>
+                    <visible>!Skin.String(HomeLayout, verticalbig) + Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
+                </control>
+                <control type="label">
+                    <height>40</height>
+                    <right>45</right>
+                    <width>100%</width>
+                    <font>Light32</font>
+                    <align>right</align>
+                    <aligny>top</aligny>
+                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                    <label>[UPPERCASE]$VAR[changeWidgetLabel][/UPPERCASE]</label>
+                    <visible>Skin.String(HomeLayout, verticalbig) + !Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
+                </control>
+                <control type="label">
+                    <height>40</height>
+                    <posx>10</posx>
+                    <font>Light32</font>
+                    <aligny>top</aligny>
+                    <align>left</align>
+                    <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                    <label>[UPPERCASE]$VAR[changeWidgetLabel][/UPPERCASE]</label>
+                    <visible>Skin.String(HomeLayout, verticalbig) + Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
                 </control>
                 <control type="image">
                     <right>5</right>
@@ -844,10 +881,11 @@
                 </control>
             </control>
             
+            
             <!-- busy image while widget loading -->
             <control type="multiimage">
                 <right>60</right>
-                <bottom>120</bottom>
+                <top>120</top>
                 <width>100</width>
                 <height>100</height>
                 <aspectratio>keep</aspectratio>
@@ -861,10 +899,6 @@
         </control>
 	
     </include>
-    <variable name="VerticalHomeAdvancedWidgetHeader_textcolor">
-        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">$INFO[Skin.String(ViewDetailsListItemTextColor)]</value>
-        <value>$INFO[Skin.String(GeneralTextColor)]</value>
-    </variable>
     <include name="VerticalHomeAdvancedWidgetHeader">
         <control type="group" id="$PARAM[id]">
             <width>1285</width>
