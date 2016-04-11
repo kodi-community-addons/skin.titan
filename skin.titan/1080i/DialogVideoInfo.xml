@@ -52,8 +52,21 @@
                     <visible>!Skin.HasSetting(DialogVideoInfoHidePanel)</visible>
 					<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
 				</control>
-                <!-- Header -->
+                
+                <!-- clearlogo at top left-->
+                <control type="image" id="887766">
+                    <left>60</left>
+                    <top>10</top>
+                    <width>450</width>
+                    <height>130</height>
+                    <fadetime>600</fadetime>
+                    <aspectratio align="left" aligny="center">keep</aspectratio>
+                    <texture>$VAR[ListItemClearLogo]</texture>
+                </control>
+                
+                <!-- Header (if no logo)-->
                 <control type="group">
+                    <visible>IsEmpty(Control.GetLabel(887766))</visible>
                     <control type="label">
                         <posx>61</posx>
                         <posy>10</posy>
@@ -76,18 +89,6 @@
                         <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                     </control>
                 </control>
-                
-                <!-- clearlogo -->
-                <control type="image">
-                    <right>60</right>
-                    <top>10</top>
-                    <width>450</width>
-                    <height>130</height>
-                    <fadetime>600</fadetime>
-                    <aspectratio align="right" aligny="center">keep</aspectratio>
-                    <texture>$INFO[ListItem.Art(clearlogo)]</texture>
-                    <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
-                </control>
 
                 <control type="image">
                     <!--studio logo -->
@@ -99,9 +100,6 @@
                     <include condition="!Skin.HasSetting(PreferColorStudioLogos) + !Skin.String(SkinHelper.StudioImagesPath)">videoInfoColorDiffuse</include>
                     <texture fallback="special://skin/extras/flags/studios/Unknown Studio.png">$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
                     <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
-                    <animation type="Conditional" condition="!IsEmpty(ListItem.Art(clearlogo))">
-                        <effect type="slide" start="0,0" end="-450,0" time="400" tween="cubic" easing="inout" delay="0" />
-                    </animation>
                 </control>
                 <control type="label">
                     <!-- additional info subtitle -->
@@ -730,7 +728,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll delay="4000">true</scroll>
-                                    <visible>!IsEmpty(ListItem.mpaa)</visible>
+                                    <visible>!IsEmpty(ListItem.mpaa) + IsEmpty(Window(Home).Property(SkinHelper.ListItemSubtitles))</visible>
 								</control>
 							</control>
 							
