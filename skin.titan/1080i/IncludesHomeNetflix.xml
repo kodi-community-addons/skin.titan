@@ -289,7 +289,7 @@
             </control>
             
             <!-- clearlogo -->
-            <control type="image">
+            <control type="image" id="442299">
                 <height>120</height>
                 <width>300</width>
                 <left>50</left>
@@ -312,6 +312,19 @@
                     <aligny>top</aligny>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <label>$VAR[HomeMenuWidgetInfoLabel]</label>
+                    <visible>IsEmpty(Control.GetLabel(442299))</visible>
+                </control>
+                <control type="label">
+                    <height>30</height>
+                    <visible>!IsEmpty(Control.GetLabel(442299))</visible>
+                </control>
+                <control type="label">
+                    <height>40</height>
+                    <font>Reg30</font>
+                    <align>left</align>
+                    <textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+                    <label>$VAR[HomeMenuWidgetInfoLabel]</label>
+                    <visible>!IsEmpty(Control.GetLabel(442299))</visible>
                 </control>
                 <!-- <control type="group">
                     <height>60</height>
@@ -497,30 +510,21 @@
 		<!--Side Menu-->
         <include>SideBladeMainMenu</include>
         
-        <!-- busy spinner overlay -->
-        <control type="group">
-            <include>DialogOverlayExtra</include>
+        <!-- busy spinner  -->
+        <control type="multiimage">
+            <animation effect="fade" start="0" end="100" time="0">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="500" delay="500">Hidden</animation>
+            <right>50</right>
+            <top>50</top>
+            <width>100</width>
+            <height>100</height>
+            <aspectratio>keep</aspectratio>
+            <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
+            <timeperimage>100</timeperimage>
+            <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
+            <fadetime>0</fadetime>
+            <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
             <visible>Container(510).IsUpdating</visible>
-            <control type="group">
-                <posx>960</posx>
-                <!--Center-->
-                <posy>540</posy>
-                <!--Center-->
-                <control type="multiimage">
-                    <animation effect="fade" start="0" end="100" time="0">Visible</animation>
-                    <animation effect="fade" start="100" end="0" time="500" delay="500">Hidden</animation>
-                    <posx>-75</posx>
-                    <posy>-75</posy>
-                    <width>150</width>
-                    <height>150</height>
-                    <aspectratio>keep</aspectratio>
-                    <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexturePath)]</imagepath>
-                    <timeperimage>100</timeperimage>
-                    <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
-                    <fadetime>0</fadetime>
-                    <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-                </control>
-            </control>
         </control>
         
     </include>
