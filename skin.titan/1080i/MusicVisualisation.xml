@@ -10,6 +10,27 @@
             <visible>[!Control.IsVisible(3333) | IsEmpty(Control.GetLabel(3333))] + [!Control.IsVisible(3334) | IsEmpty(Control.GetLabel(3334))]</visible>
 		</control>
          <include>NowPlayingBackground</include>
+         
+         <!-- lyrics overlay -->
+         <control type="group">
+            <visible>!Skin.HasSetting(DisableLyricsOverlay) + Window.IsActive(script-cu-lrclyrics-main.xml)</visible>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>100%</width>
+                <height>100%</height>
+                <texture>special://skin/extras/bgoverlays/Surround.png</texture>
+                <colordiffuse>ff000000</colordiffuse>
+            </control>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>100%</width>
+                <height>100%</height>
+                <texture>special://skin/extras/bgoverlays/Spot.png</texture>
+                <colordiffuse>ff000000</colordiffuse>
+            </control>
+        </control>
 
         <control type="group">
             <include>HideOsdConditions</include>
@@ -44,7 +65,6 @@
                 <font>Reg30</font>
                 <scrollspeed>80</scrollspeed>
                 <label>$INFO[Window(Home).Property(SkinHelper.Player.Music.Info)]</label>
-                <visible>!Window.IsActive(script-cu-lrclyrics-main.xml)</visible>
                 <visible>Skin.HasSetting(enableArtistBio)</visible>
             </control>
         </control>
@@ -55,12 +75,35 @@
 			<top>20</top>
 			<width>550</width>
 			<height>180</height>
-			<fadetime>600</fadetime>
+			<fadetime>900</fadetime>
 			<aspectratio align="right" aligny="top">keep</aspectratio>
 			<texture>$INFO[Window(Home).Property(SkinHelper.Player.Music.ClearLogo)]</texture>
             <visible>Skin.String(MusicArtistLogo,enabled) | [Skin.String(MusicArtistLogo,osd) + [Player.ShowInfo | Window.IsActive(MusicOSD)]]</visible>
             <include>animation_fade_visible_hidden_delayed</include>
 		</control>
+        
+        <control type="group">
+			<animation effect="fade" time="900">WindowOpen</animation>
+			<animation effect="fade" time="900">WindowClose</animation>
+			<animation effect="fade" time="400">Visible</animation>
+			<animation effect="fade" time="400">Hidden</animation>
+			<visible>Player.HasAudio + !Window.IsActive(script-cu-lrclyrics-main.xml)</visible>
+			<visible>Skin.HasSetting(MusicOSDScrollingTitles)</visible>
+			<control type="label">
+                <description>Now Playing</description>
+                <left>0</left>
+                <top>600</top>
+                <width>2025</width>
+                <height>25</height>
+                <label>$INFO[MusicPlayer.Artist,  , • ]$INFO[MusicPlayer.Title,  ,]$INFO[MusicPlayer.Artist,  , • ]$INFO[MusicPlayer.Title,  ,]$INFO[MusicPlayer.Artist,  , • ]$INFO[MusicPlayer.Title,  ,]</label>
+                <scroll>true</scroll>
+                <font>Light270</font>
+                <pauseatend>0</pauseatend>
+                <textcolor>77white</textcolor>
+                <align>left</align>
+            </control>
+        </control>
+
 
 		<!-- codec info -->
         <control type="group" id="0">
@@ -80,7 +123,7 @@
 			<control type="label">
 				<description>row 1 label</description>
 				<left>20</left>
-				<width>1900</width>
+				<width>11350</width>
 				<top>10</top>
 				<align>left</align>
 				<label>$INFO[musicplayer.Codec,$LOCALIZE[21446]: ,]$INFO[musicplayer.Bitrate, · $LOCALIZE[623]: ,kbps]$INFO[musicplayer.bitspersample, · $LOCALIZE[612]: ,]$INFO[musicplayer.Samplerate, · $LOCALIZE[613]: ,kHz]$INFO[musicplayer.Channels, · $LOCALIZE[21444]: ]</label>
@@ -91,7 +134,7 @@
 				<description>row 2 label</description>
 				<left>20</left>
 				<top>40</top>
-				<width>1900</width>
+				<width>11350</width>
 				<align>left</align>
 				<label>$INFO[Visualisation.Name,, [I][COLOR=orange]($LOCALIZE[20166])[/COLOR][/I] · ]fps: $INFO[System.FPS]</label>
 				<font>Light22</font>
@@ -102,7 +145,7 @@
 				<description>Unlocked row 2 label</description>
 				<left>20</left>
 				<top>40</top>
-				<width>1900</width>
+				<width>11350</width>
 				<align>left</align>
 				<label>$INFO[Visualisation.Name,, · ]fps: $INFO[System.FPS]</label>
 				<font>Light22</font>
@@ -113,7 +156,7 @@
 				<description>row 3 label</description>
 				<left>20</left>
 				<top>70</top>
-				<width>1900</width>
+				<width>11350</width>
 				<align>left</align>
 				<label>$INFO[Visualisation.Preset,$LOCALIZE[13388]: ]</label>
 				<font>Light22</font>
