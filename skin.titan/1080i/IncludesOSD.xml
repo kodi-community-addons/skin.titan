@@ -623,31 +623,6 @@
 				<texture border="5">$VAR[osdpanelimage]</texture>
 				<colordiffuse>$INFO[Skin.String(OSDPanelColor)]</colordiffuse>
 			</control>
-
-			<control type="image" id="13333">
-				<!--Music-->
-				<posx>40</posx>
-				<bottom>15</bottom>
-				<width>190</width>
-				<height>190</height>
-				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover.png" border="5">$VAR[AudioPlayerCoverImage]</texture>
-				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
-				<visible>Player.HasAudio</visible>
-                <visible>!IsEmpty(Control.GetLabel(13333))</visible>
-			</control>
-            <control type="image">
-				<!--Music-->
-				<posx>40</posx>
-				<bottom>15</bottom>
-				<width>190</width>
-				<height>190</height>
-				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Music.Thumb)]</texture>
-				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
-				<visible>Player.HasAudio</visible>
-                <visible>IsEmpty(Control.GetLabel(13333))</visible>
-			</control>
 			
 			<!--Cover movies - poster-->
 			<control type="image" id="1">
@@ -658,7 +633,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
-				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>[!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
 			
 			<!--Cover no poster-->
@@ -670,7 +645,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
 				<aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>Player.HasVideo + IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster))</visible>
+				<visible>IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster))</visible>
 			</control>
 			
 			<!--clearlogo-->
@@ -682,7 +657,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[VideoPlayerClearLogo]</texture>
 				<aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>Player.HasVideo + !VideoPlayer.Content(livetv) + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>!VideoPlayer.Content(livetv) + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
 			
 			<control type="group">
@@ -697,6 +672,8 @@
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>[B]$VAR[OSDLabel1,, • ][/B]$VAR[OSDLabel2]</label>
 					<scroll>false</scroll>
+                    <animation time="300" effect="fade" delay="300">Visible</animation>
+                    <animation time="100" effect="fade" delay="0">Hidden</animation>
 					<visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
 				</control>
                 <!-- media flags -->
@@ -704,27 +681,9 @@
                     <posx>250</posx>
 					<posy>85</posy>
                     <include>mediaflags</include>
+                    <animation time="300" effect="fade" delay="300">Visible</animation>
+                    <animation time="100" effect="fade" delay="0">Hidden</animation>
                     <visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
-                    <visible>player.hasvideo</visible>
-                </control>
-                <control type="image">
-                    <!--Stars music-->
-                    <visible>Window.IsActive(visualisation)</visible>
-                    <visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
-                    <posx>250</posx>
-					<posy>77</posy>
-                    <width>200</width>
-                    <height>50</height>
-                    <aspectratio aligny="top" align="left">keep</aspectratio>
-                    <colordiffuse>$INFO[Skin.String(OSDPrimaryTextColor)]</colordiffuse>
-                    <texture fallback="leftrating/rating0.png">$INFO[Player.StarRating,leftrating/]</texture>
-                </control>
-                <control type="group">
-                    <posx>470</posx>
-					<posy>87</posy>
-                    <include>mediaflagsAudio</include>
-                    <visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
-                    <visible>!player.hasvideo</visible>
                 </control>
 
 				<control type="progress" id="1">
@@ -953,6 +912,8 @@
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>[B]$VAR[OSDLabel1,, • ][/B]$VAR[OSDLabel2]</label>
 					<scroll>false</scroll>
+                    <animation time="300" effect="fade" delay="300">Visible</animation>
+                    <animation time="100" effect="fade" delay="0">Hidden</animation>
 					<visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
 				</control>
                 <!-- media flags -->
@@ -960,6 +921,8 @@
                     <posx>430</posx>
 					<posy>87</posy>
                     <include>mediaflagsAudio</include>
+                    <animation time="300" effect="fade" delay="300">Visible</animation>
+                    <animation time="100" effect="fade" delay="0">Hidden</animation>
                     <visible>![[Window.IsActive(musicosd) | Window.IsActive(videoosd)] + ![Window.IsVisible(OSDVideoSettings) | Window.IsVisible(OSDAudioSettings) | Window.IsVisible(subtitlesearch)]]</visible>
                 </control>
 
@@ -1084,6 +1047,7 @@
             <control type="image">
                 <visible>Window.IsActive(visualisation)</visible>
                 <visible>![Window.IsActive(musicosd) + !Window.IsVisible(OSDAudioSettings)]</visible>
+                <include>animation_fade_visible_hidden</include>
                 <right>30</right>
 				<posy>80</posy>
                 <width>200</width>
