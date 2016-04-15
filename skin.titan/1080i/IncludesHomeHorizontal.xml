@@ -408,7 +408,7 @@
 					<scrolltime tween="quadratic" easing="out">300</scrolltime>
 					<focusposition>2</focusposition>
 					<movement>2</movement>
-					<orientation>Horizontal</orientation>
+					<orientation>horizontal</orientation>
                     <animation effect="slide" tween="cubic" time="0" start="0" end="0,150" reversible="true" condition="!Control.IsVisible(4444)">Conditional</animation>
                     <visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444) | Skin.HasSetting(AutoShowSubmenu)] + !Control.HasFocus(2) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
 					<itemlayout height="70" width="384">
@@ -429,8 +429,8 @@
                         <control type="image">
                             <!-- focus sub menu -->
                             <texture>colors/color_white.png</texture>
-                            <colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-                            <visible>Control.HasFocus(4444) | SubString(Window(Home).Property(submenu),show)</visible>
+                            <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                            <visible>Control.HasFocus(4444)</visible>
                         </control>
                         <control type="label">
                             <width>94%</width>
@@ -443,6 +443,20 @@
                             <aligny>center</aligny>
                             <scroll>true</scroll>
                             <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+                            <visible>!Control.HasFocus(4444)</visible>
+                        </control>
+                        <control type="label">
+                            <width>94%</width>
+                            <height>100%</height>
+                            <left>3%</left>
+                            <font>Light26</font>
+                            <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                            <textoffsetx>0</textoffsetx>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <scroll>true</scroll>
+                            <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+                            <visible>Control.HasFocus(4444)</visible>
                         </control>
                     </focusedlayout>
                     <content>
@@ -506,7 +520,7 @@
 		<width>100%</width>
 		<height>120</height>
 		<onup>$VAR[HomeButtonUpAction]</onup>
-		<ondown>4444</ondown>
+		<ondown>Control.SetFocus(4444,0)</ondown>
 		<pagecontrol>-</pagecontrol>
 		<movement>1</movement>
 		<scrolltime tween="sine" easing="inout">300</scrolltime>
