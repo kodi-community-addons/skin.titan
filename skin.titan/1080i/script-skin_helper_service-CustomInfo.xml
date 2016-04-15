@@ -58,11 +58,26 @@
                     <aspectratio align="left" aligny="center">keep</aspectratio>
                     <texture>$VAR[ListItemClearLogo]</texture>
                     <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(88888)</visible>
+                    <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
+                    <visible>!IsEmpty(Control.GetLabel(887766))</visible>
+                </control>
+                
+                <!-- clearlogo at top right for music-->
+                <control type="image">
+                    <right>60</right>
+                    <top>10</top>
+                    <width>450</width>
+                    <height>130</height>
+                    <fadetime>600</fadetime>
+                    <aspectratio align="right" aligny="center">keep</aspectratio>
+                    <texture>$VAR[ListItemClearLogo]</texture>
+                    <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(88888)</visible>
+                    <visible>[StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
                 </control>
                 
                 <!-- Header -->
                 <control type="group">
-                    <visible>IsEmpty(Control.GetLabel(887766))</visible>
+                    <visible>!Control.IsVisible(887766)</visible>
                     <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(88888)</visible>
                     <control type="label">
                         <posx>61</posx>
@@ -75,7 +90,7 @@
                         <label>$INFO[Container(999).ListItem.Title]</label>
                         <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                     </control>
-                     <control type="label">
+                    <control type="label">
                         <posy>85</posy>
                         <posx>61</posx>
                         <width min="0" max="1100">auto</width>
@@ -84,6 +99,18 @@
                         <font>Reg30</font>
                         <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
                         <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                        <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
+                    </control>
+                    <control type="label">
+                        <posy>85</posy>
+                        <posx>61</posx>
+                        <width min="0" max="1100">auto</width>
+                        <height>50</height>
+                        <label>$INFO[Container(999).ListItem.Artist]</label>
+                        <font>Reg30</font>
+                        <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                        <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                        <visible>[StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
                     </control>
                 </control>
 
@@ -111,6 +138,7 @@
                     <label>$INFO[Window.Property(subtitle)]</label>
                     <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                     <visible>!IsEmpty(Window.Property(AdditionalInfo))</visible>
+                    <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
                 </control>
 				
 				<control type="group">
@@ -340,24 +368,38 @@
 								<posy>0</posy>
 								<width>1150</width>
 								<height>215</height>
-								<label>$INFO[Container(999).ListItem.Plot]</label>
+								<label>$VAR[SpecialVideoInfoPlot]</label>
 								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
                                 <visible>![!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                                <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
 							</control>
                             <control type="textbox">
 								<posx>0</posx>
 								<posy>0</posy>
 								<width>1790</width>
 								<height>215</height>
-								<label>$INFO[Container(999).ListItem.Plot]</label>
+								<label>$VAR[SpecialVideoInfoPlot]</label>
 								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
                                 <visible>!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)</visible>
+                                <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
+							</control>
+                            <control type="textbox">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>1150</width>
+								<height>505</height>
+								<label>$VAR[SpecialVideoInfoPlot]</label>
+								<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+								<align>justify</align>
+								<font>Reg26</font>
+                                <visible>[StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
 							</control>
 							<control type="image">
 								<width>1120</width>
@@ -376,7 +418,7 @@
 								<!--Premiered or Year -->
 								<width>950</width>
 								<height>40</height>
-								<visible>!IsEmpty(Container(999).ListItem.Premiered) | !IsEmpty(Container(999).ListItem.Year)</visible>
+								<visible>!IsEmpty(Container(999).ListItem.Premiered) | !IsEmpty(Container(999).ListItem.Year) | !IsEmpty(Container(999).ListItem.Duration)</visible>
 								<control type="image">
 									<posx>0</posx>
 									<posy>3</posy>
@@ -417,7 +459,7 @@
 									<height>49</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/time-icon.png</texture>
-									<visible>!IsEmpty(Container(999).ListItem.Duration)</visible>
+									<visible>!IsEmpty(Window(home).Property(SkinHelper.ListItemDuration))</visible>
 								</control>
 								<control type="label">
 									<posx>610</posx>
@@ -430,6 +472,30 @@
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
 								</control>
+                                
+                                <control type="image">
+									<posx>0</posx>
+									<posy>3</posy>
+									<width>49</width>
+									<height>49</height>
+                                    <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+									<texture>dialogs/videoinfo/time-icon.png</texture>
+									<visible>IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + IsEmpty(Container(999).ListItem.Premiered) + IsEmpty(Container(999).ListItem.Year) + !IsEmpty(Container(999).ListItem.Duration)</visible>
+								</control>
+								<control type="label">
+									<posx>60</posx>
+									<posy>0</posy>
+									<width>530</width>
+									<font>Reg26</font>
+									<align>left</align>
+									<label>$INFO[Container(999).ListItem.Duration]</label>
+									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+									<scroll>false</scroll>
+									<visible>IsEmpty(Window(home).Property(SkinHelper.ListItemDuration)) + IsEmpty(Container(999).ListItem.Premiered) + IsEmpty(Container(999).ListItem.Year) + !IsEmpty(Container(999).ListItem.Duration)</visible>
+								</control>
+                                
+                                
 							</control>
 							<control type="group">
 								<!--Director and Writer -->
@@ -533,7 +599,7 @@
 								<!--videocodec and audiocodec-->
 								<width>1150</width>
 								<height>40</height>
-                                <visible>StringCompare(Container(999).ListItem.Property(type),movie) | StringCompare(Container(999).ListItem.Property(type),episode)</visible>
+                                <visible>!IsEmpty(Window(home).Property(SkinHelper.ListItemAllAudioStreams)) | !IsEmpty(Container(999).VideoCodec)</visible>
 								<control type="image">
 									<posx>10</posx>
 									<posy>15</posy>
@@ -773,8 +839,9 @@
 
 						</control>
                         
-                        <!-- poster image -->
+                        <!-- poster image video-->
                         <control type="group">
+                            <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
                             <visible>![Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
                             <control type="image">
                                 <!--cdart image-->
@@ -782,12 +849,11 @@
                                 <posy>310</posy>
                                 <width>500</width>
                                 <height>500</height>
-                                <texture background="true" diffuse="diffuse/cdmask_big.png" fallback="defaultcovers/cd_big.png">$INFO[Container(999).ListItem.Art(discart)]</texture>
+                                <texture background="true" diffuse="diffuse/cdmask_big.png">$VAR[SpecialVideoInfoDiscArtImage]</texture>
                                 <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
                                 <animation effect="fade" start="100" end="0" delay="0" time="150" pulse="false" condition="!Skin.HasSetting(VideoInfo_ShowCDart)">Conditional</animation>
                                 <animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
                                 <animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-                                <visible>!IsEmpty(Container(999).ListItem.Art(poster)) | !IsEmpty(Container(999).ListItem.Art(tvshow.poster)) | !IsEmpty(Container(999).ListItem.Property(TVShowThumb))</visible>
                             </control>
                             <control type="image">
                                 <!--poster-->
@@ -795,8 +861,45 @@
                                 <posy>210</posy>
                                 <width>530</width>
                                 <height>67%</height>
+                                <aspectratio align="right" aligny="center" scalediffuse="true">keep</aspectratio>
+                                <texture background="true" diffuse="diffuse/poster.png" border="5">$VAR[SpecialVideoInfoPosterImage]</texture>
+                            </control>
+                        </control>
+                        
+                        <!-- poster image audio-->
+                        <control type="group">
+                            <visible>[StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
+                            <visible>![Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                            <control type="image" id="887755">
+                                <!--cdart image-->
+                                <right>100</right>
+                                <posy>220</posy>
+                                <width>500</width>
+                                <height>500</height>
+                                <texture background="true" diffuse="diffuse/cdmask_big.png">$VAR[SpecialVideoInfoDiscArtImage]</texture>
+                                <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+                                <animation effect="fade" start="100" end="0" delay="0" time="150" pulse="false" condition="!Skin.HasSetting(VideoInfo_ShowCDart)">Conditional</animation>
+                                <animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+                                <animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
+                                <visible>!IsEmpty(Control.GetLabel(887755)) + Skin.HasSetting(VideoInfo_ShowCDart)</visible>
+                            </control>
+                            <control type="image">
+                                <right>90</right>
+                                <posy>210</posy>
+                                <width>530</width>
+                                <height>65%</height>
+                                <aspectratio align="right" aligny="bottom" scalediffuse="true">keep</aspectratio>
+                                <texture background="true" diffuse="diffuse/poster.png" border="5">$VAR[SpecialVideoInfoPosterImage]</texture>
+                                <visible>Control.IsVisible(887755)</visible>
+                            </control>
+                            <control type="image">
+                                <right>90</right>
+                                <posy>240</posy>
+                                <width>530</width>
+                                <height>65%</height>
                                 <aspectratio align="right" aligny="top" scalediffuse="true">keep</aspectratio>
-                                <texture background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png" border="5">$INFO[Container(999).ListItem.Art(poster)]</texture>
+                                <texture background="true" diffuse="diffuse/poster.png" border="5">$VAR[SpecialVideoInfoPosterImage]</texture>
+                                <visible>!Control.IsVisible(887755)</visible>
                             </control>
                         </control>
                         
@@ -832,7 +935,7 @@
                         <visible>!Skin.HasSetting(DialogVideoInfo_HideFileName)</visible>
                         <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
                     </control>
-                                 <control type="button" id="9001">
+                    <control type="button" id="9001">
                         <!--Hidden Button-->
                         <onfocus condition="StringCompare(Window.Property(AdditionalInfo),cast)">SetFocus(998)</onfocus>
                         <onfocus condition="StringCompare(Window.Property(AdditionalInfo),similar)">SetFocus(997)</onfocus>
@@ -912,7 +1015,7 @@
                                   </control>
                             </focusedlayout>
                         </control>
-                                         <!-- busy image while widget loading -->
+                        <!-- busy image while widget loading -->
                         <control type="multiimage">
                             <posy>520</posy>
                             <left>663</left>
@@ -926,7 +1029,7 @@
                             <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
                             <visible>Container(51).IsUpdating</visible>
                         </control>
-                                                          <control type="group">
+                        <control type="group">
                                 <right>50</right>
                                 <posy>210</posy>
                                 <width>530</width>
