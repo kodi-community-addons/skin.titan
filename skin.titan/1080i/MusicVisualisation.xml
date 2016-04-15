@@ -38,14 +38,14 @@
 			<include condition="!Skin.HasTheme(classic) + !Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModern</include>
 			<include condition="!Skin.HasTheme(classic) + Skin.HasSetting(UseSlimOSDPanel)">OSDPanelModernSlimMusic</include>
 			<visible>[Skin.HasSetting(AlwaysShowMusicInfo) | Player.ShowInfo | Window.IsActive(MusicOSD)]</visible>
-            <animation effect="slide" end="0,-50" time="0" condition="Skin.HasSetting(enableArtistBio) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Music.Info))">Conditional</animation>
-			<animation effect="slide" start="0,400" end="0,0" tween="cubic" easing="out" delay="300" time="250" reversible="false">Visible</animation>
-			<animation effect="slide" start="0,0" end="0,400" tween="cubic" easing="out" delay="300" time="250" reversible="false">Hidden</animation>
+            <animation effect="slide" end="0,-50" time="0" condition="Skin.HasSetting(enableArtistBio)">Conditional</animation>
+			<animation effect="slide" start="0,400" end="0,0" tween="cubic" easing="out" delay="300" time="250" reversible="false" condition="!Skin.HasSetting(LowPerformanceMode)">Visible</animation>
+			<animation effect="slide" start="0,0" end="0,400" tween="cubic" easing="out" delay="300" time="250" reversible="false" condition="!Skin.HasSetting(LowPerformanceMode)">Hidden</animation>
 		</control>
         
         <!--artist BIO-->
         <control type="group">
-            <visible>Skin.HasSetting(enableArtistBio) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Music.Info))</visible>
+            <visible>Skin.HasSetting(enableArtistBio)</visible>
             <control type="image">
                 <bottom>0</bottom>
                 <width>100%</width>
@@ -65,7 +65,6 @@
                 <font>Reg30</font>
                 <scrollspeed>80</scrollspeed>
                 <label>$INFO[Window(Home).Property(SkinHelper.Player.Music.Info)]</label>
-                <visible>Skin.HasSetting(enableArtistBio)</visible>
             </control>
         </control>
 		
