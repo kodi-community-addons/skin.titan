@@ -206,7 +206,6 @@
 				<height>145</height>
 				<texture border="5">diffuse/panel.png</texture>
 				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-				<visible>![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)]</visible>
 			</control>
             <control type="fadelabel">
                 <!--Now Playing-->
@@ -217,7 +216,6 @@
                 <font>Reg28</font>
                 <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                 <label>$VAR[NowPlayingLabel]</label>
-				<animation effect="slide" time="0" start="0" end="140" reversible="false" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)">Conditional</animation>
             </control>
             <control type="fadelabel">
                 <!--Title-->
@@ -229,74 +227,84 @@
                 <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                 <label>$VAR[NowPlayingTitle]</label>
                 <scroll>false</scroll>
-				<animation effect="slide" time="0" start="0" end="140" reversible="false" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)">Conditional</animation>
             </control>
-			<!-- cd cover -->
-			<control type="image">
-				<posx>110</posx>
-				<posy>10</posy>
-				<width>123</width>
-				<height>123</height>
-				<aligny>center</aligny>
-				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-				<fadetime>300</fadetime>
-				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
-				<texture background="true" fallback="defaultcovers/cd_small.png" diffuse="diffuse/cdmask_small.png">$VAR[PlayerDiscArtImage]</texture>
-				<visible>Player.HasAudio + !Skin.HasSetting(DisableNowPlayingDiscArt)</visible>
-				<visible>![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)]</visible>
-			</control>
-			<control type="image">
-				<!--Music bg-->
-				<posx>60</posx>
-                <posy>10</posy>
-				<width>123</width>
-				<height>123</height>
-				<fadetime>200</fadetime>
-				<aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
-				<texture border="5">diffuse/music_cover_cd_medium.png</texture>
-				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-				<visible>Player.HasAudio</visible>
-				<visible>![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)]</visible>
-			</control>
-			<control type="image">
-				<!--music cover-->
-				<posx>60</posx>
-                <posy>10</posy>
-				<width>123</width>
-				<height>123</height>
-				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover_cd_medium.png" border="5" fallback="DefaultAddonMusic.png">$INFO[Player.Art(thumb)]</texture>
-				<aspectratio align="left" aligny="center">keep</aspectratio>
-				<visible>Player.HasAudio</visible>
-				<visible>![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)]</visible>
-			</control>
             
-            <control type="image">
-				<posx>85</posx>
-				<posy>10</posy>
-				<width>123</width>
-				<height>123</height>
-				<aligny>center</aligny>
-				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-				<fadetime>300</fadetime>
-				<animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
-				<texture background="true" fallback="defaultcovers/cd_small.png" diffuse="diffuse/cdmask_small.png">$INFO[Player.Art(discart)]</texture>
-				<visible>Player.HasVideo + !Skin.HasSetting(DisableNowPlayingDiscArt) + !IsEmpty(Player.Art(discart))</visible>
-				<visible>![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)]</visible>
-			</control>
+            <!-- AUDIO COVER + DISCART -->
+            <control type="group">
+                <visible>Player.HasAudio</visible>
+                <!-- cd cover -->
+                <control type="image">
+                    <posx>110</posx>
+                    <posy>10</posy>
+                    <width>123</width>
+                    <height>123</height>
+                    <aligny>center</aligny>
+                    <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+                    <fadetime>300</fadetime>
+                    <animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+                    <texture background="true" fallback="defaultcovers/cd_small.png" diffuse="diffuse/cdmask_small.png">$VAR[PlayerDiscArtImage]</texture>
+                    <visible>!Skin.HasSetting(DisableNowPlayingDiscArt)</visible>
+                </control>
+                <control type="image">
+                    <!--Music bg-->
+                    <posx>60</posx>
+                    <posy>10</posy>
+                    <width>123</width>
+                    <height>123</height>
+                    <fadetime>200</fadetime>
+                    <aspectratio scalediffuse="true" align="center" aligny="center">stretch</aspectratio>
+                    <texture border="5">diffuse/music_cover_cd_medium.png</texture>
+                    <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                </control>
+                <control type="image" id="13333">
+                    <!--music cover-->
+                    <posx>60</posx>
+                    <posy>10</posy>
+                    <width>123</width>
+                    <height>123</height>
+                    <fadetime>200</fadetime>
+                    <texture background="true" diffuse="diffuse/music_cover_cd.png" border="5" fallback="DefaultMusicSongs.png">$VAR[AudioPlayerCoverImage]</texture>
+                    <visible>!Skin.HasSetting(DisableNowPlayingDiscArt)</visible>
+                </control>
+                <control type="image">
+                    <!--music cover-->
+                    <posx>60</posx>
+                    <posy>10</posy>
+                    <width>123</width>
+                    <height>123</height>
+                    <fadetime>200</fadetime>
+                    <texture background="true" fallback="DefaultMusicSongs.png">$VAR[AudioPlayerCoverImage]</texture>
+                    <visible>Skin.HasSetting(DisableNowPlayingDiscArt)</visible>
+                </control>
+            </control>
             
-			<control type="image">
-				<!--Cover for all other-->
-				<posx>60</posx>
-                <posy>5</posy>
-				<width>100</width>
-				<height>130</height>
-				<fadetime>200</fadetime>
-				<texture background="true">$VAR[VideoPlayerPoster]</texture>
-				<aspectratio align="left" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo</visible>
-				<visible>![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + window.isactive(home)]</visible>
-			</control>
+            <!-- VIDEO COVER -->
+            <control type="group">
+                <visible>Player.HasVideo</visible>
+                <control type="image">
+                    <posx>85</posx>
+                    <posy>10</posy>
+                    <width>123</width>
+                    <height>123</height>
+                    <aligny>center</aligny>
+                    <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+                    <fadetime>300</fadetime>
+                    <animation effect="rotate" end="-360" center="auto" time="4800" loop="true" reversible="false" condition="!Player.Paused">Conditional</animation>
+                    <texture background="true" fallback="defaultcovers/cd_small.png" diffuse="diffuse/cdmask_small.png">$VAR[PlayerDiscArtImage]</texture>
+                    <visible>!Skin.HasSetting(DisableNowPlayingDiscArt) + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+                </control>
+                <control type="image">
+                    <!--Cover image-->
+                    <posx>60</posx>
+                    <posy>5</posy>
+                    <width>240</width>
+                    <height>130</height>
+                    <fadetime>200</fadetime>
+                    <texture background="true">$VAR[VideoPlayerPoster]</texture>
+                    <aspectratio align="left" aligny="center">keep</aspectratio>
+                </control>
+            </control>
+            
 			<!-- hidden button to go fullscreen on click -->
 			<control type="button">
 				<posx>-60</posx>
@@ -324,7 +332,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[VideoPlayerClearArt]</texture>
 				<aspectratio align="right" aligny="center">keep</aspectratio>
-				<visible>!IsEmpty(Control.GetLabel(884455))</visible>
+				<visible>!IsEmpty(Control.GetLabel(884455)) + !Skin.HasSetting(DisableNowPlayingClearArt)</visible>
 			</control>
             
             <!-- clock -->
