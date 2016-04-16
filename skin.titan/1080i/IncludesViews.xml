@@ -83,42 +83,39 @@
     </control>
         
     <!--Scrolling Letter-->
-    <control type="image">
+    <control type="group">
+        <visible>!Skin.HasSetting(DisableScrollingLetters)</visible>
         <visible>Container.Scrolling + [StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])]</visible>
-        <posx>910</posx>
-        <posy>480</posy>
-        <width>100</width>
-        <height>100</height>
-        <texture border="5">diffuse/panel.png</texture>
-             <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
         <animation effect="fade" start="0" end="100" time="400" delay="30">Visible</animation>
         <animation effect="fade" start="100" end="0" time="400" delay="150">Hidden</animation>
-    </control>
-    <control type="image">
-        <visible>Container.Scrolling + [StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])]</visible>
-        <posx>910</posx>
-        <posy>480</posy>
-        <width>100</width>
-        <height>100</height>
-        <texture border="5">diffuse/panel.png</texture>
-        <bordersize>8</bordersize>
-             <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
-        <animation effect="fade" start="0" end="100" time="400" delay="30">Visible</animation>
-        <animation effect="fade" start="100" end="0" time="400" delay="150">Hidden</animation>
-    </control>
-    <control type="label">
-        <visible>Container.Scrolling + [StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])]</visible>
-        <posx>910</posx>
-        <posy>480</posy>
-        <width>100</width>
-        <height>100</height>
-        <align>center</align>
-        <aligny>center</aligny>
-        <font>Bold55</font>
-        <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
-        <label>$INFO[ListItem.SortLetter]</label>
-        <animation effect="fade" start="0" end="100" time="400" delay="30">Visible</animation>
-        <animation effect="fade" start="100" end="0" time="400" delay="150">Hidden</animation>
+        <control type="image">
+            <posx>910</posx>
+            <posy>480</posy>
+            <width>100</width>
+            <height>100</height>
+            <texture border="5">diffuse/panel.png</texture>
+            <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+        </control>
+        <control type="image">
+            <posx>910</posx>
+            <posy>480</posy>
+            <width>100</width>
+            <height>100</height>
+            <texture border="5">diffuse/panel.png</texture>
+            <bordersize>8</bordersize>
+            <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+        </control>
+        <control type="label">
+            <posx>910</posx>
+            <posy>480</posy>
+            <width>100</width>
+            <height>100</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>Bold55</font>
+            <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
+            <label>$INFO[ListItem.SortLetter]</label>
+        </control>
     </control>
 
 </include>
@@ -1005,6 +1002,29 @@
             <align>left</align>
             <label>$VAR[ThumbListDetails]</label>
             <font>Reg20</font>
+            <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
+            <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
+        </control>
+    </include>
+    
+    <include name="ThumbsLabelOverlaySmall">
+        <control type="image">
+            <!--Panel Ovelay-->
+            <bordersize>8</bordersize>
+            <texture diffuse="home/home_matte2.png">diffuse/home_overlay.png</texture>
+            <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
+            <colordiffuse>$INFO[Skin.String(LabelOverlaysPanelColor)]</colordiffuse>
+        </control>
+        <control type="label">
+            <!--Label-->
+            <left>5%</left>
+            <bottom>2%</bottom>
+            <width>90%</width>
+            <height>60</height>
+            <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
+            <align>left</align>
+            <label>$VAR[ThumbListDetails]</label>
+            <font>Reg16</font>
             <textcolor>$INFO[Skin.String(LabelOverlaysTextColor)]</textcolor>
             <include condition="!Window.IsActive(Home)">LandscapeLabelOverlayVisibility</include>
         </control>
@@ -3971,7 +3991,7 @@
             <!-- OSD label 3 -->
             <control type="label" id="44229">
                 <font>flags</font>
-                <width>880</width>
+                <width>830</width>
                 <height>30</height>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <label>$VAR[OSDLabel3]</label>
