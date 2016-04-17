@@ -833,9 +833,8 @@
             <texture background="true" diffuse="diffuse/landscape.png" fallback="DefaultAddonArtistInfo.png" border="0">$VAR[MusicCoverImage]</texture>
             <visible>[Window.IsActive(musiclibrary) | Window.IsActive(musiclibrary)]</visible>
         </control>
-         <!-- black background behind video -->
-        <control type="image">
-            <texture>colors/color_black.png</texture>
+        <!--Video Window -->
+        <control type="group">
             <posx>8</posx>
             <posy>8</posy>
             <width>609</width>
@@ -843,16 +842,11 @@
             <visible>VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)</visible>
             <visible>[Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels)]</visible>
             <visible>!skin.hastheme(classic)</visible>
-        </control>
-         <!--Video Window -->
-        <control type="videowindow">
-            <posx>8</posx>
-            <posy>8</posy>
-            <width>609</width>
-            <height>344</height>
-            <visible>VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)</visible>
-            <visible>[Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels)]</visible>
-            <visible>!skin.hastheme(classic)</visible>
+            <control type="image">
+                <texture>colors/color_black.png</texture>
+            </control>
+            <control type="videowindow">
+            </control>
         </control>
 
         <control type="label">
@@ -4642,6 +4636,7 @@
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_episodes_normal_image</include>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 			<control type="label">
 				<!--Episodes Overlay Text-->
 				<right>0</right>
@@ -4657,6 +4652,7 @@
 			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
 			<include>indicator_sets_normal</include>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
         <control type="image">
 			<!--PVR is recording-->
@@ -4726,6 +4722,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="image">
 			<!--Watched Overlay image-->
@@ -4737,6 +4734,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
          <control type="image">
 			<!--UnWatched Overlay background-->
@@ -4748,6 +4746,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.Color)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="image">
 			<!--UnWatched Overlay image-->
@@ -4759,6 +4758,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.TextColor)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 
 		<control type="image">
@@ -4799,6 +4799,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Progress.Color)]</colordiffuse>
 			<visible>ListItem.IsResumable + Skin.HasSetting(WatchedIndicator.Progress)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="label">
 			<!--Progress Overlay Text-->
@@ -4823,6 +4824,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="label">
 			<!--Episodes Overlay Text-->
@@ -4834,6 +4836,7 @@
 			<font>indicator_small</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		
 		<control type="image">
@@ -4846,6 +4849,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
 			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="image">
 			<!--Sets Overlay image-->
@@ -4857,6 +4861,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
 			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
+            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 
 	</include>

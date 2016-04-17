@@ -26,6 +26,18 @@
                     <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                     <aspectratio>stretch</aspectratio>
                     <height>170</height>
+                    <visible>!Skin.HasSetting(LargeWidgetDetailsPanel)</visible>
+                </control>
+                <control type="image">
+                    <right>0</right>
+                    <top>0</top>
+                    <width>1355</width>
+                    <texture border="15">diffuse/bgpanel.png</texture>
+                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                    <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                    <height>100%</height>
+                    <visible>Skin.HasSetting(LargeWidgetDetailsPanel)</visible>
                 </control>
                 <control type="textbox">
                     <right>65</right>
@@ -106,9 +118,9 @@
                 <width>400</width>
                 <height>100%</height>
                 <texture>colors/color_white.png</texture>
-                <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-                <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
+                <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                <visible>Skin.String(MainMenuPanelColor) + !Skin.String(MainMenuPanelColor,None)</visible>
             </control>
 
             <!--submenu normal-->
@@ -131,7 +143,7 @@
                 <!-- arrow down -->
                 <animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
                 <left>355</left>
-                <posy>970</posy>
+                <posy>990</posy>
                 <width>25</width>
                 <height>60</height>
                 <aspectratio>keep</aspectratio>
@@ -166,9 +178,9 @@
                         <height>80</height>
                         <align>right</align>
                         <aligny>center</aligny>
-                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
-                        <focusedcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</focusedcolor>
-                        <selectedcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</selectedcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
+                        <focusedcolor>$INFO[Skin.String(MainMenuTextColor)]</focusedcolor>
+                        <selectedcolor>$INFO[Skin.String(MainMenuTextColor)]</selectedcolor>
                         <label>$INFO[ListItem.Label]</label>
                         <font>Reg34</font>
                         <scroll>false</scroll>
@@ -177,28 +189,15 @@
                 <itemlayout height="170" width="375" condition="Skin.String(HomeLayout, simplever_tiles)">
                     <control type="group">
                         <width>375</width>
-                        <height>150</height>
+                        <height>165</height>
                         <control type="image">
                             <texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/hometiles/addons.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                            <bordersize>5</bordersize>
+                            <bordersize>8</bordersize>
                         </control>
-                        <control type="image">
-                            <texture>home/home_overlay2.png</texture>
-                            <bordersize>5</bordersize>
-                            <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
-                            <visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-                        </control>
-                        <control type="label">
-                            <bottom>8</bottom>
-                            <left>10</left>
-                            <width>350</width>
-                            <height>40</height>
-                            <align>center</align>
-                            <info>ListItem.Label</info>
-                            <font>Reg38</font>
-                            <shadowcolor>black</shadowcolor>
-                            <visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+                        <control type="group">
+                            <include condition="!Skin.HasSetting(NoTitleOnHomeMenuTiles)">ThumbsLabelOverlay</include>
+                            <visible>!StringCompare(ListItem.Property(disableLabel), disable)</visible>
                         </control>
                     </control>
                 </itemlayout>
@@ -284,24 +283,11 @@
 			<height>80</height>
 			<align>right</align>
 			<aligny>center</aligny>
-			<textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
+			<textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
 			<label>[B]$INFO[ListItem.Label][/B]</label>
 			<font>Reg38</font>
             <scroll>true</scroll>
-            <visible>Control.HasFocus(300)</visible>
-            <animation effect="zoom" start="80" end="102" center="left" time="150" tween="elastic" easing="inout" pulse="false" condition="Skin.HasSetting(Vertical_Home_Animation)">Focus</animation>
-		</control>
-        <control type="label">
-			<right>0</right>
-			<width>350</width>
-			<height>80</height>
-			<align>right</align>
-			<aligny>center</aligny>
-			<textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
-			<label>[B]$INFO[ListItem.Label][/B]</label>
-			<font>Reg38</font>
-            <scroll>false</scroll>
-            <visible>!Control.HasFocus(300)</visible>
+            <animation effect="fade" start="100" end="60" time="150" condition="!Control.HasFocus(300)">Conditional</animation>
             <animation effect="zoom" start="80" end="102" center="left" time="150" tween="elastic" easing="inout" pulse="false" condition="Skin.HasSetting(Vertical_Home_Animation)">Focus</animation>
 		</control>
         <include>HiddenHomeMenuButton</include>
@@ -309,34 +295,19 @@
 	<include name="HomeSimpleVertical_FocusedMainMenuItem_tile">
 		<control type="group">
 			<width>375</width>
-			<height>150</height>
+			<height>165</height>
 			<control type="image">
 				<texture>home/home_matte2.png</texture>
 				<colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
 			</control>
 			<control type="image">
-				<bordersize>5</bordersize>
+				<bordersize>8</bordersize>
 				<texture background="true" diffuse="home/home_matte2.png" fallback="special://skin/extras/hometiles/addons.png">$INFO[ListItem.Icon]</texture>
 				<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
 			</control>
-			<control type="image">
-				<texture>home/home_overlay2.png</texture>
-				<bordersize>5</bordersize>
-				
-				<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
-				<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
-			</control>
-			<control type="label">
-				<bottom>8</bottom>
-				<left>10</left>
-				<width>350</width>
-				<height>40</height>
-				<align>center</align>
-				<info>ListItem.Label</info>
-				<font>Reg38</font>
-				<textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<visible>!Skin.HasSetting(NoTitleOnHomeMenuTiles) + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+			<control type="group">
+				<include condition="!Skin.HasSetting(NoTitleOnHomeMenuTiles)">ThumbsLabelOverlay</include>
+				<visible>!StringCompare(ListItem.Property(disableLabel), disable)</visible>
 			</control>
 			<include>HiddenHomeMenuButton</include>
 		</control>
@@ -393,8 +364,8 @@
 				<width>360</width>
 				<height>400</height>
 				<texture border="5">diffuse/panel.png</texture>
-                <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
-				<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+                <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                <visible>Skin.String(MainMenuPanelColor) + !Skin.String(MainMenuPanelColor,None)</visible>
 				<aspectratio>stretch</aspectratio>
 			</control>
 			<control type="list" id="4444">
@@ -420,7 +391,7 @@
                         <align>left</align>
                         <font>Reg26</font>
                         <height>60</height>
-                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
 				</itemlayout>
@@ -431,7 +402,7 @@
                         <align>left</align>
                         <font>Reg28</font>
                         <height>60</height>
-                        <textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
                         <label>[B]$INFO[ListItem.Label][/B]</label>
                         <scroll>true</scroll>
                     </control>
@@ -521,7 +492,7 @@
                         <align>right</align>
                         <font>Reg28</font>
                         <height>60</height>
-                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
                         <animation effect="fade" time="200" start="100" end="60" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
                     </control>
@@ -533,21 +504,10 @@
                         <align>right</align>
                         <font>Reg28</font>
                         <height>60</height>
-                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
                         <label>$INFO[ListItem.Label]</label>
-                        <visible>!Control.HasFocus(4444)</visible>
+                        <animation effect="fade" start="100" end="60" time="150" condition="!Control.HasFocus(300)">Conditional</animation>
                         <animation effect="fade" time="200" start="100" end="60" reversible="true" condition="!Control.HasFocus(4444)">Conditional</animation>
-                    </control>
-                    <control type="label">
-                        <posx>0</posx>
-                        <width>350</width>
-                        <align>right</align>
-                        <font>Reg28</font>
-                        <height>60</height>
-                        <textcolor>$VAR[ViewDetailsFocusColor]</textcolor>
-                        <label>[B]$INFO[ListItem.Label][/B]</label>
-                        <scroll>true</scroll>
-                        <visible>Control.HasFocus(4444)</visible>
                     </control>
                     <control type="button">
                         <label>-</label>
@@ -675,15 +635,15 @@
 					<itemlayout height="72" width="384">
                         <control type="image">
                             <texture>colors/color_white.png</texture>
-                            <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                            <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
                         </control>
                         <control type="label">
                             <width>94%</width>
                             <height>100%</height>
                             <left>3%</left>
                             <font>Light26</font>
-                            <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                            <selectedcolor>$INFO[Skin.String(GeneralTextColor)]</selectedcolor>
+                            <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
+                            <selectedcolor>$INFO[Skin.String(MainMenuTextColor)]</selectedcolor>
                             <align>left</align>
                             <aligny>center</aligny>
                             <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
@@ -693,12 +653,12 @@
                         <control type="image">
                             <!-- focus sub menu -->
                             <texture>colors/color_white.png</texture>
-                            <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                            <colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
                             <visible>Control.HasFocus(4444)</visible>
                         </control>
                         <control type="image">
                             <texture>colors/color_white.png</texture>
-                            <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                            <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
                             <visible>!Control.HasFocus(4444)</visible>
                         </control>
                         <control type="label">
@@ -706,7 +666,7 @@
                             <height>100%</height>
                             <left>3%</left>
                             <font>Light26</font>
-                            <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
                             <align>left</align>
                             <aligny>center</aligny>
                             <scroll>true</scroll>
@@ -718,7 +678,7 @@
                             <height>100%</height>
                             <left>3%</left>
                             <font>Light26</font>
-                            <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                            <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
                             <align>left</align>
                             <aligny>center</aligny>
                             <scroll>true</scroll>
@@ -743,7 +703,7 @@
                 <width>434</width>
                 <height>100%</height>
                 <texture>colors/color_white.png</texture>
-                <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+                <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
             </control>
 			<control type="image">
                 <!-- Home Focus panel -->
@@ -785,7 +745,7 @@
                         <height>100%</height>
                         <left>5%</left>
                         <font>Light44</font>
-                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
                         <align>left</align>
                         <aligny>center</aligny>
                         <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
@@ -797,8 +757,8 @@
                         <height>100%</height>
                         <left>5%</left>
                         <font>Light44</font>
-                        <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
-                        <selectedcolor>$INFO[Skin.String(GeneralTextColor)]</selectedcolor>
+                        <textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
+                        <selectedcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</selectedcolor>
                         <align>left</align>
                         <aligny>center</aligny>
                         <scroll>true</scroll>
@@ -842,7 +802,7 @@
                 <control type="image">
                     <texture border="5">diffuse/panel.png</texture>
                     <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-                    <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                    <visible>!Skin.HasSetting(HideWidgetPanelBackground) + ![Skin.HasSetting(LargeWidgetDetailsPanel) + Control.IsVisible(77551)]</visible>
                 </control>
                 <control type="button" id="511">
                     <width>1290</width>
@@ -927,7 +887,12 @@
                 <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
                 <fadetime>0</fadetime>
                 <visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-                <visible>[Control.IsVisible(510) + Container(510).IsUpdating] | [Control.IsVisible(520) + Container(520).IsUpdating] | [Control.IsVisible(530) + Container(530).IsUpdating] | [Control.IsVisible(540) + Container(540).IsUpdating]</visible>
+                <visible>
+                [Control.IsVisible(510) + Container(510).IsUpdating] | 
+                [Control.IsVisible(520) + Container(520).IsUpdating] | 
+                [Control.IsVisible(530) + Container(530).IsUpdating] | 
+                [Control.IsVisible(540) + Container(540).IsUpdating]
+                </visible>
             </control>
         </control>
 	
@@ -946,7 +911,7 @@
                 <height>45</height>
                 <texture border="5">diffuse/panel.png</texture>
                 <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-                <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
+                <visible>!Skin.HasSetting(HideWidgetPanelBackground) + ![Skin.HasSetting(LargeWidgetDetailsPanel) + Control.IsVisible(77551)]</visible>
             </control>
             <control type="label">
                 <height>40</height>
