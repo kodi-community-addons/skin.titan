@@ -268,6 +268,14 @@
                 <selected>Skin.HasSetting(HideWidgetDetailsPanel)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small) + !Skin.String(HomeLayout, win10) + !SubString(Skin.String(HomeLayout), netflix)</visible>
             </control>
+            <!--large widget details-->
+            <control type="radiobutton" id="31741">
+                <include>SkinSettings_Button</include>
+                <label>31741</label>
+                <onclick>Skin.ToggleSetting(LargeWidgetDetailsPanel)</onclick>
+                <selected>Skin.HasSetting(LargeWidgetDetailsPanel)</selected>
+                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(HideWidgetDetailsPanel) + SubString(Skin.String(HomeLayout), ver)</visible>
+            </control>
             <!--prefer tv show art for episodes-->
             <control type="radiobutton" id="31304">
                 <include>SkinSettings_Button</include>
@@ -663,6 +671,12 @@
                 <label>31613</label>
                 <onclick>Skin.ToggleSetting(DisableSideBladeIndicator)</onclick>
                 <selected>Skin.HasSetting(DisableSideBladeIndicator)</selected>
+            </control>
+            <control type="radiobutton" id="31738">
+                <include>SkinSettings_Button</include>
+                <label>31738</label>
+                <onclick>Skin.ToggleSetting(DisableScrollingLetters)</onclick>
+                <selected>Skin.HasSetting(DisableScrollingLetters)</selected>
             </control>
             
             <!-- video information dialog -->
@@ -1210,6 +1224,13 @@
                 <selected>Skin.HasSetting(osdgradientstyle)</selected>
                 <visible>!skin.hastheme(classic)</visible>
             </control>
+            <!--clearart on osd -->
+            <control type="radiobutton" id="31733">
+                <include>SkinSettings_Button</include>
+                <label>31733</label>
+                <onclick>Skin.ToggleSetting(OSDShowClearArt)</onclick>
+                <selected>Skin.HasSetting(OSDShowClearArt)</selected>
+            </control>
             <control type="radiobutton" id="8012">
                 <include>SkinSettings_Button</include>
                 <label>31244</label>
@@ -1231,6 +1252,13 @@
                 <selected>Skin.HasSetting(DisableNowPlayingBackground)</selected>
                 <visible>!skin.hastheme(classic)</visible>
             </control>
+            <control type="radiobutton" id="31734">
+                <include>SkinSettings_Button</include>
+                <label>31734</label>
+                <onclick>Skin.ToggleSetting(DisableNowPlayingMusicBackground)</onclick>
+                <selected>Skin.HasSetting(DisableNowPlayingMusicBackground)</selected>
+                <visible>!skin.hastheme(classic)</visible>
+            </control>
             <control type="radiobutton" id="5142">
                 <include>SkinSettings_Button</include>
                 <label>31596</label>
@@ -1242,6 +1270,13 @@
                 <label>31634</label>
                 <onclick>Skin.ToggleSetting(DisableNowPlayingDiscArt)</onclick>
                 <selected>Skin.HasSetting(DisableNowPlayingDiscArt)</selected>
+                <visible>!Skin.HasSetting(DisableNowPlayingInfoBar)</visible>
+            </control>
+            <control type="radiobutton" id="31736">
+                <include>SkinSettings_Button</include>
+                <label>31736</label>
+                <onclick>Skin.ToggleSetting(DisableNowPlayingClearArt)</onclick>
+                <selected>Skin.HasSetting(DisableNowPlayingClearArt)</selected>
                 <visible>!Skin.HasSetting(DisableNowPlayingInfoBar)</visible>
             </control>
             <!-- music playback -->
@@ -1309,13 +1344,18 @@
                 <visible>!IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))</visible>
             </control>
             <control type="radiobutton" id="5170">
-                <description>Animate Music wall</description>
+                <description>Animate Music background</description>
                 <include>SkinSettings_Button</include>
                 <label>31617</label>
-                <onclick>Skin.ToggleSetting(animateMusicWall)</onclick>
-                <selected>Skin.HasSetting(animateMusicWall)</selected>
-                <visible>!IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))</visible>
-                <visible>Skin.HasSetting(enableMusicWall)</visible>
+                <onclick>Skin.ToggleSetting(animateMusicArt)</onclick>
+                <selected>Skin.HasSetting(animateMusicArt)</selected>
+            </control>
+            <control type="radiobutton" id="31732">
+                <description>scrolling music text</description>
+                <include>SkinSettings_Button</include>
+                <label>31732</label>
+                <onclick>Skin.ToggleSetting(MusicOSDScrollingTitles)</onclick>
+                <selected>Skin.HasSetting(MusicOSDScrollingTitles)</selected>
             </control>
             <control type="radiobutton" id="31715">
                 <description>Disable screensaver on music playback</description>
@@ -1995,6 +2035,14 @@
                 <selected>Skin.HasSetting(Home_RecordingIndicator)</selected>
             </control>
             
+            <control type="radiobutton" id="31740">
+                <include>SkinSettings_Button</include>
+                <label>31740</label>
+                <onclick>Skin.ToggleSetting(Home_ShowBackgroundLogo)</onclick>
+                <selected>Skin.HasSetting(Home_ShowBackgroundLogo)</selected>
+                <visible>SubString(Skin.String(home_header),logo)</visible>
+            </control>
+            
             <!-- advanced settings -->
             <control type="label" id="8010">
                 <include>SkinSettings_Header</include>
@@ -2206,12 +2254,6 @@
             <param name="label" value="$LOCALIZE[31471]" />
             <param name="skinsetting" value="FooterPanelColor" />
         </include>
-        <!--home button focus-->
-        <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
-            <param name="id" value="31174" />
-            <param name="label" value="$LOCALIZE[31174]" />
-            <param name="skinsetting" value="HomeViewDetailsFocusColor" />
-        </include>
         <!--buttons color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31475" />
@@ -2254,6 +2296,33 @@
             <param name="label" value="$LOCALIZE[31572]" />
             <param name="skinsetting" value="GeneralHighlightTextColor" />
         </include>
+        <!--homemenu panel color-->
+        <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
+            <param name="id" value="31742" />
+            <param name="label" value="$LOCALIZE[31742]" />
+            <param name="skinsetting" value="MainMenuPanelColor" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver)" />
+        </include>
+        <!--homemenu unfocused text color-->
+        <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
+            <param name="id" value="31743" />
+            <param name="label" value="$LOCALIZE[31743]" />
+            <param name="skinsetting" value="MainMenuTextColor" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver)" />
+        </include>
+        <!--homemenu focused text color-->
+        <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
+            <param name="id" value="31744" />
+            <param name="label" value="$LOCALIZE[31744]" />
+            <param name="skinsetting" value="MainMenuFocusTextColor" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver)" />
+        </include>
+        <!--home button focus-->
+        <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
+            <param name="id" value="31174" />
+            <param name="label" value="$LOCALIZE[31174]" />
+            <param name="skinsetting" value="HomeViewDetailsFocusColor" />
+        </include>
          <!--scrollbar background color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31495" />
@@ -2290,11 +2359,17 @@
             <param name="label" value="$LOCALIZE[31603]" />
             <param name="skinsetting" value="LabelOverlaysPanelColor" />
         </include>
-         <!--label overlay text color-->
+        <!--label overlay text color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31604" />
             <param name="label" value="$LOCALIZE[31604]" />
             <param name="skinsetting" value="LabelOverlaysTextColor" />
+        </include>
+        <!--label overlay text color-->
+        <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
+            <param name="id" value="31735" />
+            <param name="label" value="$LOCALIZE[31735]" />
+            <param name="skinsetting" value="HomeWidgetsBorderColor" />
         </include>
 
     </include>

@@ -777,6 +777,16 @@
     
 	</include>
     
+    <include name="BackgroundLogo">
+        <!-- background Logo image -->
+        <control type="image" id="198754">
+            <posx>35</posx>
+            <posy>10</posy>
+            <height>110</height>
+            <aspectratio align="left">keep</aspectratio>
+            <texture>$VAR[background_logo]</texture>
+        </control>
+    </include>
     
     <include name="HeaderLogo">
         <!-- Kodi Logo image -->
@@ -787,7 +797,7 @@
             <aspectratio align="left">keep</aspectratio>
             <colordiffuse>$INFO[Skin.String(HeaderTextColor)]</colordiffuse>
             <texture>home/kodi_logo_light.png</texture>
-            <visible>!Skin.String(CustomLogoImage)</visible>
+            <visible>!Skin.String(CustomLogoImage) + IsEmpty(Control.GetLabel(198754))</visible>
             <visible>![Window.IsActive(Home) + SubString(Skin.String(HomeLayout),simplever)]</visible>
         </control>
         <!-- custom Logo image -->
@@ -797,9 +807,11 @@
             <height>110</height>
             <aspectratio align="left">keep</aspectratio>
             <texture>$INFO[Skin.String(CustomLogoImage)]</texture>
-            <visible>Skin.String(CustomLogoImage)</visible>
+            <visible>Skin.String(CustomLogoImage) + IsEmpty(Control.GetLabel(198754))</visible>
             <visible>![Window.IsActive(Home) + SubString(Skin.String(HomeLayout),simplever)]</visible>
         </control>
+        <!-- background Logo image -->
+        <include condition="Window.IsActive(Home) + Skin.HasSetting(Home_ShowBackgroundLogo)">BackgroundLogo</include>
         
         <!-- logo for vertical home -->
         <control type="image">
@@ -812,7 +824,7 @@
             <aspectratio align="right">keep</aspectratio>
             <texture>$VAR[LogoImage]</texture>
             <colordiffuse>$INFO[Skin.String(ViewDetailsListItemTextColor)]</colordiffuse>
-            <visible>Window.IsActive(Home) + SubString(Skin.String(HomeLayout),simplever)</visible>
+            <visible>Window.IsActive(Home) + SubString(Skin.String(HomeLayout),simplever) + IsEmpty(Control.GetLabel(198754))</visible>
         </control>
     </include>
     

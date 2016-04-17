@@ -151,7 +151,12 @@
                 <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
                 <fadetime>0</fadetime>
 				<visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-                <visible>[Control.IsVisible(510) + Container(510).IsUpdating]</visible>
+                <visible>
+                [Control.IsVisible(510) + Container(510).IsUpdating] | 
+                [Control.IsVisible(520) + Container(520).IsUpdating] | 
+                [Control.IsVisible(530) + Container(530).IsUpdating] | 
+                [Control.IsVisible(540) + Container(540).IsUpdating]
+                </visible>
             </control>
             <!-- busy image while widget loading -->
             <control type="multiimage">
@@ -165,7 +170,7 @@
                 <colordiffuse>$INFO[Skin.String(SpinnerTextureColor)]</colordiffuse>
                 <fadetime>0</fadetime>
 				<visible>!Skin.String(SkinHelper.SpinnerTexturePath,None)</visible>
-                <visible>Container(1508).IsUpdating</visible>
+                <visible>Control.IsVisible(1508) + Container(1508).IsUpdating</visible>
             </control>
             <!-- alt spotlight no submenu+widget present-->
 			<control type="group">
@@ -214,7 +219,7 @@
 				<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 				<texturenofocus>-</texturenofocus>
 				<label>$VAR[changeWidgetLabel]</label>
-                <onclick>$VAR[changeWidgetClickActions]</onclick>
+                <onclick>$VAR[toggleNextWidget]</onclick>
 				<onleft condition="!IntegerGreaterThan(Container(1508).NumItems,0)">4444</onleft>
 				<onleft condition="IntegerGreaterThan(Container(1508).NumItems,0)">1508</onleft>
                 <ondown>$VAR[focusWidget]</ondown>
@@ -481,7 +486,7 @@
 		<onleft>1508</onleft>
         <onright condition="Skin.HasSetting(EnhancedHome_Circular)">4444</onright>
         <onright condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onright>
-        <oninfo>$VAR[widgetoninfoaction]</oninfo>
+        <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
         <onright>300</onright>
 		<ondown>300</ondown>
 		<onback>300</onback>
@@ -554,7 +559,7 @@
 		<onleft condition="!IntegerGreaterThan(Container(4444).NumItems,0)">300</onleft>
 		<onright condition="!IsEmpty(Control.GetLabel(511))">$VAR[focusWidget]</onright>
 		<onright condition="IsEmpty(Control.GetLabel(511))">300</onright>
-        <oninfo>$VAR[widgetoninfoaction]</oninfo>
+        <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
 		<ondown>1508</ondown>
 		<onback>300</onback>
 		<onup>1508</onup>
@@ -680,6 +685,13 @@
 			<aspectratio align="right" aligny="center">keep</aspectratio>
 			<texture background="true">$VAR[SpotLightWidgetInfoThumb]</texture>
 		</control>
+        <!--hidden button -->
+        <control type="button">
+            <visible>false</visible>
+            <onfocus>SetProperty(SkinHelper.WidgetContainer,1508,home)</onfocus>
+            <onfocus condition="!IsEmpty(Window(Home).Property(WidgetRotate1508))">CancelAlarm(WidgetRotate1508,true)</onfocus>
+            <onfocus>ClearProperty(WidgetRotate1508,Home)</onfocus>
+        </control>
 	</include>
 	<include name="EnhancedHomeSpotLightWidgetLayoutAlt">
 		<control type="image">
