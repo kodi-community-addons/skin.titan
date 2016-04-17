@@ -875,12 +875,6 @@
 		<value condition="Container.Content(countries)">special://skin/extras/defaulticonswide/DefaultCountry.png</value>
 		<value condition="Container.Content(tags)">special://skin/extras/defaulticonswide/DefaultTags.png</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-        <value condition="SubString(Container(510).ListItem.FolderPath,pvr://recordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(landscape))">$INFO[Container(510).ListItem.Art(landscape)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.landscape))">$INFO[Container(510).ListItem.Art(tvshow.landscape)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(fanart))">$INFO[Container(510).ListItem.Art(fanart)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.fanart))">$INFO[Container(510).ListItem.Art(tvshow.fanart)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Thumb)">$INFO[Container(510).ListItem.Thumb]</value>
     </variable>
 	
 	<variable name="LandscapeImageSeason">
@@ -953,14 +947,12 @@
 		<value condition="Container.Content(countries)">DefaultCountry.png</value>
 		<value condition="Container.Content(tags)">DefaultTags.png</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(poster))">$INFO[Container(510).ListItem.Art(poster)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.poster))">$INFO[Container(510).ListItem.Art(tvshow.poster)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Thumb)">$INFO[Container(510).ListItem.Thumb]</value>
 		<value condition="Container.Content(seasons)">$INFO[ListItem.Path]season0$INFO[ListItem.Season]-poster.jpg</value>
         <value>$INFO[ListItem.FolderPath]poster.jpg</value>
     </variable>
 
     <variable name="PosterThumbList">
+        <value condition="Container.Content(episodes) + !IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
         <value condition="Skin.HasSetting(SkinHelper.EnableAnimatedPosters) + !StringCompare(ListItem.Art(animatedposter), ) + !Window.IsActive(Home)">$INFO[ListItem.Art(animatedposter)]</value>
 		<value condition="Container.Content(seasons) + SubString(ListItem.Label,*,left) + !IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
@@ -980,9 +972,6 @@
 		<value condition="Container.Content(countries)">DefaultCountry.png</value>
 		<value condition="Container.Content(tags)">DefaultTags.png</value>
 		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(poster))">$INFO[Container(510).ListItem.Art(poster)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Art(tvshow.poster))">$INFO[Container(510).ListItem.Art(tvshow.poster)]</value>
-        <value condition="!IsEmpty(Container(510).ListItem.Thumb)">$INFO[Container(510).ListItem.Thumb]</value>
 		<value condition="Container.Content(seasons)">$INFO[ListItem.Path]season0$INFO[ListItem.Season]-poster.jpg</value>
         <value>$INFO[ListItem.FolderPath]poster.jpg</value>
     </variable>
@@ -1607,9 +1596,49 @@
 		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),musicvideo_library) | [!Window.IsActive(Home) + Skin.String(infoline,musicvideo_library)]">[B]$LOCALIZE[20389]: [/B]$INFO[Window(Home).Property(MusicVideos.Count)][B]  •  $LOCALIZE[16102]: [/B]$INFO[Window(Home).Property(MusicVideos.Watched)][B]  •  $LOCALIZE[16101]: [/B]$INFO[Window(Home).Property(MusicVideos.UnWatched)]</value>
 		<value condition="StringCompare(Container(300).ListItem.Property(InfoLine),sysinfo) | [!Window.IsActive(Home) + Skin.String(infoline,sysinfo)]">[B]$LOCALIZE[31257] [/B]$INFO[System.memory(used.percent)][B]  •  $LOCALIZE[13271] [/B]$INFO[System.CPUUsage]</value>
         <value condition="StringCompare(Container(300).ListItem.Property(InfoLine),addonsinfo) | [!Window.IsActive(Home) + Skin.String(infoline,addonsinfo)]">[B]$LOCALIZE[20161] $LOCALIZE[24001]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalAddons)][B]  •  [/B][B]$LOCALIZE[1036]: [/B]$INFO[Window(Home).Property(SkinHelper.TotalFavourites)]</value>
+        <value condition="StringCompare(Container(300).ListItem.Property(InfoLine),backgroundtitle)">$VAR[infoline_background]</value>
         <value condition="!Window.IsActive(Home) + Skin.String(infoline,title)">$INFO[ListItem.Title]</value>
         <value condition="!Window.IsActive(Home) + Skin.String(infoline,totalsortby)">$INFO[Container.NumItems,, $LOCALIZE[31034]] $INFO[Control.GetLabel(3),• ]</value>
         <value condition="!Window.IsActive(Home) + Skin.String(infoline,total)">$INFO[Container.NumItems,, $LOCALIZE[31034]]</value>
+     </variable>
+     
+     <variable name="infoline_background">
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllTvShowsBackground))">$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllMusicVideosBackground))">$INFO[Window(Home).Property(SkinHelper.AllMusicVideosBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentMusicBackground))">$INFO[Window(Home).Property(SkinHelper.RecentMusicBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllMusicBackground))">$INFO[Window(Home).Property(SkinHelper.AllMusicBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.GlobalFanartBackground))">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.InProgressMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.InProgressMoviesBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.RecentMoviesBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.UnwatchedMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.UnwatchedMoviesBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.InProgressShowsBackground))">$INFO[Window(Home).Property(SkinHelper.InProgressShowsBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentEpisodesBackground))">$INFO[Window(Home).Property(SkinHelper.RecentEpisodesBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllVideosBackground))">$INFO[Window(Home).Property(SkinHelper.AllVideosBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentVideosBackground))">$INFO[Window(Home).Property(SkinHelper.RecentVideosBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.InProgressVideosBackground))">$INFO[Window(Home).Property(SkinHelper.InProgressVideosBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.PvrBackground))">$INFO[Window(Home).Property(SkinHelper.PvrBackground.Title)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.PicturesBackground))">$INFO[Window(Home).Property(SkinHelper.PicturesBackground.Title)]</value>
+        <value>$INFO[Container(300).ListItem.Property(BackgroundName)]</value>
+     </variable>
+     
+     <variable name="background_logo">
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllTvShowsBackground))">$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllMusicVideosBackground))">$INFO[Window(Home).Property(SkinHelper.AllMusicVideosBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentMusicBackground))">$INFO[Window(Home).Property(SkinHelper.RecentMusicBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllMusicBackground))">$INFO[Window(Home).Property(SkinHelper.AllMusicBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.GlobalFanartBackground))">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.InProgressMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.InProgressMoviesBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.RecentMoviesBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.UnwatchedMoviesBackground))">$INFO[Window(Home).Property(SkinHelper.UnwatchedMoviesBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.InProgressShowsBackground))">$INFO[Window(Home).Property(SkinHelper.InProgressShowsBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentEpisodesBackground))">$INFO[Window(Home).Property(SkinHelper.RecentEpisodesBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.AllVideosBackground))">$INFO[Window(Home).Property(SkinHelper.AllVideosBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.RecentVideosBackground))">$INFO[Window(Home).Property(SkinHelper.RecentVideosBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.InProgressVideosBackground))">$INFO[Window(Home).Property(SkinHelper.InProgressVideosBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.PvrBackground))">$INFO[Window(Home).Property(SkinHelper.PvrBackground.ClearLogo)]</value>
+        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(SkinHelper.PicturesBackground))">$INFO[Window(Home).Property(SkinHelper.PicturesBackground.ClearLogo)]</value>
      </variable>
      
      <variable name="DialogKeyboardAutoComplete">
