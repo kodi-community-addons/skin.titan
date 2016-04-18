@@ -2011,25 +2011,25 @@
 	</include>
     
     <include name="mediaflags">
-        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,classic) | skin.hastheme(classic)">mediaflags_classic</include>
-        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,large) + !skin.hastheme(classic)">mediaflags_large_osd</include>
-        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,large_color) + !skin.hastheme(classic)">mediaflags_large_osd</include>
-        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,boxed) + !skin.hastheme(classic)">mediaflags_boxed</include>
-        <include condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,textbased - full info) + !skin.hastheme(classic)">mediaflags_text</include> 
-        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,classic) | skin.hastheme(classic)">mediaflags_classic</include>
-        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,large) + !skin.hastheme(classic)">mediaflags_large</include>
+        <include condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + [Skin.String(osdmediaflagsstyle,classic) | Skin.Hastheme(classic)] | skin.hastheme(classic)">mediaflags_classic</include>
+        <include condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(osdmediaflagsstyle,large) + !skin.hastheme(classic)">mediaflags_large_osd</include>
+        <include condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(osdmediaflagsstyle,large_color) + !skin.hastheme(classic)">mediaflags_large_osd</include>
+        <include condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(osdmediaflagsstyle,boxed) + !skin.hastheme(classic)">mediaflags_boxed</include>
+        <include condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(osdmediaflagsstyle,textbased - full info) + !skin.hastheme(classic)">mediaflags_text</include> 
+        <include condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + [Skin.String(mediaflagsstyle,classic) | Skin.Hastheme(classic)] | skin.hastheme(classic)">mediaflags_classic</include>
+        <include condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(mediaflagsstyle,large) + !skin.hastheme(classic)">mediaflags_large</include>
         <include condition="window.isactive(home) + SubString(Skin.String(mediaflagsstyle),large) + !skin.hastheme(classic)">mediaflags_large_widgets</include>
-        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,large_color) + !skin.hastheme(classic)">mediaflags_large</include>
-        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,boxed) + !skin.hastheme(classic)">mediaflags_boxed</include>
-        <include condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,textbased - full info) + !skin.hastheme(classic)">mediaflags_text</include> 
+        <include condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(mediaflagsstyle,large_color) + !skin.hastheme(classic)">mediaflags_large</include>
+        <include condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(mediaflagsstyle,boxed) + !skin.hastheme(classic)">mediaflags_boxed</include>
+        <include condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(mediaflagsstyle,textbased - full info) + !skin.hastheme(classic)">mediaflags_text</include> 
     </include>
     
     <include name="mediaflags_large_layout">
 		<width>125</width>
 		<height>80</height>
 		<aspectratio alignx="center" aligny="center">keep</aspectratio>
-        <include condition="!window.isactive(fullscreenvideo) + !Skin.String(mediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
-        <include condition="window.isactive(fullscreenvideo) + !Skin.String(osdmediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
+        <include condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + !Skin.String(mediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
+        <include condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + !Skin.String(osdmediaflagsstyle,large_color)">mediaflags_colordiffuse</include>
 		<animation effect="fade" time="200">VisibleChange</animation>
 	</include>
     
@@ -2313,8 +2313,8 @@
     </include>
     
     <variable name="mediaflags_large_path">
-        <value condition="!window.isactive(fullscreenvideo) + Skin.String(mediaflagsstyle,large_color)">flags/flags_color</value>
-        <value condition="window.isactive(fullscreenvideo) + Skin.String(osdmediaflagsstyle,large_color)">flags/flags_color</value>
+        <value condition="![window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(mediaflagsstyle,large_color)">flags/flags_color</value>
+        <value condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.String(osdmediaflagsstyle,large_color)">flags/flags_color</value>
         <value>flags/flags_large</value>
     </variable>
     
@@ -3083,7 +3083,7 @@
                 <label>• </label>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <visible>!IsEmpty(Control.GetLabel(44229))</visible>
-                <visible>Window.IsActive(fullscreenvideo)</visible>
+                <visible>[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)]</visible>
             </control>
             <!-- OSD label 3 -->
             <control type="label" id="44229">
@@ -3092,7 +3092,7 @@
                 <height>30</height>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <label>$VAR[OSDLabel3]</label>
-                <visible>Window.IsActive(fullscreenvideo)</visible>
+                <visible>[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)]</visible>
             </control>
 			
                  <!-- nextaired info -->
@@ -3290,7 +3290,7 @@
                 <label>• </label>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <visible>!IsEmpty(Control.GetLabel(44229))</visible>
-                <visible>Window.IsActive(fullscreenvideo)</visible>
+                <visible>[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)]</visible>
             </control>
             <!-- OSD label 3 -->
             <control type="label" id="44229">
@@ -3299,7 +3299,7 @@
                 <height>30</height>
                 <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
                 <label>$VAR[OSDLabel3]</label>
-                <visible>Window.IsActive(fullscreenvideo)</visible>
+                <visible>[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)]</visible>
             </control>
                  <include>mediaflags_sets</include>
                 		</control>
@@ -3313,7 +3313,7 @@
             <visible>SubString(ListItem.Path,videodb://movies/sets/,left) + !IsEmpty(Window(Home).Property(SkinHelper.MovieSet.Count))</visible>
             <width>1000</width>
             <height>40</height>
-                 <control type="label">
+                <control type="label">
                 <font>Reg30</font>
                 <width>auto</width>
                 <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.UnwatchedCount)]/$INFO[Window(Home).Property(SkinHelper.MovieSet.Count)]  </label>
@@ -3996,7 +3996,8 @@
 	
     <variable name="mediaFlagsFontColor">
         <value condition="substring(Window.Property(xmlfile),My,left)">$INFO[Skin.String(FooterTextColor)]</value>
-        <value condition="Window.IsActive(fullscreenvideo)">$INFO[Skin.String(OSDPrimaryTextColor)]</value>
+        <value condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)] + Skin.HasTheme(classic)">black</value>
+        <value condition="[window.isactive(fullscreenvideo) | window.isactive(fullscreenlivetv)]">$INFO[Skin.String(OSDPrimaryTextColor)]</value>
         <value>$INFO[Skin.String(ViewDetailsTextColor)]</value>
     </variable>
 
@@ -4729,7 +4730,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="image">
 			<!--Watched Overlay image-->
@@ -4741,7 +4742,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayWatched.png) + Skin.HasSetting(WatchedIndicator.Watched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
          <control type="image">
 			<!--UnWatched Overlay background-->
@@ -4753,7 +4754,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.Color)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="image">
 			<!--UnWatched Overlay image-->
@@ -4765,7 +4766,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.UnWatched.TextColor)]</colordiffuse>
 			<visible>StringCompare(ListItem.Overlay,OverlayUnWatched.png) + Skin.HasSetting(WatchedIndicator.UnWatched) + !ListItem.IsResumable</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 
 		<control type="image">
@@ -4831,7 +4832,7 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="label">
 			<!--Episodes Overlay Text-->
@@ -4843,7 +4844,7 @@
 			<font>indicator_small</font>
 			<textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
 			<visible>IntegerGreaterThan(ListItem.Property(UnWatchedEpisodes),0) + Skin.HasSetting(WatchedIndicator.Episodes)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            <visible>!ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		
 		<control type="image">
@@ -4856,7 +4857,6 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.Color)]</colordiffuse>
 			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 		<control type="image">
 			<!--Sets Overlay image-->
@@ -4868,7 +4868,6 @@
 			<colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
 			<visible>[ListItem.IsCollection | SubString(ListItem.Path,videodb://movies/sets/)] + Skin.HasSetting(WatchedIndicator.Sets)</visible>
 			<visible>!SubString(ListItem.Label,..,left)</visible>
-            <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
 		</control>
 
 	</include>

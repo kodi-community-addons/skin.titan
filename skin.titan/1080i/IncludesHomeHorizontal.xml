@@ -363,96 +363,92 @@
 		
             
             <!-- submenu -->
-            <control type="group" id="9001">
-                <control type="wraplist" id="4444">
-					<include>animation_fade_visible_hidden</include>
-					<left>0</left>
-					<top>120</top>
-					<width>100%</width>
-					<height>70</height>
-					<onup>300</onup>
-					<ondown condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</ondown>
-					<scrolltime tween="quadratic" easing="out">300</scrolltime>
-					<focusposition>2</focusposition>
-					<movement>1</movement>
-					<orientation>horizontal</orientation>
-                    <!-- <animation effect="slide" time="200" start="0" end="-384" delay="0" condition="IsEmpty(Container(4444).ListItemNoWrap(1).Label)">Conditional</animation>
-                    <animation effect="slide" time="200" start="0" end="384" delay="0" condition="IsEmpty(Container(4444).ListItemNoWrap(-1).Label)">Conditional</animation> -->
-                    <animation effect="slide" tween="cubic" time="0" start="0" end="0,150" reversible="true" condition="!Control.IsVisible(4444)">Conditional</animation>
-                    <visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444) | Skin.HasSetting(AutoShowSubmenu)] + !Control.HasFocus(2) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
-					<itemlayout height="70" width="384">
-                        <control type="label">
-                            <width>94%</width>
-                            <height>100%</height>
-                            <left>3%</left>
-                            <font>Light26</font>
-                            <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
-                            <textoffsetx>0</textoffsetx>
-                            <selectedcolor>$INFO[Skin.String(MainMenuTextColor)]</selectedcolor>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
-                        </control>
-                    </itemlayout>
-                    <focusedlayout height="70" width="384">
-                        <control type="image">
-                            <!-- focus sub menu -->
-                            <texture>colors/color_white.png</texture>
-                            <colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
-                            <visible>Control.HasFocus(4444)</visible>
-                        </control>
-                        <control type="label">
-                            <width>94%</width>
-                            <height>100%</height>
-                            <left>3%</left>
-                            <font>Light26</font>
-                            <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
-                            <textoffsetx>0</textoffsetx>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <scroll>true</scroll>
-                            <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
-                            <visible>!Control.HasFocus(4444)</visible>
-                        </control>
-                        <control type="label">
-                            <width>94%</width>
-                            <height>100%</height>
-                            <left>3%</left>
-                            <font>Light26</font>
-                            <textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
-                            <textoffsetx>0</textoffsetx>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <scroll>true</scroll>
-                            <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
-                            <visible>Control.HasFocus(4444)</visible>
-                        </control>
-                    </focusedlayout>
-                    <content>
-                        <include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
-                    </content>
-				</control>
-				<control type="button">
-					<left>5</left>
-					<top>141</top>
-					<width>30</width>
-					<height>30</height>
-					<texturefocus colordiffuse="$INFO[Skin.String(MainMenuTextColor)]">home/home_arrow_left.png</texturefocus>
-					<texturenofocus>home/home_arrow_left.png</texturenofocus>
-					<visible>Container(4444).HasPrevious + Control.IsVisible(4444)</visible>
-					<onclick>Control.Move(4444,-1)</onclick>
-				</control>
-				<control type="button">
-					<left>1885</left>
-					<top>141</top>
-					<width>30</width>
-					<height>30</height>
-					<texturefocus colordiffuse="$INFO[Skin.String(MainMenuTextColor)]">home/home_arrow_right.png</texturefocus>
-					<texturenofocus>home/home_arrow_right.png</texturenofocus>
-					<visible>Container(4444).HasNext+ Control.IsVisible(4444)</visible>
-					<onclick>Control.Move(4444,1)</onclick>
-				</control>
-			</control>
+            <control type="fixedlist" id="4444">
+                <include>animation_fade_visible_hidden</include>
+                <left>0</left>
+                <top>120</top>
+                <width>100%</width>
+                <height>70</height>
+                <onup>300</onup>
+                <ondown condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</ondown>
+                <focusposition>2</focusposition>
+                <pagecontrol>-</pagecontrol>
+                <movement>5</movement>
+                <scrolltime tween="sine" easing="inout">300</scrolltime>
+                <orientation>horizontal</orientation>
+                <visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444) | Skin.HasSetting(AutoShowSubmenu)] + !Control.HasFocus(2) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
+                <itemlayout height="70" width="384">
+                    <control type="label">
+                        <width>94%</width>
+                        <height>100%</height>
+                        <left>3%</left>
+                        <font>Light26</font>
+                        <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
+                        <textoffsetx>0</textoffsetx>
+                        <selectedcolor>$INFO[Skin.String(MainMenuTextColor)]</selectedcolor>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="70" width="384">
+                    <control type="image">
+                        <!-- focus sub menu -->
+                        <texture>colors/color_white.png</texture>
+                        <colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
+                        <visible>Control.HasFocus(4444)</visible>
+                    </control>
+                    <control type="label">
+                        <width>94%</width>
+                        <height>100%</height>
+                        <left>3%</left>
+                        <font>Light26</font>
+                        <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
+                        <textoffsetx>0</textoffsetx>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <scroll>true</scroll>
+                        <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+                        <visible>!Control.HasFocus(4444)</visible>
+                    </control>
+                    <control type="label">
+                        <width>94%</width>
+                        <height>100%</height>
+                        <left>3%</left>
+                        <font>Light26</font>
+                        <textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
+                        <textoffsetx>0</textoffsetx>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <scroll>true</scroll>
+                        <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+                        <visible>Control.HasFocus(4444)</visible>
+                    </control>
+                </focusedlayout>
+                <content>
+                    <include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
+                </content>
+            </control>
+            <control type="button">
+                <left>5</left>
+                <top>141</top>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus colordiffuse="$INFO[Skin.String(MainMenuTextColor)]">home/home_arrow_left.png</texturefocus>
+                <texturenofocus>home/home_arrow_left.png</texturenofocus>
+                <visible>Container(4444).HasPrevious + Control.IsVisible(4444)</visible>
+                <onclick>Control.Move(4444,-1)</onclick>
+            </control>
+            <control type="button">
+                <left>1885</left>
+                <top>141</top>
+                <width>30</width>
+                <height>30</height>
+                <texturefocus colordiffuse="$INFO[Skin.String(MainMenuTextColor)]">home/home_arrow_right.png</texturefocus>
+                <texturenofocus>home/home_arrow_right.png</texturenofocus>
+                <visible>Container(4444).HasNext+ Control.IsVisible(4444)</visible>
+                <onclick>Control.Move(4444,1)</onclick>
+            </control>
 
         </control>
 	</include>
@@ -489,7 +485,7 @@
 		<width>100%</width>
 		<height>120</height>
 		<onup>$VAR[HomeButtonUpAction]</onup>
-		<ondown>4444</ondown>
+        <ondown>4444</ondown>
 		<pagecontrol>-</pagecontrol>
 		<movement>1</movement>
 		<scrolltime tween="sine" easing="inout">300</scrolltime>
