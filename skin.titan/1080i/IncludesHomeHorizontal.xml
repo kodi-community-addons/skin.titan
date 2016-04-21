@@ -363,19 +363,19 @@
 		
             
             <!-- submenu -->
-            <control type="fixedlist" id="4444">
+            <control type="list" id="4444">
                 <include>animation_fade_visible_hidden</include>
                 <left>0</left>
                 <top>120</top>
-                <width>100%</width>
+                <width>1920</width>
                 <height>70</height>
                 <onup>300</onup>
                 <ondown condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</ondown>
-                <focusposition>2</focusposition>
-                <pagecontrol>-</pagecontrol>
-                <movement>5</movement>
                 <scrolltime tween="sine" easing="inout">300</scrolltime>
                 <orientation>horizontal</orientation>
+                <animation effect="slide" time="0" start="0,0" end="0,200" condition="!Control.IsVisible(4444)">Conditional</animation>
+                
+                <animation effect="slide" time="0" start="0" end="384" delay="0" condition="!IntegerGreaterThan(Container(4444).NumItems,3)">Conditional</animation>
                 <visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444) | Skin.HasSetting(AutoShowSubmenu)] + !Control.HasFocus(2) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
                 <itemlayout height="70" width="384">
                     <control type="label">
@@ -485,7 +485,10 @@
 		<width>100%</width>
 		<height>120</height>
 		<onup>$VAR[HomeButtonUpAction]</onup>
-        <ondown>4444</ondown>
+        <ondown condition="IntegerGreaterThan(Container(4444).NumItems,3)">SetFocus(4444,2)</ondown>
+        <ondown condition="StringCompare(Container(4444).NumItems,3) | StringCompare(Container(4444).NumItems,2)">SetFocus(4444,1)</ondown>
+        <ondown condition="StringCompare(Container(4444).NumItems,1)">SetFocus(4444,0)</ondown>
+        <ondown condition="!IntegerGreaterThan(Container(4444).NumItems,0)">2</ondown>
 		<pagecontrol>-</pagecontrol>
 		<movement>1</movement>
 		<scrolltime tween="sine" easing="inout">300</scrolltime>
