@@ -58,8 +58,8 @@
             <control type="group">
                 <include condition="!Skin.HasSetting(DisableAllWidgets)">VerticalHomeWidgetsNormal</include>
                 <include condition="!Skin.HasSetting(DisableAllWidgets) + Skin.HasSetting(VerticalHomeMultiWidget)">skinshortcuts-template-VerticalHomeAdvancedWidgets</include>
-                <animation effect="slide" start="0" end="0,110" time="0" condition="Control.IsVisible(4446) + !Skin.HasSetting(HideWidgetDetailsPanel)">Conditional</animation>
-                <animation effect="slide" start="0" end="0,90" time="0" condition="Control.IsVisible(4446) + Skin.HasSetting(HideWidgetDetailsPanel)">Conditional</animation>
+                <animation effect="slide" start="0" end="0,110" time="0" condition="Control.IsVisible(4446) + !Skin.HasSetting(HideWidgetDetailsPanel) + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
+                <animation effect="slide" start="0" end="0,90" time="0" condition="Control.IsVisible(4446) + Skin.HasSetting(HideWidgetDetailsPanel) + !Skin.HasSetting(VerticalHomeMultiWidget)">Conditional</animation>
             </control>
         </control>
         
@@ -84,9 +84,7 @@
             <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
             <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
             <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
-            <visible>system.getbool(lookandfeel.enablerssfeeds) + !Control.IsVisible(77551)() + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
-            <visible>![Skin.HasSetting(VerticalHomeMultiWidget) + !IsEmpty(Container(300).ListItem.Property(widget.2))]</visible>
-            <visible>!Control.IsVisible(4446)</visible>
+            <visible>system.getbool(lookandfeel.enablerssfeeds) + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
         </control>
         <control type="label">	
             <description>InfoLine</description>
@@ -101,8 +99,6 @@
             <label>[UPPERCASE]$VAR[infolinevar][/UPPERCASE]</label>
             <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
             <visible>!Window.IsVisible(shutdownmenu)</visible>
-            <visible>![Skin.HasSetting(VerticalHomeMultiWidget) + !IsEmpty(Container(300).ListItem.Property(widget.2))]</visible>
-            <visible>!Control.IsVisible(4446)</visible>
         </control>
         
     </include>
@@ -195,7 +191,7 @@
                             <bordersize>8</bordersize>
                         </control>
                         <control type="group">
-                            <include condition="!Skin.HasSetting(NoTitleOnHomeMenuTiles)">ThumbsLabelOverlay</include>
+                            <include condition="!Skin.HasSetting(NoTitleOnHomeMenuTiles)">ThumbsTagOverlay</include>
                             <visible>!StringCompare(ListItem.Property(disableLabel), disable)</visible>
                         </control>
                     </control>
@@ -305,7 +301,7 @@
 				<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
 			</control>
 			<control type="group">
-				<include condition="!Skin.HasSetting(NoTitleOnHomeMenuTiles)">ThumbsLabelOverlay</include>
+				<include condition="!Skin.HasSetting(NoTitleOnHomeMenuTiles)">ThumbsTagOverlay</include>
 				<visible>!StringCompare(ListItem.Property(disableLabel), disable)</visible>
 			</control>
 			<include>HiddenHomeMenuButton</include>
