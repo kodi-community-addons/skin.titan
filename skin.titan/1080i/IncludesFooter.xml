@@ -475,7 +475,7 @@
 			<onclick>ActivateWindow(111)</onclick>
 			<onfocus>ActivateWindow(111)</onfocus>
 			<include>animation_fade_visible_hidden</include>
-			<visible allowhiddenfocus="true">![[Control.IsVisible(77551) | StringCompare(Window(Home).Property(ShowWidget),show) | [!IsEmpty(Container(300).ListItem.Property(infoline)) + !StringCompare(Container(300).ListItem.Property(infoline),disabled)]] + [Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, simplehor) | Skin.String(HomeLayout, enhanced)]] + !Control.IsVisible(4446) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(HidePowerMenu)</visible>
+			<visible allowhiddenfocus="true">![[Control.IsVisible(77551) | StringCompare(Window(Home).Property(ShowWidget),show) | [!IsEmpty(Container(300).ListItem.Property(infoline)) + !StringCompare(Container(300).ListItem.Property(infoline),none)]] + [Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, simplehor) | Skin.String(HomeLayout, enhanced)]] + !Control.IsVisible(4446) + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(HidePowerMenu)</visible>
 
 			<animation effect="slide" end="0,-33" time="0" condition="skin.hastheme(classic) + ![Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]">Conditional</animation>
 			<animation effect="slide" end="-610" time="0" condition="[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)]">Conditional</animation>
@@ -483,5 +483,86 @@
 			<!-- <visible allowhiddenfocus="true">[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles)] + Skin.HasSetting(VerticalHomeInlineSubmenu)</visible> -->
 		</control>
 	</include>
+    
+    <include name="StarRatingFooter">
+        <control type="group">
+            <visible>!Window.IsActive(movieinformation)</visible>
+            <visible>![!Skin.hastheme(classic) + Skin.HasSetting(StudioInFooter)]</visible>
+            <visible>!IsEmpty(ListItem.Rating) + window.isactive(videolibrary)</visible>
+            <bottom>20</bottom>
+            <height>80</height>
+            <posx>1450</posx>
+            <control type="image">
+                <!--Stars classic-->
+                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <posx>60</posx>
+                <posy>18</posy>
+                <width>270</width>
+                <height>25</height>
+                <texture>$INFO[ListItem.Rating,rating/10stars_black/,.png]</texture>
+            </control>
+            <control type="image">
+                <!--Stars modern-->
+                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <posx>130</posx>
+                <posy>24</posy>
+                <width>220</width>
+                <height>45</height>
+                <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                <texture fallback="rating/0.0.png">$INFO[ListItem.Rating,rating/,.png]</texture>
+            </control>
+            <control type="label">
+                <!--Rating classic-->
+                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <posx>340</posx>
+                <posy>0</posy>
+                <width>100</width>
+                <font>Bold30</font>
+                <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+                <label>$INFO[ListItem.Rating]</label>
+            </control>
+            <control type="label">
+                <!--Rating modern-->
+                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <posx>360</posx>
+                <posy>15</posy>
+                <width>100</width>
+                <font>Reg36</font>
+                <textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+                <label>$INFO[ListItem.Rating]</label>
+            </control>
+        </control>
+    </include>
+    
+    <include name="StarRatingMusicFooter">
+        <control type="group">
+            <bottom>20</bottom>
+            <height>80</height>
+            <right>60</right>
+            <control type="image">
+                <!--Stars classic-->
+                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <right>0</right>
+                <posy>18</posy>
+                <width>270</width>
+                <height>25</height>
+                <texture fallback="leftrating/rating0.png">$INFO[ListItem.StarRating,leftrating/]</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
+            <control type="image">
+                <!--Stars modern-->
+                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <right>0</right>
+                <posy>20</posy>
+                <width>220</width>
+                <height>55</height>
+                <colordiffuse>$INFO[Skin.String(FooterTextColor)]</colordiffuse>
+                <texture fallback="leftrating/rating0.png">$INFO[ListItem.StarRating,leftrating/]</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
+        </control>
+    </include>
+    
+    
     
 </includes>
