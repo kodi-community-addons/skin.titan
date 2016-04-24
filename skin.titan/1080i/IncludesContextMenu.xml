@@ -213,21 +213,20 @@
 	
 	<include name="SideBladeClassic">
 		<posx>-635</posx>
-		<bottom>5%</bottom>
-        <height>840</height>
-        <width>500</width>
+		<posy>-15</posy>
 		<visible>!Window.IsActive(virtualkeyboard)</visible>
 		<include>animation_sub_menu</include>
 		<!--Panel-->
 		<control type="image">
 			<posx>-19</posx>
-			<posy>46%</posy>
+			<posy>525</posy>
 			<width>80</width>
 			<height>60</height>
 			<texture>dialogs/default/arrow.png</texture>
             <colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
 		</control>
 		<control type="image">
+			<posy>150</posy>
 			<width>500</width>
 			<height>840</height>
             <bordersize>20</bordersize>
@@ -235,7 +234,7 @@
             <colordiffuse>$INFO[Skin.String(SideBladePanelColor)]</colordiffuse>
 		</control>
 	</include>	
-
+    
     <include name="SideBladeViewCommands">
          <control type="button" id="308">
 			<!--Switch fullscreen-->
@@ -252,19 +251,24 @@
 		</control>
         
         <!-- VIEW SETTINGS START HERE -->
-
+        <control type="label" id="2001">
+            <!--empty space-->
+            <width>458</width>
+            <height>5</height>
+        </control>
+        <control type="image" id="2002">
+            <!--Seperator-->
+            <width>458</width>
+            <height>2</height>
+            <texture>colors/color_white.png</texture>
+            <colordiffuse>$INFO[Skin.String(SideBladeTextColor)]</colordiffuse>
+        </control>
         <control type="label" id="14018">
             <!--Label Menu-->
             <textoffsetx>50</textoffsetx>
             <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
             <include>SideBladeMenuButton</include>
             <label>$LOCALIZE[14018]:</label>
-        </control>
-        <control type="image" id="2001">
-            <!--Seperator-->
-            <width>458</width>
-            <height>20</height>
-            <texture>common/menu-separator.png</texture>
         </control>
                 
         <control type="button" id="4403">
@@ -786,9 +790,9 @@
 			<!--Grouplist 9000-->
             <control type="grouplist" id="9000">
                 <posx>21</posx>
-                <posy>190</posy>
+                <posy>185</posy>
                 <width>458</width>
-                <height>750</height>
+                <height>770</height>
                 <itemgap>3</itemgap>
                 <onleft>5000</onleft>
                 <onright>5000</onright>
@@ -943,5 +947,79 @@
          </control>
 		 
 	</include>
+
+    <include name="SideBladeMenuButton">
+		<width>458</width>
+		<align>left</align>
+		<font>Reg26</font>
+		<textcolor>$INFO[Skin.String(SideBladeTextColor)]</textcolor>
+		<focusedcolor>$INFO[Skin.String(ButtonFocusTextColor)]</focusedcolor>
+		<disabledcolor>77585858</disabledcolor>
+		<invalidcolor>red</invalidcolor>
+		<pulseonselect>false</pulseonselect>
+		<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel.png</texturefocus>
+        <texturenofocus></texturenofocus>
+    </include>
+    
+    <include name="SideBladeMenuTabLeft">
+        <!--Sub Menu Tab Left-->
+        <control type="group">
+			<visible>!Skin.HasSetting(KioskMode.Enabled) | [SubString(Window.Property(xmlfile),PVR) + Skin.HasSetting(KioskMode.Enabled)]</visible>
+			<animation type="Conditional" condition="ControlGroup(9000).HasFocus()">
+					<effect type="fade" start="100" end="0" time="100" />
+				</animation>
+				<animation type="Conditional" condition="!ControlGroup(9000).HasFocus()">
+					<effect type="fade" start="0" end="100" time="400" delay="600" />
+				</animation>
+            <visible>[substring(Window.Property(xmlfile), pvr) + [Control.IsVisible(10) | Control.IsVisible(11) | Control.IsVisible(12) | Control.IsVisible(13) | Control.IsVisible(14) | Control.IsVisible(15) | Control.IsVisible(17)]] | Control.IsVisible(50) | Control.IsVisible(51) | Control.IsVisible(53) | Control.IsVisible(54) | Control.IsVisible(55) | Control.IsVisible(56) | Control.IsVisible(57) | Control.IsVisible(59) | Control.IsVisible(504) | Control.IsVisible(505) | Control.IsVisible(509) | Control.IsVisible(510) | Control.IsVisible(511) | Control.IsVisible(512) | Control.IsVisible(515) | Control.IsVisible(516) | Control.IsVisible(517) | Control.IsVisible(518) | Control.IsVisible(522) | Window.IsActive(script-nextaired-tvguide.xml) | Window.IsActive(script-nextaired-tvguide2.xml) | Window.IsActive(script-ExtendedInfo Script-VideoList.xml) | [Control.IsVisible(501) + !Skin.HasSetting(View_501_HorizontalNavigation)]</visible>
+			<control type="button" id="99001">
+				<posx>0</posx>
+				<posy>470</posy>
+				<width>32</width>
+				<height>140</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>[UPPERCASE]$LOCALIZE[33063][/UPPERCASE]</label>
+				<textoffsetx>0</textoffsetx>
+				<textoffsety>23</textoffsety>
+				<angle>90</angle>
+				<textwidth>140</textwidth>
+				<font>Reg20</font>
+				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+				<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturefocus>
+				<texturenofocus colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">colors/color_white.png</texturenofocus>
+				<onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+				<onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
+				<animation effect="fade" start="100" end="80" time="0" condition="!Control.HasFocus(99001)">Conditional</animation>
+			</control>
+		</control>
+    </include>
+    
+    <include name="SideBladeMenuTabTop">
+        <!--Sub Menu Tab Top-->
+        <control type="group">
+			<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
+			<visible>!Control.IsVisible(883)</visible>
+            <visible>Control.IsVisible(500) | Control.IsVisible(52) | [Control.IsVisible(501) + Skin.HasSetting(View_501_HorizontalNavigation)] | Control.IsVisible(502) | Control.IsVisible(503) | Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514) | Control.IsVisible(523)</visible>
+			<control type="button" id="99002">
+				<posx>890</posx>
+				<posy>0</posy>
+				<width>140</width>
+				<height>32</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>[UPPERCASE]$LOCALIZE[33063][/UPPERCASE]</label>
+				<textoffsetx>0</textoffsetx>
+				<textwidth>140</textwidth>
+				<font>Reg20</font>
+				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+				<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturefocus>
+				<texturenofocus colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">colors/color_white.png</texturenofocus>
+				<onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+				<onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
+				<animation effect="fade" start="100" end="80" time="0" condition="!Control.HasFocus(99002)">Conditional</animation>
+			</control>
+		</control>
+    </include>
 
 </includes>
