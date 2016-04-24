@@ -84,7 +84,7 @@
             <titlecolor>$INFO[Skin.String(GeneralHighlightTextColor)]</titlecolor>
             <headlinecolor>$INFO[Skin.String(FooterTextColor)]</headlinecolor>
             <textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
-            <visible>system.getbool(lookandfeel.enablerssfeeds) + IsEmpty(Container(300).ListItem.Property(infoline))</visible>
+            <visible>system.getbool(lookandfeel.enablerssfeeds) + [IsEmpty(Container(300).ListItem.Property(infoline)) | StringCompare(Container(300).ListItem.Property(none))]</visible>
         </control>
         <control type="label">	
             <description>InfoLine</description>
@@ -160,8 +160,8 @@
                 <ondown>300</ondown>
                 <onleft condition="!Skin.HasSetting(DisablePowerMenu)">2</onleft>
                 <onright condition="Control.IsVisible(4446)">Control.SetFocus(4446,0)</onright>
-                <onright condition="!Control.IsVisible(4446) + Control.IsVisible(4444) + ![Skin.HasSetting(VerticalHomeInlineSubmenu) + Skin.HasSetting(OpenSubMenuOnClick)]">Control.SetFocus(4444,0)</onright>
-                <onright condition="!Control.IsVisible(4446) + [[Skin.HasSetting(VerticalHomeInlineSubmenu) + Skin.HasSetting(OpenSubMenuOnClick)] | !Control.IsVisible(4444)]">77777</onright>
+                <onright condition="!Control.IsVisible(4446) + IntegerGreaterThan(Container(4445).NumItems,0) + ![Skin.HasSetting(VerticalHomeInlineSubmenu) + Skin.HasSetting(OpenSubMenuOnClick)]">Control.SetFocus(4444,0)</onright>
+                <onright condition="!Control.IsVisible(4446) + [[Skin.HasSetting(VerticalHomeInlineSubmenu) + Skin.HasSetting(OpenSubMenuOnClick)] | !IntegerGreaterThan(Container(4445).NumItems,0)]">77777</onright>
                 <scrolltime tween="quadratic">200</scrolltime>
                 <movement>0</movement>
                 <preloaditems>4</preloaditems>
@@ -981,6 +981,8 @@
                 <height>131</height>
                 <font>Light36</font>
                 <alignv>center</alignv>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
                 <include condition="Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <label>$INFO[Container(4446).ListItem.Label]</label>
                 <visible>Control.HasFocus(4446) + !IntegerGreaterThan(Container(4445).NumItems,8)</visible>
