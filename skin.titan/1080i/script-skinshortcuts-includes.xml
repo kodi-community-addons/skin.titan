@@ -21,7 +21,7 @@
 			<property name="widgetType.1">pvr</property>
 			<property name="widgetPath.1">pvr://channels/tv/all channel/;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
 			<property name="widgetName.1">19023</property>
-			<visible>PVR.HasTVChannels</visible>
+			<visible>[PVR.HasTVChannels] + [PVR.HasTVChannels]</visible>
 			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]">ActivateWindow(TVGuide)</onclick>
 			<property name="path">ActivateWindow(TVGuide)</property>
 			<property name="list">TVGuide</property>
@@ -39,10 +39,10 @@
 			<thumb>$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]</thumb>
 			<property name="labelID">movies</property>
 			<property name="defaultID">movies</property>
-			<property name="widget">librarydataprovider</property>
-			<property name="widgetName">Random Movies</property>
+			<property name="widget">recommendedmovies</property>
+			<property name="widgetName">$ADDON[script.skin.helper.service 32169]</property>
 			<property name="widgetType">movies</property>
-			<property name="widgetPath">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
+			<property name="widgetPath">plugin://script.skin.helper.service/?action=INPROGRESSANDRECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
 			<property name="widgetTarget">video</property>
 			<property name="background">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]</property>
 			<property name="backgroundName">$ADDON[script.skin.helper.service 32039]</property>
@@ -295,10 +295,11 @@
 			<thumb />
 			<property name="labelID">22020</property>
 			<property name="defaultID">22020</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVGuide)</onclick>
 			<property name="path">ActivateWindow(TVGuide)</property>
 			<property name="list">TVGuide</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -310,10 +311,11 @@
 			<thumb />
 			<property name="labelID">19019</property>
 			<property name="defaultID">19019</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVChannels)</onclick>
 			<property name="path">ActivateWindow(TVChannels)</property>
 			<property name="list">TVChannels</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -325,10 +327,11 @@
 			<thumb />
 			<property name="labelID">19163</property>
 			<property name="defaultID">19163</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVRecordings)</onclick>
 			<property name="path">ActivateWindow(TVRecordings)</property>
 			<property name="list">TVRecordings</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -340,10 +343,11 @@
 			<thumb />
 			<property name="labelID">19040</property>
 			<property name="defaultID">19040</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVTimers)</onclick>
 			<property name="path">ActivateWindow(TVTimers)</property>
 			<property name="list">TVTimers</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -355,10 +359,11 @@
 			<thumb />
 			<property name="labelID">137</property>
 			<property name="defaultID">137</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVSearch)</onclick>
 			<property name="path">ActivateWindow(TVSearch)</property>
 			<property name="list">TVSearch</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -531,10 +536,11 @@
 			<thumb />
 			<property name="labelID">19021</property>
 			<property name="defaultID">19021</property>
+			<visible>[PVR.HasRadioChannels] + StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
 			<onclick>ActivateWindow(radiochannels,return)</onclick>
 			<property name="path">ActivateWindow(radiochannels,return)</property>
 			<property name="list">radiochannels</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">music</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -703,6 +709,22 @@
 			<property name="path">ActivateWindow(FileManager)</property>
 			<property name="list">FileManager</property>
 			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)</visible>
+			<property name="group">settings</property>
+			<property name="isSubmenu">True</property>
+		</item>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<label>$LOCALIZE[14111]</label>
+			<label2>Common Shortcut</label2>
+			<icon>special://skin/extras/hometiles/settings.png</icon>
+			<thumb />
+			<property name="labelID">14111</property>
+			<property name="defaultID">14111</property>
+			<visible>[system.getbool(eventlog.enabled)] + StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)</visible>
+			<onclick>ActivateWindow(eventlog)</onclick>
+			<property name="path">ActivateWindow(eventlog)</property>
+			<property name="list">eventlog</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">settings</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -935,6 +957,7 @@
 			<thumb />
 			<property name="labelID">22020</property>
 			<property name="defaultID">22020</property>
+			<visible>PVR.HasTVChannels</visible>
 			<onclick>ActivateWindow(TVGuide)</onclick>
 			<property name="path">ActivateWindow(TVGuide)</property>
 			<property name="list">TVGuide</property>
@@ -950,6 +973,7 @@
 			<thumb />
 			<property name="labelID">19019</property>
 			<property name="defaultID">19019</property>
+			<visible>PVR.HasTVChannels</visible>
 			<onclick>ActivateWindow(TVChannels)</onclick>
 			<property name="path">ActivateWindow(TVChannels)</property>
 			<property name="list">TVChannels</property>
@@ -965,6 +989,7 @@
 			<thumb />
 			<property name="labelID">19163</property>
 			<property name="defaultID">19163</property>
+			<visible>PVR.HasTVChannels</visible>
 			<onclick>ActivateWindow(TVRecordings)</onclick>
 			<property name="path">ActivateWindow(TVRecordings)</property>
 			<property name="list">TVRecordings</property>
@@ -980,6 +1005,7 @@
 			<thumb />
 			<property name="labelID">19040</property>
 			<property name="defaultID">19040</property>
+			<visible>PVR.HasTVChannels</visible>
 			<onclick>ActivateWindow(TVTimers)</onclick>
 			<property name="path">ActivateWindow(TVTimers)</property>
 			<property name="list">TVTimers</property>
@@ -995,6 +1021,7 @@
 			<thumb />
 			<property name="labelID">137</property>
 			<property name="defaultID">137</property>
+			<visible>PVR.HasTVChannels</visible>
 			<onclick>ActivateWindow(TVSearch)</onclick>
 			<property name="path">ActivateWindow(TVSearch)</property>
 			<property name="list">TVSearch</property>
@@ -1012,10 +1039,11 @@
 			<thumb />
 			<property name="labelID">22020</property>
 			<property name="defaultID">22020</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVGuide)</onclick>
 			<property name="path">ActivateWindow(TVGuide)</property>
 			<property name="list">TVGuide</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -1027,10 +1055,11 @@
 			<thumb />
 			<property name="labelID">19019</property>
 			<property name="defaultID">19019</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVChannels)</onclick>
 			<property name="path">ActivateWindow(TVChannels)</property>
 			<property name="list">TVChannels</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -1042,10 +1071,11 @@
 			<thumb />
 			<property name="labelID">19163</property>
 			<property name="defaultID">19163</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVRecordings)</onclick>
 			<property name="path">ActivateWindow(TVRecordings)</property>
 			<property name="list">TVRecordings</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -1057,10 +1087,11 @@
 			<thumb />
 			<property name="labelID">19040</property>
 			<property name="defaultID">19040</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVTimers)</onclick>
 			<property name="path">ActivateWindow(TVTimers)</property>
 			<property name="list">TVTimers</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -1072,10 +1103,11 @@
 			<thumb />
 			<property name="labelID">137</property>
 			<property name="defaultID">137</property>
+			<visible>[PVR.HasTVChannels] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
 			<onclick>ActivateWindow(TVSearch)</onclick>
 			<property name="path">ActivateWindow(TVSearch)</property>
 			<property name="list">TVSearch</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),livetv)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -1404,6 +1436,7 @@
 			<thumb />
 			<property name="labelID">19021</property>
 			<property name="defaultID">19021</property>
+			<visible>PVR.HasRadioChannels</visible>
 			<onclick>ActivateWindow(radiochannels,return)</onclick>
 			<property name="path">ActivateWindow(radiochannels,return)</property>
 			<property name="list">radiochannels</property>
@@ -1499,10 +1532,11 @@
 			<thumb />
 			<property name="labelID">19021</property>
 			<property name="defaultID">19021</property>
+			<visible>[PVR.HasRadioChannels] + StringCompare(Window(10000).Property(submenuVisibility),music)</visible>
 			<onclick>ActivateWindow(radiochannels,return)</onclick>
 			<property name="path">ActivateWindow(radiochannels,return)</property>
 			<property name="list">radiochannels</property>
-			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),music)</visible>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">music</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -1770,6 +1804,22 @@
 			<property name="group">settings</property>
 			<property name="isSubmenu">True</property>
 		</item>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<label>$LOCALIZE[14111]</label>
+			<label2>Common Shortcut</label2>
+			<icon>special://skin/extras/hometiles/settings.png</icon>
+			<thumb />
+			<property name="labelID">14111</property>
+			<property name="defaultID">14111</property>
+			<visible>system.getbool(eventlog.enabled)</visible>
+			<onclick>ActivateWindow(eventlog)</onclick>
+			<property name="path">ActivateWindow(eventlog)</property>
+			<property name="list">eventlog</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
+			<property name="group">settings</property>
+			<property name="isSubmenu">True</property>
+		</item>
 	</include>
 	<include name="skinshortcuts-group-alt-settings">
 		<item id="1">
@@ -1814,6 +1864,22 @@
 			<property name="path">ActivateWindow(FileManager)</property>
 			<property name="list">FileManager</property>
 			<visible>[StringCompare(System.ProfileName,Master user)] + StringCompare(Window(10000).Property(submenuVisibility),settings)</visible>
+			<property name="group">settings</property>
+			<property name="isSubmenu">True</property>
+		</item>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<label>$LOCALIZE[14111]</label>
+			<label2>Common Shortcut</label2>
+			<icon>special://skin/extras/hometiles/settings.png</icon>
+			<thumb />
+			<property name="labelID">14111</property>
+			<property name="defaultID">14111</property>
+			<visible>[system.getbool(eventlog.enabled)] + StringCompare(Window(10000).Property(submenuVisibility),settings)</visible>
+			<onclick>ActivateWindow(eventlog)</onclick>
+			<property name="path">ActivateWindow(eventlog)</property>
+			<property name="list">eventlog</property>
+			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="group">settings</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -2310,7 +2376,7 @@
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
-			<content target="video">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+			<content target="video">plugin://script.skin.helper.service/?action=INPROGRESSANDRECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 		</control>
 		<control id="600" type="label">
 			<label>widget-0</label>
@@ -2550,7 +2616,7 @@
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
-			<content target="video">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+			<content target="video">plugin://script.skin.helper.service/?action=INPROGRESSANDRECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 		</control>
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
@@ -2706,7 +2772,7 @@
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
-			<content target="video">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+			<content target="video">plugin://script.skin.helper.service/?action=INPROGRESSANDRECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 		</control>
 		<control id="510" type="recentepisodes">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
@@ -2887,7 +2953,7 @@
 					<param name="multiprefix" value="_multi" />
 					<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 				</include>
-				<content target="video">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+				<content target="video">plugin://script.skin.helper.service/?action=INPROGRESSANDRECOMMENDEDMOVIES&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 			</control>
 			<include content="VerticalHomeAdvancedWidgetHeader" name="VerticalHomeAdvancedWidgetHeader">
 				<param name="id" value="519" />
