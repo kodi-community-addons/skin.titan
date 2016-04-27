@@ -12,6 +12,11 @@
 			
             <!-- background image + overlay -->
             <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
+            </control>
+            <control type="image">
                 <fadetime>350</fadetime>
                 <texture background="true">$VAR[backgroundVar]</texture>
                 <aspectratio aligny="top">scale</aspectratio>
@@ -23,13 +28,29 @@
                 <height>100%</height>
                 <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
                 <animation effect="fade" start="100" end="95" delay="0" time="0"  condition="true">Conditional</animation>
+                <visible>Skin.HasSetting(View523_DetailsShowFanart)</visible>
+            </control>
+            
+            <!-- overlay without big thumb -->
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
+                <animation effect="fade" start="100" end="70" delay="0" time="0"  condition="true">Conditional</animation>
+                <visible>!Skin.HasSetting(View523_DetailsShowFanart)</visible>
+            </control>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Netflix2_PanelColor]">special://skin/extras/bgoverlays/Side by Side.png</texture>
+                <animation effect="fade" start="100" end="95" delay="0" time="0"  condition="true">Conditional</animation>
+                <visible>!Skin.HasSetting(View523_DetailsShowFanart)</visible>
             </control>
 
             <!-- spotlight section -->
             <control type="group" id="3505">
                 <width>1920</width>
                 <height>450</height>
-                <visible>![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2)]</visible>
                 
                 <!-- spotlight image -->
                 <control type="image">
@@ -40,6 +61,7 @@
                     <top>0</top>
                     <texture background="true" diffuse="special://skin/extras/bgoverlays/Right Corner.png">$VAR[backgroundVar]</texture>
                     <aspectratio scalediffuse="true" aligny="top">scale</aspectratio>
+                    <visible>Skin.HasSetting(View523_DetailsShowFanart)</visible>
                 </control>
                 
                 <!-- clearlogo -->
@@ -55,67 +77,98 @@
                 <!-- title fallback -->
                 <control type="textbox">
                     <height>120</height>
-                    <width>300</width>
+                    <width>800</width>
                     <left>50</left>
                     <top>40</top>
                     <font>Reg46</font>
                     <align>left</align>
                     <aligny>top</aligny>
-                    <label>$INFO[ListItem.Title]</label>
+                    <label>$VAR[View523_FallbackTitle]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <visible>SubString(Control.GetLabel(29475),color_transparent) + !Container.Content(episodes)</visible>
+                    <visible>SubString(Control.GetLabel(29475),color_transparent) + Skin.HasSetting(View523_DetailsShowFanart)</visible>
                 </control>
                 <control type="textbox">
                     <height>120</height>
-                    <width>300</width>
+                    <width>1800</width>
                     <left>50</left>
                     <top>40</top>
                     <font>Reg46</font>
                     <align>left</align>
                     <aligny>top</aligny>
-                    <label>$INFO[ListItem.TvshowTitle]</label>
+                    <label>$VAR[View523_FallbackTitle]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <visible>SubString(Control.GetLabel(29475),color_transparent) + Container.Content(episodes)</visible>
+                    <visible>SubString(Control.GetLabel(29475),color_transparent) + !Skin.HasSetting(View523_DetailsShowFanart)</visible>
                 </control>
                 
                 <control type="grouplist">
-                    <width>800</width>
+                    <width>1500</width>
                     <posx>55</posx>
                     <posy>170</posy>
                     <height>400</height>
                     <orientation>vertical</orientation>
-
+                    
+                    <!-- subtitle: tagline or episode name -->
                     <control type="label">
                         <height>70</height>
+                        <width>800</width>
                         <font>Reg36</font>
                         <align>left</align>
                         <aligny>center</aligny>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <label>$INFO[ListItem.Tagline]</label>
+                        <label>$VAR[View523_SubTitle]</label>
+                        <visible>Skin.HasSetting(View523_DetailsShowFanart)</visible>
                     </control>
                     <control type="label">
                         <height>70</height>
+                        <width>1000</width>
                         <font>Reg36</font>
                         <align>left</align>
                         <aligny>center</aligny>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                        <label>$INFO[ListItem.Label]</label>
-                        <visible>Container.Content(episodes)</visible>
+                        <label>$VAR[View523_SubTitle]</label>
+                        <visible>!Skin.HasSetting(View523_DetailsShowFanart)</visible>
                     </control>
+                    
+                    <!-- details -->
                     <control type="label">
                         <height>60</height>
+                        <width>800</width>
                         <font>Reg28</font>
                         <align>left</align>
                         <aligny>center</aligny>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <label>$VAR[ListDetails]</label>
+                        <visible>Skin.HasSetting(View523_DetailsShowFanart)</visible>
                     </control>
+                    <control type="label">
+                        <height>60</height>
+                        <width>1000</width>
+                        <font>Reg28</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <label>$VAR[ListDetails]</label>
+                        <visible>!Skin.HasSetting(View523_DetailsShowFanart)</visible>
+                    </control>
+                    
+                    <!-- plot -->
                     <control type="textbox">
                         <height>170</height>
+                        <width>800</width>
                         <label>$VAR[Plots]</label>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <align>justify</align>
                         <font>Reg28</font>
+                        <visible>Skin.HasSetting(View523_DetailsShowFanart)</visible>
+                    </control>
+                    <control type="textbox">
+                        <height>170</height>
+                        <width>1000</width>
+                        <label>$VAR[Plots]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <align>justify</align>
+                        <font>Reg28</font>
+                        <visible>!Skin.HasSetting(View523_DetailsShowFanart)</visible>
                     </control>
                     
                 </control>
@@ -213,7 +266,7 @@
         <left>50</left>
         <bottom>20</bottom>
         <height>380</height>
-        <width>1820</width>
+        <width>1920</width>
         <orientation>horizontal</orientation>
         <onleft>523</onleft>
         <onright>523</onright>
@@ -224,7 +277,7 @@
         <visible>StringCompare(Window(Home).Property(SkinHelper.ForcedView),523) | IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
         <itemlayout height="380" width="455" condition="Container.Content(episodes)">
             <control type="group">
-                <width>97%</width>
+                <width>100%</width>
                 <height>75%</height>
                 <bottom>30</bottom>
                 <include>ThumbsViewLayout</include>
@@ -232,11 +285,11 @@
         </itemlayout>
         <focusedlayout height="380" width="455" condition="Container.Content(episodes)">
             <control type="group">
-                <width>97%</width>
+                <width>100%</width>
                 <height>75%</height>
                 <bottom>30</bottom>
                 <include>ThumbsViewLayoutFocus</include>
-                <animation effect="zoom" end="120,120" center="auto" time="100">focus</animation>
+                <animation effect="zoom" end="110,110" center="auto" time="100">focus</animation>
             </control>
         </focusedlayout>
         <itemlayout height="380" width="262" condition="!Container.Content(episodes)">
@@ -255,5 +308,15 @@
           </control>
         </focusedlayout>
 	</include>
+    
+    <variable name="View523_FallbackTitle">
+        <value condition="Container.Content(episodes)">$INFO[ListItem.TvshowTitle]</value>
+        <value>$INFO[ListItem.Title]</value>
+    </variable>
+    
+    <variable name="View523_SubTitle">
+        <value condition="Container.Content(episodes)">$INFO[ListItem.Label]</value>
+        <value>$INFO[ListItem.TagLine]</value>
+    </variable>
     
 </includes>
