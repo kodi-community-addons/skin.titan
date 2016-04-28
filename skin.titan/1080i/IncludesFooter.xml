@@ -157,12 +157,12 @@
 					<bordersize>2</bordersize>
 					<texture>$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
                     <visible>Skin.HasSetting(StudioInFooter) | Control.IsVisible(523)</visible>
-                    <animation effect="slide" end="-100" time="0" condition="!IsEmpty(ListItem.Rating) + [Skin.HasSetting(IMDBRatingInFooter) | Control.IsVisible(523)]">Conditional</animation>
+                    <animation effect="slide" end="-100" time="0" condition="!IsEmpty(Control.GetLabel(414783)) + [Skin.HasSetting(IMDBRatingInFooter) | Control.IsVisible(523)]">Conditional</animation>
                     <animation effect="slide" end="-100" time="0" condition="!IsEmpty(Window(Home).Property(SkinHelper.IMDB.Top250)) + [Skin.HasSetting(IMDBRatingInFooter) | Control.IsVisible(523)]">Conditional</animation>
 				</control>
                 <!-- IMDB rating -->
                 <control type="group">
-                    <visible>!IsEmpty(ListItem.Rating) + [Skin.HasSetting(IMDBRatingInFooter) | Control.IsVisible(523)]</visible>
+                    <visible>!IsEmpty(Control.GetLabel(414783)) + [Skin.HasSetting(IMDBRatingInFooter) | Control.IsVisible(523)]</visible>
                     <animation effect="slide" end="-100" time="0" condition="!IsEmpty(Window(Home).Property(SkinHelper.IMDB.Top250)) + [Skin.HasSetting(IMDBRatingInFooter) | Control.IsVisible(523)]">Conditional</animation>
                     <control type="image">
                         <right>50</right>
@@ -192,7 +192,7 @@
                         <bordersize>2</bordersize>
                         <texture>flags/imdb_logo.png</texture>
                     </control>
-                    <control type="label">
+                    <control type="label" id="414783">
                         <!--Rating modern-->
                         <right>50</right>
                         <bottom>17</bottom>
@@ -202,13 +202,29 @@
                         <aligny>center</aligny>
                         <font>flags</font>
                         <textcolor>white</textcolor>
-                        <label fallback="0.0">$INFO[ListItem.Rating]</label>
+                        <label>$VAR[FooterRatingLabel]</label>
                     </control>
                 </control>
-
 			</control>	
-
     </include>
+    
+    <variable name="FooterRatingLabel">
+        <value condition="IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))">$INFO[ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),510)">$INFO[Container(510).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),520)">$INFO[Container(520).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),530)">$INFO[Container(530).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),540)">$INFO[Container(540).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),550)">$INFO[Container(550).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),560)">$INFO[Container(560).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),570)">$INFO[Container(570).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),580)">$INFO[Container(580).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),590)">$INFO[Container(590).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),600)">$INFO[Container(600).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),601)">$INFO[Container(601).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),602)">$INFO[Container(602).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),603)">$INFO[Container(603).ListItem.Rating]</value>
+        <value condition="StringCompare(Window(Home).Property(SkinHelper.WidgetContainer),604)">$INFO[Container(604).ListItem.Rating]</value>
+    </variable>
     
     <include name="FooterContentPVR">
         <!--Progress (PVR)-->
