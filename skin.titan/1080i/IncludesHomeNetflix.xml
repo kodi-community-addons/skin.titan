@@ -407,7 +407,7 @@
 		<control type="grouplist" id="9000">
 			<posx>50</posx>
             <include condition="[Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2)]">NetFlixHome2_AltHeight</include>
-			<bottom>0</bottom>
+			<bottom>10</bottom>
             <height>420</height>
 			<width>1870</width>
             <ondown>9000</ondown>
@@ -620,17 +620,17 @@
                 <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
         </control>	
-        <include name="widgetlayout_netflix_normal" content="widgetlayout_netflix_normal" condition="![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + [Skin.String(widgetstyle, poster) | Skin.String(widgetstyle, landscape)]] + Window.IsActive(Home) + ![!Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Skin.String(widgetstyle, landscape)]">
+        <include name="widgetlayout_netflix_normal" content="widgetlayout_netflix_normal" condition="!Skin.HasSetting(NetflixHomeDisableFirstRow) + [Skin.String(widgetstyle, poster) | Skin.String(widgetstyle, landscape)] + Window.IsActive(Home)">
             <param name="widgetid" value="$PARAM[widgetid]" />
             <param name="listitemid" value="$PARAM[listitemid]" />
             <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
         </include>
-        <include name="widgetlayout_netflix_details" content="widgetlayout_netflix_details" condition="[Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + [Skin.String(widgetstyle, poster) | Skin.String(widgetstyle, landscape)]] + Window.IsActive(Home)">
+        <include name="widgetlayout_netflix_details" content="widgetlayout_netflix_details" condition="Skin.HasSetting(NetflixHomeDisableFirstRow) + [Skin.String(widgetstyle, poster) | Skin.String(widgetstyle, landscape)] + Window.IsActive(Home)">
             <param name="widgetid" value="$PARAM[widgetid]" />
             <param name="listitemid" value="$PARAM[listitemid]" />
             <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
         </include>
-        <include name="widget_layout_landscape_netflix" content="widget_layout_landscape_netflix" condition="!Window.IsActive(Home) | [!Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Skin.String(widgetstyle, landscape)]">
+        <include name="widget_layout_landscape_netflix" content="widget_layout_landscape_netflix" condition="!Window.IsActive(Home) | Skin.String(widgetstyle, landscapelarge)">
             <param name="widgetid" value="$PARAM[widgetid]" />
             <param name="listitemid" value="$PARAM[listitemid]" />
             <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
@@ -843,18 +843,11 @@
         <control type="panel" id="$PARAM[widgetid]">
             <focusposition>0</focusposition>
             <width>100%</width>
-            <include name="height" content="height" condition="![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Window.IsActive(Home)]">
-                <param name="height" value="380" />
-            </include>
             <include name="widget_layout_poster" content="widget_layout_poster" condition="Skin.String(widgetstyle, poster)">
                 <param name="widgetid" value="$PARAM[widgetid]" />
                 <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
             </include>
             <include name="widget_layout_landscape" content="widget_layout_landscape" condition="Skin.String(widgetstyle, landscape)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_landscapesmall" content="widget_layout_landscapesmall" condition="Skin.String(widgetstyle, landscapesmall)">
                 <param name="widgetid" value="$PARAM[widgetid]" />
                 <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
             </include>
@@ -913,7 +906,7 @@
             <include>widget_layout_general</include>
             <itemlayout width="430" height="380">
                 <control type="group">
-                    <width>438</width>
+                    <width>430</width>
                     <height>260</height>
                     <top>40</top>
                     <include>ThumbsViewLayout</include>
@@ -929,7 +922,7 @@
             </itemlayout>
             <focusedlayout width="430" height="380">
                 <control type="group">
-                    <width>438</width>
+                    <width>430</width>
                     <height>260</height>
                     <top>40</top>
                     <include>ThumbsViewLayoutFocus</include>
@@ -941,12 +934,10 @@
                             <param name="prefix" value="Landscape" />
                         </include>
                     </control>
-                    <control type="button">
-                        <visible>false</visible>
-                        <onfocus condition="!Skin.String(HomeLayout, netflix) + ![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + Skin.HasSetting(VerticalHomeMultiWidget)]">Setproperty(ShowWidget,show)</onfocus>
-                        <onfocus>Setproperty(widgetstyle,landscape)</onfocus>
-                        <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid],home)</onfocus>
-                    </control>
+                    <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                        <param name="widgetstyle" value="landscapelarge" />
+                        <param name="widgetid" value="$PARAM[widgetid]" />
+                    </include>
                 </control>
             </focusedlayout>
             <content target="video">$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Property(list)]</content>
@@ -973,12 +964,10 @@
 		</itemlayout>
         <focusedlayout width="1090" height="205" condition="Control.HasFocus($PARAM[widgetid])">
             <include>widebox_netflix</include>
-            <control type="button">
-                <visible>false</visible>
-                <onfocus condition="!Skin.String(HomeLayout, netflix) + ![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + Skin.HasSetting(VerticalHomeMultiWidget)]">Setproperty(ShowWidget,show,Home)</onfocus>
-                <onfocus>Setproperty(widgetstyle,landscape,Home)</onfocus>
-                <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid],home)</onfocus>
-            </control>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="landscape" />
+                <param name="widgetid" value="$PARAM[widgetid]" />
+            </include>
         </focusedlayout>
 		<focusedlayout width="366" height="210" condition="!Control.HasFocus($PARAM[widgetid])">
 			<control type="group">
@@ -993,12 +982,10 @@
                         <param name="prefix" value="Landscape" />
                     </include>
                 </control>
-                <control type="button">
-                    <visible>false</visible>
-                    <onfocus condition="!Skin.String(HomeLayout, netflix) + ![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + Skin.HasSetting(VerticalHomeMultiWidget)]">Setproperty(ShowWidget,show,Home)</onfocus>
-                    <onfocus>Setproperty(widgetstyle,landscape,Home)</onfocus>
-                    <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid],home)</onfocus>
-                </control>
+                <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                    <param name="widgetstyle" value="landscape" />
+                    <param name="widgetid" value="$PARAM[widgetid]" />
+                </include>
             </control>
 		</focusedlayout>
 		
@@ -1036,22 +1023,18 @@
                     <param name="prefix" value="Poster" />
                 </include>
             </control>
-            <control type="button">
-                <visible>false</visible>
-                <onfocus condition="!Skin.String(HomeLayout, netflix) + ![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + Skin.HasSetting(VerticalHomeMultiWidget)]">Setproperty(ShowWidget,show,Home)</onfocus>
-                <onfocus>Setproperty(widgetstyle,poster,Home)</onfocus>
-                <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid],home)</onfocus>
-            </control>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="poster" />
+                <param name="widgetid" value="$PARAM[widgetid]" />
+            </include>
           </control>
         </focusedlayout>
         <focusedlayout width="780" height="380" condition="Control.HasFocus($PARAM[widgetid])">
             <include>widebox_netflix_poster</include>
-            <control type="button">
-                <visible>false</visible>
-                <onfocus condition="!Skin.String(HomeLayout, netflix) + ![[Skin.String(HomeLayout, simplever) | Skin.String(HomeLayout, simplever_tiles) | Skin.String(HomeLayout, verticalbig)] + Skin.HasSetting(VerticalHomeMultiWidget)]">Setproperty(ShowWidget,show,Home)</onfocus>
-                <onfocus>Setproperty(widgetstyle,poster,Home)</onfocus>
-                <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid],home)</onfocus>
-            </control>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="poster" />
+                <param name="widgetid" value="$PARAM[widgetid]" />
+            </include>
         </focusedlayout>
 	</include>
     
