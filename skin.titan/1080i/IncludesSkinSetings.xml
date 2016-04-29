@@ -640,13 +640,6 @@
                 <param name="action" value="RunPlugin(plugin://script.tvtunes)" />
                 <param name="visible" value="!System.HasAddon(script.tvtunes)" />
             </include>
-            <control type="radiobutton" id="8014">
-                <include>SkinSettings_Button</include>
-                <label>31302</label>
-                <onclick condition="System.HasAddon(script.tv.show.next.aired)">Skin.ToggleSetting(EnableNextAiredNotifications)</onclick>
-                <onclick condition="!System.HasAddon(script.tv.show.next.aired)">RunPlugin(plugin://script.tv.show.next.aired)</onclick>
-                <selected>Skin.HasSetting(EnableNextAiredNotifications)</selected>
-            </control>
             <control type="radiobutton" id="17118">
                 <include>SkinSettings_Button</include>
                 <label>31498</label>
@@ -1112,6 +1105,44 @@
             <pagecontrol>316</pagecontrol>
             <orientation>vertical</orientation>
             <visible>StringCompare(Window(Home).Property(SkinSettingSection),16)</visible>
+            
+            <!-- OSD generic -->
+            <control type="label" id="478">
+                <include>SkinSettings_Header</include>
+                <label>478</label>
+                <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+            </control>
+            
+            <control type="radiobutton" id="13060">
+                <include>SkinSettings_Button</include>
+                <label>31476</label>
+                <onclick>Skin.ToggleSetting(UseSlimOSDPanel)</onclick>
+                <selected>Skin.HasSetting(UseSlimOSDPanel)</selected>
+                <visible>!Skin.HasTheme(classic)</visible>
+            </control>
+            <control type="button" id="31698">
+                <include>SkinSettings_Button</include>
+                <label>$LOCALIZE[31698]</label>
+                <label2>$INFO[Skin.String(osd_buttonstyle.label)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=osd_buttonstyle,header=$LOCALIZE[31698])</onclick>
+                <visible>!skin.hastheme(classic)</visible>
+            </control>
+            <control type="radiobutton" id="13062">
+                <include>SkinSettings_Button</include>
+                <label>31519</label>
+                <onclick>Skin.ToggleSetting(HideOSDDisc)</onclick>
+                <selected>Skin.HasSetting(HideOSDDisc)</selected>
+                <visible>!Skin.HasSetting(UseSlimOSDPanel)</visible>
+            </control>
+            <control type="radiobutton" id="13065">
+                <include>SkinSettings_Button</include>
+                <label>$LOCALIZE[31661]</label>
+                <onclick>Skin.ToggleSetting(osdgradientstyle)</onclick>
+                <selected>Skin.HasSetting(osdgradientstyle)</selected>
+                <visible>!skin.hastheme(classic)</visible>
+            </control>
+            
+
             <!-- Video playback -->
             <control type="label" id="13050">
                 <include>SkinSettings_Header</include>
@@ -1175,27 +1206,7 @@
                 <selected>Skin.HasSetting(ShowWeatherVideoInfoOSD)</selected>
                 <visible>!Skin.HasTheme(classic)</visible>
             </control>
-            <control type="radiobutton" id="13060">
-                <include>SkinSettings_Button</include>
-                <label>31476</label>
-                <onclick>Skin.ToggleSetting(UseSlimOSDPanel)</onclick>
-                <selected>Skin.HasSetting(UseSlimOSDPanel)</selected>
-                <visible>!Skin.HasTheme(classic)</visible>
-            </control>
-            <control type="button" id="31698">
-                <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31698]</label>
-                <label2>$INFO[Skin.String(osd_buttonstyle.label)]</label2>
-                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=osd_buttonstyle,header=$LOCALIZE[31698])</onclick>
-                <visible>!skin.hastheme(classic)</visible>
-            </control>
-            <control type="radiobutton" id="13062">
-                <include>SkinSettings_Button</include>
-                <label>31519</label>
-                <onclick>Skin.ToggleSetting(HideOSDDisc)</onclick>
-                <selected>Skin.HasSetting(HideOSDDisc)</selected>
-                <visible>!Skin.HasSetting(UseSlimOSDPanel)</visible>
-            </control>
+            
             <control type="button" id="13063">
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31629]</label>
@@ -1208,14 +1219,6 @@
                 <label>$LOCALIZE[31632]</label>
                 <label2>$INFO[Skin.String(osdmediaflagsstyle.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=osdmediaflagsstyle,header=$LOCALIZE[31632])</onclick>
-                <visible>!skin.hastheme(classic)</visible>
-            </control>
-            <!-- gradient on osd -->
-            <control type="radiobutton" id="13065">
-                <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31661]</label>
-                <onclick>Skin.ToggleSetting(osdgradientstyle)</onclick>
-                <selected>Skin.HasSetting(osdgradientstyle)</selected>
                 <visible>!skin.hastheme(classic)</visible>
             </control>
             <!--clearart on osd -->
@@ -2020,7 +2023,7 @@
             <control type="radiobutton" id="23023">
                 <include>SkinSettings_Button</include>
                 <label>31337</label>
-                <onclick condition="!Skin.String(CustomLogoImage)">Skin.SetImage(CustomLogoImage)</onclick>
+                <onclick condition="!Skin.String(CustomLogoImage)">RunScript(script.skin.helper.service,action=SAVESKINIMAGE,skinstring=CustomLogoImage)</onclick>
                 <onclick condition="Skin.String(CustomLogoImage)">Skin.Reset(CustomLogoImage)</onclick>
                 <selected>Skin.String(CustomLogoImage)</selected>
                 <visible>SubString(Skin.String(general_header),logo) | SubString(Skin.String(home_header),logo)</visible>
@@ -2105,6 +2108,13 @@
                 <label>31303</label>
                 <onclick>Skin.ToggleSetting(EnableWeatherNotifications)</onclick>
                 <selected>Skin.HasSetting(EnableWeatherNotifications)</selected>
+            </control>
+            <control type="radiobutton" id="8014">
+                <include>SkinSettings_Button</include>
+                <label>31302</label>
+                <onclick condition="System.HasAddon(script.tv.show.next.aired)">Skin.ToggleSetting(EnableNextAiredNotifications)</onclick>
+                <onclick condition="!System.HasAddon(script.tv.show.next.aired)">RunPlugin(plugin://script.tv.show.next.aired)</onclick>
+                <selected>Skin.HasSetting(EnableNextAiredNotifications)</selected>
             </control>
             <control type="radiobutton" id="8018">
                 <description></description>
