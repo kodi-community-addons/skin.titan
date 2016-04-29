@@ -117,7 +117,82 @@
                 <label>$INFO[ListItem.SortLetter]</label>
             </control>
         </control>
-
+        
+        <!-- alphabet scrollbar -->
+        <control type="group" id="6000">
+            <visible>!Control.HasFocus(60)</visible>
+            
+            <control type="button" id="6001">
+                <width>1</width>
+                <right>-1</right>
+                <bottom>0</bottom>
+                <height>1</height>
+                <onfocus>SetFocus(60)</onfocus>
+                <visible>!Control.IsVisible(6002)</visible>
+            </control>
+            
+            <control type="image">
+                <texture>colors/color_white.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                <width>40</width>
+                <right>0</right>
+                <visible>Control.IsVisible(6002)</visible>
+            </control>
+            
+            <control type="panel" id="6002">
+                <width>40</width>
+                <right>0</right>
+                <bottom>0</bottom>
+                <height>100%</height>
+                <onleft>5000</onleft>
+                <onright>6000</onright>
+                <onup>5000</onup>
+                <ondown>6000</ondown>
+                <onback>5000</onback>
+                <orientation>vertical</orientation>
+                <itemlayout height="41" width="40">
+                    <control type="label">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <font>Reg26</font>
+                        <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                        <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
+                        <font>Reg26</font>
+                        <visible>StringCompare(ListItem.Label,Container.ListItem.SortLetter)</visible>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="41" width="40">
+                    <control type="image">
+                        <texture>colors/color_white.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
+                        <font>Reg26</font>
+                    </control>
+                </focusedlayout>
+                <content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
+                <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + Window.IsMedia + !StringCompare(Window(Home).Property(contenttype),tvchannels) + !StringCompare(Window(Home).Property(contenttype),tvrecordings)</visible>
+            </control>
+        </control>
     </include>
 
   	<!-- TV Shows Next Aired script -->
