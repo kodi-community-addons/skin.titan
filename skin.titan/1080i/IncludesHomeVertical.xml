@@ -44,7 +44,7 @@
                     <top>10</top>
                     <width>1270</width>
                     <height>145</height>
-                    <label fallback="19055">[COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[HomeMenuWidgetInfoLabel][/COLOR]$VAR[HomeMenuWidgetInfoPlotAlt, • ]</label>
+                    <label fallback="19055">$VAR[HomeMenuWidgetInfoLabel]$VAR[HomeMenuWidgetInfoPlotAlt, • ]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                     <align>justify</align>
@@ -248,22 +248,14 @@
             <!--submenu inline-->
             <include condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(VerticalHomeInlineSubmenu)">HomeSimpleVerticalSubMenuInline</include>
             <!-- Power button -->
-            <control type="button" id="2">
-                <description>powerbutton</description>
+            <control type="group">
                 <posx>20</posx>
                 <bottom>5</bottom>
                 <width>60</width>
                 <height>60</height>
-                <onup>300</onup>
-                <onright>300</onright>
-                <onleft>300</onleft>
-                <texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">common/shutdown2.png</texturefocus>
-                <texturenofocus colordiffuse="white">common/shutdown2.png</texturenofocus>
-                <onclick>ActivateWindow(111)</onclick>
-                <onfocus>ActivateWindow(111)</onfocus>
-                <include>animation_fade_visible_hidden</include>
-                <visible>!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)</visible>
-                <visible allowhiddenfocus="true">!Skin.HasSetting(HidePowerMenu)</visible>
+                <include name="PowerButton" content="PowerButton" condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">
+                    <param name="visibility" value="!Skin.HasSetting(HidePowerMenu)" />
+                </include>
             </control>
             <!-- touchscreen support -->
             <include condition="Skin.HasSetting(EnableTouchSupport)">TouchControlsFooter</include>
