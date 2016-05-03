@@ -120,7 +120,6 @@
         
         <!-- alphabet scrollbar -->
         <control type="group" id="6000">
-            <visible>!Control.HasFocus(60)</visible>
             
             <control type="button" id="6001">
                 <width>1</width>
@@ -136,7 +135,9 @@
                 <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                 <width>40</width>
                 <right>0</right>
-                <visible>Control.IsVisible(6002)</visible>
+                <visible>Control.IsVisible(6002) + !Control.HasFocus(60)</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
             </control>
             
             <control type="panel" id="6002">
@@ -190,7 +191,10 @@
                     </control>
                 </focusedlayout>
                 <content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
-                <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + Window.IsMedia + !StringCompare(Window(Home).Property(contenttype),tvchannels) + !StringCompare(Window(Home).Property(contenttype),tvrecordings)</visible>
+                <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + !Control.HasFocus(60)</visible>
+                <visible>StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
             </control>
         </control>
     </include>
