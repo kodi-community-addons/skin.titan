@@ -9,16 +9,16 @@
 			<!-- movie details -->
 			<control type="group">
 				<include>MovieDetails</include>
-				<animation type="Conditional" condition="StringCompare(Window(Home).Property(showinfopanel),show)">
+				<animation type="Conditional" condition="Skin.HasSetting(PosterRowViewShowInfo)">
 					<effect type="slide" start="0,1100" end="0,-50" time="800" tween="cubic" easing="inout" />
 				</animation>
-                <animation type="Conditional" condition="!StringCompare(Window(Home).Property(showinfopanel),show)">
+                <animation type="Conditional" condition="!Skin.HasSetting(PosterRowViewShowInfo)">
 					<effect type="slide" start="0,0" end="0,1100" time="800" tween="cubic" easing="inout" />
 				</animation>
 			</control>
 				
 			<control type="group">
-				<animation type="Conditional" condition="StringCompare(Window(Home).Property(showinfopanel),show)">
+				<animation type="Conditional" condition="Skin.HasSetting(PosterRowViewShowInfo)">
 					<effect type="slide" start="0,-0" end="0,250" time="800" tween="cubic" easing="inout" />
 				</animation>
 				<bottom>11%</bottom>
@@ -1342,7 +1342,7 @@
 									<animation effect="slide" start="0,200" end="0" tween="cubic" easing="inout" time="1200" delay="800">Visible</animation>
 									<animation effect="fade" start="0" end="100" delay="800" time="800" pulse="false">Visible</animation>
 									<animation effect="rotate" end="-360" center="auto" time="20000" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-									<visible>Skin.HasSetting(View513_ShowCDart) + !StringCompare(Window(Home).Property(showinfopanel),show) + ![SubString(ListItem.Thumb,Default,left) | IsEmpty(ListItem.Thumb)]  + !Container(513).IsScrolling + !Container(513).OnScrollNext + !Container(513).OnScrollPrevious</visible>
+									<visible>Skin.HasSetting(View513_ShowCDart) + !Skin.HasSetting(PosterRowViewShowInfo) + ![SubString(ListItem.Thumb,Default,left) | IsEmpty(ListItem.Thumb)]  + !Container(513).IsScrolling + !Container(513).OnScrollNext + !Container(513).OnScrollPrevious</visible>
 								</control>
 								
 								<control type="image">
@@ -1388,15 +1388,11 @@
 					<posy>460</posy>
 					<width>1890</width>
 					<height>560</height>
-					<onup condition="!StringCompare(Window(Home).Property(showinfopanel),show)">9000</onup>
-					<onup condition="StringCompare(Window(Home).Property(showinfopanel),show)">SetProperty(showinfopanel, hide, Home)</onup>
-					
-					<ondown condition="!StringCompare(Window(Home).Property(showinfopanel),show)">SetProperty(showinfopanel, show, Home)</ondown>
-					<ondown condition="StringCompare(Window(Home).Property(showinfopanel),show)">SetProperty(showinfopanel, hide, Home)</ondown>
-
+					<onup>9000</onup>
+					<ondown>6000</ondown>
 					<orientation>horizontal</orientation>
 					<viewtype label="31440">bigwrap</viewtype>
-					<pagecontrol>61</pagecontrol>
+					<pagecontrol>60</pagecontrol>
 					<focusposition>1</focusposition>
 					<preloaditems>2</preloaditems>
 					<visible>StringCompare(Window(Home).Property(SkinHelper.ForcedView),513) | IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
@@ -1408,6 +1404,21 @@
 			
             </control>
 			
+            <!--horizontal Scrollbar-->
+			<control type="scrollbar" id="60">
+                <visible>Control.IsVisible(513)</visible>
+                <left>60</left>
+                <bottom>11%</bottom>
+                <width>1800</width>
+                <height>15</height>
+                <onup>513</onup>
+                <onleft>60</onleft>
+                <onright>6000</onright>
+                <orientation>horizontal</orientation>
+                <animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+            </control>
+            
 		</control>
 	</include>
 	
