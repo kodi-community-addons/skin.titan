@@ -2,7 +2,7 @@
 <includes>
 
     <include name="allViewIds">
-        <views>10,50,51,52,500,501,502,503,504,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523</views>
+        <views>10,50,51,52,501,502,503,504,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524</views>
         <menucontrol>9000</menucontrol>
     </include>
 
@@ -32,7 +32,7 @@
             <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.50)">View_50_List</include>
             <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.10)">View_10_SimplePVR</include>
             <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.55)">View_55_BannerList</include>
-            <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.500)">View_500_Showcase</include>
+            <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.524)">View_524_Showcase</include>
             <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.51)">View_51_BigList</include>
             <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.52)">View_52_HorizontalPanel</include>
             <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.53)">View_53_PanelDetails</include>
@@ -120,7 +120,6 @@
         
         <!-- alphabet scrollbar -->
         <control type="group" id="6000">
-            <visible>!Control.HasFocus(60)</visible>
             
             <control type="button" id="6001">
                 <width>1</width>
@@ -136,7 +135,9 @@
                 <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                 <width>40</width>
                 <right>0</right>
-                <visible>Control.IsVisible(6002)</visible>
+                <visible>Control.IsVisible(6002) + !Control.HasFocus(60)</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
             </control>
             
             <control type="panel" id="6002">
@@ -145,9 +146,9 @@
                 <bottom>0</bottom>
                 <height>100%</height>
                 <onleft>5000</onleft>
-                <onright>6000</onright>
-                <onup>5000</onup>
-                <ondown>6000</ondown>
+                <onright>60</onright>
+                <onup>6002</onup>
+                <ondown>6002</ondown>
                 <onback>5000</onback>
                 <orientation>vertical</orientation>
                 <itemlayout height="41" width="40">
@@ -190,7 +191,10 @@
                     </control>
                 </focusedlayout>
                 <content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
-                <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + Window.IsMedia + !StringCompare(Window(Home).Property(contenttype),tvchannels) + !StringCompare(Window(Home).Property(contenttype),tvrecordings)</visible>
+                <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + !Control.HasFocus(60)</visible>
+                <visible>StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
             </control>
         </control>
     </include>
@@ -1066,7 +1070,7 @@
             <width>360</width>
             <height>360</height>
             <left>180</left>
-            <texture background="true" diffuse="diffuse/cdmask_big.png" fallback="defaultcovers/cd_big.png">$VAR[DiscArtImage]</texture>
+            <texture background="true" diffuse="diffuse/cdmask_new.png" fallback="defaultcovers/cd_big.png">$VAR[DiscArtImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
             <animation effect="rotate" end="-90" center="auto" time="20000" loop="false" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
             <visible>!IsEmpty(ListItem.Thumb) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Music.Thumb))</visible>
@@ -1241,12 +1245,13 @@
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Progress.Color)]</colordiffuse>
                 </control>
                 <control type="label">
-                    <right>$PARAM[labeloffsetx]</right>
-                    <top>$PARAM[labeloffsety]</top>
+                    <right>0</right>
+                    <top>0</top>
                     <align>center</align>
-                    <label>$INFO[ListItem$PARAM[listitem].PercentPlayed]%</label>
                     <font>$PARAM[font]</font>
-                    <angle>-45</angle>
+                    <width>65%</width>
+                    <height>45%</height>
+                    <label>$INFO[ListItem$PARAM[listitem].PercentPlayed]%</label>
                     <textcolor>$INFO[Skin.String(WatchedIndicator.Progress.TextColor)]</textcolor>
                 </control>
             </control>
@@ -1259,11 +1264,12 @@
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Episodes.Color)]</colordiffuse>
                 </control>
                 <control type="label">
-                    <right>$PARAM[labeloffsetx]</right>
-                    <top>$PARAM[labeloffsety]</top>
+                    <right>0</right>
+                    <top>0</top>
                     <align>center</align>
                     <font>$PARAM[font]</font>
-                    <angle>-45</angle>
+                    <width>65%</width>
+                    <height>45%</height>
                     <label>$INFO[ListItem$PARAM[listitem].Property(UnWatchedEpisodes)]</label>
                     <textcolor>$INFO[Skin.String(WatchedIndicator.Episodes.TextColor)]</textcolor>
                 </control>
@@ -1343,8 +1349,6 @@
             <param name="width" value="80" />
             <param name="height" value="80" />
             <param name="font" value="indicator_normal" />
-            <param name="labeloffsetx" value="-30" />
-            <param name="labeloffsety" value="-4" />
             <param name="overlay" value="normal" />
             <param name="overlay_texture" value="diffuse/icon_overlay.png" />
         </include>
@@ -1355,8 +1359,6 @@
             <param name="width" value="60" />
             <param name="height" value="60" />
             <param name="font" value="indicator_small" />
-            <param name="labeloffsetx" value="-25" />
-            <param name="labeloffsety" value="-8" />
             <param name="overlay" value="normal" />
             <param name="overlay_texture" value="diffuse/icon_overlay.png" />
         </include>
@@ -1367,8 +1369,6 @@
             <param name="width" value="120" />
             <param name="height" value="120" />
             <param name="font" value="indicator_big" />
-            <param name="labeloffsetx" value="-50" />
-            <param name="labeloffsety" value="5" />
             <param name="overlay" value="big" />
             <param name="overlay_texture" value="diffuse/icon_overlay.png" />
         </include>
