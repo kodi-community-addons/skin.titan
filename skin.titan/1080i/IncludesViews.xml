@@ -151,7 +151,7 @@
                 <ondown>6002</ondown>
                 <onback>5000</onback>
                 <orientation>vertical</orientation>
-                <itemlayout height="41" width="40">
+                <itemlayout height="40" width="40">
                     <control type="label">
                         <width>100%</width>
                         <height>100%</height>
@@ -173,7 +173,7 @@
                         <visible>StringCompare(ListItem.Label,Container.ListItem.SortLetter)</visible>
                     </control>
                 </itemlayout>
-                <focusedlayout height="41" width="40">
+                <focusedlayout height="40" width="40">
                     <control type="image">
                         <texture>colors/color_white.png</texture>
                         <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
@@ -318,11 +318,12 @@
         <width>2137</width>
     </include>
     
-    <include name="MovieDetails">
+    <include name="MovieDetailsTop">
         <!-- movie details TOP -->
         <control type="group" id="888">
             <include>animation_view_change</include>
             <visible>IntegerGreaterThan(Container.NumItems,0)</visible>
+            <animation effect="slide" start="0,-100" end="0" time="0" condition="Control.IsVisible(513)">Conditional</animation>
             <height>740</height>
 			<bottom>13%</bottom>
             <control type="image">
@@ -669,6 +670,55 @@
                     <align>justify</align>
                 </control>
             </control>
+        </control>
+    </include>
+	
+    <include name="MovieDetailsTop2">
+        <!-- movie details TOP -->
+        <control type="group" id="9888">
+            <include>animation_view_change</include>
+            <visible>IntegerGreaterThan(Container.NumItems,0)</visible>
+            <height>270</height>
+			<top>0</top>
+            <control type="image">
+                <visible>!IsEmpty(ListItem.Label)</visible>
+                <posx>50</posx>
+                <width>1820</width>
+                <texture border="15">diffuse/bgpanel.png</texture>
+                <visible>!Skin.HasSetting(DetailsTopHidepanel)</visible>
+				<colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+			</control>
+            
+            <control type="group">
+                <right>60</right>
+                <top>10</top>
+                <left>60</left>
+                <height>233</height>
+                
+                <!-- Title -->
+                <control type="label">
+                    <width>100%</width>
+                    <height>35</height>
+                    <align>left</align>
+                    <label>[UPPERCASE]$VAR[mediatitle][/UPPERCASE]</label>
+                    <textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
+                    <scroll>true</scroll>
+                    <font>Bold30</font>
+                </control>
+                
+                <!-- Plot -->
+                <control type="textbox">
+                    <width>100%</width>
+                    <height>193</height>
+                    <posy>50</posy>
+                    <label>[B]$VAR[Details][/B][CR]$VAR[Plots]</label>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+					<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <align>justify</align>
+                </control>
+            </control>
+			
         </control>
     </include>
 	
