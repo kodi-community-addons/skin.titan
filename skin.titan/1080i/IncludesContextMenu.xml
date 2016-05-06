@@ -299,15 +299,6 @@
             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
         </control>
         
-        <control type="radiobutton" id="31719">
-            <!--Enable info overlay-->
-            <include>SideBladeMenuButton</include>
-            <label>31719</label>
-            <onclick>Skin.ToggleSetting(EnableInfoOverlay)</onclick>
-            <selected>Skin.HasSetting(EnableInfoOverlay)</selected>
-            <visible>Container.Content(movies) | Container.Content(episodes)  | Container.Content(sets)</visible>
-        </control>
-        
  		<control type="radiobutton" id="3010">
 			<!--Show info-->
 			<include>SideBladeMenuButton</include>
@@ -319,8 +310,6 @@
             <onclick condition="Control.IsVisible(503)">Skin.ToggleSetting(LogoViewShowInfo)</onclick>
             <onclick condition="Control.IsVisible(51)">Skin.ToggleSetting(BigListViewShowInfo)</onclick>
             <onclick condition="Control.IsVisible(516)">Skin.ToggleSetting(SlimListViewShowInfo)</onclick>
-            <onclick condition="Control.IsVisible(513)">Skin.ToggleSetting(PosterRowViewShowInfo)</onclick>
-            <onclick condition="Control.IsVisible(514)">Skin.ToggleSetting(PosterShiftViewShowInfo)</onclick>
 			<selected>
             [Control.IsVisible(507) + Skin.HasSetting(FanArtViewShowInfo)] |
             [Control.IsVisible(524) + Skin.HasSetting(ShowCaseViewShowInfo)] |
@@ -328,8 +317,6 @@
             [Control.IsVisible(502) + Skin.HasSetting(LandscapeViewShowInfo)] |
             [Control.IsVisible(503) + Skin.HasSetting(LogoViewShowInfo)] |
             [Control.IsVisible(51) + Skin.HasSetting(BigListViewShowInfo)] | 
-            [Control.IsVisible(513) + Skin.HasSetting(PosterRowViewShowInfo)] |
-            [Control.IsVisible(514) + Skin.HasSetting(PosterShiftViewShowInfo)] |
             [Control.IsVisible(516) + Skin.HasSetting(SlimListViewShowInfo)]
             </selected>
 			<visible>
@@ -339,11 +326,28 @@
             Control.IsVisible(502) | 
             Control.IsVisible(503) | 
             Control.IsVisible(51) | 
-            Control.IsVisible(513) |
-            Control.IsVisible(514) |
             Control.IsVisible(516)
             </visible>
 		</control>
+        
+        <!-- show info for poster row-->
+        <control type="button" id="317491">
+            <include>SideBladeMenuButton</include>
+            <label>$LOCALIZE[31749]:</label>
+            <label2>$INFO[Skin.String(View513_DisplayInfo.label)]</label2>
+            <onclick>RunScript(script.skin.helper.service,action=setskinsetting,id=View_DisplayInfo,setting=View513_DisplayInfo,header=$LOCALIZE[31749])</onclick>
+            <visible>Control.IsVisible(513)</visible>
+        </control>
+        
+        <!-- show info for poster shift-->
+        <control type="button" id="317492">
+            <include>SideBladeMenuButton</include>
+            <label>$LOCALIZE[31749]:</label>
+            <label2>$INFO[Skin.String(View514_DisplayInfo.label)]</label2>
+            <onclick>RunScript(script.skin.helper.service,action=setskinsetting,id=View_DisplayInfo,setting=View514_DisplayInfo,header=$LOCALIZE[31749])</onclick>
+            <visible>Control.IsVisible(514)</visible>
+        </control>
+        
         <control type="radiobutton" id="3005">
 			<!--show fanart thumb in details pane-->
 			<include>SideBladeMenuButton</include>
@@ -527,6 +531,16 @@
 			<visible>SubString(Window.Property(xmlfile),pvr) + Control.IsVisible(10)</visible>
             <visible>!Window.IsActive(tvguide)</visible>
 		</control>
+        
+        <control type="radiobutton" id="31719">
+            <!--Enable info overlay-->
+            <include>SideBladeMenuButton</include>
+            <label>31719</label>
+            <onclick>Skin.ToggleSetting(EnableInfoOverlay)</onclick>
+            <selected>Skin.HasSetting(EnableInfoOverlay)</selected>
+            <visible>Container.Content(movies) | Container.Content(episodes)  | Container.Content(sets)</visible>
+        </control>
+        
         <control type="radiobutton" id="3059">
 			<!--Show discart-->
 			<include>SideBladeMenuButton</include>
@@ -558,6 +572,7 @@
             Control.IsVisible(513) | Control.IsVisible(514) | Control.IsVisible(51) | Control.IsVisible(52) | 
             Control.IsVisible(502) | Control.IsVisible(523)
             </visible>
+            <visible>!Control.IsVisible(88882) + !Control.IsVisible(88883)</visible>
 		</control>
 
         <control type="radiobutton" id="3067">
@@ -590,6 +605,7 @@
             [Control.IsVisible(522) + Skin.HasSetting(View522_ShowCDart)] | 
             [Control.IsVisible(523) + Skin.HasSetting(View523_ShowCDart)]
 			</visible>
+            <visible>!Control.IsVisible(88882) + !Control.IsVisible(88883)</visible>
 		</control>
 		<control type="radiobutton" id="3080">
 			<!--Hide background panel-->
@@ -1031,7 +1047,7 @@
         <!--Sub Menu Tab Top-->
         <control type="group">
 			<visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
-			<visible>!Control.IsVisible(883)</visible>
+			<visible>!Control.IsVisible(883) + !Control.IsVisible(888)</visible>
             <visible>
             Control.IsVisible(524) | Control.IsVisible(52) | [Control.IsVisible(501) + Skin.HasSetting(View_501_HorizontalNavigation)] | 
             Control.IsVisible(502) | Control.IsVisible(503) | Control.IsVisible(506) | Control.IsVisible(58) | Control.IsVisible(507) | 
