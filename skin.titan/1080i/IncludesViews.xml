@@ -119,8 +119,15 @@
         </control>
         
         <!-- alphabet scrollbar -->
+        <include condition="Skin.HasSetting(EnableQuickJump)">AlphabetScrollbar</include>
+    
+    </include>
+    
+    <include name="AlphabetScrollbar">
+        
+        <!-- scrollbar vertical -->
         <control type="group" id="6000">
-            
+            <visible>![Control.IsVisible(52) | Control.IsVisible(58) | Control.IsVisible(502) | Control.IsVisible(503) | Control.IsVisible(506) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514) | Control.IsVisible(523) | Control.IsVisible(524)]</visible>
             <control type="button" id="6001">
                 <width>1</width>
                 <right>-1</right>
@@ -196,7 +203,104 @@
                 <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
                 <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(6002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
             </control>
+        
         </control>
+    
+        <!-- scrollbar horizontal -->
+        <control type="group" id="7000">
+            <animation effect="slide" start="0" end="0,110" time="0" condition="Skin.HasTheme(classic) | Control.IsVisible(523)">Conditional</animation>
+            <visible>[Control.IsVisible(52) | Control.IsVisible(58) | Control.IsVisible(502) | Control.IsVisible(503) | Control.IsVisible(506) | Control.IsVisible(507) | Control.IsVisible(508) | Control.IsVisible(513) | Control.IsVisible(514) | Control.IsVisible(523) | Control.IsVisible(524)]</visible>
+            <control type="button" id="7001">
+                <width>1</width>
+                <right>-1</right>
+                <bottom>0</bottom>
+                <height>1</height>
+                <onfocus>SetFocus(60)</onfocus>
+                <visible>!Control.IsVisible(7002)</visible>
+            </control>
+            
+            <control type="image">
+                <texture>colors/color_white.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                <left>0</left>
+                <width>100%</width>
+                <bottom>110</bottom>
+                <height>40</height>
+                <visible>Control.IsVisible(7002) + !Control.HasFocus(60)</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(7002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(7002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+            </control>
+            <control type="image">
+                <texture>colors/color_white.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+                <left>0</left>
+                <width>100%</width>
+                <bottom>110</bottom>
+                <height>40</height>
+                <visible>Control.IsVisible(7002) + !Control.HasFocus(60)</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(7002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(7002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+            </control>
+            
+            <control type="panel" id="7002">
+                <left>60</left>
+                <width>1800</width>
+                <bottom>110</bottom>
+                <height>40</height>
+                <onleft>7002</onleft>
+                <onright>7002</onright>
+                <onup>5000</onup>
+                <ondown>60</ondown>
+                <onback>5000</onback>
+                <orientation>horizontal</orientation>
+                <itemlayout height="40" width="66">
+                    <control type="label">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsListItemTextColor)]</textcolor>
+                        <font>Reg26</font>
+                        <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                        <textcolor>$INFO[Skin.String(ButtonFocusColor)]</textcolor>
+                        <font>Reg26</font>
+                        <visible>StringCompare(ListItem.Label,Container.ListItem.SortLetter)</visible>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="40" width="66">
+                    <control type="image">
+                        <texture>colors/color_white.png</texture>
+                        <colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+                        <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <width>100%</width>
+                        <height>100%</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <label>$INFO[ListItem.Label]</label>
+                        <textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+                        <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
+                        <font>Reg26</font>
+                    </control>
+                </focusedlayout>
+                <content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
+                <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + !Control.HasFocus(60)</visible>
+                <visible>StringCompare(Container.SortMethod,$LOCALIZE[551]) | StringCompare(Container.SortMethod,$LOCALIZE[561]) | StringCompare(Container.SortMethod,$LOCALIZE[558]) | StringCompare(Container.SortMethod,$LOCALIZE[557]) | StringCompare(Container.SortMethod,$LOCALIZE[556])</visible>
+                <animation effect="fade" start="0" end="100" time="400" condition="[Control.HasFocus(7002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+                <animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(7002) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+            </control>
+        
+        </control>
+    
     </include>
 
   	<!-- TV Shows Next Aired script -->
