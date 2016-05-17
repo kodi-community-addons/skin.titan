@@ -149,6 +149,7 @@
             <control type="image">
                 <!-- arrow up -->
                 <animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
+                <animation effect="slide" start="0" end="-325" time="0" delay="0" condition="Skin.HasSetting(SimpleVerHomeLeftAlign)">Conditional</animation>
                 <left>355</left>
                 <posy>110</posy>
                 <width>25</width>
@@ -161,8 +162,9 @@
             <control type="image">
                 <!-- arrow down -->
                 <animation effect="fade" start="100" end="50" tween="sine" easing="inout" time="800" pulse="true" reversible="false" condition="true">Conditional</animation>
+                <animation effect="slide" start="0" end="-325" time="0" delay="0" condition="Skin.HasSetting(SimpleVerHomeLeftAlign)">Conditional</animation>
                 <left>355</left>
-                <posy>990</posy>
+                <posy>970</posy>
                 <width>25</width>
                 <height>60</height>
                 <aspectratio>keep</aspectratio>
@@ -194,6 +196,7 @@
                         <posy>0</posy>
                         <width>350</width>
                         <height>80</height>
+                        <include condition="Skin.HasSetting(SimpleVerHomeLeftAlign)">align_left</include>
                         <align>right</align>
                         <aligny>center</aligny>
                         <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
@@ -299,6 +302,7 @@
 			<right>0</right>
 			<width>350</width>
 			<height>80</height>
+            <include condition="Skin.HasSetting(SimpleVerHomeLeftAlign)">align_left</include>
 			<align>right</align>
 			<aligny>center</aligny>
 			<textcolor>$INFO[Skin.String(MainMenuFocusTextColor)]</textcolor>
@@ -813,18 +817,14 @@
 
     <include name="VerticalHomeAdvancedWidgetHeader">
         <control type="group" id="$PARAM[id]">
-            <width>1285</width>
+            <right>55</right>
+            <width>1290</width>
             <height>45</height>
-            <right>60</right>
             <include>widgets_animation</include>
             
             <visible>!IsEmpty(Container(300).Listitem.Property(widget$PARAM[widgetidprefix]))</visible>
             <visible>SubString(Container(300).Listitem.Property(multiwidget),multi)</visible>
             <control type="image">
-                <right>-5</right>
-                <posy>0</posy>
-                <width>1290</width>
-                <height>45</height>
                 <texture border="5">diffuse/panel.png</texture>
                 <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                 <visible>!Skin.HasSetting(HideWidgetPanelBackground) + ![Skin.HasSetting(LargeWidgetDetailsPanel) + Control.IsVisible(77551)]</visible>
@@ -835,8 +835,8 @@
                 <font>Bold30</font>
                 <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
+                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
                 <label>$INFO[Container(300).ListItem.Property(widgetName$PARAM[widgetidprefix])]</label>
                 <visible>IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
                 <visible>!Skin.String(HomeLayout, verticalbig)</visible>
@@ -847,8 +847,8 @@
                 <font>Bold30</font>
                 <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
+                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
                 <label>$LOCALIZE[31545] $INFO[Container($PARAM[containerid]).ListItem.Property(similartitle)]</label>
                 <visible>!IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
                 <visible>!Skin.String(HomeLayout, verticalbig)</visible>
@@ -859,8 +859,8 @@
                 <font>Light32</font>
                 <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
+                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
                 <label>[UPPERCASE]$INFO[Container(300).ListItem.Property(widgetName$PARAM[widgetidprefix])][/UPPERCASE]</label>
                 <visible>IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
                 <visible>Skin.String(HomeLayout, verticalbig)</visible>
@@ -871,8 +871,8 @@
                 <font>Light32</font>
                 <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
+                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
                 <label>[UPPERCASE]$LOCALIZE[31545] $INFO[Container($PARAM[containerid]).ListItem.Property(similartitle)][/UPPERCASE]</label>
                 <visible>!IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
                 <visible>Skin.String(HomeLayout, verticalbig)</visible>
@@ -880,6 +880,17 @@
             
         </control>
     </include>
+    
+    <variable name="VerticalHomeWidgetHeaderTextColor">
+        <value condition="Control.HasFocus(513)">$INFO[Skin.String(ButtonFocusTextColor)]</value>
+        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">$INFO[Skin.String(HeaderTextColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsTextColor)]</value>
+    </variable>
+    <variable name="VerticalHomeWidgetHeaderTextShadowColor">
+        <value condition="Control.HasFocus(513)">-</value>
+        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">$INFO[Skin.String(HeaderTextShadowColor)]</value>
+        <value>$INFO[Skin.String(ViewDetailsTextColor)]</value>
+    </variable>
     
     <include name="VerticalHomeSimpleWidgetHeader">
         <!--change widget button -->
@@ -894,18 +905,15 @@
                 <visible>!Skin.HasSetting(HideWidgetPanelBackground) + ![Skin.HasSetting(LargeWidgetDetailsPanel) + Control.IsVisible(77551)]</visible>
             </control>
             <control type="button" id="513">
-                <width>1290</width>
                 <height>45</height>
-                <align>right</align>
-                <font>Light32</font>
+                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
+                <width>1290</width>
                 <onleft>300</onleft>
                 <onright>300</onright>
                 <onup condition="!Control.IsVisible(4446) + !StringCompare(Container(300).ListItem.Property(lowerwidgets),enable)">300</onup>
                 <onup condition="StringCompare(Container(300).ListItem.Property(lowerwidgets),enable">$VAR[focusWidget]</onup>
                 <onup condition="Control.IsVisible(4446) + !StringCompare(Container(300).ListItem.Property(lowerwidgets),enable)">4446</onup>
-                <textoffsetx>50</textoffsetx>
                 <label></label>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <onclick>$VAR[toggleNextWidget]</onclick>
                 <ondown condition="StringCompare(Container(300).ListItem.Property(lowerwidgets),enable)">300</ondown>
                 <ondown condition="!StringCompare(Container(300).ListItem.Property(lowerwidgets),enable)">$VAR[focusWidget]</ondown>
@@ -913,52 +921,36 @@
             </control>
             <control type="label" id="514">
                 <height>40</height>
-                <right>45</right>
-                <width>100%</width>
-                <font>Bold30</font>
-                <align>right</align>
-                <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>$VAR[changeWidgetLabel]</label>
-                <visible>!Skin.String(HomeLayout, verticalbig) + !Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
-            </control>
-            <control type="label" id="515">
-                <height>40</height>
                 <posx>10</posx>
                 <font>Bold30</font>
-                <align>left</align>
+                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <aligny>top</aligny>
+                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
+                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
                 <label>$VAR[changeWidgetLabel]</label>
-                <visible>!Skin.String(HomeLayout, verticalbig) + Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
+                <visible>!Skin.String(HomeLayout, verticalbig)</visible>
             </control>
+
             <control type="label" id="516">
                 <height>40</height>
-                <right>45</right>
-                <width>100%</width>
-                <font>Light32</font>
-                <align>right</align>
-                <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>[UPPERCASE]$VAR[changeWidgetLabel][/UPPERCASE]</label>
-                <visible>Skin.String(HomeLayout, verticalbig) + !Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
-            </control>
-            <control type="label" id="517">
-                <height>40</height>
                 <posx>10</posx>
                 <font>Light32</font>
+                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
                 <aligny>top</aligny>
-                <align>left</align>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <aligny>top</aligny>
+                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
+                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
                 <label>[UPPERCASE]$VAR[changeWidgetLabel][/UPPERCASE]</label>
-                <visible>Skin.String(HomeLayout, verticalbig) + Skin.HasSetting(AutoWidgetAlignDisabled)</visible>
+                <visible>Skin.String(HomeLayout, verticalbig)</visible>
             </control>
+
             <control type="image" id="518">
-                <right>5</right>
+                <right>10</right>
                 <posy>8</posy>
                 <width>30</width>
                 <height>30</height>
-                <texture colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">home/home_arrow_up.png</texture>
+                <texture colordiffuse="$VAR[VerticalHomeWidgetHeaderTextColor]">home/home_arrow_up.png</texture>
             </control>
         </control>
             
