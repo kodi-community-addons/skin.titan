@@ -47,13 +47,14 @@
             <bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[LandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">stretch</aspectratio>
+            <visible>![SubString(ListItem.FileNameAndPath,pvr) + IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(fanart))]</visible>
         </control>
         <control type="image">
             <!--fallback logo image-->
             <posx>0</posx>
             <posy>0</posy>
             <bordersize>30</bordersize>
-            <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+            <texture background="true">$VAR[ClearLogoFallback]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
             <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape))</visible>
         </control>
@@ -72,6 +73,14 @@
             </include>
         </control>
     </include>
+    
+    <variable name="ClearLogoFallback">
+        <value condition="!IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
+        <value condition="!IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
+        <value condition="!IsEmpty(ListItem.Art(channellogo))">$INFO[ListItem.Art(channellogo)]</value>
+        <value condition="!IsEmpty(ListItem.Property(channellogo))">$INFO[ListItem.Art(channellogo)]</value>
+        <value condition="SubString(ListItem.FileNameAndPath,pvr) + IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(thumb)]</value>
+    </variable>
     
     <!-- LANDSCAPE LAYOUT -->
     <include name="LandscapeLayout">
