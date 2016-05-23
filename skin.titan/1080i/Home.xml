@@ -6,7 +6,8 @@
     <onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=300&amp;group=mainmenu|powermenu|netflixmenu)</onload>
 	<include condition="Skin.String(widgets_rotate) + !Skin.String(widgets_rotate,disabled)">WidgetsAutoRotateUnload</include>
     <onunload condition="!Skin.HasSetting(SectionBackgroundHomeOnly)">SetProperty(SectionBackground,$INFO[Control.GetLabel(99004)])</onunload>
-    <onunload>SetProperty(LastFocusWidget,$INFO[Window(Home).Property(SkinHelper.WidgetContainer)])</onunload>
+    <onunload condition="[Window.Next(fullscreenvideo) + !IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))] + Skin.HasSetting(KeepWidgetFocus)">SetProperty(LastFocusWidget,77777,Home)</onunload>
+    <onunload condition="![Window.Next(fullscreenvideo) + !IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))] + Skin.HasSetting(KeepWidgetFocus)">ClearProperty(LastFocusWidget,Home)</onunload>
     <!-- auto close homemenu and focus mainmenu when home is unloaded -->
     <onunload>ClearProperty(submenu,Home)</onunload>
     <onunload>ClearProperty(ShowWidget,Home)</onunload>
@@ -25,7 +26,7 @@
             <onfocus condition="[SubString(Skin.String(HomeLayout), netflix) | Skin.String(HomeLayout, win10)] + !Skin.HasSetting(AutoFocusHome)">SetFocus(9000)</onfocus>
             <onfocus condition="[[!SubString(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)] | Skin.HasSetting(AutoFocusHome)] + !Skin.String(home.defaultfocus) + IsEmpty(Window(Home).Property(LastFocusWidget))">SetFocus(300)</onfocus>
             <onfocus condition="[[!SubString(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)] | Skin.HasSetting(AutoFocusHome)] + Skin.String(home.defaultfocus) + IsEmpty(Window(Home).Property(LastFocusWidget))">SetFocus(300,$INFO[Skin.String(home.defaultfocus)])</onfocus>
-            <onfocus condition="!IsEmpty(Window(Home).Property(LastFocusWidget))">SetFocus($INFO[Window(Home).Property(LastFocusWidget)])</onfocus>
+            <onfocus condition="!IsEmpty(Window(Home).Property(LastFocusWidget)) + Skin.HasSetting(KeepWidgetFocus)">SetFocus($INFO[Window(Home).Property(LastFocusWidget)])</onfocus>
             <onfocus>SetProperty(HomeFirstLoadDone,done)</onfocus>
 			<texturenofocus>-</texturenofocus>
 			<texturefocus>-</texturefocus>
