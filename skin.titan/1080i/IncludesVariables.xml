@@ -537,8 +537,9 @@
 	
     <variable name="ListTitle">
         <value condition="Container.Content(addons) + SubString(ListItem.Label2,%)">$INFO[ListItem.Label]$INFO[ListItem.Label2, (,)]</value>
-        <value condition="!Container.Content(albums)">$INFO[ListItem.Label]</value>
-        <value condition="Container.Content(albums)">$INFO[ListItem.Label2] - $INFO[ListItem.Label]</value>
+        <value condition="Container.Content(albums) + !IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2] - $INFO[ListItem.Label]</value>
+        <value condition="Container.Content(albums) + !IsEmpty(ListItem.Artist)">$INFO[ListItem.Artist] - $INFO[ListItem.Title]</value>
+        <value>$INFO[ListItem.Label]</value>
     </variable>
     
     <variable name="ListTitlePVR">
@@ -1328,6 +1329,10 @@
         <value condition="Control.IsVisible(523)">$INFO[Skin.String(View523.Tags.label)]</value>
      </variable>
      
-     
+     <variable name="VideoInfoFileName">
+        <value condition="!IsEmpty(Window(Home).Property(filename_formatted))">$INFO[Window(Home).Property(filename_formatted)]</value>
+        <value condition="!IsEmpty(Container(999).ListItem.FileNameAndPath)">$INFO[Container(999).ListItem.FileNameAndPath]</value>
+        <value>$INFO[ListItem.FileNameAndPath]</value>
+     </variable>
      	 
 </includes>
