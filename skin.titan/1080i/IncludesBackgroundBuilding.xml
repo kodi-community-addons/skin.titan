@@ -109,14 +109,13 @@
 			<animation effect="zoom" start="110" end="130" center="auto" time="12000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<animation effect="slide" start="-10,-10" end="10,10" time="8000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
         </control>
-         <!-- fanart image background (hidden with visibility conditions)-->
+        <!-- fanart image background (hidden with visibility conditions)-->
         <control type="image" id="99006">
             <left>-1</left>
             <top>-1</top>
             <width>1</width>
             <height>1</height>
             <texture background="true">$VAR[fanartBackground]</texture>
-            <visible>!IsEmpty(Control.GetLabel(99006))</visible>
             <visible>Skin.HasSetting(ShowFanartBackground) | !IsEmpty(Window(Home).Property(netflixview)) | Control.IsVisible(523)</visible>
             <include condition="Window.IsMedia">disabledFanart</include>
         </control>
@@ -147,12 +146,14 @@
 			<include condition="skin.string(extrafanartdelay, 10)">fanartSpeed10</include>
 			<include condition="skin.string(extrafanartdelay, 15)">fanartSpeed15</include>
 			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
-            <include condition="Skin.HasSetting(RandomizeBackground)">randomizeImages</include>
 			<include condition="Window.IsMedia">disabledFanart</include>
             <include condition="Window.IsMedia">disabledExtraFanart</include>
             <visible>Skin.HasSetting(SkinHelper.EnableExtraFanart)</visible>
-            <visible>!Container.Scrolling</visible>
+            <animation time="0" effect="fade" delay="2000">Visible</animation>
+            <animation time="0" effect="fade">Hidden</animation>
+            <randomize>true</randomize>
             <!-- general visibility conditions -->
+            <visible>!Container.OnNext + !Container.OnPrevious + !Container.Scrolling</visible>
             <visible>!IsEmpty(Window(Home).Property(SkinHelper.ExtraFanArtPath)) | !IsEmpty(Window(Home).Property(SkinHelper.Music.ExtraFanArt)) | !IsEmpty(Window(Home).Property(SkinHelper.PVR.ExtraFanArt))</visible>
             <visible>![Window.IsActive(Home) + ![Control.HasFocus(1508) | Control.HasFocus(510) | Control.HasFocus(520) | Control.HasFocus(530) | Control.HasFocus(540)]]</visible>
         </control>
@@ -241,6 +242,7 @@
     </include>
 
     <variable name="fanartBackground">
+    
         <!-- extendedinfo -->
         <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window.Property(movie.FanArt))">$INFO[Window.Property(movie.FanArt)]</value>
         <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window(Home).Property(fanart))">$INFO[Window(home).Property(fanart)]</value>
@@ -356,7 +358,7 @@
         <value condition="[Window.IsActive(loginscreen) | Window.IsActive(StartUp.xml)] + Skin.String(LoginBackground)">$INFO[Skin.String(LoginBackground)]</value>
          <!-- fanart background -->
         <value condition="Control.IsVisible(99005) + !IsEmpty(Control.GetLabel(99005))">$INFO[Control.GetLabel(99005)]</value>
-        <value condition="Control.IsVisible(99006)">$INFO[Control.GetLabel(99006)]</value>
+        <value condition="Control.IsVisible(99006) + !IsEmpty(Control.GetLabel(99006))">$INFO[Control.GetLabel(99006)]</value>
          <!-- conditional background override -->
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.ConditionalBackground))">$INFO[Window(home).Property(SkinHelper.ConditionalBackground)]</value>
  		<!-- weather fanart -->
