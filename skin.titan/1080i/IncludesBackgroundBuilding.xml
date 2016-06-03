@@ -130,7 +130,7 @@
         
         <!-- touchscreen workaround for windows tablets -->
 		<include condition="Skin.HasSetting(EnableTouchSupport)">TouchScreenWorkaround</include>
-        
+
      </include>
     
     <include name="extraFanartBackground">
@@ -148,14 +148,10 @@
 			<include condition="skin.string(extrafanartdelay, 20)">fanartSpeed20</include>
 			<include condition="Window.IsMedia">disabledFanart</include>
             <include condition="Window.IsMedia">disabledExtraFanart</include>
-            <visible>Skin.HasSetting(SkinHelper.EnableExtraFanart)</visible>
-            <animation time="0" effect="fade" delay="2000">Visible</animation>
-            <animation time="0" effect="fade">Hidden</animation>
             <randomize>true</randomize>
+            <loop>yes</loop>
             <!-- general visibility conditions -->
-            <visible>!Container.OnNext + !Container.OnPrevious + !Container.Scrolling</visible>
-            <visible>!IsEmpty(Window(Home).Property(SkinHelper.ExtraFanArtPath)) | !IsEmpty(Window(Home).Property(SkinHelper.Music.ExtraFanArt)) | !IsEmpty(Window(Home).Property(SkinHelper.PVR.ExtraFanArt))</visible>
-            <visible>![Window.IsActive(Home) + ![Control.HasFocus(1508) | Control.HasFocus(510) | Control.HasFocus(520) | Control.HasFocus(530) | Control.HasFocus(540)]]</visible>
+            <visible>Skin.HasSetting(SkinHelper.EnableExtraFanart)</visible>
         </control>
 	</include>
 
@@ -396,7 +392,9 @@
     
     <variable name="extraFanartBackground">
 		<!-- extra fanart backgrounds -->
-		<value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.ExtraFanArtPath))">$INFO[Window(Home).Property(SkinHelper.ExtraFanArtPath)]</value>
+        <value condition="!System.IdleTime(2)">-</value>
+        <value condition="Window.IsActive(Home) + ![Control.HasFocus(1508) | Control.HasFocus(510) | Control.HasFocus(520) | Control.HasFocus(530) | Control.HasFocus(540)]">-</value>
+        <value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.ExtraFanArtPath))">$INFO[Window(Home).Property(SkinHelper.ExtraFanArtPath)]</value>
 		<value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.Music.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.Music.ExtraFanArt)]</value>
         <value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.PVR.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.PVR.ExtraFanArt)]</value>
         <value>-</value>
