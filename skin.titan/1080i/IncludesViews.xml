@@ -544,7 +544,7 @@
                         <posx>60</posx>
                         <posy>0</posy>
                         <width>600</width>
-                        <label>$VAR[ListItemExtendedDuration]</label>
+                        <label>$VAR[ListItemDurationWithEndTime]</label>
 						<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                         <scroll>false</scroll>
@@ -980,21 +980,10 @@
                     <posx>60</posx>
                     <posy>0</posy>
                     <align>left</align>
-                    <label>$INFO[ListItem.Duration,, $LOCALIZE[12391]]</label>
+                    <label>$VAR[ListItemDurationWithEndTime]</label>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <scroll>false</scroll>
-                    <visible>!SubString(ListItem.Path,videodb://movies/sets/)</visible>
-                </control>
-                <control type="label">
-                    <posx>60</posx>
-                    <posy>0</posy>
-                    <align>left</align>
-                    <label>$INFO[Window(Home).Property(SkinHelper.MovieSet.Runtime),, $LOCALIZE[12391]]</label>
-                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <scroll>false</scroll>
-                    <visible>SubString(ListItem.Path,videodb://movies/sets/)</visible>
                 </control>
             </control>
             <control type="group">
@@ -1428,55 +1417,75 @@
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Sets.TextColor)]</colordiffuse>
                 </control>
             </control>
-            <control type="image">
-                <description>PVR is recording</description>
-                <right>0</right>
-                <top>0</top>
-                <width>65</width>
-                <height>60</height>
-                <texture>pvr/icons/pvr_record.png</texture>
-                <visible>ListItem$PARAM[listitem].IsRecording</visible>
-            </control>
-            <control type="image">
-                <description>PVR single timer</description>
-                <right>0</right>
-                <top>0</top>
-                <width>65</width>
-                <height>60</height>
-                <texture>pvr/icons/pvr_timer.png</texture>
-                <visible>!ListItem$PARAM[listitem].IsRecording + [ListItem$PARAM[listitem].HasTimer | StringCompare(ListItem$PARAM[listitem].Comment,$LOCALIZE[305])] + ![!IsEmpty(ListItem$PARAM[listitem].TimerType) + StringCompare(ListItem$PARAM[listitem].TimerType,$LOCALIZE[823])]</visible>
-            </control>
-            <control type="image">
+            
+            <control type="group">
                 <description>Is Playing</description>
-                <right>0</right>
-                <top>0</top>
-                <width>65</width>
-                <height>60</height>
-                <texture>pvr/icons/pvr_play.png</texture>
                 <visible>ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording</visible>
+                <control type="image">
+                    <texture>$PARAM[overlay_texture]</texture>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+                </control>
+                <control type="image">
+                    <texture>osd/slim/Play.png</texture>
+                    <left>35%</left>
+                    <top>-10%</top>
+                    <width>78%</width>
+                    <height>78%</height>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
+                </control>
             </control>
+            
+            <control type="group">
+                <description>Is Recording or timer</description>
+                <visible>!ListItem$PARAM[listitem].IsPlaying + [ListItem$PARAM[listitem].IsRecording | ListItem$PARAM[listitem].HasTimer] + !ListItem$PARAM[listitem].HasTimerSchedule</visible>
+                <control type="image">
+                    <texture>$PARAM[overlay_texture]</texture>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+                </control>
+                <control type="image">
+                    <left>35%</left>
+                    <top>-10%</top>
+                    <width>78%</width>
+                    <height>78%</height>
+                    <texture>pvr/icons/pvr_record.png</texture>
+                    <visible>ListItem$PARAM[listitem].IsRecording</visible>
+                </control>
+                <control type="image">
+                    <left>35%</left>
+                    <top>-10%</top>
+                    <width>78%</width>
+                    <height>78%</height>
+                    <texture>pvr/icons/pvr_timer.png</texture>
+                    <visible>!ListItem$PARAM[listitem].IsRecording + ListItem$PARAM[listitem].HasTimer</visible>
+                </control>
+            </control>
+
             <control type="group">
                 <description>PVR recurring timer</description>
-                <visible>!IsEmpty(ListItem$PARAM[listitem].TimerType) + StringCompare(ListItem$PARAM[listitem].TimerType,$LOCALIZE[823])</visible>
+                <visible>ListItem$PARAM[listitem].HasTimerSchedule</visible>
                 <control type="image">
-                    <right>-4</right>
-                    <top>5</top>
+                    <texture>$PARAM[overlay_texture]</texture>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+                </control>
+                <control type="image">
+                    <right>-11</right>
+                    <top>-5</top>
                     <width>55</width>
                     <height>50</height>
                     <texture>pvr/icons/pvr_record.png</texture>
                     <animation effect="fade" start="100" end="60" time="0" condition="true">Conditional</animation>
                 </control>
                 <control type="image">
-                    <right>4</right>
-                    <top>5</top>
+                    <right>-3</right>
+                    <top>-5</top>
                     <width>55</width>
                     <height>50</height>
                     <texture>pvr/icons/pvr_record.png</texture>
                     <animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>
                 </control>
                 <control type="image">
-                    <right>12</right>
-                    <top>5</top>
+                    <right>5</right>
+                    <top>-5</top>
                     <width>55</width>
                     <height>50</height>
                     <texture>pvr/icons/pvr_record.png</texture>
@@ -1532,6 +1541,71 @@
     <include name="Font_Reg31">
         <font>Reg31</font>
     </include>
+    
+    <include name="PVRWatchedIndicator">
+        <control type="group">
+            <visible>!SubString(ListItem.Label,..,left)</visible>
+            <width>65</width>
+            <height>65</height>
+            <posx>-5</posx>
+            <top>4</top>
+            <control type="image">
+                <description>PVR is recording</description>
+                <right>0</right>
+                <top>0</top>
+                <width>65</width>
+                <height>60</height>
+                <texture>pvr/icons/pvr_record.png</texture>
+                <visible>ListItem.IsRecording</visible>
+            </control>
+            <control type="image">
+                <description>PVR single timer</description>
+                <right>0</right>
+                <top>0</top>
+                <width>65</width>
+                <height>60</height>
+                <texture>pvr/icons/pvr_timer.png</texture>
+                <visible>!ListItem.IsRecording + ListItem.HasTimer + !ListItem.HasTimerSchedule</visible>
+            </control>
+            <control type="image">
+                <description>Is Playing</description>
+                <right>0</right>
+                <top>0</top>
+                <width>65</width>
+                <height>60</height>
+                <texture>pvr/icons/pvr_play.png</texture>
+                <visible>ListItem.IsPlaying + !ListItem.IsRecording</visible>
+            </control>
+            <control type="group">
+                <description>PVR recurring timer</description>
+                <visible>ListItem.HasTimerSchedule</visible>
+                <control type="image">
+                    <right>-4</right>
+                    <top>5</top>
+                    <width>55</width>
+                    <height>50</height>
+                    <texture>pvr/icons/pvr_record.png</texture>
+                    <animation effect="fade" start="100" end="60" time="0" condition="true">Conditional</animation>
+                </control>
+                <control type="image">
+                    <right>4</right>
+                    <top>5</top>
+                    <width>55</width>
+                    <height>50</height>
+                    <texture>pvr/icons/pvr_record.png</texture>
+                    <animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>
+                </control>
+                <control type="image">
+                    <right>12</right>
+                    <top>5</top>
+                    <width>55</width>
+                    <height>50</height>
+                    <texture>pvr/icons/pvr_record.png</texture>
+                </control>
+            </control>
+        </control>
+    </include>
+      
 
     <variable name="PVRGuideGenreColorsVar">
         <value condition="Skin.String(pvrgenretype,genre) + !Skin.HasSetting(CustomEPGGenreImages)">epg-genres/$INFO[ListItem.Genre].png</value>
@@ -1561,13 +1635,8 @@
             <texture border="6" fallback="diffuse/panel_trans.png">$VAR[PVRGuideGenreColorsVar]</texture>
         </control>
         
-        <control type="group">
-            <!--Watched Overlay-->
-            <posx>20</posx>
-            <top>4</top>
-            <visible>ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying</visible>
-            <include>WatchedIndicatorNormal</include>
-        </control>
+        <!--Watched Overlay-->
+        <include>PVRWatchedIndicator</include>
         
         <control type="label" id="1">
             <!--Channel Now Playing (with recording or timer active)-->
@@ -1611,13 +1680,7 @@
             <texture border="5" colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">diffuse/panel.png</texture>
         </control>
         
-        <control type="group">
-            <!--Watched Overlay-->
-            <posx>20</posx>
-            <top>4</top>
-            <visible>ListItem.IsRecording | ListItem.HasTimer | ListItem.IsPlaying</visible>
-            <include>WatchedIndicatorNormal</include>
-        </control>
+        <include>PVRWatchedIndicator</include>
         
         <control type="label" id="1">
             <!--Channel Now Playing (with recording or timer active)-->
