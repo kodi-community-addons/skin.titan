@@ -527,7 +527,7 @@
 		<value condition="[Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] + ListItem.Property(season_finale)">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration,, • ] $LOCALIZE[31336]</value>
 		<value condition="[Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] + ListItem.Property(series_finale)">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration,, • ] $LOCALIZE[31335]</value>
 		<value condition="[Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)]">$INFO[ListItem.Premiered,, • ]$VAR[ListItemDuration]</value>
-		<value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863] : ]</value>
+		<value condition="Container.Content(Addons)">$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863]: , • ]$INFO[ListItem.Property(Addon.Version),$LOCALIZE[24051] ]</value>
 		<value condition="Container.Content(songs)">$INFO[ListItem.Year,, • ]$INFO[ListItem.Genre,, • ]$INFO[ListItem.Album]</value>
 		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_genre))">$INFO[ListItem.Property(artist_genre),$LOCALIZE[515]: ]</value>
 		<value condition="Container.Content(Artists) + !IsEmpty(ListItem.Property(artist_style))">$INFO[ListItem.Property(artist_style),$LOCALIZE[176]: ]</value>
@@ -557,6 +557,7 @@
     
     <variable name="ListDatePVR">
         <value condition="Window.IsActive(tvrecordings) | Window.IsActive(tvtimers) | Window.IsActive(tvsearch)">$INFO[ListItem.StartDate] $INFO[ListItem.StartTime]</value>
+        <value condition="[Window.IsActive(tvchannels) | Window.IsActive(tvguide)] + !IsEmpty(ListItem.StartTime) + [StringCompare(System.Language,Arabic) | StringCompare(System.Language,Hebrew)]">$INFO[ListItem.EndTime] - $INFO[ListItem.StartTime]</value>
         <value condition="[Window.IsActive(tvchannels) | Window.IsActive(tvguide)] + !IsEmpty(ListItem.StartTime)">$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</value>
         <value>$INFO[ListItem.StartDate] - $INFO[ListItem.StartTime]</value>
     </variable>
@@ -663,10 +664,10 @@
         <value condition="[Container.Content(movies) | Container.Content(musicvideos)] + !SubString(ListItem.Path,videodb://1/7,left)">$INFO[ListItem.Duration,[B]$LOCALIZE[180]:[/B] ,min.]$INFO[ListItem.Director, - [B]$LOCALIZE[20339]:[/B] ]</value>
         <value condition="SubString(ListItem.Path,videodb://1/7,left)">$LOCALIZE[20457]</value>
 
-        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">$LOCALIZE[20360]: $INFO[ListItem.Property(TotalEpisodes)]  - $LOCALIZE[16101]: $INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TVShowTitle] - $LOCALIZE[20360]: $INFO[ListItem.Property(TotalEpisodes)] - $LOCALIZE[16101]: $INFO[ListItem.Property(UnWatchedEpisodes)]</value>
-        <value condition="[Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)]">$LOCALIZE[180]:  $INFO[ListItem.Duration,,min.] - $INFO[ListItem.TVShowTitle]</value>
-        <value condition="Container.Content(artists) + !IsEmpty(ListItem.Property(Artist_YearsActive))">$LOCALIZE[21898]: $INFO[ListItem.Property(Artist_YearsActive)]</value>
+        <value condition="Container.Content(tvshows) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360, - ]: ]$INFO[ListItem.Property(UnWatchedEpisodes),$LOCALIZE[16101]: ]</value>
+        <value condition="Container.Content(seasons) + !IsEmpty(ListItem.Episode)">$INFO[ListItem.TVShowTitle,, - ]$INFO[ListItem.Property(TotalEpisodes),$LOCALIZE[20360]: , - ]$INFO[ListItem.Property(UnWatchedEpisodes),$LOCALIZE[16101]: ]</value>
+        <value condition="[Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)]">$INFO[ListItem.Duration,$LOCALIZE[180]: ,min.]$INFO[ListItem.TVShowTitle, - ]</value>
+        <value condition="Container.Content(artists) + !IsEmpty(ListItem.Property(Artist_YearsActive))">$INFO[ListItem.Property(Artist_YearsActive),$LOCALIZE[21898]: ]</value>
         <value condition="!IsEmpty(ListItem.Duration)">$INFO[ListItem.Duration, ,min. • ]</value>
 		<value condition="!IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
  	</variable>
@@ -691,7 +692,7 @@
     <value condition="Container.Content(songs) + !IsEmpty(ListItem.Comment)">$INFO[ListItem.Comment]</value>
 	<value condition="Container.Content(songs) + !IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
 	<value condition="Container.Content(songs) + !IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
-    <value condition="Window.IsActive(tvchannels) + !IsEmpty(ListItem.Plot)">$INFO[ListItem.Season,S,]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.EpisodeName,,[CR]]$INFO[ListItem.Plot]$INFO[Container.ListItem.NextTitle,[CR][CR][B]$LOCALIZE[19031]:[/B] ]</value>
+    <value condition="Window.IsActive(tvchannels) + !IsEmpty(ListItem.Plot)">$INFO[ListItem.Season,S,]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.EpisodeName,,[CR]]$INFO[ListItem.Plot]$INFO[Container.ListItem.NextTitle,[CR][CR][B]$LOCALIZE[19031]: [/B]]</value>
 	<value condition="!IsEmpty(Window(home).Property(SkinHelper.Music.Info))">$INFO[Window(home).Property(SkinHelper.Music.Info)]</value>
     <value condition="Window.IsActive(pictures ) + !IsEmpty(ListItem.PictureDesc)">$INFO[ListItem.PictureDesc]</value>
     <value condition="Window.IsActive(pictures ) + !IsEmpty(ListItem.PictureComment)">$INFO[ListItem.PictureComment]</value>
