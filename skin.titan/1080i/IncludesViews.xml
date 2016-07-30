@@ -210,6 +210,11 @@
                         <animation effect="fade" start="100" end="20" time="0" condition="!IsEmpty(ListItem.Property(NotAvailable))">Conditional</animation>
                         <font>Reg26</font>
                     </control>
+                    <control type="button">
+                        <visible>false</visible>
+                        <onfocus condition="!IsEmpty(Container(6002).ListItem.Property(NotAvailable)) + Container(6002).OnNext">Control.Move(6002,1)</onfocus>
+                        <onfocus condition="!IsEmpty(Container(6002).ListItem.Property(NotAvailable)) + Container(6002).OnPrevious">Control.Move(6002,-1)</onfocus>
+                    </control>
                 </focusedlayout>
                 <content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
                 <visible>Skin.HasSetting(EnableQuickJump) + IntegerGreaterThan(Container.NumPages,1) + !Control.HasFocus(60)</visible>
@@ -1178,7 +1183,7 @@
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                 <aligny>top</aligny>
-                <autoscroll>true</autoscroll>
+                <autoscroll>!Skin.HasSetting(DisablePlotAutoScroll)</autoscroll>
             </control>
         </control>
 
