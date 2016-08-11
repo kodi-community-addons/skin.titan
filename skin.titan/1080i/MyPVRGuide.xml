@@ -92,7 +92,7 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>[skin.string(GuideRows, 7) | skin.string(GuideRows, 8)] + control.isvisible(10)</visible>
 					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				<control type="image">
@@ -102,7 +102,7 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>!skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>[skin.string(GuideRows, 7) | skin.string(GuideRows, 8)] + control.isvisible(10)</visible>
 					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
                 <control type="image">
@@ -112,7 +112,7 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>[skin.string(GuideRows, 7) | skin.string(GuideRows, 8)] + control.isvisible(10)</visible>
 					<visible>Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				<control type="image">
@@ -122,7 +122,7 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>!skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>!skin.string(GuideRows, 7) + !skin.string(GuideRows, 8) + control.isvisible(10)</visible>
 					<visible>Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
@@ -211,18 +211,6 @@
 						<font>Reg28</font>
 						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 						<label fallback="161">$INFO[ListItem.Plot]</label>
-						<visible>skin.string(GuideRows, 7)</visible>
-					</control>
-					<control type="textbox">
-						<!--Info Plot-->
-						<posx>0</posx>
-						<posy>85</posy>
-						<height>125</height>
-						<width>1460</width>
-						<font>Reg28</font>
-						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-						<label fallback="161">$INFO[ListItem.Plot]</label>
-						<visible>!skin.string(GuideRows, 7)</visible>
 					</control>
 				</control>
 			</control>
@@ -316,6 +304,26 @@
                     <include>PVRGuideItemLayout</include>
                 </itemlayout>
                 <focusedlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
+                    <include>PVRGuideItemLayoutFocus</include>
+                </focusedlayout>
+                
+                <!-- guide 8 rows -->
+				<channellayout height="79" width="500" condition="skin.string(GuideRows, 8) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                    <include>PVRGuideChannelItemLayout</include>
+                </channellayout>
+                <focusedchannellayout height="79" width="500" condition="skin.string(GuideRows, 8) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                    <include>PVRGuideChannelItemLayout</include>
+                </focusedchannellayout>
+                <channellayout height="79" width="250" condition="skin.string(GuideRows, 8) + Skin.HasSetting(HideChannelNamesInGuide)">
+                    <include>PVRGuideChannelItemLayout</include>
+                </channellayout>
+                <focusedchannellayout height="79" width="250" condition="skin.string(GuideRows, 8) + Skin.HasSetting(HideChannelNamesInGuide)">
+                    <include>PVRGuideChannelItemLayout</include>
+                </focusedchannellayout>
+                <itemlayout height="79" width="60" condition="skin.string(GuideRows, 8)">
+                    <include>PVRGuideItemLayout</include>
+                </itemlayout>
+                <focusedlayout height="79" width="60" condition="skin.string(GuideRows, 8)">
                     <include>PVRGuideItemLayoutFocus</include>
                 </focusedlayout>
                 

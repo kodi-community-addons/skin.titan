@@ -1348,7 +1348,7 @@
     
 	<include name="WatchedIndicatorLayout">
         <control type="group">
-            <visible>!SubString(ListItem$PARAM[listitem].Label,..,left)</visible>
+            <visible>!StringCompare(ListItem$PARAM[listitem].Label,..)</visible>
             <width>$PARAM[width]</width>
             <height>$PARAM[height]</height>
             <right>0</right>
@@ -1448,12 +1448,8 @@
                 </control>
             </control>
             <control type="group">
-                <description>Is Recording or timer</description>
-                <visible>
-                    !ListItem$PARAM[listitem].IsPlaying + [ListItem$PARAM[listitem].IsRecording | ListItem$PARAM[listitem].HasTimer | 
-                    [!IsEmpty(ListItem.TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821])]]]
-                    + !ListItem$PARAM[listitem].HasTimerSchedule
-                </visible>
+                <description>Is Recording</description>
+                <visible>!ListItem$PARAM[listitem].IsPlaying + ListItem$PARAM[listitem].IsRecording</visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
@@ -1464,7 +1460,18 @@
                     <width>78%</width>
                     <height>78%</height>
                     <texture>pvr/icons/pvr_record.png</texture>
-                    <visible>ListItem$PARAM[listitem].IsRecording</visible>
+                </control>
+            </control>
+            <control type="group">
+                <description>Is single timer</description>
+                <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording + !ListItem$PARAM[listitem].HasTimerSchedule</visible>
+                <visible>
+                    ListItem$PARAM[listitem].HasTimer | 
+                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821])]]
+                </visible>
+                <control type="image">
+                    <texture>$PARAM[overlay_texture]</texture>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
                 </control>
                 <control type="image">
                     <left>35%</left>
@@ -1472,17 +1479,15 @@
                     <width>78%</width>
                     <height>78%</height>
                     <texture>pvr/icons/pvr_timer.png</texture>
-                    <visible>
-                        !ListItem$PARAM[listitem].IsRecording + 
-                        [ListItem$PARAM[listitem].HasTimer | 
-                        [!IsEmpty(ListItem.TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821])]]]
-                    </visible>
                 </control>
             </control>
 
             <control type="group">
                 <description>PVR recurring timer</description>
-                <visible>ListItem$PARAM[listitem].HasTimerSchedule | [!IsEmpty(ListItem.TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[822]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[823])]]</visible>
+                <visible>
+                    ListItem$PARAM[listitem].HasTimerSchedule | 
+                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[822]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[823])]]
+                </visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
