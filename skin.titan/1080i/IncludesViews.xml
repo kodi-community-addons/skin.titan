@@ -1464,10 +1464,11 @@
             </control>
             <control type="group">
                 <description>Is single timer</description>
+                <visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) | IsEmpty(ListItem.Comment)</visible>
                 <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording + !ListItem$PARAM[listitem].HasTimerSchedule</visible>
                 <visible>
                     ListItem$PARAM[listitem].HasTimer | 
-                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821])]]
+                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821]) | SubString(ListItem$PARAM[listitem].Timertype,$ADDON[pvr.mediaportal.tvserver 30110])]]
                 </visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
@@ -1484,9 +1485,10 @@
 
             <control type="group">
                 <description>PVR recurring timer</description>
+                <visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) | IsEmpty(ListItem.Comment)</visible>
                 <visible>
                     ListItem$PARAM[listitem].HasTimerSchedule | 
-                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[822]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[823])]]
+                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + ![SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821]) | SubString(ListItem$PARAM[listitem].Timertype,$ADDON[pvr.mediaportal.tvserver 30110])]]
                 </visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
