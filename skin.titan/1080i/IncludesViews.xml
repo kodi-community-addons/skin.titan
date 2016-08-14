@@ -1465,11 +1465,8 @@
             <control type="group">
                 <description>Is single timer</description>
                 <visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) | IsEmpty(ListItem.Comment)</visible>
-                <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording + !ListItem$PARAM[listitem].HasTimerSchedule</visible>
-                <visible>
-                    ListItem$PARAM[listitem].HasTimer | 
-                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + [SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821])]]
-                </visible>
+                <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording</visible>
+                <visible>[ListItem$PARAM[listitem].HasTimer + !ListItem$PARAM[listitem].HasTimerSchedule] | [!IsEmpty(ListItem$PARAM[listitem].TimerType) + !ListItem$PARAM[listitem].IsFolder]</visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
@@ -1486,10 +1483,8 @@
             <control type="group">
                 <description>PVR recurring timer</description>
                 <visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) | IsEmpty(ListItem.Comment)</visible>
-                <visible>
-                    ListItem$PARAM[listitem].HasTimerSchedule | 
-                    [!IsEmpty(ListItem$PARAM[listitem].TimerType) + ![SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[820]) | SubString(ListItem$PARAM[listitem].Timertype,$LOCALIZE[821])]]
-                </visible>
+                <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording</visible>
+                <visible>[ListItem$PARAM[listitem].HasTimer + ListItem$PARAM[listitem].HasTimerSchedule] | [!IsEmpty(ListItem$PARAM[listitem].TimerType) + ListItem$PARAM[listitem].IsFolder]</visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
                     <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
