@@ -92,17 +92,17 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>[skin.string(GuideRows, 7) | skin.string(GuideRows, 8)] + control.isvisible(10)</visible>
 					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				<control type="image">
 					<posy>309</posy>
 					<posx>50</posx>
-					<width>400</width>
+					<width>500</width>
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>!skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>[skin.string(GuideRows, 7) | skin.string(GuideRows, 8)] + control.isvisible(10)</visible>
 					<visible>!Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
                 <control type="image">
@@ -112,7 +112,7 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>[skin.string(GuideRows, 7) | skin.string(GuideRows, 8)] + control.isvisible(10)</visible>
 					<visible>Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				<control type="image">
@@ -122,7 +122,7 @@
 					<height>631</height>
 					<texture border="0">pvr/guide_diffuse.png</texture>
 					<aspectratio>stretch</aspectratio>
-					<visible>!skin.string(GuideRows, 7) + control.isvisible(10)</visible>
+					<visible>!skin.string(GuideRows, 7) + !skin.string(GuideRows, 8) + control.isvisible(10)</visible>
 					<visible>Skin.HasSetting(HideChannelNamesInGuide) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))</visible>
 				</control>
 				
@@ -184,7 +184,7 @@
 						<posx>0</posx>
 						<posy>0</posy>
 						<width>1460</width>
-						<height>80</height>
+						<height>20</height>
 						<font>Reg28</font>
 						<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor>
 						<label>[B]$INFO[ListItem.Label]$INFO[ListItem.EpisodeName, (,)][/B]</label>
@@ -211,143 +211,244 @@
 						<font>Reg28</font>
 						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 						<label fallback="161">$INFO[ListItem.Plot]</label>
-						<visible>skin.string(GuideRows, 7)</visible>
-					</control>
-					<control type="textbox">
-						<!--Info Plot-->
-						<posx>0</posx>
-						<posy>85</posy>
-						<height>125</height>
-						<width>1460</width>
-						<font>Reg28</font>
-						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-						<label fallback="161">$INFO[ListItem.Plot]</label>
-						<visible>!skin.string(GuideRows, 7)</visible>
 					</control>
 				</control>
 			</control>
-     			<control type="group">
-			<!-- timeline view ID=10-->
-			<control type="epggrid" id="10">
-				<viewtype label="19032">list</viewtype>
-				<description>EPG Grid</description>
-				<include>animation_view_change_pvr</include>
-                <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo)) + Skin.string(GuideRows, 7)">altEpgOnScreen7</include>
-                <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo)) + Skin.string(GuideRows, 9)">altEpgOnScreen9</include>
-                <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo)) + Skin.string(GuideRows, 10)">altEpgOnScreen10</include>
-				<top>275</top>
-				<height>665</height>
-				<left>50</left>
-				<width>1800</width>
-				<pagecontrol>10</pagecontrol>
-				<timeblocks>40</timeblocks>
-				<rulerunit>6</rulerunit>
-				<onleft>9000</onleft>
-                <scrolltime tween="quadratic">300</scrolltime>
-				<onback condition="Skin.HasSetting(PVRGuideBackSideblade) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9000</onback>
-                <onback condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9200</onback>
-				<include condition="!Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorNormal</include>
-				<include condition="Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorAlt</include>
-				<onleft>31</onleft>
-				<onright>31</onright>
-				<onup>10</onup>
-				<ondown>10</ondown>
-				<rulerlayout height="35" width="60" condition="skin.string(GuideRows, 10)">
-					<!--Date, Time Top Line-->
-					<control type="label" id="2">
-						<!--Date, Time-->
-						<posx>0</posx>
-						<width>60</width>
-						<height>30</height>
-						<align>left</align>
-						<font>Reg24</font>
-						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control>
-				</rulerlayout>
-				<rulerlayout height="35" width="60" condition="!skin.string(GuideRows, 10)">
-					<!--Date, Time Top Line-->
-					<control type="label" id="2">
-						<!--Date, Time-->
-						<posx>0</posx>
-						<width>60</width>
-						<height>30</height>
-						<align>left</align>
-						<font>Reg28</font>
-						<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-						<label>$INFO[ListItem.Label]</label>
-					</control>
-				</rulerlayout>
-				
-                <!-- guide 10 rows -->
-				<channellayout height="63" width="400" condition="skin.string(GuideRows, 10) + !Skin.HasSetting(HideChannelNamesInGuide)">
-					<include>PVRGuideChannelItemLayout</include>
-				</channellayout>
-				<focusedchannellayout height="63" width="400" condition="skin.string(GuideRows, 10) + !Skin.HasSetting(HideChannelNamesInGuide)">
-					<include>PVRGuideChannelItemLayout</include>
-				</focusedchannellayout>
-				<channellayout height="63" width="200" condition="skin.string(GuideRows, 10) + Skin.HasSetting(HideChannelNamesInGuide)">
-					<include>PVRGuideChannelItemLayout</include>
-				</channellayout>
-				<focusedchannellayout height="63" width="200" condition="skin.string(GuideRows, 10) + Skin.HasSetting(HideChannelNamesInGuide)">
-					<include>PVRGuideChannelItemLayout</include>
-				</focusedchannellayout>
-				<itemlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
-					<include>PVRGuideItemLayout</include>
-				</itemlayout>
-				<focusedlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
-					<include>PVRGuideItemLayoutFocus</include>
-				</focusedlayout>
-                
-                <!-- guide 7 rows -->
-				<channellayout height="90" width="500" condition="skin.string(GuideRows, 7) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </channellayout>
-                <focusedchannellayout height="90" width="500" condition="skin.string(GuideRows, 7) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </focusedchannellayout>
-                <channellayout height="90" width="250" condition="skin.string(GuideRows, 7) + Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </channellayout>
-                <focusedchannellayout height="90" width="250" condition="skin.string(GuideRows, 7) + Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </focusedchannellayout>
-                <itemlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
-                    <include>PVRGuideItemLayout</include>
-                </itemlayout>
-                <focusedlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
-                    <include>PVRGuideItemLayoutFocus</include>
-                </focusedlayout>
-                
-                <!-- guide 9 rows -->
-                <channellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </channellayout>
-                <focusedchannellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </focusedchannellayout>
-                <channellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </channellayout>
-                <focusedchannellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </focusedchannellayout>
-                <channellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </channellayout>
-				<focusedchannellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
-                    <include>PVRGuideChannelItemLayout</include>
-                </focusedchannellayout>
-				
-                <itemlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
-                    <include>PVRGuideItemLayout</include>
-                </itemlayout>
-                <focusedlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
-                    <include>PVRGuideItemLayoutFocus</include>
-                </focusedlayout>
-     			
-			</control>
-				
+            <control type="group">
+                <!-- timeline view ID=10-->
+                <control type="epggrid" id="10">
+                    <viewtype label="19032">list</viewtype>
+                    <description>EPG Grid</description>
+                    <include>animation_view_change_pvr</include>
+                    <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo)) + Skin.string(GuideRows, 7)">altEpgOnScreen7</include>
+                    <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo)) + Skin.string(GuideRows, 9)">altEpgOnScreen9</include>
+                    <include condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo)) + Skin.string(GuideRows, 10)">altEpgOnScreen10</include>
+                    <top>275</top>
+                    <height>665</height>
+                    <left>50</left>
+                    <width>1800</width>
+                    <pagecontrol>10</pagecontrol>
+                    <timeblocks>40</timeblocks>
+                    <rulerunit>6</rulerunit>
+                    <onleft>9000</onleft>
+                    <scrolltime tween="quadratic">300</scrolltime>
+                    <onback condition="Skin.HasSetting(PVRGuideBackSideblade) + IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9000</onback>
+                    <onback condition="!IsEmpty(Window(home).Property(pvrGuideOnFullscreenVideo))">9200</onback>
+                    <include condition="!Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorNormal</include>
+                    <include condition="Skin.HasSetting(UseAltEpgProgress)">EpgProgressIndicatorAlt</include>
+                    <onleft>31</onleft>
+                    <onright>31</onright>
+                    <onup>10</onup>
+                    <ondown>10</ondown>
+                    <rulerlayout height="35" width="60" condition="skin.string(GuideRows, 10)">
+                        <!--Date, Time Top Line-->
+                        <control type="label" id="2">
+                            <!--Date, Time-->
+                            <posx>0</posx>
+                            <width>60</width>
+                            <height>30</height>
+                            <align>left</align>
+                            <font>Reg24</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                    </rulerlayout>
+                    <rulerlayout height="35" width="60" condition="!skin.string(GuideRows, 10)">
+                        <!--Date, Time Top Line-->
+                        <control type="label" id="2">
+                            <!--Date, Time-->
+                            <posx>0</posx>
+                            <width>60</width>
+                            <height>30</height>
+                            <align>left</align>
+                            <font>Reg28</font>
+                            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                    </rulerlayout>
+                    
+                    <!-- guide 10 rows -->
+                    <channellayout height="63" width="400" condition="skin.string(GuideRows, 10) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="63" width="400" condition="skin.string(GuideRows, 10) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </focusedchannellayout>
+                    <channellayout height="63" width="200" condition="skin.string(GuideRows, 10) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include>PVRGuideChannelItemLayout</include>
+                    </channellayout>
+                    <focusedchannellayout height="63" width="200" condition="skin.string(GuideRows, 10) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </focusedchannellayout>
+                    <itemlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
+                        <include>PVRGuideItemLayout</include>
+                    </itemlayout>
+                    <focusedlayout height="63" width="60" condition="skin.string(GuideRows, 10)">
+                        <include>PVRGuideItemLayoutFocus</include>
+                    </focusedlayout>
+                    
+                    <!-- guide 7 rows -->
+                    <channellayout height="90" width="500" condition="skin.string(GuideRows, 7) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg31" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="90" width="500" condition="skin.string(GuideRows, 7) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg31" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg31" />
+                        </include>
+                    </focusedchannellayout>
+                    <channellayout height="90" width="250" condition="skin.string(GuideRows, 7) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg31" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="90" width="250" condition="skin.string(GuideRows, 7) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg31" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg31" />
+                        </include>
+                    </focusedchannellayout>
+                    <itemlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
+                        <include>PVRGuideItemLayout</include>
+                    </itemlayout>
+                    <focusedlayout height="90" width="60" condition="skin.string(GuideRows, 7)">
+                        <include>PVRGuideItemLayoutFocus</include>
+                    </focusedlayout>
+                    
+                    <!-- guide 8 rows -->
+                    <channellayout height="79" width="500" condition="skin.string(GuideRows, 8) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="79" width="500" condition="skin.string(GuideRows, 8) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </focusedchannellayout>
+                    <channellayout height="79" width="250" condition="skin.string(GuideRows, 8) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="79" width="250" condition="skin.string(GuideRows, 8) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </focusedchannellayout>
+                    <itemlayout height="79" width="60" condition="skin.string(GuideRows, 8)">
+                        <include>PVRGuideItemLayout</include>
+                    </itemlayout>
+                    <focusedlayout height="79" width="60" condition="skin.string(GuideRows, 8)">
+                        <include>PVRGuideItemLayoutFocus</include>
+                    </focusedlayout>
+                    
+                    <!-- guide 9 rows -->
+                    <channellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="70" width="400" condition="skin.string(GuideRows, 9) + !Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </focusedchannellayout>
+                    <channellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </channellayout>
+                    <focusedchannellayout height="70" width="200" condition="skin.string(GuideRows, 9) + Skin.HasSetting(HideChannelNamesInGuide)">
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="!Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorUnfocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorUnfocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                        <include name="PVRGuideChannelItemLayout" content="PVRGuideChannelItemLayout" condition="Skin.HasSetting(pvrGuideHighlightChannel)">
+                            <param name="panelcolor" value="$VAR[PVRGuideItemColorFocus]" />
+                            <param name="textcolor" value="$VAR[PVRGuideItemTextColorFocus]" />
+                            <param name="font" value="Reg26" />
+                        </include>
+                    </focusedchannellayout>
+                    <itemlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
+                        <include>PVRGuideItemLayout</include>
+                    </itemlayout>
+                    <focusedlayout height="70" width="60" condition="skin.string(GuideRows, 9)">
+                        <include>PVRGuideItemLayoutFocus</include>
+                    </focusedlayout>
+                    
+                </control>
+                    
 				<!-- now view ID=11-->
 				<control type="list" id="11">
 					<!--List ID=16-->
@@ -843,5 +944,7 @@
 		<!--NowPlaying-->
         <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
         <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
+        
+        <include condition="Skin.HasSetting(DebugGrid) | Skin.HasSetting(DebugInfo)">DebugInfo</include>
 	</controls>
 </window>
