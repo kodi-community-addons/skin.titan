@@ -1433,10 +1433,11 @@
             
             <control type="group">
                 <description>Is Playing</description>
+                <visible>Skin.HasSetting(WatchedIndicator.Playing)</visible>
                 <visible>ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording</visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
-                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Playing.Color)]</colordiffuse>
                 </control>
                 <control type="image">
                     <texture>osd/slim/Play.png</texture>
@@ -1444,15 +1445,16 @@
                     <top>-10%</top>
                     <width>78%</width>
                     <height>78%</height>
-                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.TextColor)]</colordiffuse>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Playing.TextColor)]</colordiffuse>
                 </control>
             </control>
             <control type="group">
                 <description>Is Recording</description>
+                <visible>Skin.HasSetting(WatchedIndicator.Playing)</visible>
                 <visible>!ListItem$PARAM[listitem].IsPlaying + ListItem$PARAM[listitem].IsRecording</visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
-                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Playing.Color)]</colordiffuse>
                 </control>
                 <control type="image">
                     <left>35%</left>
@@ -1464,12 +1466,13 @@
             </control>
             <control type="group">
                 <description>Is single timer</description>
+                <visible>Skin.HasSetting(WatchedIndicator.Playing)</visible>
                 <visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) | IsEmpty(ListItem.Comment)</visible>
                 <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording</visible>
                 <visible>[ListItem$PARAM[listitem].HasTimer + !ListItem$PARAM[listitem].HasTimerSchedule] | [!IsEmpty(ListItem$PARAM[listitem].TimerType) + !ListItem$PARAM[listitem].IsFolder]</visible>
                 <control type="image">
                     <texture>$PARAM[overlay_texture]</texture>
-                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Watched.Color)]</colordiffuse>
+                    <colordiffuse>$INFO[Skin.String(WatchedIndicator.Playing.Color)]</colordiffuse>
                 </control>
                 <control type="image">
                     <left>35%</left>
@@ -1479,9 +1482,9 @@
                     <texture>pvr/icons/pvr_timer.png</texture>
                 </control>
             </control>
-
             <control type="group">
                 <description>PVR recurring timer</description>
+                <visible>Skin.HasSetting(WatchedIndicator.Playing)</visible>
                 <visible>StringCompare(ListItem.Comment,$LOCALIZE[305]) | IsEmpty(ListItem.Comment)</visible>
                 <visible>!ListItem$PARAM[listitem].IsPlaying + !ListItem$PARAM[listitem].IsRecording</visible>
                 <visible>[ListItem$PARAM[listitem].HasTimer + ListItem$PARAM[listitem].HasTimerSchedule] | [!IsEmpty(ListItem$PARAM[listitem].TimerType) + ListItem$PARAM[listitem].IsFolder]</visible>
@@ -1492,24 +1495,24 @@
                 <control type="image">
                     <right>-11</right>
                     <top>-5</top>
-                    <width>55</width>
-                    <height>50</height>
+                    <width>73%</width>
+                    <height>70%</height>
                     <texture>pvr/icons/pvr_record.png</texture>
                     <animation effect="fade" start="100" end="60" time="0" condition="true">Conditional</animation>
                 </control>
                 <control type="image">
                     <right>-3</right>
                     <top>-5</top>
-                    <width>55</width>
-                    <height>50</height>
+                    <width>73%</width>
+                    <height>70%</height>
                     <texture>pvr/icons/pvr_record.png</texture>
                     <animation effect="fade" start="100" end="80" time="0" condition="true">Conditional</animation>
                 </control>
                 <control type="image">
                     <right>5</right>
                     <top>-5</top>
-                    <width>55</width>
-                    <height>50</height>
+                    <width>73%</width>
+                    <height>70%</height>
                     <texture>pvr/icons/pvr_record.png</texture>
                 </control>
             </control>
@@ -1628,23 +1631,6 @@
         </control>
     </include>
       
-    <variable name="PVRGuideItemColorUnfocus">
-        <value condition="Skin.String(PVRGuideItemColorUnfocus)">$INFO[Skin.String(PVRGuideItemColorUnfocus)]</value>
-        <value>$INFO[Skin.String(ButtonColor)]</value>
-    </variable>
-    <variable name="PVRGuideItemColorFocus">
-        <value condition="Skin.String(PVRGuideItemColorFocus)">$INFO[Skin.String(PVRGuideItemColorFocus)]</value>
-        <value>$INFO[Skin.String(ButtonFocusColor)]</value>
-    </variable>
-    <variable name="PVRGuideItemTextColorUnfocus">
-        <value condition="Skin.String(PVRGuideItemTextColorUnfocus)">$INFO[Skin.String(PVRGuideItemTextColorUnfocus)]</value>
-        <value>$INFO[Skin.String(ButtonTextColor)]</value>
-    </variable>
-    <variable name="PVRGuideItemTextColorFocus">
-        <value condition="Skin.String(PVRGuideItemTextColorFocus)">$INFO[Skin.String(PVRGuideItemTextColorFocus)]</value>
-        <value>$INFO[Skin.String(ButtonFocusTextColor)]</value>
-    </variable>
-    
     <variable name="PVRGuideGenreColorsVar">
         <value condition="!IsEmpty(ListItem.Genre) + Skin.String(pvrgenretype,genre) + !Skin.HasSetting(CustomEPGGenreImages)">epg-genres/$INFO[ListItem.Genre].png</value>
         <value condition="!IsEmpty(ListItem.Property(GenreType)) + Skin.String(pvrgenretype,genretype) + !Skin.HasSetting(CustomEPGGenreImages)">epg-genres/$INFO[ListItem.Property(GenreType)].png</value>
@@ -1660,7 +1646,7 @@
             <posy>0</posy>
             <width>50</width>
             <height>92%</height>
-            <texture colordiffuse="$VAR[PVRGuideItemColorUnfocus]" border="5">diffuse/panel.png</texture>
+            <texture colordiffuse="$INFO[Skin.String(PVRGuideItemColorUnfocus]" border="5">diffuse/panel.png</texture>
             <visible>!Skin.HasSetting(ShowEpgGenreColors)</visible>
         </control>
         <control type="image" id="14">
@@ -1687,7 +1673,7 @@
             <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
             <aligny>center</aligny>
             <textoffsetx>55</textoffsetx>
-            <textcolor>$VAR[PVRGuideItemTextColorUnfocus]</textcolor>
+            <textcolor>$INFO[Skin.String(PVRGuideItemTextColorUnfocus]</textcolor>
             <label>$INFO[ListItem.Label]</label>
         </control>
         
@@ -1702,7 +1688,7 @@
             <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
             <aligny>center</aligny>
             <textoffsetx>15</textoffsetx>
-            <textcolor>$VAR[PVRGuideItemTextColorUnfocus]</textcolor>
+            <textcolor>$INFO[Skin.String(PVRGuideItemTextColorUnfocus]</textcolor>
             <label>$INFO[ListItem.Label]</label>
         </control>
     </include>
@@ -1715,7 +1701,7 @@
             <posy>0</posy>
             <width>50</width>
             <height>92%</height>
-            <texture border="5" colordiffuse="$VAR[PVRGuideItemColorFocus]">diffuse/panel.png</texture>
+            <texture border="5" colordiffuse="$INFO[Skin.String(PVRGuideItemColorFocus]">diffuse/panel.png</texture>
         </control>
         
         <include>PVRWatchedIndicator</include>
@@ -1731,7 +1717,7 @@
             <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
             <aligny>center</aligny>
             <textoffsetx>55</textoffsetx>
-            <textcolor>$VAR[PVRGuideItemTextColorFocus]</textcolor>
+            <textcolor>$INFO[Skin.String(PVRGuideItemTextColorFocus]</textcolor>
             <label>$INFO[ListItem.Label]</label>
             <scroll>true</scroll>
         </control>
@@ -1747,7 +1733,7 @@
             <include condition="skin.string(GuideRows, 7)">Font_Reg31</include>
             <aligny>center</aligny>
             <textoffsetx>15</textoffsetx>
-            <textcolor>$VAR[PVRGuideItemTextColorFocus]</textcolor>
+            <textcolor>$INFO[Skin.String(PVRGuideItemTextColorFocus]</textcolor>
             <label>$INFO[ListItem.Label]</label>
             <scroll>true</scroll>
         </control>
