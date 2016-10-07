@@ -3,10 +3,9 @@
 <window>
     
     <defaultcontrol always="true">9005</defaultcontrol>
-    <onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">PlayerControl(Stop)</onunload>
+    <onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying)) + !StringCompare(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunload>
 	<onunload>ClearProperty(AdditionalInfo)</onunload>
     <onload>ClearProperty(AdditionalInfo)</onload>
-	<onunload>ClearProperty(TrailerPlaying,Home)</onunload>
     <onunload>ClearProperty(filename_formatted,Home)</onunload>
     <controls>
     
@@ -15,25 +14,24 @@
             <visible allowhiddenfocus="true">false</visible>
             <onfocus>RunScript(script.skin.helper.service,action=GETFILENAME,output=filename_formatted)</onfocus>
             <onfocus condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification) + StringCompare(Window(Home).Property(contenttype),movies)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification) + StringCompare(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification) + StringCompare(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification) + StringCompare(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onfocus>
-            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification)] + SubString(Skin.String(videoinfo_traileraction),auto) + !IsEmpty(ListItem.Trailer) + !Player.HasMedia">PlayMedia($ESCINFO[ListItem.Trailer],1)</onfocus>
-            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification)] + SubString(Skin.String(videoinfo_traileraction),auto) + IsEmpty(ListItem.Trailer) + !Player.HasMedia + [StringCompare(ListItem.DBTYPE,movie) | StringCompare(ListItem.Property(DBTYPE),movie) | StringCompare(ListItem.DBTYPE,tvshow) | StringCompare(ListItem.Property(DBTYPE),tvshow)]">RunScript(script.skin.helper.service,action=searchyoutube,windowed=true,autoplay=true,title=$INFO[ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onfocus>
-            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification)] + SubString(Skin.String(videoinfo_traileraction),auto) + !IsEmpty(ListItem.Trailer) + !Player.HasMedia">SetProperty(TrailerPlaying,Playing,Home)</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification)">close</onfocus>
-            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendednotification)]">SetFocus(8000)</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),movies)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onfocus>
+            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)] + SubString(Skin.String(videoinfo_traileraction),auto)">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)">close</onfocus>
+            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)]">SetFocus(8000)</onfocus>
         </control>
     
 		<control type="group">
-			<visible>![Skin.HasSetting(UseExtendednotification) + System.HasAddon(script.extendedinfo)]</visible>
+			<visible>![Skin.HasSetting(UseExtendedInfoDialog) + System.HasAddon(script.extendedinfo)]</visible>
 	
 			<control type="group">
 				<visible>!Window.IsVisible(FileBrowser)</visible>
 				<!--Dialog Overlay-->
 				<visible>Window.IsActive(movieinformation)</visible>
 				<include>GlobalBackground</include>
+                <include condition="!Skin.HasSetting(DisableNowPlayingBackground)">NowPlayingBackground</include>
 			</control>
 				
 			<control type="group">
@@ -95,9 +93,9 @@
                     <height>160</height>
                     <posy>10</posy>
                     <aspectratio aligny="top" align="right">keep</aspectratio>
-                    <include condition="!Skin.HasSetting(PreferColorStudioLogos) + !Skin.String(SkinHelper.StudioImagesPath)">videoInfoColorDiffuse</include>
-                    <texture>$VAR[studiologo]</texture>
-                    <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
+                    <include condition="!SubString(Skin.String(SkinHelper.StudioLogos.Path),colo)">videoInfoColorDiffuse</include>
+                    <texture>$INFO[Window(home).Property(SkinHelper.ListItemStudioLogo)]</texture>
+                    <visible>IsEmpty(Window.Property(AdditionalInfo)) + !IsEmpty(Window(home).Property(SkinHelper.ListItemStudioLogo))</visible>
                 </control>
                 <control type="label">
                     <!-- additional info subtitle -->
@@ -150,7 +148,7 @@
 						<onright>8000</onright>
 						<pagecontrol>60</pagecontrol>
 						<orientation>horizontal</orientation>
-						<visible>!Skin.HasSetting(UseExtendednotification)</visible>
+						<visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
 						
                         <include condition="Skin.HasSetting(EnableTouchSupport)">back_button</include>
                         <include condition="Skin.HasSetting(EnableTouchSupport)">home_button</include>
@@ -186,12 +184,9 @@
 							<label>20410</label>
                             <altlabel>244</altlabel>
                             <usealttexture>!IsEmpty(Window(Home).Property(TrailerPlaying))</usealttexture>
-                            <onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">FullScreen</onclick>
-							<onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[ListItem.Trailer])</onclick>
-                            <onclick condition="!Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[ListItem.Trailer],1)</onclick>
-                            <onclick condition="IsEmpty(Window(Home).Property(TrailerPlaying)">SetProperty(TrailerPlaying,Playing,Home)</onclick>
-                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying)">ClearProperty(TrailerPlaying,Home)</onclick>
-                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying)">FullScreen</onclick>
+                            <onclick condition="IsEmpty(Window(Home).Property(TrailerPlaying))">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)])</onclick>
+                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">SetProperty(TrailerPlaying,fullscreen,home)</onclick>
+                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">FullScreen</onclick>
                             <visible>Skin.HasSetting(videoinfo_button_trailer)</visible>
 							<visible>!IsEmpty(ListItem.Trailer) | !IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
@@ -421,7 +416,7 @@
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
-                                <visible>![!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                                <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
 							</control>
                             <control type="textbox">
 								<posx>0</posx>
@@ -433,7 +428,7 @@
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
-                                <visible>!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)</visible>
+                                <visible>StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
 							</control>
 							<control type="image">
 								<width>1120</width>
@@ -857,7 +852,7 @@
                         
                         <!-- Poster image -->
                         <control type="group">
-                            <visible>![Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                            <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image">
                                 <!--cdart image-->
                                 <right>50</right>
@@ -904,7 +899,7 @@
                             <posy>415</posy>
                             <width>661</width>
                             <height>371</height>
-                            <visible>Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)</visible>
+                            <visible>StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image">
                                 <texture border="15">diffuse/bgpanel.png</texture>
                                 <colordiffuse>black</colordiffuse>
