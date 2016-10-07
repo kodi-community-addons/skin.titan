@@ -4,6 +4,7 @@
     <include name="allViewIds">
         <views>10,50,51,52,501,502,503,504,505,53,54,55,506,56,57,58,59,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524</views>
         <menucontrol>9000</menucontrol>
+        <onunload condition="Skin.HasSetting(DetailsAutoTrailer) + !IsEmpty(Window(Home).Property(TrailerPlaying)) + !StringCompare(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunload>
     </include>
 
     <include name="playlistViewId">
@@ -884,6 +885,7 @@
         [Control.IsVisible(504) + Skin.HasSetting(View504_DetailsShowFanart)] |
         [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)]]
         </visible>
+        <visible>![!IsEmpty(Window(Home).Property(TrailerPlaying)) + Skin.HasSetting(DetailsAutoTrailer)]</visible>
         <animation effect="slide" end="0,-8" time="0" condition="[Skin.HasSetting(DetailsLeftHidepanel) + !Control.IsVisible(516) + !Control.IsVisible(51) + !Control.IsVisible(504)] | [Skin.HasSetting(View516_HidePanel) + Control.IsVisible(516)] | [Skin.HasSetting(View51_HidePanel) + Control.IsVisible(51)] | [Skin.HasSetting(View504_HidePanel) + Control.IsVisible(504)]">Conditional</animation><posx>50</posx>
         <bottom>13%</bottom>
         <height>736</height>
@@ -1198,7 +1200,8 @@
         [Control.IsVisible(59) + Skin.HasSetting(View59_DetailsShowFanart)] |
         [Control.IsVisible(55) + Skin.HasSetting(View55_DetailsShowFanart)] |
         [Control.IsVisible(504) + Skin.HasSetting(View504_DetailsShowFanart)] |
-        [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)]
+        [Control.IsVisible(53) + Skin.HasSetting(View53_DetailsShowFanart)] | 
+        [!IsEmpty(Window(Home).Property(TrailerPlaying)) + Skin.HasSetting(DetailsAutoTrailer)]
         </visible>
 
         <posx>50</posx>
@@ -1267,8 +1270,10 @@
             <posy>8</posy>
             <width>609</width>
             <height>344</height>
-            <visible>VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)</visible>
-            <visible>[Window.IsActive(tvchannels) | Window.IsActive(tvrecordings) | Window.IsActive(radiochannels)]</visible>
+            <visible>
+                    [Window.IsActive(tvchannels) + VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)] | 
+                    [Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + Skin.HasSetting(DetailsAutoTrailer)]
+            </visible>
             <visible>!skin.hastheme(classic)</visible>
             <control type="image">
                 <texture>colors/color_black.png</texture>

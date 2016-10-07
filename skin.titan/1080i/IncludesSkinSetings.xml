@@ -180,7 +180,7 @@
                 <label>31561</label>
                 <onclick>Skin.ToggleSetting(OpenSubMenuOnClick)</onclick>
                 <selected>Skin.HasSetting(OpenSubMenuOnClick)</selected>
-                <visible>!Skin.String(HomeLayout, netflix)</visible>
+                <visible>!SubString(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!-- auto show widgets-->
             <control type="radiobutton" id="23013">
@@ -198,7 +198,7 @@
                 <onclick>Skin.ToggleSetting(LowerWidgets)</onclick>
                 <selected>Skin.HasSetting(LowerWidgets)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
-                <visible>[Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 1)] + Skin.HasSetting(AutoShowWidgets)</visible>
+                <visible>[Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2)] + Skin.HasSetting(AutoShowWidgets)</visible>
             </control>
 
             <!--enable auto show submenus-->
@@ -207,7 +207,7 @@
                 <label>31113</label>
                 <onclick>Skin.ToggleSetting(AutoShowSubmenu)</onclick>
                 <selected>Skin.HasSetting(AutoShowSubmenu)</selected>
-                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, netflix) + !Skin.String(HomeLayout, win10)</visible>
+                <visible>!Skin.String(HomeLayout, enhanced) + !SubString(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)</visible>
             </control>
             <!--open submenu inline in vertical home-->
             <control type="radiobutton" id="23515">
@@ -225,7 +225,7 @@
                 <label>31264</label>
                 <onclick>Skin.ToggleSetting(DisableAllWidgets)</onclick>
                 <selected>Skin.HasSetting(DisableAllWidgets)</selected>
-                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, netflix)</visible>
+                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, 3) + !SubString(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--disable all submenus-->
             <control type="radiobutton" id="23017">
@@ -233,7 +233,7 @@
                 <label>31265</label>
                 <onclick>Skin.ToggleSetting(DisableAllSubmenus)</onclick>
                 <selected>Skin.HasSetting(DisableAllSubmenus)</selected>
-                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, netflix)</visible>
+                <visible>!Skin.String(HomeLayout, enhanced) + !SubString(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--enable cicular navigation-->
             <control type="radiobutton" id="31619">
@@ -355,6 +355,14 @@
                 <label>31675</label>
                 <label2>$INFO[Skin.String(Widgets_DisplayTags.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=Widgets_DisplayTags,header=$LOCALIZE[31675])</onclick>
+                <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
+            </control>
+            <!-- prefer plot outline -->
+            <control type="radiobutton" id="31794">
+                <include>SkinSettings_Button</include>
+                <label>31794</label>
+                <onclick>Skin.ToggleSetting(WidgetsPreferPlotOutline)</onclick>
+                <selected>Skin.HasSetting(WidgetsPreferPlotOutline)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
             </control>
             <!-- do not right align widgets -->
@@ -1279,6 +1287,13 @@
                 <onclick>Skin.ToggleSetting(OSDShowInfoOnPause)</onclick>
                 <selected>Skin.HasSetting(OSDShowInfoOnPause)</selected>
             </control>
+            <control type="radiobutton" id="31795">
+                <include>SkinSettings_Button</include>
+                <label>31795</label>
+                <onclick>Skin.ToggleSetting(SeekPanelOnPause)</onclick>
+                <selected>Skin.HasSetting(SeekPanelOnPause)</selected>
+                <visible>!Skin.HasSetting(OSDShowInfoOnPause)</visible>
+            </control>
             <control type="button" id="31662">
                 <description>Default OSD button</description>
                 <include>SkinSettings_Button</include>
@@ -1778,7 +1793,7 @@
                 <param name="label" value="31595" />
                 <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)" />
                 <param name="action2" value="SetProperty(netflixmenu, active, Home)" />
-                <param name="visible" value="Skin.String(HomeLayout, netflix)" />
+                <param name="visible" value="SubString(Skin.String(HomeLayout), netflix)" />
             </include>
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="96008" />
@@ -2256,23 +2271,13 @@
                 <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
             </control>
             
-            <control type="radiobutton" id="17123">
+            <control type="button" id="31625">
                 <description>Studio Icons</description>
                 <include>SkinSettings_Button</include>
-                <label>$LOCALIZE[31625]</label>
-                <onclick condition="System.HasAddon(resource.images.studios.coloured)">Skin.ToggleSetting(PreferColorStudioLogos)</onclick>
-                <onclick>Skin.Reset(SkinHelper.StudioImagesPath)</onclick>
-                <onclick condition="!System.HasAddon(resource.images.studios.coloured)">RunPlugin(plugin://resource.images.studios.coloured)</onclick>
-                <selected>System.HasAddon(resource.images.studios.coloured) + Skin.HasSetting(PreferColorStudioLogos) + !Skin.String(SkinHelper.StudioImagesPath)</selected>
-            </control>
-            
-            <control type="radiobutton" id="17124">
-                <include>SkinSettings_Button</include>
-                <label>31510</label>
-                <onclick>Skin.Reset(PreferColorStudioLogos)</onclick>
-                <onclick condition="Skin.String(SkinHelper.StudioImagesPath)">Skin.Reset(SkinHelper.StudioImagesPath)</onclick>
-                <onclick condition="!Skin.String(SkinHelper.StudioImagesPath)">Skin.SetPath(SkinHelper.StudioImagesPath)</onclick>
-                <selected>Skin.String(SkinHelper.StudioImagesPath)</selected>
+                <label>31625</label>
+                <label2>$INFO[Skin.String(SkinHelper.StudioLogos.Name)]</label2>
+                <onclick condition="System.HasAddon(script.image.resource.select)">RunScript(script.image.resource.select,property=SkinHelper.StudioLogos&amp;type=resource.images.studios)</onclick>
+                <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
             </control>
             
             <control type="button" id="17125">
@@ -2537,21 +2542,21 @@
             <param name="id" value="31742" />
             <param name="label" value="$LOCALIZE[31742]" />
             <param name="skinsetting" value="MainMenuPanelColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver)" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10)" />
         </include>
         <!--homemenu unfocused text color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31743" />
             <param name="label" value="$LOCALIZE[31743]" />
             <param name="skinsetting" value="MainMenuTextColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver)" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10" />
         </include>
         <!--homemenu focused text color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31744" />
             <param name="label" value="$LOCALIZE[31744]" />
             <param name="skinsetting" value="MainMenuFocusTextColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver)" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10" />
         </include>
         <!--home button focus-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">

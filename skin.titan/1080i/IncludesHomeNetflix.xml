@@ -204,330 +204,335 @@
         </content>
         </control>
         
-        <!-- background image + overlay -->
         <control type="image">
             <width>100%</width>
             <height>100%</height>
             <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
-        </control>
-        <control type="image">
-            <fadetime>350</fadetime>
-            <texture background="true">$VAR[backgroundVar]</texture>
-            <aspectratio aligny="top">scale</aspectratio>
-            <animation effect="zoom" start="110" end="130" center="auto" time="12000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-            <animation effect="slide" start="-10,-10" end="10,10" time="8000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
-            <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
-        </control>
-        <control type="image">
-            <width>100%</width>
-            <height>100%</height>
-            <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
-            <animation effect="fade" start="100" end="90" delay="0" time="0"  condition="true">Conditional</animation>
-            <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
         </control>
         
-        <!-- overlay without big thumb -->
-        <control type="image">
-            <width>100%</width>
-            <height>100%</height>
-            <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
-            <animation effect="fade" start="100" end="70" delay="0" time="0"  condition="true">Conditional</animation>
-            <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
-        </control>
-        <control type="image">
-            <width>100%</width>
-            <height>100%</height>
-            <texture colordiffuse="$VAR[Netflix2_PanelColor]">special://skin/extras/bgoverlays/Side by Side.png</texture>
-            <animation effect="fade" start="100" end="95" delay="0" time="0"  condition="true">Conditional</animation>
-            <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
-        </control>
-            
-        <!-- spotlight section -->
-        <control type="group" id="3505">
-            <width>1920</width>
-            <height>450</height>
-            <visible>![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Window.IsActive(Home)]</visible>
-            
-            <!-- spotlight image -->
+        <!-- netflix content -->
+        <control type="group">
+            <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
+            <!-- background image + overlay -->
             <control type="image">
                 <fadetime>350</fadetime>
-                <width>1152</width>
-                <right>0</right>
-                <height>550</height>
-                <top>0</top>
-                <texture background="true" diffuse="special://skin/extras/bgoverlays/Right Corner.png">$VAR[backgroundVar]</texture>
-                <aspectratio scalediffuse="true" aligny="top">scale</aspectratio>
+                <texture background="true">$VAR[backgroundVar]</texture>
+                <aspectratio aligny="top">scale</aspectratio>
+                <animation effect="zoom" start="110" end="130" center="auto" time="12000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
+                <animation effect="slide" start="-10,-10" end="10,10" time="8000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
+                <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+            </control>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
+                <animation effect="fade" start="100" end="90" delay="0" time="0"  condition="true">Conditional</animation>
                 <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
             </control>
             
-            <!-- clearlogo -->
-            <control type="image" id="29475">
-                <height>120</height>
-                <width>300</width>
-                <left>50</left>
-                <top>20</top>
-                <aspectratio align="left" aligny="top">keep</aspectratio>
-                <texture background="true" fallback="colors/color_transparent.png">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+            <!-- overlay without big thumb -->
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Netflix2_PanelColor]">colors/color_white.png</texture>
+                <animation effect="fade" start="100" end="70" delay="0" time="0"  condition="true">Conditional</animation>
+                <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
             </control>
-            <!-- title fallback -->
-            <control type="textbox">
-                <height>120</height>
-                <width>800</width>
-                <left>50</left>
-                <top>20</top>
-                <font>Reg46</font>
-                <align>left</align>
-                <aligny>top</aligny>
-                <label>$VAR[HomeMenuWidgetInfoLabel]</label>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <visible>SubString(Control.GetLabel(29475),color_transparent) + Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
-            </control>
-            <control type="textbox">
-                <height>120</height>
-                <width>1800</width>
-                <left>50</left>
-                <top>20</top>
-                <font>Reg46</font>
-                <align>left</align>
-                <aligny>top</aligny>
-                <label>$VAR[HomeMenuWidgetInfoLabel]</label>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <visible>SubString(Control.GetLabel(29475),color_transparent) + !Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+            <control type="image">
+                <width>100%</width>
+                <height>100%</height>
+                <texture colordiffuse="$VAR[Netflix2_PanelColor]">special://skin/extras/bgoverlays/Side by Side.png</texture>
+                <animation effect="fade" start="100" end="95" delay="0" time="0"  condition="true">Conditional</animation>
+                <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
             </control>
                 
-            <!-- spotlight details -->
-            <control type="grouplist">
-                <width>1500</width>
-                <posx>55</posx>
-                <posy>130</posy>
-                <height>400</height>
-                <orientation>vertical</orientation>
+            <!-- spotlight section -->
+            <control type="group" id="3505">
+                <width>1920</width>
+                <height>450</height>
+                <visible>![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Window.IsActive(Home)]</visible>
                 
-                <!-- subtitle: tagline or episode name -->
-                <control type="label">
-                    <height>70</height>
-                    <width>800</width>
-                    <font>Reg36</font>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <label>$VAR[netflix2_SubTitle]</label>
+                <!-- spotlight image -->
+                <control type="image">
+                    <fadetime>350</fadetime>
+                    <width>1152</width>
+                    <right>0</right>
+                    <height>550</height>
+                    <top>0</top>
+                    <texture background="true" diffuse="special://skin/extras/bgoverlays/Right Corner.png">$VAR[backgroundVar]</texture>
+                    <aspectratio scalediffuse="true" aligny="top">scale</aspectratio>
                     <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
-                <control type="label">
-                    <height>70</height>
-                    <width>1000</width>
-                    <font>Reg36</font>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <label>$VAR[netflix2_SubTitle]</label>
-                    <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
-                </control>
                 
-                <!-- plot -->
+                <!-- clearlogo -->
+                <control type="image" id="29475">
+                    <height>120</height>
+                    <width>300</width>
+                    <left>50</left>
+                    <top>20</top>
+                    <aspectratio align="left" aligny="top">keep</aspectratio>
+                    <texture background="true" fallback="colors/color_transparent.png">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+                </control>
+                <!-- title fallback -->
                 <control type="textbox">
-                    <height>230</height>
+                    <height>120</height>
                     <width>800</width>
-                    <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                    <left>50</left>
+                    <top>20</top>
+                    <font>Reg46</font>
+                    <align>left</align>
+                    <aligny>top</aligny>
+                    <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <align>justify</align>
-                    <font>Reg28</font>
-                    <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    <visible>SubString(Control.GetLabel(29475),color_transparent) + Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
                 <control type="textbox">
-                    <height>230</height>
-                    <width>1000</width>
-                    <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                    <height>120</height>
+                    <width>1800</width>
+                    <left>50</left>
+                    <top>20</top>
+                    <font>Reg46</font>
+                    <align>left</align>
+                    <aligny>top</aligny>
+                    <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <align>justify</align>
-                    <font>Reg28</font>
-                    <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    <visible>SubString(Control.GetLabel(29475),color_transparent) + !Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                </control>
+                    
+                <!-- spotlight details -->
+                <control type="grouplist">
+                    <width>1500</width>
+                    <posx>55</posx>
+                    <posy>130</posy>
+                    <height>400</height>
+                    <orientation>vertical</orientation>
+                    
+                    <!-- subtitle: tagline or episode name -->
+                    <control type="label">
+                        <height>70</height>
+                        <width>800</width>
+                        <font>Reg36</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <label>$VAR[netflix2_SubTitle]</label>
+                        <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    </control>
+                    <control type="label">
+                        <height>70</height>
+                        <width>1000</width>
+                        <font>Reg36</font>
+                        <align>left</align>
+                        <aligny>center</aligny>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <label>$VAR[netflix2_SubTitle]</label>
+                        <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    </control>
+                    
+                    <!-- plot -->
+                    <control type="textbox">
+                        <height>230</height>
+                        <width>800</width>
+                        <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <align>justify</align>
+                        <font>Reg28</font>
+                        <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    </control>
+                    <control type="textbox">
+                        <height>230</height>
+                        <width>1000</width>
+                        <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                        <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                        <align>justify</align>
+                        <font>Reg28</font>
+                        <visible>!Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    </control>
+                    
+                </control>
+                
+                <!-- media flags -->
+                <control type="group">
+                    <posx>60</posx>
+                    <height>50</height>
+                    <top>490</top>
+                    <include>mediaflags</include>
+                </control>
+                <!-- rating -->
+                <control type="group">
+                    <right>0</right>
+                    <height>50</height>
+                    <top>490</top>
+                    <include condition="!Skin.HasSetting(NetflixHomeDisableRating)">AltRatingFooter</include>
                 </control>
                 
             </control>
             
-            <!-- media flags -->
-            <control type="group">
-                <posx>60</posx>
-                <height>50</height>
-                <top>490</top>
-                <include>mediaflags</include>
-            </control>
-            <!-- rating -->
-            <control type="group">
-                <right>0</right>
-                <height>50</height>
-                <top>490</top>
-                <include condition="!Skin.HasSetting(NetflixHomeDisableRating)">AltRatingFooter</include>
-            </control>
-            
-        </control>
-        
-        <!-- menu button -->
-        <control type="radiobutton" id="51">
-            <width>60</width>
-            <height>60</height>
-            <right>20</right>
-            <top>20</top>
-            <font>-</font>
-            <selected>Control.HasFocus(51)</selected>
-            <texturefocus>-</texturefocus>
-            <texturenofocus>-</texturenofocus>
-            <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/menu.png</textureradiofocus>
-            <textureradionofocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">common/menu.png</textureradionofocus>
-            <radiowidth>60</radiowidth>
-            <radioheight>60</radioheight>
-            <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
-            <onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
-            <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetFocus(300)</onclick>
-            <visible>Skin.HasSetting(EnableTouchSupport) + Window.IsActive(Home)</visible>
-            <ondown>510</ondown>
-        </control>
-        
-        <!-- menu button -->
-        <control type="radiobutton" id="52">
-            <width>60</width>
-            <height>60</height>
-            <right>20</right>
-            <top>20</top>
-            <font>-</font>
-            <selected>Control.HasFocus(52)</selected>
-            <texturefocus>-</texturefocus>
-            <texturenofocus>-</texturenofocus>
-            <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">touchcontrols/back.png</textureradiofocus>
-            <textureradionofocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">touchcontrols/back.png</textureradionofocus>
-            <radiowidth>60</radiowidth>
-            <radioheight>60</radioheight>
-            <onclick>Close</onclick>
-            <visible>Skin.HasSetting(EnableTouchSupport) + !Window.IsActive(Home)</visible>
-            <ondown>510</ondown>
-        </control>
-        
-		<!-- all widgets -->
-		<control type="grouplist" id="9000">
-			<posx>50</posx>
-            <include condition="[Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2)]">NetFlixHome2_AltHeight</include>
-			<bottom>0</bottom>
-            <height>530</height>
-			<width>1870</width>
-            <ondown>9000</ondown>
-            <onleft>300</onleft>
-            <onup>614</onup>
-			<pagecontrol>317</pagecontrol>
-            
-            <!-- ROW1 -->
-            <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="510" />
-                <param name="listitemid" value="0" />
-            </include>
-            <!-- ROW2 -->
-            <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="520" />
-                <param name="listitemid" value="1" />
-            </include>
-			<!-- ROW3 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="530" />
-                <param name="listitemid" value="2" />
-            </include>
-			
-			<!-- ROW4 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="540" />
-                <param name="listitemid" value="3" />
-            </include>
-			
-			<!-- ROW5 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="550" />
-                <param name="listitemid" value="4" />
-            </include>
-			
-            <!-- ROW6 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="560" />
-                <param name="listitemid" value="5" />
-            </include>
-			
-            <!-- ROW7 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="570" />
-                <param name="listitemid" value="6" />
-            </include>
-			
-            <!-- ROW8 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="580" />
-                <param name="listitemid" value="7" />
-            </include>
-			
-            <!-- ROW9 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="590" />
-                <param name="listitemid" value="8" />
-            </include>
-			
-            <!-- ROW10 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="600" />
-                <param name="listitemid" value="9" />
-            </include>
-            
-            <!-- ROW11 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="610" />
-                <param name="listitemid" value="10" />
-            </include>
-            
-            <!-- ROW12 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="611" />
-                <param name="listitemid" value="11" />
-            </include>
-            
-            <!-- ROW13 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="612" />
-                <param name="listitemid" value="12" />
-            </include>
-            
-            <!-- ROW14 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="613" />
-                <param name="listitemid" value="13" />
-            </include>
-            
-            <!-- ROW15 -->
-			<include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                <param name="widgetid" value="614" />
-                <param name="listitemid" value="14" />
-            </include>
-            
-            
-            <!-- space -->
-			<control type="button" id="605">
-				<width>1920</width>
-				<height>10</height>
+            <!-- menu button -->
+            <control type="radiobutton" id="51">
+                <width>60</width>
+                <height>60</height>
+                <right>20</right>
+                <top>20</top>
+                <font>-</font>
+                <selected>Control.HasFocus(51)</selected>
                 <texturefocus>-</texturefocus>
                 <texturenofocus>-</texturenofocus>
-                <onfocus condition="IntegerGreaterThan(Container(510).Numitems,0)">SetFocus(510)</onfocus>
+                <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">common/menu.png</textureradiofocus>
+                <textureradionofocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">common/menu.png</textureradionofocus>
+                <radiowidth>60</radiowidth>
+                <radioheight>60</radioheight>
+                <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+                <onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
+                <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetFocus(300)</onclick>
+                <visible>Skin.HasSetting(EnableTouchSupport) + Window.IsActive(Home)</visible>
+                <ondown>510</ondown>
+            </control>
+            
+            <!-- menu button -->
+            <control type="radiobutton" id="52">
+                <width>60</width>
+                <height>60</height>
+                <right>20</right>
+                <top>20</top>
+                <font>-</font>
+                <selected>Control.HasFocus(52)</selected>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+                <textureradiofocus colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">touchcontrols/back.png</textureradiofocus>
+                <textureradionofocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">touchcontrols/back.png</textureradionofocus>
+                <radiowidth>60</radiowidth>
+                <radioheight>60</radioheight>
+                <onclick>Close</onclick>
+                <visible>Skin.HasSetting(EnableTouchSupport) + !Window.IsActive(Home)</visible>
+                <ondown>510</ondown>
+            </control>
+            
+            <!-- all widgets -->
+            <control type="grouplist" id="9000">
+                <posx>50</posx>
+                <include condition="[Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2)]">NetFlixHome2_AltHeight</include>
+                <bottom>0</bottom>
+                <height>530</height>
+                <width>1870</width>
+                <ondown>9000</ondown>
                 <onleft>300</onleft>
-			</control>
+                <onup>614</onup>
+                <pagecontrol>317</pagecontrol>
+                
+                <!-- ROW1 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="510" />
+                    <param name="listitemid" value="0" />
+                </include>
+                <!-- ROW2 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="520" />
+                    <param name="listitemid" value="1" />
+                </include>
+                <!-- ROW3 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="530" />
+                    <param name="listitemid" value="2" />
+                </include>
+                
+                <!-- ROW4 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="540" />
+                    <param name="listitemid" value="3" />
+                </include>
+                
+                <!-- ROW5 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="550" />
+                    <param name="listitemid" value="4" />
+                </include>
+                
+                <!-- ROW6 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="560" />
+                    <param name="listitemid" value="5" />
+                </include>
+                
+                <!-- ROW7 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="570" />
+                    <param name="listitemid" value="6" />
+                </include>
+                
+                <!-- ROW8 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="580" />
+                    <param name="listitemid" value="7" />
+                </include>
+                
+                <!-- ROW9 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="590" />
+                    <param name="listitemid" value="8" />
+                </include>
+                
+                <!-- ROW10 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="600" />
+                    <param name="listitemid" value="9" />
+                </include>
+                
+                <!-- ROW11 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="610" />
+                    <param name="listitemid" value="10" />
+                </include>
+                
+                <!-- ROW12 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="611" />
+                    <param name="listitemid" value="11" />
+                </include>
+                
+                <!-- ROW13 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="612" />
+                    <param name="listitemid" value="12" />
+                </include>
+                
+                <!-- ROW14 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="613" />
+                    <param name="listitemid" value="13" />
+                </include>
+                
+                <!-- ROW15 -->
+                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
+                    <param name="widgetid" value="614" />
+                    <param name="listitemid" value="14" />
+                </include>
+                
+                
+                <!-- space -->
+                <control type="button" id="605">
+                    <width>1920</width>
+                    <height>10</height>
+                    <texturefocus>-</texturefocus>
+                    <texturenofocus>-</texturenofocus>
+                    <onfocus condition="IntegerGreaterThan(Container(510).Numitems,0)">SetFocus(510)</onfocus>
+                    <onleft>300</onleft>
+                </control>
 
 
-		</control>
-		
-		<control type="scrollbar" id="317"> 
-			<left>0</left>
-			<top>450</top>
-            <bottom>0</bottom>
-			<onleft>300</onleft>
-            <onright>9000</onright>
-			<showonepage>false</showonepage>
-			<visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
-		</control>
-		
+            </control>
+            
+            <control type="scrollbar" id="317"> 
+                <left>0</left>
+                <top>450</top>
+                <bottom>0</bottom>
+                <onleft>300</onleft>
+                <onright>9000</onright>
+                <showonepage>false</showonepage>
+                <visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
+            </control>
+            
+        </control>    
 		<!--Side Menu-->
         <include>SideBladeMainMenu</include>
         
