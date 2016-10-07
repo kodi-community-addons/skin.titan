@@ -18,7 +18,7 @@
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onfocus>
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onfocus>
-            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)] + SubString(Skin.String(videoinfo_traileraction),auto)">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)])</onfocus>
+            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)] + SubString(Skin.String(videoinfo_traileraction),auto) + [StringCompare(Window(Home).Property(contenttype),movies) | StringCompare(Window(Home).Property(contenttype),tvshows)]">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)])</onfocus>
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)">close</onfocus>
             <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)]">SetFocus(8000)</onfocus>
         </control>
@@ -201,7 +201,7 @@
                             <onclick condition="System.HasAddon(plugin.video.youtube) + !Skin.String(videoinfo_traileraction,fullscreen)">RunScript(script.skin.helper.service,action=searchyoutube,windowed=true,title=$INFO[ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onclick>
                             <onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
 							<visible>Skin.HasSetting(videoinfo_button_youtubetrailer)</visible>
-                            <visible>[StringCompare(ListItem.DBTYPE,movie) | StringCompare(ListItem.Property(DBTYPE),movie) | StringCompare(ListItem.DBTYPE,tvshow) | StringCompare(ListItem.Property(DBTYPE),tvshow) | Container.Content(movies) | Container.Content(tvshows)] + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
+                            <visible>[StringCompare(Window(Home).Property(contenttype),movies) | StringCompare(Window(Home).Property(contenttype),tvshows)] + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
                         
 						<control type="button" id="114">
@@ -295,6 +295,7 @@
                             <label>$LOCALIZE[38018]: $INFO[ListItem.UserRating]</label>
                             <visible>!Skin.HasSetting(KioskMode.Enabled)</visible>
                             <visible>Skin.HasSetting(videoinfo_button_myrating)</visible>
+                            <visible>Control.IsEnabled(7)</visible>
                         </control>
                         
 						<control type="button" id="102">
