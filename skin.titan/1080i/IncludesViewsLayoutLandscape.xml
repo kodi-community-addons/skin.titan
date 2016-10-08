@@ -5,8 +5,6 @@
     <include name="ThumbsViewLayout">
         <control type="image">
             <!--Panel Normal-->
-            <posx>0</posx>
-            <posy>0</posy>
             <texture background="true">home/home_matte2.png</texture>
             <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
             <include condition="Skin.String(thumbsborder_unfocused, 0)">thumbborder_0</include>
@@ -20,8 +18,6 @@
     <include name="ThumbsViewLayoutFocus">
         <control type="image">
             <!--Panel Normal-->
-            <posx>0</posx>
-            <posy>0</posy>
             <texture background="true">home/home_matte2.png</texture>
             <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
             <include condition="Skin.String(thumbsborder_focused, 2)">thumbborder_2</include>
@@ -42,8 +38,6 @@
     <include name="ThumbsViewItemLayout">
         <control type="image">
             <!--thumb image-->
-            <posx>0</posx>
-            <posy>0</posy>
             <bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[LandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">stretch</aspectratio>
@@ -51,12 +45,10 @@
         </control>
         <control type="image">
             <!--fallback logo image-->
-            <posx>0</posx>
-            <posy>0</posy>
             <bordersize>30</bordersize>
             <texture background="true">$VAR[ClearLogoFallback]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + !StringCompare(ListItem.DBTYPE,episode) + !StringCompare(ListItem.Property(DBTYPE),episode) + !Container.Content(episodes)</visible>
+            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + !StringCompare(ListItem.DBTYPE,episode) + !StringCompare(ListItem.Property(DBTYPE),episode) + !Container.Content(episodes) + !StringCompare(ListItem.DBTYPE,season) + !StringCompare(ListItem.Property(DBTYPE),season)</visible>
         </control>
         <include condition="!Window.IsActive(Home)">ThumbsTagOverlay</include>
         <control type="group">
@@ -184,14 +176,15 @@
             <include condition="!Window.IsActive(Home)">LandscapeTagOverlayVisibility</include>
             <colordiffuse>$INFO[Skin.String(TagOverlaysPanelColor)]</colordiffuse>
         </control>
-        <control type="label">
+        <control type="textbox">
             <!--Label-->
-            <left>5%</left>
-            <bottom>5%</bottom>
-            <width>90%</width>
+            <left>8</left>
+            <right>8</right>
+            <bottom>8</bottom>
             <height>60</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
             <align>left</align>
+            <aligny>center</aligny>
             <label>$VAR[ThumbListDetails]</label>
             <font>Reg20</font>
             <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
@@ -206,14 +199,15 @@
             <include condition="!Window.IsActive(Home)">LandscapeTagOverlayVisibility</include>
             <colordiffuse>$INFO[Skin.String(TagOverlaysPanelColor)]</colordiffuse>
         </control>
-        <control type="label">
+        <control type="textbox">
             <!--Label-->
-            <left>5%</left>
-            <bottom>2%</bottom>
-            <width>90%</width>
-            <height>60</height>
+            <left>8</left>
+            <right>8</right>
+            <bottom>8</bottom>
+            <height>33%</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
             <align>left</align>
+            <aligny>center</aligny>
             <label>$VAR[ThumbListDetails]</label>
             <font>Reg16</font>
             <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
@@ -228,21 +222,47 @@
             <include condition="!Window.IsActive(Home)">LandscapeTagOverlayVisibility</include>
             <colordiffuse>$INFO[Skin.String(TagOverlaysPanelColor)]</colordiffuse>
         </control>
-
-        <control type="label">
-            <!--Label with title-->
+        <control type="textbox">
+            <!--Label-->
+            <left>8</left>
+            <right>8</right>
             <bottom>8</bottom>
-			<height>33%</height>
-			<left>3%</left>
-			<width>94%</width>
-			<font>Reg38</font>
+            <height>33%</height>
             <include condition="Skin.HasSetting(ThumbsLabelAlignmentCenter)">aligncenter</include>
             <align>left</align>
             <aligny>center</aligny>
             <label>$VAR[ThumbListDetails]</label>
-			<textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
+            <font>Reg38</font>
+            <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
             <include condition="!Window.IsActive(Home)">LandscapeTagOverlayVisibility</include>
         </control>
     </include>
 
+    <variable name="LandscapeImage">
+        <value condition="Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(Container.FolderPath, pvr://) + !StringCompare(ListItem.Label,..)">http://localhost:52307/getpvrthumb&amp;title=$VAR[ListTitlePVR]&amp;channel=$INFO[ListItem.ChannelName]&amp;type=landscape,fanart,thumb&amp;fallback=$INFO[ListItem.Thumb]</value>
+		<value condition="!IsEmpty(ListItem.Thumb) + [StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] + ![Window.IsActive(home) + Skin.HasSetting(PreferTvShowThumbWidget)]">$INFO[ListItem.Thumb]</value>
+        <value condition="!IsEmpty(ListItem.Thumb) + [SubString(ListItem.Path,youtube) | SubString(ListItem.Path,botchamania)]">$INFO[ListItem.Thumb]</value>
+        <value condition="Skin.HasSetting(PreferClearArtOverLandscape) + !IsEmpty(ListItem.Art(clearart)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(clearart)]</value>
+        <value condition="Skin.HasSetting(PreferClearArtOverLandscape) + !IsEmpty(ListItem.Art(tvshow.clearart)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(tvshow.clearart)]</value>
+        <value condition="!IsEmpty(ListItem.Art(season.landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(season.landscape)]</value>
+        <value condition="!IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(landscape)]</value>
+        <value condition="!IsEmpty(ListItem.Art(tvshow.landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(tvshow.landscape)]</value>
+        <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="!IsEmpty(ListItem.Property(landscape))">$INFO[ListItem.Property(landscape)]</value>
+		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
+		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
+        <value condition="[Container.Content(genres) | StringCompare(ListItem.DBTYPE,genre)] + Window.IsActive(videos)">$VAR[MovieGenreIconVar]</value>
+        <value condition="[Container.Content(genres) | StringCompare(ListItem.DBTYPE,genre)] + Window.IsActive(music)">$VAR[MusicGenreIconVar]</value>
+		<value condition="Window.IsActive(tvrecordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Thumb]</value>
+		<value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
+		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
+		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/DefaultActorPoster.png</value>
+		<value condition="Container.Content(artists) + IsEmpty(ListItem.Thumb)">special://skin/extras/defaulticonswide/defaultartist.png</value>
+        <value condition="Container.Content(years)">special://skin/extras/defaulticonswide/defaultyear.png</value>
+		<value condition="Container.Content(countries)">special://skin/extras/defaulticonswide/DefaultCountry.png</value>
+		<value condition="Container.Content(tags)">special://skin/extras/defaulticonswide/DefaultTags.png</value>
+        <value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+    </variable>
+    
 </includes>
