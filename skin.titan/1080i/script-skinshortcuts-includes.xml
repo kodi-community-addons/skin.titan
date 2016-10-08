@@ -4,7 +4,7 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<label>$ADDON[script.skinshortcuts 32022]</label>
-			<label2>Custom item</label2>
+			<label2>Live TV</label2>
 			<icon>special://skin/extras/hometiles/livetv.png</icon>
 			<thumb>$INFO[Window(Home).Property(SkinHelper.PvrBackground)]</thumb>
 			<property name="labelID">livetv</property>
@@ -16,10 +16,10 @@
 			<property name="widgetTarget">pvr</property>
 			<property name="background">$INFO[Window(Home).Property(SkinHelper.PvrBackground)]</property>
 			<property name="backgroundName">571</property>
-			<visible>PVR.HasTVChannels</visible>
-			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]">PlayPvrTV</onclick>
-			<property name="path">PlayPvrTV</property>
-			<property name="list">PlayPvrTV</property>
+			<visible>System.HasPVRAddon</visible>
+			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]">ActivateWindow(TVGuide)</onclick>
+			<property name="path">ActivateWindow(TVGuide)</property>
+			<property name="list">TVGuide</property>
 			<onclick condition="[Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0)] | [SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]">SetFocus(4444,0)</onclick>
 			<visible>StringCompare(System.ProfileName,Master user)</visible>
 			<property name="submenuVisibility">livetv</property>
@@ -28,25 +28,6 @@
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<label>$ADDON[script.skinshortcuts 32066]</label>
-			<label2>Live TV</label2>
-			<icon>DefaultTVShows.png</icon>
-			<thumb />
-			<property name="labelID">32066</property>
-			<property name="defaultID">32066</property>
-			<property name="translatedPath">PlayPvrTV</property>
-			<visible>PVR.HasTVChannels</visible>
-			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]">PlayPvrTV</onclick>
-			<property name="path">PlayPvrTV</property>
-			<property name="list">PlayPvrTV</property>
-			<onclick condition="[Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0)] | [SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]">SetFocus(4444,0)</onclick>
-			<visible>StringCompare(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">num-32066</property>
-			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">False</property>
-		</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
 			<label>$LOCALIZE[342]</label>
 			<label2>Movies</label2>
 			<icon>special://skin/extras/hometiles/titan.png</icon>
@@ -80,8 +61,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 		</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2>TV shows</label2>
 			<icon>special://skin/extras/hometiles/titan.png</icon>
@@ -100,11 +81,16 @@
 			<property name="widgetType.1">episodes</property>
 			<property name="widgetPath.1">plugin://script.skin.helper.service/?action=recentepisodes&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
 			<property name="widgetName.1">20387</property>
-			<property name="widget.99">randomtvshows</property>
+			<property name="widget.99">scriptwidgets</property>
 			<property name="widgetTarget.99">videos</property>
 			<property name="widgetType.99">tvshows</property>
-			<property name="widgetPath.99">plugin://script.skin.helper.service/?action=randomtvshows&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
-			<property name="widgetName.99">Spotlight</property>
+			<property name="widgetPath.99">plugin://script.skin.helper.service/?action=recommendedtvshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
+			<property name="widgetName.99">Recommended Tv Shows</property>
+			<property name="widget.2">scriptwidgets</property>
+			<property name="widgetName.2">Similar TV Shows</property>
+			<property name="widgetType.2">tvshows</property>
+			<property name="widgetTarget.2">videos</property>
+			<property name="widgetPath.2">plugin://script.skin.helper.service/?action=similarshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
 			<visible>Library.HasContent(TVShows)</visible>
 			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]">ActivateWindow(10025,videodb://tvshows/titles/,return)</onclick>
 			<property name="path">ActivateWindow(10025,videodb://tvshows/titles/,return)</property>
@@ -115,8 +101,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 		</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<label>$LOCALIZE[10005]</label>
 			<label2>Music</label2>
 			<icon>special://skin/extras/hometiles/music.png</icon>
@@ -145,8 +131,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 		</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2>Music videos</label2>
 			<icon>special://skin/extras/backgrounds/hover_my music.jpg</icon>
@@ -170,8 +156,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Weather</label2>
 			<icon>special://skin/extras/hometiles/weather.png</icon>
@@ -195,8 +181,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<label>$LOCALIZE[31062]</label>
 			<label2>youtube</label2>
 			<icon>special://skin/extras/hometiles/youtube.png</icon>
@@ -214,8 +200,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<label>$LOCALIZE[10002]</label>
 			<label2>Pictures</label2>
 			<icon>special://skin/extras/hometiles/pictures.png</icon>
@@ -234,8 +220,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<label>$LOCALIZE[10040]</label>
 			<label2>Add-on browser</label2>
 			<icon>special://skin/extras/hometiles/addons.png</icon>
@@ -253,8 +239,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 		</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<label>$LOCALIZE[10006]</label>
 			<label2>Videos</label2>
 			<icon>special://skin/extras/hometiles/videos.png</icon>
@@ -272,8 +258,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<label>$LOCALIZE[10004]</label>
 			<label2>Settings</label2>
 			<icon>special://skin/extras/hometiles/settings.png</icon>
@@ -1120,12 +1106,6 @@
 			<property name="group">livetv</property>
 			<property name="isSubmenu">True</property>
 		</item>
-	</include>
-	<include name="skinshortcuts-group-num-32066">
-		<description>No items</description>
-	</include>
-	<include name="skinshortcuts-group-alt-num-32066">
-		<description>No items</description>
 	</include>
 	<include name="skinshortcuts-group-movies">
 		<item id="1">
@@ -2355,7 +2335,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
 			<visible>Skin.String(widgetvalue-livetv,0) | !Skin.String(widgetvalue-livetv)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2377,7 +2357,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
 			<visible>Skin.String(widgetvalue-movies,0) | !Skin.String(widgetvalue-movies)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2399,7 +2379,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<visible>Skin.String(widgetvalue-tvshows,0) | !Skin.String(widgetvalue-tvshows)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2421,7 +2401,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
 			<visible>Skin.String(widgetvalue-music,0) | !Skin.String(widgetvalue-music)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2443,7 +2423,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),musicvideos)</visible>
 			<visible>Skin.String(widgetvalue-musicvideos,0) | !Skin.String(widgetvalue-musicvideos)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2465,7 +2445,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),weather)</visible>
 			<visible>Skin.String(widgetvalue-weather,0) | !Skin.String(widgetvalue-weather)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2489,7 +2469,7 @@
 		<control id="510" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)</visible>
 			<visible>Skin.String(widgetvalue-settings,0) | !Skin.String(widgetvalue-settings)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="510" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -2868,7 +2848,7 @@
 			<height>897</height>
 			<width>1920</width>
 			<onleft>300</onleft>
-			<pagecontrol>6883</pagecontrol>
+			<pagecontrol>6882</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
 			<animation condition="StringCompare(Skin.AspectRatio,16:10)" effect="slide" end="0,120" start="0" time="0">Conditional</animation>
@@ -2991,7 +2971,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6883" type="scrollbar">
+		<control id="6882" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -3052,7 +3032,7 @@
 			<height>897</height>
 			<width>1920</width>
 			<onleft>300</onleft>
-			<pagecontrol>6884</pagecontrol>
+			<pagecontrol>6883</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
 			<animation condition="StringCompare(Skin.AspectRatio,16:10)" effect="slide" end="0,120" start="0" time="0">Conditional</animation>
@@ -3147,7 +3127,7 @@
 					<param name="multiprefix" value="" />
 					<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 				</include>
-				<content target="" />
+				<content target="videos">plugin://script.skin.helper.service/?action=similarshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 			</control>
 			<include condition="false" content="VerticalHomeAdvancedWidgetHeader" name="VerticalHomeAdvancedWidgetHeader">
 				<param name="id" value="539" />
@@ -3175,7 +3155,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6884" type="scrollbar">
+		<control id="6883" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -3236,7 +3216,7 @@
 			<height>897</height>
 			<width>1920</width>
 			<onleft>300</onleft>
-			<pagecontrol>6885</pagecontrol>
+			<pagecontrol>6884</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),music)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
 			<animation condition="StringCompare(Skin.AspectRatio,16:10)" effect="slide" end="0,120" start="0" time="0">Conditional</animation>
@@ -3359,7 +3339,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6885" type="scrollbar">
+		<control id="6884" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -3420,7 +3400,7 @@
 			<height>897</height>
 			<width>1920</width>
 			<onleft>300</onleft>
-			<pagecontrol>6886</pagecontrol>
+			<pagecontrol>6885</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),musicvideos)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
 			<animation condition="StringCompare(Skin.AspectRatio,16:10)" effect="slide" end="0,120" start="0" time="0">Conditional</animation>
@@ -3543,7 +3523,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6886" type="scrollbar">
+		<control id="6885" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),musicvideos)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -3604,7 +3584,7 @@
 			<height>897</height>
 			<width>1920</width>
 			<onleft>300</onleft>
-			<pagecontrol>6887</pagecontrol>
+			<pagecontrol>6886</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),weather)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
 			<animation condition="StringCompare(Skin.AspectRatio,16:10)" effect="slide" end="0,120" start="0" time="0">Conditional</animation>
@@ -3729,7 +3709,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6887" type="scrollbar">
+		<control id="6886" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),weather)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -3790,7 +3770,7 @@
 			<height>897</height>
 			<width>1920</width>
 			<onleft>300</onleft>
-			<pagecontrol>68812</pagecontrol>
+			<pagecontrol>68811</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
 			<animation condition="StringCompare(Skin.AspectRatio,16:10)" effect="slide" end="0,120" start="0" time="0">Conditional</animation>
@@ -3915,7 +3895,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="68812" type="scrollbar">
+		<control id="68811" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -4155,7 +4135,7 @@
 			<height>1070</height>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onleft>300</onleft>
-			<pagecontrol>6883</pagecontrol>
+			<pagecontrol>6882</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="Skin.String(HomeLayout,verticalbig)" effect="slide" end="25" start="0" time="0">Conditional</animation>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
@@ -4282,7 +4262,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6883" type="scrollbar">
+		<control id="6882" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -4336,7 +4316,7 @@
 			<height>1070</height>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onleft>300</onleft>
-			<pagecontrol>6884</pagecontrol>
+			<pagecontrol>6883</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="Skin.String(HomeLayout,verticalbig)" effect="slide" end="25" start="0" time="0">Conditional</animation>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
@@ -4435,7 +4415,7 @@
 					<param name="multiprefix" value="" />
 					<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 				</include>
-				<content target="" />
+				<content target="videos">plugin://script.skin.helper.service/?action=similarshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 			</control>
 			<include condition="false" content="VerticalHomeAdvancedWidgetHeader" name="VerticalHomeAdvancedWidgetHeader">
 				<param name="id" value="539" />
@@ -4463,7 +4443,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6884" type="scrollbar">
+		<control id="6883" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -4517,7 +4497,7 @@
 			<height>1070</height>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onleft>300</onleft>
-			<pagecontrol>6885</pagecontrol>
+			<pagecontrol>6884</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="Skin.String(HomeLayout,verticalbig)" effect="slide" end="25" start="0" time="0">Conditional</animation>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),music)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
@@ -4644,7 +4624,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6885" type="scrollbar">
+		<control id="6884" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -4698,7 +4678,7 @@
 			<height>1070</height>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onleft>300</onleft>
-			<pagecontrol>6886</pagecontrol>
+			<pagecontrol>6885</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="Skin.String(HomeLayout,verticalbig)" effect="slide" end="25" start="0" time="0">Conditional</animation>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),musicvideos)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
@@ -4825,7 +4805,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6886" type="scrollbar">
+		<control id="6885" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),musicvideos)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -4879,7 +4859,7 @@
 			<height>1070</height>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onleft>300</onleft>
-			<pagecontrol>6887</pagecontrol>
+			<pagecontrol>6886</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="Skin.String(HomeLayout,verticalbig)" effect="slide" end="25" start="0" time="0">Conditional</animation>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),weather)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
@@ -5008,7 +4988,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="6887" type="scrollbar">
+		<control id="6886" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),weather)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -5062,7 +5042,7 @@
 			<height>1070</height>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onleft>300</onleft>
-			<pagecontrol>68812</pagecontrol>
+			<pagecontrol>68811</pagecontrol>
 			<include>animation_window_open_close</include>
 			<animation condition="Skin.String(HomeLayout,verticalbig)" effect="slide" end="25" start="0" time="0">Conditional</animation>
 			<animation condition="!StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)" easing="inout" effect="fade" end="0" reversible="true" start="100" time="50">Conditional</animation>
@@ -5191,7 +5171,7 @@
 				<selected>Control.HasFocus(511)</selected>
 			</control>
 		</control>
-		<control id="68812" type="scrollbar">
+		<control id="68811" type="scrollbar">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),settings)</visible>
 			<right>5</right>
 			<bottom>0</bottom>
@@ -5219,7 +5199,7 @@
 		<control id="520" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
 			<visible>Skin.String(widgetvalue-movies,1)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="520" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -5241,7 +5221,7 @@
 		<control id="520" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<visible>Skin.String(widgetvalue-tvshows,1)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="520" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -5263,7 +5243,7 @@
 		<control id="520" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
 			<visible>Skin.String(widgetvalue-music,1)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomePanelLayout" name="EnhancedHomePanelLayout">
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
 				<param name="widgetid" value="520" />
 				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 			</include>
@@ -5286,7 +5266,7 @@
 		<control id="1508" type="panel">
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<include>EnhancedHomeSpotLightWidgetLayout</include>
-			<content target="videos">plugin://script.skin.helper.service/?action=randomtvshows&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+			<content target="videos">plugin://script.skin.helper.service/?action=recommendedtvshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
 		</control>
 	</include>
 	<include name="skinshortcuts-template-win10widget.2">
@@ -5337,12 +5317,52 @@
 		</control>
 	</include>
 	<include name="skinshortcuts-template-widget.2">
-		<description>This include was built automatically as the template didn't match any menu items</description>
+		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-widget.2-Master user</include>
 	</include>
-	<include name="skinshortcuts-template-widget.3">
-		<description>This include was built automatically as the template didn't match any menu items</description>
+	<include name="skinshortcuts-template-widget.2-Master user">
+		<control id="600" type="label">
+			<label>widget-2</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,2)</visible>
+		</control>
+		<control id="530" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,2)</visible>
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
+				<param name="widgetid" value="530" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
+				<param name="widgetid" value="530" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.service/?action=similarshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+		</control>
 	</include>
 	<include name="skinshortcuts-template-win10widget.3">
+		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-win10widget.3-Master user</include>
+	</include>
+	<include name="skinshortcuts-template-win10widget.3-Master user">
+		<control id="530" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<include>HomeWin10WidgetPosBottom</include>
+			<onleft>520</onleft>
+			<onright>SetFocus(540,0)</onright>
+			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.3)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
+			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.3))">SetFocus(4444,0)</onright>
+			<include>HomeWin10WidgetLayout</include>
+			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
+				<param name="widgetid" value="530" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.service/?action=similarshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+		</control>
+	</include>
+	<include name="skinshortcuts-template-widget.3">
 		<description>This include was built automatically as the template didn't match any menu items</description>
 	</include>
 	<include name="skinshortcuts-template-win10widget.4">
