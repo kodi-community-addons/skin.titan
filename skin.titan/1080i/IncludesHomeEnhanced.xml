@@ -50,7 +50,7 @@
         <include condition="!Skin.HasSetting(UseFixedHomeFocus)">EnhancedHomeMainMenuNormal</include>
         
 		<!-- widgets -->
-		<control type="group">
+		<control type="group" id="77777">
 			<posx>60</posx>
 			<bottom>310</bottom>
 			<width>1790</width>
@@ -486,8 +486,7 @@
         <content><include>skinshortcuts-mainmenu</include></content>
     </include>
     
-    
-    <include name="EnhancedHomePanelLayout">
+    <include name="EnhancedHomeWidgetLayout">
 		<posy>40</posy>
 		<posx>10</posx>
 		<width>350</width>
@@ -559,7 +558,8 @@
             </control>
 		</focusedlayout>
 	</include>
-	<include name="EnhancedHomeSpotLightWidgetLayout">
+	
+    <include name="EnhancedHomeSpotLightWidgetLayout">
 		<posy>40</posy>
 		<posx>0</posx>
 		<width>1790</width>
@@ -744,56 +744,37 @@
 		</control>
 
 	</include>
-	
+    
+    <variable name="EnhancedHomeSpotLightWidgetButtonText">
+		<value condition="IntegerGreaterThan(Window(Home).Property(SkinHelper.ListItem.Episode),9) + IntegerGreaterThan(Window(Home).Property(SkinHelper.ListItem.Season),9)">$INFO[Window(Home).Property(SkinHelper.ListItem.TvShowTitle)] $INFO[Window(Home).Property(SkinHelper.ListItem.Season),S]$INFO[Window(Home).Property(SkinHelper.ListItem.Episode),E]: $INFO[Window(Home).Property(SkinHelper.ListItem.Title)]</value>
+		<value condition="!IntegerGreaterThan(Window(Home).Property(SkinHelper..ListItem.Episode),9) + IntegerGreaterThan(Window(Home).Property(SkinHelper.ListItem.Season),9)">$INFO[Window(Home).Property(SkinHelper.ListItem.TvShowTitle)] $INFO[Window(Home).Property(SkinHelper.ListItem.Season),S]$INFO[Window(Home).Property(SkinHelper.ListItem.Episode),E0]: $INFO[Window(Home).Property(SkinHelper.ListItem.Title)]</value>
+		<value condition="IntegerGreaterThan(Window(Home).Property(SkinHelper.ListItem.Episode),9)">$INFO[Window(Home).Property(SkinHelper.ListItem.TvShowTitle)] $INFO[Window(Home).Property(SkinHelper.ListItem.Season),S0]$INFO[Window(Home).Property(SkinHelper.ListItem.Episode),E]: $INFO[Window(Home).Property(SkinHelper.ListItem.Title)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Season)) + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Episode))">$INFO[Window(Home).Property(SkinHelper.ListItem.TvShowTitle)] $INFO[Window(Home).Property(SkinHelper.ListItem.Season),S0]$INFO[Window(Home).Property(SkinHelper.ListItem.Episode),E0]: $INFO[Window(Home).Property(SkinHelper.ListItem.Title)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Title))">$INFO[Window(Home).Property(SkinHelper.ListItem.Title)]</value>
+        
+
+		<value condition="!IsEmpty(Container(300).ListItem.Property(widgetName.99))">$INFO[Container(300).ListItem.Property(widgetName.99)]</value>
+        <value>$LOCALIZE[31185]</value>
+	</variable>
     <variable name="EnhancedHomeSpotLightWidgetImage">
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.FanArt))">$INFO[Window(home).Property(SkinHelper.PVR.FanArt)]</value>
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Thumb))">$INFO[Window(home).Property(SkinHelper.PVR.Thumb)]</value>
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.Music.FanArt))">$INFO[Window(home).Property(SkinHelper.Music.FanArt)]</value>
+        
         <value condition="!IsEmpty(ListItem.ChannelName)">special://skin/extras/backgrounds/hover_my tv.jpg</value>
         <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
         <value condition="!IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
         <value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
         <value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-        <value condition="Control.IsVisible(510) + !IsEmpty(Container(510).ListItem.Art(fanart)) + !StringCompare(Container(300).ListItem.Property(widget),youtube)">$INFO[Container(510).ListItem.Art(fanart)]</value>
-        <value condition="Control.IsVisible(510) + !IsEmpty(Container(510).ListItem.Art(tvshow.fanart))">$INFO[Container(510).ListItem.Art(tvshow.fanart)]</value>
-        <value condition="Control.IsVisible(510) + !IsEmpty(Container(510).ListItem.Property(fanart))">$INFO[Container(510).ListItem.Property(fanart)]</value>
-        <value condition="Control.IsVisible(510) + !IsEmpty(Container(510).ListItem.Icon)">$INFO[Container(510).ListItem.Icon]</value>
-        <value condition="Control.IsVisible(520) + !IsEmpty(Container(520).ListItem.Art(fanart)) + !StringCompare(Container(300).ListItem.Property(widget),youtube)">$INFO[Container(520).ListItem.Art(fanart)]</value>
-        <value condition="Control.IsVisible(520) + !IsEmpty(Container(520).ListItem.Art(tvshow.fanart))">$INFO[Container(520).ListItem.Art(tvshow.fanart)]</value>
-        <value condition="Control.IsVisible(520) + !IsEmpty(Container(520).ListItem.Property(fanart))">$INFO[Container(520).ListItem.Property(fanart)]</value>
-        <value condition="Control.IsVisible(520) + !IsEmpty(Container(520).ListItem.Icon)">$INFO[Container(520).ListItem.Icon]</value>
-        <value condition="Control.IsVisible(530) + !IsEmpty(Container(530).ListItem.Art(fanart)) + !StringCompare(Container(300).ListItem.Property(widget),youtube)">$INFO[Container(530).ListItem.Art(fanart)]</value>
-        <value condition="Control.IsVisible(530) + !IsEmpty(Container(530).ListItem.Art(tvshow.fanart))">$INFO[Container(530).ListItem.Art(tvshow.fanart)]</value>
-        <value condition="Control.IsVisible(530) + !IsEmpty(Container(530).ListItem.Property(fanart))">$INFO[Container(530).ListItem.Property(fanart)]</value>
-        <value condition="Control.IsVisible(530) + !IsEmpty(Container(530).ListItem.Icon)">$INFO[Container(530).ListItem.Icon]</value>
-        <value condition="Control.IsVisible(540) + !IsEmpty(Container(540).ListItem.Art(fanart)) + !StringCompare(Container(300).ListItem.Property(widget),youtube)">$INFO[Container(540).ListItem.Art(fanart)]</value>
-        <value condition="Control.IsVisible(540) + !IsEmpty(Container(540).ListItem.Art(tvshow.fanart))">$INFO[Container(540).ListItem.Art(tvshow.fanart)]</value>
-        <value condition="Control.IsVisible(540) + !IsEmpty(Container(540).ListItem.Property(fanart))">$INFO[Container(540).ListItem.Property(fanart)]</value>
-        <value condition="Control.IsVisible(540) + !IsEmpty(Container(540).ListItem.Icon)">$INFO[Container(540).ListItem.Icon]</value>
+        
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.ChannelName))">special://skin/extras/backgrounds/hover_my tv.jpg</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art(fanart)))">$INFO[Window(Home).Property(SkinHelper.ListItem.Art(fanart))]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art(tvshow.fanart)))">$INFO[Window(Home).Property(SkinHelper.ListItem.Art(tvshow.fanart))]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Property(fanart)))">$INFO[Window(Home).Property(SkinHelper.ListItem.Property(fanart))]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Thumb))">$INFO[Window(Home).Property(SkinHelper.ListItem.Thumb)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Icon))">$INFO[Window(Home).Property(SkinHelper.ListItem.Icon)]</value>
     </variable>
-	<variable name="EnhancedHomeSpotLightWidgetButtonText">
-		<value condition="Control.HasFocus(510) + !IsEmpty(Container(510).ListItem.Season) + !IsEmpty(Container(510).ListItem.Episode) + IntegerGreaterThan(Container(510).ListItem.Episode,9) + IntegerGreaterThan(Container(510).ListItem.Season,9)">$INFO[Container(510).ListItem.TvShowTitle] $INFO[Container(510).ListItem.Season,S]$INFO[Container(510).ListItem.Episode,E]: $INFO[Container(510).ListItem.Title]</value>
-		<value condition="Control.HasFocus(510) + !IsEmpty(Container(510).ListItem.Season) + !IsEmpty(Container(510).ListItem.Episode) + !IntegerGreaterThan(Container(510).ListItem.Episode,9) + IntegerGreaterThan(Container(510).ListItem.Season,9)">$INFO[Container(510).ListItem.TvShowTitle] $INFO[Container(510).ListItem.Season,S]$INFO[Container(510).ListItem.Episode,E0]: $INFO[Container(510).ListItem.Title]</value>
-		<value condition="Control.HasFocus(510) + !IsEmpty(Container(510).ListItem.Season) + !IsEmpty(Container(510).ListItem.Episode) + IntegerGreaterThan(Container(510).ListItem.Episode,9)">$INFO[Container(510).ListItem.TvShowTitle] $INFO[Container(510).ListItem.Season,S0]$INFO[Container(510).ListItem.Episode,E]: $INFO[Container(510).ListItem.Title]</value>
-		<value condition="Control.HasFocus(510) + !IsEmpty(Container(510).ListItem.Season) + !IsEmpty(Container(510).ListItem.Episode) + !IntegerGreaterThan(Container(510).ListItem.Episode,9)">$INFO[Container(510).ListItem.TvShowTitle] $INFO[Container(510).ListItem.Season,S0]$INFO[Container(510).ListItem.Episode,E0]: $INFO[Container(510).ListItem.Title]</value>
-		<value condition="Control.HasFocus(510)">$INFO[Container(510).ListItem.Title]</value>
-        <value condition="Control.HasFocus(520) + !IsEmpty(Container(520).ListItem.Season) + !IsEmpty(Container(520).ListItem.Episode) + IntegerGreaterThan(Container(520).ListItem.Episode,9) + IntegerGreaterThan(Container(520).ListItem.Season,9)">$INFO[Container(520).ListItem.TvShowTitle] $INFO[Container(520).ListItem.Season,S]$INFO[Container(520).ListItem.Episode,E]: $INFO[Container(520).ListItem.Title]</value>
-		<value condition="Control.HasFocus(520) + !IsEmpty(Container(520).ListItem.Season) + !IsEmpty(Container(520).ListItem.Episode) + !IntegerGreaterThan(Container(520).ListItem.Episode,9) + IntegerGreaterThan(Container(520).ListItem.Season,9)">$INFO[Container(520).ListItem.TvShowTitle] $INFO[Container(520).ListItem.Season,S]$INFO[Container(520).ListItem.Episode,E0]: $INFO[Container(520).ListItem.Title]</value>
-		<value condition="Control.HasFocus(520) + !IsEmpty(Container(520).ListItem.Season) + !IsEmpty(Container(520).ListItem.Episode) + IntegerGreaterThan(Container(520).ListItem.Episode,9)">$INFO[Container(520).ListItem.TvShowTitle] $INFO[Container(520).ListItem.Season,S0]$INFO[Container(520).ListItem.Episode,E]: $INFO[Container(520).ListItem.Title]</value>
-		<value condition="Control.HasFocus(520) + !IsEmpty(Container(520).ListItem.Season) + !IsEmpty(Container(520).ListItem.Episode) + !IntegerGreaterThan(Container(520).ListItem.Episode,9)">$INFO[Container(520).ListItem.TvShowTitle] $INFO[Container(520).ListItem.Season,S0]$INFO[Container(520).ListItem.Episode,E0]: $INFO[Container(520).ListItem.Title]</value>
-		<value condition="Control.HasFocus(520)">$INFO[Container(520).ListItem.Title]</value>
-        <value condition="Control.HasFocus(530) + !IsEmpty(Container(530).ListItem.Season) + !IsEmpty(Container(530).ListItem.Episode) + IntegerGreaterThan(Container(530).ListItem.Episode,9) + IntegerGreaterThan(Container(530).ListItem.Season,9)">$INFO[Container(530).ListItem.TvShowTitle] $INFO[Container(530).ListItem.Season,S]$INFO[Container(530).ListItem.Episode,E]: $INFO[Container(530).ListItem.Title]</value>
-		<value condition="Control.HasFocus(530) + !IsEmpty(Container(530).ListItem.Season) + !IsEmpty(Container(530).ListItem.Episode) + !IntegerGreaterThan(Container(530).ListItem.Episode,9) + IntegerGreaterThan(Container(530).ListItem.Season,9)">$INFO[Container(530).ListItem.TvShowTitle] $INFO[Container(530).ListItem.Season,S]$INFO[Container(530).ListItem.Episode,E0]: $INFO[Container(530).ListItem.Title]</value>
-		<value condition="Control.HasFocus(530) + !IsEmpty(Container(530).ListItem.Season) + !IsEmpty(Container(530).ListItem.Episode) + IntegerGreaterThan(Container(530).ListItem.Episode,9)">$INFO[Container(530).ListItem.TvShowTitle] $INFO[Container(530).ListItem.Season,S0]$INFO[Container(530).ListItem.Episode,E]: $INFO[Container(530).ListItem.Title]</value>
-		<value condition="Control.HasFocus(530) + !IsEmpty(Container(530).ListItem.Season) + !IsEmpty(Container(530).ListItem.Episode) + !IntegerGreaterThan(Container(530).ListItem.Episode,9)">$INFO[Container(530).ListItem.TvShowTitle] $INFO[Container(530).ListItem.Season,S0]$INFO[Container(530).ListItem.Episode,E0]: $INFO[Container(530).ListItem.Title]</value>
-		<value condition="Control.HasFocus(530)">$INFO[Container(530).ListItem.Title]</value>
-        <value condition="Control.HasFocus(540) + !IsEmpty(Container(540).ListItem.Season) + !IsEmpty(Container(540).ListItem.Episode) + IntegerGreaterThan(Container(540).ListItem.Episode,9) + IntegerGreaterThan(Container(540).ListItem.Season,9)">$INFO[Container(540).ListItem.TvShowTitle] $INFO[Container(540).ListItem.Season,S]$INFO[Container(540).ListItem.Episode,E]: $INFO[Container(540).ListItem.Title]</value>
-		<value condition="Control.HasFocus(540) + !IsEmpty(Container(540).ListItem.Season) + !IsEmpty(Container(540).ListItem.Episode) + !IntegerGreaterThan(Container(540).ListItem.Episode,9) + IntegerGreaterThan(Container(540).ListItem.Season,9)">$INFO[Container(540).ListItem.TvShowTitle] $INFO[Container(540).ListItem.Season,S]$INFO[Container(540).ListItem.Episode,E0]: $INFO[Container(540).ListItem.Title]</value>
-		<value condition="Control.HasFocus(540) + !IsEmpty(Container(540).ListItem.Season) + !IsEmpty(Container(540).ListItem.Episode) + IntegerGreaterThan(Container(540).ListItem.Episode,9)">$INFO[Container(540).ListItem.TvShowTitle] $INFO[Container(540).ListItem.Season,S0]$INFO[Container(540).ListItem.Episode,E]: $INFO[Container(540).ListItem.Title]</value>
-		<value condition="Control.HasFocus(540) + !IsEmpty(Container(540).ListItem.Season) + !IsEmpty(Container(540).ListItem.Episode) + !IntegerGreaterThan(Container(540).ListItem.Episode,9)">$INFO[Container(540).ListItem.TvShowTitle] $INFO[Container(540).ListItem.Season,S0]$INFO[Container(540).ListItem.Episode,E0]: $INFO[Container(540).ListItem.Title]</value>
-		<value condition="Control.HasFocus(540)">$INFO[Container(540).ListItem.Title]</value>
-		<value condition="!IsEmpty(Container(300).ListItem.Property(widgetName.99))">$INFO[Container(300).ListItem.Property(widgetName.99)]</value>
-        <value>$LOCALIZE[31185]</value>
-	</variable>
+	
     <variable name="EnhancedHomeButtonUpAction">
 		<value condition="Control.IsVisible(4445)">SetFocus(4445)</value>
         <value condition="!IntegerGreaterThan(Container(4444).NumItems,0) + !IsEmpty(Container(300).ListItem.Property(widget.99))">SetFocus(1508)</value>
