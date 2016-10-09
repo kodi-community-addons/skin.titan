@@ -4,9 +4,8 @@
     
     <onload>AlarmClock(setfocus,SetFocus(9005),00:01,silent)</onload>
     <onload>ClearProperty(AdditionalInfo)</onload>
-	<onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">PlayerControl(Stop)</onunload>
+	<onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying)) + !StringCompare(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunload>
 	<onunload>ClearProperty(AdditionalInfo)</onunload>
-	<onunload>ClearProperty(TrailerPlaying,Home)</onunload>
     <onunload>ClearProperty(filename_formatted,Home)</onunload>
     <controls>
         <!--fake list used as container -->
@@ -23,9 +22,7 @@
         <control type="button" id="9005">
             <visible allowhiddenfocus="true">false</visible>
             <onfocus>RunScript(script.skin.helper.service,action=GETFILENAME,output=filename_formatted)</onfocus>
-            <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + !IsEmpty(Container(999).ListItem.Trailer) + !Player.HasMedia">PlayMedia($ESCINFO[Container(999).ListItem.Trailer],1)</onfocus>
-            <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + IsEmpty(Container(999).ListItem.Trailer) + !Player.HasMedia + [StringCompare(Container(999).ListItem.Property(type),movie) | StringCompare(Container(999).ListItem.Property(type),tvshow)]">RunScript(script.skin.helper.service,action=searchyoutube,windowed=true,autoplay=true,title=$INFO[Container(999).ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onfocus>
-            <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + !IsEmpty(Container(999).ListItem.Trailer) + !Player.HasMedia">SetProperty(TrailerPlaying,Playing,Home)</onfocus>
+            <onfocus condition="SubString(Skin.String(videoinfo_traileraction),auto) + [StringCompare(Window(Home).Property(contenttype),movies) | StringCompare(Window(Home).Property(contenttype),tvshows)]">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)],YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)],WIDGETCONTAINER=999)</onfocus>
             <onfocus>SetFocus(9000)</onfocus>
         </control>
     
@@ -191,49 +188,22 @@
                             <visible>Skin.HasSetting(videoinfo_button_play)</visible>
 						</control>
                         
-                        <control type="button" id="244">
-							<!--Go Fullscreen-->
-							<label>244</label>
-							<width>285</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<visible>Player.HasVideo</visible>
-                            <onclick>Close</onclick>
-                            <onclick>Close</onclick>
-                            <onclick>ClearProperty(TrailerPlaying,Home)</onclick>
-                            <onclick>FullScreen</onclick>
-						</control>
-						
-						<control type="button" id="6">
-							<!-- Local Trailer-->
+                        <control type="togglebutton" id="103">
+							<!-- Trailer-->
 							<width>285</width>
 							<height>60</height>
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
 							<label>20410</label>
-                            <onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">Close</onclick>
-                            <onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">Close</onclick>
-                            <onclick condition="Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[Container(999).ListItem.Trailer])</onclick>
-                            <onclick condition="!Skin.String(videoinfo_traileraction,fullscreen)">PlayMedia($ESCINFO[Container(999).ListItem.Trailer],1)</onclick>
-                            <onclick condition="!Skin.String(videoinfo_traileraction,fullscreen)">SetProperty(TrailerPlaying,Playing,Home)</onclick>
-							<visible>Skin.HasSetting(videoinfo_button_trailer)</visible>
-                            <visible>!IsEmpty(Container(999).ListItem.Trailer) + [StringCompare(Container(999).ListItem.Property(type),movie) | stringcompare(Container(999).ListItem.Property(ItemType),Movie)] + IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
+                            <altlabel>244</altlabel>
+                            <usealttexture>!IsEmpty(Window(Home).Property(TrailerPlaying))</usealttexture>
+                            <onclick condition="IsEmpty(Window(Home).Property(TrailerPlaying))">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)],YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)],WIDGETCONTAINER=999)</onclick>
+                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">SetProperty(TrailerPlaying,fullscreen,home)</onclick>
+                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">FullScreen</onclick>
+                            <visible>Skin.HasSetting(videoinfo_button_trailer)</visible>
+							<visible>!IsEmpty(Container(999).ListItem.Trailer) | Skin.String(AutoYoutubeTrailer,true) | !IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
-                        
-                        <control type="button" id="100">
-							<!--Search Trailer on Youtube-->
-							<width>285</width>
-							<height>60</height>
-							<align>center</align>
-							<textoffsetx>0</textoffsetx>
-							<label>YouTube $LOCALIZE[20410]</label>
-							<onclick condition="System.HasAddon(plugin.video.youtube) + Skin.String(videoinfo_traileraction,fullscreen)">RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[Container(999).ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onclick>
-                            <onclick condition="System.HasAddon(plugin.video.youtube) + !Skin.String(videoinfo_traileraction,fullscreen)">RunScript(script.skin.helper.service,action=searchyoutube,windowed=true,title=$INFO[Container(999).ListItem.Title] Trailer,header=YouTube $LOCALIZE[20410])</onclick>
-                            <onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
-							<visible>IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
-							<visible>StringCompare(Container(999).ListItem.Property(type),movie) | stringcompare(Container(999).ListItem.Property(ItemType),Movie)</visible>
-						</control>
+
                         <control type="button" id="114">
 							<!--Cast Button-->
 							<label>206</label>
@@ -246,7 +216,7 @@
 							<onclick>SetFocus(9001)</onclick>
                             <visible>IntegerGreaterThan(Container(998).NumItems,0)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),cast)</visible>
-                            <visible>Skin.HasSetting(videoinfo_button_youtubetrailer)</visible>
+                            <visible>Skin.HasSetting(videoinfo_button_youtubevideos)</visible>
 						</control>
                         <control type="button" id="31622">
 							<!--Similar Button-->
@@ -261,6 +231,18 @@
                             <visible>IntegerGreaterThan(Container(997).NumItems,0)</visible>
 							<visible>!StringCompare(Window.Property(AdditionalInfo),similar)</visible>
                             <visible>Skin.HasSetting(videoinfo_button_similar)</visible>
+						</control>
+                        <control type="button" id="100">
+							<!--Youtube Videos-->
+							<width>285</width>
+							<height>60</height>
+							<align>center</align>
+							<textoffsetx>0</textoffsetx>
+							<label>31797</label>
+							<onclick condition="System.HasAddon(plugin.video.youtube)">RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[Container(999).ListItem.Title] $INFO[Container(999).ListItem.Year],header=$LOCALIZE[31797])</onclick>
+                            <onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
+							<visible>Skin.HasSetting(videoinfo_button_youtubevideos)</visible>
+                            <visible>[StringCompare(Window(Home).Property(contenttype),movies) | StringCompare(Window(Home).Property(contenttype),tvshows)]</visible>
 						</control>
                         <control type="button" id="207207">
 							<!--Plot Button-->
@@ -374,7 +356,7 @@
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
-                                <visible>![!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                                <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                                 <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
 							</control>
                             <control type="textbox">
@@ -387,7 +369,7 @@
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
-                                <visible>!IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)</visible>
+                                <visible>StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                                 <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
 							</control>
                             <control type="textbox">
@@ -831,7 +813,7 @@
                         <!-- poster image video-->
                         <control type="group">
                             <visible>![StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
-                            <visible>![Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                            <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image">
                                 <!--cdart image-->
                                 <right>240</right>
@@ -858,7 +840,7 @@
                         <!-- poster image audio-->
                         <control type="group">
                             <visible>[StringCompare(Container(999).ListItem.Property(dbtype),album) | StringCompare(Container(999).ListItem.Property(dbtype),song)]</visible>
-                            <visible>![Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)]</visible>
+                            <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image" id="887755">
                                 <!--cdart image-->
                                 <right>100</right>
@@ -898,7 +880,7 @@
                             <posy>415</posy>
                             <width>661</width>
                             <height>371</height>
-                            <visible>Player.HasVideo + !IsEmpty(Window(Home).Property(TrailerPlaying)) + SubString(Skin.String(videoinfo_traileraction),windowed)</visible>
+                            <visible>StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image">
                                 <texture border="15">diffuse/bgpanel.png</texture>
                                 <colordiffuse>black</colordiffuse>

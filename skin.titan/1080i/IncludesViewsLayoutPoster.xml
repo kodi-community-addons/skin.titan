@@ -54,21 +54,7 @@
             <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumbList]</texture>
             <aspectratio scalediffuse="true" aligny="bottom" align="center">stretch</aspectratio>
             <bordersize>8</bordersize>
-            <visible>
-                [!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | StringCompare(ListItem.Label,..)] +
-                ![StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode) | StringCompare(ListItem.Property(DBTYPE),weather)] + 
-                ![StringCompare(ListItem.Property(DBTYPE),tvchannel) + IsEmpty(ListItem.Art(poster))] + !SubString(ListItem.FolderPath,pvr://)
-            </visible>
-        </control>
-        <control type="image">
-            <description>Fallback Poster thumb scaled aspect for episode thumbs</description>
-            <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumbList]</texture>
-            <aspectratio scalediffuse="false" aligny="top" align="center">scale</aspectratio>
-            <bordersize>8</bordersize>
-            <visible>
-                [StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] +
-                [!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster))]
-            </visible>
+            <visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster))</visible>
         </control>
         <control type="image">
             <description>Fallback Poster thumb keep aspect for all other</description>
@@ -361,7 +347,6 @@
 
     <variable name="PosterThumbList">
         <value condition="!IsEmpty(ListItem.Art(poster)) + ListItem.IsCollection + SubString(ListItem.Art(poster),emby)">$INFO[ListItem.Art(poster)]&amp;EnableImageEnhancers=false</value>
-        <value condition="[Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] + !IsEmpty(ListItem.Thumb) + !Skin.HasSetting(PreferTvShowThumbWidget)">$INFO[ListItem.Thumb]</value>
         <value condition="Skin.HasSetting(SkinHelper.EnableAnimatedPosters) + !StringCompare(ListItem.Art(animatedposter), ) + !Window.IsActive(Home)">$INFO[ListItem.Art(animatedposter)]</value>
 		<value condition="Container.Content(seasons) + SubString(ListItem.Label,*,left) + !IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
 		<value condition="Container.Content(seasons) + !IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
