@@ -577,13 +577,11 @@
                 <onclick>Skin.ToggleSetting(BackgroundAnimation)</onclick>
                 <selected>Skin.HasSetting(BackgroundAnimation)</selected>
             </control>
-            <!-- multi-image Background transition time-->
-            <control type="button" id="13019">
-                <include>SkinSettings_Button</include>
-                <label>31449</label>
-                <label2>$INFO[skin.string(SkinHelper.RandomFanartDelay.label)]</label2>
-                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=SkinHelper.RandomFanartDelay,header=$LOCALIZE[31449])</onclick>
-            </control>
+            <!-- skin helper backgrounds settings-->
+            <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
+                <param name="id" value="31531" />
+                <param name="addon" value="script.skin.helper.backgrounds" />
+            </include>
             <!--background randomize-->
             <control type="radiobutton" id="31747">
                 <include>SkinSettings_Button</include>
@@ -599,13 +597,13 @@
             <!--section background-->
             <control type="label" id="13321">
                 <include>SkinSettings_Header</include>
-                <label>$ADDON[script.skin.helper.service 32059]</label>
+                <label>$ADDON[script.skin.helper.backgrounds 32071]</label>
                 <textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
                 </control>
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="13325" />
-                <param name="label" value="$ADDON[script.skin.helper.service 32057]" />
-                <param name="action" value="RunScript(script.skin.helper.service,action=conditionalbackgrounds)" />
+                <param name="label" value="$ADDON[script.skin.helper.backgrounds 32072]" />
+                <param name="action" value="RunScript(script.skin.helper.backgrounds,action=conditionalbackgrounds)" />
                 <param name="visible" value="true" />
             </include>
         </control>
@@ -788,7 +786,6 @@
                 <onclick condition="!Skin.String(actorthumbslookup, true)">Skin.SetString(actorthumbslookup,true)</onclick>
                 <selected>Skin.String(actorthumbslookup,true)</selected>
                 <visible>!Skin.HasSetting(UseExtendedInfoDialog)</visible>
-                <visible>Skin.String(videoinfo_castaction,extendedinfo)</visible>
             </control>
             <!-- trailer behaviour in videoinfo -->
             <control type="button" id="31694">
@@ -1700,7 +1697,7 @@
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="31709" />
                 <param name="label" value="31709" />
-                <param name="action" value="Addon.OpenSettings(script.skin.helper.service)" />
+                <param name="action" value="Addon.OpenSettings(script.module.skin.helper.artutils)" />
                 <param name="visible" value="Skin.HasSetting(SkinHelper.EnablePVRThumbs)" />
             </include>
             <control type="radiobutton" id="13041">
@@ -2266,8 +2263,7 @@
                 <include>SkinSettings_Button</include>
                 <label>31623</label>
                 <label2>$INFO[Skin.String(WeatherIconPack.name)]</label2>
-                <onclick condition="System.HasAddon(script.image.resource.select)">RunScript(script.image.resource.select,property=WeatherIconPack&amp;type=resource.images.weathericons)</onclick>
-                <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
+                <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=WeatherIconPack,addontype=resource.images.weathericons)</onclick>
             </control>
             
             <control type="button" id="17122">
@@ -2275,8 +2271,7 @@
                 <include>SkinSettings_Button</include>
                 <label>31624</label>
                 <label2>$INFO[Skin.String(WeatherFanArtPack.name)]</label2>
-                <onclick condition="System.HasAddon(script.image.resource.select)">RunScript(script.image.resource.select,property=WeatherFanArtPack&amp;type=resource.images.weatherfanart)</onclick>
-                <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
+                <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=WeatherFanArtPack,addontype=resource.images.weatherfanart)</onclick>
             </control>
             
             <control type="button" id="31625">
@@ -2284,8 +2279,7 @@
                 <include>SkinSettings_Button</include>
                 <label>31625</label>
                 <label2>$INFO[Skin.String(SkinHelper.StudioLogos.Name)]</label2>
-                <onclick condition="System.HasAddon(script.image.resource.select)">RunScript(script.image.resource.select,property=SkinHelper.StudioLogos&amp;type=resource.images.studios)</onclick>
-                <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
+                <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=SkinHelper.StudioLogos,addontype=resource.images.studios)</onclick>
             </control>
             
             <control type="button" id="17125">
@@ -2293,8 +2287,7 @@
                 <include>SkinSettings_Button</include>
                 <label>31626</label>
                 <label2>$INFO[Skin.String(MovieGenreIconPack.name)]</label2>
-                <onclick condition="System.HasAddon(script.image.resource.select)">RunScript(script.image.resource.select,property=MovieGenreIconPack&amp;type=resource.images.moviegenreicons)</onclick>
-                <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
+                <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=MovieGenreIconPack,addontype=resource.images.moviegenreicons)</onclick>
             </control>
             
             <control type="button" id="17126">
@@ -2302,16 +2295,15 @@
                 <include>SkinSettings_Button</include>
                 <label>31627</label>
                 <label2>$INFO[Skin.String(MusicGenreIconPack.name)]</label2>
-                <onclick condition="System.HasAddon(script.image.resource.select)">RunScript(script.image.resource.select,property=MusicGenreIconPack&amp;type=resource.images.musicgenreicons)</onclick>
-                <onclick condition="!System.HasAddon(script.image.resource.select)">RunPlugin(plugin://script.image.resource.select)</onclick>
+                <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=MusicGenreIconPack,addontype=resource.images.musicgenreicons)</onclick>
             </control>
             
             <control type="button" id="31772">
                 <description>Movie Genre Fanart</description>
                 <include>SkinSettings_Button</include>
                 <label>31772</label>
-                <label2>$INFO[Skin.String(moviegenrefanartpath.label)]</label2>
-                <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=moviegenrefanartpath,header=$LOCALIZE[31772])</onclick>
+                <label2>$INFO[Skin.String(moviegenrefanart.name)]</label2>
+                <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=moviegenrefanart,addontype=resource.images.moviegenrefanart)</onclick>
             </control>
             
             <control type="radiobutton" id="5158">
@@ -2336,32 +2328,12 @@
                 <onclick>Skin.SetString(SkinHelper.ShowInfoAtPlaybackStart,0)</onclick>
                 <selected>Skin.HasSetting(LowPerformanceMode)</selected>
             </control>
-            <control type="radiobutton" id="8015">
-                <include>SkinSettings_Button</include>
-                <label>31303</label>
-                <onclick>Skin.ToggleSetting(EnableWeatherNotifications)</onclick>
-                <selected>Skin.HasSetting(EnableWeatherNotifications)</selected>
-            </control>
-            <control type="radiobutton" id="8014">
-                <include>SkinSettings_Button</include>
-                <label>31302</label>
-                <onclick condition="System.HasAddon(script.tv.show.next.aired)">Skin.ToggleSetting(EnableNextAiredNotifications)</onclick>
-                <onclick condition="!System.HasAddon(script.tv.show.next.aired)">RunPlugin(plugin://script.tv.show.next.aired)</onclick>
-                <selected>Skin.HasSetting(EnableNextAiredNotifications)</selected>
-            </control>
-            <control type="radiobutton" id="8018">
-                <description></description>
-                <include>SkinSettings_Button</include>
-                <label>31343</label>
-                <onclick condition="!Skin.String(SkinHelper.CustomPicturesBackgroundPath)">Skin.SetPath(SkinHelper.CustomPicturesBackgroundPath)</onclick>
-                <onclick condition="Skin.String(SkinHelper.CustomPicturesBackgroundPath)">Skin.Reset(SkinHelper.CustomPicturesBackgroundPath)</onclick>
-                <selected>Skin.String(SkinHelper.CustomPicturesBackgroundPath)</selected>
-            </control>
+
             <!-- skin helper settings -->
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="8019" />
                 <param name="label" value="31630" />
-                <param name="action" value="Addon.OpenSettings(script.skin.helper.service)" />
+                <param name="action" value="Addon.OpenSettings(script.module.skin.helper.artutils)" />
                 <param name="visible" value="true" />
             </include>
             <control type="radiobutton" id="8020">
@@ -2410,8 +2382,8 @@
                 <description>Enable skin helper artwork lookups for addons</description>
                 <include>SkinSettings_Button</include>
                 <label>31710</label>
-                <onclick>Skin.ToggleSetting(SkinHelper.EnableAddonsLookups)</onclick>
-                <selected>Skin.HasSetting(SkinHelper.EnableAddonsLookups)</selected>
+                <onclick>Skin.ToggleSetting(SkinHelper.EnableExtendedArt)</onclick>
+                <selected>Skin.HasSetting(SkinHelper.EnableExtendedArt)</selected>
             </control>
             <control type="radiobutton" id="31724">
                 <description>Do not display hour representation of the duration</description>
@@ -2565,14 +2537,14 @@
             <param name="id" value="31743" />
             <param name="label" value="$LOCALIZE[31743]" />
             <param name="skinsetting" value="MainMenuTextColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10)" />
         </include>
         <!--homemenu focused text color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31744" />
             <param name="label" value="$LOCALIZE[31744]" />
             <param name="skinsetting" value="MainMenuFocusTextColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10" />
+            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10)" />
         </include>
         <!--home button focus-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
@@ -2654,6 +2626,18 @@
             <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
                 <param name="id" value="31001" />
                 <param name="addon" value="script.skin.helper.service" />
+            </include>
+            <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
+                <param name="id" value="31030" />
+                <param name="addon" value="script.skin.helper.widgets" />
+            </include>
+            <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
+                <param name="id" value="31031" />
+                <param name="addon" value="script.skin.helper.backgrounds" />
+            </include>
+            <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
+                <param name="id" value="31032" />
+                <param name="addon" value="script.module.skin.helper.artutils" />
             </include>
             <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
                 <param name="id" value="31002" />
