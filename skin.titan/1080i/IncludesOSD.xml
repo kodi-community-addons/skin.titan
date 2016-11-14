@@ -323,7 +323,7 @@
 				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
 				<texture background="true" diffuse="diffuse/cdmask_medium_new.png" fallback="defaultcovers/cd_medium.png" border="5">$VAR[PlayerDiscArtImage]</texture>
 				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
 				<visible>!Skin.HasSetting(HideOSDDisc)</visible>
 			</control>
 			
@@ -336,7 +336,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
 			</control>
 			
 			<!--Cover livetv or no poster image-->
@@ -348,7 +348,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
 				<aspectratio align="center" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo + IsEmpty(Player.Art(tvshow.poster)) + IsEmpty(Player.Art(poster))</visible>
+				<visible>Player.HasVideo + IsEmpty(Player.Art(tvshow.poster)) + IsEmpty(Player.Art(poster)) + IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))</visible>
 			</control>
 			
 			<control type="group">
@@ -615,7 +615,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
-				<visible>[!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>[!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
 			</control>
 			
 			<!--Cover no poster-->
@@ -627,7 +627,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
 				<aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster))</visible>
+				<visible>IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster)) + IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))</visible>
 			</control>
 			
 			<!--clearlogo-->
@@ -858,7 +858,7 @@
 				<width>280</width>
 				<height>280</height>
 				<fadetime>200</fadetime>
-				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Music.Thumb)]</texture>
+				<texture background="true" diffuse="diffuse/music_cover_cd.png" border="5">$INFO[Window(Home).Property(SkinHelper.Player.Art.Thumb)]</texture>
 				<aspectratio align="left" aligny="center" scalediffuse="false">keep</aspectratio>
                 <visible>SubString(Control.GetLabel(13333),imagenotfound) | SubString(Control.GetLabel(13333),Default)</visible>
 			</control>
@@ -2342,7 +2342,7 @@
             <!--Current Weather-->
             <control type="multiimage">
                 <!--Current Weather Icon-->
-                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$VAR[WeatherIconsExtension]</imagepath>
+                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$INFO[Skin.String(WeatherIconPack.ext)]</imagepath>
                 <width>128</width>
                 <height>128</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
@@ -2390,7 +2390,7 @@
             <!--Current Weather-->
             <control type="multiimage">
                 <!--Current Weather Icon-->
-                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$VAR[WeatherIconsExtension]</imagepath>
+                <imagepath>$INFO[Skin.String(WeatherIconPack.path)]$INFO[Window(Weather).Property(Current.FanartCode)]$INFO[Skin.String(WeatherIconPack.ext)]</imagepath>
 				<right>0</right>
                 <width>128</width>
                 <height>128</height>
@@ -2626,9 +2626,10 @@
      </include>
     
     <variable name="OSDImage">
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.AnimatedPoster))">$INFO[Window(Home).Property(SkinHelper.Player.AnimatedPoster)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Poster)]</value>
 		<value condition="!IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
         <value condition="!IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
-        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.PVR.Poster))">$INFO[Window(Home).Property(SkinHelper.PVR.Poster)]</value>
 		<value condition="!IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
 		<value condition="!IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
 		<value>DefaultVideo.png</value>
@@ -2745,7 +2746,7 @@
 			<height>180</height>
 			<fadetime>600</fadetime>
 			<aspectratio align="right" aligny="top">keep</aspectratio>
-			<texture>$INFO[Window(Home).Property(SkinHelper.Player.Music.ClearLogo)]</texture>
+			<texture>$INFO[Window(Home).Property(SkinHelper.Player.Art.ClearLogo)]</texture>
             <visible>Skin.String(MusicArtistLogo,enabled) | [Skin.String(MusicArtistLogo,osd) + [Player.ShowInfo | Window.IsActive(MusicOSD)]]</visible>
             <include>animation_fade_visible_hidden_delayed</include>
 		</control>

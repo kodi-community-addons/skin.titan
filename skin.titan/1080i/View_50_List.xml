@@ -6,7 +6,7 @@
 		
         <control type="group">
             <visible>Control.IsVisible(50)</visible>
-            <visible>!Window.IsActive(movieinformation)</visible>
+            <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
             <include>animation_view_change</include>
 			<bottom>13%</bottom>
             <height>736</height>
@@ -212,7 +212,7 @@
                     <width>870</width>
                     <include>ListDetailsBtn</include>
                     <label>[B]$LOCALIZE[180]:[/B]</label>
-                    <label2>$INFO[Window(home).Property(SkinHelper.ListItemDuration)]$INFO[ListItem.Duration, (, min.)]</label2>
+                    <label2>$INFO[Window(home).Property(SkinHelper.ListItem.Duration)]$INFO[ListItem.Duration, (, min.)]</label2>
                     <visible>!IsEmpty(ListItem.Duration)</visible>
                 </control>
                 <control type="button">
@@ -274,7 +274,7 @@
                 <font>Light28</font>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$INFO[ListItem.Plot]</label>
+                <label>$VAR[Plots]</label>
             </control>
             <!--Control Tags-->
             <control type="grouplist">
@@ -760,7 +760,7 @@
                 <animation effect="slide" start="0,0" end="220,0" tween="cubic" easing="inout" time="1200" delay="600" condition="Skin.HasSetting(View50_ShowCDart)">Conditional</animation>
                 <animation effect="fade" start="0" end="100" delay="600" time="800" pulse="false" condition="Skin.HasSetting(View50_ShowCDart)">Conditional</animation>
                 <animation effect="rotate" end="-360" center="auto" time="20000" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-                <visible>Skin.HasSetting(View50_ShowCDart) + Container.Content(movies) + [!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.PVR.Poster))]</visible>
+                <visible>Skin.HasSetting(View50_ShowCDart) + Container.Content(movies) + [!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.Poster))]</visible>
             </control>
             
             <!-- poster images -->
@@ -795,7 +795,7 @@
                     <texture diffuse="home/home_matte.png" background="true">$VAR[PVRThumb]</texture>
                     <aspectratio align="right" aligny="top">keep</aspectratio>
                     <visible>![VideoPlayer.Content(livetv) + Skin.HasSetting(PVRShowPreview)]</visible>
-                    <animation effect="slide" end="-5,-10" time="0" condition="!IsEmpty(Window(home).Property(SkinHelper.PVR.Poster))">Conditional</animation>
+                    <animation effect="slide" end="-5,-10" time="0" condition="!IsEmpty(Window(home).Property(SkinHelper.ListItem.Art.Poster))">Conditional</animation>
                 </control>
             <!-- black background behind video -->
                 <control type="image">
