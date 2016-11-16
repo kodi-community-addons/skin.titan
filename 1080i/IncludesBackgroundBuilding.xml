@@ -10,13 +10,13 @@
 			<texture>$VAR[ColorOverlayTexture]</texture>
 			<include condition="Skin.String(BackgroundOverlayColor) + !Skin.String(BackgroundOverlayColor,None)">bgOverlayDiffuse</include>
 			<visible>!Control.IsVisible(507)</visible>
-            <visible>Skin.String(BackgroundOverlayTexture) + !Skin.String(BackgroundOverlayTexture, None)</visible>
+            <visible>Skin.String(BackgroundOverlayTexture)</visible>
 		</control>
     </include>
 	
 	<variable name="ColorOverlayTexture">
-		<value condition="!Skin.String(BackgroundOverlayTexture, Custom)">special://skin/extras/bgoverlays/$INFO[Skin.String(BackgroundOverlayTexture)].png</value>
-		<value condition="Skin.String(BackgroundOverlayTexture, Custom)">$INFO[Skin.String(CustomBackgroundOverlayTexture)]</value>
+		<value condition="!SubString(Skin.String(BackgroundOverlayTexture),/)">colors/color_90%trans_white.png</value>
+		<value>$INFO[Skin.String(BackgroundOverlayTexture)]</value>
    </variable>
    
     <include name="bgColorDiffuse">
@@ -31,21 +31,20 @@
 		<!-- dim screen overlay used in certain dialogs -->
 		<control type="image">
 			<include>DimensionsFullscreen</include>
-			<texture>special://skin/extras/bgoverlays/Default.png</texture>
+			<texture>colors/color_90%trans_white.png</texture>
 			<colordiffuse>aawhite</colordiffuse>
             <visible>!Skin.String(BackgroundDiffuseColor.base)</visible>
 		</control>
 		<control type="image">
 			<include>DimensionsFullscreen</include>
-			<texture>special://skin/extras/bgoverlays/Default.png</texture>
+			<texture>colors/color_90%trans_white.png</texture>
 			<colordiffuse>aa0f0f0f</colordiffuse>
             <visible>!Skin.String(BackgroundDiffuseColor.base)</visible>
 		</control>
         <control type="image" description="panel behind bg">
             <include>DimensionsFullscreen</include>
-            <texture>colors/color_white.png</texture>
+            <texture>colors/color_90%trans_white.png</texture>
             <colordiffuse>$INFO[Skin.String(BackgroundDiffuseColor.base)]</colordiffuse>
-            <animation effect="fade" start="100" end="95" time="150" condition="true">Conditional</animation>
             <visible>Skin.String(BackgroundDiffuseColor.base)</visible>
         </control>
     </include>
@@ -332,26 +331,8 @@
 		<!-- section background when home not active -->
 		<value condition="Skin.HasSetting(UseSectionBackground) + !IsEmpty(Window(home).Property(SectionBackground)) + !Window.IsActive(script-skinshortcuts.xml) + !Window.IsActive(home)">$INFO[Window(home).Property(SectionBackground)]</value>
 		
-		<!-- global weather background -->
-		<value condition="Skin.String(CustomBackgroundSetting, weather)">$INFO[Skin.String(WeatherFanArtPack.path)]$INFO[Window(Weather).Property(Current.fanartCode)]$INFO[Skin.String(WeatherFanArtPack.ext)]</value>
-		<!-- global background: global fanart -->
-		<value condition="Skin.String(CustomBackgroundSetting, fanart)">$INFO[Window(Home).Property(SkinHelper.GlobalFanartBackground)]</value>
-        <!-- global background: movies -->
-		<value condition="Skin.String(CustomBackgroundSetting, movies)">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]</value>
-        <!-- global background: tvshows -->
-		<value condition="Skin.String(CustomBackgroundSetting, tvshows)">$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]</value>
-        <!-- global background: pictures -->
-		<value condition="Skin.String(CustomBackgroundSetting, pictures)">$INFO[Window(Home).Property(SkinHelper.PicturesBackground)]</value>
-        <!-- global background: videos -->
-		<value condition="Skin.String(CustomBackgroundSetting, videos)">$INFO[Window(Home).Property(SkinHelper.AllVideosBackground)]</value> 
-        <!-- global background: videos2 -->
-		<value condition="Skin.String(CustomBackgroundSetting, videos2)">$INFO[Window(Home).Property(SkinHelper.AllVideosBackground2)]</value> 
-        <!-- global background: movieswall -->
-		<value condition="Skin.String(CustomBackgroundSetting, movieswall)">$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground.Wall)]</value>        
-        <!-- global background: default -->
-        <value condition="Skin.String(CustomBackgroundSetting, default) + skin.hastheme(classic)">resource://resource.images.skinbackgrounds.titan/global.jpg</value>
-		<value condition="Skin.String(CustomBackgroundSetting, default)">resource://resource.images.skinbackgrounds.titan/global_blue.jpg</value>
-        <!-- global background custom-->
+		<!-- global background -->
+        <value condition="SubString(Skin.String(CustomBackgroundSetting),VAR)">$VAR[CustomBackgroundSetting]</value>
 		<value condition="Skin.String(CustomBackgroundSetting)">$INFO[Skin.String(CustomBackgroundSetting)]</value>
    </variable>
     
