@@ -1870,10 +1870,10 @@
             </control>
             <control type="button" id="15004">
                 <description>Select Theme</description>
-                <label>$ADDON[script.skin.helper.skinbackup 32020]</label>
+                <label>31800</label>
                 <include>SkinSettings_Button</include>
                 <onclick>XBMC.RunScript(script.skin.helper.skinbackup,action=colorthemes)</onclick>
-                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://$PARAM[script.skin.helper.skinbackup])</onclick>
+                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://script.skin.helper.skinbackup)</onclick>
                 <onclick>ClearProperty(startupDone,home)</onclick>
             </control>
             <control type="label" id="15030">
@@ -1898,8 +1898,8 @@
             <control type="radiobutton" id="15033">
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31589]</label>
-                <onclick>Skin.ToggleSetting(SkinHelper.EnableDayNightThemes)</onclick>
-                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://$PARAM[script.skin.helper.skinbackup])</onclick>
+                <onclick condition="System.HasAddon(script.skin.helper.skinbackup)">Skin.ToggleSetting(SkinHelper.EnableDayNightThemes)</onclick>
+                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://script.skin.helper.skinbackup)</onclick>
                 <selected>Skin.HasSetting(SkinHelper.EnableDayNightThemes)</selected>
             </control>
             <control type="button" id="15034">
@@ -1907,7 +1907,7 @@
                 <description>Select Theme for day</description>
                 <label>$LOCALIZE[31591]: $INFO[Skin.String(SkinHelper.ColorTheme.Day.label)]</label>
                 <onclick>XBMC.RunScript(script.skin.helper.skinbackup,action=daynighttheme,daynight=day)</onclick>
-                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://$PARAM[script.skin.helper.skinbackup])</onclick>
+                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://script.skin.helper.skinbackup)</onclick>
                 <visible>Skin.HasSetting(SkinHelper.EnableDayNightThemes)</visible>
             </control>
             <control type="button" id="15035">
@@ -1915,7 +1915,7 @@
                 <description>Select Theme for night</description>
                 <label>$LOCALIZE[31592]: $INFO[Skin.String(SkinHelper.ColorTheme.Night.label)]</label>
                 <onclick>XBMC.RunScript(script.skin.helper.skinbackup,action=daynighttheme,daynight=night)</onclick>
-                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://$PARAM[script.skin.helper.skinbackup])</onclick>
+                <onclick condition="!System.HasAddon(script.skin.helper.skinbackup)">RunPlugin(plugin://script.skin.helper.skinbackup)</onclick>
                 <visible>Skin.HasSetting(SkinHelper.EnableDayNightThemes)</visible>
             </control>
 
@@ -2002,28 +2002,34 @@
             </control>
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="8005" />
-                <param name="label" value="$ADDON[script.skin.helper.skinbackup 32016]" />
+                <param name="label" value="31801" />
                 <param name="action" value="XBMC.RunAddon(script.skin.helper.skinbackup)" />
-                <param name="visible" value="true" />
+                <param name="visible" value="System.HasAddon(script.skin.helper.skinbackup)" />
             </include>
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="8002" />
                 <param name="label" value="31272" />
                 <param name="action" value="XBMC.RunScript(script.skin.helper.skinbackup,action=backup)" />
-                <param name="visible" value="true" />
+                <param name="visible" value="System.HasAddon(script.skin.helper.skinbackup)" />
             </include>
 
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="8003" />
                 <param name="label" value="31273" />
                 <param name="action" value="XBMC.RunScript(script.skin.helper.skinbackup,action=RESTORE)" />
-                <param name="visible" value="true" />
+                <param name="visible" value="System.HasAddon(script.skin.helper.skinbackup)" />
             </include>
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="8004" />
                 <param name="label" value="31274" />
                 <param name="action" value="XBMC.RunScript(script.skin.helper.skinbackup,action=RESET)" />
-                <param name="visible" value="true" />
+                <param name="visible" value="System.HasAddon(script.skin.helper.skinbackup)" />
+            </include>
+            <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
+                <param name="id" value="8006" />
+                <param name="label" value="31801" />
+                <param name="action" value="RunPlugin(plugin://script.skin.helper.skinbackup)" />
+                <param name="visible" value="!System.HasAddon(script.skin.helper.skinbackup)" />
             </include>
 
         </control>
