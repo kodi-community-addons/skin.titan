@@ -68,6 +68,19 @@
 	<include name="fanartSpeed60">
 		<timeperimage>60000</timeperimage>
 	</include>
+    
+    <include name="fanartSpeed">
+		<include condition="skin.string(SkinHelper.RandomFanartDelay, 6)">fanartSpeed6</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 5)">fanartSpeed5</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 8)">fanartSpeed8</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 10)">fanartSpeed10</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 15)">fanartSpeed15</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 20)">fanartSpeed20</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 30)">fanartSpeed30</include>
+        <include condition="skin.string(SkinHelper.RandomFanartDelay, 60)">fanartSpeed60</include>
+        <include condition="!skin.string(SkinHelper.RandomFanartDelay)">fanartSpeed30</include>
+	</include>
+    
     <include name="randomizeImages">
         <randomize>true</randomize>
     </include>
@@ -90,15 +103,8 @@
             <aspectratio>scale</aspectratio>
             <fadetime>450</fadetime>
             <include condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None) + !Skin.String(BackgroundDiffuseColor.name, None)">bgColorDiffuse</include>
-            <include condition="skin.string(SkinHelper.RandomFanartDelay, 6)">fanartSpeed6</include>
-            <include condition="skin.string(SkinHelper.RandomFanartDelay, 5)">fanartSpeed5</include>
-			<include condition="skin.string(SkinHelper.RandomFanartDelay, 8)">fanartSpeed8</include>
-			<include condition="skin.string(SkinHelper.RandomFanartDelay, 10)">fanartSpeed10</include>
-			<include condition="skin.string(SkinHelper.RandomFanartDelay, 15)">fanartSpeed15</include>
-			<include condition="skin.string(SkinHelper.RandomFanartDelay, 20)">fanartSpeed20</include>
-            <include condition="skin.string(SkinHelper.RandomFanartDelay, 30)">fanartSpeed30</include>
-            <include condition="skin.string(SkinHelper.RandomFanartDelay, 60)">fanartSpeed60</include>
             <include condition="Skin.HasSetting(RandomizeBackground)">randomizeImages</include>
+            <include>fanartSpeed</include>
             <loop>yes</loop>
 			<animation effect="zoom" start="110" end="130" center="auto" time="12000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
 			<animation effect="slide" start="-10,-10" end="10,10" time="8000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(BackgroundAnimation)">Conditional</animation>
@@ -308,7 +314,8 @@
 	<variable name="backgroundVar">
     
         <value condition="[Window.IsActive(LoginScreen.xml) | Window.IsActive(StartUp.xml)] + Skin.String(LoginBackground)">$INFO[Skin.String(LoginBackground)]</value>
-         <!-- fanart background -->
+        <!-- fanart background -->
+        <value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItem.Art.AnimatedFanArt)) + Skin.HasSetting(AnimatedFanart)">$INFO[Window(home).Property(SkinHelper.ListItem.Art.AnimatedFanArt)]</value>
         <value condition="Control.IsVisible(99005) + !IsEmpty(Control.GetLabel(99005))">$INFO[Control.GetLabel(99005)]</value>
         <value condition="Control.IsVisible(99006) + !IsEmpty(Control.GetLabel(99006))">$INFO[Control.GetLabel(99006)]</value>
          <!-- conditional background override -->
