@@ -2304,12 +2304,13 @@
 	<include name="widget_layout_general">
         <animation effect="slide" start="0" end="50" time="0" condition="Skin.String(HomeLayout, netflix)">Conditional</animation>
 		<ondown>ClearProperty(ShowWidget, Home)</ondown>
-		<onback condition="IsEmpty(Window(Home).Property(netflixview))">300</onback>
+		<onback>300</onback>
         <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
 		<onback>ClearProperty(ShowWidget, Home)</onback>
         <onfocus>Setproperty(ShowWidget,show)</onfocus>
         <onfocus>ClearProperty(submenu)</onfocus>
 		<orientation>horizontal</orientation>
+        <onleft condition="Skin.HasSetting(EnhancedHome_Circular) + Skin.String(HomeLayout,netflix2)">$INFO[Window(Home).Property(SkinHelper.WidgetContainer)]</onleft>
 		<scrolltime tween="cubic" easing="inout">500</scrolltime>
         <animation condition="![Control.HasFocus(510) | Control.HasFocus(520) | Control.HasFocus(530) | Control.HasFocus(540)] + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
 			<effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom" />
@@ -2332,7 +2333,8 @@
         <value condition="!IsEmpty(Container(300).ListItem.Property(widget.1)) + StringCompare(Control.GetLabel(600),widget-1) + IntegerGreaterThan(Container(520).NumItems,0)">SetFocus(520)</value>
         <value condition="!IsEmpty(Container(300).ListItem.Property(widget.2)) + StringCompare(Control.GetLabel(600),widget-2) + IntegerGreaterThan(Container(530).NumItems,0)">SetFocus(530)</value>
         <value condition="!IsEmpty(Container(300).ListItem.Property(widget.3)) + StringCompare(Control.GetLabel(600),widget-3) + IntegerGreaterThan(Container(540).NumItems,0)">SetFocus(540)</value>
-        <value>SetFocus(511)</value>
+        <value condition="!Control.HasFocus(511)">SetFocus(511)</value>
+        <value>SetFocus(300)</value>
     </variable>
     
     <include name="changeWidgetButton">

@@ -580,10 +580,10 @@
     <include name="HomeBigVertical">
 		<control type="group">
 			<top>0</top>
-			<animation effect="slide" tween="cubic" time="600" start="-818" end="0" reversible="false">WindowOpen</animation>
-			<animation effect="slide" tween="cubic" time="150" start="0" end="-818" reversible="false">WindowClose</animation>
-			<animation effect="slide" tween="cubic" time="600" start="-818" end="0" reversible="false">Visible</animation>
-			<animation effect="slide" tween="cubic" time="150" start="0" end="-818" reversible="false">Hidden</animation>
+			<animation effect="slide" tween="cubic" time="600" start="-818" end="0" reversible="false" condition="!Skin.String(HomeLayout,netflix2)">WindowOpen</animation>
+			<animation effect="slide" tween="cubic" time="150" start="0" end="-818" reversible="false" condition="!Skin.String(HomeLayout,netflix2)">WindowClose</animation>
+			<animation effect="slide" tween="cubic" time="600" start="-818" end="0" reversible="false" condition="!Skin.String(HomeLayout,netflix2)">Visible</animation>
+			<animation effect="slide" tween="cubic" time="150" start="0" end="-818" reversible="false" condition="!Skin.String(HomeLayout,netflix2)">Hidden</animation>
 			
             <!-- Submenu -->
             <control type="group" id="9001">
@@ -679,6 +679,10 @@
                     <onback>ClearProperty(submenu, Home)</onback>
                     <onleft>ClearProperty(submenu, Home)</onleft>
                     <onright>ClearProperty(submenu, Home)</onright>
+                    <onright condition="Skin.String(HomeLayout,netflix2)">ClearProperty(ShowViewSubMenu, Home)</onright>
+                    <onback condition="Skin.String(HomeLayout,netflix2)">ClearProperty(ShowViewSubMenu, Home)</onback>
+                    <onright condition="Skin.String(HomeLayout,netflix2)">9000</onright>
+                    <onback condition="Skin.String(HomeLayout,netflix2)">9000</onback>
 					<onright>77777</onright>
 					<onback>300</onback>
 					<pagecontrol>-</pagecontrol>
@@ -787,9 +791,13 @@
                 <onleft condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</onleft>
                 <ondown>300</ondown>
                 <onup>300</onup>
+                <onback condition="Skin.String(HomeLayout,netflix2)">9000</onback>
+                <onback condition="Skin.String(HomeLayout,netflix2)">ClearProperty(ShowViewSubMenu, Home)</onback>
                 <onright condition="Control.IsVisible(4446)">Control.SetFocus(4446,0)</onright>
                 <onright condition="!Control.IsVisible(4446) + IntegerGreaterThan(Container(4445).NumItems,0) + !Skin.HasSetting(OpenSubMenuOnClick)">Control.SetFocus(4444,0)</onright>
-                <onright condition="!Control.IsVisible(4446) + [Skin.HasSetting(OpenSubMenuOnClick) | !IntegerGreaterThan(Container(4445).NumItems,0)]">$VAR[focusWidget]</onright>
+                <onright condition="!Skin.String(HomeLayout,netflix2) + !Control.IsVisible(4446) + [Skin.HasSetting(OpenSubMenuOnClick) | !IntegerGreaterThan(Container(4445).NumItems,0)]">$VAR[focusWidget]</onright>
+                <onright condition="Skin.String(HomeLayout,netflix2) + !Control.IsVisible(4446) + [Skin.HasSetting(OpenSubMenuOnClick) | !IntegerGreaterThan(Container(4445).NumItems,0)]">9000</onright>
+                <onright condition="Skin.String(HomeLayout,netflix2) + !Control.IsVisible(4446) + [Skin.HasSetting(OpenSubMenuOnClick) | !IntegerGreaterThan(Container(4445).NumItems,0)]">ClearProperty(ShowViewSubMenu, Home)</onright>
                 <pagecontrol>-</pagecontrol>
                 <scrolltime tween="quadratic" easing="out">150</scrolltime>
                 <orientation>Vertical</orientation>
