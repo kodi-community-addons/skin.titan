@@ -563,14 +563,16 @@
 		<ondown>1508</ondown>
 		<onback>300</onback>
 		<onup>1508</onup>
-        <orientation>horizontal</orientation>
-        <itemlayout />
-        <focusedlayout>
+        <orientation>vertical</orientation>
+        <itemlayout width="1790" height="607" />
+        <focusedlayout width="1790" height="607" >
             <control type="button">
                 <visible>false</visible>
                 <onfocus>SetProperty(SkinHelper.WidgetContainer,1508)</onfocus>
                 <onfocus condition="Skin.HasSetting(SpotLightTrailers)">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=windowed,YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)],WIDGETCONTAINER=1508)</onfocus>
                 <onunfocus condition="Skin.HasSetting(SpotLightTrailers) + !IsEmpty(Window(Home).Property(TrailerPlaying)) + !StringCompare(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunfocus>
+                <onfocus condition="!IsEmpty(Window(Home).Property(WidgetRotate1508))">CancelAlarm(WidgetRotate1508,true)</onfocus>
+                <onfocus>ClearProperty(WidgetRotate1508,Home)</onfocus>
             </control>
         </focusedlayout>
     </include>
@@ -650,13 +652,6 @@
 			<texture background="true">$VAR[SpotLightWidgetInfoThumb]</texture>
 		</control>
         
-        <!--hidden button -->
-        <control type="button">
-            <visible>false</visible>
-            <onfocus>SetProperty(SkinHelper.WidgetContainer,1508,home)</onfocus>
-            <onfocus condition="!IsEmpty(Window(Home).Property(WidgetRotate1508))">CancelAlarm(WidgetRotate1508,true)</onfocus>
-            <onfocus>ClearProperty(WidgetRotate1508,Home)</onfocus>
-        </control>
 	</include>
 
     <variable name="EnhancedHomeSpotLightWidgetButtonText">
