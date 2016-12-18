@@ -175,8 +175,17 @@
 			</control>
 		</control>
 		
-		<!--Side Menu-->
-        <include>SideBladeMainMenu</include>
+		<!--Side Menu BIG-->
+        <control type="group">
+            <top>0</top>
+            <left>0</left>
+            <include condition="Skin.HasSetting(NetFlixHome_LargeMenu)">HomeBigVertical</include>
+            <animation type="Conditional" condition="![ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)]">
+                <effect type="slide" start="0" end="-660" time="300" delay="0" tween="cubic" easing="inout" />
+            </animation>
+        </control>
+        <!-- Side Menu Small -->
+        <include condition="!Skin.HasSetting(NetFlixHome_LargeMenu)">SideBladeMainMenu</include>
     </include>
 	
     <variable name="Netflix2_PanelColor">
@@ -533,15 +542,18 @@
             </control>
             
         </control>    
-		<!--Side Menu-->
+		
+        <!--Side Menu BIG-->
         <control type="group">
             <top>0</top>
             <left>0</left>
-            <include>HomeBigVertical</include>
+            <include condition="Skin.HasSetting(NetFlixHome_LargeMenu)">HomeBigVertical</include>
             <animation type="Conditional" condition="![ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)]">
                 <effect type="slide" start="0" end="-660" time="300" delay="0" tween="cubic" easing="inout" />
             </animation>
         </control>
+        <!-- Side Menu Small -->
+        <include condition="!Skin.HasSetting(NetFlixHome_LargeMenu)">SideBladeMainMenu</include>
         
         <!-- busy spinner  -->
         <control type="multiimage">
@@ -856,6 +868,8 @@
         <control type="panel" id="$PARAM[widgetid]">
             <focusposition>0</focusposition>
             <width>100%</width>
+            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
+            <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">$PARAM[widgetid]</onleft>
             <include name="widget_layout_poster" content="widget_layout_poster" condition="Skin.String(widgetstyle, poster)">
                 <param name="widgetid" value="$PARAM[widgetid]" />
                 <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
@@ -899,6 +913,8 @@
         <control type="fixedlist" id="$PARAM[widgetid]">
             <focusposition>0</focusposition>
             <width>100%</width>
+            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
+            <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">$PARAM[widgetid]</onleft>
             <include name="widget_layout_poster_netflix_details" content="widget_layout_poster_netflix_details" condition="Skin.String(widgetstyle, poster)">
                 <param name="widgetid" value="$PARAM[widgetid]" />
                 <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
@@ -917,6 +933,8 @@
             <height>260</height>
             <orientation>horizontal</orientation>
             <include>widget_layout_general</include>
+            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
+            <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">$PARAM[widgetid]</onleft>
             <itemlayout width="430" height="260">
                 <control type="group">
                     <width>430</width>
