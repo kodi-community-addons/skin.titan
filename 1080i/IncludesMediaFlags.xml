@@ -426,122 +426,139 @@
 	</variable>
     
 	<include name="mediaflags_classic">
-        <include>mediaflags_sets</include>
-        <!-- nextaired info -->
-        <control type="group">
-            <width>400</width>
-            <posy>1</posy>
-            <height>30</height>
-            <visible>!IsEmpty(Control.GetLabel(44240))</visible>
-            <visible>Container.content(tvshows) | Container.content(seasons)</visible>
-            <control type="image">
-                <posx>-6</posx>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture border="60,3,10,3">flags/flag_box_rating_classic.png</texture>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="label" id="44240">
-                <font>flags</font>
-                <posx>40</posx>
-                <width>360</width>
-                <right>0</right>
-                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
-                <label>$INFO[Window(Home).Property(SkinHelper.ListItem.Status),, ]$INFO[Window(Home).Property(SkinHelper.ListItem.nextepisode.airdate)]</label>
-                <align>center</align>
-                <aligny>center</aligny>
-                <height>29</height>
-            </control>
-        </control>
-        <control type="group">
-            <visible>!IsEmpty(Control.GetLabel(44223))</visible>
-            <control type="image">
-                <!--Video Resolution-->
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>141</width>
-                <height>30</height>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture fallback="flags/flags_classic/resolution/default.png">$VAR[VideoResolutionVar,flags/flags_classic/resolution/,.png]</texture>
-            </control>
-            <control type="label" id="44223">
-                <visible>false</visible>
-                <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
-                <label>$VAR[VideoResolutionVar]</label>
-            </control>
+		<include>mediaflags_sets</include>
+		<control type="grouplist">
+			<orientation>horizontal</orientation>
 
-            <control type="image">
-                <!--VideoCode-->
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>141</width>
-                <height>30</height>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture fallback="flags/flags_classic/videocodec/default.png">$VAR[VideoCodecVar,flags/flags_classic/videocodec/,.png]</texture>
-            </control>
-            <control type="image">
-                <!--Aspectration-->
-                <posx>-1</posx>
-                <posy>0</posy>
-                <width>141</width>
-                <height>30</height>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture fallback="flags/flags_classic/aspectration/default.png">$VAR[VideoAspectVar,flags/flags_classic/aspectration/,.png]</texture>
-            </control>
-            <control type="image">
-                <!--Audio Codec-->
-                <posx>160</posx>
-                <posy>0</posy>
-                <width>82</width>
-                <height>30</height>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture fallback="flags/flags_classic/audiocodec/default.png">$VAR[AudioCodecVar,flags/flags_classic/audiocodec/,.png]</texture>
-            </control>
-            <control type="image">
-                <!--Audio Channels-->
-                <posx>160</posx>
-                <posy>0</posy>
-                <width>82</width>
-                <height>30</height>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture fallback="flags/flags_classic/audiochannels/default.png">$VAR[AudioChannelsVar,flags/flags_classic/audiochannels/,.png]</texture>
-            </control>
-            <control type="image">
-                <!--Video 3D-->
-                <posx>260</posx>
-                <width>70</width>
-                <height>32</height>
-                <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                <texture>flags/flags_classic/3dbd.png</texture>
-                <visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)</visible>
-            </control>
-            <!-- mpaa rating -->
-            <control type="group">
-                <posx>270</posx>
-                <posy>0</posy>
-                <width>145</width>
-                <height>30</height>
-                <animation effect="slide" start="0,0" end="84" center="auto" easing="out" tween="back" time="0" condition="ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)">Conditional</animation>
-                <visible>!IsEmpty(Control.GetLabel(44225))</visible>
-                <control type="image">
-                    <posx>-6</posx>
-                    <colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
-                    <texture>flags/flag_box_rating_classic.png</texture>
-                    <aspectratio>stretch</aspectratio>
-                </control>
-                <control type="label" id="44225">
-                    <font>flags_classic</font>
-                    <posx>-6</posx>
-                    <width>115</width>
-                    <right>0</right>
-                    <textcolor>$VAR[mediaFlagsFontColor]</textcolor>
-                    <label>$VAR[RatingFlagVar]</label>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <height>29</height>
-                </control>
-            </control>
-        </control>
-    </include>
+			<!-- Video -->
+			<control type="group">
+				<visible>!IsEmpty(Control.GetLabel(44223))</visible>
+				<width>141</width>
+				<height>30</height>
+
+				<!-- Video Resolution -->
+				<control type="image">
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture fallback="flags/flags_classic/resolution/default.png">$VAR[VideoResolutionVar,flags/flags_classic/resolution/,.png]</texture>
+				</control>
+				
+				<control type="label" id="44223">
+					<visible>false</visible>
+					<textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+					<label>$VAR[VideoResolutionVar]</label>
+				</control>
+				
+				<!-- Video Codec -->
+				<control type="image">
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture fallback="flags/flags_classic/videocodec/default.png">$VAR[VideoCodecVar,flags/flags_classic/videocodec/,.png]</texture>
+				</control>
+
+				<!-- Aspect Ratio -->
+				<control type="image">
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture fallback="flags/flags_classic/aspectration/default.png">$VAR[VideoAspectVar,flags/flags_classic/aspectration/,.png]</texture>
+				</control>
+			</control>
+			
+			<!-- Audio -->
+			<control type="group">
+				<visible>!IsEmpty(Control.GetLabel(44223))</visible>
+				<width>82</width>
+				<height>30</height>
+
+				<!-- Audio Codec -->
+				<control type="image">
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture fallback="flags/flags_classic/audiocodec/default.png">$VAR[AudioCodecVar,flags/flags_classic/audiocodec/,.png]</texture>
+				</control>
+
+				<!-- Audio Channels -->			
+				<control type="image">
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture fallback="flags/flags_classic/audiochannels/default.png">$VAR[AudioChannelsVar,flags/flags_classic/audiochannels/,.png]</texture>
+				</control>
+			</control>
+
+			<!-- Video 3D -->
+			<control type="group">
+				<visible>!IsEmpty(Control.GetLabel(44223))</visible>
+				<visible>ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)</visible>
+				<width>70</width>
+				<height>30</height>
+				<control type="image">
+					<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+					<texture>flags/flags_classic/3dbd.png</texture>
+				</control>
+			</control>
+
+
+			<!-- mpaa rating -->			
+			<control type="group">
+				<visible>!IsEmpty(Control.GetLabel(44225))</visible>
+				<width>145</width>
+				<height>30</height>
+
+				<control type="group">
+					<animation effect="slide" start="0,0" end="84" center="auto" easing="out" tween="back" time="0" condition="ListItem.IsStereoScopic | !IsEmpty(ListItem.Property(Video3DFormat)) | substring(ListItem.FileName,.3d.)">Conditional</animation>
+					<control type="image">
+						<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+						<texture>flags/flag_box_rating_classic.png</texture>
+						<aspectratio>stretch</aspectratio>
+					</control>
+					<control type="label" id="44225">
+						<font>flags_classic</font>
+						<width>115</width>
+						<height>30</height>
+						<right>0</right>
+						<textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+						<label>$VAR[RatingFlagVar]</label>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+				</control>
+			</control>
+
+			<!-- nextaired info -->
+			<control type="group">
+				<visible>!IsEmpty(Control.GetLabel(44240))</visible>
+				<visible>Container.content(tvshows) | Container.content(seasons)</visible>
+				<width>300</width>
+				<height>30</height>
+
+				<control type="group">
+					<control type="image">
+						<width>180</width>
+						<colordiffuse>$VAR[mediaFlagsFontColor]</colordiffuse>
+						<texture>flags/flag_box_calendar_classic.png</texture>
+						<aspectratio>stretch</aspectratio>
+					</control>
+					<control type="label" id="44240">
+						<font>flags_classic</font>
+						<width>180</width>
+						<height>30</height>
+						<left>15</left>
+						<textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+						<label>$INFO[Window(Home).Property(SkinHelper.ListItem.Status),, ]</label>						
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+
+					<control type="label" id="44241">
+						<font>flags_classic</font>
+						<width>135</width>
+						<height>30</height>
+						<right>-5</right>
+						<textcolor>$VAR[mediaFlagsFontColor]</textcolor>
+						<label>$INFO[Window(Home).Property(SkinHelper.ListItem.nextepisode.airdate)]</label>
+						<align>center</align>
+						<aligny>center</aligny>
+					</control>
+
+				</control>
+			</control>
+		</control>
+	</include>
     
     <include name="mediaflags_boxed">
         <control type="grouplist">
