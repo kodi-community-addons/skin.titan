@@ -734,8 +734,11 @@
                     <onleft>300</onleft>
                     <ondown>520</ondown>
                     <onup>600</onup>
-                    <onfocus>Setproperty(SkinHelper.WidgetContainer,510)</onfocus>
-                    <onclick>PlayMedia($ESCINFO[Container(510).ListItem.FileNameAndPath])</onclick>
+                    <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                        <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
+                    </include>
+                    <onfocus>Setproperty(SkinHelper.WidgetContainer,1508)</onfocus>
+                    <onclick>PlayMedia($ESCINFO[Container(1508).ListItem.FileNameAndPath])</onclick>
                 </control>
                 <control type="button" id="52">
                     <description>Info</description>
@@ -747,10 +750,11 @@
                     <onright>53</onright>
                     <ondown>520</ondown>
                     <onup>600</onup>
-                    <onfocus>Setproperty(SkinHelper.WidgetContainer,510)</onfocus>
-                    <onclick condition="!System.HasAddon(script.extendedinfo)">ActivateWindow(Videos,plugin://script.extendedinfo)</onclick>
-                    <onclick condition="IsEmpty(Container(510).ListItem.TvShowTitle)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[Container(510).ListItem.DBID],name=$INFO[Container(510).ListItem.Title])</onclick>
-                    <onclick condition="!IsEmpty(Container(510).ListItem.TvShowTitle)">RunScript(script.extendedinfo,info=extendedtvinfo,name=$INFO[Container(510).ListItem.TvShowTitle])</onclick>
+                    <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                        <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
+                    </include>
+                    <onclick>RunScript(script.skin.helper.service,action=showinfo)</onclick>
+                    <onfocus>Setproperty(SkinHelper.WidgetContainer,1508)</onfocus>
                 </control>
                 <control type="radiobutton" id="53">
                     <label></label>
@@ -766,7 +770,7 @@
                     <onright>54</onright>
                     <onleft>52</onleft>
                     <ondown>520</ondown>
-                    <onclick>Control.Move(510,-1)</onclick>
+                    <onclick>Control.Move(1508,-1)</onclick>
                     <selected>Control.HasFocus(53)</selected>
                 </control>
                 <control type="radiobutton" id="54">
@@ -782,13 +786,13 @@
                     <radiowidth>40</radiowidth>
                     <radioheight>40</radioheight>
                     <radioposx>0</radioposx>
-                    <onclick>Control.Move(510,1)</onclick>
+                    <onclick>Control.Move(1508,1)</onclick>
                     <selected>Control.HasFocus(54)</selected>
                 </control>
             </control>
             
             <!-- spotlight widget -->
-            <control type="panel" id="510">
+            <control type="panel" id="1508">
                 <right>60</right>
                 <top>10</top>
                 <width>960</width>
@@ -797,44 +801,18 @@
                 <focusposition>2</focusposition>
                 <onup>51</onup>
                 <ondown>51</ondown>
+                <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                    <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
+                </include>
                 <onfocus>51</onfocus>
-                <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid])</onfocus>
                 <scrolltime tween="cubic" easing="inout">500</scrolltime>
-                <visible>ControlGroup(505).HasFocus() | Control.HasFocus(300)</visible>
                 <itemlayout width="960" height="555">
-                    <!-- spotlight image -->
-                    <control type="image">
-                        <bordersize>5</bordersize>
-                        <texture background="true" diffuse="diffuse/wide.png">$VAR[fanartBackground]</texture>
-                        <aspectratio scalediffuse="false">scale</aspectratio>
-                    </control>
-                    <!-- clearlogo -->
-                    <control type="image">
-                        <right>20</right>
-                        <bottom>25</bottom>
-                        <width>70%</width>
-                        <height>350</height>
-                        <aspectratio align="right" aligny="bottom">keep</aspectratio>
-                        <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-                        <visible>IsEmpty(Listitem.Art(landscape))</visible>
-                    </control>
                 </itemlayout>
                 <focusedlayout width="960" height="555">
-                    <!-- spotlight image -->
-                    <control type="image">
-                        <bordersize>5</bordersize>
-                        <texture background="true" diffuse="diffuse/wide.png">$VAR[fanartBackground]</texture>
-                        <aspectratio scalediffuse="false">scale</aspectratio>
-                    </control>
-                    <!-- clearlogo -->
-                    <control type="image">
-                        <right>20</right>
-                        <bottom>25</bottom>
-                        <width>70%</width>
-                        <height>350</height>
-                        <aspectratio align="right" aligny="bottom">keep</aspectratio>
-                        <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
-                    </control>
+                    <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                        <param name="widgetstyle" value="spotlight" />
+                        <param name="widgetid" value="1508" />
+                    </include>
                 </focusedlayout>
                 <content target="videos">$INFO[Container(999).ListItemNoWrap(0).Property(list)]</content>
             </control>
