@@ -16,6 +16,11 @@
 			<property name="widgetTarget">pvr</property>
 			<property name="background">$INFO[Window(Home).Property(SkinHelper.PvrBackground)]</property>
 			<property name="backgroundName">571</property>
+			<property name="widget.1">plugin://script.skin.helper.widgets/?action=pvrlisting</property>
+			<property name="widgetName.1">TV Channels</property>
+			<property name="widgetType.1">pvr</property>
+			<property name="widgetTarget.1">videos</property>
+			<property name="widgetPath.1">plugin://script.skin.helper.widgets/?action=channels&amp;mediatype=pvr&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
 			<visible>System.HasPVRAddon</visible>
 			<onclick condition="![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]">ActivateWindow(TVGuide)</onclick>
 			<property name="path">ActivateWindow(TVGuide)</property>
@@ -2666,6 +2671,99 @@
 			</content>
 		</control>
 	</include>
+	<include name="skinshortcuts-template-widget.1">
+		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-widget.1-Master user</include>
+	</include>
+	<include name="skinshortcuts-template-widget.1-Master user">
+		<control id="600" type="label">
+			<label>widget-1</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>Skin.String(widgetvalue-livetv,1)</visible>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<visible>Skin.String(widgetvalue-livetv,1)</visible>
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.widgets/?action=channels&amp;mediatype=pvr&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</content>
+		</control>
+		<control id="600" type="label">
+			<label>widget-1</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
+			<visible>Skin.String(widgetvalue-movies,1)</visible>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
+			<visible>Skin.String(widgetvalue-movies,1)</visible>
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=movies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+		</control>
+		<control id="600" type="label">
+			<label>widget-1</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,1)</visible>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<visible>Skin.String(widgetvalue-tvshows,1)</visible>
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=episodes&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+		</control>
+		<control id="600" type="label">
+			<label>widget-1</label>
+			<width>1</width>
+			<heigth>1</heigth>
+			<posx>-1</posx>
+			<posy>-1</posy>
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
+			<visible>Skin.String(widgetvalue-music,1)</visible>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
+			<visible>Skin.String(widgetvalue-music,1)</visible>
+			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="music">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=songs&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]</content>
+		</control>
+	</include>
 	<include name="skinshortcuts-template-win10widget.1">
 		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-win10widget.1-Master user</include>
 	</include>
@@ -2792,6 +2890,67 @@
 			<content target="static">
 				<include>SystemInfoWidget</include>
 			</content>
+		</control>
+	</include>
+	<include name="skinshortcuts-template-win10widget.2">
+		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-win10widget.2-Master user</include>
+	</include>
+	<include name="skinshortcuts-template-win10widget.2-Master user">
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),livetv)</visible>
+			<include>HomeWin10WidgetPosBottom</include>
+			<onleft>510</onleft>
+			<onright>SetFocus(530,0)</onright>
+			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
+			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
+			<include>HomeWin10WidgetLayout</include>
+			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.widgets/?action=channels&amp;mediatype=pvr&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</content>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
+			<include>HomeWin10WidgetPosBottom</include>
+			<onleft>510</onleft>
+			<onright>SetFocus(530,0)</onright>
+			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
+			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
+			<include>HomeWin10WidgetLayout</include>
+			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=movies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
+			<include>HomeWin10WidgetPosBottom</include>
+			<onleft>510</onleft>
+			<onright>SetFocus(530,0)</onright>
+			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
+			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
+			<include>HomeWin10WidgetLayout</include>
+			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=episodes&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
+		</control>
+		<control id="520" type="panel">
+			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
+			<include>HomeWin10WidgetPosBottom</include>
+			<onleft>510</onleft>
+			<onright>SetFocus(530,0)</onright>
+			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
+			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
+			<include>HomeWin10WidgetLayout</include>
+			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
+				<param name="widgetid" value="520" />
+				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
+			</include>
+			<content target="music">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=songs&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]</content>
 		</control>
 	</include>
 	<include name="skinshortcuts-template-VerticalHomeWidgets">
@@ -2925,7 +3084,7 @@
 					<param name="multiprefix" value="" />
 					<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 				</include>
-				<content target="" />
+				<content target="videos">plugin://script.skin.helper.widgets/?action=channels&amp;mediatype=pvr&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 			<include condition="false" content="VerticalHomeAdvancedWidgetHeader" name="VerticalHomeAdvancedWidgetHeader">
 				<param name="id" value="529" />
@@ -4219,7 +4378,7 @@
 					<param name="multiprefix" value="" />
 					<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
 				</include>
-				<content target="" />
+				<content target="videos">plugin://script.skin.helper.widgets/?action=channels&amp;mediatype=pvr&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 			<include condition="false" content="VerticalHomeAdvancedWidgetHeader" name="VerticalHomeAdvancedWidgetHeader">
 				<param name="id" value="529" />
@@ -5367,77 +5526,6 @@
 			<animation condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]" effect="fade" end="0" start="100" time="400">Conditional</animation>
 		</control>
 	</include>
-	<include name="skinshortcuts-template-widget.1">
-		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-widget.1-Master user</include>
-	</include>
-	<include name="skinshortcuts-template-widget.1-Master user">
-		<control id="600" type="label">
-			<label>widget-1</label>
-			<width>1</width>
-			<heigth>1</heigth>
-			<posx>-1</posx>
-			<posy>-1</posy>
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
-			<visible>Skin.String(widgetvalue-movies,1)</visible>
-		</control>
-		<control id="520" type="panel">
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
-			<visible>Skin.String(widgetvalue-movies,1)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=movies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
-		</control>
-		<control id="600" type="label">
-			<label>widget-1</label>
-			<width>1</width>
-			<heigth>1</heigth>
-			<posx>-1</posx>
-			<posy>-1</posy>
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<visible>Skin.String(widgetvalue-tvshows,1)</visible>
-		</control>
-		<control id="520" type="panel">
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<visible>Skin.String(widgetvalue-tvshows,1)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=episodes&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
-		</control>
-		<control id="600" type="label">
-			<label>widget-1</label>
-			<width>1</width>
-			<heigth>1</heigth>
-			<posx>-1</posx>
-			<posy>-1</posy>
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
-			<visible>Skin.String(widgetvalue-music,1)</visible>
-		</control>
-		<control id="520" type="panel">
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
-			<visible>Skin.String(widgetvalue-music,1)</visible>
-			<include condition="Skin.String(HomeLayout, enhanced)" content="EnhancedHomeWidgetLayout" name="EnhancedHomeWidgetLayout">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<include condition="!Skin.String(HomeLayout, enhanced)" content="widgetlayout" name="widgetlayout">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<content target="music">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=songs&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]</content>
-		</control>
-	</include>
 	<include name="skinshortcuts-template-spotlightwidget">
 		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-spotlightwidget-Master user</include>
 	</include>
@@ -5451,53 +5539,6 @@
 			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
 			<include>EnhancedHomeSpotLightWidgetLayout</include>
 			<content target="videos">plugin://script.skin.helper.widgets/?action=random&amp;mediatype=tvshows&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
-		</control>
-	</include>
-	<include name="skinshortcuts-template-win10widget.2">
-		<include condition="StringCompare(System.ProfileName,Master user)">skinshortcuts-template-win10widget.2-Master user</include>
-	</include>
-	<include name="skinshortcuts-template-win10widget.2-Master user">
-		<control id="520" type="panel">
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),movies)</visible>
-			<include>HomeWin10WidgetPosBottom</include>
-			<onleft>510</onleft>
-			<onright>SetFocus(530,0)</onright>
-			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
-			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
-			<include>HomeWin10WidgetLayout</include>
-			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=movies&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
-		</control>
-		<control id="520" type="panel">
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),tvshows)</visible>
-			<include>HomeWin10WidgetPosBottom</include>
-			<onleft>510</onleft>
-			<onright>SetFocus(530,0)</onright>
-			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
-			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
-			<include>HomeWin10WidgetLayout</include>
-			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<content target="videos">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=episodes&amp;reload=$INFO[Window(Home).Property(widgetreload)]</content>
-		</control>
-		<control id="520" type="panel">
-			<visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),music)</visible>
-			<include>HomeWin10WidgetPosBottom</include>
-			<onleft>510</onleft>
-			<onright>SetFocus(530,0)</onright>
-			<onright condition="Skin.HasSetting(EnhancedHome_Circular) + IsEmpty(Container(300).ListItem.Property(widget.2)) + ![Skin.HasSetting(Win10SubmenuRight) + IntegerGreaterThan(Container(4445).NumItems,0)]">Control.Move(300,1)</onright>
-			<onright condition="IsEmpty(Container(300).ListItem.Property(widget.2))">SetFocus(4444,0)</onright>
-			<include>HomeWin10WidgetLayout</include>
-			<include content="HomeWin10WidgetLayoutSquare" name="HomeWin10WidgetLayoutSquare">
-				<param name="widgetid" value="520" />
-				<param name="widgetLabelVisibility" value="WidgetTagOverlayAuto" />
-			</include>
-			<content target="music">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=songs&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]</content>
 		</control>
 	</include>
 	<include name="skinshortcuts-template-widget.2">
