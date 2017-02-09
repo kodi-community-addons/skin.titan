@@ -76,7 +76,7 @@
 			<!--Rating normal-->
 			<include condition="window.isactive(Videos) + !skin.hastheme(classic) + ![Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter) | Skin.HasSetting(RTRatingInFooter)]">StarRatingFooter</include>
             <include condition="window.isactive(Videos) + !skin.hastheme(classic) + [Skin.HasSetting(StudioInFooter) | Skin.HasSetting(IMDBRatingInFooter) | Skin.HasSetting(RTRatingInFooter)]">AltRatingFooter</include>
-			<include condition="window.isactive(Music)">StarRatingMusicFooter</include>
+			<include condition="window.isactive(MyMusicNav.xml)">StarRatingMusicFooter</include>
      			
 		</control>
 	</include>
@@ -97,15 +97,7 @@
                 <height>70</height>
                 <width>84</width>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>darkgrey</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <height>70</height>
-                <width>85</width>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>ff000000</colordiffuse>
+                <colordiffuse>$VAR[AdvancedRatings_PanelColor]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
             </control>
             <control type="image">
@@ -124,8 +116,60 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <font>flags</font>
-                <textcolor>white</textcolor>
+                <textcolor>$VAR[AdvancedRatings_TextColor]</textcolor>
                 <label>$INFO[Window(Home).Property(SkinHelper.ListItem.IMDB.Top250)]</label>
+            </control>
+        </control>
+    </include>
+    
+    <variable name="AdvancedRatings_PanelColor">
+        <value condition="[Window.IsMedia + Control.IsVisible(523)] | [Window.IsActive(Home) + Skin.String(HomeLayout, netflix2)]">None</value>
+        <value condition="Skin.String(FooterPanelColor) + !Skin.String(FooterPanelColor, None)">$INFO[Skin.String(FooterPanelColor)]</value>
+        <value>ff000000</value>
+    </variable>
+    <variable name="AdvancedRatings_TextColor">
+        <value condition="[Window.IsMedia + Control.IsVisible(523)] | [Window.IsActive(Home) + Skin.String(HomeLayout, netflix2)]">$INFO[Skin.String(ViewDetailsTextColor)]</value>
+        <value condition="Skin.String(FooterTextColor) + !Skin.String(FooterPanelColor, None)">$INFO[Skin.String(FooterTextColor)]</value>
+        <value>ffffffff</value>
+    </variable>
+    
+    <include name="AdvancedRatingLayout">
+        <control type="group">
+            <height>70</height>
+            <width>85</width>
+            <control type="image">
+                <height>70</height>
+                <width>84</width>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$VAR[AdvancedRatings_PanelColor]</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <height>70</height>
+                <width>85</width>
+                <bordersize>2</bordersize>
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$INFO[AdvancedRatings_PanelColor]</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <!--top image-->
+                <top>0</top>
+                <width>84</width>
+                <height>40</height>
+                <bordersize>2</bordersize>
+                <texture>$PARAM[image]</texture>
+            </control>
+            <control type="label">
+                <!--rating text-->
+                <top>40</top>
+                <width>84</width>
+                <height>30</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>flags</font>
+                <textcolor>$VAR[AdvancedRatings_TextColor]</textcolor>
+                <label>$PARAM[text]</label>
             </control>
         </control>
     </include>
@@ -139,24 +183,8 @@
                 <height>70</height>
                 <width>84</width>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>darkgrey</colordiffuse>
+                <colordiffuse>$VAR[AdvancedRatings_PanelColor]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <height>70</height>
-                <width>85</width>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>ff000000</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <top>0</top>
-                <width>85</width>
-                <height>40</height>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>black</colordiffuse>
             </control>
             <control type="image">
                 <description>Rotten tomatoes image</description>
@@ -174,7 +202,7 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <font>flags</font>
-                <textcolor>white</textcolor>
+                <textcolor>$VAR[AdvancedRatings_TextColor]</textcolor>
                 <label>$INFO[Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Meter),,%]</label>
             </control>
         </control>
@@ -189,24 +217,8 @@
                 <height>70</height>
                 <width>84</width>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>darkgrey</colordiffuse>
+                <colordiffuse>$VAR[AdvancedRatings_PanelColor]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <height>70</height>
-                <width>85</width>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>ff000000</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <top>0</top>
-                <width>85</width>
-                <height>40</height>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>black</colordiffuse>
             </control>
             <control type="image">
                 <top>0</top>
@@ -233,7 +245,7 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <font>flags</font>
-                <textcolor>white</textcolor>
+                <textcolor>$VAR[AdvancedRatings_TextColor]</textcolor>
                 <label>$INFO[Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.UserMeter),,%]</label>
             </control>
         </control>
@@ -248,24 +260,8 @@
                 <height>70</height>
                 <width>84</width>
                 <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>darkgrey</colordiffuse>
+                <colordiffuse>$VAR[AdvancedRatings_PanelColor]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <height>70</height>
-                <width>85</width>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>ff000000</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="image">
-                <top>0</top>
-                <width>85</width>
-                <height>40</height>
-                <bordersize>2</bordersize>
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>black</colordiffuse>
             </control>
             <control type="image">
                 <top>2</top>
@@ -282,7 +278,7 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <font>flags</font>
-                <textcolor>white</textcolor>
+                <textcolor>$VAR[AdvancedRatings_TextColor]</textcolor>
                 <label>$INFO[Window(Home).Property(SkinHelper.ListItem.MetaCritic.Rating)]</label>
             </control>
         </control>
@@ -369,17 +365,7 @@
                         <width>84</width>
                         <bottom>15</bottom>
                         <texture border="5">diffuse/panel.png</texture>
-                        <colordiffuse>darkgrey</colordiffuse>
-                        <aspectratio>stretch</aspectratio>
-                    </control>
-                    <control type="image">
-                        <right>50</right>
-                        <height>70</height>
-                        <width>85</width>
-                        <bottom>15</bottom>
-                        <bordersize>2</bordersize>
-                        <texture border="5">diffuse/panel.png</texture>
-                        <colordiffuse>ff000000</colordiffuse>
+                        <colordiffuse>$VAR[AdvancedRatings_PanelColor]</colordiffuse>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="image">
@@ -400,7 +386,7 @@
                         <align>center</align>
                         <aligny>center</aligny>
                         <font>flags</font>
-                        <textcolor>white</textcolor>
+                        <textcolor>$VAR[AdvancedRatings_TextColor]</textcolor>
                         <label>$VAR[FooterRatingLabel]</label>
                     </control>
                 </control>
@@ -683,7 +669,7 @@
         <control type="group">
             <visible>!Window.IsActive(DialogVideoInfo.xml)</visible>
             <visible>![!Skin.hastheme(classic) + Skin.HasSetting(StudioInFooter)]</visible>
-            <visible>!IsEmpty(ListItem.Rating) + window.isactive(Videos)</visible>
+            <visible>!IsEmpty(ListItem.Rating)</visible>
             <bottom>20</bottom>
             <height>80</height>
             <posx>1450</posx>
@@ -736,7 +722,7 @@
             <right>60</right>
             <control type="image">
                 <!--Stars classic-->
-                <visible>!IsEmpty(ListItem.Rating) + skin.hastheme(classic)</visible>
+                <visible>!IsEmpty(Container.ListItem.StarRating) + skin.hastheme(classic)</visible>
                 <right>0</right>
                 <posy>18</posy>
                 <width>270</width>
@@ -746,7 +732,7 @@
             </control>
             <control type="image">
                 <!--Stars modern-->
-                <visible>!IsEmpty(ListItem.Rating) + !skin.hastheme(classic)</visible>
+                <visible>!IsEmpty(Container.ListItem.StarRating) + !skin.hastheme(classic)</visible>
                 <right>0</right>
                 <posy>20</posy>
                 <width>220</width>
