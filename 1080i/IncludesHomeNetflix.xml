@@ -220,7 +220,7 @@
         </control>
         
         <!-- netflix content -->
-        <control type="group">
+        <control type="group" id="77777">
             <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
             <!-- background image + overlay -->
             <control type="image">
@@ -262,13 +262,16 @@
                 <visible>![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Window.IsActive(Home)]</visible>
                 
                 <!-- spotlight image -->
-                <control type="image">
-                    <fadetime>350</fadetime>
+                <control type="multiimage">
+                    <imagepath background="true" diffuse="special://home/addons/resource.images.backgroundoverlays.titan/resources/Right Corner.png">$VAR[backgroundVar]</imagepath>
+                    <aspectratio>scale</aspectratio>
+                    <fadetime>450</fadetime>
+                    <include>fanartSpeed</include>
+                    <loop>yes</loop>
                     <width>1152</width>
                     <right>0</right>
                     <height>550</height>
                     <top>0</top>
-                    <texture background="true" diffuse="special://home/addons/resource.images.backgroundoverlays.titan/resources/Right Corner.png">$VAR[backgroundVar]</texture>
                     <aspectratio scalediffuse="true" aligny="top">scale</aspectratio>
                     <visible>Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
@@ -281,6 +284,7 @@
                     <top>20</top>
                     <aspectratio align="left" aligny="top">keep</aspectratio>
                     <texture background="true" fallback="colors/color_transparent.png">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+                    <visible>!Skin.HasSetting(NoClearLogoNetflix)</visible>
                 </control>
                 <!-- title fallback -->
                 <control type="textbox">
@@ -293,7 +297,7 @@
                     <aligny>top</aligny>
                     <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <visible>SubString(Control.GetLabel(29475),color_transparent) + Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    <visible>[SubString(Control.GetLabel(29475),color_transparent) | Skin.HasSetting(NoClearLogoNetflix)] + Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
                 <control type="textbox">
                     <height>120</height>
@@ -305,7 +309,7 @@
                     <aligny>top</aligny>
                     <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <visible>SubString(Control.GetLabel(29475),color_transparent) + !Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    <visible>[SubString(Control.GetLabel(29475),color_transparent) | Skin.HasSetting(NoClearLogoNetflix)] + !Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
                     
                 <!-- spotlight details -->

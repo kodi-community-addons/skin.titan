@@ -302,20 +302,6 @@
 		<value condition="!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Plot))">$INFO[Window(Home).Property(SkinHelper.ListItem.Plot)]</value>
 	 </variable>
      
-	<variable name="SquarePosterThumb">
-		<value condition="[Container.Content(genres) | StringCompare(ListItem.DBTYPE,genre)] + SubString(ListItem.FolderPath,music)">$VAR[MusicGenreIconVar]</value>
-        <value condition="[Container.Content(genres) | StringCompare(ListItem.DBTYPE,genre)]">$VAR[MovieGenreIconVar]</value>
-		<value condition="!IsEmpty(ListItem.Thumb) + [Container.Content(episodes) | StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] + !Window.IsActive(DialogVideoInfo.xml)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Property(ArtistThumb))">$INFO[ListItem.Property(ArtistThumb)]</value>
-		<value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-        <value condition="!IsEmpty(ListItem.Art(fanart)) + [Container.Content(movies) | Container.Content(seasons) | Container.Content(tvshows)]">$INFO[ListItem.Art(fanart)]</value>
-		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack.png</value>
-		<value condition="StringCompare(ListItem.Label,$LOCALIZE[21452])">dialogs/filebrowser/DefaultAddSource.png</value>
-		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-        <value condition="Window.IsActive(Music) | Container.Content(albums) | Container.Content(songs)">dialogs/filebrowser/DefaultAudio.png</value>
-		<value condition="!IsEmpty(ListItem.Property(FanArt))">$INFO[ListItem.Property(FanArt)]</value>
-    </variable>
-	
 	<variable name="ListItemClearLogo">
 		<value condition="Control.IsVisible(503)">-</value>
 		<value condition="!IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
@@ -829,20 +815,42 @@
      </variable>
      
      <variable name="MovieGenreIconVar">
+       <value condition="SubString(Skin.String(MovieGenreIconPack.ext), png)">$INFO[Skin.String(MovieGenreIconPack.path)]$INFO[ListItem.Label,,.png]</value>
+       <value condition="Skin.String(MovieGenreIconPack.path)">$INFO[Skin.String(MovieGenreIconPack.path)]$INFO[ListItem.Label,,.jpg]</value>
+       <value>DefaultGenre.png</value>
+     </variable>
+     
+     <variable name="MovieGenreIconVarList">
+       <!-- infolabels are not supported within a container item layout so we define all known resource addons manually-->
        <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.poster/)">resource://resource.images.moviegenreicons.poster/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.coloured/)">resource://resource.images.moviegenreicons.coloured/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.white/)">resource://resource.images.moviegenreicons.white/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.transparent/)">resource://resource.images.moviegenreicons.transparent/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.grey/)">resource://resource.images.moviegenreicons.grey/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.filmstrip/)">resource://resource.images.moviegenreicons.filmstrip/$INFO[ListItem.Label].jpg</value>
-       <value>$INFO[Skin.String(MovieGenreIconPack.path)]$INFO[ListItem.Label,,.jpg]</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.arctic.zephyr/)">resource://resource.images.moviegenreicons.arctic.zephyr/$INFO[ListItem.Label].png</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.xzener-flat/)">resource://resource.images.moviegenreicons.xzener-flat/$INFO[ListItem.Label].png</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.xzener-reflection/)">resource://resource.images.moviegenreicons.xzener-reflection/$INFO[ListItem.Label].png</value>
+       <value condition="Skin.String(MovieGenreIconPack.path,resource://resource.images.moviegenreicons.arctic.zephyr/)">resource://resource.images.moviegenreicons.arctic.zephyr/$INFO[ListItem.Label].png</value>
+       <!-- last resort: use webservice - will only work for non-texture packed resource addons -->
+       <value condition="Skin.String(MovieGenreIconPack.path)">http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MovieGenreIconPack.path)}$INFO[ListItem.Label]$INFO{Skin.String(MovieGenreIconPack.ext)}&amp;fallback=DefaultGenre.png</value>
+       <value>DefaultGenre.png</value>
      </variable>
      
      <variable name="MusicGenreIconVar">
+       <value condition="SubString(Skin.String(MusicGenreIconPack.ext), png)">$INFO[Skin.String(MusicGenreIconPack.path)]$INFO[ListItem.Label,,.png]</value>
+       <value condition="Skin.String(MusicGenreIconPack.path)">$INFO[Skin.String(MusicGenreIconPack.path)]$INFO[ListItem.Label,,.jpg]</value>
+       <value>DefaultGenre.png</value>
+     </variable>
+     
+     <variable name="MusicGenreIconVarList">
        <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.text/)">resource://resource.images.musicgenreicons.text/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.grey/)">resource://resource.images.musicgenreicons.grey/$INFO[ListItem.Label].jpg</value>
        <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.poster/)">resource://resource.images.musicgenreicons.poster/$INFO[ListItem.Label].jpg</value>
-       <value>$INFO[Skin.String(MusicGenreIconPack.path)]$INFO[ListItem.Label,,.jpg]</value>
+       <value condition="Skin.String(MusicGenreIconPack.path,resource://resource.images.musicgenreicons.coloured/)">resource://resource.images.musicgenreicons.coloured/$INFO[ListItem.Label].jpg</value>
+       <!-- last resort: use webservice - will only work for non-texture packed resource addons -->
+       <value condition="Skin.String(MusicGenreIconPack.path)">http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MusicGenreIconPack.path)}$INFO[ListItem.Label]$INFO{Skin.String(MusicGenreIconPack.ext)}&amp;fallback=DefaultGenre.png</value>
+       <value>DefaultGenre.png</value>
      </variable>
      
      <variable name="similarInfo">
@@ -1180,21 +1188,6 @@
         <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(plexbmc.7.image))">$INFO[Window(Home).Property(plexbmc.7.image.ClearLogo)]</value>
         <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(plexbmc.8.image))">$INFO[Window(Home).Property(plexbmc.8.image.ClearLogo)]</value>
         <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(plexbmc.9.image))">$INFO[Window(Home).Property(plexbmc.9.image.ClearLogo)]</value>
-        
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.generic.image))">$INFO[Window(Home).Property(netflix.generic.image.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.generic.mylist.image))">$INFO[Window(Home).Property(netflix.generic.mylist.image.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.generic.suggestions.image))">$INFO[Window(Home).Property(netflix.generic.suggestions.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.generic.inprogress.image))">$INFO[Window(Home).Property(netflix.generic.inprogress.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.generic.recent.image))">$INFO[Window(Home).Property(netflix.generic.recent.ClearLogo)]</value>
-
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.movies.image))">$INFO[Window(Home).Property(netflix.movies.image.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.movies.mylist.image))">$INFO[Window(Home).Property(netflix.movies.mylist.image.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.movies.suggestions.image))">$INFO[Window(Home).Property(netflix.movies.suggestions.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.movies.recent.image))">$INFO[Window(Home).Property(netflix.movies.recent.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.tvshows.image))">$INFO[Window(Home).Property(netflix.tvshows.image.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.tvshows.mylist.image))">$INFO[Window(Home).Property(netflix.tvshows.mylist.image.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.tvshows.suggestions.image))">$INFO[Window(Home).Property(netflix.tvshows.suggestions.ClearLogo)]</value>
-        <value condition="StringCompare(Control.GetLabel(99004),Window(Home).Property(netflix.tvshows.recent.image))">$INFO[Window(Home).Property(netflix.tvshows.recent.ClearLogo)]</value>
 
      </variable>
      
