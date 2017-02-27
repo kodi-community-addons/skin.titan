@@ -5,147 +5,41 @@
 		<include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
 		<include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
 		<include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
-		
-        <!-- fake list containing all netflix rows -->
-        <control type="list" id="999">
-        <width>1</width>
-        <height>1</height>
-        <itemlayout/>
-        <focusedlayout />
-        <content><include>skinshortcuts-group-netflixmenu</include></content>
-        </control>
-
-		<!-- all widgets -->
-		<control type="grouplist" id="9000">
-			<posx>0</posx>
-			<height>82%</height>
-			<width>100%</width>
-			<bottom>10</bottom>
-            <ondown>9000</ondown>
-            <onleft>300</onleft>
-            <onup>9000</onup>
-			<defaultcontrol always="true">51</defaultcontrol>
-			<pagecontrol>317</pagecontrol>
-			<!-- ROW1: spotlight -->
-			<include condition="!Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHomeSpotLightWidget</include>
-            <!-- ROW1 (when spotlight disabled) -->
-            <include name="widgetlayout_netflix" content="widgetlayout_netflix" condition="Skin.HasSetting(NetflixHomeDisableFirstRow)">
-                <param name="widgetid" value="510" />
-                <param name="listitemid" value="0" />
-            </include>
-            <!-- $INFO[Skin.String(ViewDetailsTextColor)]space -->
-			<control type="group" id="514">
-				<width>1920</width>
-				<height>15</height>
-				<visible>!Skin.String(widgetstyle, poster)</visible>
-                <visible>!Skin.HasSetting(NetflixHomeDisableFirstRow)</visible>
-			</control>
-     		<!-- ROW2 -->
-            <include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="520" />
-                <param name="listitemid" value="1" />
-            </include>
-			<!-- ROW3 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="530" />
-                <param name="listitemid" value="2" />
-            </include>
-			
-			<!-- ROW4 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="540" />
-                <param name="listitemid" value="3" />
-            </include>
-			
-			<!-- ROW5 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="550" />
-                <param name="listitemid" value="4" />
-            </include>
-			
-            <!-- ROW6 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="560" />
-                <param name="listitemid" value="5" />
-            </include>
-			
-            <!-- ROW7 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="570" />
-                <param name="listitemid" value="6" />
-            </include>
-			
-            <!-- ROW8 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="580" />
-                <param name="listitemid" value="7" />
-            </include>
-			
-            <!-- ROW9 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="590" />
-                <param name="listitemid" value="8" />
-            </include>
-			
-            <!-- ROW10 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="600" />
-                <param name="listitemid" value="9" />
-            </include>
+        
+        <control type="group" id="9000">
+            <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
             
-            <!-- ROW11 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="610" />
-                <param name="listitemid" value="10" />
-            </include>
+            <!-- spotlight -->
+            <include condition="!Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHomeSpotLightWidget</include>
+                
+            <!-- all widgets -->
+            <control type="grouplist" id="77777">
+                <include condition="Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHome_AltHeight_NoSpotLight</include>
+                <left>50</left>
+                <right>50</right>
+                <bottom>0</bottom>
+                <height>530</height>
+                <ondown>77777</ondown>
+                <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
+                <onup condition="!Skin.HasSetting(NetflixHomeDisableFirstRow)">505</onup>
+                <onback>300</onback>
+                <pagecontrol>317</pagecontrol>
+                <include>skinshortcuts-template-Widgets</include>
+            </control>
             
-            <!-- ROW12 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="611" />
-                <param name="listitemid" value="11" />
-            </include>
-            
-            <!-- ROW13 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="612" />
-                <param name="listitemid" value="12" />
-            </include>
-            
-            <!-- ROW14 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="613" />
-                <param name="listitemid" value="13" />
-            </include>
-            
-            <!-- ROW15 -->
-			<include name="widgetlayout_netflix" content="widgetlayout_netflix">
-                <param name="widgetid" value="614" />
-                <param name="listitemid" value="14" />
-            </include>
-            
-            <!-- $INFO[Skin.String(ViewDetailsTextColor)]space -->
-			<control type="button" id="605">
-				<width>1920</width>
-				<height>10</height>
-                <texturefocus>-</texturefocus>
-                <texturenofocus>-</texturenofocus>
-                <onfocus condition="Skin.HasSetting(NetflixHomeDisableFirstRow)">SetFocus(520)</onfocus>
-                <onfocus condition="!Skin.HasSetting(NetflixHomeDisableFirstRow)">SetFocus(51)</onfocus>
-			</control>
-
-
+            <control type="scrollbar" id="317">
+                <include condition="Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHome_AltHeight_NoSpotLight</include>
+                <right>50</right>
+                <top>140</top>
+                <bottom>0</bottom>
+                <onleft>77777</onleft>
+                <onright>300</onright>
+                <showonepage>false</showonepage>
+                <visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
+            </control>
+                    
 		</control>
-		
-		<control type="scrollbar" id="317"> 
-			<right>15</right>
-			<top>160</top>
-			<bottom>10</bottom>
-			<onleft>17000</onleft>
-			<showonepage>false</showonepage>
-			<visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
-		</control>
-				
-		<!--Sub Menu Tab Left-->
+        <!--Sub Menu Tab Left-->
         <control type="group">
 			<animation type="Conditional" condition="ControlGroup(300).HasFocus()">
 					<effect type="fade" start="100" end="0" time="100" />
@@ -198,21 +92,7 @@
     </variable>
     
     <include name="HomeNetflix2">
-		
-        <!-- fake list containing all netflix rows -->
-        <control type="list" id="999">
-        <width>1</width>
-        <height>1</height>
-        <itemlayout/>
-        <focusedlayout />
-        <content>
-            <include condition="Window.IsActive(Home)">skinshortcuts-group-netflixmenu</include>
-            <include condition="Window.IsActive(3017)">netflix_items_tvshows</include>
-            <include condition="Window.IsActive(3018)">netflix_items_movies</include>
-            <include condition="Window.IsActive(3019)">netflix_items_flix2kodi</include>
-        </content>
-        </control>
-        
+		        
         <control type="image">
             <width>100%</width>
             <height>100%</height>
@@ -220,7 +100,7 @@
         </control>
         
         <!-- netflix content -->
-        <control type="group" id="77777">
+        <control type="group" id="9000">
             <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
             <!-- background image + overlay -->
             <control type="image">
@@ -262,12 +142,10 @@
                 <visible>![Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2) + Window.IsActive(Home)]</visible>
                 
                 <!-- spotlight image -->
-                <control type="multiimage">
-                    <imagepath background="true" diffuse="special://home/addons/resource.images.backgroundoverlays.titan/resources/Right Corner.png">$VAR[backgroundVar]</imagepath>
+                <control type="image">
+                    <texture background="true" diffuse="special://home/addons/resource.images.backgroundoverlays.titan/resources/Right Corner.png">$VAR[netflixThumb]</texture>
                     <aspectratio>scale</aspectratio>
                     <fadetime>450</fadetime>
-                    <include>fanartSpeed</include>
-                    <loop>yes</loop>
                     <width>1152</width>
                     <right>0</right>
                     <height>550</height>
@@ -422,125 +300,27 @@
             </control>
             
             <!-- all widgets -->
-            <control type="grouplist" id="9000">
+            <control type="grouplist" id="77777">
                 <posx>50</posx>
-                <include condition="[Skin.HasSetting(NetflixHomeDisableFirstRow) + Skin.String(HomeLayout,netflix2)]">NetFlixHome2_AltHeight</include>
+                <include condition="Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHome_AltHeight_NoSpotLight</include>
                 <bottom>0</bottom>
                 <height>530</height>
                 <width>1870</width>
-                <ondown>9000</ondown>
-                <onleft>300</onleft>
+                <ondown>77777</ondown>
+                <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
                 <onup>614</onup>
+                <onback>300</onback>
                 <pagecontrol>317</pagecontrol>
-                
-                <!-- ROW1 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="510" />
-                    <param name="listitemid" value="0" />
-                </include>
-                <!-- ROW2 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="520" />
-                    <param name="listitemid" value="1" />
-                </include>
-                <!-- ROW3 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="530" />
-                    <param name="listitemid" value="2" />
-                </include>
-                
-                <!-- ROW4 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="540" />
-                    <param name="listitemid" value="3" />
-                </include>
-                
-                <!-- ROW5 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="550" />
-                    <param name="listitemid" value="4" />
-                </include>
-                
-                <!-- ROW6 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="560" />
-                    <param name="listitemid" value="5" />
-                </include>
-                
-                <!-- ROW7 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="570" />
-                    <param name="listitemid" value="6" />
-                </include>
-                
-                <!-- ROW8 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="580" />
-                    <param name="listitemid" value="7" />
-                </include>
-                
-                <!-- ROW9 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="590" />
-                    <param name="listitemid" value="8" />
-                </include>
-                
-                <!-- ROW10 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="600" />
-                    <param name="listitemid" value="9" />
-                </include>
-                
-                <!-- ROW11 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="610" />
-                    <param name="listitemid" value="10" />
-                </include>
-                
-                <!-- ROW12 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="611" />
-                    <param name="listitemid" value="11" />
-                </include>
-                
-                <!-- ROW13 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="612" />
-                    <param name="listitemid" value="12" />
-                </include>
-                
-                <!-- ROW14 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="613" />
-                    <param name="listitemid" value="13" />
-                </include>
-                
-                <!-- ROW15 -->
-                <include name="widgetlayout_netflix2" content="widgetlayout_netflix2">
-                    <param name="widgetid" value="614" />
-                    <param name="listitemid" value="14" />
-                </include>
-                
-                
-                <!-- space -->
-                <control type="button" id="605">
-                    <width>1920</width>
-                    <height>10</height>
-                    <texturefocus>-</texturefocus>
-                    <texturenofocus>-</texturenofocus>
-                    <onfocus condition="IntegerGreaterThan(Container(510).Numitems,0)">SetFocus(510)</onfocus>
-                    <onleft>300</onleft>
-                </control>
-
-
+                <include>skinshortcuts-template-Widgets</include>
             </control>
             
             <control type="scrollbar" id="317"> 
+                <include condition="Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHome_AltHeight_NoSpotLight</include>
                 <left>0</left>
                 <top>450</top>
                 <bottom>0</bottom>
-                <onleft>300</onleft>
-                <onright>9000</onright>
+                <onleft>77777</onleft>
+                <onright>300</onright>
                 <showonepage>false</showonepage>
                 <visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars)]</visible>
             </control>
@@ -559,31 +339,14 @@
         <!-- Side Menu Small -->
         <include condition="!Skin.HasSetting(NetFlixHome_LargeMenu)">SideBladeMainMenu</include>
         
-        <!-- busy spinner  -->
-        <control type="multiimage">
-            <animation effect="fade" start="0" end="100" time="0">Visible</animation>
-            <animation effect="fade" start="100" end="0" time="500" delay="500">Hidden</animation>
-            <right>50</right>
-            <top>50</top>
-            <width>100</width>
-            <height>100</height>
-            <aspectratio>keep</aspectratio>
-            <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexture.Path)]</imagepath>
-            <timeperimage>100</timeperimage>
-            <colordiffuse>$INFO[Skin.String(SpinnerTexture.Color)]</colordiffuse>
-            <fadetime>0</fadetime>
-            <visible>!Skin.String(SkinHelper.SpinnerTexture.Path,None)</visible>
-            <visible>Control.IsVisible(510) + Container(510).IsUpdating</visible>
-        </control>
-        
     </include>
     
     <include name="widgetlayout_netflix">
-        <control type="group" id="10$PARAM[widgetid]">
+        <control type="group" id="10$PARAM[widgetId]">
             <width>1920</width>
             <height>70</height>
             <visible>!IsEmpty(Container(999).ListItemNoWrap($PARAM[listitemid]).Label)</visible>
-            <visible>IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,0)</visible>
+            <visible>IntegerGreaterThan(Container($PARAM[widgetId]).NumItems,0)</visible>
             <control type="image">
                 <posx>50</posx>
                 <posy>0</posy>
@@ -601,7 +364,7 @@
                 <aligny>center</aligny>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <label>$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Label]</label>
-                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
+                <visible>IsEmpty(Container($PARAM[widgetId]).ListItem.Property(similartitle))</visible>
             </control>
             <control type="label">
                 <height>55</height>
@@ -610,78 +373,30 @@
                 <align>left</align>
                 <aligny>center</aligny>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>$LOCALIZE[31545] $INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
-                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
+                <label>$LOCALIZE[31545] $INFO[Container($PARAM[widgetId]).ListItem.Property(similartitle)]</label>
+                <visible>!IsEmpty(Container($PARAM[widgetId]).ListItem.Property(similartitle))</visible>
             </control>
         </control>	
         <include name="widgetlayout_netflix_normal">
-            <param name="widgetid" value="$PARAM[widgetid]" />
+            <param name="widgetId" value="$PARAM[widgetId]" />
             <param name="listitemid" value="$PARAM[listitemid]" />
             <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
         </include>
     </include>
-    <include name="widgetlayout_netflix2">
-        <control type="group" id="10$PARAM[widgetid]">
-            <width>1920</width>
-            <height>40</height>
-            <visible>!IsEmpty(Container(999).ListItemNoWrap($PARAM[listitemid]).Label)</visible>
-            <visible>IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,0)</visible>
-            <control type="label">
-                <height>40</height>
-                <posx>5</posx>
-                <font>Reg32</font>
-                <align>left</align>
-                <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Label]</label>
-                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
-            </control>
-            <control type="label">
-                <height>40</height>
-                <posx>5</posx>
-                <font>Reg32</font>
-                <align>left</align>
-                <aligny>top</aligny>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$LOCALIZE[31545] $INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
-                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
-            </control>
-        </control>	
-        <include name="widgetlayout_netflix_normal" content="widgetlayout_netflix_normal" condition="![Skin.HasSetting(NetflixHomeDisableFirstRow) + [Skin.String(widgetstyle, poster) | Skin.String(widgetstyle, landscape)]] + Window.IsActive(Home) + !Skin.String(widgetstyle, landscapelarge)">
-            <param name="widgetid" value="$PARAM[widgetid]" />
-            <param name="listitemid" value="$PARAM[listitemid]" />
-            <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-        </include>
-        <include name="widgetlayout_netflix_details" content="widgetlayout_netflix_details" condition="Skin.HasSetting(NetflixHomeDisableFirstRow) + [Skin.String(widgetstyle, poster) | Skin.String(widgetstyle, landscape)] + Window.IsActive(Home)">
-            <param name="widgetid" value="$PARAM[widgetid]" />
-            <param name="listitemid" value="$PARAM[listitemid]" />
-            <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-        </include>
-        <include name="widget_layout_landscape_netflix" content="widget_layout_landscape_netflix" condition="!Window.IsActive(Home) | Skin.String(widgetstyle, landscapelarge)">
-            <param name="widgetid" value="$PARAM[widgetid]" />
-            <param name="listitemid" value="$PARAM[listitemid]" />
-            <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-        </include>
-    </include>
-    
-    <include name="NetFlixHome2_AltHeight">
+      
+    <include name="NetFlixHome_AltHeight_NoSpotLight">
         <top>0</top>
         <height>100%</height>
     </include>
     
     <include name="NetFlixHomeSpotLightWidget">
-        <control type="group" id="505">
-            <width>1920</width>
-            <height>580</height>
+        <control type="group">
+            <left>50</left>
+            <width>1820</width>
+            <height>500</height>
+            <top>140</top>
             <!-- background panel -->
             <control type="image">
-                <posx>50</posx>
-                <top>0</top>
-                <bottom>0</bottom>
-                <width>1820</width>
-                <height>575</height>
                 <texture border="15">diffuse/bgpanel.png</texture>
                 <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
                 <aspectratio>stretch</aspectratio>
@@ -689,13 +404,14 @@
             </control>
 
             <control type="grouplist">
-                <width>800</width>
-                <posx>60</posx>
+                <width>47%</width>
+                <left>10</left>
                 <posy>10</posy>
-                <height>450</height>
+                <bottom>10</bottom>
                 <orientation>vertical</orientation>
                 <control type="label">
-                    <height>100</height>
+                    <height>60</height>
+                    <width>99%</width>
                     <font>Reg36</font>
                     <align>left</align>
                     <aligny>top</aligny>
@@ -704,40 +420,53 @@
                     <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                 </control>
                 <control type="textbox">
-                    <height max="260">auto</height>
+                    <height>240</height>
+                    <width>99%</width>
                     <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                     <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                     <align>justify</align>
                     <font>Light28</font>
+                    <visible>Control.IsVisible(505)</visible>
+                </control>
+                <control type="textbox">
+                    <height>329</height>
+                    <width>99%</width>
+                    <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+                    <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+                    <align>justify</align>
+                    <font>Light28</font>
+                    <visible>!Control.IsVisible(505)</visible>
                 </control>
                 <control type="label">
-                    <height>25</height>
+                    <height>45</height>
                     <label></label>
                 </control>
                 <control type="group">
-                    <height>60</height>
+                    <height>100</height>
+                    <width>99%</width>
+                    <left>5</left>
                     <include>mediaflags</include>
                 </control>
             </control>
-            <control type="grouplist">
+            <control type="grouplist" id="505">
                 <width>800</width>
-                <posx>60</posx>
-                <posy>490</posy>
-                <height>60</height>
+                <bottom>10</bottom>
+                <left>10</left>
+                <height>55</height>
                 <orientation>horizontal</orientation>
                 <onleft>300</onleft>
-                <visible allowhiddenfocus="true">ControlGroup(505).HasFocus()</visible>
+                <visible allowhiddenfocus="true">ControlGroup(505).HasFocus() + IntegerGreaterThan(Container(1508).NumItems,0)</visible>
                 <control type="button" id="51">
                     <description>Play</description>
                     <width>320</width>
-                    <posx>60</posx>
-                    <posy>490</posy>
+                    <height>100%</height>
                     <label>208</label>
                     <onright>52</onright>
                     <onleft>300</onleft>
-                    <ondown>520</ondown>
-                    <onup>600</onup>
+                    <ondown>77777</ondown>
+                    <onup>77777</onup>
                     <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                         <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
                     </include>
@@ -747,13 +476,12 @@
                 <control type="button" id="52">
                     <description>Info</description>
                     <width>320</width>
-                    <posx>400</posx>
-                    <posy>490</posy>
+                    <height>100%</height>
                     <label>19033</label>
                     <onleft>51</onleft>
                     <onright>53</onright>
-                    <ondown>520</ondown>
-                    <onup>600</onup>
+                    <ondown>77777</ondown>
+                    <onup>77777</onup>
                     <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                         <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
                     </include>
@@ -762,8 +490,7 @@
                 </control>
                 <control type="radiobutton" id="53">
                     <label></label>
-                    <posy>490</posy>
-                    <posx>735</posx>
+                    <height>100%</height>
                     <width>60</width>
                     <height>60</height>
                     <textureradiofocus colordiffuse="$INFO[Skin.String(ButtonFocusTextColor)]">dialogs/keyboard/left.png</textureradiofocus>
@@ -773,18 +500,17 @@
                     <radioposx>0</radioposx>
                     <onright>54</onright>
                     <onleft>52</onleft>
-                    <ondown>520</ondown>
+                    <ondown>77777</ondown>
                     <onclick>Control.Move(1508,-1)</onclick>
                     <selected>Control.HasFocus(53)</selected>
                 </control>
                 <control type="radiobutton" id="54">
                     <label></label>
-                    <posy>490</posy>
-                    <posx>800</posx>
+                    <height>100%</height>
                     <width>60</width>
                     <height>60</height>
                     <onleft>53</onleft>
-                    <ondown>520</ondown>
+                    <ondown>77777</ondown>
                     <textureradiofocus colordiffuse="$INFO[Skin.String(ButtonFocusTextColor)]">dialogs/keyboard/right.png</textureradiofocus>
                     <textureradionofocus colordiffuse="$INFO[Skin.String(ButtonTextColor)]">dialogs/keyboard/right.png</textureradionofocus>
                     <radiowidth>40</radiowidth>
@@ -815,18 +541,18 @@
                 <focusedlayout width="960" height="555">
                     <include name="HiddenWidgetButton" content="HiddenWidgetButton">
                         <param name="widgetstyle" value="spotlight" />
-                        <param name="widgetid" value="1508" />
+                        <param name="widgetId" value="1508" />
                     </include>
                 </focusedlayout>
-                <content target="videos">$INFO[Container(999).ListItemNoWrap(0).Property(list)]</content>
+                <content target="videos">$VAR[NetFlixHomeSpotLightWidgetContent]</content>
             </control>
             
             <!-- spotlight image  -->
             <control type="group">
-                <right>60</right>
+                <right>10</right>
                 <top>10</top>
-                <width>960</width>
-                <height>555</height>
+                <width>50%</width>
+                <bottom>10</bottom>
                 <control type="image">
                     <bordersize>5</bordersize>
                     <texture background="true" diffuse="diffuse/wide.png">$VAR[fanartBackground]</texture>
@@ -834,127 +560,46 @@
                     <fadetime>350</fadetime>
                 </control>
                 <control type="image">
-                    <right>20</right>
-                    <bottom>25</bottom>
-                    <width>70%</width>
-                    <height>350</height>
+                    <bordersize>5</bordersize>
                     <aspectratio align="right" aligny="bottom">keep</aspectratio>
                     <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
                 </control>
             </control>
+        
+            <!-- busy image while widget loading -->
+            <control type="multiimage">
+                <posy>300</posy>
+                <right>140</right>
+                <width>100</width>
+                <height>100</height>
+				<aspectratio>keep</aspectratio>
+                <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexture.Path)]</imagepath>
+                <timeperimage>100</timeperimage>
+                <colordiffuse>$INFO[Skin.String(SpinnerTexture.Color)]</colordiffuse>
+                <fadetime>0</fadetime>
+				<visible>!Skin.String(SkinHelper.SpinnerTexture.Path,None)</visible>
+                <visible>Control.IsVisible(1508)</visible>
+            </control>
         </control>
 			
     </include>
-	
-    <include name="widgetlayout_netflix_normal">
-        <control type="panel" id="$PARAM[widgetid]">
-            <focusposition>0</focusposition>
-            <width>100%</width>
-            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
-            <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">$PARAM[widgetid]</onleft>
-            <include name="widget_layout_poster" content="widget_layout_poster" condition="Skin.String(widgetstyle, poster)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_landscape" content="widget_layout_landscape" condition="Skin.String(widgetstyle, landscape)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_landscapesmall" content="widget_layout_landscapesmall" condition="Skin.String(widgetstyle, landscapesmall)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_singlebox" content="widget_layout_singlebox" condition="Skin.String(widgetstyle, single box)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_widebox" content="widget_layout_widebox" condition="Skin.String(widgetstyle, wide box)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_small_poster" content="widget_layout_small_poster" condition="Skin.String(widgetstyle, small poster)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_square" content="widget_layout_square" condition="Skin.String(widgetstyle, square)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_minisquare" content="widget_layout_minisquare" condition="Skin.String(widgetstyle, minisquare)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_banner" content="widget_layout_banner" condition="Skin.String(widgetstyle, banner)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <content target="videos">$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Property(list)]</content>
-        </control>
-    </include>
-    <include name="widgetlayout_netflix_details">
-        <control type="fixedlist" id="$PARAM[widgetid]">
-            <focusposition>0</focusposition>
-            <width>100%</width>
-            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
-            <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">$PARAM[widgetid]</onleft>
-            <include name="widget_layout_poster_netflix_details" content="widget_layout_poster_netflix_details" condition="Skin.String(widgetstyle, poster)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <include name="widget_layout_landscape_netflix_details" content="widget_layout_landscape_netflix_details" condition="Skin.String(widgetstyle, landscape)">
-                <param name="widgetid" value="$PARAM[widgetid]" />
-                <param name="widgetTags" value="$PARAM[widgetLabelVisibility]" />
-            </include>
-            <content target="videos">$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Property(list)]</content>
-        </control>
-    </include>
+	<variable name="NetFlixHomeSpotLightWidgetContent">
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItem.Property(widgetPath.99)) + !SubString(Container(300).ListItem.Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItem.Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(0).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(0).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(0).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(1).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(1).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(1).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(2).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(2).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(2).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(3).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(3).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(3).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(4).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(4).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(4).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(5).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(5).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(5).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(6).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(6).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(6).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(7).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(7).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(7).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(8).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(8).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(8).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(9).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(9).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(9).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(10).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(10).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(10).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(11).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(11).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(11).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(12).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(12).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(12).Property(widgetPath.99)]</value>
+    </variable>
     
-    <include name="widget_layout_landscape_netflix">
-        <control type="panel" id="$PARAM[widgetid]">
-            <width>1920</width>
-            <height>260</height>
-            <orientation>horizontal</orientation>
-            <include>widget_layout_general</include>
-            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
-            <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">$PARAM[widgetid]</onleft>
-            <itemlayout width="430" height="260">
-                <control type="group">
-                    <width>430</width>
-                    <height>260</height>
-                    <include>ThumbsViewLayout</include>
-                    <control type="group">
-                        <description>widget label overlay</description>
-                        <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
-                        <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
-                        <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
-                            <param name="prefix" value="Landscape" />
-                        </include>
-                    </control>
-                </control>
-            </itemlayout>
-            <focusedlayout width="430" height="260">
-                <control type="group">
-                    <width>430</width>
-                    <height>260</height>
-                    <animation effect="zoom" center="auto" start="100" end="105" time="160" tween="quadratic" condition="Skin.HasSetting(WidgetsZoomFocus)">Focus</animation>
-                    <include>ThumbsViewLayoutFocus</include>
-                    <control type="group">
-                        <description>widget label overlay</description>
-                        <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
-                        <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
-                        <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
-                            <param name="prefix" value="Landscape" />
-                        </include>
-                    </control>
-                    <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                        <param name="widgetstyle" value="landscapelarge" />
-                        <param name="widgetid" value="$PARAM[widgetid]" />
-                    </include>
-                </control>
-            </focusedlayout>
-            <content target="videos">$INFO[Container(999).ListItemNoWrap($PARAM[listitemid]).Property(list)]</content>
-        </control>
-    </include>
     <include name="widget_layout_landscape_netflix_details">
         <include>widget_layout_general</include>
         <height>210</height>
@@ -974,14 +619,14 @@
                 </control>
             </control>
 		</itemlayout>
-        <focusedlayout width="1090" height="205" condition="Control.HasFocus($PARAM[widgetid])">
+        <focusedlayout width="1090" height="205" condition="Control.HasFocus($PARAM[widgetId])">
             <include>widebox_netflix</include>
             <include name="HiddenWidgetButton" content="HiddenWidgetButton">
                 <param name="widgetstyle" value="landscape" />
-                <param name="widgetid" value="$PARAM[widgetid]" />
+                <param name="widgetId" value="$PARAM[widgetId]" />
             </include>
         </focusedlayout>
-		<focusedlayout width="366" height="210" condition="!Control.HasFocus($PARAM[widgetid])">
+		<focusedlayout width="366" height="210" condition="!Control.HasFocus($PARAM[widgetId])">
 			<control type="group">
                 <width>354</width>
                 <height>200</height>
@@ -996,60 +641,11 @@
                 </control>
                 <include name="HiddenWidgetButton" content="HiddenWidgetButton">
                     <param name="widgetstyle" value="landscape" />
-                    <param name="widgetid" value="$PARAM[widgetid]" />
+                    <param name="widgetId" value="$PARAM[widgetId]" />
                 </include>
             </control>
 		</focusedlayout>
-		
 	</include>
-    <include name="widget_layout_poster_netflix_details">
-        <include>widget_layout_general</include>
-        <height>380</height>
-        <orientation>horizontal</orientation>
-        
-        <itemlayout height="380" width="261">
-          <control type="group">
-            <width>250</width>
-            <height>370</height>
-            <include>PosterPanelLayout</include>
-            <control type="group">
-                <description>widget label overlay</description>
-                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
-                <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
-                    <param name="prefix" value="Poster" />
-                </include>
-                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
-            </control>
-          </control>
-        </itemlayout>
-        <focusedlayout height="380" width="261" condition="!Control.HasFocus($PARAM[widgetid])">
-          <control type="group">
-            <width>250</width>
-            <height>370</height>
-            <include>PosterPanelLayout</include>
-            <control type="group">
-                <description>widget label overlay</description>
-                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
-                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
-                <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
-                    <param name="prefix" value="Poster" />
-                </include>
-            </control>
-            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                <param name="widgetstyle" value="poster" />
-                <param name="widgetid" value="$PARAM[widgetid]" />
-            </include>
-          </control>
-        </focusedlayout>
-        <focusedlayout width="780" height="380" condition="Control.HasFocus($PARAM[widgetid])">
-            <include>widebox_netflix_poster</include>
-            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                <param name="widgetstyle" value="poster" />
-                <param name="widgetid" value="$PARAM[widgetid]" />
-            </include>
-        </focusedlayout>
-	</include>
-    
     <include name="widebox_netflix">
         <!-- wide box widget -->
         <control type="group">
@@ -1093,6 +689,53 @@
         </control>
     
     </include>
+    
+    <include name="widget_layout_poster_netflix_details">
+        <include>widget_layout_general</include>
+        <height>380</height>
+        <orientation>horizontal</orientation>
+        <itemlayout height="380" width="261">
+          <control type="group">
+            <width>250</width>
+            <height>370</height>
+            <include>PosterPanelLayout</include>
+            <control type="group">
+                <description>widget label overlay</description>
+                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
+                <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
+                    <param name="prefix" value="Poster" />
+                </include>
+                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+            </control>
+          </control>
+        </itemlayout>
+        <focusedlayout height="380" width="261" condition="!Control.HasFocus($PARAM[widgetId])">
+          <control type="group">
+            <width>250</width>
+            <height>370</height>
+            <include>PosterPanelLayout</include>
+            <control type="group">
+                <description>widget label overlay</description>
+                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
+                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+                <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
+                    <param name="prefix" value="Poster" />
+                </include>
+            </control>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="poster" />
+                <param name="widgetId" value="$PARAM[widgetId]" />
+            </include>
+          </control>
+        </focusedlayout>
+        <focusedlayout width="780" height="380" condition="Control.HasFocus($PARAM[widgetId])">
+            <include>widebox_netflix_poster</include>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="poster" />
+                <param name="widgetId" value="$PARAM[widgetId]" />
+            </include>
+        </focusedlayout>
+	</include>
     <include name="widebox_netflix_poster">
         <!-- wide box widget -->
         <control type="group">
@@ -1268,39 +911,6 @@
     <include name="netflix_mainmenu_tvshows">
         <content target="videos">library://video/tvshows</content>
     </include>
-    <include name="netflix_mainmenu_flix2kodi">
-        <content>
-            <item>
-                <label>$INFO[Window(Home).Property(netflix.generic.title)]</label>
-                <onclick>$INFO[Window(Home).Property(netflix.generic.path)]</onclick>
-            </item>
-            <item>
-                <label>342</label>
-                <onclick>$INFO[Window(Home).Property(netflix.movies.path)]</onclick>
-            </item>
-            <item>
-                <label>20343</label>
-                <onclick>$INFO[Window(Home).Property(netflix.tvshows.path)]</onclick>
-            </item>
-            <item>
-                <label>$INFO[Window(Home).Property(netflix.generic.mylist.title)]</label>
-                <onclick>$INFO[Window(Home).Property(netflix.generic.mylist.path)]</onclick>
-            </item>
-            <item>
-                <label>$INFO[Window(Home).Property(netflix.generic.inprogress.title)]</label>
-                <onclick>$INFO[Window(Home).Property(netflix.generic.inprogress.path)]</onclick>
-            </item>
-            <item>
-                <label>$INFO[Window(Home).Property(netflix.generic.suggestions.title)]</label>
-                <onclick>$INFO[Window(Home).Property(netflix.generic.suggestions.path)]</onclick>
-            </item>
-            <item>
-                <label>$INFO[Window(Home).Property(netflix.generic.recent.title)]</label>
-                <onclick>$INFO[Window(Home).Property(netflix.generic.recent.path)]</onclick>
-            </item>
-        </content>
-    </include>
-    
     <variable name="netflix2_SubTitle">
         <value condition="StringCompare(Window(Home).Property(ListItem.dbtype,episode))">$INFO[Window(Home).Property(ListItem.Label)]</value>
         <value>$INFO[Window(Home).Property(ListItem.TagLine)]</value>

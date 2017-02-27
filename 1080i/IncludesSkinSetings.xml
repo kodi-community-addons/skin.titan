@@ -72,14 +72,6 @@
                 <visible>SubString(Skin.String(HomeLayout), simplever)</visible>
                 <selected>Skin.HasSetting(SimpleVerHomeLeftAlign)</selected>
             </control>
-            <!--change netflix rows-->
-            <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
-                <param name="id" value="23602" />
-                <param name="label" value="$LOCALIZE[31595]" />
-                <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)" />
-                <param name="action2" value="SetProperty(netflixmenu, active, Home)" />
-                <param name="visible" value="SubString(Skin.String(HomeLayout), netflix)" />
-            </include>
             <!--disable top row on netflix home-->
             <control type="radiobutton" id="23604">
                 <include>SkinSettings_Button</include>
@@ -143,6 +135,14 @@
                 <onclick>Skin.ToggleSetting(VerticalHomeLargeWidget)</onclick>
                 <visible>SubString(Skin.String(HomeLayout), ver)</visible>
                 <selected>Skin.HasSetting(VerticalHomeLargeWidget)</selected>
+            </control>
+            <!--show all widgets at once-->
+            <control type="radiobutton" id="31820">
+                <include>SkinSettings_Button</include>
+                <label>$LOCALIZE[31820]</label>
+                <onclick>Skin.ToggleSetting(ShowAllWidgets)</onclick>
+                <visible>SubString(Skin.String(HomeLayout), ver) | SubString(Skin.String(HomeLayout), netflix)</visible>
+                <selected>Skin.HasSetting(ShowAllWidgets)</selected>
             </control>
             <!-- widget rotate-->
             <control type="button" id="31672">
@@ -348,14 +348,7 @@
                 <selected>Skin.HasSetting(PreferTvShowThumbWidget)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small)</visible>
             </control>
-            <!--show labels for episodes-->
-            <control type="radiobutton" id="31648">
-                <include>SkinSettings_Button</include>
-                <label>31648</label>
-                <onclick>Skin.ToggleSetting(ShowLabelsPosterEpisodes)</onclick>
-                <selected>Skin.HasSetting(ShowLabelsPosterEpisodes)</selected>
-                <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
-            </control>
+            
             <!--hide indicators on home tiles-->
             <control type="radiobutton" id="31529">
                 <include>SkinSettings_Button</include>
@@ -381,12 +374,12 @@
                 <selected>Skin.HasSetting(WidgetsPreferPlotOutline)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
             </control>
-            <!-- do not right align widgets -->
+            <!-- auto right align widgets -->
             <control type="radiobutton" id="31712">
                 <include>SkinSettings_Button</include>
                 <label>31712</label>
-                <onclick>Skin.ToggleSetting(AutoWidgetAlignDisabled)</onclick>
-                <selected>Skin.HasSetting(AutoWidgetAlignDisabled)</selected>
+                <onclick>Skin.ToggleSetting(WidgetAlignRight)</onclick>
+                <selected>Skin.HasSetting(WidgetAlignRight)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
             </control>
             <!-- colorize custom home tiles -->
@@ -1105,7 +1098,7 @@
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="6026" />
                 <param name="label" value="31487" />
-                <param name="action" value="RunScript(script.skin.helper.service,action=ENABLEVIEWS)" />
+                <param name="action" value="RunScript(script.skin.helper.service,action=ENABLEVIEWS,richlayout=true)" />
                 <param name="visible" value="true" />
             </include>
             <!-- white space -->
@@ -1401,6 +1394,13 @@
                 <label>31244</label>
                 <onclick>Skin.ToggleSetting(DisableSubtitles)</onclick>
                 <selected>Skin.HasSetting(DisableSubtitles)</selected>
+            </control>
+            <!-- hide playback controls -->
+            <control type="radiobutton" id="31819">
+                <include>SkinSettings_Button</include>
+                <label>31819</label>
+                <onclick>Skin.ToggleSetting(OSDDisablePlaybackControls)</onclick>
+                <selected>Skin.HasSetting(OSDDisablePlaybackControls)</selected>
             </control>
             
             <!-- music playback -->
@@ -1876,13 +1876,6 @@
                 <param name="label" value="31014" />
                 <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=mainmenu)" />
                 <param name="visible" value="true" />
-            </include>
-            <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
-                <param name="id" value="96009" />
-                <param name="label" value="31595" />
-                <param name="action" value="RunScript(script.skinshortcuts,type=manage&amp;group=netflixmenu)" />
-                <param name="action2" value="SetProperty(netflixmenu, active, Home)" />
-                <param name="visible" value="SubString(Skin.String(HomeLayout), netflix)" />
             </include>
             <include name="SkinSettings_ActionButton" content="SkinSettings_ActionButton">
                 <param name="id" value="96008" />
@@ -2406,12 +2399,6 @@
                 <onclick>RunScript(script.skin.helper.service,action=setresourceaddon,skinstring=moviegenrefanart,addontype=resource.images.moviegenrefanart)</onclick>
             </control>
             
-            <control type="radiobutton" id="5158">
-                <include>SkinSettings_Button</include>
-                <label>31258</label>
-                <onclick>Skin.ToggleSetting(HideWatchedRecentlyAdded)</onclick>
-                <selected>Skin.HasSetting(HideWatchedRecentlyAdded)</selected>
-            </control>
             <control type="radiobutton" id="5139">
                 <include>SkinSettings_Button</include>
                 <label>31099</label>
@@ -2532,6 +2519,13 @@
                 <label>31818</label>
                 <onclick>Skin.ToggleSetting(NoClearLogoNetflix)</onclick>
                 <selected>Skin.HasSetting(NoClearLogoNetflix)</selected>
+            </control>
+            <control type="radiobutton" id="31648">
+                <include>SkinSettings_Button</include>
+                <label>31648</label>
+                <onclick>Skin.ToggleSetting(ShowLabelsPosterEpisodes)</onclick>
+                <selected>Skin.HasSetting(ShowLabelsPosterEpisodes)</selected>
+                <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
             </control>
         </control>
 
@@ -2749,7 +2743,7 @@
             </include>
             <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
                 <param name="id" value="31032" />
-                <param name="addon" value="script.module.skin.helper.artutils" />
+                <param name="addon" value="script.module.metadatautils" />
             </include>
             <include name="SkinSettings_AddonButton" content="SkinSettings_AddonButton">
                 <param name="id" value="31033" />
