@@ -24,6 +24,9 @@
                 <onup condition="!Skin.HasSetting(NetflixHomeDisableFirstRow)">505</onup>
                 <onback>300</onback>
                 <pagecontrol>317</pagecontrol>
+                <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                    <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
+                </include>
                 <include>skinshortcuts-template-Widgets</include>
             </control>
             
@@ -303,6 +306,9 @@
                 <onup>614</onup>
                 <onback>300</onback>
                 <pagecontrol>317</pagecontrol>
+                <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                    <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
+                </include>
                 <include>skinshortcuts-template-Widgets</include>
             </control>
             
@@ -425,7 +431,7 @@
                     <onleft>300</onleft>
                     <ondown>77777</ondown>
                     <onup>77777</onup>
-                    <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                    <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                         <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
                     </include>
                     <onfocus>Setproperty(SkinHelper.WidgetContainer,1508)</onfocus>
@@ -440,7 +446,7 @@
                     <onright>53</onright>
                     <ondown>77777</ondown>
                     <onup>77777</onup>
-                    <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
+                    <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                         <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
                     </include>
                     <onclick>RunScript(script.skin.helper.service,action=showinfo)</onclick>
@@ -489,9 +495,6 @@
                 <focusposition>2</focusposition>
                 <onup>51</onup>
                 <ondown>51</ondown>
-                <include name="WidgetsAutoRotateNetFlix" content="WidgetsAutoRotateNetFlix" condition="SubString(Skin.String(HomeLayout),netflix) + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
-                    <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
-                </include>
                 <onfocus>51</onfocus>
                 <scrolltime tween="cubic" easing="inout">500</scrolltime>
                 <itemlayout width="960" height="555">
@@ -562,96 +565,6 @@
         <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(12).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(12).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(12).Property(widgetPath.99)]</value>
     </variable>
     
-    <include name="widget_layout_landscape_netflix_details">
-        <include>widget_layout_general</include>
-        <height>210</height>
-        <orientation>horizontal</orientation>
-        <itemlayout width="366" height="210">
-			<control type="group">
-                <width>354</width>
-                <height>200</height>
-                <include>ThumbsViewLayout</include>
-                <control type="group">
-                    <description>widget label overlay</description>
-                    <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
-                    <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
-                    <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
-                        <param name="prefix" value="Landscape" />
-                    </include>
-                </control>
-            </control>
-		</itemlayout>
-        <focusedlayout width="1090" height="205" condition="Control.HasFocus($PARAM[widgetId])">
-            <include>widebox_netflix</include>
-            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                <param name="widgetstyle" value="landscape" />
-                <param name="widgetId" value="$PARAM[widgetId]" />
-            </include>
-        </focusedlayout>
-		<focusedlayout width="366" height="210" condition="!Control.HasFocus($PARAM[widgetId])">
-			<control type="group">
-                <width>354</width>
-                <height>200</height>
-                <include>ThumbsViewLayout</include>
-                <control type="group">
-                    <description>widget label overlay</description>
-                    <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
-                    <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
-                    <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
-                        <param name="prefix" value="Landscape" />
-                    </include>
-                </control>
-                <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                    <param name="widgetstyle" value="landscape" />
-                    <param name="widgetId" value="$PARAM[widgetId]" />
-                </include>
-            </control>
-		</focusedlayout>
-	</include>
-    <include name="widebox_netflix">
-        <!-- wide box widget -->
-        <control type="group">
-            <control type="image">
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-            </control>
-            <control type="image">
-                <texture border="5">diffuse/thinborder.png</texture>
-                <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-            </control>
-            <!-- poster image -->
-            <control type="group">
-                <width>354</width>
-                <height>200</height>
-                <include>ThumbsViewLayout</include>
-            </control>
-            <control type="label">
-                <left>370</left>
-                <width>70%</width>
-                <top>8</top>
-                <aligny>top</aligny>
-                <height>80</height>
-                <font>Reg30</font>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>$VAR[HomeMenuWidgetInfoLabel]</label>
-            </control>
-            <control type="textbox">
-                <left>370</left>
-                <right>30</right>
-                <right>10</right>
-                <top>50</top>
-                <height>145</height>
-                <font>Reg24</font>
-                <align>justify</align>
-                <autoscroll delay="4000" time="3000" repeat="10000" condition="!Control.HasFocus(510) + !Skin.HasSetting(DisablePlotAutoScroll)" />
-                <autoscroll delay="4000" time="3000" repeat="10000" condition="Control.HasFocus(510) + !Skin.HasSetting(DisablePlotAutoScroll)" />
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
-            </control>
-        </control>
-    
-    </include>
-    
     <include name="widget_layout_poster_netflix_details">
         <include>widget_layout_general</include>
         <height>380</height>
@@ -664,7 +577,7 @@
             <control type="group">
                 <description>widget label overlay</description>
                 <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
-                <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
+                <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
                     <param name="prefix" value="Poster" />
                 </include>
                 <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
@@ -680,7 +593,7 @@
                 <description>widget label overlay</description>
                 <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
                 <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
-                <include name="$PARAM[widgetLabelVisibility]" content="$PARAM[widgetLabelVisibility]" condition="Skin.String(Widgets_DisplayTags,override)">
+                <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
                     <param name="prefix" value="Poster" />
                 </include>
             </control>
