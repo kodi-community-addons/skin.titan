@@ -84,8 +84,6 @@
         <!-- Side Menu Small -->
         <include condition="!Skin.HasSetting(NetFlixHome_LargeMenu)">SideBladeMainMenu</include>
     </include>
-	
-    
     <include name="HomeNetflix2">
 		        
         <control type="image">
@@ -303,13 +301,14 @@
                 <width>1870</width>
                 <ondown>77777</ondown>
                 <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
-                <onup>614</onup>
+                <onup>77777</onup>
                 <onback>300</onback>
                 <pagecontrol>317</pagecontrol>
                 <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                     <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
                 </include>
-                <include>skinshortcuts-template-Widgets</include>
+                <include condition="Window.IsActive(Home)">skinshortcuts-template-Widgets</include>
+                <include condition="!Window.IsActive(Home)">netflix_items_movies</include>
             </control>
             
             <control type="scrollbar" id="317"> 
@@ -564,221 +563,110 @@
         <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(11).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(11).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(11).Property(widgetPath.99)]</value>
         <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(12).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(12).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(12).Property(widgetPath.99)]</value>
     </variable>
-    
-    <include name="widget_layout_poster_netflix_details">
-        <include>widget_layout_general</include>
-        <height>380</height>
-        <orientation>horizontal</orientation>
-        <itemlayout height="380" width="261">
-          <control type="group">
-            <width>250</width>
-            <height>370</height>
-            <include>PosterPanelLayout</include>
-            <control type="group">
-                <description>widget label overlay</description>
-                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
-                <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
-                    <param name="prefix" value="Poster" />
-                </include>
-                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
-            </control>
-          </control>
-        </itemlayout>
-        <focusedlayout height="380" width="261" condition="!Control.HasFocus($PARAM[widgetId])">
-          <control type="group">
-            <width>250</width>
-            <height>370</height>
-            <include>PosterPanelLayout</include>
-            <control type="group">
-                <description>widget label overlay</description>
-                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
-                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
-                <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
-                    <param name="prefix" value="Poster" />
-                </include>
-            </control>
-            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                <param name="widgetstyle" value="poster" />
-                <param name="widgetId" value="$PARAM[widgetId]" />
-            </include>
-          </control>
-        </focusedlayout>
-        <focusedlayout width="780" height="380" condition="Control.HasFocus($PARAM[widgetId])">
-            <include>widebox_netflix_poster</include>
-            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
-                <param name="widgetstyle" value="poster" />
-                <param name="widgetId" value="$PARAM[widgetId]" />
-            </include>
-        </focusedlayout>
-	</include>
-    <include name="widebox_netflix_poster">
-        <!-- wide box widget -->
-        <control type="group">
-            <control type="image">
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-            </control>
-            <control type="image">
-                <texture border="5">diffuse/thinborder.png</texture>
-                <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
-            </control>
-            <!-- poster image -->
-            <control type="group">
-                <width>250</width>
-                <height>370</height>
-                <include>PosterPanelLayout</include>
-              </control>
-            <control type="textbox">
-                <left>260</left>
-                <right>30</right>
-                <top>8</top>
-                <aligny>top</aligny>
-                <height>40</height>
-                <font>Reg30</font>
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>$VAR[HomeMenuWidgetInfoLabel]</label>
-            </control>
-            <control type="textbox">
-                <left>260</left>
-                <right>30</right>
-                <top>50</top>
-                <bottom>20</bottom>
-                <font>Reg24</font>
-                <align>justify</align>
-                <autoscroll delay="4000" time="3000" repeat="10000" condition="!Control.HasFocus(510) + !Skin.HasSetting(DisablePlotAutoScroll)" />
-                <autoscroll delay="4000" time="3000" repeat="10000" condition="Control.HasFocus(510) + !Skin.HasSetting(DisablePlotAutoScroll)" />
-                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
-            </control>
+        
+    <include name="netflix_customhub_item">
+        <control type="button" id="$PARAM[widgetid]4">
+            <width>100%</width>
+            <height>40</height>
+            <align>left</align>
+            <font>Reg32</font>
+            <textoffsetx>5</textoffsetx>
+            <label>$INFO[Skin.String($PARAM[skinsetting].label)]</label>
+            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+            <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+            <onclick>RunScript(script.skinshortcuts,type=widgets&amp;showNone=true&amp;skinWidgetName=$PARAM[skinsetting].label&amp;skinWidgetTarget=$PARAM[skinsetting].target&amp;skinWidgetPath=$PARAM[skinsetting].path)</onclick>
+            <texturenofocus>-</texturenofocus>
+            <visible>Skin.String($PARAM[skinsetting].label)</visible>
         </control>
-    
-    </include>
-    
-    <include name="netflix_items_tvshows">
-        <item>
-			<label>$ADDON[script.skin.helper.service 32002]</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=next&amp;mediatype=episodes&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload-episodes)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$ADDON[script.skin.helper.service 32130]</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=similar&amp;mediatype=tvshows&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>20387</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=episodes&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload-episodes)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>31103</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=random&amp;mediatype=episodes&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload-episodes)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Container(550).ListItem.Property(genretitle)]</label>
-			<property name="list">plugin://script.skin.helper.service/?action=showsforgenre&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Container(560).ListItem.Property(genretitle)]</label>
-			<property name="list">plugin://script.skin.helper.service/?action=showsforgenre&amp;limit=26&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
+        <control type="button" id="$PARAM[widgetid]5">
+            <width>100%</width>
+            <height>40</height>
+            <align>left</align>
+            <font>Reg32</font>
+            <textoffsetx>5</textoffsetx>
+            <label>31822</label>
+            <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+            <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+            <onclick>RunScript(script.skinshortcuts,type=widgets&amp;showNone=true&amp;skinWidgetName=$PARAM[skinsetting].label&amp;skinWidgetTarget=$PARAM[skinsetting].target&amp;skinWidgetPath=$PARAM[skinsetting].path)</onclick>
+            <texturenofocus>-</texturenofocus>
+            <visible>!Skin.String($PARAM[skinsetting].label)</visible>
+        </control>
+        <control type="multiimage" id="$PARAM[widgetid]6">
+            <width>100%</width>
+            <height>80</height>
+            <aspectratio align="left">keep</aspectratio>
+            <imagepath>busy_spinner/</imagepath>
+            <timeperimage>100</timeperimage>
+            <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+            <fadetime>0</fadetime>
+            <visible>Container($PARAM[widgetid]).IsUpdating</visible>
+        </control>
+		<include condition="true" content="widget_base" name="widget_base">
+			<param name="containerType" value="panel" />
+			<param name="contentStyle" value="normal" />
+			<param name="widgetid" value="$PARAM[widgetid]" />
+			<param name="submenuid" value="" />
+			<param name="widgetTags" value="WidgetTagOverlayAuto" />
+			<param name="widgetTarget" value="$INFO[Skin.String($PARAM[skinsetting].target)]" />
+			<param name="widgetPath" value="$INFO[Skin.String($PARAM[skinsetting].path)]" />
+			<param name="widgetStyle" value="$PARAM[widgetStyle]" />
+			<param name="visibility" value="Skin.String($PARAM[skinsetting].path)" />
+			<param name="multiRows" value="false" />
+		</include>
     </include>
     <include name="netflix_items_movies">
-        <item>
-			<label>$ADDON[script.skin.helper.service 32003]</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=recommended&amp;mediatype=movies&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$ADDON[script.skin.helper.service 32006]</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=similar&amp;mediatype=movies&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>20386</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=recent&amp;mediatype=movies&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>31102</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=random&amp;mediatype=movies&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Container(550).ListItem.Property(genretitle)]</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=forgenre&amp;mediatype=movies&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Container(560).ListItem.Property(genretitle)]</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=forgenre&amp;mediatype=movies&amp;limit=26&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>31297</label>
-			<property name="list">plugin://script.skin.helper.widgets/?action=unwatched&amp;mediatype=movies&amp;limit=25&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</property>
-			<onclick>noop</onclick>
-		</item>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="510" />
+            <param name="widgetStyle" value="widget_layout_poster" />
+			<param name="skinsetting" value="netflixhub-movies-510" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="520" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-movies-520" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="530" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-movies-530" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="540" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-movies-540" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="550" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-movies-550" />
+		</include>        
     </include>
-    <include name="netflix_items_flix2kodi">
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.mylist.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.mylist.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.inprogress.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.inprogress.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.recommended.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.recommended.content)]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.recent.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.recent.content)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.trending.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.trending.content)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.0.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.0.content)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.1.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.1.content)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.2.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.2.content)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.3.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.3.content)]</property>
-			<onclick>noop</onclick>
-		</item>
-        <item>
-			<label>$INFO[Window(Home).Property(netflix.generic.suggestions.4.title)]</label>
-			<property name="list">$INFO[Window(Home).Property(netflix.generic.suggestions.4.content)]</property>
-			<onclick>noop</onclick>
-		</item>
+    <include name="netflix_items_tvshows">
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="510" />
+            <param name="widgetStyle" value="widget_layout_poster" />
+			<param name="skinsetting" value="netflixhub-tvshows-510" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="520" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-tvshows-520" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="530" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-tvshows-530" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="540" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-tvshows-540" />
+		</include>
+        <include condition="true" content="netflix_customhub_item" name="netflix_customhub_item">
+			<param name="widgetid" value="550" />
+            <param name="widgetStyle" value="widgetlayout" />
+			<param name="skinsetting" value="netflixhub-tvshows-550" />
+		</include>
     </include>
     <include name="netflix_mainmenu_movies">
         <content target="videos">library://video/movies</content>

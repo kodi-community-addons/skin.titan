@@ -548,7 +548,7 @@
         <include>$PARAM[prefix]TagOverlayVisibility</include>
     </include>
     
-    <include name="widgetlayout">
+    <include name="widget_layout_default">
         <include name="widget_layout_poster" content="widget_layout_poster" condition="Skin.String(widgetstyle, poster)">
             <param name="widgetid" value="$PARAM[widgetid]"/>
             <param name="multiprefix" value="$PARAM[multiprefix]"/>
@@ -567,19 +567,19 @@
             <param name="widgetTags" value="$PARAM[widgetTags]"/>
             <param name="multiRows" value="$PARAM[multiRows]" />
         </include>
-        <include name="widget_layout_singlebox" content="widget_layout_singlebox" condition="Skin.String(widgetstyle, single box)">
+        <include name="widget_layout_singlebox" content="widget_layout_singlebox" condition="Skin.String(widgetstyle, single box) | Skin.String(widgetstyle, singlebox)">
             <param name="widgetid" value="$PARAM[widgetid]"/>
             <param name="multiprefix" value="$PARAM[multiprefix]"/>
             <param name="widgetTags" value="$PARAM[widgetTags]"/>
             <param name="multiRows" value="$PARAM[multiRows]" />
         </include>
-        <include name="widget_layout_widebox" content="widget_layout_widebox" condition="Skin.String(widgetstyle, wide box)">
+        <include name="widget_layout_widebox" content="widget_layout_widebox" condition="Skin.String(widgetstyle, wide box) | Skin.String(widgetstyle, widebox)">
             <param name="widgetid" value="$PARAM[widgetid]"/>
             <param name="multiprefix" value="$PARAM[multiprefix]"/>
             <param name="widgetTags" value="$PARAM[widgetTags]"/>
             <param name="multiRows" value="$PARAM[multiRows]" />
         </include>
-        <include name="widget_layout_small_poster" content="widget_layout_small_poster" condition="Skin.String(widgetstyle, small poster)">
+        <include name="widget_layout_small_poster" content="widget_layout_small_poster" condition="Skin.String(widgetstyle, small poster) | Skin.String(widgetstyle, smallposter)">
             <param name="widgetid" value="$PARAM[widgetid]"/>
             <param name="multiprefix" value="$PARAM[multiprefix]"/>
             <param name="widgetTags" value="$PARAM[widgetTags]"/>
@@ -609,7 +609,13 @@
             <param name="widgetTags" value="$PARAM[widgetTags]"/>
             <param name="multiRows" value="$PARAM[multiRows]" />
         </include>
-        <include name="widget_layout_landscape_details" content="widget_layout_landscape_details" condition="Skin.String(widgetstyle, landscapedetails)">
+        <include name="widget_layout_landscapedetails" content="widget_layout_landscapedetails" condition="Skin.String(widgetstyle, landscapedetails)">
+            <param name="widgetid" value="$PARAM[widgetid]"/>
+            <param name="multiprefix" value="$PARAM[multiprefix]"/>
+            <param name="widgetTags" value="$PARAM[widgetTags]"/>
+            <param name="multiRows" value="$PARAM[multiRows]" />
+        </include>
+        <include name="widget_layout_posterdetails" content="widget_layout_posterdetails" condition="Skin.String(widgetstyle, posterdetails)">
             <param name="widgetid" value="$PARAM[widgetid]"/>
             <param name="multiprefix" value="$PARAM[multiprefix]"/>
             <param name="widgetTags" value="$PARAM[widgetTags]"/>
@@ -668,7 +674,96 @@
     <include name="widget_layout_poster_multi">
         <height>760</height>
     </include>
-
+    
+    <!-- widget poster details layout -->
+    <include name="widget_layout_posterdetails">
+        <height>380</height>
+        <orientation>horizontal</orientation>
+        <itemlayout height="380" width="261">
+          <control type="group">
+            <width>250</width>
+            <height>370</height>
+            <include>PosterPanelLayout</include>
+            <control type="group">
+                <description>widget label overlay</description>
+                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
+                <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                    <param name="prefix" value="Poster" />
+                </include>
+                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+            </control>
+          </control>
+        </itemlayout>
+        <focusedlayout height="380" width="261" condition="!Control.HasFocus($PARAM[widgetid])">
+          <control type="group">
+            <width>250</width>
+            <height>370</height>
+            <include>PosterPanelLayout</include>
+            <control type="group">
+                <description>widget label overlay</description>
+                <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
+                <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+                <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                    <param name="prefix" value="Poster" />
+                </include>
+            </control>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="poster" />
+                <param name="widgetid" value="$PARAM[widgetid]" />
+            </include>
+          </control>
+        </focusedlayout>
+        <focusedlayout width="780" height="380" condition="Control.HasFocus($PARAM[widgetid])">
+            <include>widget_layout_posterdetails_widebox</include>
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="poster" />
+                <param name="widgetid" value="$PARAM[widgetid]" />
+            </include>
+        </focusedlayout>
+	</include>
+    <include name="widget_layout_posterdetails_widebox">
+        <!-- wide box widget -->
+        <control type="group">
+            <control type="image">
+                <texture border="5">diffuse/panel.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
+            </control>
+            <control type="image">
+                <texture border="5">diffuse/thinborder.png</texture>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsFocusColor)]</colordiffuse>
+            </control>
+            <!-- poster image -->
+            <control type="group">
+                <width>250</width>
+                <height>370</height>
+                <include>PosterPanelLayout</include>
+              </control>
+            <control type="textbox">
+                <left>260</left>
+                <right>30</right>
+                <top>8</top>
+                <aligny>top</aligny>
+                <height>40</height>
+                <font>Reg30</font>
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <label>$VAR[HomeMenuWidgetInfoLabel]</label>
+            </control>
+            <control type="textbox">
+                <left>260</left>
+                <right>30</right>
+                <top>50</top>
+                <bottom>20</bottom>
+                <font>Reg24</font>
+                <align>justify</align>
+                <autoscroll delay="4000" time="3000" repeat="10000" condition="!Control.HasFocus(510) + !Skin.HasSetting(DisablePlotAutoScroll)" />
+                <autoscroll delay="4000" time="3000" repeat="10000" condition="Control.HasFocus(510) + !Skin.HasSetting(DisablePlotAutoScroll)" />
+                <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+                <label>$VAR[HomeMenuWidgetInfoPlotAlt]</label>
+            </control>
+        </control>
+    
+    </include>
+    
     <!-- widget small poster layout -->
     <include name="widget_layout_small_poster">
         <include condition="$PARAM[multiRows]">widget_layout_small_poster_multi</include>
@@ -949,7 +1044,7 @@
         <height>760</height>
     </include>
     
-    <include name="widget_layout_landscape_details">
+    <include name="widget_layout_landscapelarge">
         <height>210</height>
         <orientation>horizontal</orientation>
         <itemlayout width="366" height="210">
@@ -968,7 +1063,7 @@
             </control>
 		</itemlayout>
         <focusedlayout width="1090" height="205" condition="Control.HasFocus($PARAM[widgetid])">
-            <include>widget_layout_landscape_details_widebox</include>
+            <include>widget_layout_landscapelarge_widebox</include>
             <include name="HiddenWidgetButton" content="HiddenWidgetButton">
                 <param name="widgetstyle" value="landscape" />
                 <param name="widgetid" value="$PARAM[widgetid]" />
@@ -994,7 +1089,7 @@
             </control>
 		</focusedlayout>
 	</include>
-    <include name="widget_layout_landscape_details_widebox">
+    <include name="widget_layout_landscapelarge_widebox">
         <!-- wide box widget -->
         <control type="group">
             <control type="image">
@@ -1037,7 +1132,6 @@
         </control>
     
     </include>
-    
     
     <!-- widget banner layout -->
     <include name="widget_layout_banner">
@@ -1522,10 +1616,10 @@
                 <align>left</align>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$PARAM[widgetName]</label>
-                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
+                <label>$VAR[$PARAM[widgetid]-label]</label>
                 <animation effect="slide" end="50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + !Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
                 <animation effect="slide" end="-50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
+                <visible>IsEmpty(Container().ListItem.Property(similartitle))</visible>
             </control>
             <control type="textbox">
                 <height>95%</height>
@@ -1535,10 +1629,10 @@
                 <align>left</align>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$LOCALIZE[31545] $INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]  </label>
-                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
+                <label>$INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
                 <animation effect="slide" end="50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + !Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
                 <animation effect="slide" end="-50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
+                <visible>!IsEmpty(Container().ListItem.Property(similartitle))</visible>
             </control>
             <control type="multiimage">
                 <width>100%</width>
@@ -1563,7 +1657,7 @@
             <align>left</align>
             <font>Reg32</font>
             <textoffsetx>5</textoffsetx>
-            <label>$PARAM[label]</label>
+            <label>$VAR[widgetlabel-$PARAM[mainmenuid]]</label>
             <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
             <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <onfocus>SetProperty(ShowWidget,show)</onfocus>
@@ -1620,24 +1714,194 @@
     </include>
     
     <include name="widget_base">
+        <include name="widget_base_normal" content="widget_base_normal" condition="![Skin.String(HomeLayout,win10) | Skin.String(HomeLayout,enhanced)]">
+            <param name="containerType" value="$PARAM[containerType]" />
+            <param name="contentStyle" value="$PARAM[contentStyle]" />
+            <param name="widgetid" value="$PARAM[widgetid]" />
+            <param name="submenuid" value="$PARAM[submenuid]" />
+            <param name="widgetTags" value="$PARAM[widgetTags]" />
+            <param name="widgetTarget" value="$PARAM[widgetTarget]" />
+            <param name="widgetPath" value="$PARAM[widgetPath]" />
+            <param name="widgetStyle" value="$PARAM[widgetStyle]" />
+            <param name="visibility" value="$PARAM[visibility]" />
+            <param name="multiRows" value="$PARAM[multiRows]" />
+        </include>
+        <include name="widget_base_enhanced" content="widget_base_enhanced" condition="Skin.String(HomeLayout,enhanced)">
+            <param name="containerType" value="$PARAM[containerType]" />
+            <param name="contentStyle" value="$PARAM[contentStyle]" />
+            <param name="widgetid" value="$PARAM[widgetid]" />
+            <param name="submenuid" value="$PARAM[submenuid]" />
+            <param name="widgetTags" value="$PARAM[widgetTags]" />
+            <param name="widgetTarget" value="$PARAM[widgetTarget]" />
+            <param name="widgetPath" value="$PARAM[widgetPath]" />
+            <param name="widgetStyle" value="$PARAM[widgetStyle]" />
+            <param name="visibility" value="$PARAM[visibility]" />
+            <param name="multiRows" value="$PARAM[multiRows]" />
+        </include>
+        <include name="widget_base_win10" content="widget_base_win10" condition="Skin.String(HomeLayout,win10)">
+            <param name="containerType" value="$PARAM[containerType]" />
+            <param name="contentStyle" value="$PARAM[contentStyle]" />
+            <param name="widgetid" value="$PARAM[widgetid]" />
+            <param name="widgetName" value="$PARAM[widgetName]" />
+            <param name="submenuid" value="$PARAM[submenuid]" />
+            <param name="widgetTags" value="$PARAM[widgetTags]" />
+            <param name="widgetTarget" value="$PARAM[widgetTarget]" />
+            <param name="widgetPath" value="$PARAM[widgetPath]" />
+            <param name="widgetStyle" value="$PARAM[widgetStyle]" />
+            <param name="widgetInfoPanel" value="$PARAM[widgetInfoPanel]" />
+            <param name="visibility" value="$PARAM[visibility]" />
+            <param name="multiRows" value="$PARAM[multiRows]" />
+        </include>
+    </include>
+    <include name="widget_base_win10">
+        <include name="HomeWin10SpotlightPanel" content="HomeWin10SpotlightPanel" condition="!Skin.String(CompareTxtDisable, $PARAM[widgetInfoPanel])">
+            <param name="widgetid" value="$PARAM[widgetid]" />
+            <param name="position" value="$PARAM[widgetInfoPanel]" />
+        </include>
+        <control type="group" id="$PARAM[widgetid]5">
+            <description>Heading</description>
+            <width>1</width>
+            <height>1</height>
+            <animation effect="slide" end="10,-50" time="0" condition="true">Conditional</animation>
+            <visible>Control.IsVisible($PARAM[widgetid])</visible>
+            <control type="label">
+                <height>40</height>
+                <width>690</width>
+                <font>Reg28</font>
+                <align>left</align>
+                <aligny>top</aligny>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <label>$PARAM[widgetName]</label>
+                <visible>IsEmpty(Container().ListItem.Property(similartitle))</visible>
+            </control>
+            <control type="label">
+                <height>40</height>
+                <width>690</width>
+                <font>Reg28</font>
+                <align>left</align>
+                <aligny>top</aligny>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <label>$INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
+                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
+            </control>
+            <control type="multiimage" id="$PARAM[widgetid]7">
+                <width>650</width>
+                <height>90</height>
+                <top>200</top>
+                <aspectratio align="center">keep</aspectratio>
+                <imagepath>busy_spinner/</imagepath>
+                <timeperimage>100</timeperimage>
+                <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
+                <fadetime>0</fadetime>
+                <visible>Container($PARAM[widgetid]).IsUpdating</visible>
+            </control>
+        </control>
         <control type="$PARAM[containerType]" id="$PARAM[widgetid]">
-            <include name="EnhancedHomeWidgetLayout" content="EnhancedHomeWidgetLayout" condition="Skin.String(HomeLayout, enhanced)">
+            <description>Widget</description>
+            <focusposition>0</focusposition>
+            <width>690</width>
+            <animation effect="slide" end="0,440" time="0" condition="Skin.String(CompareTxtTop, $PARAM[widgetInfoPanel])">Conditional</animation>
+            <include condition="Skin.String(CompareTxtDisable, $PARAM[widgetInfoPanel])">widget_base_win10_altheight</include>
+            <height>440</height>
+            <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
+            <orientation>vertical</orientation>
+            <animation condition="!Control.HasFocus($PARAM[widgetid]) + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
+                <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom"/>
+                <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide"/>
+                <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade"/>
+            </animation>
+            <animation time="100" effect="fade" start="0" end="100" reversible="false" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
+            <include name="win10_$PARAM[widgetStyle]" content="win10_$PARAM[widgetStyle]">
                 <param name="widgetid" value="$PARAM[widgetid]" />
                 <param name="widgetTags" value="$PARAM[widgetTags]" />
             </include>
-            <focusposition>0</focusposition>
-            <width>100%</width>
+            <include name="widget_base_content_$PARAM[contentStyle]" content="widget_base_content_$PARAM[contentStyle]">
+                <param name="widgetid" value="$PARAM[widgetid]" />
+                <param name="submenuid" value="$PARAM[submenuid]" />
+                <param name="widgetTarget" value="$PARAM[widgetTarget]" />
+                <param name="widgetPath" value="$PARAM[widgetPath]" />
+            </include>
+            <visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),$PARAM[submenuid]) | Skin.HasSetting(ShowAllWidgets)</visible>
+            <visible>$PARAM[visibility]</visible>
+        </control>
+    </include>
+    <include name="widget_base_win10_altheight">
+        <height>880</height>
+    </include>
+    <include name="widget_base_enhanced">
+        <control type="$PARAM[containerType]" id="$PARAM[widgetid]">
+            <height>615</height>
+            <width>362</width>
             <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
-            <onfocus>SetProperty(ShowWidget,show)</onfocus>
-            <orientation>horizontal</orientation>
+            <orientation>vertical</orientation>
+            <focusposition>2</focusposition>
             <scrolltime tween="cubic" easing="inout">500</scrolltime>
+            <itemlayout width="350" height="205">
+                <control type="group">
+                    <width>337</width>
+                    <height>195</height>
+                    <include>ThumbsViewLayout</include>
+                    <control type="group">
+                        <description>widget label overlay</description>
+                        <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
+                        <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
+                        <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                            <param name="prefix" value="Landscape" />
+                        </include>
+                    </control>
+                </control>
+            </itemlayout>
+            <focusedlayout width="350" height="205">
+                <control type="group">
+                    <width>337</width>
+                    <height>195</height>
+                    <include>ThumbsViewLayoutFocus</include>
+                    <control type="group">
+                        <description>widget label overlay</description>
+                        <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
+                        <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
+                        <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                            <param name="prefix" value="Landscape" />
+                        </include>
+                    </control>
+                </control>
+                <control type="button">
+                    <visible>false</visible>
+                    <onfocus>Setproperty(SkinHelper.WidgetContainer,$PARAM[widgetid])</onfocus>
+                    <onfocus condition="Skin.HasSetting(SpotLightTrailers)">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=windowed,YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)],WIDGETCONTAINER=$PARAM[widgetid])</onfocus>
+                    <onunfocus condition="Skin.HasSetting(SpotLightTrailers) + !IsEmpty(Window(Home).Property(TrailerPlaying)) + !StringCompare(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunfocus>
+                </control>
+            </focusedlayout>
             <animation condition="!Control.HasFocus(77777) + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
                 <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom"/>
                 <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide"/>
                 <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade"/>
             </animation>
             <animation time="100" effect="fade" start="0" end="100" reversible="false" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
-            <include name="$PARAM[widgetStyle]" content="$PARAM[widgetStyle]" condition="!Skin.String(HomeLayout, enhanced)">
+            <include name="widget_base_content_$PARAM[contentStyle]" content="widget_base_content_$PARAM[contentStyle]">
+                <param name="widgetid" value="$PARAM[widgetid]" />
+                <param name="submenuid" value="$PARAM[submenuid]" />
+                <param name="widgetTarget" value="$PARAM[widgetTarget]" />
+                <param name="widgetPath" value="$PARAM[widgetPath]" />
+            </include>
+            <visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),$PARAM[submenuid])</visible>
+            <visible>$PARAM[visibility]</visible>
+        </control>
+    </include>
+    <include name="widget_base_normal">
+        <control type="$PARAM[containerType]" id="$PARAM[widgetid]">
+            <focusposition>0</focusposition>
+            <width>100%</width>
+            <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
+            <onfocus>SetProperty(ShowWidget,show)</onfocus>
+            <orientation>horizontal</orientation>
+            <animation condition="!Control.HasFocus(77777) + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
+                <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom"/>
+                <effect delay="280" easing="in" end="0,0" start="0,40" time="180" tween="sine" type="slide"/>
+                <effect delay="280" easing="in" end="100" start="0" time="180" tween="sine" type="fade"/>
+            </animation>
+            <animation time="100" effect="fade" start="0" end="100" reversible="false" easing="inout" condition="!Skin.HasSetting(Widgets_Animation)">Visible</animation>
+            <include name="$PARAM[widgetStyle]" content="$PARAM[widgetStyle]">
                 <param name="widgetid" value="$PARAM[widgetid]" />
                 <param name="widgetTags" value="$PARAM[widgetTags]" />
                 <param name="multiRows" value="$PARAM[multiRows]" />
@@ -1652,6 +1916,7 @@
             <visible>$PARAM[visibility]</visible>
         </control>
     </include>
+    
     <include name="widget_base_content_normal">
         <content target="$PARAM[widgetTarget]">$PARAM[widgetPath]</content>
     </include>
@@ -1673,126 +1938,107 @@
     
     <variable name="focusWidget">
         <!-- workaround to focus the first widget -->
-        <value condition="Control.IsVisible(1510)">SetFocus(1510)</value>
-        <value condition="Control.IsVisible(1520)">SetFocus(1520)</value>
-        <value condition="Control.IsVisible(1530)">SetFocus(1530)</value>
-        <value condition="Control.IsVisible(1540)">SetFocus(1540)</value>
-        <value condition="Control.IsVisible(1550)">SetFocus(1550)</value>
-        <value condition="Control.IsVisible(1560)">SetFocus(1560)</value>
-        <value condition="Control.IsVisible(1570)">SetFocus(1570)</value>
-        <value condition="Control.IsVisible(1580)">SetFocus(1580)</value>
-        <value condition="Control.IsVisible(1590)">SetFocus(1590)</value>
-        <value condition="Control.IsVisible(1600)">SetFocus(1600)</value>
-        <value condition="Control.IsVisible(2510)">SetFocus(2510)</value>
-        <value condition="Control.IsVisible(2520)">SetFocus(2520)</value>
-        <value condition="Control.IsVisible(2530)">SetFocus(2530)</value>
-        <value condition="Control.IsVisible(2540)">SetFocus(2540)</value>
-        <value condition="Control.IsVisible(2550)">SetFocus(2550)</value>
-        <value condition="Control.IsVisible(2560)">SetFocus(2560)</value>
-        <value condition="Control.IsVisible(2570)">SetFocus(2570)</value>
-        <value condition="Control.IsVisible(2580)">SetFocus(2580)</value>
-        <value condition="Control.IsVisible(2590)">SetFocus(2590)</value>
-        <value condition="Control.IsVisible(2600)">SetFocus(2600)</value>
-        <value condition="Control.IsVisible(3510)">SetFocus(3510)</value>
-        <value condition="Control.IsVisible(3520)">SetFocus(3520)</value>
-        <value condition="Control.IsVisible(3530)">SetFocus(3530)</value>
-        <value condition="Control.IsVisible(3540)">SetFocus(3540)</value>
-        <value condition="Control.IsVisible(3550)">SetFocus(3550)</value>
-        <value condition="Control.IsVisible(3560)">SetFocus(3560)</value>
-        <value condition="Control.IsVisible(3570)">SetFocus(3570)</value>
-        <value condition="Control.IsVisible(3580)">SetFocus(3580)</value>
-        <value condition="Control.IsVisible(3590)">SetFocus(3590)</value>
-        <value condition="Control.IsVisible(3600)">SetFocus(3600)</value>
-        <value condition="Control.IsVisible(4510)">SetFocus(4510)</value>
-        <value condition="Control.IsVisible(4520)">SetFocus(4520)</value>
-        <value condition="Control.IsVisible(4530)">SetFocus(4530)</value>
-        <value condition="Control.IsVisible(4540)">SetFocus(4540)</value>
-        <value condition="Control.IsVisible(4550)">SetFocus(4550)</value>
-        <value condition="Control.IsVisible(4560)">SetFocus(4560)</value>
-        <value condition="Control.IsVisible(4570)">SetFocus(4570)</value>
-        <value condition="Control.IsVisible(4580)">SetFocus(4580)</value>
-        <value condition="Control.IsVisible(4590)">SetFocus(4590)</value>
-        <value condition="Control.IsVisible(4600)">SetFocus(4600)</value>
-        <value condition="Control.IsVisible(5510)">SetFocus(5510)</value>
-        <value condition="Control.IsVisible(5520)">SetFocus(5520)</value>
-        <value condition="Control.IsVisible(5530)">SetFocus(5530)</value>
-        <value condition="Control.IsVisible(5540)">SetFocus(5540)</value>
-        <value condition="Control.IsVisible(5550)">SetFocus(5550)</value>
-        <value condition="Control.IsVisible(5560)">SetFocus(5560)</value>
-        <value condition="Control.IsVisible(5570)">SetFocus(5570)</value>
-        <value condition="Control.IsVisible(5580)">SetFocus(5580)</value>
-        <value condition="Control.IsVisible(5590)">SetFocus(5590)</value>
-        <value condition="Control.IsVisible(5600)">SetFocus(5600)</value>
-        <value condition="Control.IsVisible(6510)">SetFocus(6510)</value>
-        <value condition="Control.IsVisible(6520)">SetFocus(6520)</value>
-        <value condition="Control.IsVisible(6530)">SetFocus(6530)</value>
-        <value condition="Control.IsVisible(6540)">SetFocus(6540)</value>
-        <value condition="Control.IsVisible(6550)">SetFocus(6550)</value>
-        <value condition="Control.IsVisible(6560)">SetFocus(6560)</value>
-        <value condition="Control.IsVisible(6570)">SetFocus(6570)</value>
-        <value condition="Control.IsVisible(6580)">SetFocus(6580)</value>
-        <value condition="Control.IsVisible(6590)">SetFocus(6590)</value>
-        <value condition="Control.IsVisible(6600)">SetFocus(6600)</value>
-        <value condition="Control.IsVisible(7510)">SetFocus(7510)</value>
-        <value condition="Control.IsVisible(7520)">SetFocus(7520)</value>
-        <value condition="Control.IsVisible(7530)">SetFocus(7530)</value>
-        <value condition="Control.IsVisible(7540)">SetFocus(7540)</value>
-        <value condition="Control.IsVisible(7550)">SetFocus(7550)</value>
-        <value condition="Control.IsVisible(7560)">SetFocus(7560)</value>
-        <value condition="Control.IsVisible(7570)">SetFocus(7570)</value>
-        <value condition="Control.IsVisible(7580)">SetFocus(7580)</value>
-        <value condition="Control.IsVisible(7590)">SetFocus(7590)</value>
-        <value condition="Control.IsVisible(7600)">SetFocus(7600)</value>
-        <value condition="Control.IsVisible(8510)">SetFocus(8510)</value>
-        <value condition="Control.IsVisible(8520)">SetFocus(8520)</value>
-        <value condition="Control.IsVisible(8530)">SetFocus(8530)</value>
-        <value condition="Control.IsVisible(8540)">SetFocus(8540)</value>
-        <value condition="Control.IsVisible(8550)">SetFocus(8550)</value>
-        <value condition="Control.IsVisible(8560)">SetFocus(8560)</value>
-        <value condition="Control.IsVisible(8570)">SetFocus(8570)</value>
-        <value condition="Control.IsVisible(8580)">SetFocus(8580)</value>
-        <value condition="Control.IsVisible(8590)">SetFocus(8590)</value>
-        <value condition="Control.IsVisible(8600)">SetFocus(8600)</value>
-        <value condition="Control.IsVisible(9510)">SetFocus(9510)</value>
-        <value condition="Control.IsVisible(9520)">SetFocus(9520)</value>
-        <value condition="Control.IsVisible(9530)">SetFocus(9530)</value>
-        <value condition="Control.IsVisible(9540)">SetFocus(9540)</value>
-        <value condition="Control.IsVisible(9550)">SetFocus(9550)</value>
-        <value condition="Control.IsVisible(9560)">SetFocus(9560)</value>
-        <value condition="Control.IsVisible(9570)">SetFocus(9570)</value>
-        <value condition="Control.IsVisible(9580)">SetFocus(9580)</value>
-        <value condition="Control.IsVisible(9590)">SetFocus(9590)</value>
-        <value condition="Control.IsVisible(9600)">SetFocus(9600)</value>
-        <value condition="Control.IsVisible(10510)">SetFocus(10510)</value>
-        <value condition="Control.IsVisible(10520)">SetFocus(10520)</value>
-        <value condition="Control.IsVisible(10530)">SetFocus(10530)</value>
-        <value condition="Control.IsVisible(10540)">SetFocus(10540)</value>
-        <value condition="Control.IsVisible(10550)">SetFocus(10550)</value>
-        <value condition="Control.IsVisible(10560)">SetFocus(10560)</value>
-        <value condition="Control.IsVisible(10570)">SetFocus(10570)</value>
-        <value condition="Control.IsVisible(10580)">SetFocus(10580)</value>
-        <value condition="Control.IsVisible(10590)">SetFocus(10590)</value>
-        <value condition="Control.IsVisible(10600)">SetFocus(10600)</value>
-        <value condition="Control.IsVisible(11510)">SetFocus(11510)</value>
-        <value condition="Control.IsVisible(11520)">SetFocus(11520)</value>
-        <value condition="Control.IsVisible(11530)">SetFocus(11530)</value>
-        <value condition="Control.IsVisible(11540)">SetFocus(11540)</value>
-        <value condition="Control.IsVisible(11550)">SetFocus(11550)</value>
-        <value condition="Control.IsVisible(11560)">SetFocus(11560)</value>
-        <value condition="Control.IsVisible(11570)">SetFocus(11570)</value>
-        <value condition="Control.IsVisible(11580)">SetFocus(11580)</value>
-        <value condition="Control.IsVisible(11590)">SetFocus(11590)</value>
-        <value condition="Control.IsVisible(11600)">SetFocus(11600)</value>
-        <value condition="Control.IsVisible(12510)">SetFocus(12510)</value>
-        <value condition="Control.IsVisible(12520)">SetFocus(12520)</value>
-        <value condition="Control.IsVisible(12530)">SetFocus(12530)</value>
-        <value condition="Control.IsVisible(12540)">SetFocus(12540)</value>
-        <value condition="Control.IsVisible(12550)">SetFocus(12550)</value>
-        <value condition="Control.IsVisible(12560)">SetFocus(12560)</value>
-        <value condition="Control.IsVisible(12570)">SetFocus(12570)</value>
-        <value condition="Control.IsVisible(12580)">SetFocus(12580)</value>
-        <value condition="Control.IsVisible(12590)">SetFocus(12590)</value>
-        <value condition="Control.IsVisible(12600)">SetFocus(12600)</value>
+        <value condition="Control.IsVisible(1510) + IntegerGreaterThan(Container(1510).NumItems,0)">SetFocus(1510)</value>
+        <value condition="Control.IsVisible(1520) + IntegerGreaterThan(Container(1520).NumItems,0)">SetFocus(1520)</value>
+        <value condition="Control.IsVisible(1530) + IntegerGreaterThan(Container(1530).NumItems,0)">SetFocus(1530)</value>
+        <value condition="Control.IsVisible(1540) + IntegerGreaterThan(Container(1540).NumItems,0)">SetFocus(1540)</value>
+        <value condition="Control.IsVisible(1550) + IntegerGreaterThan(Container(1550).NumItems,0)">SetFocus(1550)</value>
+        <value condition="Control.IsVisible(1560) + IntegerGreaterThan(Container(1560).NumItems,0)">SetFocus(1560)</value>
+        <value condition="Control.IsVisible(1570) + IntegerGreaterThan(Container(1570).NumItems,0)">SetFocus(1570)</value>
+        <value condition="Control.IsVisible(1580) + IntegerGreaterThan(Container(1580).NumItems,0)">SetFocus(1580)</value>
+        <value condition="Control.IsVisible(1590) + IntegerGreaterThan(Container(1590).NumItems,0)">SetFocus(1590)</value>
+        <value condition="Control.IsVisible(1600) + IntegerGreaterThan(Container(1600).NumItems,0)">SetFocus(1600)</value>
+        <value condition="Control.IsVisible(2510) + IntegerGreaterThan(Container(2510).NumItems,0)">SetFocus(2510)</value>
+        <value condition="Control.IsVisible(2520) + IntegerGreaterThan(Container(2520).NumItems,0)">SetFocus(2520)</value>
+        <value condition="Control.IsVisible(2530) + IntegerGreaterThan(Container(2530).NumItems,0)">SetFocus(2530)</value>
+        <value condition="Control.IsVisible(2540) + IntegerGreaterThan(Container(2540).NumItems,0)">SetFocus(2540)</value>
+        <value condition="Control.IsVisible(2550) + IntegerGreaterThan(Container(2550).NumItems,0)">SetFocus(2550)</value>
+        <value condition="Control.IsVisible(2560) + IntegerGreaterThan(Container(2560).NumItems,0)">SetFocus(2560)</value>
+        <value condition="Control.IsVisible(2570) + IntegerGreaterThan(Container(2570).NumItems,0)">SetFocus(2570)</value>
+        <value condition="Control.IsVisible(2580) + IntegerGreaterThan(Container(2580).NumItems,0)">SetFocus(2580)</value>
+        <value condition="Control.IsVisible(2590) + IntegerGreaterThan(Container(2590).NumItems,0)">SetFocus(2590)</value>
+        <value condition="Control.IsVisible(2600) + IntegerGreaterThan(Container(2600).NumItems,0)">SetFocus(2600)</value>
+        <value condition="Control.IsVisible(3510) + IntegerGreaterThan(Container(3510).NumItems,0)">SetFocus(3510)</value>
+        <value condition="Control.IsVisible(3520) + IntegerGreaterThan(Container(3520).NumItems,0)">SetFocus(3520)</value>
+        <value condition="Control.IsVisible(3530) + IntegerGreaterThan(Container(3530).NumItems,0)">SetFocus(3530)</value>
+        <value condition="Control.IsVisible(3540) + IntegerGreaterThan(Container(3540).NumItems,0)">SetFocus(3540)</value>
+        <value condition="Control.IsVisible(3550) + IntegerGreaterThan(Container(3550).NumItems,0)">SetFocus(3550)</value>
+        <value condition="Control.IsVisible(3560) + IntegerGreaterThan(Container(3560).NumItems,0)">SetFocus(3560)</value>
+        <value condition="Control.IsVisible(3570) + IntegerGreaterThan(Container(3570).NumItems,0)">SetFocus(3570)</value>
+        <value condition="Control.IsVisible(3580) + IntegerGreaterThan(Container(3580).NumItems,0)">SetFocus(3580)</value>
+        <value condition="Control.IsVisible(3590) + IntegerGreaterThan(Container(3590).NumItems,0)">SetFocus(3590)</value>
+        <value condition="Control.IsVisible(3600) + IntegerGreaterThan(Container(3600).NumItems,0)">SetFocus(3600)</value>
+        <value condition="Control.IsVisible(4510) + IntegerGreaterThan(Container(4510).NumItems,0)">SetFocus(4510)</value>
+        <value condition="Control.IsVisible(4520) + IntegerGreaterThan(Container(4520).NumItems,0)">SetFocus(4520)</value>
+        <value condition="Control.IsVisible(4530) + IntegerGreaterThan(Container(4530).NumItems,0)">SetFocus(4530)</value>
+        <value condition="Control.IsVisible(4540) + IntegerGreaterThan(Container(4540).NumItems,0)">SetFocus(4540)</value>
+        <value condition="Control.IsVisible(4550) + IntegerGreaterThan(Container(4550).NumItems,0)">SetFocus(4550)</value>
+        <value condition="Control.IsVisible(4560) + IntegerGreaterThan(Container(4560).NumItems,0)">SetFocus(4560)</value>
+        <value condition="Control.IsVisible(4570) + IntegerGreaterThan(Container(4570).NumItems,0)">SetFocus(4570)</value>
+        <value condition="Control.IsVisible(4580) + IntegerGreaterThan(Container(4580).NumItems,0)">SetFocus(4580)</value>
+        <value condition="Control.IsVisible(4590) + IntegerGreaterThan(Container(4590).NumItems,0)">SetFocus(4590)</value>
+        <value condition="Control.IsVisible(4600) + IntegerGreaterThan(Container(4600).NumItems,0)">SetFocus(4600)</value>
+        <value condition="Control.IsVisible(5510) + IntegerGreaterThan(Container(5510).NumItems,0)">SetFocus(5510)</value>
+        <value condition="Control.IsVisible(5520) + IntegerGreaterThan(Container(5520).NumItems,0)">SetFocus(5520)</value>
+        <value condition="Control.IsVisible(5530) + IntegerGreaterThan(Container(5530).NumItems,0)">SetFocus(5530)</value>
+        <value condition="Control.IsVisible(5540) + IntegerGreaterThan(Container(5540).NumItems,0)">SetFocus(5540)</value>
+        <value condition="Control.IsVisible(5550) + IntegerGreaterThan(Container(5550).NumItems,0)">SetFocus(5550)</value>
+        <value condition="Control.IsVisible(5560) + IntegerGreaterThan(Container(5560).NumItems,0)">SetFocus(5560)</value>
+        <value condition="Control.IsVisible(5570) + IntegerGreaterThan(Container(5570).NumItems,0)">SetFocus(5570)</value>
+        <value condition="Control.IsVisible(5580) + IntegerGreaterThan(Container(5580).NumItems,0)">SetFocus(5580)</value>
+        <value condition="Control.IsVisible(5590) + IntegerGreaterThan(Container(5590).NumItems,0)">SetFocus(5590)</value>
+        <value condition="Control.IsVisible(5600) + IntegerGreaterThan(Container(5600).NumItems,0)">SetFocus(5600)</value>
+        <value condition="Control.IsVisible(6510) + IntegerGreaterThan(Container(6510).NumItems,0)">SetFocus(6510)</value>
+        <value condition="Control.IsVisible(6520) + IntegerGreaterThan(Container(6520).NumItems,0)">SetFocus(6520)</value>
+        <value condition="Control.IsVisible(6530) + IntegerGreaterThan(Container(6530).NumItems,0)">SetFocus(6530)</value>
+        <value condition="Control.IsVisible(6540) + IntegerGreaterThan(Container(6540).NumItems,0)">SetFocus(6540)</value>
+        <value condition="Control.IsVisible(6550) + IntegerGreaterThan(Container(6550).NumItems,0)">SetFocus(6550)</value>
+        <value condition="Control.IsVisible(6560) + IntegerGreaterThan(Container(6560).NumItems,0)">SetFocus(6560)</value>
+        <value condition="Control.IsVisible(6570) + IntegerGreaterThan(Container(6570).NumItems,0)">SetFocus(6570)</value>
+        <value condition="Control.IsVisible(6580) + IntegerGreaterThan(Container(6580).NumItems,0)">SetFocus(6580)</value>
+        <value condition="Control.IsVisible(6590) + IntegerGreaterThan(Container(6590).NumItems,0)">SetFocus(6590)</value>
+        <value condition="Control.IsVisible(6600) + IntegerGreaterThan(Container(6600).NumItems,0)">SetFocus(6600)</value>
+        <value condition="Control.IsVisible(7510) + IntegerGreaterThan(Container(7510).NumItems,0)">SetFocus(7510)</value>
+        <value condition="Control.IsVisible(7520) + IntegerGreaterThan(Container(7520).NumItems,0)">SetFocus(7520)</value>
+        <value condition="Control.IsVisible(7530) + IntegerGreaterThan(Container(7530).NumItems,0)">SetFocus(7530)</value>
+        <value condition="Control.IsVisible(7540) + IntegerGreaterThan(Container(7540).NumItems,0)">SetFocus(7540)</value>
+        <value condition="Control.IsVisible(7550) + IntegerGreaterThan(Container(7550).NumItems,0)">SetFocus(7550)</value>
+        <value condition="Control.IsVisible(7560) + IntegerGreaterThan(Container(7560).NumItems,0)">SetFocus(7560)</value>
+        <value condition="Control.IsVisible(7570) + IntegerGreaterThan(Container(7570).NumItems,0)">SetFocus(7570)</value>
+        <value condition="Control.IsVisible(7580) + IntegerGreaterThan(Container(7580).NumItems,0)">SetFocus(7580)</value>
+        <value condition="Control.IsVisible(7590) + IntegerGreaterThan(Container(7590).NumItems,0)">SetFocus(7590)</value>
+        <value condition="Control.IsVisible(7600) + IntegerGreaterThan(Container(7600).NumItems,0)">SetFocus(7600)</value>
+        <value condition="Control.IsVisible(8510) + IntegerGreaterThan(Container(8510).NumItems,0)">SetFocus(8510)</value>
+        <value condition="Control.IsVisible(8520) + IntegerGreaterThan(Container(8520).NumItems,0)">SetFocus(8520)</value>
+        <value condition="Control.IsVisible(8530) + IntegerGreaterThan(Container(8530).NumItems,0)">SetFocus(8530)</value>
+        <value condition="Control.IsVisible(8540) + IntegerGreaterThan(Container(8540).NumItems,0)">SetFocus(8540)</value>
+        <value condition="Control.IsVisible(8550) + IntegerGreaterThan(Container(8550).NumItems,0)">SetFocus(8550)</value>
+        <value condition="Control.IsVisible(8560) + IntegerGreaterThan(Container(8560).NumItems,0)">SetFocus(8560)</value>
+        <value condition="Control.IsVisible(8570) + IntegerGreaterThan(Container(8570).NumItems,0)">SetFocus(8570)</value>
+        <value condition="Control.IsVisible(8580) + IntegerGreaterThan(Container(8580).NumItems,0)">SetFocus(8580)</value>
+        <value condition="Control.IsVisible(8590) + IntegerGreaterThan(Container(8590).NumItems,0)">SetFocus(8590)</value>
+        <value condition="Control.IsVisible(8600) + IntegerGreaterThan(Container(8600).NumItems,0)">SetFocus(8600)</value>
+        <value condition="Control.IsVisible(9510) + IntegerGreaterThan(Container(9510).NumItems,0)">SetFocus(9510)</value>
+        <value condition="Control.IsVisible(9520) + IntegerGreaterThan(Container(9520).NumItems,0)">SetFocus(9520)</value>
+        <value condition="Control.IsVisible(9530) + IntegerGreaterThan(Container(9530).NumItems,0)">SetFocus(9530)</value>
+        <value condition="Control.IsVisible(9540) + IntegerGreaterThan(Container(9540).NumItems,0)">SetFocus(9540)</value>
+        <value condition="Control.IsVisible(9550) + IntegerGreaterThan(Container(9550).NumItems,0)">SetFocus(9550)</value>
+        <value condition="Control.IsVisible(9560) + IntegerGreaterThan(Container(9560).NumItems,0)">SetFocus(9560)</value>
+        <value condition="Control.IsVisible(9570) + IntegerGreaterThan(Container(9570).NumItems,0)">SetFocus(9570)</value>
+        <value condition="Control.IsVisible(9580) + IntegerGreaterThan(Container(9580).NumItems,0)">SetFocus(9580)</value>
+        <value condition="Control.IsVisible(9590) + IntegerGreaterThan(Container(9590).NumItems,0)">SetFocus(9590)</value>
+        <value condition="Control.IsVisible(9600) + IntegerGreaterThan(Container(9600).NumItems,0)">SetFocus(9600)</value>
+        <value condition="Control.IsVisible(10510) + IntegerGreaterThan(Container(10510).NumItems,0)">SetFocus(10510)</value>
+        <value condition="Control.IsVisible(10520) + IntegerGreaterThan(Container(10520).NumItems,0)">SetFocus(10520)</value>
+        <value condition="Control.IsVisible(10530) + IntegerGreaterThan(Container(10530).NumItems,0)">SetFocus(10530)</value>
+        <value condition="Control.IsVisible(10540) + IntegerGreaterThan(Container(10540).NumItems,0)">SetFocus(10540)</value>
+        <value condition="Control.IsVisible(10550) + IntegerGreaterThan(Container(10550).NumItems,0)">SetFocus(10550)</value>
+        <value condition="Control.IsVisible(10560) + IntegerGreaterThan(Container(10560).NumItems,0)">SetFocus(10560)</value>
+        <value condition="Control.IsVisible(10570) + IntegerGreaterThan(Container(10570).NumItems,0)">SetFocus(10570)</value>
+        <value condition="Control.IsVisible(10580) + IntegerGreaterThan(Container(10580).NumItems,0)">SetFocus(10580)</value>
+        <value condition="Control.IsVisible(10590) + IntegerGreaterThan(Container(10590).NumItems,0)">SetFocus(10590)</value>
+        <value condition="Control.IsVisible(10600) + IntegerGreaterThan(Container(10600).NumItems,0)">SetFocus(10600)</value>
+
         <value>SetFocus(77777)</value>
     </variable>
 </includes>
