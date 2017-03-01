@@ -7,7 +7,7 @@
             <width>100%</width>
             <height>100%</height>
             <!-- fade when submenu active -->
-            <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + ![ControlGroup(77777).HasFocus | Control.HasFocus(4446) | Control.HasFocus(511)]">
+            <animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + !Control.HasFocus(77777)">
                 <effect type="fade" start="100" end="20" time="150" delay="0" tween="cubic" easing="inout" />
             </animation>
             
@@ -15,24 +15,23 @@
             <control type="group" id="77551">
                 <visible>!Skin.HasSetting(HideWidgetDetailsPanel) + !Skin.HasSetting(VerticalHomeLargeWidget)</visible>
                 <visible>!Substring(Window(Home).Property(widgetstyle),box)</visible>
-                <visible>!ControlGroup(511).HasFocus + !Control.HasFocus(4446)</visible>
+                <visible>!Control.HasFocus(4446)</visible>
                 <visible>ControlGroup(77777).HasFocus() + !StringCompare(Container(300).ListItem.Property(widget),submenuaswidget)</visible>
-                <visible>!Window.IsActive(notification) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(88888)</visible>
+                <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(88888)</visible>
+               
                 <control type="image">
-                    <right>55</right>
-                    <top>0</top>
-                    <width>1290</width>
+                    <left>560</left>
+                    <width>1300</width>
                     <texture border="15">diffuse/bgpanel.png</texture>
                     <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
                     <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
                     <aspectratio>stretch</aspectratio>
-                    <height>170</height>
+                    <height>180</height>
                     <visible>!Skin.HasSetting(LargeWidgetDetailsPanel)</visible>
                 </control>
                 <control type="image">
-                    <right>0</right>
-                    <top>0</top>
-                    <width>1355</width>
+                    <left>560</left>
+                    <width>1300</width>
                     <texture border="15">diffuse/bgpanel.png</texture>
                     <visible>!Skin.HasSetting(HideWidgetPanelBackground)</visible>
                     <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
@@ -41,7 +40,7 @@
                     <visible>Skin.HasSetting(LargeWidgetDetailsPanel)</visible>
                 </control>
                 <control type="label">
-                    <right>65</right>
+                    <right>76</right>
                     <top>5</top>
                     <width>1270</width>
                     <height>30</height>
@@ -52,7 +51,7 @@
                     <font>Reg28</font>
                 </control>
                 <control type="textbox">
-                    <right>65</right>
+                    <right>76</right>
                     <top>40</top>
                     <width>1270</width>
                     <height>115</height>
@@ -65,8 +64,8 @@
             </control>
             
             <!-- widgets -->
-            <include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(VerticalHomeLargeWidget)">skinshortcuts-template-VerticalHomeWidgets</include>
-            <include condition="!Skin.HasSetting(DisableAllWidgets) + Skin.HasSetting(VerticalHomeLargeWidget)">skinshortcuts-template-VerticalHomeWidgetsLarge</include>
+            <include condition="!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(VerticalHomeLargeWidget)">VerticalWidgets</include>
+            <include condition="!Skin.HasSetting(DisableAllWidgets) + Skin.HasSetting(VerticalHomeLargeWidget)">VerticalWidgetsLarge</include>
             
             <!-- fake button for submenu at focus -->
             <control type="button" id="4444">
@@ -77,25 +76,6 @@
                 <visible>StringCompare(Container(300).Listitem.Property(squaresubmenu),enable)</visible>
             </control>
             
-            <!-- busy image while widget loading -->
-            <control type="multiimage">
-                <right>60</right>
-                <top>250</top>
-                <width>100</width>
-                <height>100</height>
-                <aspectratio>keep</aspectratio>
-                <imagepath>$INFO[Skin.String(SkinHelper.SpinnerTexture.Path)]</imagepath>
-                <timeperimage>100</timeperimage>
-                <colordiffuse>$INFO[Skin.String(SpinnerTexture.Color)]</colordiffuse>
-                <fadetime>0</fadetime>
-                <visible>!Skin.String(SkinHelper.SpinnerTexture.Path,None)</visible>
-                <visible>
-                [Control.IsVisible(510) + Container(510).IsUpdating] | 
-                [Control.IsVisible(520) + Container(520).IsUpdating] | 
-                [Control.IsVisible(530) + Container(530).IsUpdating] | 
-                [Control.IsVisible(540) + Container(540).IsUpdating]
-                </visible>
-            </control>
         </control>
         
         <control type="group">
@@ -834,178 +814,161 @@
     </include>
 
     <!--  includes for widgets -->
+    <include name="VerticalWidgets">
+        <control type="grouplist" id="77777">
+            <width>1300</width>
+            <right>50</right>
+            <top>200</top>
+            <bottom>60</bottom>
+            <ondown>77777</ondown>
+            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
+            <onup>77777</onup>
+            <onback>300</onback>
+            <pagecontrol>317</pagecontrol>
+            
+            <!-- lower widgets if enabled -->
+            <animation effect="slide" start="0" end="0,380" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,506" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),small poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,small poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,490" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),square) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,square)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,655" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),minisquare) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,minisquare)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,570" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscape) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscape)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,592" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscapesmall) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscapesmall)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,584" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),banner) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,banner)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,400" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),single box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,single box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,500" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),wide box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,wide box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,-100" time="0" condition="StringCompare(Container(300).ListItem.Property(squaresubmenu),enable) + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            
+            <animation effect="slide" start="0" end="0,127" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),small poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,small poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,135" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),square) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,square)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,249" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),minisquare) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,minisquare)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,190" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscape) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscape)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscapesmall) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscapesmall)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),banner) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,banner)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),single box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,single box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,125" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),wide box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,wide box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            
+            <animation effect="slide" start="0" end="0,127" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),small poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,small poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,135" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),square) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,square)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,249" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),minisquare) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,minisquare)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,190" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),landscape) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,landscape)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),landscapesmall) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,landscapesmall)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),banner) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,banner)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),single box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,single box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,125" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),wide box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,wide box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
 
-    <include name="VerticalHomeAdvancedWidgetHeader">
-        <control type="group" id="$PARAM[id]">
-            <right>55</right>
+            <!-- square submenu -->
+            <control type="panel" id="4446">
+                <include>VerticalHomeSquareSubMenuLayout</include>
+                <visible>StringCompare(Container(300).ListItem.Property(squaresubmenu),enable)</visible>
+            </control>
             
-            <include name="width" content="width" condition="Skin.HasSetting(VerticalHomeLargeWidget)">
-                <param name="width" value="1435" />
-            </include>
+            <include>skinshortcuts-template-Widgets</include>
+        </control>
+        <control type="scrollbar" id="317"> 
+            <right>60</right>
+            <top>200</top>
+            <bottom>60</bottom>
+            <onleft>77777</onleft>
+            <onright>300</onright>
+            <showonepage>false</showonepage>
+            <visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars) | Control.HasFocus(77777)]</visible>
+        </control>
             
-            <width>1290</width>
-            <height>45</height>
-            <include>widgets_animation</include>
+    </include>
+    <include name="VerticalWidgetsLarge">
+        <control type="grouplist" id="77777">
+            <left>470</left>
+            <right>0</right>
+            <top>160</top>
+            <bottom>0</bottom>
+            <ondown>77777</ondown>
+            <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">300</onleft>
+            <onup>77777</onup>
+            <onback>300</onback>
+            <pagecontrol>317</pagecontrol>
             
-            <visible>!IsEmpty(Container(300).Listitem.Property(widget$PARAM[widgetidprefix]))</visible>
-            <visible>SubString(Container(300).Listitem.Property(multiwidget),multi)</visible>
-            <control type="image">
-                <texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(ViewDetailsPanelColor)]</colordiffuse>
-                <visible>!Skin.HasSetting(HideWidgetPanelBackground) + ![Skin.HasSetting(LargeWidgetDetailsPanel) + Control.IsVisible(77551)]</visible>
+            <!-- lower widgets if enabled -->
+            <animation effect="slide" start="0" end="0,380" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,506" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),small poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,small poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,490" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),square) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,square)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,655" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),minisquare) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,minisquare)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,570" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscape) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscape)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,592" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscapesmall) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscapesmall)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,584" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),banner) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,banner)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,400" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),single box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,single box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,500" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),wide box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,wide box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            <animation effect="slide" start="0" end="0,-100" time="0" condition="StringCompare(Container(300).ListItem.Property(squaresubmenu),enable) + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),single)">Conditional</animation>
+            
+            <animation effect="slide" start="0" end="0,127" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),small poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,small poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,135" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),square) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,square)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,249" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),minisquare) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,minisquare)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,190" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscape) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscape)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),landscapesmall) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,landscapesmall)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),banner) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,banner)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),single box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,single box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,125" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle),wide box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle)) + Skin.String(widgetstyle,wide box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            
+            <animation effect="slide" start="0" end="0,127" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),small poster) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,small poster)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,135" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),square) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,square)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,249" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),minisquare) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,minisquare)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,190" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),landscape) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,landscape)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),landscapesmall) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,landscapesmall)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,225" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),banner) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,banner)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,40" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),single box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,single box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+            <animation effect="slide" start="0" end="0,125" time="0" condition="[StringCompare(Container(300).ListItem.Property(widgetstyle.1),wide box) | [IsEmpty(Container(300).ListItem.Property(widgetstyle.1)) + Skin.String(widgetstyle,wide box)]] + StringCompare(Container(300).ListItem.Property(lowerwidgets),enable) + StringCompare(Container(300).ListItem.Property(multiwidget),multi) + !IsEmpty(Container(300).ListItem.Property(widget.1)) + IsEmpty(Container(300).ListItem.Property(widget.2))">Conditional</animation>
+
+            <!-- square submenu -->
+            <control type="panel" id="4446">
+                <include>VerticalHomeSquareSubMenuLayout</include>
+                <visible>StringCompare(Container(300).ListItem.Property(squaresubmenu),enable)</visible>
             </control>
-            <control type="label">
-                <height>100%</height>
-                <right>0</right>
-                <textoffsetx>10</textoffsetx>
-                <width>100%</width>
-                <font>Reg32</font>
-                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
-                <aligny>center</aligny>
-                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
-                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
-                <label>$INFO[Container(300).ListItem.Property(widgetName$PARAM[widgetidprefix])]</label>
-                <visible>IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
-                <visible>!Skin.String(HomeLayout, verticalbig)</visible>
-            </control>
-            <control type="label">
-                <height>100%</height>
-                <right>0</right>
-                <textoffsetx>10</textoffsetx>
-                <width>100%</width>
-                <font>Reg32</font>
-                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
-                <aligny>center</aligny>
-                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
-                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
-                <label>$LOCALIZE[31545] $INFO[Container($PARAM[containerid]).ListItem.Property(similartitle)]</label>
-                <visible>!IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
-                <visible>!Skin.String(HomeLayout, verticalbig)</visible>
-            </control>
-            <control type="label">
-                <height>100%</height>
-                <right>0</right>
-                <textoffsetx>10</textoffsetx>
-                <width>100%</width>
-                <font>Light32</font>
-                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
-                <aligny>center</aligny>
-                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
-                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
-                <label>[UPPERCASE]$INFO[Container(300).ListItem.Property(widgetName$PARAM[widgetidprefix])][/UPPERCASE]</label>
-                <visible>IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
-                <visible>Skin.String(HomeLayout, verticalbig)</visible>
-            </control>
-            <control type="label">
-                <height>100%</height>
-                <right>0</right>
-                <textoffsetx>10</textoffsetx>
-                <width>100%</width>
-                <font>Light32</font>
-                <include condition="!Skin.HasSetting(AutoWidgetAlignDisabled)">align_right</include>
-                <aligny>center</aligny>
-                <textcolor>$VAR[VerticalHomeWidgetHeaderTextColor]</textcolor>
-                <shadowcolor>$VAR[VerticalHomeWidgetHeaderTextShadowColor]</shadowcolor>
-                <label>[UPPERCASE]$LOCALIZE[31545] $INFO[Container($PARAM[containerid]).ListItem.Property(similartitle)][/UPPERCASE]</label>
-                <visible>!IsEmpty(Container($PARAM[containerid]).ListItem.Property(similartitle))</visible>
-                <visible>Skin.String(HomeLayout, verticalbig)</visible>
-            </control>
+            
+            <include>skinshortcuts-template-Widgets</include>
             
         </control>
-    </include>
-    
-    <variable name="VerticalHomeWidgetHeaderTextColor">
-        <value condition="Control.HasFocus(513)">$INFO[Skin.String(ButtonFocusTextColor)]</value>
-        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">$INFO[Skin.String(HeaderTextColor)]</value>
-        <value>$INFO[Skin.String(ViewDetailsTextColor)]</value>
-    </variable>
-    <variable name="VerticalHomeWidgetHeaderTextShadowColor">
-        <value condition="Control.HasFocus(513)">-</value>
-        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">$INFO[Skin.String(HeaderTextShadowColor)]</value>
-        <value>$INFO[Skin.String(ViewDetailsTextShadowColor)]</value>
-    </variable>
-    
-    <variable name="VerticalHomeWidgetHeaderBgColor">
-        <value condition="Skin.HasSetting(HideWidgetPanelBackground)">00ffffff</value>
-        <value>$INFO[Skin.String(ViewDetailsPanelColor)]</value>
-    </variable>
-    
-    <variable name="VerticalHomeWidgetHeaderLabel">
-        <value condition="Skin.String(HomeLayout, verticalbig)">[UPPERCASE]$VAR[changeWidgetLabel][/UPPERCASE]</value>
-        <value>$VAR[changeWidgetLabel]</value>
-    </variable>
-    
-    <include name="VerticalHomeSimpleWidgetHeaderLayout">
-        <right>55</right>
-        <include name="width" content="width" condition="Skin.HasSetting(VerticalHomeLargeWidget)">
-            <param name="width" value="1435" />
-        </include>
-        <width>1290</width>
-        <height>45</height>
-        <align>right</align>
-        <label>$VAR[VerticalHomeWidgetHeaderLabel]</label>
-        <onclick>$VAR[toggleNextWidget]</onclick>
-        <font>Reg32</font>
-        <textureradiofocus colordiffuse="$INFO[Skin.String(ButtonFocusTextColor)]" flipy="true">home/home_arrow_up.png</textureradiofocus>
-        <textureradionofocus colordiffuse="$VAR[VerticalHomeWidgetHeaderTextColor]" flipy="true">home/home_arrow_up.png</textureradionofocus>
-        <texturenofocus colordiffuse="$VAR[VerticalHomeWidgetHeaderBgColor]" border="5">diffuse/panel.png</texturenofocus>
-        <radiowidth>30</radiowidth>
-        <radioheight>30</radioheight>
-    </include>
-    <include name="VerticalHomeSimpleWidgetHeaderLayoutAlt">
-        <right>55</right>
-        <include name="width" content="width" condition="Skin.HasSetting(VerticalHomeLargeWidget)">
-            <param name="width" value="1435" />
-        </include>
-        <width>1290</width>
-        <height>45</height>
-        <align>left</align>
-        <label>$VAR[VerticalHomeWidgetHeaderLabel]</label>
-        <onclick>$VAR[toggleNextWidget]</onclick>
-        <font>Reg32</font>
-        <textureradiofocus colordiffuse="$INFO[Skin.String(ButtonFocusTextColor)]" flipy="true">home/home_arrow_up.png</textureradiofocus>
-        <textureradionofocus colordiffuse="$VAR[VerticalHomeWidgetHeaderTextColor]" flipy="true">home/home_arrow_up.png</textureradionofocus>
-        <texturenofocus colordiffuse="$VAR[VerticalHomeWidgetHeaderBgColor]" border="5">diffuse/panel.png</texturenofocus>
-        <radiowidth>30</radiowidth>
-        <radioheight>30</radioheight>
-        <radioposx>10</radioposx>
+        <control type="scrollbar" id="317"> 
+            <left>450</left>
+            <right>60</right>
+            <top>150</top>
+            <bottom>60</bottom>
+            <onleft>77777</onleft>
+            <onright>300</onright>
+            <showonepage>false</showonepage>
+            <visible>[Skin.HasSetting(EnableTouchSupport) | Skin.HasSetting(alwaysShowScrollbars) | Control.HasFocus(77777)]</visible>
+        </control>
+            
     </include>
     
     <include name="VerticalHomeSquareSubMenuLayout">
-        <include name="width" content="width" condition="Skin.HasSetting(VerticalHomeLargeWidget)">
-            <param name="width" value="1443" />
-        </include>
-        <width>1296</width>
-        <right>50</right>
-        <posy>0</posy>
+        <width>100%</width>
         <height>100</height>
         <orientation>horizontal</orientation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,11) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,10) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,9) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,8) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,7) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,6) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,5) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,4) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,3) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,2) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="108" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,1) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="10" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,11) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,10) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,9) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,8) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,7) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,6) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,5) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,4) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,3) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,2) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="108" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,1) + !Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
         
-        <animation effect="slide" start="0" end="5" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,12) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,11) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,10) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,9) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,8) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,7) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,6) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,5) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,4) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,3) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,2) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        <animation effect="slide" start="0" end="111" time="0" condition="!Skin.HasSetting(AutoWidgetAlignDisabled) + !IntegerGreaterThan(Container(4445).NumItems,1) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
-        
+        <animation effect="slide" start="0" end="5" time="0" condition="Skin.HasSetting(WidgetAlignRight) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,12) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,11) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,10) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,9) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,8) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,7) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,6) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,5) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,4) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,3) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,2) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
+        <animation effect="slide" start="0" end="111" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container(4445).NumItems,1) + Skin.HasSetting(VerticalHomeLargeWidget)">Conditional</animation>
         
         <itemlayout height="100" width="108" condition="!Skin.HasSetting(VerticalHomeLargeWidget)">
           <control type="group">
@@ -1036,7 +999,7 @@
             </control>
         </focusedlayout>
         <content>
-            <include condition="!Skin.HasSetting(DisableAllSubmenus)">skinshortcuts-submenu</include>
+            <include>skinshortcuts-submenu</include>
         </content> 
     </include>
     
