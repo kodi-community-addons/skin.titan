@@ -79,6 +79,8 @@
         <property name="widgetStyle1">default</property>
         <property name="widgetInfoPanel1" tag="property" attribute="name|widgetInfoPanel" />
         <property name="widgetInfoPanel1">top</property>
+        <property name="widgetFixedFocus1" tag="property" attribute="name|widgetFixedFocus" />
+        <property name="widgetFixedFocus1">disabled</property>
 
         <!-- widget 2 -->
 		<property name="widgetTarget2" tag="property" attribute="name|widgetTarget.1" />
@@ -98,6 +100,8 @@
         <property name="widgetStyle2">default</property>
         <property name="widgetInfoPanel2" tag="property" attribute="name|widgetInfoPanel.1" />
         <property name="widgetInfoPanel2">top</property>
+        <property name="widgetFixedFocus2" tag="property" attribute="name|widgetFixedFocus.1" />
+        <property name="widgetFixedFocus2">disabled</property>
 
         <!-- widget 3 -->
 		<property name="widgetTarget3" tag="property" attribute="name|widgetTarget.2" />
@@ -117,6 +121,8 @@
         <property name="widgetStyle3">default</property>
         <property name="widgetInfoPanel3" tag="property" attribute="name|widgetInfoPanel.2" />
         <property name="widgetInfoPanel3">top</property>
+        <property name="widgetFixedFocus3" tag="property" attribute="name|widgetFixedFocus.2" />
+        <property name="widgetFixedFocus3">disabled</property>
         
         <!-- widget 4 -->
 		<property name="widgetTarget4" tag="property" attribute="name|widgetTarget.3" />
@@ -136,6 +142,8 @@
         <property name="widgetStyle4">default</property>
         <property name="widgetInfoPanel4" tag="property" attribute="name|widgetInfoPanel.3" />
         <property name="widgetInfoPanel4">top</property>
+        <property name="widgetFixedFocus4" tag="property" attribute="name|widgetFixedFocus.3" />
+        <property name="widgetFixedFocus4">disabled</property>
         
         <!-- widget 5 -->
 		<property name="widgetTarget5" tag="property" attribute="name|widgetTarget.4" />
@@ -155,6 +163,8 @@
         <property name="widgetStyle5">default</property>
         <property name="widgetInfoPanel5" tag="property" attribute="name|widgetInfoPanel.4" />
         <property name="widgetInfoPanel5">top</property>
+        <property name="widgetFixedFocus5" tag="property" attribute="name|widgetFixedFocus.4" />
+        <property name="widgetFixedFocus5">disabled</property>
         
         <!-- widget 6 -->
 		<property name="widgetTarget6" tag="property" attribute="name|widgetTarget.5" />
@@ -174,6 +184,8 @@
         <property name="widgetStyle6">default</property>
         <property name="widgetInfoPanel6" tag="property" attribute="name|widgetInfoPanel.5" />
         <property name="widgetInfoPanel6">top</property>
+        <property name="widgetFixedFocus6" tag="property" attribute="name|widgetFixedFocus.5" />
+        <property name="widgetFixedFocus6">disabled</property>
         
         <!-- widget 7 -->
 		<property name="widgetTarget7" tag="property" attribute="name|widgetTarget.6" />
@@ -193,6 +205,8 @@
         <property name="widgetStyle7">default</property>
         <property name="widgetInfoPanel7" tag="property" attribute="name|widgetInfoPanel.6" />
         <property name="widgetInfoPanel7">top</property>
+        <property name="widgetFixedFocus7" tag="property" attribute="name|widgetFixedFocus.6" />
+        <property name="widgetFixedFocus7">disabled</property>
         
         <!-- widget 8 -->
 		<property name="widgetTarget8" tag="property" attribute="name|widgetTarget.7" />
@@ -212,13 +226,22 @@
         <property name="widgetStyle8">default</property>
         <property name="widgetInfoPanel8" tag="property" attribute="name|widgetInfoPanel.7" />
         <property name="widgetInfoPanel8">top</property>
+        <property name="widgetFixedFocus8" tag="property" attribute="name|widgetFixedFocus.7" />
+        <property name="widgetFixedFocus8">disabled</property>
         
         <controls>
             
             <include name="widget_header_single" content="widget_header_single" condition="!Skin.String(HomeLayout,win10) + ![$SKINSHORTCUTS[multiWidgets] + [SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix)]] + $PYTHON['true' if widgetPath1 else 'false']">
                 <param name="mainmenuid" value="$SKINSHORTCUTS[id]" />
-                <param name="label" value="$VAR[widgetlabel-$SKINSHORTCUTS[id]]" />
                 <param name="submenuid" value="$SKINSHORTCUTS[submenuid]" />
+                <param name="hasWidget0" value="$PYTHON['true' if widgetPath1 else 'false']" />
+                <param name="hasWidget1" value="$PYTHON['true' if widgetPath2 else 'false']" />
+                <param name="hasWidget2" value="$PYTHON['true' if widgetPath3 else 'false']" />
+                <param name="hasWidget3" value="$PYTHON['true' if widgetPath4 else 'false']" />
+                <param name="hasWidget4" value="$PYTHON['true' if widgetPath5 else 'false']" />
+                <param name="hasWidget5" value="$PYTHON['true' if widgetPath6 else 'false']" />
+                <param name="hasWidget6" value="$PYTHON['true' if widgetPath7 else 'false']" />
+                <param name="hasWidget7" value="$PYTHON['true' if widgetPath8 else 'false']" />
             </include>
             
             <!-- widget 1 -->
@@ -228,7 +251,7 @@
                 <param name="widgetName" value="$SKINSHORTCUTS[widgetName1]" />
             </include>
             <include name="widget_base" content="widget_base" condition="$PYTHON['true' if widgetPath1 else 'false']">
-                <param name="containerType" value="$PYTHON['fixedlist' if widgetStyle1 in 'details' else 'panel']" />
+                <param name="containerType" value="$PYTHON['fixedlist' if widgetStyle1 in 'details' or 'enabled' in widgetFixedFocus1 else 'panel']" />
                 <param name="contentStyle" value="$SKINSHORTCUTS[contentStyle1]" />
                 <param name="widgetid" value="$SKINSHORTCUTS[id]510" />
                 <param name="widgetName" value="$SKINSHORTCUTS[widgetName1]" />
@@ -571,13 +594,6 @@
             </variable>
             
             <variable name="widgetlabel-$SKINSHORTCUTS[id]">
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],7) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName.7)]</value>
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],6) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName).6]</value>
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],5) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName.5)]</value>
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],4) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName.4)]</value>
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],3) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName.3)]</value>
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],2) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName.2)]</value>
-                <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],1) + StringCompare(Container(300).ListItem.Property(submenuVisibility),$SKINSHORTCUTS[submenuid])">$INFO[Container(300).ListItem.Property(widgetName)]</value>
                 <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],7)">$SKINSHORTCUTS[widgetName8]</value>
                 <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],6)">$SKINSHORTCUTS[widgetName7]</value>
                 <value condition="Skin.String(widgetvalue-$SKINSHORTCUTS[submenuid],5)">$SKINSHORTCUTS[widgetName6]</value>

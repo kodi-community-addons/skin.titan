@@ -10,8 +10,10 @@
                 <right>0</right>
                 <bottom>40</bottom>
                 <ondown>77777</ondown>
-                <onleft>300</onleft>
+                <onleft condition="!Skin.HasSetting(EnhancedHome_Circular)">SetFocus(300)</onleft>
+                <onleft condition="Skin.HasSetting(EnhancedHome_Circular)">77777</onleft>
                 <onup>5555</onup>
+                <onback>300</onback>
                 <orientation>horizontal</orientation>
                 <pagecontrol>317</pagecontrol>
                 <onfocus>ClearProperty(ShowViewSubMenu)</onfocus>
@@ -352,6 +354,23 @@
                     <bordersize>8</bordersize>
                     <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Art(fanart)]</texture>
                     <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+                    <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                </control>
+                <control type="image">
+                    <width>100%</width>
+                    <height>100%</height>
+                    <bordersize>8</bordersize>
+                    <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Property(fanart)]</texture>
+                    <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+                    <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                </control>
+                <control type="image">
+                    <width>100%</width>
+                    <height>100%</height>
+                    <bordersize>8</bordersize>
+                    <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Icon]</texture>
+                    <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+                    <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
                 </control>
                 <control type="image">
                     <bottom>0</bottom>
@@ -380,7 +399,103 @@
                     <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
                     <font>Reg24</font>
                     <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
+                    <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
                 </control>
+                <control type="textbox">
+                    <bottom>12</bottom>
+                    <posx>20</posx>
+                    <width>95%</width>
+                    <height>97</height>
+                    <align>left</align>
+                    <label>$INFO[Container($PARAM[widgetid]).ListItem.Property(Plot)]</label>
+                    <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
+                    <font>Reg24</font>
+                    <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
+                    <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
+                </control>
+            </control>
+        </control>
+    </include>
+    <include name="HomeWin10SpotlightPanelLarge">
+        <control type="group" id="$PARAM[widgetid]60">
+            <height>880</height>
+            <width>687</width>
+            <animation effect="slide" end="-25" time="0" condition="true">Conditional</animation>
+            <visible>Control.IsVisible($PARAM[widgetid])</visible>
+            <control type="image">
+                <texture background="true">diffuse/wide.png</texture>
+                <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+                <include condition="Skin.String(thumbsborder_unfocused, 0)">thumbborder_0</include>
+                <include condition="Skin.String(thumbsborder_unfocused, 2)">thumbborder_2</include>
+                <include condition="Skin.String(thumbsborder_unfocused, 4)">thumbborder_4</include>
+                <include condition="Skin.String(thumbsborder_unfocused, 6)">thumbborder_6</include>
+            </control>
+            <control type="image">
+                <texture background="true">diffuse/wide.png</texture>
+                <colordiffuse>$VAR[ViewDetailsPanelColor]</colordiffuse>
+                <include condition="Skin.String(thumbsborder_unfocused, 0)">thumbborder_0</include>
+                <include condition="Skin.String(thumbsborder_unfocused, 2)">thumbborder_2</include>
+                <include condition="Skin.String(thumbsborder_unfocused, 4)">thumbborder_4</include>
+                <include condition="Skin.String(thumbsborder_unfocused, 6)">thumbborder_6</include>
+            </control>
+            <control type="image">
+                <height>385</height>
+                <width>100%</width>
+                <height>395</height>
+                <bordersize>15</bordersize>
+                <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Art(fanart)]</texture>
+                <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+            </control>
+            <control type="image">
+                <width>100%</width>
+                <height>395</height>
+                <bordersize>15</bordersize>
+                <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Property(fanart)]</texture>
+                <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+            </control>
+            <control type="image">
+                <width>100%</width>
+                <height>395</height>
+                <bordersize>15</bordersize>
+                <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Icon]</texture>
+                <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+            </control>
+            <control type="textbox">
+                <top>410</top>
+                <left>15</left>
+                <right>15</right>
+                <height>60</height>
+                <align>left</align>
+                <label>[B][COLOR=$INFO[Skin.String(ViewDetailsFocusColor)]]$VAR[widgetinfolabel-$PARAM[widgetid]][/COLOR][CR]$VAR[widgetsubtitle-$PARAM[widgetid]][/B]</label>
+                <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
+                <font>Reg26</font>
+            </control>
+            <control type="textbox">
+                <bottom>15</bottom>
+                <top>490</top>
+                <left>15</left>
+                <right>15</right>
+                <align>left</align>
+                <label>$INFO[Container($PARAM[widgetid]).ListItem.Plot]</label>
+                <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
+                <font>Reg24</font>
+                <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
+                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
+            </control>
+            <control type="textbox">
+                <bottom>15</bottom>
+                <top>490</top>
+                <left>15</left>
+                <right>15</right>
+                <align>left</align>
+                <label>$INFO[Container($PARAM[widgetid]).ListItem.Property(Plot)]</label>
+                <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
+                <font>Reg24</font>
+                <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
+                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
             </control>
         </control>
     </include>

@@ -1616,10 +1616,10 @@
                 <align>left</align>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$VAR[$PARAM[widgetid]-label]</label>
+                <label>$PARAM[widgetName]</label>
                 <animation effect="slide" end="50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + !Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
                 <animation effect="slide" end="-50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
-                <visible>IsEmpty(Container().ListItem.Property(similartitle))</visible>
+                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
             <control type="textbox">
                 <height>95%</height>
@@ -1629,10 +1629,10 @@
                 <align>left</align>
                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                <label>$INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
+                <label>$LOCALIZE[31543] $INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
                 <animation effect="slide" end="50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + !Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
                 <animation effect="slide" end="-50" time="0" condition="Container($PARAM[widgetid]).IsUpdating + Skin.HasSetting(WidgetAlignRight)">Conditional</animation>
-                <visible>!IsEmpty(Container().ListItem.Property(similartitle))</visible>
+                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
             <control type="multiimage">
                 <width>100%</width>
@@ -1661,13 +1661,20 @@
             <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
             <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
             <onfocus>SetProperty(ShowWidget,show)</onfocus>
-            <onclick condition="[Skin.String(widgetvalue-$PARAM[submenuid],0) | !Skin.String(widgetvalue-$PARAM[submenuid])] + !IsEmpty(Container(300).ListItem.Property(widgetPath.1))">Skin.SetString(widgetvalue-$PARAM[submenuid],1)</onclick>
-            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],1) + !IsEmpty(Container(300).ListItem.Property(widgetPath.2))">Skin.SetString(widgetvalue-$PARAM[submenuid],2)</onclick>
-            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],1) + IsEmpty(Container(300).ListItem.Property(widgetPath.2))">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
-            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],2) + !IsEmpty(Container(300).ListItem.Property(widgetPath.3))">Skin.SetString(widgetvalue-$PARAM[submenuid],3)</onclick>
-            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],2) + IsEmpty(Container(300).ListItem.Property(widgetPath.3))">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
-            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],3) + !IsEmpty(Container(300).ListItem.Property(widgetPath.4))">Skin.SetString(widgetvalue-$PARAM[submenuid],4)</onclick>
-            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],3) + IsEmpty(Container(300).ListItem.Property(widgetPath.4))">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="[Skin.String(widgetvalue-$PARAM[submenuid],0) | !Skin.String(widgetvalue-$PARAM[submenuid])] + $PARAM[hasWidget1]">Skin.SetString(widgetvalue-$PARAM[submenuid],1)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],1) + $PARAM[hasWidget2]">Skin.SetString(widgetvalue-$PARAM[submenuid],2)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],1) + !$PARAM[hasWidget2]">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],2) + $PARAM[hasWidget3]">Skin.SetString(widgetvalue-$PARAM[submenuid],3)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],2) + !$PARAM[hasWidget3]">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],3) + $PARAM[hasWidget4]">Skin.SetString(widgetvalue-$PARAM[submenuid],4)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],3) + !$PARAM[hasWidget4]">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],4) + $PARAM[hasWidget5]">Skin.SetString(widgetvalue-$PARAM[submenuid],5)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],4) + !$PARAM[hasWidget5]">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],5) + $PARAM[hasWidget6]">Skin.SetString(widgetvalue-$PARAM[submenuid],6)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],5) + !$PARAM[hasWidget6]">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],6) + $PARAM[hasWidget7]">Skin.SetString(widgetvalue-$PARAM[submenuid],7)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],6) + !$PARAM[hasWidget7]">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
+            <onclick condition="Skin.String(widgetvalue-$PARAM[submenuid],7)">Skin.SetString(widgetvalue-$PARAM[submenuid],0)</onclick>
             <texturenofocus>-</texturenofocus>
             <radiowidth>40</radiowidth>
             <radioheight>40</radioheight>
@@ -1688,6 +1695,10 @@
             <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
             <fadetime>0</fadetime>
             <visible>
+                [Skin.String(widgetvalue-$PARAM[submenuid],7) + Container($PARAM[mainmenuid]580).IsUpdating] | 
+                [Skin.String(widgetvalue-$PARAM[submenuid],6) + Container($PARAM[mainmenuid]570).IsUpdating] | 
+                [Skin.String(widgetvalue-$PARAM[submenuid],5) + Container($PARAM[mainmenuid]560).IsUpdating] | 
+                [Skin.String(widgetvalue-$PARAM[submenuid],4) + Container($PARAM[mainmenuid]550).IsUpdating] | 
                 [Skin.String(widgetvalue-$PARAM[submenuid],3) + Container($PARAM[mainmenuid]540).IsUpdating] | 
                 [Skin.String(widgetvalue-$PARAM[submenuid],2) + Container($PARAM[mainmenuid]530).IsUpdating] | 
                 [Skin.String(widgetvalue-$PARAM[submenuid],1) + Container($PARAM[mainmenuid]520).IsUpdating] | 
@@ -1754,7 +1765,7 @@
         </include>
     </include>
     <include name="widget_base_win10">
-        <include name="HomeWin10SpotlightPanel" content="HomeWin10SpotlightPanel" condition="!Skin.String(CompareTxtDisable, $PARAM[widgetInfoPanel])">
+        <include name="HomeWin10SpotlightPanel" content="HomeWin10SpotlightPanel" condition="Skin.String(CompareTxtTop, $PARAM[widgetInfoPanel]) | Skin.String(CompareTxtBottom, $PARAM[widgetInfoPanel])">
             <param name="widgetid" value="$PARAM[widgetid]" />
             <param name="position" value="$PARAM[widgetInfoPanel]" />
         </include>
@@ -1762,7 +1773,7 @@
             <description>Heading</description>
             <width>1</width>
             <height>1</height>
-            <animation effect="slide" end="10,-50" time="0" condition="true">Conditional</animation>
+            <animation effect="slide" end="13,-50" time="0" condition="true">Conditional</animation>
             <visible>Control.IsVisible($PARAM[widgetid])</visible>
             <control type="label">
                 <height>40</height>
@@ -1772,7 +1783,7 @@
                 <aligny>top</aligny>
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
                 <label>$PARAM[widgetName]</label>
-                <visible>IsEmpty(Container().ListItem.Property(similartitle))</visible>
+                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
             <control type="label">
                 <height>40</height>
@@ -1781,7 +1792,7 @@
                 <align>left</align>
                 <aligny>top</aligny>
                 <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
-                <label>$INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
+                <label>$LOCALIZE[31543] $INFO[Container($PARAM[widgetid]).ListItem.Property(similartitle)]</label>
                 <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(similartitle))</visible>
             </control>
             <control type="multiimage" id="$PARAM[widgetid]7">
@@ -1796,12 +1807,13 @@
                 <visible>Container($PARAM[widgetid]).IsUpdating</visible>
             </control>
         </control>
-        <control type="$PARAM[containerType]" id="$PARAM[widgetid]">
+        <control type="panel" id="$PARAM[widgetid]">
             <description>Widget</description>
             <focusposition>0</focusposition>
             <width>690</width>
             <animation effect="slide" end="0,440" time="0" condition="Skin.String(CompareTxtTop, $PARAM[widgetInfoPanel])">Conditional</animation>
             <include condition="Skin.String(CompareTxtDisable, $PARAM[widgetInfoPanel])">widget_base_win10_altheight</include>
+            <include condition="Skin.String(CompareTxtLarge, $PARAM[widgetInfoPanel])">widget_base_win10_altheight</include>
             <height>440</height>
             <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
             <orientation>vertical</orientation>
@@ -1824,6 +1836,10 @@
             <visible>StringCompare(Container(300).ListItem.Property(submenuVisibility),$PARAM[submenuid]) | Skin.HasSetting(ShowAllWidgets)</visible>
             <visible>$PARAM[visibility]</visible>
         </control>
+        <include name="HomeWin10SpotlightPanelLarge" content="HomeWin10SpotlightPanelLarge" condition="Skin.String(CompareTxtLarge, $PARAM[widgetInfoPanel])">
+            <param name="widgetid" value="$PARAM[widgetid]" />
+            <param name="position" value="$PARAM[widgetInfoPanel]" />
+        </include>
     </include>
     <include name="widget_base_win10_altheight">
         <height>880</height>
