@@ -28,6 +28,7 @@
             <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="[SubString(Skin.String(HomeLayout), netflix) | Skin.String(HomeLayout, win10)] + Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                 <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
             </include>            
+            <onfocus condition="IsEmpty(Window(Home).Property(widgetstyle))">SetProperty(widgetstyle, $INFO[Skin.String(widgetstyle)])</onfocus>
             <onfocus>SetProperty(HomeFirstLoadDone,done)</onfocus>
 			<texturenofocus>-</texturenofocus>
 			<texturefocus>-</texturefocus>
@@ -48,11 +49,6 @@
 			<font>-</font>
 			<label>$INFO[Weather.Conditions]</label>
 		</control>
-        <!--hidden label with widget style-->
-        <control type="label" id="17888">
-            <font>-</font>
-            <label>$VAR[widgetstyle_active]</label>
-        </control>
 		
         <!-- hidden submenu for count calculations -->
         <include condition="!Skin.String(HomeLayout, enhanced) + !Skin.HasSetting(DisableAllSubmenus)">hiddenSubmenu</include>
