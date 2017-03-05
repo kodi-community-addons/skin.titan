@@ -136,8 +136,8 @@
             <ondown>ClearProperty(ShowWidget, Home)</ondown>
             <onback>300</onback>
             <onback>ClearProperty(ShowWidget, Home)</onback>
-            <onfocus>SetProperty(ShowWidget,show)</onfocus>
             <itemgap>0</itemgap>
+            <visible>!IsEmpty(Window(Home).Property(HomeFirstLoadDone))</visible>
             
             <!-- hide when no focus on widget and autoshow not enabled -->
             <animation effect="slide" start="0,0" end="0,-1000" time="300" tween="cubic" easing="inout" delay="0" condition="!StringCompare(Window(Home).Property(ShowWidget),show) + !Skin.HasSetting(AutoShowWidgets)">Conditional</animation>
@@ -524,13 +524,13 @@
 
 
         <animation effect="slide" start="0" end="140" time="0" condition="Skin.HasSetting(WidgetAlignRight) + SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + !SubString(Skin.String(HomeLayout),ver)">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + !SubString(Skin.String(HomeLayout),ver)">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Skin.HasSetting(WidgetAlignRight) +  !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
-        <animation effect="slide" start="0" end="263" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
-        <itemlayout height="263" width="263">
+        <animation effect="slide" start="0" end="262" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + !SubString(Skin.String(HomeLayout),ver)">Conditional</animation>
+        <animation effect="slide" start="0" end="262" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,5) + !SubString(Skin.String(HomeLayout),ver)">Conditional</animation>
+        <animation effect="slide" start="0" end="262" time="0" condition="Skin.HasSetting(WidgetAlignRight) +  !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
+        <animation effect="slide" start="0" end="262" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
+        <animation effect="slide" start="0" end="262" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,2)">Conditional</animation>
+        <animation effect="slide" start="0" end="262" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
+        <itemlayout height="263" width="262">
             <control type="group">
                 <width>240</width>
                 <height>240</height>
@@ -545,7 +545,7 @@
                 </control>
             </control>
         </itemlayout>
-        <focusedlayout height="263" width="263">
+        <focusedlayout height="263" width="262">
             <control type="group">
                 <width>240</width>
                 <height>240</height>
@@ -1356,7 +1356,7 @@
         <control type="radiobutton" id="$PARAM[mainmenuid]505">
             <include condition="Skin.String(Homelayout,enhanced)">widget_header_enhancedhome</include>
             <include condition="Skin.HasSetting(WidgetAlignRight) + !Skin.String(Homelayout,enhanced)">widget_header_rightalign</include>
-            <include condition="Skin.String(Homelayout,1) | Skin.String(Homelayout,1small) | Skin.String(Homelayout,2) | Skin.String(Homelayout,2small)">widget_header_single_fade</include>
+            <include condition="![SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),ver)]">widget_header_single_fade</include>
             <width>100%</width>
             <height>40</height>
             <align>left</align>
@@ -1647,11 +1647,11 @@
     </include>
     <include name="widget_base_normal">
         <control type="$PARAM[containerType]" id="$PARAM[widgetid]">
+            <include condition="$PARAM[multiRows]">widget_base_vertical</include>
             <focusposition>0</focusposition>
             <width>100%</width>
             <oninfo>RunScript(script.skin.helper.service,action=showinfo)</oninfo>
             <onfocus>SetProperty(ShowWidget,show)</onfocus>
-            <include condition="$PARAM[multiRows]">widget_base_vertical</include>
             <orientation>horizontal</orientation>
             <animation condition="!Control.HasFocus(77777) + Skin.HasSetting(Widgets_Animation)" reversible="false" type="Visible">
                 <effect center="960,540" delay="280" easing="in" end="100" start="98" time="180" tween="sine" type="zoom"/>
@@ -1675,6 +1675,7 @@
         </control>
     </include>
     <include name="widget_base_vertical">
+        <width>102%</width>
         <orientation>vertical</orientation>
     </include>
     
