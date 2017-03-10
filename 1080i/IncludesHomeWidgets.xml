@@ -251,12 +251,12 @@
         <include condition="$PARAM[multiRows]">widget_layout_poster_multi</include>
         <height>380</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,-70" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,50" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-170" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-300" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-180" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-70" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,50" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-170" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-300" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-180" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         <animation effect="slide" start="0" end="140" time="0" condition="Skin.HasSetting(WidgetAlignRight) + SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
         <animation effect="slide" start="0" end="261" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,6) + !SubString(Skin.String(HomeLayout),ver)">Conditional</animation>
@@ -280,7 +280,22 @@
                 </control>
             </control>
         </itemlayout>
-        <focusedlayout height="380" width="261">
+        <focusedlayout height="380" width="261" condition="!Control.HasFocus($PARAM[widgetid])">
+            <control type="group">
+                <width>250</width>
+                <height>370</height>
+                <include>PosterPanelLayout</include>
+                <control type="group">
+                    <description>widget label overlay</description>
+                    <include condition="!Skin.String(Widgets_DisplayTags,disable)">PosterTagOverlay</include>
+                    <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                        <param name="prefix" value="Poster"/>
+                    </include>
+                    <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+                </control>
+            </control>
+        </focusedlayout>
+        <focusedlayout height="380" width="261" condition="Control.HasFocus($PARAM[widgetid])">
             <control type="group">
                 <width>250</width>
                 <height>370</height>
@@ -308,12 +323,12 @@
     <!-- widget poster details layout -->
     <include name="widget_layout_posterdetails">
         
-        <animation effect="slide" delay="0" start="0" end="0,-70" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,50" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-170" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-300" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-180" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-70" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,50" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-170" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-300" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-180" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         <height>380</height>
@@ -408,12 +423,12 @@
         <include condition="$PARAM[multiRows]">widget_layout_smallposter_multi</include>
         <height>253</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,57" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,177" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-43" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-173" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-53" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,57" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,177" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-43" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-173" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-53" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         <itemlayout height="253" width="182" condition="!SubString(Skin.String(HomeLayout),ver)">
@@ -431,7 +446,22 @@
                 </control>
             </control>
         </itemlayout>
-        <focusedlayout height="253" width="182" condition="!SubString(Skin.String(HomeLayout),ver)">
+        <focusedlayout height="253" width="182" condition="!SubString(Skin.String(HomeLayout),ver) + !Control.HasFocus($PARAM[widgetid])">
+            <control type="group">
+                <width>162</width>
+                <height>240</height>
+                <include>SmallPosterPanelLayout</include>
+                <control type="group">
+                    <description>widget label overlay</description>
+                    <include condition="!Skin.String(Widgets_DisplayTags,disable)">SmallPosterTagOverlay</include>
+                    <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+                    <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                        <param name="prefix" value="Poster"/>
+                    </include>
+                </control>
+            </control>
+        </focusedlayout>
+        <focusedlayout height="253" width="182" condition="!SubString(Skin.String(HomeLayout),ver) + Control.HasFocus($PARAM[widgetid])">
             <control type="group">
                 <width>162</width>
                 <height>240</height>
@@ -451,6 +481,7 @@
                 </include>
             </control>
         </focusedlayout>
+        
         <itemlayout height="253" width="162" condition="SubString(Skin.String(HomeLayout),ver)">
             <control type="group">
                 <width>162</width>
@@ -466,7 +497,22 @@
                 </control>
             </control>
         </itemlayout>
-        <focusedlayout height="253" width="162" condition="SubString(Skin.String(HomeLayout),ver)">
+        <focusedlayout height="253" width="162" condition="SubString(Skin.String(HomeLayout),ver) + !Control.HasFocus($PARAM[widgetid])">
+            <control type="group">
+                <width>162</width>
+                <height>240</height>
+                <include>SmallPosterPanelLayout</include>
+                <control type="group">
+                    <description>widget label overlay</description>
+                    <include condition="!Skin.String(Widgets_DisplayTags,disable)">SmallPosterTagOverlay</include>
+                    <include condition="Skin.String(Widgets_DisplayTags,auto)">PosterTagOverlayVisibility</include>
+                    <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                        <param name="prefix" value="Poster"/>
+                    </include>
+                </control>
+            </control>
+        </focusedlayout>
+        <focusedlayout height="253" width="162" condition="SubString(Skin.String(HomeLayout),ver) + Control.HasFocus($PARAM[widgetid])">
             <control type="group">
                 <width>162</width>
                 <height>240</height>
@@ -486,6 +532,7 @@
                 </include>
             </control>
         </focusedlayout>
+        
         <animation effect="slide" start="0" end="140" time="0" condition="Skin.HasSetting(WidgetAlignRight) + SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,7)">Conditional</animation>
         
         <animation effect="slide" start="0" end="182" time="0" condition="Skin.HasSetting(WidgetAlignRight) + !SubString(Skin.String(HomeLayout),ver) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,9)">Conditional</animation>
@@ -507,20 +554,25 @@
         <animation effect="slide" start="0" end="162" time="0" condition="Skin.HasSetting(WidgetAlignRight) + SubString(Skin.String(HomeLayout),ver) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,1)">Conditional</animation>
     </include>
     <include name="widget_layout_smallposter_multi">
-        <height>759</height>
+        <include condition="StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)" name="height" content="height">
+            <param name="height" value="1012" />
+        </include>
+        <include condition="![StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="759" />
+        </include>
     </include>
     
     <!-- widget square layout -->
     <include name="widget_layout_square">
         <include condition="$PARAM[multiRows]">widget_layout_square_multi</include>
-        <height>245</height>
+        <height>263</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,65" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,185" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-35" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-165" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-45" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,65" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,185" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-35" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-165" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-45" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
 
         <animation effect="slide" start="0" end="140" time="0" condition="Skin.HasSetting(WidgetAlignRight) + SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,4)">Conditional</animation>
@@ -567,7 +619,12 @@
         </focusedlayout>
     </include>
     <include name="widget_layout_square_multi">
-        <height>789</height>
+        <include condition="StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)" name="height" content="height">
+            <param name="height" value="1052" />
+        </include>
+        <include condition="![StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="789" />
+        </include>
     </include>
 
     <!-- widget minisquare layout -->
@@ -575,12 +632,12 @@
         <include condition="$PARAM[multiRows]">widget_layout_minisquare_multi</include>
         <height>131</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,180" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,300" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,79" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-51" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,69" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,180" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,300" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,79" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-51" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,69" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         
@@ -626,12 +683,12 @@
         <include condition="$PARAM[multiRows]">widget_layout_landscape_multi</include>
         <height>210</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,100" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,220" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,0" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-130" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-10" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,100" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,220" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,0" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-130" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-10" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         <animation effect="slide" start="0" end="140" time="0" condition="Skin.HasSetting(WidgetAlignRight) + SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget) + !IntegerGreaterThan(Container($PARAM[widgetid]).NumItems,3)">Conditional</animation>
@@ -659,7 +716,22 @@
                 </control>
             </control>
         </itemlayout>
-        <focusedlayout width="366" height="210" condition="!SubString(Skin.String(HomeLayout),ver)">
+        <focusedlayout width="366" height="210" condition="!SubString(Skin.String(HomeLayout),ver) + !  Control.HasFocus($PARAM[widgetid])">
+            <control type="group">
+                <width>354</width>
+                <height>200</height>
+                <include>ThumbsViewLayout</include>
+                <control type="group">
+                    <description>widget label overlay</description>
+                    <include condition="!Skin.String(Widgets_DisplayTags,disable)">ThumbsTagOverlay</include>
+                    <include condition="Skin.String(Widgets_DisplayTags,auto)">LandscapeTagOverlayVisibility</include>
+                    <include name="$PARAM[widgetTags]" content="$PARAM[widgetTags]" condition="Skin.String(Widgets_DisplayTags,override)">
+                        <param name="prefix" value="Landscape"/>
+                    </include>
+                </control>
+            </control>
+        </focusedlayout>
+        <focusedlayout width="366" height="210" condition="!SubString(Skin.String(HomeLayout),ver) + Control.HasFocus($PARAM[widgetid])">
             <control type="group">
                 <width>354</width>
                 <height>200</height>
@@ -716,7 +788,12 @@
         </focusedlayout>
     </include>
     <include name="widget_layout_landscape_multi">
-        <height>760</height>
+        <include condition="StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)" name="height" content="height">
+            <param name="height" value="970" />
+        </include>
+        <include condition="![StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="760" />
+        </include>
     </include>
     
     <!-- widget netflix large landscape -->
@@ -724,12 +801,12 @@
         <include condition="$PARAM[multiRows]">widget_layout_landscapelarge_multi</include>
         <height>260</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,40" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,160" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-60" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-190" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-70" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,40" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,160" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-60" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-190" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-70" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         <itemlayout width="430" height="260">
@@ -769,19 +846,24 @@
         </focusedlayout>
     </include>
     <include name="widget_layout_landscapelarge_multi">
-        <height>780</height>
+        <include condition="StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)" name="height" content="height">
+            <param name="height" value="1040" />
+        </include>
+        <include condition="![StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="780" />
+        </include>
     </include>
     
     <!-- landscape details -->
     <include name="widget_layout_landscapedetails">
         <height>210</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,100" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,220" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,0" time="0" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="0" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-130" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-10" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,100" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,220" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,0" time="0" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="0" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-130" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-10" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         <orientation>horizontal</orientation>
@@ -873,15 +955,25 @@
     
     <!-- widget banner layout -->
     <include name="widget_layout_banner">
-        <include condition="$PARAM[multiRows]">widget_layout_banner_multi</include>
-        <height>146</height>
+        <include condition="SubString(Skin.String(HomeLayout),ver) + ![$PARAM[multiRows]]" name="height" content="height">
+            <param name="height" value="146" />
+        </include>
+        <include condition="SubString(Skin.String(HomeLayout),ver) + [$PARAM[multiRows]] + ![StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="876" />
+        </include>
+        <include condition="SubString(Skin.String(HomeLayout),ver) + [$PARAM[multiRows]] + [StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="1022" />
+        </include>
+        <include condition="!SubString(Skin.String(HomeLayout),ver)" name="height" content="height">
+            <param name="height" value="126" />
+        </include>
         
-        <animation effect="slide" delay="0" start="0" end="0,165" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,285" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,64" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-66" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,54" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,165" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,285" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,64" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-66" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,54" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         <itemlayout height="126" width="610" condition="!SubString(Skin.String(HomeLayout),ver)">
             <control type="image">
@@ -944,21 +1036,18 @@
             </control>
         </focusedlayout>
     </include>
-    <include name="widget_layout_banner_multi">
-        <height>730</height>
-    </include>
     
     <!-- widget landscapesmall layout -->
     <include name="widget_layout_landscapesmall">
         <include condition="$PARAM[multiRows]">widget_layout_landscapesmall_multi</include>
         <height>148</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,162" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,282" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,62" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-68" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,52" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,162" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,282" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,62" time="200" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="200" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-68" time="200" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,52" time="200" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         
@@ -1048,19 +1137,24 @@
         </focusedlayout>
     </include>
     <include name="widget_layout_landscapesmall_multi">
-        <height>740</height>
+        <include condition="StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)" name="height" content="height">
+            <param name="height" value="1036" />
+        </include>
+        <include condition="![StringCompare(Skin.AspectRatio,16:10) + Skin.HasSetting(VerticalHomeLargeWidget)]" name="height" content="height">
+            <param name="height" value="740" />
+        </include>
     </include>
     
     <!-- widget singlebox layout -->
     <include name="widget_layout_singlebox">
         <height>340</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,-30" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,90" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-130" time="0" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="0" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-260" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-140" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-30" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,90" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-130" time="0" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="0" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-260" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-140" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
         <itemlayout height="340" width="1820" condition="!SubString(Skin.String(HomeLayout),ver)">
@@ -1074,19 +1168,21 @@
             <control type="image">
                 <include condition="Skin.HasSetting(WidgetAlignRight)">widget_layout_singlebox_rightalign</include>
                 <bordersize>0</bordersize>
-                <height>340</height>
+                <height>330</height>
                 <width>940</width>
                 <texture border="15">diffuse/bgpanel.png</texture>
                 <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+                <visible>Control.HasFocus($PARAM[widgetid])</visible>
             </control>
             <include name="itemlayout_singlebox" content="itemlayout_singlebox">
                 <param name="widgetid" value="$PARAM[widgetid]"/>
             </include>
         </focusedlayout>
-        <itemlayout height="340" width="1300" condition="SubString(Skin.String(HomeLayout),ver)">
+        
+        <itemlayout height="340" width="1302" condition="SubString(Skin.String(HomeLayout),ver) + !Skin.HasSetting(VerticalHomeLargeWidget)">
             <include>itemlayout_singlebox</include>
         </itemlayout>
-        <focusedlayout height="340" width="1300" condition="SubString(Skin.String(HomeLayout),ver)">
+        <focusedlayout height="340" width="1302" condition="SubString(Skin.String(HomeLayout),ver) + !Skin.HasSetting(VerticalHomeLargeWidget)">
             <include name="HiddenWidgetButton" content="HiddenWidgetButton">
                 <param name="widgetstyle" value="singlebox"/>
                 <param name="widgetid" value="$PARAM[widgetid]"/>
@@ -1094,20 +1190,44 @@
             <control type="image">
                 <include condition="Skin.HasSetting(WidgetAlignRight)">widget_layout_singlebox_rightalign</include>
                 <bordersize>0</bordersize>
-                <height>340</height>
+                <height>330</height>
                 <width>940</width>
                 <texture border="15">diffuse/bgpanel.png</texture>
                 <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+                <visible>Control.HasFocus($PARAM[widgetid])</visible>
             </control>
             <include name="itemlayout_singlebox" content="itemlayout_singlebox">
                 <param name="widgetid" value="$PARAM[widgetid]"/>
             </include>
         </focusedlayout>
+    
+        <itemlayout height="340" width="1440" condition="SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget)">
+            <include>itemlayout_singlebox</include>
+        </itemlayout>
+        <focusedlayout height="340" width="1440" condition="SubString(Skin.String(HomeLayout),ver) + Skin.HasSetting(VerticalHomeLargeWidget)">
+            <include name="HiddenWidgetButton" content="HiddenWidgetButton">
+                <param name="widgetstyle" value="singlebox"/>
+                <param name="widgetid" value="$PARAM[widgetid]"/>
+            </include>
+            <control type="image">
+                <include condition="Skin.HasSetting(WidgetAlignRight)">widget_layout_singlebox_rightalign</include>
+                <bordersize>0</bordersize>
+                <height>330</height>
+                <width>940</width>
+                <texture border="15">diffuse/bgpanel.png</texture>
+                <colordiffuse>$VAR[ViewDetailsFocusColor]</colordiffuse>
+                <visible>Control.HasFocus($PARAM[widgetid])</visible>
+            </control>
+            <include name="itemlayout_singlebox" content="itemlayout_singlebox">
+                <param name="widgetid" value="$PARAM[widgetid]"/>
+            </include>
+        </focusedlayout>
+    
     </include>
     <include name="itemlayout_singlebox">
         <!-- single box widget -->
         <control type="group">
-            <height>340</height>
+            <height>330</height>
             <width>940</width>
             <include condition="Skin.HasSetting(WidgetAlignRight)">widget_layout_singlebox_rightalign</include>
             <control type="image">
@@ -1124,7 +1244,7 @@
             <!-- poster image -->
             <control type="image">
                 <width>240</width>
-                <height>339</height>
+                <height>329</height>
                 <texture border="1" background="true" diffuse="diffuse/poster.png" fallback="DefaultVideo.png">$VAR[PosterThumbList]</texture>
                 <aspectratio scalediffuse="true" aligny="top" align="left">keep</aspectratio>
                 <bordersize>12</bordersize>
@@ -1145,7 +1265,7 @@
                 <left>251</left>
                 <width>650</width>
                 <top>60</top>
-                <bottom>80</bottom>
+                <bottom>70</bottom>
                 <font>Reg24</font>
                 <align>justify</align>
                 <autoscroll delay="4000" time="3000" repeat="10000" condition="!Control.HasFocus($PARAM[widgetid]) + !Skin.HasSetting(DisablePlotAutoScroll)"/>
@@ -1203,26 +1323,26 @@
     
     <!-- widget widebox layout -->
     <include name="widget_layout_widebox">
-        <height>255</height>
+        <height>265</height>
         
-        <animation effect="slide" delay="0" start="0" end="0,55" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,175" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-45" time="0" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-370" time="0" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-175" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
-        <animation effect="slide" delay="0" start="0" end="0,-55" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + !StringCompare(Window(Home).Property(ShowWidget),show)">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,55" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,175" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + SubString(Skin.String(HomeLayout),horizontal) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-45" time="0" condition="SubString(Skin.String(HomeLayout),simplehor) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-370" time="0" condition="[[[Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + !Skin.HasSetting(LowerWidgets)] | [Skin.String(HomeLayout,2) | Skin.String(HomeLayout,2small)]] + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-175" time="0" condition="!StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
+        <animation effect="slide" delay="0" start="0" end="0,-55" time="0" condition="StringCompare(Skin.AspectRatio,16:10) + [Skin.String(HomeLayout,1) | Skin.String(HomeLayout,1small)] + Skin.HasSetting(LowerWidgets) + Skin.HasSetting(AutoShowWidgets) + [!StringCompare(Window(Home).Property(ShowWidget),show) | Skin.HasSetting(HideWidgetDetailsPanel)]">Conditional</animation>
 
         
-        <itemlayout height="255" width="1820" condition="!SubString(Skin.String(HomeLayout),ver)">
+        <itemlayout height="265" width="1820" condition="!SubString(Skin.String(HomeLayout),ver)">
             <include>itemlayout_widebox</include>
         </itemlayout>
-        <itemlayout height="255" width="1300" condition="SubString(Skin.String(HomeLayout),ver)">
+        <itemlayout height="265" width="1300" condition="SubString(Skin.String(HomeLayout),ver)">
             <include>itemlayout_widebox</include>
         </itemlayout>
-        <focusedlayout height="255" width="1820" condition="!SubString(Skin.String(HomeLayout),ver)">
+        <focusedlayout height="265" width="1820" condition="!SubString(Skin.String(HomeLayout),ver)">
             <include>itemlayout_widebox_focus</include>
         </focusedlayout>
-         <focusedlayout height="255" width="1300" condition="SubString(Skin.String(HomeLayout),ver)">
+         <focusedlayout height="265" width="1300" condition="SubString(Skin.String(HomeLayout),ver)">
             <include>itemlayout_widebox_focus</include>
         </focusedlayout>
     </include>

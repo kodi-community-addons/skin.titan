@@ -8,8 +8,9 @@ Installation instructions:
  3. Select Titan and hit install
  4. Default installation now complete and you can sit back and enjoy :-)
 
-Beta version repository
- If you want to try out the latest features install the beta repository which is hosted at Emby bacause my involvement in the Emby addon for kodi.
+## Beta version repository
+If you want to try out the latest features you can install my beta repository:
+
  
 PLEASE DO NOT INSTALL THE SKIN FROM GITHUB, I WILL NOT PROVIDE SUPPORT !
 USE OFFICIAL VERSION FROM KODI REPO OR THE BETA VERSION FROM EMBY REPO ONLY!

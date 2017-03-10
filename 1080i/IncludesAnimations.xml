@@ -546,7 +546,7 @@
         <control type="button">
             <visible>false</visible>
             <onfocus condition="!IsEmpty(Container(300).ListItem.Property(widgetPath.99))">SetProperty(Skinhelper.WidgetContainer,1508,Home)</onfocus>
-            <onfocus condition="IsEmpty(Container(300).ListItem.Property(widgetPath.99)) + !IsEmpty(Container(300).ListItem.Property(widgetPath))">RunScript(script.skin.helper.service,ACTION=SETWIDGETCONTAINER,CONTROLS=$INFO[Container(300).ListItem.Property(id)]510-$INFO[Container(300).ListItem.Property(id)]520-$INFO[Container(300).ListItem.Property(id)]530-$INFO[Container(300).ListItem.Property(id)]540)</onfocus>
+            <onfocus condition="IsEmpty(Container(300).ListItem.Property(widgetPath.99)) + !IsEmpty(Container(300).ListItem.Property(widgetPath))">RunScript(script.skin.helper.service,ACTION=SETWIDGETCONTAINER,CONTROLS=$INFO[Container(300).ListItem.Property(id)]510-$INFO[Container(300).ListItem.Property(id)]520-$INFO[Container(300).ListItem.Property(id)]530-$INFO[Container(300).ListItem.Property(id)]540-$INFO[Container(300).ListItem.Property(id)]550-$INFO[Container(300).ListItem.Property(id)]560-$INFO[Container(300).ListItem.Property(id)]570-$INFO[Container(300).ListItem.Property(id)]580)</onfocus>
             <onfocus condition="IsEmpty(Container(300).ListItem.property(widgetPath)) + IsEmpty(Container(300).ListItem.property(widgetPath.99))">ClearProperty(Skinhelper.WidgetContainer)</onfocus>
             <include name="WidgetsAutoRotate" content="WidgetsAutoRotate" condition="Skin.String(widgets_rotate_delay) + !Skin.String(widgets_rotate,disabled)">
                 <param name="interval" value="$INFO[Skin.String(widgets_rotate_delay)]" />
@@ -558,7 +558,8 @@
         <control type="button">
             <visible>false</visible>
             <onfocus condition="Skin.String(HomeLayout,win10) | SubString(Skin.String(HomeLayout),netflix)">SetProperty(ShowViewSubMenu,show)</onfocus>
-            <onfocus>ClearProperty(SkinHelper.WidgetContainer)</onfocus>
+            <onfocus condition="!IsEmpty(Container(300).ListItem.Property(widgetPath)) + !Skin.HasSetting(DisableAllWidgets)">RunScript(script.skin.helper.service,ACTION=SETWIDGETCONTAINER,CONTROLS=$INFO[Container(300).ListItem.Property(id)]510-$INFO[Container(300).ListItem.Property(id)]520-$INFO[Container(300).ListItem.Property(id)]530-$INFO[Container(300).ListItem.Property(id)]540-$INFO[Container(300).ListItem.Property(id)]550-$INFO[Container(300).ListItem.Property(id)]560-$INFO[Container(300).ListItem.Property(id)]570-$INFO[Container(300).ListItem.Property(id)]580)</onfocus>
+            <onfocus condition="!IsEmpty(Window.Property(SkinHelper.WidgetContainer)) + IsEmpty(Container(300).ListItem.property(widgetPath))">ClearProperty(Skinhelper.WidgetContainer)</onfocus>
             <onfocus condition="!Skin.HasSetting(DisableAllSubmenus)">SetProperty(submenupos,$INFO[Container(300).Position],Home)</onfocus>
             <onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4445).NumItems,0) + !Control.IsVisible(4446)">SetProperty(submenu,show,home)</onfocus>
             <onfocus condition="!Skin.HasSetting(DisableAllSubmenus) + Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4445).NumItems,0) + !Control.IsVisible(4446) + Skin.String(SubmenuLayout, vertical)">SetFocus(4444,0)</onfocus>
