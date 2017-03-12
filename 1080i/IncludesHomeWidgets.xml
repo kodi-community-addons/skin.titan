@@ -97,9 +97,8 @@
         </control>
         <!-- tagline or clearlogo at bottom -->
         <control type="group" id="77552">
-            <visible>Control.IsVisible(77551) + !Skin.HasSetting(EnableTouchSupport)</visible>
-            <animation time="300" effect="fade" delay="500">Visible</animation>
-            <animation time="200" effect="fade" delay="0">Hidden</animation>
+            <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
+            
             <control type="fadelabel">
                 <left></left>
                 <bottom>0</bottom>
@@ -114,6 +113,9 @@
                 <scrollout>true</scrollout>
                 <pauseatend>0</pauseatend>
                 <visible>IsEmpty(Control.GetLabel(8821))</visible>
+                <animation time="300" effect="fade" delay="500">Visible</animation>
+                <animation time="200" effect="fade" delay="0">Hidden</animation>
+                <visible>Control.IsVisible(77551)</visible>
             </control>
             <control type="image" id="8821">
                 <width>100%</width>
@@ -121,6 +123,9 @@
                 <height>90</height>
                 <aspectratio align="center" aligny="bottom">keep</aspectratio>
                 <texture background="true">$VAR[HomeMenuWidgetInfoclearlogo]</texture>
+                <animation time="300" effect="fade" delay="500">Visible</animation>
+                <animation time="200" effect="fade" delay="0">Hidden</animation>
+                <visible>Control.IsVisible(77551)</visible>
             </control>
         </control>
             
@@ -1997,6 +2002,7 @@
             <property name="fanart">resource://resource.images.skinbackgrounds.titan/battery_good.jpg</property>
             <property name="plot">[CR][COLOR green]$LOCALIZE[12395]: $LOCALIZE[12321][/COLOR]</property>
             <visible>Integer.IsGreater(System.BatteryLevel,60)</visible>
+            <visible>Skin.HasSetting(SysInfoWidgetShowBattery)</visible>
             <onclick>ActivateWindow(systeminfo)</onclick>
         </item>
         <item>
@@ -2008,6 +2014,7 @@
             <property name="fanart">resource://resource.images.skinbackgrounds.titan/battery_low.jpg</property>
             <property name="plot">[CR][COLOR yellow]$LOCALIZE[13050][/COLOR]</property>
             <visible>Integer.IsGreater(System.BatteryLevel,20) + !Integer.IsGreater(System.BatteryLevel,60)</visible>
+            <visible>Skin.HasSetting(SysInfoWidgetShowBattery)</visible>
             <onclick>ActivateWindow(systeminfo)</onclick>
         </item>
         <item>
@@ -2019,6 +2026,7 @@
             <property name="fanart">resource://resource.images.skinbackgrounds.titan/battery_critical.jpg</property>
             <property name="plot">[CR][COLOR red]$LOCALIZE[13050][/COLOR]</property>
             <visible>!Integer.IsGreater(System.BatteryLevel,20)</visible>
+            <visible>Skin.HasSetting(SysInfoWidgetShowBattery)</visible>
             <onclick>ActivateWindow(systeminfo)</onclick>
         </item>
     </include>
