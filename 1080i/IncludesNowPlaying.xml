@@ -522,26 +522,9 @@
             <control type="visualisation" id="2">
                 <description>visualisation</description>
                 <include>DimensionsFullscreen</include>
-                <visible>![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)] + !IsEmpty(Visualisation.Name) + !StringCompare(Visualisation.Name,None)</visible>
+                <visible>Visualisation.Enabled + ![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)] + !IsEmpty(Visualisation.Name) + !StringCompare(Visualisation.Name,None)</visible>
             </control>
-            <!-- music wall background-->
-            <control type="group">
-                <control type="image" id="3334">
-                    <left>-100</left>
-                    <top>-100</top>
-                    <width>2020</width>
-                    <height>1180</height>
-                    <fadetime>5500</fadetime>
-                    <texture background="true">$INFO[Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall)]</texture>
-                    <visible>IsEmpty(Window(10025).Property(PlayingBackgroundMedia)) + Skin.HasSetting(enableMusicWall) + !IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))</visible>
-                    <visible>![Control.IsVisible(3333) + !IsEmpty(Control.GetLabel(3333))]</visible>
-                    <animation effect="fade" start="100" end="20" time="0" condition="![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)] + !IsEmpty(Visualisation.Name) + !StringCompare(Visualisation.Name,None)">Conditional</animation>
-                    <animation effect="zoom" start="110" end="160" center="auto" time="20000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicArt)">Skin.HasSetting(animateMusicArt)</animation>
-                    <animation effect="slide" start="-100,0" end="100,0" time="10000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicArt)">Skin.HasSetting(animateMusicArt)</animation>
-                    <animation effect="slide" start="0,-100" end="0,100" time="15000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicArt)">Skin.HasSetting(animateMusicArt)</animation>
-                </control>
-            </control>
-            <!-- artist (extra)fanart -->
+            <!-- music fanart -->
             <control type="multiimage" id="3333">
                 <aspectratio>scale</aspectratio>
                 <include>DimensionsFullscreen</include>
@@ -549,16 +532,15 @@
                 <randomize>true</randomize>
                 <fadetime>600</fadetime>
                 <loop>yes</loop>
-                <imagepath background="true">$VAR[artist_fanart]</imagepath>
-                <animation effect="fade" start="100" end="20" time="0" condition="![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)] + !IsEmpty(Visualisation.Name) + !StringCompare(Visualisation.Name,None)">Conditional</animation>
+                <imagepath background="true">$VAR[music_fanart]</imagepath>
+                <animation effect="fade" start="100" end="20" time="0" condition="Visualisation.Enabled + ![StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)] + !IsEmpty(Visualisation.Name) + !StringCompare(Visualisation.Name,None)">Conditional</animation>
                 <animation effect="zoom" start="110" end="130" center="auto" time="15000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicArt)">Conditional</animation>
                 <animation effect="slide" start="-10,-10" end="10,10" time="8000" tween="cubic" easing="inout" pulse="true" condition="Skin.HasSetting(animateMusicArt)">Conditional</animation>
-                <visible>!Skin.String(MusicArtistFanart,disabled)</visible>
             </control>
             <control type="visualisation" id="2">
                 <description>visualisation</description>
                 <include>DimensionsFullscreen</include>
-                <visible>[StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)]</visible>
+                <visible>Visualisation.Enabled + [StringCompare(Visualisation.Name,waveform) | StringCompare(Visualisation.Name,opengl spectrum) | StringCompare(Visualisation.Name,directx spectrum)]</visible>
             </control>
         </control>
     </include>
@@ -580,12 +562,13 @@
 		</control>
 	</include>
     
-    <variable name="artist_fanart">
+    <variable name="music_fanart">
         <value condition="Skin.String(MusicArtistFanart,slideshow) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.Player.Art.ExtraFanArt)]</value>
-        <value condition="!Skin.String(MusicArtistFanart,disabled) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.FanArt))">$INFO[Window(Home).Property(SkinHelper.Player.Art.FanArt)]</value>
         <value condition="!Skin.String(MusicArtistFanart,disabled) + !IsEmpty(Player.Art(fanart))">$INFO[Player.Art(fanart)]</value>
-        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall))">$INFO[Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall)]</value>
-        <value>colors/color_transparent.png</value>
+        <value condition="!Skin.String(MusicArtistFanart,disabled) + !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.FanArt))">$INFO[Window(Home).Property(SkinHelper.Player.Art.FanArt)]</value>
+        <value condition="SubString(Skin.String(MusicBackground),VAR)">$VAR[MusicBackground]</value>
+        <value condition="Skin.String(MusicBackground)">$INFO[Skin.String(MusicBackground)]</value>
+        <value>colors/color_black.png</value>
     </variable>
 	
 </includes>

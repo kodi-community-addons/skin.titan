@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Titan-->
 <includes>
+    
     <include name="Header">
-     
+        <include condition="!Skin.HasSetting(CompactHeader) + [[Window.IsActive(Home) + !Skin.String(home_header,disable)] | [!Window.IsActive(Home) + !Skin.String(general_header,disable)]]">Header_Normal</include>
+        <include condition="Skin.HasSetting(CompactHeader) + [[Window.IsActive(Home) + !Skin.String(home_header,disable)] | [!Window.IsActive(Home) + !Skin.String(general_header,disable)]]">Header_Compact</include>
+    </include>
+    
+    <include name="Header_Normal">
         <!-- Header Normal -->
         <control type="group">
-            <visible>!Skin.HasSetting(CompactHeader)</visible>
             <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + ![Control.IsVisible(77551) + !SubString(Skin.String(HomeLayout),ver)] + !Control.IsVisible(88888) + !Control.IsVisible(88883)</visible>
             <visible>![[SubString(Skin.String(HomeLayout), 2) | SubString(Skin.String(HomeLayout), 1)] + !Skin.HasSetting(AutoShowWidgets) + StringCompare(Window(Home).Property(ShowWidget),show) + Skin.HasSetting(HideWidgetDetailsPanel)]</visible>
             
@@ -22,63 +26,56 @@
             
             <!-- Header Logo left -->
             <control type="group">
-                <include condition="!Skin.HasSetting(CompactHeader)">HeaderLogo</include>
+                <include condition="[!Window.IsActive(Home) + SubString(Skin.String(general_header),logo)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),logo)]">HeaderLogo</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.IsVisible(882) | Control.IsVisible(77551) | !IsEmpty(Control.GetLabel(29476))]</visible>
-                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),logo)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),logo)]</visible>
                 <animation effect="slide" end="434" time="0" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(Home) + Skin.String(HomeLayout,verticalbig)">Conditional</animation>
             </control>
             
             <!-- Time right -->
             <control type="group">
-                <include>TimeInfo</include>
+                <include condition="[!Window.IsActive(Home) + SubString(Skin.String(general_header),time)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),time)]">TimeInfo</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(881) | Control.IsVisible(77551) | Control.IsVisible(14446)]</visible>
-                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),time)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),time)]</visible>
             </control>
             
             <!-- Title left -->
             <control type="group">
-                <include>HeaderTitle</include>
+                <include condition="[!Window.IsActive(Home) + SubString(Skin.String(general_header),title)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),title)]">HeaderTitle</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.IsVisible(882) | Control.IsVisible(77551) | !IsEmpty(Control.GetLabel(29476))]</visible>
-                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),title)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),title)]</visible>
                 <animation effect="slide" end="434" time="0" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(Home) + [Skin.String(HomeLayout,verticalbig)]">Conditional</animation>
             </control>
             
             <!-- Weather left -->
             <control type="group">
-                <include>WeatherInfoLeft</include>
+                <include condition="[!Window.IsActive(Home) + SubString(Skin.String(general_header),weather-)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),weather-)]">WeatherInfoLeft</include>
                 <animation effect="slide" end="420" time="0" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(Home) + SubString(Skin.String(home_header),slideweather)">Conditional</animation>
                 <animation effect="slide" end="420" time="0" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(Home) + Skin.String(HomeLayout,verticalbig)">Conditional</animation>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.IsVisible(882) | Control.IsVisible(77551) | !IsEmpty(Control.GetLabel(29476))]</visible>
-                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),weather-)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),weather-)]</visible>
             </control>
             
             <!-- Weather right -->
             <control type="group">
-                <include>WeatherInfoRight</include>
+                <include condition="[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weather)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weather)]">WeatherInfoRight</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(881) | Control.IsVisible(77551) | Control.IsVisible(14446)]</visible>
-                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weather)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weather)]</visible>
             </control>
             
             <!-- Weather + clock right -->
             <control type="group">
-                <include>WeatherClockInfoRight</include>
+                <include condition="[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weathclock)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weathclock)]">WeatherClockInfoRight</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(881) | Control.IsVisible(77551) | Control.IsVisible(14446)]</visible>
-                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weathclock)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weathclock)]</visible>
             </control>
 
             <!-- Profile right -->
             <control type="group">
                 <right>60</right>
-                <include>ProfileInfo</include>
+                <include condition="Window.IsActive(Home) + SubString(Skin.String(home_header),-profile)">ProfileInfo</include>
                 <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
                 <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(77551) | Control.IsVisible(14446)]</visible>
-                <visible>Window.IsActive(Home) + SubString(Skin.String(home_header),-profile)</visible>
             </control>
             
             <!-- Profile left -->
@@ -91,10 +88,128 @@
             </control>
             
             <!-- Title for square submenu -->
-            <include condition="SubString(Skin.String(HomeLayout),ver)">SquareSubmenuHeader</include>
+            <include condition="Window.IsActive(Home) + SubString(Skin.String(HomeLayout),ver)">SquareSubmenuHeader</include>
             
         </control>
         
+        <!-- Header Compact -->
+        <control type="group">
+            <visible>Skin.HasSetting(CompactHeader)</visible>
+            <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
+            <visible>!Window.IsActive(infodialog) + !Window.IsActive(extendedprogressdialog) + !Control.IsVisible(77551) + !Control.IsVisible(88888) + !Control.IsVisible(88883)</visible>
+            
+            <!-- header panel -->
+            <control type="image">
+				<posx>0</posx>
+				<posy>-5</posy>
+				<width>100%</width>
+				<height>110</height>
+				<texture border="5">diffuse/panel.png</texture>
+				<colordiffuse>$INFO[Skin.String(HeaderPanelColor)]</colordiffuse>
+                <visible>Skin.String(HeaderPanelColor) + !Skin.String(HeaderPanelColor,none)</visible>
+                <visible>![Window.IsActive(Home) + [SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),ver)]]</visible>
+			</control>
+            
+            <!-- Header Logo left -->
+            <control type="group">
+                <include condition="Skin.HasSetting(CompactHeader)">HeaderLogo</include>
+                <visible>![Window.IsActive(Home) + Skin.String(HomeLayout,verticalbig)]</visible>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
+                <visible>![StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.IsVisible(882)]</visible>
+                <visible>![Window.IsActive(Home) + Skin.String(HomeLayout,win10)] + !Skin.HasSetting(EnableTouchSupport)</visible>
+                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),logo)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),logo)]</visible>
+            </control>
+            
+            <!-- Time right -->
+            <control type="group">
+                <include>TimeInfoCompact</include>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
+                <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(881) | Control.IsVisible(14446)]</visible>
+                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),time)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),time)]</visible>
+            </control>
+            
+            <!-- Profile right -->
+            <control type="group">
+                <include>ProfileInfoCompact</include>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
+                <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(14446)]</visible>
+                <visible>Window.IsActive(Home) + SubString(Skin.String(home_header),-profile)</visible>
+            </control>
+            
+            <control type="grouplist" id="5555">
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>		
+                <orientation>horizontal</orientation>
+                <itemgap>25</itemgap>
+                <posx>50</posx>
+                <top>25</top>
+                <onright>890</onright>
+                <ondown>9000</ondown>
+                <onup>9000</onup>
+                <visible>![Window.IsActive(Home) + Skin.String(HomeLayout,verticalbig)]</visible>
+                <visible>![StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.IsVisible(882)]</visible>
+                <include condition="Skin.HasSetting(EnableTouchSupport) | [Window.IsActive(Home) + Skin.String(HomeLayout,win10)]">HeaderCompactTouchButtons</include>
+                <!-- Title left -->
+                <control type="group" id="99226">
+                    <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),title)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),title)]</visible>
+                    <control type="label">
+                        <top>-15</top>
+                        <align>left</align>
+                        <width>800</width>
+                        <label>$VAR[value_header]</label>
+                        <font>Bold30</font>
+                        <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                        <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                    </control>
+                    <control type="label">
+                        <top>15</top>
+                        <align>left</align>
+                        <width>800</width>
+                        <label>$VAR[value_subheader]</label>
+                        <font>Reg26</font>
+                        <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                        <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                    </control>
+                </control>
+                <!--infoline win10 home-->
+                <control type="label">	
+                    <description>InfoLine</description>
+                    <posx>20%</posx>
+                    <bottom>5</bottom>
+                    <width>60%</width>
+                    <height>60</height>
+                    <font>Light28</font>
+                    <align>center</align>
+                    <label>$VAR[infolinevar]</label>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                    <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                    <visible>Window.IsActive(Home) + Skin.String(HomeLayout,win10)</visible>
+                </control>
+            </control>
+            
+            <!-- Weather right -->
+            <control type="group">
+                <include>WeatherInfoCompact</include>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
+                <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(881) | Control.IsVisible(14446)]</visible>
+                <animation effect="slide" end="-180,0" time="400" tween="cubic" easing="inout" delay="0" condition="Window.IsActive(mutebug) | Window.IsActive(volumebar)">Conditional</animation>
+                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weather)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weather)]</visible>
+            </control>
+
+            <!-- Weather + clock right -->
+            <control type="group">
+                <include>WeatherClockInfoRightCompact</include>
+                <include condition="!Skin.HasSetting(LowPerformanceMode)">animation_fade_visible</include>
+                <visible>![Window.IsActive(mutebug) | Window.IsActive(volumebar) | Control.IsVisible(881) | Control.IsVisible(77551) | Control.IsVisible(14446)]</visible>
+                <visible>[!Window.IsActive(Home) + SubString(Skin.String(general_header),-weathclock)] | [Window.IsActive(Home) + SubString(Skin.String(home_header),-weathclock)]</visible>
+            </control>
+            
+            <!-- Title for square submenu -->
+            <include condition="SubString(Skin.String(HomeLayout),ver)">SquareSubmenuHeaderCompact</include>
+            
+        </control>
+
+    </include>
+    <include name="Header_Compact">
         <!-- Header Compact -->
         <control type="group">
             <visible>Skin.HasSetting(CompactHeader)</visible>
