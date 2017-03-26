@@ -101,7 +101,7 @@
             <include>DimensionsFullscreen</include>
             <imagepath background="true" fallback="colors/color_black.png">$VAR[backgroundVar]</imagepath>
             <aspectratio>scale</aspectratio>
-            <fadetime>450</fadetime>
+            <fadetime>800</fadetime>
             <include condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None) + !Skin.String(BackgroundDiffuseColor.name, None)">bgColorDiffuse</include>
             <include condition="Skin.HasSetting(RandomizeBackground)">randomizeImages</include>
             <include>fanartSpeed</include>
@@ -155,7 +155,11 @@
             <loop>yes</loop>
             <!-- general visibility conditions -->
             <visible>Skin.HasSetting(SkinHelper.EnableExtraFanart)</visible>
-            <include>extraFanartBackgroundConditions</include>
+            <visible>
+                [Window.IsActive(Home) + [Control.HasFocus(77777) | ControlGroup(77777).HasFocus() | Window.IsActive(DialogVideoInfo.xml)] + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))] |
+                [Container.Content(Genres) + Skin.String(moviegenrefanart.path) + !IsEmpty(ListItem.label) + !StringCompare(ListItem.label,..)] | 
+                [Window.IsMedia + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))]
+            </visible>
         </control>
     </include>
 
@@ -343,14 +347,6 @@
         <!-- normal extrafanart -->
         <value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt)]</value>
     </variable>
-    <include name="extraFanartBackgroundConditions">
-        <visible>System.IdleTime(5)</visible>
-        <visible>
-            [Window.IsActive(Home) + [Control.HasFocus(77777) | ControlGroup(77777).HasFocus() | Window.IsActive(DialogVideoInfo.xml)] + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))] |
-            [Container.Content(Genres) + Skin.String(moviegenrefanart.path) + !IsEmpty(ListItem.label) + !StringCompare(ListItem.label,..)] | 
-            [Window.IsMedia + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))]
-        </visible>
-    </include>
     
     <variable name="netflixThumb">
         <!-- animated fanart background -->
