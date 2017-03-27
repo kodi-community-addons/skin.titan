@@ -101,7 +101,7 @@
             <include>DimensionsFullscreen</include>
             <imagepath background="true" fallback="colors/color_black.png">$VAR[backgroundVar]</imagepath>
             <aspectratio>scale</aspectratio>
-            <fadetime>450</fadetime>
+            <fadetime>800</fadetime>
             <include condition="Skin.String(BackgroundDiffuseColor) + !Skin.String(BackgroundDiffuseColor, None) + !Skin.String(BackgroundDiffuseColor.name, None)">bgColorDiffuse</include>
             <include condition="Skin.HasSetting(RandomizeBackground)">randomizeImages</include>
             <include>fanartSpeed</include>
@@ -155,7 +155,11 @@
             <loop>yes</loop>
             <!-- general visibility conditions -->
             <visible>Skin.HasSetting(SkinHelper.EnableExtraFanart)</visible>
-            <include>extraFanartBackgroundConditions</include>
+            <visible>
+                [Window.IsActive(Home) + [Control.HasFocus(77777) | ControlGroup(77777).HasFocus() | Window.IsActive(DialogVideoInfo.xml)] + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))] |
+                [Container.Content(Genres) + Skin.String(moviegenrefanart.path) + !IsEmpty(ListItem.label) + !StringCompare(ListItem.label,..)] | 
+                [Window.IsMedia + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))]
+            </visible>
         </control>
     </include>
 
@@ -245,45 +249,11 @@
         
         <value condition="Container.Scrolling">-</value>
         <!-- extendedinfo -->
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window.Property(movie.FanArt))">$INFO[Window.Property(movie.FanArt)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window(Home).Property(fanart))">$INFO[Window(home).Property(fanart)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window.Property(actor.fanart))">$INFO[Window.Property(actor.fanart)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window.Property(fanart))">$INFO[Window.Property(fanart)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Container(750).ListItem.Property(Original))">$INFO[Container(750).ListItem.Property(Original)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window.Property(actor.thumb))">$INFO[Window.Property(actor.thumb)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Window.Property(thumb))">$INFO[Window.Property(thumb)]</value>
-        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)] + !IsEmpty(Container(500).ListItem.Property(Fanart_small))">$INFO[Container(500).ListItem.Property(Fanart_small)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Window.Property(movie.FanArt))">$INFO[Window.Property(movie.FanArt)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Window(Home).Property(fanart))">$INFO[Window(home).Property(fanart)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Window.Property(actor.fanart))">$INFO[Window.Property(actor.fanart)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Window.Property(fanart))">$INFO[Window.Property(fanart)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Container(750).ListItem.Property(Original))">$INFO[Container(750).ListItem.Property(Original)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Window.Property(actor.thumb))">$INFO[Window.Property(actor.thumb)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Window.Property(thumb))">$INFO[Window.Property(thumb)]</value>
-        <value condition="[Window.IsActive(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsActive(script-script.extendedinfo-DialogInfo.xml)] + !IsEmpty(Container(500).ListItem.Property(Fanart_small))">$INFO[Container(500).ListItem.Property(Fanart_small)]</value>
-        
+        <value condition="[Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) | Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)]">$VAR[fanartBackground_extendedinfo]</value>
         <!--nextaired script backgrounds -->
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Fanart))">$INFO[Container(200).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(201) + !IsEmpty(Container(201).ListItem.Property(Fanart))">$INFO[Container(201).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(202) + !IsEmpty(Container(202).ListItem.Property(Fanart))">$INFO[Container(202).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(203) + !IsEmpty(Container(203).ListItem.Property(Fanart))">$INFO[Container(203).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(204) + !IsEmpty(Container(204).ListItem.Property(Fanart))">$INFO[Container(204).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(205) + !IsEmpty(Container(205).ListItem.Property(Fanart))">$INFO[Container(205).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(206) + !IsEmpty(Container(206).ListItem.Property(Fanart))">$INFO[Container(206).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(207) + !IsEmpty(Container(207).ListItem.Property(Fanart))">$INFO[Container(207).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(208) + !IsEmpty(Container(208).ListItem.Property(Fanart))">$INFO[Container(208).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(209) + !IsEmpty(Container(209).ListItem.Property(Fanart))">$INFO[Container(209).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(210) + !IsEmpty(Container(210).ListItem.Property(Fanart))">$INFO[Container(210).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(211) + !IsEmpty(Container(211).ListItem.Property(Fanart))">$INFO[Container(211).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(212) + !IsEmpty(Container(212).ListItem.Property(Fanart))">$INFO[Container(212).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(213) + !IsEmpty(Container(213).ListItem.Property(Fanart))">$INFO[Container(213).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Fanart))">$INFO[Container(214).ListItem.Property(Fanart)]</value>
-        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)] + Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Fanart))">$INFO[Container(215).ListItem.Property(Fanart)]</value>
-
+        <value condition="[Window.IsActive(script-NextAired-TVGuide.xml) | Window.IsActive(script-NextAired-TVGuide2.xml)]">$VAR[fanartBackground_nextaired]</value>
         <!-- custom search -->
-        <value condition="Window.IsActive(script-skin_helper_service-CustomSearch.xml) + Control.HasFocus(3110) + !IsEmpty(Container(3110).ListItem.Art(fanart))">$INFO[Container(3110).ListItem.Art(fanart)]</value>
-        <value condition="Window.IsActive(script-skin_helper_service-CustomSearch.xml) + Control.HasFocus(3111) + !IsEmpty(Container(3111).ListItem.Art(fanart))">$INFO[Container(3111).ListItem.Art(fanart)]</value>
-        <value condition="Window.IsActive(script-skin_helper_service-CustomSearch.xml) + Control.HasFocus(3112) + !IsEmpty(Container(3112).ListItem.Art(tvshow.fanart))">$INFO[Container(3112).ListItem.Art(tvshow.fanart)]</value>
+        <value condition="Window.IsActive(script-skin_helper_service-CustomSearch.xml)">$VAR[fanartBackground_search]</value>
 
         <!-- genre fanart -->
         <value condition="Container.Content(Genres) + SubString(Skin.String(moviegenrefanart.path),script.skin.helper) + !IsEmpty(ListItem.label) + !StringCompare(ListItem.label,..)">http://localhost:52307/getmoviegenreimagesrandom&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0</value>
@@ -306,7 +276,48 @@
         <!-- skinhelper provided art in media windows-->
         <value condition="!IsEmpty(Window(home).Property(SkinHelper.ListItem.Art.Fanart)) + !Window.IsActive(Home)">$INFO[Window(home).Property(SkinHelper.ListItem.Art.Fanart)]</value>
     </variable>
-
+    <variable name="fanartBackground_extendedinfo">
+        <value condition="!IsEmpty(Window.Property(movie.FanArt))">$INFO[Window.Property(movie.FanArt)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(fanart))">$INFO[Window(home).Property(fanart)]</value>
+        <value condition="!IsEmpty(Window.Property(actor.fanart))">$INFO[Window.Property(actor.fanart)]</value>
+        <value condition="!IsEmpty(Window.Property(fanart))">$INFO[Window.Property(fanart)]</value>
+        <value condition="!IsEmpty(Container(750).ListItem.Property(Original))">$INFO[Container(750).ListItem.Property(Original)]</value>
+        <value condition="!IsEmpty(Window.Property(actor.thumb))">$INFO[Window.Property(actor.thumb)]</value>
+        <value condition="!IsEmpty(Window.Property(thumb))">$INFO[Window.Property(thumb)]</value>
+        <value condition="!IsEmpty(Container(500).ListItem.Property(Fanart_small))">$INFO[Container(500).ListItem.Property(Fanart_small)]</value>
+        <value condition="!IsEmpty(Window.Property(movie.FanArt))">$INFO[Window.Property(movie.FanArt)]</value>
+        <value condition="!IsEmpty(Window(Home).Property(fanart))">$INFO[Window(home).Property(fanart)]</value>
+        <value condition="!IsEmpty(Window.Property(actor.fanart))">$INFO[Window.Property(actor.fanart)]</value>
+        <value condition="!IsEmpty(Window.Property(fanart))">$INFO[Window.Property(fanart)]</value>
+        <value condition="!IsEmpty(Container(750).ListItem.Property(Original))">$INFO[Container(750).ListItem.Property(Original)]</value>
+        <value condition="!IsEmpty(Window.Property(actor.thumb))">$INFO[Window.Property(actor.thumb)]</value>
+        <value condition="!IsEmpty(Window.Property(thumb))">$INFO[Window.Property(thumb)]</value>
+        <value condition="!IsEmpty(Container(500).ListItem.Property(Fanart_small))">$INFO[Container(500).ListItem.Property(Fanart_small)]</value>
+    </variable>
+    <variable name="fanartBackground_nextaired">
+        <value condition="Control.IsVisible(200) + !IsEmpty(Container(200).ListItem.Property(Fanart))">$INFO[Container(200).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(201) + !IsEmpty(Container(201).ListItem.Property(Fanart))">$INFO[Container(201).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(202) + !IsEmpty(Container(202).ListItem.Property(Fanart))">$INFO[Container(202).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(203) + !IsEmpty(Container(203).ListItem.Property(Fanart))">$INFO[Container(203).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(204) + !IsEmpty(Container(204).ListItem.Property(Fanart))">$INFO[Container(204).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(205) + !IsEmpty(Container(205).ListItem.Property(Fanart))">$INFO[Container(205).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(206) + !IsEmpty(Container(206).ListItem.Property(Fanart))">$INFO[Container(206).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(207) + !IsEmpty(Container(207).ListItem.Property(Fanart))">$INFO[Container(207).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(208) + !IsEmpty(Container(208).ListItem.Property(Fanart))">$INFO[Container(208).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(209) + !IsEmpty(Container(209).ListItem.Property(Fanart))">$INFO[Container(209).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(210) + !IsEmpty(Container(210).ListItem.Property(Fanart))">$INFO[Container(210).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(211) + !IsEmpty(Container(211).ListItem.Property(Fanart))">$INFO[Container(211).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(212) + !IsEmpty(Container(212).ListItem.Property(Fanart))">$INFO[Container(212).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(213) + !IsEmpty(Container(213).ListItem.Property(Fanart))">$INFO[Container(213).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(214) + !IsEmpty(Container(214).ListItem.Property(Fanart))">$INFO[Container(214).ListItem.Property(Fanart)]</value>
+        <value condition="Control.IsVisible(215) + !IsEmpty(Container(215).ListItem.Property(Fanart))">$INFO[Container(215).ListItem.Property(Fanart)]</value>
+    </variable>
+    <variable name="fanartBackground_search">
+        <value condition="Control.HasFocus(3110) + !IsEmpty(Container(3110).ListItem.Art(fanart))">$INFO[Container(3110).ListItem.Art(fanart)]</value>
+        <value condition="Control.HasFocus(3111) + !IsEmpty(Container(3111).ListItem.Art(fanart))">$INFO[Container(3111).ListItem.Art(fanart)]</value>
+        <value condition="Control.HasFocus(3112) + !IsEmpty(Container(3112).ListItem.Art(tvshow.fanart))">$INFO[Container(3112).ListItem.Art(tvshow.fanart)]</value>
+    </variable>
+    
     <variable name="backgroundVar">
 
         <value condition="[Window.IsActive(LoginScreen.xml) | Window.IsActive(StartUp.xml)] + Skin.String(LoginBackground)">$INFO[Skin.String(LoginBackground)]</value>
@@ -343,14 +354,6 @@
         <!-- normal extrafanart -->
         <value condition="Skin.HasSetting(SkinHelper.EnableExtraFanart) + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))">$INFO[Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt)]</value>
     </variable>
-    <include name="extraFanartBackgroundConditions">
-        <visible>System.IdleTime(5)</visible>
-        <visible>
-            [Window.IsActive(Home) + [Control.HasFocus(77777) | ControlGroup(77777).HasFocus() | Window.IsActive(DialogVideoInfo.xml)] + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))] |
-            [Container.Content(Genres) + Skin.String(moviegenrefanart.path) + !IsEmpty(ListItem.label) + !StringCompare(ListItem.label,..)] | 
-            [Window.IsMedia + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Art.ExtraFanArt))]
-        </visible>
-    </include>
     
     <variable name="netflixThumb">
         <!-- animated fanart background -->
