@@ -384,21 +384,59 @@
 			</animation>
 
 			<!--Panel-->
-			<control type="image">
-				<posy>-10</posy>
-				<posx>-20</posx>
-				<width>360</width>
-				<height>400</height>
-				<texture border="5">diffuse/panel.png</texture>
-                <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+            <control type="group">
                 <visible>Skin.String(MainMenuPanelColor) + !Skin.String(MainMenuPanelColor,None)</visible>
-				<aspectratio>stretch</aspectratio>
-			</control>
+                <posy>-10</posy>
+                <posx>-20</posx>
+                <width>360</width>
+                <control type="image">
+                    <height>410</height>
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                    <visible>IntegerGreaterThan(Container(4444).NumItems,5)</visible>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="image">
+                    <height>345</height>
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                    <visible>StringCompare(Container(4444).NumItems,5)</visible>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="image">
+                    <height>280</height>
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                    <visible>StringCompare(Container(4444).NumItems,4)</visible>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="image">
+                    <height>215</height>
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                    <visible>StringCompare(Container(4444).NumItems,3)</visible>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="image">
+                    <height>150</height>
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                    <visible>StringCompare(Container(4444).NumItems,2)</visible>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="image">
+                    <height>85</height>
+                    <texture border="5">diffuse/panel.png</texture>
+                    <colordiffuse>$INFO[Skin.String(MainMenuPanelColor)]</colordiffuse>
+                    <visible>StringCompare(Container(4444).NumItems,1)</visible>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+            </control>
 			<control type="list" id="4444">
 				<visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | control.hasfocus(4444)] + IntegerGreaterThan(Container(4445).NumItems,0) + !StringCompare(Container(300).ListItem.Property(squaresubmenu),enable)</visible>
 				<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 				<width>310</width>
-				<height>380</height>
+				<height>390</height>
 				<itemgap>3</itemgap>
 				<onleft>300</onleft>
 				<onleft>ClearProperty(submenu,home)</onleft>
@@ -926,6 +964,23 @@
         <top>10</top>
     </include>
     <include name="VerticalHomeSquareSubMenu">
+        <control type="group" id="14446">
+            <width>100%</width>
+            <height>1</height>
+            <visible>Control.HasFocus(4446)</visible>
+            <control type="label">
+                <right>0</right>
+                <posy>0</posy>
+                <width>100%</width>
+                <height>100</height>
+                <include condition="Skin.HasSetting(WidgetAlignRight)">align_left</include>
+                <align>right</align>
+                <info>Container(4446).ListItem.Label</info>
+                <font>Reg36</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+        </control>
         <control type="panel" id="4446">
             <visible>StringCompare(Container(300).ListItem.Property(squaresubmenu),enable)</visible>
             <width>100%</width>
