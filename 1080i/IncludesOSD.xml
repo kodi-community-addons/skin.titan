@@ -324,31 +324,19 @@
 				<texture background="true" diffuse="diffuse/cdmask_medium_new.png" fallback="defaultcovers/cd_medium.png" border="5">$VAR[PlayerDiscArtImage]</texture>
 				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
-				<visible>!Skin.HasSetting(HideOSDDisc)</visible>
+				<visible>!Skin.HasSetting(HideOSDDisc) + ![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)]</visible>
 			</control>
 			
-			<!--Cover movies - poster-->
+			<!--Video Cover-->
 			<control type="image">
 				<posx>60</posx>
 				<posy>20</posy>
-				<width>175</width>
+				<width>250</width>
 				<height>250</height>
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
-			</control>
-			
-			<!--Cover livetv or no poster image-->
-			<control type="image">
-				<posx>60</posx>
-				<posy>0</posy>
-				<width>240</width>
-				<height>240</height>
-				<fadetime>200</fadetime>
-				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
-				<aspectratio align="center" aligny="center">keep</aspectratio>
-				<visible>Player.HasVideo + IsEmpty(Player.Art(tvshow.poster)) + IsEmpty(Player.Art(poster)) + IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))</visible>
+				<visible>Player.HasVideo</visible>
 			</control>
 			
 			<control type="group">
@@ -2654,10 +2642,10 @@
      </include>
     
     <variable name="OSDImage">
-        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.AnimatedPoster))">$INFO[Window(Home).Property(SkinHelper.Player.AnimatedPoster)]</value>
-		<value condition="!IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
-        <value condition="!IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
-        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Poster)]</value>
+        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Window(Home).Property(SkinHelper.Player.AnimatedPoster))">$INFO[Window(Home).Property(SkinHelper.Player.AnimatedPoster)]</value>
+		<value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
+        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
+        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Poster)]</value>
 		<value condition="!IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
 		<value condition="!IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
 		<value>DefaultVideo.png</value>
