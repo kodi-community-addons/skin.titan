@@ -642,8 +642,8 @@
 	      
      <variable name="AudioPlayerCoverImage">
         <value condition="SubString(MusicPlayer.Cover,.tbn,right)">$INFO[MusicPlayer.Cover]</value>
-        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.Art.AlbumThumb))">$INFO[Window(Home).Property(SkinHelper.Player.Art.AlbumThumb)]</value>
         <value condition="!IsEmpty(MusicPlayer.Cover) + !Substring(MusicPlayer.Cover,Default,left) + !IsEmpty(Player.Duration)">$INFO[MusicPlayer.Cover]</value>
+        <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.Art.AlbumThumb))">$INFO[Window(Home).Property(SkinHelper.Player.Art.AlbumThumb)]</value>
         <value condition="!IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Thumb))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Thumb)]</value>
         <value>$INFO[MusicPlayer.Cover]</value>
 	 </variable>
@@ -823,7 +823,9 @@
 	 </variable>
      
      <variable name="castInfo">
-		<value condition="!IsEmpty(ListItem.DBTYPE)">plugin://script.skin.helper.service/?action=getcast&amp;$INFO[ListItem.DBTYPE]=$INFO[ListItem.Title]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]&amp;castaction=$INFO[Skin.String(videoinfo_castaction)]</value>
+		<value condition="!IsEmpty(ListItem.DBTYPE) + !IsEmpty(ListItem.DBID)">plugin://script.skin.helper.service/?action=getcast&amp;$INFO[ListItem.DBTYPE]=$INFO[ListItem.DBID]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]&amp;castaction=$INFO[Skin.String(videoinfo_castaction)]</value>
+        <value condition="!IsEmpty(ListItem.DBTYPE)">plugin://script.skin.helper.service/?action=getcast&amp;$INFO[ListItem.DBTYPE]=$INFO[ListItem.Title]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]&amp;castaction=$INFO[Skin.String(videoinfo_castaction)]</value>
+        <value condition="!IsEmpty(ListItem.Property(DBTYPE)) + !IsEmpty(ListItem.Property(DBID))">plugin://script.skin.helper.service/?action=getcast&amp;$INFO[ListItem.Propery(DBTYPE)]=$INFO[ListItem.Propery(DBID)]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]&amp;castaction=$INFO[Skin.String(videoinfo_castaction)]</value>
         <value condition="!IsEmpty(ListItem.Property(DBTYPE))">plugin://script.skin.helper.service/?action=getcast&amp;$INFO[ListItem.Propery(DBTYPE)]=$INFO[ListItem.Title]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]&amp;castaction=$INFO[Skin.String(videoinfo_castaction)]</value>
         <value condition="!IsEmpty(Container.Content)">plugin://script.skin.helper.service/?action=getcast&amp;$INFO[Container.Content]=$INFO[ListItem.Title]&amp;downloadthumbs=$INFO[Skin.String(actorthumbslookup)]&amp;castaction=$INFO[Skin.String(videoinfo_castaction)]</value>
      </variable>
