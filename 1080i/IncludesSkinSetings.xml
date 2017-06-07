@@ -15,7 +15,7 @@
             <onright>311</onright>
             <pagecontrol>311</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),12)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),12)</visible>
             <control type="label" id="23001">
                 <include>SkinSettings_Header</include>
                 <label>31121</label>
@@ -52,7 +52,7 @@
                 <onclick>Skin.ToggleSetting(UseFixedHomeFocus)</onclick>
                 <selected>Skin.HasSetting(UseFixedHomeFocus)</selected>
                 <visible>![Skin.HasSetting(UseSingleShortcut) + Skin.String(HomeLayout, simplehor)]</visible>
-                <visible>Skin.String(HomeLayout, enhanced) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small) | [Skin.String(HomeLayout, simplehor) + !Skin.HasSetting(EnhancedHome_Circular)] | [SubString(Skin.String(HomeLayout), lowhorizontal) + !Skin.HasSetting(EnhancedHome_Circular)]</visible>
+                <visible>Skin.String(HomeLayout, enhanced) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small) | [Skin.String(HomeLayout, simplehor) + !Skin.HasSetting(EnhancedHome_Circular)] | [String.Contains(Skin.String(HomeLayout), lowhorizontal) + !Skin.HasSetting(EnhancedHome_Circular)]</visible>
             </control>
             <!--single menu item-->
             <control type="radiobutton" id="131721">
@@ -69,7 +69,7 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31760]</label>
                 <onclick>Skin.ToggleSetting(SimpleVerHomeLeftAlign)</onclick>
-                <visible>SubString(Skin.String(HomeLayout), simplever)</visible>
+                <visible>String.Contains(Skin.String(HomeLayout), simplever)</visible>
                 <selected>Skin.HasSetting(SimpleVerHomeLeftAlign)</selected>
             </control>
             <!--disable top row on netflix home-->
@@ -77,7 +77,7 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31639]</label>
                 <onclick>Skin.ToggleSetting(NetflixHomeDisableFirstRow)</onclick>
-                <visible>SubString(Skin.String(HomeLayout), netflix)</visible>
+                <visible>String.Contains(Skin.String(HomeLayout), netflix)</visible>
                 <selected>Skin.HasSetting(NetflixHomeDisableFirstRow)</selected>
             </control>
             <!--show large thumb on netflix2 home-->
@@ -101,7 +101,7 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31725]</label>
                 <onclick>Skin.ToggleSetting(AutoFocusHome)</onclick>
-                <visible>SubString(Skin.String(HomeLayout), netflix) | Skin.String(HomeLayout,win10)</visible>
+                <visible>String.Contains(Skin.String(HomeLayout), netflix) | Skin.String(HomeLayout,win10)</visible>
                 <selected>Skin.HasSetting(AutoFocusHome)</selected>
             </control>
             <!-- default focus position-->
@@ -110,7 +110,7 @@
                 <label>31727</label>
                 <label2>$INFO[Skin.String(home.defaultfocus.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=home.defaultfocus,header=$LOCALIZE[31727])</onclick>
-                <visible>[!SubString(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)] | Skin.HasSetting(AutoFocusHome)</visible>
+                <visible>[!String.Contains(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)] | Skin.HasSetting(AutoFocusHome)</visible>
             </control>
             <!-- submenu layout-->
             <control type="button" id="23060">
@@ -133,7 +133,7 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31761]</label>
                 <onclick>Skin.ToggleSetting(VerticalHomeLargeWidget)</onclick>
-                <visible>SubString(Skin.String(HomeLayout), ver)</visible>
+                <visible>String.Contains(Skin.String(HomeLayout), ver)</visible>
                 <selected>Skin.HasSetting(VerticalHomeLargeWidget)</selected>
             </control>
             <!--show all widgets at once-->
@@ -141,7 +141,7 @@
                 <include>SkinSettings_Button</include>
                 <label>$LOCALIZE[31820]</label>
                 <onclick>Skin.ToggleSetting(ShowAllWidgets)</onclick>
-                <visible>SubString(Skin.String(HomeLayout), ver) | SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)</visible>
+                <visible>String.Contains(Skin.String(HomeLayout), ver) | String.Contains(Skin.String(HomeLayout), netflix) | String.Contains(Skin.String(HomeLayout), win10)</visible>
                 <selected>Skin.HasSetting(ShowAllWidgets)</selected>
             </control>
             <!-- widget rotate-->
@@ -166,7 +166,7 @@
                 <label>31821</label>
                 <onclick>Skin.ToggleSetting(widgets_rotate_pause)</onclick>
                 <selected>Skin.HasSetting(widgets_rotate_pause)</selected>
-                <visible>!Skin.HasSetting(DisableAllWidgets) + Skin.String(widgets_rotate) + !Skin.String(widgets_rotate,disabled) + !SubString(Skin.String(HomeLayout),netflix)</visible>
+                <visible>!Skin.HasSetting(DisableAllWidgets) + Skin.String(widgets_rotate) + !Skin.String(widgets_rotate,disabled) + !String.Contains(Skin.String(HomeLayout),netflix)</visible>
             </control>
 
             <!-- HOMESCREEN OPTIONS -->
@@ -188,7 +188,7 @@
                 <label>31561</label>
                 <onclick>Skin.ToggleSetting(OpenSubMenuOnClick)</onclick>
                 <selected>Skin.HasSetting(OpenSubMenuOnClick)</selected>
-                <visible>!SubString(Skin.String(HomeLayout), netflix)</visible>
+                <visible>!String.Contains(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!-- auto show widgets-->
             <control type="radiobutton" id="23013">
@@ -197,7 +197,7 @@
                 <onclick>Skin.ToggleSetting(AutoShowWidgets)</onclick>
                 <selected>Skin.HasSetting(AutoShowWidgets)</selected>
                 <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
-                <visible>[Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, simplehor) | SubString(Skin.String(HomeLayout), lowhorizontal)]</visible>
+                <visible>[Skin.String(HomeLayout, 1small) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, simplehor) | String.Contains(Skin.String(HomeLayout), lowhorizontal)]</visible>
             </control>
             <!-- lower widgets-->
             <control type="radiobutton" id="31660">
@@ -233,7 +233,7 @@
                 <label>31264</label>
                 <onclick>Skin.ToggleSetting(DisableAllWidgets)</onclick>
                 <selected>Skin.HasSetting(DisableAllWidgets)</selected>
-                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, 3) + !SubString(Skin.String(HomeLayout), netflix)</visible>
+                <visible>!Skin.String(HomeLayout, enhanced) + !Skin.String(HomeLayout, 3) + !String.Contains(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--disable all submenus-->
             <control type="radiobutton" id="23017">
@@ -241,7 +241,7 @@
                 <label>31265</label>
                 <onclick>Skin.ToggleSetting(DisableAllSubmenus)</onclick>
                 <selected>Skin.HasSetting(DisableAllSubmenus)</selected>
-                <visible>!Skin.String(HomeLayout, enhanced) + !SubString(Skin.String(HomeLayout), netflix)</visible>
+                <visible>!Skin.String(HomeLayout, enhanced) + !String.Contains(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--enable cicular navigation-->
             <control type="radiobutton" id="31619">
@@ -250,7 +250,7 @@
                 <onclick>Skin.ToggleSetting(EnhancedHome_Circular)</onclick>
                 <selected>Skin.HasSetting(EnhancedHome_Circular)</selected>
                 <visible>![Skin.HasSetting(UseSingleShortcut) + Skin.String(HomeLayout, simplehor)]</visible>
-                <visible>Skin.String(HomeLayout, enhanced) | Skin.String(HomeLayout, netflix2) | Skin.String(HomeLayout, win10) | Skin.String(HomeLayout, simplehor) | SubString(Skin.String(HomeLayout), lowhorizontal)</visible>
+                <visible>Skin.String(HomeLayout, enhanced) | Skin.String(HomeLayout, netflix2) | Skin.String(HomeLayout, win10) | Skin.String(HomeLayout, simplehor) | String.Contains(Skin.String(HomeLayout), lowhorizontal)</visible>
             </control>
             <!--use large mainmenu on netflix home-->
             <control type="radiobutton" id="31805">
@@ -258,7 +258,7 @@
                 <label>31805</label>
                 <onclick>Skin.ToggleSetting(NetFlixHome_LargeMenu)</onclick>
                 <selected>Skin.HasSetting(NetFlixHome_LargeMenu)</selected>
-                <visible>SubString(Skin.String(HomeLayout), netflix)</visible>
+                <visible>String.Contains(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--enable home menu animation-->
             <control type="radiobutton" id="31620">
@@ -274,7 +274,7 @@
                 <label>31621</label>
                 <onclick>Skin.ToggleSetting(Widgets_Animation)</onclick>
                 <selected>Skin.HasSetting(Widgets_Animation)</selected>
-                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, enhanced) + !SubString(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)</visible>
+                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, enhanced) + !String.Contains(Skin.String(HomeLayout), netflix) + !Skin.String(HomeLayout, win10)</visible>
             </control>
             <!--enable widgets zoom effect-->
             <control type="radiobutton" id="31763">
@@ -330,7 +330,7 @@
                 <label>31707</label>
                 <onclick>Skin.ToggleSetting(HideWidgetDetailsPanel)</onclick>
                 <selected>Skin.HasSetting(HideWidgetDetailsPanel)</selected>
-                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small) + !Skin.String(HomeLayout, win10) + !SubString(Skin.String(HomeLayout), netflix)</visible>
+                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.String(HomeLayout, 3) + !Skin.String(HomeLayout, 3small) + !Skin.String(HomeLayout, win10) + !String.Contains(Skin.String(HomeLayout), netflix)</visible>
             </control>
             <!--large widget details-->
             <control type="radiobutton" id="31741">
@@ -338,7 +338,7 @@
                 <label>31741</label>
                 <onclick>Skin.ToggleSetting(LargeWidgetDetailsPanel)</onclick>
                 <selected>Skin.HasSetting(LargeWidgetDetailsPanel)</selected>
-                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(HideWidgetDetailsPanel) + SubString(Skin.String(HomeLayout), ver)</visible>
+                <visible>!Skin.HasSetting(DisableAllWidgets) + !Skin.HasSetting(HideWidgetDetailsPanel) + String.Contains(Skin.String(HomeLayout), ver)</visible>
             </control>
             <!--spotlight widget trailer-->
             <control type="radiobutton" id="31798">
@@ -404,7 +404,7 @@
                 <label>31810</label>
                 <onclick>Skin.ToggleSetting(homemenu_nouppercase)</onclick>
                 <selected>Skin.HasSetting(homemenu_nouppercase)</selected>
-                <visible>Skin.String(HomeLayout,verticalbig) | SubString(Skin.String(HomeLayout),hor)</visible>
+                <visible>Skin.String(HomeLayout,verticalbig) | String.Contains(Skin.String(HomeLayout),hor)</visible>
             </control>
         </control>
          <!--scrollbar for homescreen layout-->
@@ -413,7 +413,7 @@
             <height>96%</height>
             <onleft>23000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),12)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),12)</visible>
         </control>
 				
     </include>
@@ -432,7 +432,7 @@
             <onright>313</onright>
             <orientation>vertical</orientation>
             <pagecontrol>313</pagecontrol>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),19)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),19)</visible>
 
             <!-- smart shortcuts -->
             <control type="label" id="19001">
@@ -512,7 +512,7 @@
             <onright>314</onright>
             <pagecontrol>314</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),8)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),8)</visible>
             <!-- skin background -->
             <control type="label" id="14001">
                 <include>SkinSettings_Header</include>
@@ -635,7 +635,7 @@
             <height>96%</height>
             <onleft>14000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),8)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),8)</visible>
         </control>	
     </include>
     
@@ -653,7 +653,7 @@
             <onright>317</onright>
             <pagecontrol>317</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),17)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),17)</visible>
             <!-- media library views -->
             <control type="label" id="13020">
                 <include>SkinSettings_Header</include>
@@ -1016,7 +1016,7 @@
             <height>96%</height>
             <onleft>17000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),17)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),17)</visible>
         </control>
     </include>
     
@@ -1095,7 +1095,7 @@
             <onright>37</onright>
             <pagecontrol>37</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),7)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),7)</visible>
                  <!-- forced views -->
             <control type="label" id="6027">
                 <include>SkinSettings_Header</include>
@@ -1226,7 +1226,7 @@
             <height>96%</height>
             <onleft>7000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),7)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),7)</visible>
         </control>	
     </include>
     
@@ -1244,7 +1244,7 @@
             <onright>316</onright>
             <pagecontrol>316</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),16)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),16)</visible>
             
             <!-- OSD generic -->
             <control type="label" id="478">
@@ -1558,7 +1558,7 @@
             <height>96%</height>
             <onleft>16000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),16)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),16)</visible>
         </control>					
     </include>
     
@@ -1700,7 +1700,7 @@
             <onright>316</onright>
             <pagecontrol>316</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),18)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),18)</visible>
             <!-- PVR appearance settings -->
             <control type="label" id="13040">
                 <include>SkinSettings_Header</include>
@@ -1869,7 +1869,7 @@
             <onleft condition="Window.IsActive(Custom_SkinSettings.xml)">2000</onleft>
             <onright>noop</onright>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),9)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),9)</visible>
             <control type="label" id="6001">
                 <include>SkinSettings_Header</include>
                 <label>31167</label>
@@ -1942,7 +1942,7 @@
             <onleft condition="Window.IsActive(Custom_SkinSettings.xml)">2000</onleft>
             <onright>313</onright>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),15)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),15)</visible>
 
             <control type="label" id="15001">
                 <include>SkinSettings_Header</include>
@@ -2052,7 +2052,7 @@
             <onright>326</onright>
             <pagecontrol>326</pagecontrol>
             <orientation>vertical</orientation>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),20)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),20)</visible>
 
             <!-- all color settings -->
             <include>SkinSettings_General_Colors</include>
@@ -2067,7 +2067,7 @@
             <height>96%</height>
             <onleft>20000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),20)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),20)</visible>
         </control>
     </include>
     
@@ -2085,7 +2085,7 @@
             <onright>313</onright>
             <orientation>vertical</orientation>
             <pagecontrol>313</pagecontrol>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),14)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),14)</visible>
             <!-- backup and restore -->
             <control type="label" id="8001">
                 <include>SkinSettings_Header</include>
@@ -2131,7 +2131,7 @@
             <height>96%</height>
             <onleft>8000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),14)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),14)</visible>
         </control>
     </include>
     
@@ -2149,7 +2149,7 @@
             <onright>312</onright>
             <orientation>vertical</orientation>
             <pagecontrol>312</pagecontrol>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),6)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),6)</visible>
 
             <!-- general -->
             <control type="label" id="5136">
@@ -2322,7 +2322,7 @@
                 <label2>$INFO[Skin.String(infoline.label)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=infoline,header=$LOCALIZE[31688])</onclick>
                 <visible>!Skin.Hastheme(classic)</visible>
-                <visible>SubString(Skin.String(general_header),title) | SubString(Skin.String(home_header),title)</visible>
+                <visible>String.Contains(Skin.String(general_header),title) | String.Contains(Skin.String(home_header),title)</visible>
             </control>
             
             <!--custom logo-->
@@ -2332,7 +2332,7 @@
                 <onclick condition="!Skin.String(CustomLogoImage)">RunScript(script.skin.helper.service,action=SAVESKINIMAGE,skinstring=CustomLogoImage)</onclick>
                 <onclick condition="Skin.String(CustomLogoImage)">Skin.Reset(CustomLogoImage)</onclick>
                 <selected>Skin.String(CustomLogoImage)</selected>
-                <visible>SubString(Skin.String(general_header),logo) | SubString(Skin.String(home_header),logo)</visible>
+                <visible>String.Contains(Skin.String(general_header),logo) | String.Contains(Skin.String(home_header),logo)</visible>
             </control>
             <!-- logo alignment-->
             <control type="button" id="123023">
@@ -2340,7 +2340,7 @@
                 <label>31618</label>
                 <label2>$INFO[Skin.String(LogoImageAlignment)]</label2>
                 <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=LogoImageAlignment,header=$LOCALIZE[31618])</onclick>
-                <visible>SubString(Skin.String(home_header),logo) + SubString(Skin.String(HomeLayout),simplever)</visible>
+                <visible>String.Contains(Skin.String(home_header),logo) + String.Contains(Skin.String(HomeLayout),simplever)</visible>
                 <visible>Skin.String(CustomLogoImage)</visible>
             </control>
             
@@ -2356,7 +2356,7 @@
                 <label>31740</label>
                 <onclick>Skin.ToggleSetting(Home_ShowBackgroundLogo)</onclick>
                 <selected>Skin.HasSetting(Home_ShowBackgroundLogo)</selected>
-                <visible>SubString(Skin.String(home_header),logo)</visible>
+                <visible>String.Contains(Skin.String(home_header),logo)</visible>
             </control>
             
             <!-- advanced settings -->
@@ -2558,7 +2558,7 @@
             <height>96%</height>
             <onleft>5000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),6)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),6)</visible>
         </control>
     </include>
     
@@ -2659,21 +2659,21 @@
             <param name="id" value="31742" />
             <param name="label" value="$LOCALIZE[31742]" />
             <param name="skinsetting" value="MainMenuPanelColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10)" />
+            <param name="visible" value="String.Contains(Skin.String(HomeLayout),hor) | String.Contains(Skin.String(HomeLayout),ver) | String.Contains(Skin.String(HomeLayout),netflix) | String.Contains(Skin.String(HomeLayout),win10)" />
         </include>
         <!--homemenu unfocused text color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31743" />
             <param name="label" value="$LOCALIZE[31743]" />
             <param name="skinsetting" value="MainMenuTextColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10)" />
+            <param name="visible" value="String.Contains(Skin.String(HomeLayout),hor) | String.Contains(Skin.String(HomeLayout),ver) | String.Contains(Skin.String(HomeLayout),netflix) | String.Contains(Skin.String(HomeLayout),win10)" />
         </include>
         <!--homemenu focused text color-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
             <param name="id" value="31744" />
             <param name="label" value="$LOCALIZE[31744]" />
             <param name="skinsetting" value="MainMenuFocusTextColor" />
-            <param name="visible" value="SubString(Skin.String(HomeLayout),hor) | SubString(Skin.String(HomeLayout),ver) | SubString(Skin.String(HomeLayout),netflix) | SubString(Skin.String(HomeLayout),win10)" />
+            <param name="visible" value="String.Contains(Skin.String(HomeLayout),hor) | String.Contains(Skin.String(HomeLayout),ver) | String.Contains(Skin.String(HomeLayout),netflix) | String.Contains(Skin.String(HomeLayout),win10)" />
         </include>
         <!--home button focus-->
         <include name="SkinSettings_ColorButton" content="SkinSettings_ColorButton">
@@ -2746,7 +2746,7 @@
             <onright>3199</onright>
             <orientation>vertical</orientation>
             <pagecontrol>3199</pagecontrol>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),31)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),31)</visible>
             <control type="label" id="31696">
                 <include>SkinSettings_Header</include>
                 <label>31696</label>
@@ -2846,7 +2846,7 @@
             <height>96%</height>
             <onleft>31000</onleft>
             <showonepage>false</showonepage>
-            <visible>StringCompare(Window(Home).Property(SkinSettingSection),31)</visible>
+            <visible>String.IsEqual(Window(Home).Property(SkinSettingSection),31)</visible>
         </control>
     </include>
     
@@ -2873,7 +2873,7 @@
             <label>31115</label>
             <altlabel>31115</altlabel>
             <onfocus>SetProperty(SkinSettingSection,12,Home)</onfocus>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),12)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),12)</usealttexture>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
         </control>
@@ -2884,7 +2884,7 @@
             <onfocus>SetProperty(SkinSettingSection,9,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),9)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),9)</usealttexture>
         </control>
         <!--background settings-->
         <control type="togglebutton" id="8">
@@ -2893,7 +2893,7 @@
             <onfocus>SetProperty(SkinSettingSection,8,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),8)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),8)</usealttexture>
         </control>	
          <control type="togglebutton" id="17">
             <!--media library-->
@@ -2902,7 +2902,7 @@
             <onfocus>SetProperty(SkinSettingSection,17,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),17)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),17)</usealttexture>
         </control>
         <control type="togglebutton" id="7">
             <!--forced views-->
@@ -2911,7 +2911,7 @@
             <onfocus>SetProperty(SkinSettingSection,7,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),7)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),7)</usealttexture>
         </control>
         <control type="togglebutton" id="16">
             <!--osd settings-->
@@ -2920,7 +2920,7 @@
             <onfocus>SetProperty(SkinSettingSection,16,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),16)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),16)</usealttexture>
         </control>
         <control type="togglebutton" id="18">
             <!--PVR settings-->
@@ -2929,7 +2929,7 @@
             <onfocus>SetProperty(SkinSettingSection,18,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),18)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),18)</usealttexture>
             <visible>PVR.HasTVChannels</visible>
         </control>
         <control type="togglebutton" id="6">
@@ -2939,7 +2939,7 @@
             <onfocus>SetProperty(SkinSettingSection,6,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),6)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),6)</usealttexture>
         </control>
         <!-- color themes -->
         <control type="togglebutton" id="15">
@@ -2948,7 +2948,7 @@
             <onfocus>SetProperty(SkinSettingSection,15,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),15)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),15)</usealttexture>
         </control>
         <!-- custom colors -->
         <control type="togglebutton" id="20">
@@ -2957,7 +2957,7 @@
             <onfocus>SetProperty(SkinSettingSection,20,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),20)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),20)</usealttexture>
         </control>
         <!-- smart shortcuts -->
         <control type="togglebutton" id="19">
@@ -2966,7 +2966,7 @@
             <onfocus>SetProperty(SkinSettingSection,19,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),19)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),19)</usealttexture>
         </control>
         <!-- back and restore -->
         <control type="togglebutton" id="14">
@@ -2975,7 +2975,7 @@
             <onfocus>SetProperty(SkinSettingSection,14,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),14)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),14)</usealttexture>
         </control>
         <control type="togglebutton" id="31">
             <label>31696</label>
@@ -2983,7 +2983,7 @@
             <onfocus>SetProperty(SkinSettingSection,31,Home)</onfocus>
             <include condition="!Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonLarge</include>
             <include condition="Window.IsActive(Custom_SkinSettings.xml)">SkinSettings_MenuButtonSmall</include>
-            <usealttexture>StringCompare(Window(Home).Property(SkinSettingSection),31)</usealttexture>
+            <usealttexture>String.IsEqual(Window(Home).Property(SkinSettingSection),31)</usealttexture>
         </control>
     </include>
     

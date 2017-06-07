@@ -9,7 +9,7 @@
 			<include>animation_window_open_close</include>
             
             <!-- widgets -->
-            <include condition="!Skin.HasSetting(DisableAllWidgets) + !SubString(Skin.String(HomeLayout),3)">HorizontalWidgets</include>
+            <include condition="!Skin.HasSetting(DisableAllWidgets) + !String.Contains(Skin.String(HomeLayout),3)">HorizontalWidgets</include>
     
             <!-- mainmenu -->
             <include condition="[!Skin.HasSetting(UseFixedHomeFocus) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)]] | Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 3) | Skin.String(HomeLayout, 2small) | Skin.String(HomeLayout, 3small)">HomeTitanTilesNormal</include>
@@ -42,7 +42,7 @@
                 <width>60</width>
                 <height>60</height>
                 <include name="PowerButton" content="PowerButton" condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">
-                    <param name="visibility" value="!Skin.HasSetting(HidePowerMenu) + !Control.IsVisible(77551) + !Control.IsVisible(4444) + ![!IsEmpty(Container(300).ListItem.Property(infoline)) + !StringCompare(Container(300).ListItem.Property(infoline),none)] + !system.getbool(lookandfeel.enablerssfeeds)" />
+                    <param name="visibility" value="!Skin.HasSetting(HidePowerMenu) + !Control.IsVisible(77551) + !Control.IsVisible(4444) + ![!String.IsEmpty(Container(300).ListItem.Property(infoline)) + !String.IsEqual(Container(300).ListItem.Property(infoline),none)] + !system.getbool(lookandfeel.enablerssfeeds)" />
                 </include>
                 <animation type="Conditional" condition="skin.hastheme(classic)">
                     <effect type="slide" start="0,0" end="0,-15" time="0" tween="cubic" easing="inout" delay="0" />
@@ -73,7 +73,7 @@
         <control type="group">
             <!-- show arrow up button if widget available -->
             <visible>!Skin.HasSetting(DisableAllWidgets)</visible>
-            <visible>!IsEmpty(Container(300).ListItem.Property(widget)) + [[[Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + [StringCompare(Container(300).Position,0) | StringCompare(Container(300).Position,2) | StringCompare(Container(300).Position,4) | StringCompare(Container(300).Position,6) | StringCompare(Container(300).Position,8)]] | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)]</visible>
+            <visible>!String.IsEmpty(Container(300).ListItem.Property(widget)) + [[[Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + [String.IsEqual(Container(300).Position,0) | String.IsEqual(Container(300).Position,2) | String.IsEqual(Container(300).Position,4) | String.IsEqual(Container(300).Position,6) | String.IsEqual(Container(300).Position,8)]] | Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)]</visible>
             <animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
             <control type="image">
                 <left>35%</left>
@@ -105,7 +105,7 @@
         <control type="group">
             <!-- show arrow down button if submenu available or widget at 2 rows of home tiles -->
             <visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
-            <visible>[[IntegerGreaterThan(Container(4444).NumItems,0) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)]] | [!IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + [StringCompare(Container(300).Position,1) | StringCompare(Container(300).Position,3) | StringCompare(Container(300).Position,5) | StringCompare(Container(300).Position,7) | StringCompare(Container(300).Position,9)]]]</visible>
+            <visible>[[Integer.IsGreater(Container(4444).NumItems,0) + [Skin.String(HomeLayout, 1) | Skin.String(HomeLayout, 1small)]] | [!String.IsEmpty(Container(300).ListItem.Property(widget)) + [Skin.String(HomeLayout, 2) | Skin.String(HomeLayout, 2small)] + [String.IsEqual(Container(300).Position,1) | String.IsEqual(Container(300).Position,3) | String.IsEqual(Container(300).Position,5) | String.IsEqual(Container(300).Position,7) | String.IsEqual(Container(300).Position,9)]]]</visible>
             <animation effect="fade" start="0" end="100" delay="1200" time="800" pulse="false">Focus</animation>
             <control type="image">
                 <left>35%</left>
@@ -161,7 +161,7 @@
 			<effect type="slide" start="0,0" end="0,30" time="200" tween="cubic" easing="inout" delay="0" />
 		</animation>
 
-		<animation type="Conditional" condition="[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)">
+		<animation type="Conditional" condition="[String.Contains(Window(Home).Property(submenu),show) | Control.HasFocus(4444)] + Skin.String(SubmenuLayout, subpage)">
 			<effect type="slide" start="0,0" end="0,1000" time="0" delay="0" />
 		</animation>
 

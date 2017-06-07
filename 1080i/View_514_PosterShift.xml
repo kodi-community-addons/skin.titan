@@ -34,7 +34,7 @@
                     <font>Reg28</font>
                     <autoscroll delay="0" time="2000" repeat="2000">false</autoscroll>
                     <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
-                    <visible>!StringCompare(Container.ListItem.Label,ListItem.Label)</visible>
+                    <visible>!String.IsEqual(Container.ListItem.Label,ListItem.Label)</visible>
                 </control>
                 <control type="textbox">
                     <left>30</left>
@@ -47,7 +47,7 @@
                     <font>Reg28</font>
                     <autoscroll delay="0" time="2000" repeat="2000">true</autoscroll>
                     <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
-                    <visible>StringCompare(Container.ListItem.Label,ListItem.Label)</visible>
+                    <visible>String.IsEqual(Container.ListItem.Label,ListItem.Label)</visible>
                 </control>
             </control>
 
@@ -117,7 +117,7 @@
                     <animation effect="slide" start="0,200" end="0" tween="cubic" easing="inout" time="1200" delay="800">Visible</animation>
                     <animation effect="fade" start="0" end="100" delay="800" time="800" pulse="false">Visible</animation>
                     <animation effect="rotate" end="-360" center="auto" time="20000" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-                    <visible>Skin.HasSetting(View514_ShowCDart) + Control.HasFocus(514) + !Skin.HasSetting(PosterShiftViewShowInfo) + ![SubString(ListItem.Thumb,Default,left) | IsEmpty(ListItem.Thumb)]  + !Container.IsScrolling + !Container.OnScrollNext + !Container.OnScrollPrevious</visible>
+                    <visible>Skin.HasSetting(View514_ShowCDart) + Control.HasFocus(514) + !Skin.HasSetting(PosterShiftViewShowInfo) + ![String.StartsWith(ListItem.Thumb,Default) | String.IsEmpty(ListItem.Thumb)]  + !Container.IsScrolling + !Container.OnScrollNext + !Container.OnScrollPrevious</visible>
                 </control>
                 
 				<control type="fixedlist" id="514">
@@ -134,7 +134,7 @@
 					<preloaditems>2</preloaditems>
 					<scrolltime tween="quadratic">200</scrolltime>
 					<focusposition>3</focusposition>
-					<visible>StringCompare(Window(Home).Property(SkinHelper.ForcedView),514) | IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
+					<visible>String.IsEqual(Window(Home).Property(SkinHelper.ForcedView),514) | String.IsEmpty(Window(Home).Property(SkinHelper.ForcedView))</visible>
 					<itemlayout width="315" height="750">
 						<include>ShiftPosterThumbs</include>
 					</itemlayout>
@@ -149,7 +149,7 @@
                 
                 <!--horizontal Scrollbar-->
                 <control type="scrollbar" id="60">
-                    <visible>Control.IsVisible(514) + IntegerGreaterThan(Container.Numitems,0)</visible>
+                    <visible>Control.IsVisible(514) + Integer.IsGreater(Container.Numitems,0)</visible>
                     <left>60</left>
                     <bottom>11%</bottom>
                     <width>1800</width>
