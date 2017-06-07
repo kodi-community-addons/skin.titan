@@ -7,7 +7,7 @@
 		<shortcut label="31531" type="32010">||BROWSE||script.skin.helper.service/?action=smartshortcuts</shortcut>
 
 		<!-- common items -->
-		<node label="32029" condition="IsEmpty(Window(home).Property(netflixmenu))">
+		<node label="32029" condition="String.IsEmpty(Window(home).Property(netflixmenu))">
 			<shortcut label="32022" grouping="32029" icon="resource://resource.images.skinicons.wide/livetv.png" condition="PVR.HasTVChannels">ActivateWindow(TVGuide)</shortcut>
 			<shortcut label="342" grouping="32029" icon="$INFO[Window(Home).Property(SkinHelper.AllMoviesBackground)]">ActivateWindow(10025,videodb://movies/titles/,return)</shortcut>
 			<shortcut label="20343" grouping="32029" icon="$INFO[Window(Home).Property(SkinHelper.AllTvShowsBackground)]">ActivateWindow(10025,videodb://tvshows/titles/,return)</shortcut>
@@ -32,7 +32,7 @@
 
 		<!-- video library-->
 		<node label="32030">
-			<shortcut label="19140" grouping="1211" type="1211" condition="IsEmpty(Window(home).Property(netflixmenu))">RunScript(script.skin.helper.service,action=VIDEOSEARCH)</shortcut>
+			<shortcut label="19140" grouping="1211" type="1211" condition="String.IsEmpty(Window(home).Property(netflixmenu))">RunScript(script.skin.helper.service,action=VIDEOSEARCH)</shortcut>
 			<shortcut label="20381" type="32010">||BROWSE||script.skin.helper.widgets</shortcut>
 			<content>video</content>
 			<node label="32040">
@@ -52,15 +52,15 @@
 		<!-- music -->
 		<node label="32031">
 			<shortcut label="10005" grouping="32029" icon="resource://resource.images.skinicons.wide/music.png">ActivateWindow(10502,musicdb://,return)</shortcut>
-			<shortcut label="19021" grouping="32029" icon="resource://resource.images.skinicons.wide/radio.png" condition="IsEmpty(Window(home).Property(netflixmenu))">ActivateWindow(radiochannels,return)</shortcut>
-            <shortcut label="19140" grouping="1211" type="1211" condition="IsEmpty(Window(home).Property(netflixmenu))">RunScript(script.skin.helper.service,action=MUSICSEARCH)</shortcut>
+			<shortcut label="19021" grouping="32029" icon="resource://resource.images.skinicons.wide/radio.png" condition="String.IsEmpty(Window(home).Property(netflixmenu))">ActivateWindow(radiochannels,return)</shortcut>
+            <shortcut label="19140" grouping="1211" type="1211" condition="String.IsEmpty(Window(home).Property(netflixmenu))">RunScript(script.skin.helper.service,action=MUSICSEARCH)</shortcut>
 			<shortcut label="589" grouping="1211" type="1211">PlayerControl(Partymode(music))</shortcut>
             <content>music</content>
 			<node label="32040">
 				<content>playlist-audio</content>
 			</node>
 			<node label="32011">
-				<shortcut label="1038" type="32019" icon="DefaultAddonMusic.png" condition="IsEmpty(Window(home).Property(netflixmenu))">ActivateWindow(10502,Addons,return)</shortcut>
+				<shortcut label="1038" type="32019" icon="DefaultAddonMusic.png" condition="String.IsEmpty(Window(home).Property(netflixmenu))">ActivateWindow(10502,Addons,return)</shortcut>
 				<content>addon-audio</content>
 			</node>
 			<node label="32075">
@@ -117,21 +117,21 @@
 		</node>
 
 		<!-- favourites-->	
-		<node label="32006" condition="IsEmpty(Window(home).Property(netflixmenu))">
+		<node label="32006" condition="String.IsEmpty(Window(home).Property(netflixmenu))">
 			<shortcut label="10134" grouping="32029" icon="resource://resource.images.skinicons.wide/favourites.png">ActivateWindow(favourites)</shortcut>
 			<content>favourite</content>
 		</node>
 		
 		<!-- settings -->
-		<node label="10004" condition="IsEmpty(Window(home).Property(netflixmenu))">
+		<node label="10004" condition="String.IsEmpty(Window(home).Property(netflixmenu))">
 			<shortcut label="7" grouping="32029" icon="resource://resource.images.skinicons.wide/filemanager.png">ActivateWindow(filemanager)</shortcut>
             <shortcut label="130" grouping="32029" icon="resource://resource.images.skinbackgrounds.titanium/systeminfo.jpg">ActivateWindow(systeminfo)</shortcut>
 			<content>settings</content>
 		</node>
 		
 		<!-- xbmc commands -->
-		<node label="32054" condition="IsEmpty(Window(home).Property(netflixmenu))">
-			<shortcut label="31565" grouping="32029" condition="IsEmpty(Window(home).Property(powermenu))">submenu</shortcut>
+		<node label="32054" condition="String.IsEmpty(Window(home).Property(netflixmenu))">
+			<shortcut label="31565" grouping="32029" condition="String.IsEmpty(Window(home).Property(powermenu))">submenu</shortcut>
 			<shortcut label="20077" icon="common/skin-settings.png">ActivateWindow(SkinSettings)</shortcut>
 			<shortcut label="10004" icon="common/settings1.png">ActivateWindow(Settings)</shortcut>
 			<shortcut label="20126" icon="common/lock.png">System.LogOff</shortcut>
@@ -309,11 +309,11 @@
 </override>
 
 <override action="globaloverride" group="mainmenu">
-	<condition>![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]]</condition>
+	<condition>![Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0) + ![String.Contains(Skin.String(HomeLayout), netflix) | String.Contains(Skin.String(HomeLayout), win10)]]</condition>
 	<action>::ACTION::</action>
 </override>
 <override action="globaloverride" group="mainmenu">
-	<condition>[Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0)] | [SubString(Skin.String(HomeLayout), netflix) | SubString(Skin.String(HomeLayout), win10)]</condition>
+	<condition>[Skin.HasSetting(OpenSubMenuOnClick) + IntegerGreaterThan(Container(4445).NumItems,0)] | [String.Contains(Skin.String(HomeLayout), netflix) | String.Contains(Skin.String(HomeLayout), win10)]</condition>
 	<action>SetFocus(4444,0)</action>
 </override>
 
