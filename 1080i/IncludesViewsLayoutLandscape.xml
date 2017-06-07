@@ -41,16 +41,16 @@
             <bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[LandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="center">stretch</aspectratio>
-            <visible>![!IsEmpty(ListItem.Thumb) + StringCompare(ListItem.Thumb,ListItem.Property(channellogo))]</visible>
-            <visible>IsEmpty(ListItem.Property(defaultID))</visible>
+            <visible>![!String.IsEmpty(ListItem.Thumb) + String.IsEqual(ListItem.Thumb,ListItem.Property(channellogo))]</visible>
+            <visible>String.IsEmpty(ListItem.Property(defaultID))</visible>
         </control>
         <control type="image">
             <!--fallback logo image-->
             <bordersize>30</bordersize>
             <texture background="true">$VAR[ClearLogoFallback]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + !StringCompare(ListItem.DBTYPE,episode) + !StringCompare(ListItem.Property(DBTYPE),episode) + !Container.Content(episodes) + !StringCompare(ListItem.DBTYPE,season) + !StringCompare(ListItem.Property(DBTYPE),season)</visible>
-            <visible>IsEmpty(ListItem.Property(defaultID))</visible>
+            <visible>String.IsEmpty(Listitem.Art(landscape)) + String.IsEmpty(ListItem.Property(landscape)) + !String.IsEqual(ListItem.DBTYPE,episode) + !String.IsEqual(ListItem.Property(DBTYPE),episode) + !Container.Content(episodes) + !String.IsEqual(ListItem.DBTYPE,season) + !String.IsEqual(ListItem.Property(DBTYPE),season)</visible>
+            <visible>String.IsEmpty(ListItem.Property(defaultID))</visible>
         </control>
         <control type="multiimage">
             <!--thumb image for home tiles-->
@@ -63,7 +63,7 @@
             <include>fanartSpeed</include>
             <fadetime>450</fadetime>
             <include condition="Skin.HasSetting(RandomizeBackground)">randomizeImages</include>
-            <visible>!IsEmpty(ListItem.Property(defaultID))</visible>
+            <visible>!String.IsEmpty(ListItem.Property(defaultID))</visible>
         </control>
         <include condition="!Window.IsActive(Home)">ThumbsTagOverlay</include>
         <control type="group">
@@ -82,10 +82,10 @@
     </include>
     
     <variable name="ClearLogoFallback">
-        <value condition="!IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
-        <value condition="!IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
-        <value condition="!Skin.HasSetting(SkinHelper.EnablePVRThumbs) + SubString(ListItem.FileNameAndPath,pvr://) + !IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-        <value condition="!Skin.HasSetting(SkinHelper.EnablePVRThumbs) + !IsEmpty(ListItem.Thumb) + StringCompare(ListItem.Thumb,ListItem.Property(channellogo))">$INFO[ListItem.Thumb]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
+        <value condition="!Skin.HasSetting(SkinHelper.EnablePVRThumbs) + String.Contains(ListItem.FileNameAndPath,pvr://) + !String.IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+        <value condition="!Skin.HasSetting(SkinHelper.EnablePVRThumbs) + !String.IsEmpty(ListItem.Thumb) + String.IsEqual(ListItem.Thumb,ListItem.Property(channellogo))">$INFO[ListItem.Thumb]</value>
     </variable>
     
     <!-- LANDSCAPE LAYOUT -->
@@ -130,8 +130,8 @@
 			<bordersize>8</bordersize>
             <texture background="true" diffuse="home/home_matte2.png" fallback="colors/color_keyboard.png">$VAR[LandscapeImage]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-            <visible>![!IsEmpty(ListItem.Thumb) + StringCompare(ListItem.Thumb,ListItem.Property(channellogo))]</visible>
-            <visible>IsEmpty(ListItem.Property(defaultID))</visible>
+            <visible>![!String.IsEmpty(ListItem.Thumb) + String.IsEqual(ListItem.Thumb,ListItem.Property(channellogo))]</visible>
+            <visible>String.IsEmpty(ListItem.Property(defaultID))</visible>
         </control>
         <control type="image">
             <!--fallback logo image-->
@@ -140,8 +140,8 @@
             <bordersize>30</bordersize>
             <texture background="true">$VAR[ClearLogoFallback]</texture>
             <aspectratio scalediffuse="false" align="center" aligny="bottom">keep</aspectratio>
-            <visible>IsEmpty(Listitem.Art(landscape)) + IsEmpty(ListItem.Property(landscape)) + !StringCompare(ListItem.DBTYPE,episode) + !StringCompare(ListItem.Property(DBTYPE),episode) + !Container.Content(episodes)</visible>
-            <visible>IsEmpty(ListItem.Property(defaultID))</visible>
+            <visible>String.IsEmpty(Listitem.Art(landscape)) + String.IsEmpty(ListItem.Property(landscape)) + !String.IsEqual(ListItem.DBTYPE,episode) + !String.IsEqual(ListItem.Property(DBTYPE),episode) + !Container.Content(episodes)</visible>
+            <visible>String.IsEmpty(ListItem.Property(defaultID))</visible>
         </control>
         <control type="multiimage">
             <!--thumb image for home tiles-->
@@ -154,7 +154,7 @@
             <include>fanartSpeed</include>
             <fadetime>450</fadetime>
             <include condition="Skin.HasSetting(RandomizeBackground)">randomizeImages</include>
-            <visible>!IsEmpty(ListItem.Property(defaultID))</visible>
+            <visible>!String.IsEmpty(ListItem.Property(defaultID))</visible>
         </control>
         <include condition="!Window.IsActive(Home)">LandscapeTagOverlay</include>
 		<control type="group">
@@ -182,9 +182,9 @@
             ![[!Window.IsActive(Home) + Control.IsVisible(511)] + Skin.String(View511.Tags,disable)] + 
             ![Control.IsVisible(512) + Skin.String(View512.Tags,disable)] + 
             ![Control.IsVisible(523) + Skin.String(View523.Tags,disable)] + 
-            ![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + 
-            !StringCompare(ListItem.Property(disableLabel), disable) +
-            !StringCompare(ListItem.Label,..)
+            ![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !String.IsEmpty(ListItem.Property(defaultID))] + 
+            !String.IsEqual(ListItem.Property(disableLabel), disable) +
+            !String.IsEqual(ListItem.Label,..)
         </visible>
         <visible>
             [Control.IsVisible(501) + Skin.String(View501.Tags,enable)] | 
@@ -193,9 +193,9 @@
             [[!Window.IsActive(Home) + Control.IsVisible(511)] + Skin.String(View511.Tags,enable)] | 
             [Control.IsVisible(512) + Skin.String(View512.Tags,enable)] | 
             [Control.IsVisible(523) + Skin.String(View523.Tags,enable)] | 
-            [IsEmpty(ListItem.Art(landscape)) + IsEmpty(ListItem.Art(clearlogo)) + !SubString(ListItem.Thumb,icon.png)] |
-            [StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] |
-            !IsEmpty(ListItem.Property(defaultID))
+            [String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(clearlogo)) + !String.Contains(ListItem.Thumb,icon.png)] |
+            [String.IsEqual(ListItem.DBTYPE,episode) | String.IsEqual(ListItem.Property(DBTYPE),episode)] |
+            !String.IsEmpty(ListItem.Property(defaultID))
         </visible>
 	</include>
 	<include name="ThumbsTagOverlay">
@@ -269,29 +269,29 @@
     </include>
 
     <variable name="LandscapeImage">
-		<value condition="!IsEmpty(ListItem.Thumb) + [StringCompare(ListItem.DBTYPE,episode) | StringCompare(ListItem.Property(DBTYPE),episode)] + ![Window.IsActive(home) + Skin.HasSetting(PreferTvShowThumbWidget)]">$INFO[ListItem.Thumb]</value>
-        <value condition="!IsEmpty(ListItem.Thumb) + [SubString(ListItem.Path,youtube) | SubString(ListItem.Path,botchamania)]">$INFO[ListItem.Thumb]</value>
-        <value condition="Skin.HasSetting(PreferClearArtOverLandscape) + !IsEmpty(ListItem.Art(clearart)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(clearart)]</value>
-        <value condition="Skin.HasSetting(PreferClearArtOverLandscape) + !IsEmpty(ListItem.Art(tvshow.clearart)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(tvshow.clearart)]</value>
-        <value condition="!IsEmpty(ListItem.Art(season.landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(season.landscape)]</value>
-        <value condition="!IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(landscape)]</value>
-        <value condition="!IsEmpty(ListItem.Art(tvshow.landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(tvshow.landscape)]</value>
-        <value condition="!IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-		<value condition="!IsEmpty(ListItem.Property(landscape))">$INFO[ListItem.Property(landscape)]</value>
-		<value condition="!IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
-		<value condition="StringCompare(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
-        <value condition="[Container.Content(genres) | StringCompare(ListItem.DBTYPE,genre)] + SubString(ListItem.Folderpath,video)">$VAR[MovieGenreIconVarList]</value>
-        <value condition="[Container.Content(genres) | StringCompare(ListItem.DBTYPE,genre)] + [Window.IsActive(music) | SubString(ListItem.Folderpath,music)]">$VAR[MusicGenreIconVarList]</value>
-        <value condition="Window.IsActive(tvrecordings) + !IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Thumb]</value>
+		<value condition="!String.IsEmpty(ListItem.Thumb) + [String.IsEqual(ListItem.DBTYPE,episode) | String.IsEqual(ListItem.Property(DBTYPE),episode)] + ![Window.IsActive(home) + Skin.HasSetting(PreferTvShowThumbWidget)]">$INFO[ListItem.Thumb]</value>
+        <value condition="!String.IsEmpty(ListItem.Thumb) + [String.Contains(ListItem.Path,youtube) | String.Contains(ListItem.Path,botchamania)]">$INFO[ListItem.Thumb]</value>
+        <value condition="Skin.HasSetting(PreferClearArtOverLandscape) + !String.IsEmpty(ListItem.Art(clearart)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(clearart)]</value>
+        <value condition="Skin.HasSetting(PreferClearArtOverLandscape) + !String.IsEmpty(ListItem.Art(tvshow.clearart)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(tvshow.clearart)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(season.landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(season.landscape)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(landscape)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(tvshow.landscape)) + !Skin.HasSetting(DisableLandscapeThumbs)">$INFO[ListItem.Art(tvshow.landscape)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="!String.IsEmpty(ListItem.Property(landscape))">$INFO[ListItem.Property(landscape)]</value>
+		<value condition="!String.IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
+		<value condition="String.IsEqual(ListItem.Label,..)">dialogs/filebrowser/DefaultFolderBack2.png</value>
+        <value condition="[Container.Content(genres) | String.IsEqual(ListItem.DBTYPE,genre)] + String.Contains(ListItem.Folderpath,video)">$VAR[MovieGenreIconVarList]</value>
+        <value condition="[Container.Content(genres) | String.IsEqual(ListItem.DBTYPE,genre)] + [Window.IsActive(music) | String.Contains(ListItem.Folderpath,music)]">$VAR[MusicGenreIconVarList]</value>
+        <value condition="Window.IsActive(tvrecordings) + !String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Thumb]</value>
 		<value condition="Container.Content(studios)">$INFO[ListItem.Label,special://skin/extras/flags/studios/,.png]</value>
-		<value condition="Container.Content(actors) + IsEmpty(ListItem.Thumb)">resource://resource.images.skinicons.wide/ActorPoster.png</value>
-		<value condition="Container.Content(directors) + IsEmpty(ListItem.Thumb)">resource://resource.images.skinicons.wide/ActorPoster.png</value>
-		<value condition="Container.Content(artists) + IsEmpty(ListItem.Thumb)">resource://resource.images.skinicons.wide/artist.png</value>
+		<value condition="Container.Content(actors) + String.IsEmpty(ListItem.Thumb)">resource://resource.images.skinicons.wide/ActorPoster.png</value>
+		<value condition="Container.Content(directors) + String.IsEmpty(ListItem.Thumb)">resource://resource.images.skinicons.wide/ActorPoster.png</value>
+		<value condition="Container.Content(artists) + String.IsEmpty(ListItem.Thumb)">resource://resource.images.skinicons.wide/artist.png</value>
         <value condition="Container.Content(years)">resource://resource.images.skinicons.wide/year.png</value>
 		<value condition="Container.Content(countries)">resource://resource.images.skinicons.wide/Country.png</value>
 		<value condition="Container.Content(tags)">resource://resource.images.skinicons.wide/Tags.png</value>
-        <value condition="!IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
-		<value condition="!IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+        <value condition="!String.IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
     </variable>
     
 </includes>

@@ -20,7 +20,7 @@
                 <itemgap>8</itemgap>
                 <onfocus>ClearProperty(ShowViewSubMenu)</onfocus>
                 <include>animation_window_open_close</include>
-                <animation effect="slide" end="420" time="300" delay="0" tween="cubic" easing="inout" condition="Control.HasFocus(300) | StringCompare(Window(Home).Property(ShowViewSubMenu),show)">Conditional</animation>
+                <animation effect="slide" end="420" time="300" delay="0" tween="cubic" easing="inout" condition="Control.HasFocus(300) | String.IsEqual(Window(Home).Property(ShowViewSubMenu),show)">Conditional</animation>
                 <animation effect="slide" end="0,30" time="300" delay="0" tween="cubic" easing="inout" condition="Window.IsActive(infodialog) | Window.IsActive(extendedprogressdialog) | Control.IsVisible(88888)">Conditional</animation>
                 
                 <!-- submenu -->
@@ -29,7 +29,7 @@
                 <!--white space -->
                 <control type="group" id="4447">
                     <width>25</width>
-                    <visible>IntegerGreaterThan(Container(4445).NumItems,0)</visible>
+                    <visible>Integer.IsGreater(Container(4445).NumItems,0)</visible>
                 </control>
                 
                 <!-- widgets -->
@@ -42,7 +42,7 @@
                 <control type="button" id="3331">
                     <texturefocus />
                     <texturenofocus />
-                    <visible>IsEmpty(Container(300).ListItem.Property(widget)) + !IntegerGreaterThan(Container(4445).NumItems,0)</visible>
+                    <visible>String.IsEmpty(Container(300).ListItem.Property(widget)) + !Integer.IsGreater(Container(4445).NumItems,0)</visible>
                 </control>
                 
             </control>
@@ -75,7 +75,7 @@
             <width>1</width>
             <height>1</height>
             <animation effect="slide" end="10,-50" time="0" condition="true">Conditional</animation>
-            <visible>IntegerGreaterThan(Container(4445).NumItems,0)</visible>
+            <visible>Integer.IsGreater(Container(4445).NumItems,0)</visible>
             <control type="label">
                 <height>40</height>
                 <width>440</width>
@@ -94,7 +94,7 @@
             <orientation>vertical</orientation>
             <preloaditems>4</preloaditems>
             <scrolltime tween="quadratic" easing="out">300</scrolltime>
-            <visible>IntegerGreaterThan(Container(4445).NumItems,0)</visible>
+            <visible>Integer.IsGreater(Container(4445).NumItems,0)</visible>
             <itemlayout height="220" width="220">
                 <control type="group">
                     <width>220</width>
@@ -103,7 +103,7 @@
                     <control type="group">
                         <description>label overlay</description>
                         <include>SquarePosterTagOverlay</include>
-                        <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+                        <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !String.IsEmpty(ListItem.Property(defaultID))] + !String.IsEqual(ListItem.Property(disableLabel), disable)</visible>
                     </control>
                 </control>
             </itemlayout>
@@ -115,7 +115,7 @@
                     <control type="group">
                         <description>label overlay</description>
                         <include>SquarePosterTagOverlay</include>
-                        <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !IsEmpty(ListItem.Property(defaultID))] + !StringCompare(ListItem.Property(disableLabel), disable)</visible>
+                        <visible>![Skin.HasSetting(NoTitleOnHomeMenuTiles) + !String.IsEmpty(ListItem.Property(defaultID))] + !String.IsEqual(ListItem.Property(disableLabel), disable)</visible>
                     </control>
                 </control>
                 <control type="button">
@@ -134,7 +134,7 @@
             <posx>-660</posx>
 			<posy>0</posy>
 			<visible>!Window.IsActive(virtualkeyboard)</visible>
-			<animation type="Conditional" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">
+			<animation type="Conditional" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | String.IsEqual(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">
                 <effect type="slide" start="0" end="660" time="300" delay="0" tween="cubic" easing="inout" />
             </animation>
 			<!--Panel-->
@@ -196,9 +196,9 @@
 				<height>85%</height>
 				<itemgap>0</itemgap>
 				<onleft>1</onleft>
-                <onright condition="IntegerGreaterThan(Container(4445).NumItems,0)">4444</onright>
-				<onright condition="!IntegerGreaterThan(Container(4445).NumItems,0)">77777</onright>
-				<onright condition="!IntegerGreaterThan(Container(4445).NumItems,0)">ClearProperty(ShowViewSubMenu, Home)</onright>
+                <onright condition="Integer.IsGreater(Container(4445).NumItems,0)">4444</onright>
+				<onright condition="!Integer.IsGreater(Container(4445).NumItems,0)">77777</onright>
+				<onright condition="!Integer.IsGreater(Container(4445).NumItems,0)">ClearProperty(ShowViewSubMenu, Home)</onright>
                 <onback>ClearProperty(ShowViewSubMenu, Home)</onback>
 				<onback>77777</onback>
 				<onup>300</onup>
@@ -239,7 +239,7 @@
 			</control>
         </control>
         
-        <include condition="SubString(Skin.String(HomeLayout),netflix)">SideBladeSubMenu</include>
+        <include condition="String.Contains(Skin.String(HomeLayout),netflix)">SideBladeSubMenu</include>
     </include>
     
     <include name="SideBladeSubMenu">
@@ -250,7 +250,7 @@
 			<animation type="Conditional" condition="Control.IsVisible(4444)">
 				<effect type="fade" start="0" end="100" time="250" delay="0" />
 			</animation>
-            <animation type="Conditional" condition="IsEmpty(Window(Home).Property(ShowViewSubMenu))">
+            <animation type="Conditional" condition="String.IsEmpty(Window(Home).Property(ShowViewSubMenu))">
 				<effect type="slide" start="0" end="-800" time="0" delay="0" />
 			</animation>
 			<animation type="Conditional" condition="!Control.IsVisible(4444) | Control.IsVisible(4446)">
@@ -259,19 +259,19 @@
             <animation type="Conditional" condition="!Control.IsVisible(4444) | Control.IsVisible(4446)">
 				<effect type="slide" start="0" end="-300" time="5" delay="145" />
 			</animation>
-			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,0)">
+			<animation type="Conditional" condition="Integer.IsGreater(Container(300).Position,0)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
 			</animation>
-			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,1)">
+			<animation type="Conditional" condition="Integer.IsGreater(Container(300).Position,1)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
 			</animation>
-			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,2)">
+			<animation type="Conditional" condition="Integer.IsGreater(Container(300).Position,2)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
 			</animation>
-			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,3)">
+			<animation type="Conditional" condition="Integer.IsGreater(Container(300).Position,3)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
 			</animation>
-			<animation type="Conditional" condition="IntegerGreaterThan(Container(300).Position,4)">
+			<animation type="Conditional" condition="Integer.IsGreater(Container(300).Position,4)">
 				<effect type="slide" end="0,80" time="0" delay="0" />
 			</animation>
 
@@ -287,7 +287,7 @@
 				<aspectratio>stretch</aspectratio>
 			</control>
 			<control type="list" id="4444">
-				<visible allowhiddenfocus="true">[StringCompare(Window(Home).Property(submenu),show) | control.hasfocus(4444)] + IntegerGreaterThan(Container(4445).NumItems,0) + !Control.IsVisible(4446)</visible>
+				<visible allowhiddenfocus="true">[String.IsEqual(Window(Home).Property(submenu),show) | control.hasfocus(4444)] + Integer.IsGreater(Container(4445).NumItems,0) + !Control.IsVisible(4446)</visible>
 				<visible>!Skin.HasSetting(DisableAllSubmenus)</visible>
 				<width>310</width>
 				<height>380</height>
@@ -367,7 +367,7 @@
                     <bordersize>8</bordersize>
                     <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Art(fanart)]</texture>
                     <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                    <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
                 </control>
                 <control type="image">
                     <width>100%</width>
@@ -375,7 +375,7 @@
                     <bordersize>8</bordersize>
                     <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Property(fanart)]</texture>
                     <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                    <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + String.IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
                 </control>
                 <control type="image">
                     <width>100%</width>
@@ -383,7 +383,7 @@
                     <bordersize>8</bordersize>
                     <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Icon]</texture>
                     <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                    <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                    <visible>String.IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + String.IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
                 </control>
                 <control type="image">
                     <bottom>0</bottom>
@@ -412,7 +412,7 @@
                     <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
                     <font>Reg24</font>
                     <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
-                    <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
+                    <visible>!String.IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
                 </control>
                 <control type="textbox">
                     <bottom>12</bottom>
@@ -424,7 +424,7 @@
                     <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
                     <font>Reg24</font>
                     <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
-                    <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
+                    <visible>String.IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
                 </control>
             </control>
         </control>
@@ -458,7 +458,7 @@
                 <bordersize>15</bordersize>
                 <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Art(fanart)]</texture>
                 <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                <visible>!String.IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
             </control>
             <control type="image">
                 <width>100%</width>
@@ -466,7 +466,7 @@
                 <bordersize>15</bordersize>
                 <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Property(fanart)]</texture>
                 <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                <visible>!String.IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + String.IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
             </control>
             <control type="image">
                 <width>100%</width>
@@ -474,7 +474,7 @@
                 <bordersize>15</bordersize>
                 <texture background="true" diffuse="diffuse/wide.png">$INFO[Container($PARAM[widgetid]).ListItem.Icon]</texture>
                 <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
+                <visible>String.IsEmpty(Container($PARAM[widgetid]).ListItem.Property(fanart)) + String.IsEmpty(Container($PARAM[widgetid]).ListItem.Art(fanart))</visible>
             </control>
             <control type="textbox">
                 <top>410</top>
@@ -496,7 +496,7 @@
                 <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
                 <font>Reg24</font>
                 <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
-                <visible>!IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
+                <visible>!String.IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
             </control>
             <control type="textbox">
                 <bottom>15</bottom>
@@ -508,7 +508,7 @@
                 <textcolor>$INFO[Skin.String(TagOverlaysTextColor)]</textcolor>
                 <font>Reg24</font>
                 <autoscroll delay="5000" time="3000" repeat="10000">Control.HasFocus($PARAM[widgetid])</autoscroll>
-                <visible>IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
+                <visible>String.IsEmpty(Container($PARAM[widgetid]).ListItem.Plot)</visible>
             </control>
         </control>
     </include>

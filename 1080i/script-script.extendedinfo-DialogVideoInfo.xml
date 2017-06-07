@@ -102,7 +102,7 @@
 						<height>60</height>
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
-						<visible>!String.IsEmpty(Window.Property(DBID)) + !String.IsEqual(Window.Property(Type),tvshow) + !Integer.IsGreater(Window.Property(PercentPlayed),0)</visible>
+						<visible>!String.String.IsEmpty(Window.Property(DBID)) + !String.IsEqual(Window.Property(Type),tvshow) + !Integer.IsGreater(Window.Property(PercentPlayed),0)</visible>
 					</control>
                     
                     <!-- resume button -->
@@ -123,7 +123,7 @@
 						<height>60</height>
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
-						<visible>!String.IsEmpty(Window.Property(DBID)) + String.IsEqual(Window.Property(Type),tvshow)</visible>
+						<visible>!String.String.IsEmpty(Window.Property(DBID)) + String.IsEqual(Window.Property(Type),tvshow)</visible>
 					</control>
 					
 					<!-- couchpotato button -->
@@ -134,7 +134,7 @@
 						<align>center</align>
 						<textoffsetx>0</textoffsetx>
 						<onclick>XBMC.RunPlugin(plugin://plugin.video.couchpotato_manager/movies/add?imdb_id=$INFO[Window.Property(imdb_id)])</onclick>
-						<visible>String.IsEmpty(Window.Property(DBID)) + System.HasAddon(plugin.video.couchpotato_manager)</visible>
+						<visible>String.String.IsEmpty(Window.Property(DBID)) + System.HasAddon(plugin.video.couchpotato_manager)</visible>
 					</control>
                     
 					
@@ -170,7 +170,7 @@
 						<label>$LOCALIZE[20410]</label>
                         <onclick>SetFocus(1150,0)</onclick>
                         <onclick>SetProperty(TrailerPlaying,Playing,Home)</onclick>
-						<visible>IntegerGreaterThan(Container(1150).NumItems,0)</visible>
+						<visible>Integer.IsGreater(Container(1150).NumItems,0)</visible>
 					</control>
 					
 					<!--video extras -->
@@ -181,8 +181,8 @@
 						<textoffsetx>0</textoffsetx>
 						<label>$ADDON[script.extendedinfo 32132]</label>
 						<onclick>XBMC.RunScript(script.videoextras,display,"$INFO[Window.Property(FilenameAndPath)]")</onclick>
-						<visible>System.HasAddon(script.videoextras) + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
-						<visible>!IsEmpty(Window.Property(FilenameAndPath))</visible>
+						<visible>System.HasAddon(script.videoextras) + String.IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
+						<visible>!String.IsEmpty(Window.Property(FilenameAndPath))</visible>
 					</control>
                     
                     <control type="button" id="101">
@@ -257,7 +257,7 @@
 								<control type="group">
 									<posx>0</posx>
 									<width>155</width>
-									<visible>!Stringcompare(Window.Property(Rating),0.0) + !IsEmpty(Window.Property(Rating))</visible>
+									<visible>!String.IsEqual(Window.Property(Rating),0.0) + !String.IsEmpty(Window.Property(Rating))</visible>
 									<control type="image">
 										<posx>0</posx>
 										<height>79</height>
@@ -299,7 +299,7 @@
 								</control>
 								<control type="group">
 									<width>220</width>
-									<visible>!IsEmpty(Window.Property(ReleaseDate))</visible>
+									<visible>!String.IsEmpty(Window.Property(ReleaseDate))</visible>
 									<control type="label">
 										<posx>0</posx>
 										<posy>12</posy>
@@ -327,7 +327,7 @@
 								<control type="group">
 									<posx>0</posx>
 									<width>220</width>
-									<visible>!IsEmpty(Window.Property(Budget))</visible>
+									<visible>!String.IsEmpty(Window.Property(Budget))</visible>
 									<control type="image">
 										<posx>0</posx>
 										<posy>1</posy>
@@ -363,7 +363,7 @@
 								<control type="group" id="3300">
 									<posx>0</posx>
 									<width>220</width>
-									<visible>!IsEmpty(Window.Property(Revenue))</visible>
+									<visible>!String.IsEmpty(Window.Property(Revenue))</visible>
 									<control type="image">
 										<posx>0</posx>
 										<posy>1</posy>
@@ -426,7 +426,7 @@
 				
 					<!-- normal info -->
                     <control type="group" id="140">
-						<visible>!IsEmpty(Window.Property(Plot))</visible>
+						<visible>!String.IsEmpty(Window.Property(Plot))</visible>
 						<height>300</height>
 						<control type="radiobutton" id="132">
 						<visible>false</visible>
@@ -439,7 +439,7 @@
 							<label>$INFO[Window.Property(movie.File),[B]$LOCALIZE[21800]: [/B]]</label>
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                            <visible>!IsEmpty(Window.Property(movie.File)) + !Skin.HasSetting(DialogVideoInfo_HideFileName)</visible>
+                            <visible>!String.IsEmpty(Window.Property(movie.File)) + !Skin.HasSetting(DialogVideoInfo_HideFileName)</visible>
 							<align>left</align>
 							<font>Reg20</font>
 						</control>
@@ -464,7 +464,7 @@
 							<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 							<animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
 							<animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-							<visible>!IsEmpty(Window.Property(Poster)) + !IsEmpty(Window.Property(DiscArt))</visible>
+							<visible>!String.IsEmpty(Window.Property(Poster)) + !String.IsEmpty(Window.Property(DiscArt))</visible>
 						</control>
 						<control type="image">
 							<!--poster-->
@@ -479,7 +479,7 @@
                     				
 					<!-- cast panel -->
                     <control type="group" id="50111">
-                        <visible>IntegerGreaterThan(Container(1000).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(1000).NumItems,0)</visible>
                         <height>350</height>
                         <control type="label">
                             <posx>5</posx>
@@ -545,7 +545,7 @@
 					
 					<!-- crew panel -->
 					<control type="group" id="54111">
-                        <visible>IntegerGreaterThan(Container(750).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(750).NumItems,0)</visible>
                         <height>350</height>
                         <control type="label">
                             <posx>5</posx>
@@ -598,7 +598,7 @@
                     				
 					<!-- recommended by TMDB -->
 					<control type="group" id="50112">
-                        <visible>IntegerGreaterThan(Container(150).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(150).NumItems,0)</visible>
                         <height>350</height>
                         <control type="label">
                             <posx>5</posx>
@@ -652,7 +652,7 @@
              					<!-- movie sets or seasons-->
 					<control type="group" id="50113">
                         <height>350</height>
-                        <visible>IntegerGreaterThan(Container(250).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(250).NumItems,0)</visible>
                         <control type="label">
                             <posx>5</posx>
                             <posy>0</posy>
@@ -665,7 +665,7 @@
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$INFO[Window.Property(set.label)]$INFO[Container(250).NumItems, (,)]</label>
-							<visible>!IntegerGreaterThan(Container(250).NumItems,0)</visible>
+							<visible>!Integer.IsGreater(Container(250).NumItems,0)</visible>
                         </control>
 						 <control type="label">
                             <posx>5</posx>
@@ -679,7 +679,7 @@
 							<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 							<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                             <label>$LOCALIZE[33054] $INFO[Container(250).NumItems, (,)]</label>
-							<visible>IntegerGreaterThan(Container(250).NumItems,0)</visible>
+							<visible>Integer.IsGreater(Container(250).NumItems,0)</visible>
                         </control>
                         <control type="image">
                             <posx>1810</posx>
@@ -718,7 +718,7 @@
                     </control>
              					<!-- official movies -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(1150).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(1150).NumItems,0)</visible>
                         <height>270</height>
                         <control type="label">
                             <posx>5</posx>
@@ -773,7 +773,7 @@
                     </control>
              					<!-- youtube movies -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(350).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(350).NumItems,0)</visible>
                         <height>270</height>
                         <control type="label">
                             <posx>5</posx>
@@ -829,7 +829,7 @@
                     </control>
              					<!-- studios -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(550).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(550).NumItems,0)</visible>
                         <height>290</height>
                         <control type="label">
                             <posx>5</posx>
@@ -941,7 +941,7 @@
                     </control>
              					<!-- networks -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(1450).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(1450).NumItems,0)</visible>
                         <height>290</height>
                         <control type="label">
                             <posx>5</posx>
@@ -1053,7 +1053,7 @@
                     </control>
              					<!-- releases -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(650).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(650).NumItems,0)</visible>
                         <height>400</height>
 						<control type="label">
                             <posx>5</posx>
@@ -1175,7 +1175,7 @@
 					
 					<!-- Genres -->
                     <control type="group">
-                        <visible>IntegerGreaterThan(Container(850).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(850).NumItems,0)</visible>
                         <height>180</height>
                         <control type="label">
                            <posx>5</posx>
@@ -1263,7 +1263,7 @@
                     </control>
              					<!-- reviews -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(1050).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(1050).NumItems,0)</visible>
                         <height>365</height>
                         <control type="label">
                             <posx>5</posx>
@@ -1351,7 +1351,7 @@
                     </control>
              					<!-- keywords -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(950).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(950).NumItems,0)</visible>
                         <height>310</height>
                         <control type="label">
                             <posx>5</posx>
@@ -1447,7 +1447,7 @@
              					<!-- artwork (posters) -->
 					<control type="group">
                         <height>350</height>
-                        <visible>IntegerGreaterThan(Container(1250).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(1250).NumItems,0)</visible>
                         <control type="label">
                             <posx>5</posx>
                             <width>500</width>
@@ -1523,7 +1523,7 @@
              					<!-- fanart -->
 					<control type="group">
                         <height>270</height>
-                        <visible>IntegerGreaterThan(Container(1350).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(1350).NumItems,0)</visible>
                         <control type="label">
                             <posx>5</posx>
                             <width>500</width>
@@ -1593,7 +1593,7 @@
              					<!-- related tmdb lists -->
 					<control type="group" id="50215">
                         <height>350</height>
-                        <visible>IntegerGreaterThan(Container(450).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(450).NumItems,0)</visible>
                         <control type="label">
                             <posx>5</posx>
                             <posy>0</posy>
@@ -1704,7 +1704,7 @@
                     </control>
              					<!-- episode index -->
 					<control type="group">
-                        <visible>IntegerGreaterThan(Container(2000).NumItems,0)</visible>
+                        <visible>Integer.IsGreater(Container(2000).NumItems,0)</visible>
                         <height>270</height>
                         <control type="label">
                             <posx>5</posx>

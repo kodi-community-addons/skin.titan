@@ -39,7 +39,7 @@
 				<animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
 				<texture background="true" diffuse="diffuse/cdmask_medium_new.png" fallback="defaultcovers/cd_medium.png" border="5">$VAR[PlayerDiscArtImage]</texture>
 				<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-				<visible>VideoPlayer.Content(Movies) + !IsEmpty(Player.Art(poster))</visible>
+				<visible>VideoPlayer.Content(Movies) + !String.IsEmpty(Player.Art(poster))</visible>
 				<visible>!Skin.HasSetting(HideOSDDisc)</visible>
 			</control>
 			
@@ -144,7 +144,7 @@
 					<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
 				</control>
 				<control type="label">
-					<visible>substring(system.time,AM,right)</visible>
+					<visible>String.EndsWith(system.time,AM)</visible>
 					<width min="0" max="150">auto</width>
 					<height>80</height>
 					<label>378</label>
@@ -153,7 +153,7 @@
 					<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
 				</control>
 				<control type="label">
-					<visible>substring(system.time,PM,right)</visible>
+					<visible>String.EndsWith(system.time,PM)</visible>
 					<width min="0" max="150">auto</width>
 					<height>80</height>
 					<label>379</label>
@@ -177,7 +177,7 @@
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$VAR[PlayerActionLabel]</label>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				
 				<control type="image">
@@ -344,7 +344,7 @@
                     <animation effect="fade" start="0" end="100" delay="800" time="1200" reversible="false"></animation>
                     <texture background="true" diffuse="diffuse/cdmask_medium_new.png" fallback="defaultcovers/cd_medium.png" border="5">$VAR[PlayerDiscArtImage]</texture>
                     <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
-                    <visible>Player.HasVideo + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
+                    <visible>Player.HasVideo + [!String.IsEmpty(Player.Art(poster)) | !String.IsEmpty(Player.Art(tvshow.poster)) | !String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
                     <visible>!Skin.HasSetting(HideOSDDisc) + ![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)]</visible>
                 </control>
                 
@@ -394,8 +394,8 @@
 					<height>20</height>
 					<width>700</width>
 					<info>Player.ProgressCache</info>
-					<visible>!IsEmpty(Player.Duration) + !VideoPlayer.content(livetv)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEmpty(Player.Duration) + !VideoPlayer.content(livetv)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 					<texturebg border="5" colordiffuse="00ffffff">diffuse/panel.png</texturebg>
 					<lefttexture>-</lefttexture>
 					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarCacheColor)]">diffuse/panel.png</midtexture>
@@ -410,8 +410,8 @@
 					<height>20</height>
 					<width>700</width>
 					<info>Player.Progress</info>
-					<visible>!IsEmpty(Player.Duration)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 					<texturebg border="5" colordiffuse="$VAR[OSDProgressBarBackgroundColor]">diffuse/panel_trans.png</texturebg>
 					<lefttexture>-</lefttexture>
 					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">diffuse/panel.png</midtexture>
@@ -424,8 +424,8 @@
 					<posy>160</posy>
 					<height>20</height>
 					<width>700</width>
-					<visible>!IsEmpty(Player.Duration)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 					<texture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarBorderColor)]">diffuse/thinborder.png</texture>
 				</control>
                 <control type="slider" id="401">
@@ -451,7 +451,7 @@
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$INFO[Player.Time]</label>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<control type="label">
 					<!--Play Time-->
@@ -463,8 +463,8 @@
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$INFO[Player.TimeRemaining,- ]</label>
-					<visible>!IsEmpty(Player.Duration)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				
 			<!-- media flags -->
@@ -513,7 +513,7 @@
 				<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 				<label>$VAR[PlayerActionLabel]</label>
-				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
 			
 			<control type="label">
@@ -529,8 +529,8 @@
 				<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 				<label>$INFO[Player.Duration,[B]$LOCALIZE[180]: [/B]]</label>
-				<visible>!IsEmpty(Player.Duration)</visible>
-				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				<visible>!String.IsEmpty(Player.Duration)</visible>
+				<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
             
             <!-- OSD label 3 -->
@@ -592,7 +592,7 @@
                 <textcolor>$INFO[Skin.String(OSDSecondaryTextColor)]</textcolor>
                 <shadowcolor>$INFO[Skin.String(OSDSecondaryTextShadowColor)]</shadowcolor>
                 <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
-                <visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+                <visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
                 <animation type="Conditional" condition="player.paused | player.forwarding | player.rewinding">
                     <effect type="slide" start="0,0" end="-160,0" time="200" tween="cubic" easing="inout" delay="0" />
                 </animation>
@@ -624,7 +624,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[OSDImage]</texture>
 				<aspectratio align="left" aligny="bottom">stretch</aspectratio>
-				<visible>[!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster)) | !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
+				<visible>[!String.IsEmpty(Player.Art(poster)) | !String.IsEmpty(Player.Art(tvshow.poster)) | !String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))]</visible>
 			</control>
 			
 			<!--Cover no poster-->
@@ -636,7 +636,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$INFO[VideoPlayer.Cover]</texture>
 				<aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>IsEmpty(Player.Art(poster)) + IsEmpty(Player.Art(tvshow.poster)) + IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))</visible>
+				<visible>String.IsEmpty(Player.Art(poster)) + String.IsEmpty(Player.Art(tvshow.poster)) + String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))</visible>
 			</control>
 			
 			<!--clearlogo-->
@@ -648,7 +648,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true">$VAR[VideoPlayerClearLogo]</texture>
 				<aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>!VideoPlayer.Content(livetv) + [!IsEmpty(Player.Art(poster)) | !IsEmpty(Player.Art(tvshow.poster))]</visible>
+				<visible>!VideoPlayer.Content(livetv) + [!String.IsEmpty(Player.Art(poster)) | !String.IsEmpty(Player.Art(tvshow.poster))]</visible>
 			</control>
 			
 			<control type="group">
@@ -690,9 +690,9 @@
 					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarCacheColor)]">diffuse/panel.png</midtexture>
 					<righttexture>-</righttexture>
 					<overlaytexture>-</overlaytexture>
-					<visible>!IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
                     <visible>!Skin.String(OSDProgressBarCacheColor,None)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<control type="progress" id="23">
 					<description>Progress Bar</description>
@@ -707,8 +707,8 @@
 					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">diffuse/panel.png</midtexture>
 					<righttexture>-</righttexture>
 					<overlaytexture>-</overlaytexture>
-					<visible>!IsEmpty(Player.Duration)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
                 <control type="slider" id="401">
                     <description>Seek Slider</description>
@@ -734,7 +734,7 @@
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$INFO[Player.Time]</label>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 				<control type="label">
 					<!--Play Time-->
@@ -746,8 +746,8 @@
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$INFO[Player.TimeRemaining]</label>
-					<visible>!IsEmpty(Player.Duration)</visible>
-					<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 				</control>
 
 			</control>
@@ -775,7 +775,7 @@
 				<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 				<label>$VAR[PlayerActionLabel]</label>
-				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
             <control type="label">
 				<right>40</right>
@@ -786,7 +786,7 @@
 				<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 				<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 				<label>$VAR[OSDLabel3]</label>
-				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
 
 		</control>
@@ -922,7 +922,7 @@
 					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarCacheColor)]">diffuse/panel.png</midtexture>
 					<righttexture>-</righttexture>
 					<overlaytexture>-</overlaytexture>
-					<visible>!IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
                     <visible>!Skin.String(OSDProgressBarCacheColor,None)</visible>
 				</control>
 				<control type="progress" id="23">
@@ -938,7 +938,7 @@
 					<midtexture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarColor)]">diffuse/panel.png</midtexture>
 					<righttexture>-</righttexture>
 					<overlaytexture>-</overlaytexture>
-					<visible>!IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
 				</control>
                 <control type="slider" id="401">
                     <description>Seek Slider</description>
@@ -975,7 +975,7 @@
 					<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 					<label>$INFO[Player.TimeRemaining]</label>
-					<visible>!IsEmpty(Player.Duration)</visible>
+					<visible>!String.IsEmpty(Player.Duration)</visible>
 				</control>
 			</control>
             
@@ -1182,7 +1182,7 @@
 				<fadetime>200</fadetime>
 				<texture background="true" fallback="colors/color_keyboard.png" diffuse="diffuse/music_cover.png">$VAR[AudioPlayerCoverImage]</texture>
 				<aspectratio align="left" aligny="top">stretch</aspectratio>
-				<visible>!IsEmpty(MusicPlayer.Cover)</visible>
+				<visible>!String.IsEmpty(MusicPlayer.Cover)</visible>
 			</control>
 
 			<!-- OSDLabel1 -->
@@ -1262,7 +1262,7 @@
 					<textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
 				</control>
 				<control type="label">
-					<visible>substring(system.time,AM,right)</visible>
+					<visible>String.EndsWith(system.time,AM)</visible>
 					<width min="0" max="150">auto</width>
 					<height>80</height>
 					<label>378</label>
@@ -1271,7 +1271,7 @@
 					<textcolor>$INFO[Skin.String(GeneralHighlightTextColor)]</textcolor>
 				</control>
 				<control type="label">
-					<visible>substring(system.time,PM,right)</visible>
+					<visible>String.EndsWith(system.time,PM)</visible>
 					<width min="0" max="150">auto</width>
 					<height>80</height>
 					<label>379</label>
@@ -1656,7 +1656,7 @@
             <width>800</width>
             <visible>Window.IsActive(videoosd)</visible>
             <visible>![Window.IsActive(OSDVideoSettings) | Window.IsActive(OSDAudioSettings) | Window.IsActive(subtitlesearch) | Window.IsActive(sliderdialog)]</visible>
-			<visible>!IsEmpty(Player.Duration)</visible>
+			<visible>!String.IsEmpty(Player.Duration)</visible>
 			<action>seek</action>
             <texturefocus>-</texturefocus>
             <texturenofocus>-</texturenofocus>
@@ -1687,7 +1687,7 @@
         
         <!-- subtitle selection -->
         <control type="grouplist" id="1410">
-            <visible>StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+            <visible>String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
             <animation effect="slide" end="-110,110" time="0" condition="Skin.HasSetting(UseSlimOSDPanel)">Conditional</animation>
             <animation effect="slide" end="50" time="0" condition="player.hasaudio + !Skin.HasSetting(HideOSDDisc)">Conditional</animation>
             <description>Header</description>
@@ -1986,7 +1986,7 @@
 				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]Video.png</texturenofocus>
 				<onclick>ActivateWindow(123)</onclick>
 				<visible>Player.HasVideo</visible>
-				<onfocus condition="StringCompare(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,home)</onfocus>
+				<onfocus condition="String.IsEqual(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,home)</onfocus>
 			</control>
 			<control type="button" id="104">
 				<description>Subtitles</description>
@@ -2001,10 +2001,10 @@
 				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]Subtitles.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]Subtitles.png</texturenofocus>
 				<onclick condition="!VideoPlayer.HasSubtitles">ActivateWindow(SubtitleSearch)</onclick>
-				<onclick condition="!StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.HasSubtitles">SetProperty(subtitlemenu,show,Home)</onclick>
-				<onclick condition="StringCompare(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,Home)</onclick>
-				<onback condition="StringCompare(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,Home)</onback>
-				<onclick condition="!StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.HasSubtitles">Control.SetFocus(1401)</onclick>
+				<onclick condition="!String.IsEqual(Window(Home).Property(subtitlemenu), show) + VideoPlayer.HasSubtitles">SetProperty(subtitlemenu,show,Home)</onclick>
+				<onclick condition="String.IsEqual(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,Home)</onclick>
+				<onback condition="String.IsEqual(Window(Home).Property(subtitlemenu), show)">ClearProperty(subtitlemenu,Home)</onback>
+				<onclick condition="!String.IsEqual(Window(Home).Property(subtitlemenu), show) + VideoPlayer.HasSubtitles">Control.SetFocus(1401)</onclick>
 				<visible>!VideoPlayer.Content(livetv)</visible>
 				<visible>Player.HasVideo</visible>
 			</control>
@@ -2069,7 +2069,7 @@
 				<font>-</font>
 				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]epg.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]epg.png</texturenofocus>
-				<visible>Player.hasaudio + Visualisation.Enabled + [StringCompare(Visualisation.Name,milkdrop) | StringCompare(Visualisation.Name,vortex) | Visualisation.HasPresets ]</visible>
+				<visible>Player.hasaudio + Visualisation.Enabled + [String.IsEqual(Visualisation.Name,milkdrop) | String.IsEqual(Visualisation.Name,vortex) | Visualisation.HasPresets ]</visible>
                 <onclick>ActivateWindow(122)</onclick>
 			</control>
 			<control type="button" id="806">
@@ -2102,7 +2102,7 @@
 				<font>-</font>
 				<texturefocus colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">$PARAM[iconspath]TeleText.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(OSDButtonsColor)]">$PARAM[iconspath]TeleText.png</texturenofocus>
-				<visible>!StringCompare(Playlist.Length(music),0) + Player.HasAudio</visible>
+				<visible>!String.IsEqual(Playlist.Length(music),0) + Player.HasAudio</visible>
                 <onclick>SetProperty(playlistdialog,show,Home)</onclick>
                 <onclick>Dialog.Close(MusicOSD)</onclick>
                 <onclick>ActivateWindow(musicplaylist)</onclick>
@@ -2153,12 +2153,12 @@
 			<bottom>34</bottom>
 			<height>17</height>
 			<visible>Window.IsActive(videoosd)</visible>
-			<visible>!IsEmpty(Player.Duration)</visible>
+			<visible>!String.IsEmpty(Player.Duration)</visible>
 			<action>seek</action>
 			<texturesliderbar>colors/color_transparent.png</texturesliderbar>
 			<textureslidernib>colors/color_transparent.png</textureslidernib>
 			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">diffuse/panel.png</textureslidernibfocus>
-			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show) + !VideoPlayer.Content(LiveTV)</visible>
+			<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show) + !VideoPlayer.Content(LiveTV)</visible>
 		</control>
 		<!--Process/Seekbar-->
 		<control type="label">
@@ -2172,7 +2172,7 @@
 			<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 			<label>$INFO[Player.Time]</label>
-			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+			<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 		</control>
 		<control type="label">
 			<!--Play Time-->
@@ -2185,8 +2185,8 @@
 			<textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 			<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
 			<label>$INFO[Player.TimeRemaining]</label>
-			<visible>!IsEmpty(Player.Duration)</visible>
-			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+			<visible>!String.IsEmpty(Player.Duration)</visible>
+			<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 		</control>
 	</include>
 	
@@ -2197,12 +2197,12 @@
 			<bottom>120</bottom>
 			<height>10</height>
 			<width>700</width>
-			<visible>!IsEmpty(Player.Duration)</visible>
+			<visible>!String.IsEmpty(Player.Duration)</visible>
 			<action>seek</action>
 			<texturesliderbar>colors/color_transparent.png</texturesliderbar>
 			<textureslidernib>colors/color_transparent.png</textureslidernib>
 			<textureslidernibfocus border="5" colordiffuse="$INFO[Skin.String(OSDButtonsFocusColor)]">diffuse/panel.png</textureslidernibfocus>
-			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show) + !VideoPlayer.Content(LiveTV)</visible>
+			<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show) + !VideoPlayer.Content(LiveTV)</visible>
             <animation effect="slide" end="50" time="0" condition="player.hasaudio + !Skin.HasSetting(HideOSDDisc)">Conditional</animation>     		
         </control>
 		<control type="image">
@@ -2211,8 +2211,8 @@
 			<bottom>110</bottom>
 			<height>20</height>
 			<width>700</width>
-			<visible>!IsEmpty(Player.Duration)</visible>
-			<visible>!StringCompare(Window(Home).Property(subtitlemenu), show) + !VideoPlayer.Content(LiveTV)</visible>
+			<visible>!String.IsEmpty(Player.Duration)</visible>
+			<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show) + !VideoPlayer.Content(LiveTV)</visible>
 			<texture border="5" colordiffuse="$INFO[Skin.String(OSDProgressBarBorderColor)]">diffuse/thinborder.png</texture>
             <animation effect="slide" end="50" time="0" condition="player.hasaudio + !Skin.HasSetting(HideOSDDisc)">Conditional</animation>
 		</control>
@@ -2250,7 +2250,7 @@
 				<font>Reg24</font>
 				<textcolor>$INFO[Skin.String(ViewDetailsHighlightTextColor)]</textcolor><shadowcolor>$INFO[Skin.String(ViewDetailsHighlightTextShadowColor)]</shadowcolor>
 				<label>$VAR[PlayerActionLabelSmall]</label>
-				<visible>!StringCompare(Window(Home).Property(subtitlemenu), show)</visible>
+				<visible>!String.IsEqual(Window(Home).Property(subtitlemenu), show)</visible>
 			</control>
 			
 			<!-- total runtime -->
@@ -2262,7 +2262,7 @@
 				<font>Reg20</font>
 				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
 				<label>$INFO[Player.Duration,[B]$LOCALIZE[180]: [/B]]</label>
-				<visible>!IsEmpty(Player.Duration)</visible>
+				<visible>!String.IsEmpty(Player.Duration)</visible>
 			</control>
 
 			<control type="image">
@@ -2308,7 +2308,7 @@
 				<font>Reg20</font>
 				<textcolor>white</textcolor>
 				<label>$INFO[Player.Time]</label>
-				<visible>!IsEmpty(Player.Duration)</visible>
+				<visible>!String.IsEmpty(Player.Duration)</visible>
 			</control>
 			<control type="label">
 				<!--remaining Time-->
@@ -2319,7 +2319,7 @@
 				<font>Reg20</font>
 				<textcolor>white</textcolor>
 				<label>$INFO[Player.TimeRemaining,- ]</label>
-				<visible>!IsEmpty(Player.Duration)</visible>
+				<visible>!String.IsEmpty(Player.Duration)</visible>
 			</control>
 
 			<control type="progress">
@@ -2359,7 +2359,7 @@
             <bottom>292</bottom>
             <width>128</width>
             <height>128</height>
-            <visible>!IsEmpty(Window(Weather).Property(Current.FanartCode)) + Skin.String(WeatherIconPack.path)</visible>
+            <visible>!String.IsEmpty(Window(Weather).Property(Current.FanartCode)) + Skin.String(WeatherIconPack.path)</visible>
             <include>HideOsdConditions</include>
 			
             <!--Current Weather-->
@@ -2376,7 +2376,7 @@
 				<width>128</width>
                 <height>128</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-				<visible>!IsEmpty(Window(Weather).Property(Alerts)) + !IsEmpty(Window(Weather).Property(Alerts.IsFetched)) + Skin.HasSetting(EnableWeatherAlertOverlay)</visible>
+				<visible>!String.IsEmpty(Window(Weather).Property(Alerts)) + !String.IsEmpty(Window(Weather).Property(Alerts.IsFetched)) + Skin.HasSetting(EnableWeatherAlertOverlay)</visible>
             </control>
             <control type="label">
                 <!--Current Temp-->
@@ -2415,7 +2415,7 @@
             <bottom>200</bottom>
             <width>550</width>
             <height>128</height>
-            <visible>!IsEmpty(Window(Weather).Property(Current.FanartCode)) + Skin.String(WeatherIconPack.path)</visible>
+            <visible>!String.IsEmpty(Window(Weather).Property(Current.FanartCode)) + Skin.String(WeatherIconPack.path)</visible>
             <include>HideOsdConditions</include>
 
             <!--Current Weather-->
@@ -2438,7 +2438,7 @@
                 <top>10</top>
                 <bottom>0</bottom>
                 <aspectratio align="right" aligny="bottom">keep</aspectratio>
-				<visible>!IsEmpty(Window(Weather).Property(Alerts)) + !IsEmpty(Window(Weather).Property(Alerts.IsFetched)) + Skin.HasSetting(EnableWeatherAlertOverlay)</visible>
+				<visible>!String.IsEmpty(Window(Weather).Property(Alerts)) + !String.IsEmpty(Window(Weather).Property(Alerts.IsFetched)) + Skin.HasSetting(EnableWeatherAlertOverlay)</visible>
             </control>
             <control type="label">
                 <!--Current Temp-->
@@ -2506,7 +2506,7 @@
                      <fadetime>200</fadetime>
                      <texture background="true">$VAR[OSDInfoImage]</texture>
                      <aspectratio align="left" aligny="top">keep</aspectratio>
-                     <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                     <visible>[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearart))]</visible>
                  </control>
                  <!-- plot when clearlogo visible -->
                  <control type="textbox">
@@ -2514,7 +2514,7 @@
                      <posy>30</posy>
                      <width>1450</width>
                      <height>200</height>
-                     <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                     <visible>[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearart))]</visible>
                      <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                      <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
                      <shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
@@ -2527,7 +2527,7 @@
                      <posy>30</posy>
                      <width>1810</width>
                      <height>190</height>
-                     <visible>![!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
+                     <visible>![!String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearart)) | !String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
                      <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                      <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
                      <shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
@@ -2574,7 +2574,7 @@
 					<fadetime>200</fadetime>
 					<texture background="true">$VAR[OSDInfoImage]</texture>
 					<aspectratio align="left" aligny="top">keep</aspectratio>
-                    <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                    <visible>[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearart))]</visible>
 				</control>
                 <!-- plot when clearlogo visible -->
                 <control type="textbox">
@@ -2582,7 +2582,7 @@
                     <posy>0</posy>
                     <width>1500</width>
                     <height>160</height>
-                    <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                    <visible>[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearart))]</visible>
                     <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                     <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
@@ -2595,7 +2595,7 @@
                     <posy>0</posy>
                     <width>1810</width>
                     <height>160</height>
-                    <visible>![!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
+                    <visible>![!String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearart)) | !String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
                     <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                     <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
 					<shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
@@ -2635,7 +2635,7 @@
                      <fadetime>200</fadetime>
                      <texture background="true">$VAR[OSDInfoImage]</texture>
                      <aspectratio align="left" aligny="top">keep</aspectratio>
-                     <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                     <visible>[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearart))]</visible>
                  </control>
                  <!-- plot when clearlogo visible -->
                  <control type="textbox">
@@ -2643,7 +2643,7 @@
                      <posy>0</posy>
                      <width>1130</width>
                      <height>560</height>
-                     <visible>[!IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearlogo)) | !IsEmpty(Player.Art(tvshow.clearart))]</visible>
+                     <visible>[!String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearart))]</visible>
                      <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                      <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
                      <shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
@@ -2656,7 +2656,7 @@
                      <posy>0</posy>
                      <width>1440</width>
                      <height>560</height>
-                     <visible>![!IsEmpty(Player.Art(clearart)) | !IsEmpty(Player.Art(tvshow.clearart)) | !IsEmpty(Player.Art(clearlogo)) | !IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
+                     <visible>![!String.IsEmpty(Player.Art(clearart)) | !String.IsEmpty(Player.Art(tvshow.clearart)) | !String.IsEmpty(Player.Art(clearlogo)) | !String.IsEmpty(Player.Art(tvshow.clearlogo))]</visible>
                      <label fallback="19055">[B]$INFO[VideoPlayer.Premiered,,  • ]$INFO[VideoPlayer.Duration,, min. • ]$INFO[VideoPlayer.MPAA, • ]$INFO[VideoPlayer.RatingAndVotes, • ]$INFO[VideoPlayer.EpisodeName,, • ][/B][CR]$INFO[VideoPlayer.Plot]</label>
                      <textcolor>$INFO[Skin.String(OSDPrimaryTextColor)]</textcolor>
                      <shadowcolor>$INFO[Skin.String(OSDPrimaryTextShadowColor)]</shadowcolor>
@@ -2668,44 +2668,44 @@
      </include>
     
     <variable name="OSDImage">
-        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Window(Home).Property(SkinHelper.Player.AnimatedPoster))">$INFO[Window(Home).Property(SkinHelper.Player.AnimatedPoster)]</value>
-		<value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
-        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
-        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Poster)]</value>
-		<value condition="!IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
-		<value condition="!IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
+        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !String.IsEmpty(Window(Home).Property(SkinHelper.Player.AnimatedPoster))">$INFO[Window(Home).Property(SkinHelper.Player.AnimatedPoster)]</value>
+		<value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !String.IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
+        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !String.IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
+        <value condition="![VideoPlayer.Content(livetv) + Skin.HasSetting(NoPvrArtOSD)] + !String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Poster))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Poster)]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.Cover)">$INFO[VideoPlayer.Cover]</value>
+		<value condition="!String.IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
 		<value>DefaultVideo.png</value>
 	 </variable>
 
 	<variable name="OSDLabel1">
-        <value condition="Player.HasVideo + StringCompare(Window(Home).Property(subtitlemenu), show)">$LOCALIZE[287]</value>
-        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv)">$INFO[VideoPlayer.ChannelNumber,, - ]$INFO[VideoPlayer.ChannelName]</value>
-		<value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + Player.IsInternetStream + !IsEmpty(Window(Home).Property(SkinHelper.Player.AddonName)) + IsEmpty(VideoPlayer.TvShowTitle)">$INFO[Window(Home).Property(SkinHelper.Player.AddonName)]</value>
-        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(episodes) + !IsEmpty(VideoPlayer.TvShowTitle)">$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</value>
-        <value condition="Player.HasAudio + !IsEmpty(MusicPlayer.Artist)">$INFO[MusicPlayer.Artist]</value>
-        <value condition="Player.HasAudio + IsEmpty(MusicPlayer.Artist) + !IsEmpty(MusicPlayer.ChannelName)">$INFO[MusicPlayer.ChannelName]</value>
-        <value condition="Player.HasAudio + IsEmpty(MusicPlayer.Artist) + IsEmpty(MusicPlayer.ChannelName) + !IsEmpty(Window(Home).Property(SkinHelper.Player.AddonName))">$INFO[Window(Home).Property(SkinHelper.Player.AddonName)]</value>
+        <value condition="Player.HasVideo + String.IsEqual(Window(Home).Property(subtitlemenu), show)">$LOCALIZE[287]</value>
+        <value condition="Player.HasVideo + !String.IsEqual(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv)">$INFO[VideoPlayer.ChannelNumber,, - ]$INFO[VideoPlayer.ChannelName]</value>
+		<value condition="Player.HasVideo + !String.IsEqual(Window(Home).Property(subtitlemenu), show) + Player.IsInternetStream + !String.IsEmpty(Window(Home).Property(SkinHelper.Player.AddonName)) + String.IsEmpty(VideoPlayer.TvShowTitle)">$INFO[Window(Home).Property(SkinHelper.Player.AddonName)]</value>
+        <value condition="Player.HasVideo + !String.IsEqual(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(episodes) + !String.IsEmpty(VideoPlayer.TvShowTitle)">$INFO[VideoPlayer.TVShowTitle] • $LOCALIZE[20373] $INFO[VideoPlayer.Season]</value>
+        <value condition="Player.HasAudio + !String.IsEmpty(MusicPlayer.Artist)">$INFO[MusicPlayer.Artist]</value>
+        <value condition="Player.HasAudio + String.IsEmpty(MusicPlayer.Artist) + !String.IsEmpty(MusicPlayer.ChannelName)">$INFO[MusicPlayer.ChannelName]</value>
+        <value condition="Player.HasAudio + String.IsEmpty(MusicPlayer.Artist) + String.IsEmpty(MusicPlayer.ChannelName) + !String.IsEmpty(Window(Home).Property(SkinHelper.Player.AddonName))">$INFO[Window(Home).Property(SkinHelper.Player.AddonName)]</value>
         <value>$LOCALIZE[31040]</value>
 	 </variable>
      
 	 <variable name="OSDLabel2">
-        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(Episodes)">$INFO[VideoPlayer.Episode]. $INFO[VideoPlayer.Title]</value>
-        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv) + [!IsEmpty(VideoPlayer.Episode) + !IsEmpty(VideoPlayer.EpisodeName)]">$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName]</value>
-        <value condition="Player.HasVideo + !StringCompare(Window(Home).Property(subtitlemenu), show)">$INFO[VideoPlayer.Title]</value>
+        <value condition="Player.HasVideo + !String.IsEqual(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(Episodes)">$INFO[VideoPlayer.Episode]. $INFO[VideoPlayer.Title]</value>
+        <value condition="Player.HasVideo + !String.IsEqual(Window(Home).Property(subtitlemenu), show) + VideoPlayer.Content(livetv) + [!String.IsEmpty(VideoPlayer.Episode) + !String.IsEmpty(VideoPlayer.EpisodeName)]">$INFO[VideoPlayer.Title] - $INFO[VideoPlayer.EpisodeName]</value>
+        <value condition="Player.HasVideo + !String.IsEqual(Window(Home).Property(subtitlemenu), show)">$INFO[VideoPlayer.Title]</value>
         <value condition="Player.HasAudio">$INFO[MusicPlayer.Title]</value>
 	 </variable>
      
 	 <variable name="OSDLabel3">
-        <value condition="Player.HasVideo + VideoPlayer.Content(livetv) + !IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)">$LOCALIZE[19031]: $INFO[VideoPlayer.NextTitle]</value>
-        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD) + !IsEmpty(player.chaptercount) + !StringCompare(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]$INFO[player.chaptername, - ,]</value>
-        <value condition="Player.HasAudio + !IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)">[COLOR=$INFO[Skin.String(OSDSecondaryTextColor)]]$LOCALIZE[554]:[/COLOR] $INFO[MusicPlayer.PlaylistPosition]/$INFO[MusicPlayer.PlaylistLength] - [COLOR=$INFO[Skin.String(OSDSecondaryTextColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</value>
-        <value condition="!IsEmpty(VideoPlayer.Genre) + !Window.IsActive(VideoOSD) + !SubString(VideoPlayer.Genre,unknown)">$LOCALIZE[515]: $INFO[VideoPlayer.Genre]</value>
+        <value condition="Player.HasVideo + VideoPlayer.Content(livetv) + !String.IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD)">$LOCALIZE[19031]: $INFO[VideoPlayer.NextTitle]</value>
+        <value condition="Player.HasVideo + !VideoPlayer.Content(livetv) + String.IsEmpty(VideoPlayer.NextTitle) + !Window.IsActive(VideoOSD) + !String.IsEmpty(player.chaptercount) + !String.IsEqual(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]$INFO[player.chaptername, - ,]</value>
+        <value condition="Player.HasAudio + !String.IsEmpty(MusicPlayer.Offset(1).Artist) + !Window.IsActive(MusicOSD)">[COLOR=$INFO[Skin.String(OSDSecondaryTextColor)]]$LOCALIZE[554]:[/COLOR] $INFO[MusicPlayer.PlaylistPosition]/$INFO[MusicPlayer.PlaylistLength] - [COLOR=$INFO[Skin.String(OSDSecondaryTextColor)]]$LOCALIZE[19031]:[/COLOR] $INFO[MusicPlayer.Offset(1).Artist] - $INFO[MusicPlayer.Offset(1).Title]</value>
+        <value condition="!String.IsEmpty(VideoPlayer.Genre) + !Window.IsActive(VideoOSD) + !String.Contains(VideoPlayer.Genre,unknown)">$LOCALIZE[515]: $INFO[VideoPlayer.Genre]</value>
 	 </variable>
      
      <variable name="PlayerActionLabel">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
-		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
-		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="!String.IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
+		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !String.IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
 		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
@@ -2717,15 +2717,15 @@
 		<value condition="player.rewinding8x">[B]$LOCALIZE[31254][/B] x8</value>
 		<value condition="player.rewinding16x">[B]$LOCALIZE[31254][/B] x16</value>
 		<value condition="player.rewinding32x">[B]$LOCALIZE[31254][/B] x32</value>
-		<value condition="!IsEmpty(player.FinishTime)">$LOCALIZE[31112]: $INFO[Player.FinishTime]</value>
+		<value condition="!String.IsEmpty(player.FinishTime)">$LOCALIZE[31112]: $INFO[Player.FinishTime]</value>
 	 </variable>
 	 
 	 <variable name="PlayerActionLabelSmall">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
-		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
-		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !IsEmpty(player.chaptercount) + !StringCompare(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]</value>
-		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
-		<value condition="Player.seeking + !IsEmpty(player.chaptercount) + !StringCompare(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]</value>
+		<value condition="!String.IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
+		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !String.IsEmpty(player.chaptercount) + !String.IsEqual(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]</value>
+		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !String.IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="Player.seeking + !String.IsEmpty(player.chaptercount) + !String.IsEqual(player.chaptercount,00)">$INFO[player.chapter,[B]$LOCALIZE[21396]:[/B] ,]$INFO[player.chaptercount,/,]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
 		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
@@ -2737,13 +2737,13 @@
 		<value condition="player.rewinding8x">[B]$LOCALIZE[31254][/B] x8</value>
 		<value condition="player.rewinding16x">[B]$LOCALIZE[31254][/B] x16</value>
 		<value condition="player.rewinding32x">[B]$LOCALIZE[31254][/B] x32</value>
-		<value condition="!IsEmpty(player.FinishTime)">[B]$LOCALIZE[31112]:[/B] $INFO[Player.FinishTime]</value>
+		<value condition="!String.IsEmpty(player.FinishTime)">[B]$LOCALIZE[31112]:[/B] $INFO[Player.FinishTime]</value>
 	 </variable>
 	 
 	 <variable name="PlayerActionLabelLarge">
 		<value condition="[Player.Paused + Player.Caching] + !Player.Seeking">[B]$LOCALIZE[15107]:[/B] $INFO[Player.CacheLevel]%</value>
-		<value condition="!IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
-		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
+		<value condition="!String.IsEmpty(Player.SeekStepSize) + ![player.forwarding | player.rewinding] + Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekStepSize]</value>
+		<value condition="Player.DisplayAfterSeek  + ![player.forwarding | player.rewinding] + !String.IsEmpty(Player.SeekOffset)">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekOffset]</value>
 		<value condition="Player.seeking">[B]$LOCALIZE[31255][/B] $INFO[Player.SeekTime] - $INFO[Player.Duration]</value>
 		<value condition="player.forwarding2x">[B]$LOCALIZE[31253][/B] x2</value>
 		<value condition="player.forwarding4x">[B]$LOCALIZE[31253][/B] x4</value>
@@ -2767,7 +2767,7 @@
         <!--fallback background -->
         <control type="group">
 			<include>GlobalBackground</include>
-            <visible>[!Control.IsVisible(3333) | IsEmpty(Control.GetLabel(3333))] + [!Control.IsVisible(3334) | IsEmpty(Control.GetLabel(3334))]</visible>
+            <visible>[!Control.IsVisible(3333) | String.IsEmpty(Control.GetLabel(3333))] + [!Control.IsVisible(3334) | String.IsEmpty(Control.GetLabel(3334))]</visible>
 		</control>
          <include>NowPlayingBackground</include>
 

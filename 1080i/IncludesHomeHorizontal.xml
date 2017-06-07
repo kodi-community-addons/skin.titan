@@ -11,7 +11,7 @@
 		
         <!-- mainmenu-->
         <include condition="Skin.String(HomeLayout, simplehor)">HomeSimpleHorizontal</include>
-        <include condition="SubString(Skin.String(HomeLayout), lowhorizontal)">HomeLowHorizontal</include>
+        <include condition="String.Contains(Skin.String(HomeLayout), lowhorizontal)">HomeLowHorizontal</include>
         
         
     </include>
@@ -68,16 +68,16 @@
 			  <itemgap>6</itemgap>
 			  <onback>SetFocus(300)</onback>
 			  <ondown condition="!Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</ondown>
-              <animation type="Conditional" condition="StringCompare(Container(4444).Numitems,1)">
+              <animation type="Conditional" condition="String.IsEqual(Container(4444).Numitems,1)">
 				<effect type="slide" end="768" time="0" delay="0" />
               </animation>
-              <animation type="Conditional" condition="StringCompare(Container(4444).Numitems,2)">
+              <animation type="Conditional" condition="String.IsEqual(Container(4444).Numitems,2)">
 				<effect type="slide" end="576" time="0" delay="0" />
               </animation>
-              <animation type="Conditional" condition="StringCompare(Container(4444).Numitems,3)">
+              <animation type="Conditional" condition="String.IsEqual(Container(4444).Numitems,3)">
 				<effect type="slide" end="384" time="0" delay="0" />
               </animation>
-              <animation type="Conditional" condition="StringCompare(Container(4444).Numitems,4)">
+              <animation type="Conditional" condition="String.IsEqual(Container(4444).Numitems,4)">
 				<effect type="slide" end="192" time="0" delay="0" />
               </animation>
 			  <itemlayout width="384" height="50">
@@ -136,7 +136,7 @@
             <height>60</height>
             <visible>!Control.isVisible(77551)</visible>
             <include name="PowerButton" content="PowerButton" condition="!Skin.HasSetting(EnableTouchSupport) + !Skin.HasSetting(DisablePowerMenu)">
-                <param name="visibility" value="![!IsEmpty(Container(300).ListItem.Property(infoline)) + !StringCompare(Container(300).ListItem.Property(infoline),none)] + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(HidePowerMenu)" />
+                <param name="visibility" value="![!String.IsEmpty(Container(300).ListItem.Property(infoline)) + !String.IsEqual(Container(300).ListItem.Property(infoline),none)] + !system.getbool(lookandfeel.enablerssfeeds) + !Skin.HasSetting(HidePowerMenu)" />
             </include>
             <animation type="Conditional" condition="skin.hastheme(classic)">
                 <effect type="slide" start="0,0" end="0,-15" time="0" tween="cubic" easing="inout" delay="0" />
@@ -154,8 +154,8 @@
     </include>
     <include name="HomeSimpleHorizontalFixed">
         <control type="fixedlist" id="300">
-            <animation effect="slide" time="200" start="0" end="-519" delay="0" condition="IsEmpty(Container(300).ListItemNoWrap(1).Label)">Conditional</animation>
-            <animation effect="slide" time="200" start="0" end="519" delay="0" condition="IsEmpty(Container(300).ListItemNoWrap(-1).Label)">Conditional</animation>
+            <animation effect="slide" time="200" start="0" end="-519" delay="0" condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label)">Conditional</animation>
+            <animation effect="slide" time="200" start="0" end="519" delay="0" condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label)">Conditional</animation>
             <focusposition>2</focusposition>
             <posx>-338</posx>
             <width>3069</width>
@@ -323,8 +323,8 @@
                 <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
                 <visible>System.getbool(lookandfeel.enablerssfeeds)</visible>
                 <visible>!Window.IsVisible(shutdownmenu)</visible>
-                <visible>!Control.IsVisible(4444) + [IsEmpty(Container(300).ListItem.Property(infoline)) | StringCompare(Container(300).ListItem.Property(infoline),none)]</visible>
-                <visible>![Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)]</visible>
+                <visible>!Control.IsVisible(4444) + [String.IsEmpty(Container(300).ListItem.Property(infoline)) | String.IsEqual(Container(300).ListItem.Property(infoline),none)]</visible>
+                <visible>![Skin.HasSetting(AutoShowSubmenu) + Integer.IsGreater(Container(4444).NumItems,0)]</visible>
                 <visible>!Skin.HasSetting(EnableTouchSupport)</visible>
             </control>
             <!-- rss feed -->
@@ -341,8 +341,8 @@
                 <textcolor>$INFO[Skin.String(MainMenuTextColor)]</textcolor>
                 <visible>System.getbool(lookandfeel.enablerssfeeds)</visible>
                 <visible>!Window.IsVisible(shutdownmenu)</visible>
-                <visible>!Control.IsVisible(4444) + [IsEmpty(Container(300).ListItem.Property(infoline)) | StringCompare(Container(300).ListItem.Property(infoline),none)]</visible>
-                <visible>![Skin.HasSetting(AutoShowSubmenu) + IntegerGreaterThan(Container(4444).NumItems,0)]</visible>
+                <visible>!Control.IsVisible(4444) + [String.IsEmpty(Container(300).ListItem.Property(infoline)) | String.IsEqual(Container(300).ListItem.Property(infoline),none)]</visible>
+                <visible>![Skin.HasSetting(AutoShowSubmenu) + Integer.IsGreater(Container(4444).NumItems,0)]</visible>
                 <visible>Skin.HasSetting(EnableTouchSupport)</visible>
             </control>
             <!--infoline-->
@@ -376,8 +376,8 @@
                 <orientation>horizontal</orientation>
                 <animation effect="slide" time="0" start="0,0" end="0,200" condition="!Control.IsVisible(4444)">Conditional</animation>
                 
-                <animation effect="slide" time="0" start="0" end="384" delay="0" condition="!IntegerGreaterThan(Container(4444).NumItems,3)">Conditional</animation>
-                <visible allowhiddenfocus="true">[SubString(Window(Home).Property(submenu),show) | Control.HasFocus(4444) | Skin.HasSetting(AutoShowSubmenu)] + !Control.HasFocus(2) + IntegerGreaterThan(Container(4444).NumItems,0)</visible>
+                <animation effect="slide" time="0" start="0" end="384" delay="0" condition="!Integer.IsGreater(Container(4444).NumItems,3)">Conditional</animation>
+                <visible allowhiddenfocus="true">[String.Contains(Window(Home).Property(submenu),show) | Control.HasFocus(4444) | Skin.HasSetting(AutoShowSubmenu)] + !Control.HasFocus(2) + Integer.IsGreater(Container(4444).NumItems,0)</visible>
                 <itemlayout height="70" width="384">
                     <control type="label">
                         <width>94%</width>
@@ -463,10 +463,10 @@
     </include>
     <include name="HomeLowHorizontalFixed">
         <control type="fixedlist" id="300">
-            <animation effect="slide" time="200" start="0" end="-384" delay="0" condition="IsEmpty(Container(300).ListItemNoWrap(1).Label) + !Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
-            <animation effect="slide" time="200" start="0" end="384" delay="0" condition="IsEmpty(Container(300).ListItemNoWrap(-1).Label) + !Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
-            <animation effect="slide" time="200" start="0" end="-590" delay="0" condition="IsEmpty(Container(300).ListItemNoWrap(1).Label) + Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
-            <animation effect="slide" time="200" start="0" end="590" delay="0" condition="IsEmpty(Container(300).ListItemNoWrap(-1).Label) + Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
+            <animation effect="slide" time="200" start="0" end="-384" delay="0" condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label) + !Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
+            <animation effect="slide" time="200" start="0" end="384" delay="0" condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label) + !Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
+            <animation effect="slide" time="200" start="0" end="-590" delay="0" condition="String.IsEmpty(Container(300).ListItemNoWrap(1).Label) + Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
+            <animation effect="slide" time="200" start="0" end="590" delay="0" condition="String.IsEmpty(Container(300).ListItemNoWrap(-1).Label) + Skin.String(HomeLayout,lowhorizontal_big)">Conditional</animation>
             <include condition="Skin.String(HomeLayout,lowhorizontal_big)">HomeLowHorizontalBig</include>
             <focusposition>2</focusposition>
             <include>HomeLowHorizontalLayout</include>
@@ -486,10 +486,10 @@
 		<width>100%</width>
 		<height>120</height>
 		<onup>$VAR[HomeButtonUpAction]</onup>
-        <ondown condition="IntegerGreaterThan(Container(4444).NumItems,3)">SetFocus(4444,2)</ondown>
-        <ondown condition="StringCompare(Container(4444).NumItems,3) | StringCompare(Container(4444).NumItems,2)">SetFocus(4444,1)</ondown>
-        <ondown condition="StringCompare(Container(4444).NumItems,1)">SetFocus(4444,0)</ondown>
-        <ondown condition="!IntegerGreaterThan(Container(4445).NumItems,0) + !Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</ondown>
+        <ondown condition="Integer.IsGreater(Container(4444).NumItems,3)">SetFocus(4444,2)</ondown>
+        <ondown condition="String.IsEqual(Container(4444).NumItems,3) | String.IsEqual(Container(4444).NumItems,2)">SetFocus(4444,1)</ondown>
+        <ondown condition="String.IsEqual(Container(4444).NumItems,1)">SetFocus(4444,0)</ondown>
+        <ondown condition="!Integer.IsGreater(Container(4445).NumItems,0) + !Skin.HasSetting(DisablePowerMenu)">ActivateWindow(ShutdownMenu)</ondown>
 		<pagecontrol>-</pagecontrol>
 		<movement>1</movement>
 		<scrolltime tween="sine" easing="inout">300</scrolltime>

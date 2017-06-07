@@ -7,7 +7,7 @@
 		<include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
         
         <control type="group" id="9000">
-            <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
+            <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | String.IsEqual(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
             
             <!-- spotlight -->
             <include condition="!Skin.HasSetting(NetflixHomeDisableFirstRow)">NetFlixHomeSpotLightWidget</include>
@@ -71,8 +71,8 @@
 				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
 				<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturefocus>
 				<texturenofocus colordiffuse="$INFO[Skin.String(GeneralPanelsColor)]">colors/color_white.png</texturenofocus>
-				<onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
-				<onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
+				<onclick condition="!String.IsEqual(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+				<onclick condition="String.IsEqual(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
 				<animation effect="fade" start="100" end="80" time="0" condition="!Control.HasFocus(99001)">Conditional</animation>
 			</control>
 		</control>
@@ -82,7 +82,7 @@
             <top>0</top>
             <left>0</left>
             <include condition="Skin.HasSetting(NetFlixHome_LargeMenu)">HomeBigVertical</include>
-            <animation type="Conditional" condition="![ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)]">
+            <animation type="Conditional" condition="![ControlGroup(300).HasFocus() | String.IsEqual(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)]">
                 <effect type="slide" start="0" end="-660" time="300" delay="0" tween="cubic" easing="inout" />
             </animation>
         </control>
@@ -99,7 +99,7 @@
         
         <!-- netflix content -->
         <control type="group" id="9000">
-            <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
+            <animation time="300" effect="fade" start="100" end="20" reversible="true" easing="inout" condition="[ControlGroup(9001).HasFocus() + window.isactive(home)] | ControlGroup(300).HasFocus() | String.IsEqual(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)">Conditional</animation>
             <!-- background image + overlay -->
             <control type="image">
                 <fadetime>350</fadetime>
@@ -173,7 +173,7 @@
                     <aligny>top</aligny>
                     <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <visible>[SubString(Control.GetLabel(29475),color_transparent) | Skin.HasSetting(NoClearLogoNetflix)] + Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    <visible>[String.Contains(Control.GetLabel(29475),color_transparent) | Skin.HasSetting(NoClearLogoNetflix)] + Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
                 <control type="textbox">
                     <height>120</height>
@@ -185,7 +185,7 @@
                     <aligny>top</aligny>
                     <label>$VAR[HomeMenuWidgetInfoLabel]</label>
                     <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
-                    <visible>[SubString(Control.GetLabel(29475),color_transparent) | Skin.HasSetting(NoClearLogoNetflix)] + !Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
+                    <visible>[String.Contains(Control.GetLabel(29475),color_transparent) | Skin.HasSetting(NoClearLogoNetflix)] + !Skin.HasSetting(NetflixHomeShowLargeThumb)</visible>
                 </control>
                     
                 <!-- spotlight details -->
@@ -273,9 +273,9 @@
                 <textureradionofocus colordiffuse="$INFO[Skin.String(ViewDetailsTextColor)]">common/menu.png</textureradionofocus>
                 <radiowidth>60</radiowidth>
                 <radioheight>60</radioheight>
-                <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
-                <onclick condition="StringCompare(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
-                <onclick condition="!StringCompare(Window(Home).Property(ShowViewSubMenu),show)">SetFocus(300)</onclick>
+                <onclick condition="!String.IsEqual(Window(Home).Property(ShowViewSubMenu),show)">SetProperty(ShowViewSubMenu, show, Home)</onclick>
+                <onclick condition="String.IsEqual(Window(Home).Property(ShowViewSubMenu),show)">ClearProperty(ShowViewSubMenu, Home)</onclick>
+                <onclick condition="!String.IsEqual(Window(Home).Property(ShowViewSubMenu),show)">SetFocus(300)</onclick>
                 <visible>Skin.HasSetting(EnableTouchSupport) + Window.IsActive(Home)</visible>
                 <ondown>510</ondown>
             </control>
@@ -338,7 +338,7 @@
             <left>0</left>
             <include condition="Skin.HasSetting(NetFlixHome_LargeMenu)">HomeBigVertical_submenu</include>
             <include condition="Skin.HasSetting(NetFlixHome_LargeMenu)">HomeBigVertical_mainmenu</include>
-            <animation type="Conditional" condition="![ControlGroup(300).HasFocus() | StringCompare(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)]">
+            <animation type="Conditional" condition="![ControlGroup(300).HasFocus() | String.IsEqual(Window(Home).Property(ShowViewSubMenu),show) | Control.HasFocus(300)]">
                 <effect type="slide" start="0" end="-660" time="300" delay="0" tween="cubic" easing="inout" />
             </animation>
         </control>
@@ -419,7 +419,7 @@
                     <width>99%</width>
                     <left>5</left>
                     <include>mediaflags</include>
-                    <visible>Control.IsVisible(505) | [!Control.IsVisible(505) + !IsEmpty(Window(Home).Property(ListItem.VideoCodec))]</visible>
+                    <visible>Control.IsVisible(505) | [!Control.IsVisible(505) + !String.IsEmpty(Window(Home).Property(ListItem.VideoCodec))]</visible>
                 </control>
             </control>
             <control type="grouplist" id="505">
@@ -429,7 +429,7 @@
                 <height>55</height>
                 <orientation>horizontal</orientation>
                 <onleft>300</onleft>
-                <visible allowhiddenfocus="true">ControlGroup(505).HasFocus() + IntegerGreaterThan(Container(1508).NumItems,0)</visible>
+                <visible allowhiddenfocus="true">ControlGroup(505).HasFocus() + Integer.IsGreater(Container(1508).NumItems,0)</visible>
                 <control type="button" id="51">
                     <description>Play</description>
                     <width>320</width>
@@ -557,20 +557,20 @@
 			
     </include>
 	<variable name="NetFlixHomeSpotLightWidgetContent">
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItem.Property(widgetPath.99)) + !SubString(Container(300).ListItem.Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItem.Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(0).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(0).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(0).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(1).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(1).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(1).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(2).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(2).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(2).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(3).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(3).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(3).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(4).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(4).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(4).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(5).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(5).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(5).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(6).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(6).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(6).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(7).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(7).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(7).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(8).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(8).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(8).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(9).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(9).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(9).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(10).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(10).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(10).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(11).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(11).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(11).Property(widgetPath.99)]</value>
-        <value condition="Skin.HasSetting(ShowAllWidgets) + !IsEmpty(Container(300).ListItemAbsolute(12).Property(widgetPath.99)) + !SubString(Container(300).ListItemAbsolute(12).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(12).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItem.Property(widgetPath.99)) + !String.Contains(Container(300).ListItem.Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItem.Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(0).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(0).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(0).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(1).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(1).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(1).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(2).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(2).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(2).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(3).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(3).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(3).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(4).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(4).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(4).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(5).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(5).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(5).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(6).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(6).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(6).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(7).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(7).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(7).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(8).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(8).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(8).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(9).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(9).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(9).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(10).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(10).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(10).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(11).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(11).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(11).Property(widgetPath.99)]</value>
+        <value condition="Skin.HasSetting(ShowAllWidgets) + !String.IsEmpty(Container(300).ListItemAbsolute(12).Property(widgetPath.99)) + !String.Contains(Container(300).ListItemAbsolute(12).Property(widgetPath.99),INCLUDE)">$INFO[Container(300).ListItemAbsolute(12).Property(widgetPath.99)]</value>
     </variable>
         
     <include name="netflix_customhub_item">
@@ -690,7 +690,7 @@
         <content target="videos">library://video/tvshows</content>
     </include>
     <variable name="netflix2_SubTitle">
-        <value condition="StringCompare(Window(Home).Property(ListItem.dbtype,episode))">$INFO[Window(Home).Property(ListItem.Label)]</value>
+        <value condition="String.IsEqual(Window(Home).Property(ListItem.dbtype,episode))">$INFO[Window(Home).Property(ListItem.Label)]</value>
         <value>$INFO[Window(Home).Property(ListItem.TagLine)]</value>
     </variable>
         

@@ -3,7 +3,7 @@
 <window>
     
     <defaultcontrol always="true">9005</defaultcontrol>
-    <onunload condition="!IsEmpty(Window(Home).Property(TrailerPlaying)) + !StringCompare(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunload>
+    <onunload condition="!String.IsEmpty(Window(Home).Property(TrailerPlaying)) + !String.IsEqual(Window(Home).Property(TrailerPlaying),fullscreen)">PlayerControl(Stop)</onunload>
 	<onunload>ClearProperty(AdditionalInfo)</onunload>
     <onunload>ClearProperty(filename_formatted,Home)</onunload>
     <controls>
@@ -13,11 +13,11 @@
             <visible allowhiddenfocus="true">false</visible>
             <onfocus>RunScript(script.skin.helper.service,action=GETFILENAME,output=filename_formatted)</onfocus>
             <onfocus condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),movies)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onfocus>
-            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + StringCompare(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onfocus>
-            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)] + SubString(Skin.String(videoinfo_traileraction),auto) + [StringCompare(Window(Home).Property(contenttype),movies) | StringCompare(Window(Home).Property(contenttype),tvshows)]">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)],YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + String.IsEqual(Window(Home).Property(contenttype),movies)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + String.IsEqual(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + String.IsEqual(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onfocus>
+            <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog) + String.IsEqual(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onfocus>
+            <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)] + String.Contains(Skin.String(videoinfo_traileraction),auto) + [String.IsEqual(Window(Home).Property(contenttype),movies) | String.IsEqual(Window(Home).Property(contenttype),tvshows)]">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)],YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)])</onfocus>
             <onfocus condition="System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)">close</onfocus>
             <onfocus condition="![System.HasAddon(script.extendedinfo) + Skin.HasSetting(UseExtendedInfoDialog)]">SetFocus(8000)</onfocus>
         </control>
@@ -55,7 +55,7 @@
                 
                 <!-- Header (if no logo)-->
                 <control type="group">
-                    <visible>IsEmpty(Control.GetLabel(887766))</visible>
+                    <visible>String.IsEmpty(Control.GetLabel(887766))</visible>
                     <control type="label">
                         <posx>61</posx>
                         <posy>10</posy>
@@ -86,9 +86,9 @@
                     <height>160</height>
                     <posy>10</posy>
                     <aspectratio aligny="top" align="right">keep</aspectratio>
-                    <include condition="!SubString(Skin.String(SkinHelper.StudioLogos.Path),colo)">videoInfoColorDiffuse</include>
+                    <include condition="!String.Contains(Skin.String(SkinHelper.StudioLogos.Path),colo)">videoInfoColorDiffuse</include>
                     <texture background="true">$INFO[Window(home).Property(SkinHelper.ListItem.StudioLogo)]</texture>
-                    <visible>IsEmpty(Window.Property(AdditionalInfo)) + !IsEmpty(Window(home).Property(SkinHelper.ListItem.StudioLogo))</visible>
+                    <visible>String.IsEmpty(Window.Property(AdditionalInfo)) + !String.IsEmpty(Window(home).Property(SkinHelper.ListItem.StudioLogo))</visible>
                 </control>
                 <control type="label">
                     <!-- additional info subtitle -->
@@ -102,7 +102,7 @@
                     <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
                     <label>$INFO[Window.Property(subtitle)]</label>
                     <shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
-                    <visible>!IsEmpty(Window.Property(AdditionalInfo))</visible>
+                    <visible>!String.IsEmpty(Window.Property(AdditionalInfo))</visible>
                 </control>
 				
 				<control type="group">
@@ -135,8 +135,8 @@
 						<width>1800</width>
 						<height>60</height>
 						<itemgap>15</itemgap>
-                        <onup condition="StringCompare(Window.Property(AdditionalInfo),cast)">SetFocus(351)</onup>
-                        <onup condition="StringCompare(Window.Property(AdditionalInfo),similar)">SetFocus(352)</onup>
+                        <onup condition="String.IsEqual(Window.Property(AdditionalInfo),cast)">SetFocus(351)</onup>
+                        <onup condition="String.IsEqual(Window.Property(AdditionalInfo),similar)">SetFocus(352)</onup>
                         <ondown>noop</ondown>
 						<onleft>8000</onleft>
 						<onright>8000</onright>
@@ -177,12 +177,12 @@
 							<textoffsetx>0</textoffsetx>
 							<label>20410</label>
                             <altlabel>244</altlabel>
-                            <usealttexture>!IsEmpty(Window(Home).Property(TrailerPlaying))</usealttexture>
-                            <onclick condition="IsEmpty(Window(Home).Property(TrailerPlaying))">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)],YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)])</onclick>
-                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">SetProperty(TrailerPlaying,fullscreen,home)</onclick>
-                            <onclick condition="!IsEmpty(Window(Home).Property(TrailerPlaying))">FullScreen</onclick>
+                            <usealttexture>!String.IsEmpty(Window(Home).Property(TrailerPlaying))</usealttexture>
+                            <onclick condition="String.IsEmpty(Window(Home).Property(TrailerPlaying))">RunScript(script.skin.helper.service,ACTION=playtrailer,MODE=$INFO[Skin.String(videoinfo_traileraction)],YOUTUBE=$INFO[Skin.String(AutoYoutubeTrailer)])</onclick>
+                            <onclick condition="!String.IsEmpty(Window(Home).Property(TrailerPlaying))">SetProperty(TrailerPlaying,fullscreen,home)</onclick>
+                            <onclick condition="!String.IsEmpty(Window(Home).Property(TrailerPlaying))">FullScreen</onclick>
                             <visible>Skin.HasSetting(videoinfo_button_trailer)</visible>
-							<visible>!IsEmpty(ListItem.Trailer) | Skin.String(AutoYoutubeTrailer,true) | !IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
+							<visible>!String.IsEmpty(ListItem.Trailer) | Skin.String(AutoYoutubeTrailer,true) | !String.IsEmpty(Window(Home).Property(TrailerPlaying))</visible>
 						</control>
 
 						<control type="button" id="114">
@@ -195,8 +195,8 @@
 							<onclick>SetProperty(AdditionalInfo, cast)</onclick>
                             <onclick>SetProperty(subtitle, $LOCALIZE[206])</onclick>
 							<onclick>SetFocus(351)</onclick>
-                            <visible>IntegerGreaterThan(Container(351).NumItems,0)</visible>
-							<visible>!StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+                            <visible>Integer.IsGreater(Container(351).NumItems,0)</visible>
+							<visible>!String.IsEqual(Window.Property(AdditionalInfo),cast)</visible>
                             <visible>Skin.HasSetting(videoinfo_button_cast)</visible>
 						</control>
                         <control type="button" id="31622">
@@ -209,8 +209,8 @@
 							<onclick>SetProperty(AdditionalInfo, similar)</onclick>
                             <onclick>SetProperty(subtitle, $LOCALIZE[31622])</onclick>
 							<onclick>SetFocus(352)</onclick>
-                            <visible>IntegerGreaterThan(Container(352).NumItems,0)</visible>
-							<visible>!StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+                            <visible>Integer.IsGreater(Container(352).NumItems,0)</visible>
+							<visible>!String.IsEqual(Window.Property(AdditionalInfo),similar)</visible>
                             <visible>Skin.HasSetting(videoinfo_button_similar)</visible>
 						</control>
                         <control type="button" id="100">
@@ -223,7 +223,7 @@
 							<onclick condition="System.HasAddon(plugin.video.youtube)">RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[ListItem.Title] $INFO[ListItem.Year],header=$LOCALIZE[31797])</onclick>
                             <onclick condition="!System.HasAddon(plugin.video.youtube)">ActivateWindow(Videos,plugin://plugin.video.youtube)</onclick>
 							<visible>Skin.HasSetting(videoinfo_button_youtubevideos)</visible>
-                            <visible>StringCompare(Window(Home).Property(contenttype),movies) | StringCompare(Window(Home).Property(contenttype),tvshows)</visible>
+                            <visible>String.IsEqual(Window(Home).Property(contenttype),movies) | String.IsEqual(Window(Home).Property(contenttype),tvshows)</visible>
 						</control>
                         <control type="button" id="207207">
 							<!--Plot Button-->
@@ -234,8 +234,8 @@
 							<textoffsetx>0</textoffsetx>
 							<onclick>SetProperty(AdditionalInfo, plot)</onclick>
                             <onclick>SetProperty(subtitle, $LOCALIZE[207])</onclick>
-                            <visible>!IsEmpty(ListItem.Plot)</visible>
-							<visible>!StringCompare(Window.Property(AdditionalInfo),plot)</visible>
+                            <visible>!String.IsEmpty(ListItem.Plot)</visible>
+							<visible>!String.IsEqual(Window.Property(AdditionalInfo),plot)</visible>
                             <visible>Skin.HasSetting(videoinfo_button_plot)</visible>
 						</control>
 						<control type="button" id="116">
@@ -246,7 +246,7 @@
 							<align>center</align>
 							<textoffsetx>0</textoffsetx>
 							<onclick>ClearProperty(AdditionalInfo)</onclick>
-							<visible>!IsEmpty(Window.Property(AdditionalInfo))</visible>
+							<visible>!String.IsEmpty(Window.Property(AdditionalInfo))</visible>
 						</control>
 						<control type="button" id="115">
 							<!--Extended Info Button-->
@@ -257,10 +257,10 @@
 							<textoffsetx>0</textoffsetx>
                             <visible>Skin.HasSetting(videoinfo_button_extendedinfo)</visible>
                             <onclick condition="!System.HasAddon(script.extendedinfo)">RunPlugin(plugin://script.extendedinfo)</onclick>
-							<onclick condition="System.HasAddon(script.extendedinfo) + StringCompare(Window(Home).Property(contenttype),movies)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onclick>
-                            <onclick condition="System.HasAddon(script.extendedinfo) + StringCompare(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onclick>
-                            <onclick condition="System.HasAddon(script.extendedinfo) + StringCompare(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onclick>
-                            <onclick condition="System.HasAddon(script.extendedinfo) + StringCompare(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,dbid=$INFO[ListItem.DBID],tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onclick>
+							<onclick condition="System.HasAddon(script.extendedinfo) + String.IsEqual(Window(Home).Property(contenttype),movies)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</onclick>
+                            <onclick condition="System.HasAddon(script.extendedinfo) + String.IsEqual(Window(Home).Property(contenttype),tvshows)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</onclick>
+                            <onclick condition="System.HasAddon(script.extendedinfo) + String.IsEqual(Window(Home).Property(contenttype),seasons)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</onclick>
+                            <onclick condition="System.HasAddon(script.extendedinfo) + String.IsEqual(Window(Home).Property(contenttype),episodes)">RunScript(script.extendedinfo,info=extendedepisodeinfo,dbid=$INFO[ListItem.DBID],tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</onclick>
 						</control>
                         <control type="button" id="112">
                              <width>285</width>
@@ -279,7 +279,7 @@
 							<onclick>Dialog.Close(DialogVideoInfo.xml)</onclick>
 							<onclick>RunScript(script.cinema.experience,movieid=$INFO[ListItem.DBID])</onclick>
                             <visible>Skin.HasSetting(videoinfo_button_cinemaexperience)</visible>
-							<visible>System.HasAddon(script.cinema.experience) + StringCompare(ListItem.DBTYPE,movie) + !SubString(Container.FolderPath,plugin)</visible>
+							<visible>System.HasAddon(script.cinema.experience) + String.IsEqual(ListItem.DBTYPE,movie) + !String.Contains(Container.FolderPath,plugin)</visible>
 						</control>
                         
                         <control type="button" id="7">
@@ -299,7 +299,7 @@
 							<textoffsetx>0</textoffsetx>
 							<label>$INFO[System.AddonTitle(script.videoextras)]</label>
 							<onclick>XBMC.RunScript(script.videoextras,display,"$INFO[ListItem.FilenameAndPath]")</onclick>
-							<visible>System.HasAddon(script.videoextras) + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
+							<visible>System.HasAddon(script.videoextras) + String.IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
                             <visible>Skin.HasSetting(videoinfo_button_videoextras)</visible>
 						</control>
 						<control type="button" id="211">
@@ -311,7 +311,7 @@
 							<label>31300</label>
 							<onclick>RunScript(script.tvtunes,mode=solo)</onclick>
                             <visible>Skin.HasSetting(videoinfo_button_tvtunes)</visible>
-							<visible>System.HasAddon(script.tvtunes) + [StringCompare(ListItem.DBTYPE,movie) | StringCompare(ListItem.DBTYPE,tvshow) | StringCompare(ListItem.DBTYPE,musicvideo)] + IsEmpty(Window(movieinformation).Property(TvTunes_HideVideoInfoButton))</visible>
+							<visible>System.HasAddon(script.tvtunes) + [String.IsEqual(ListItem.DBTYPE,movie) | String.IsEqual(ListItem.DBTYPE,tvshow) | String.IsEqual(ListItem.DBTYPE,musicvideo)] + String.IsEmpty(Window(movieinformation).Property(TvTunes_HideVideoInfoButton))</visible>
 						</control>
 						
 						<control type="button" id="101">
@@ -387,7 +387,7 @@
                     </control>
 						
 					<control type="group">
-						<visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
+						<visible>String.IsEmpty(Window.Property(AdditionalInfo))</visible>
 						<visible>!Window.IsActive(script-ExtendedInfo Script-DialogVideoInfo.xml) + !Window.IsActive(script-ExtendedInfo Script-DialogInfo.xml)</visible>
 						<include>animation_window_open_close</include>
 						
@@ -409,7 +409,7 @@
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
-                                <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
+                                <visible>!String.IsEqual(Window(Home).Property(TrailerPlaying),windowed)</visible>
 							</control>
                             <control type="textbox">
 								<posx>0</posx>
@@ -421,7 +421,7 @@
 								<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 								<align>justify</align>
 								<font>Reg26</font>
-                                <visible>StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
+                                <visible>String.IsEqual(Window(Home).Property(TrailerPlaying),windowed)</visible>
 							</control>
 							<control type="image">
 								<width>1120</width>
@@ -433,7 +433,7 @@
 								<!--Premiered or Year -->
 								<width>950</width>
 								<height>40</height>
-								<visible>!IsEmpty(Window(Home).Property(Skinhelper.Listitem.Premiered.formatted)) | !IsEmpty(ListItem.Year) | !IsEmpty(Listitem.Premiered)</visible>
+								<visible>!String.IsEmpty(Window(Home).Property(Skinhelper.Listitem.Premiered.formatted)) | !String.IsEmpty(ListItem.Year) | !String.IsEmpty(Listitem.Premiered)</visible>
 								<control type="image">
 									<posx>0</posx>
 									<posy>3</posy>
@@ -470,7 +470,7 @@
 									<label>$VAR[ListItemDurationWithEndTime]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                                    <visible>IsEmpty(ListItem.Property(TotalEpisodes))</visible>
+                                    <visible>String.IsEmpty(ListItem.Property(TotalEpisodes))</visible>
 									<scroll>false</scroll>
 								</control>
                                 <control type="label">
@@ -483,14 +483,14 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
-                                    <visible>!IsEmpty(ListItem.Property(TotalEpisodes))</visible>
+                                    <visible>!String.IsEmpty(ListItem.Property(TotalEpisodes))</visible>
 								</control>
 							</control>
 							<control type="group">
 								<!--Director and Writer -->
 								<width>530</width>
 								<height>40</height>
-								<visible>!IsEmpty(ListItem.Director) + !IsEmpty(ListItem.Writer)</visible>
+								<visible>!String.IsEmpty(ListItem.Director) + !String.IsEmpty(ListItem.Writer)</visible>
 								<control type="image">
 									<posx>0</posx>
 									<posy>5</posy>
@@ -498,7 +498,7 @@
 									<height>49</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/director-icon.png</texture>
-									<visible>!IsEmpty(ListItem.Director)</visible>
+									<visible>!String.IsEmpty(ListItem.Director)</visible>
 								</control>
 								<control type="label">
 									<posx>60</posx>
@@ -510,7 +510,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
-									<visible>!IsEmpty(ListItem.Director)</visible>
+									<visible>!String.IsEmpty(ListItem.Director)</visible>
 								</control>
 								<control type="image">
 									<posx>550</posx>
@@ -519,7 +519,7 @@
 									<height>49</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/writer-icon.png</texture>
-									<visible>!IsEmpty(ListItem.Writer)</visible>
+									<visible>!String.IsEmpty(ListItem.Writer)</visible>
 								</control>
 								<control type="label">
 									<posx>610</posx>
@@ -531,14 +531,14 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
-									<visible>!IsEmpty(ListItem.Writer)</visible>
+									<visible>!String.IsEmpty(ListItem.Writer)</visible>
 								</control>
 							</control>
 							<control type="group">
 								<!--Genre and studio-->
 								<width>1150</width>
 								<height>40</height>
-								<visible>!IsEmpty(ListItem.Genre)</visible>
+								<visible>!String.IsEmpty(ListItem.Genre)</visible>
 								
 								<control type="image">
 									<posx>0</posx>
@@ -547,7 +547,7 @@
 									<height>49</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/genre-icon.png</texture>
-									<visible>!IsEmpty(ListItem.Genre)</visible>
+									<visible>!String.IsEmpty(ListItem.Genre)</visible>
 								</control>
 								<control type="label">
 									<posx>60</posx>
@@ -559,7 +559,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
-									<visible>!IsEmpty(ListItem.Genre)</visible>
+									<visible>!String.IsEmpty(ListItem.Genre)</visible>
 								</control>
 								<control type="image">
 									<posx>550</posx>
@@ -568,7 +568,7 @@
 									<height>49</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>dialogs/videoinfo/tvstudio-icon.png</texture>
-									<visible>!IsEmpty(ListItem.Studio)</visible>
+									<visible>!String.IsEmpty(ListItem.Studio)</visible>
 								</control>
 								<control type="label">
 									<posx>610</posx>
@@ -580,7 +580,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
-									<visible>!IsEmpty(ListItem.Studio)</visible>
+									<visible>!String.IsEmpty(ListItem.Studio)</visible>
 								</control>
 							</control>
 							
@@ -588,7 +588,7 @@
 								<!--videocodec and audiocodec-->
 								<width>1150</width>
 								<height>40</height>
-								<visible>!IsEmpty(ListItem.VideoCodec) | !IsEmpty(Window(Home).Property(SkinHelper.ListItem.VideoCodec))</visible>
+								<visible>!String.IsEmpty(ListItem.VideoCodec) | !String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.VideoCodec))</visible>
 								<control type="image">
 									<posx>10</posx>
 									<posy>15</posy>
@@ -632,7 +632,7 @@
 								<!--MPAA RATING and SUBTITLES-->
 								<width>1150</width>
 								<height>40</height>
-								<visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles)) | !IsEmpty(ListItem.mpaa) | !IsEmpty(ListItem.Rating)</visible>
+								<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles)) | !String.IsEmpty(ListItem.mpaa) | !String.IsEmpty(ListItem.Rating)</visible>
 								<control type="image">
 									<posx>8</posx>
 									<posy>15</posy>
@@ -640,7 +640,7 @@
 									<height>36</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>flags/subtitles.png</texture>
-                                    <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
+                                    <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
 								</control>
 								<control type="label">
 									<posx>60</posx>
@@ -660,7 +660,7 @@
 									<height>30</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>flags/mpaa.png</texture>
-                                    <visible>!IsEmpty(ListItem.mpaa) + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
+                                    <visible>!String.IsEmpty(ListItem.mpaa) + !String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
 								</control>
 								<control type="label">
 									<posx>610</posx>
@@ -672,7 +672,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll delay="4000">true</scroll>
-                                    <visible>!IsEmpty(ListItem.mpaa) + !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
+                                    <visible>!String.IsEmpty(ListItem.mpaa) + !String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
 								</control>
                                 <!-- mpaa at left side for tvshows -->
                                 <control type="image">
@@ -682,7 +682,7 @@
 									<height>30</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>flags/mpaa.png</texture>
-                                    <visible>!IsEmpty(ListItem.mpaa) + IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
+                                    <visible>!String.IsEmpty(ListItem.mpaa) + String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
 								</control><control type="label">
 									<posx>60</posx>
 									<posy>0</posy>
@@ -693,7 +693,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll delay="4000">true</scroll>
-                                    <visible>!IsEmpty(ListItem.mpaa) + IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
+                                    <visible>!String.IsEmpty(ListItem.mpaa) + String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Subtitles))</visible>
 								</control>
 							</control>
 							
@@ -708,7 +708,7 @@
 									<height>36</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>flags/rating.png</texture>
-                                    <visible>!IsEmpty(ListItem.RatingAndVotes)</visible>
+                                    <visible>!String.IsEmpty(ListItem.RatingAndVotes)</visible>
 								</control>
 								<control type="label">
 									<posx>60</posx>
@@ -719,7 +719,7 @@
 									<label>$INFO[ListItem.RatingAndVotes,$LOCALIZE[563]: ]</label>
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                                    <visible>!IsEmpty(ListItem.RatingAndVotes)</visible>
+                                    <visible>!String.IsEmpty(ListItem.RatingAndVotes)</visible>
 									<scroll>false</scroll>
 								</control>
 								<control type="image">
@@ -729,7 +729,7 @@
 									<height>30</height>
                                     <colordiffuse>$INFO[Skin.String(ViewDetailsTextColor)]</colordiffuse>
 									<texture>flags/tomato.png</texture>
-                                    <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Meter))</visible>
+                                    <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Meter))</visible>
 								</control>
 								<control type="label">
 									<posx>610</posx>
@@ -741,7 +741,7 @@
 									<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
 									<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
 									<scroll>false</scroll>
-                                    <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Meter))</visible>
+                                    <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Meter))</visible>
 								</control>                       							
                             </control>
                             <control type="image">
@@ -768,7 +768,7 @@
                                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                                 <scroll>false</scroll>
-                                <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Consensus)) | !IsEmpty(Window(Home).Property(SkinHelper.ListItem.Awards))</visible>
+                                <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.RottenTomatoes.Consensus)) | !String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.Awards))</visible>
                             </control>
 
                             <control type="image">
@@ -787,8 +787,8 @@
                                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                                 <scroll>false</scroll>
-                                <visible>StringCompare(Window(Home).Property(contenttype),tvshows)</visible>
-                                <visible>IsEmpty(Window(Home).Property(SkinHelper.ListItem.NextEpisode.airdate.Label))</visible>
+                                <visible>String.IsEqual(Window(Home).Property(contenttype),tvshows)</visible>
+                                <visible>String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.NextEpisode.airdate.Label))</visible>
                             </control>
                             
                             <!-- tvdb returning series status-->
@@ -801,7 +801,7 @@
                                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                                 <scroll>false</scroll>
-                                <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.NextEpisode.airdate.Label))</visible>
+                                <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.NextEpisode.airdate.Label))</visible>
                             </control>
                             
 							<!--Last aired episode-->
@@ -813,7 +813,7 @@
                                 <label>[B]$LOCALIZE[31214]:[/B] $INFO[Window(Home).Property(SkinHelper.ListItem.Lastepisode.airdate.Label)]</label>
                                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                                <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.LastEpisode.airdate.Label))</visible>
+                                <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.LastEpisode.airdate.Label))</visible>
                                 <scroll>false</scroll>
                             </control>
 							<!--Next aired episode-->
@@ -826,7 +826,7 @@
                                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                                 <scroll>false</scroll>
-                                <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.NextEpisode.airdate.Label))</visible>
+                                <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.NextEpisode.airdate.Label))</visible>
                             </control>
                             <!--filename-->
                             <control type="label">
@@ -838,15 +838,15 @@
                                 <label>$VAR[VideoInfoFileName,[B]$LOCALIZE[21800]: [/B]]</label>
                                 <textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
                                 <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
-                                <visible>!IsEmpty(ListItem.FileNameAndPath) + !Skin.HasSetting(DialogVideoInfo_HideFileName)</visible>
-                                <visible>IsEmpty(Window.Property(AdditionalInfo))</visible>
+                                <visible>!String.IsEmpty(ListItem.FileNameAndPath) + !Skin.HasSetting(DialogVideoInfo_HideFileName)</visible>
+                                <visible>String.IsEmpty(Window.Property(AdditionalInfo))</visible>
                             </control>
 
 						</control>
                         
                         <!-- Poster image -->
                         <control type="group">
-                            <visible>!StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
+                            <visible>!String.IsEqual(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image">
                                 <!--cdart image-->
                                 <right>50</right>
@@ -860,7 +860,7 @@
                                 <animation effect="fade" start="100" end="0" delay="0" time="150" pulse="false" condition="!Skin.HasSetting(VideoInfo_ShowCDart)">Conditional</animation>
                                 <animation effect="rotate" end="-90" center="auto" time="600" loop="false" reversible="false" condition="!Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
                                 <animation effect="rotate" end="-360" center="auto" time="20000" delay="0" loop="true" reversible="false" condition="Skin.HasSetting(AnimateDiscArt)">Conditional</animation>
-                                <visible>!IsEmpty(ListItem.Art(poster)) | !IsEmpty(ListItem.Art(tvshow.poster)) | !IsEmpty(ListItem.Property(TVShowThumb))</visible>
+                                <visible>!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster)) | !String.IsEmpty(ListItem.Property(TVShowThumb))</visible>
                             </control>
                             <control type="image">
                                 <!--poster-->
@@ -878,7 +878,7 @@
                                 <top>235</top>
                                 <right>580</right>
                                 <include>ImdbTop250</include>
-                                <visible>!IsEmpty(Window(Home).Property(SkinHelper.ListItem.IMDB.Top250))</visible>
+                                <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.ListItem.IMDB.Top250))</visible>
                             </control>
                             <control type="group">
                                 <right>50</right>
@@ -893,7 +893,7 @@
                             <posy>415</posy>
                             <width>661</width>
                             <height>371</height>
-                            <visible>StringCompare(Window(Home).Property(TrailerPlaying),windowed)</visible>
+                            <visible>String.IsEqual(Window(Home).Property(TrailerPlaying),windowed)</visible>
                             <control type="image">
                                 <texture border="15">diffuse/bgpanel.png</texture>
                                 <colordiffuse>black</colordiffuse>
@@ -915,7 +915,7 @@
                         <shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
                         <align>justify</align>
                         <font>Reg42</font>
-                        <visible>StringCompare(Window.Property(AdditionalInfo),plot)</visible>
+                        <visible>String.IsEqual(Window.Property(AdditionalInfo),plot)</visible>
                     </control>
                     
 					<!--Cast List-->
@@ -948,9 +948,9 @@
                         <orientation>vertical</orientation>
                         <focusposition>0</focusposition>
                         <animation effect="fade" start="100" end="25" time="0" condition="Container(351).IsUpdating">Conditional</animation>
-                        <animation effect="slide" start="0,0" end="0,1000" time="0" delay="0" condition="!StringCompare(Window.Property(AdditionalInfo),cast)">Conditional</animation>
+                        <animation effect="slide" start="0,0" end="0,1000" time="0" delay="0" condition="!String.IsEqual(Window.Property(AdditionalInfo),cast)">Conditional</animation>
                         <viewtype label="actor list">list</viewtype>
-                        <visible allowhiddenfocus="true">StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+                        <visible allowhiddenfocus="true">String.IsEqual(Window.Property(AdditionalInfo),cast)</visible>
 						<include>animation_window_open_close</include>
                         <itemlayout height="357" width="240">
                             <control type="group">
@@ -990,7 +990,7 @@
                     
                     <!-- cast info details -->
 					<control type="group">
-						<visible>StringCompare(Window.Property(AdditionalInfo),cast)</visible>
+						<visible>String.IsEqual(Window.Property(AdditionalInfo),cast)</visible>
 						<include>animation_window_open_close</include>
                         
                         <!-- busy image while widget loading -->
@@ -1055,9 +1055,9 @@
                         <orientation>vertical</orientation>
                         <focusposition>0</focusposition>
                         <viewtype label="actor list">list</viewtype>
-                        <visible allowhiddenfocus="true">StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+                        <visible allowhiddenfocus="true">String.IsEqual(Window.Property(AdditionalInfo),similar)</visible>
                         <animation effect="fade" start="100" end="25" time="0" condition="Container(352).IsUpdating">Conditional</animation>
-                        <animation effect="slide" start="0,0" end="0,1000" time="0" delay="0" condition="!StringCompare(Window.Property(AdditionalInfo),similar)">Conditional</animation>
+                        <animation effect="slide" start="0,0" end="0,1000" time="0" delay="0" condition="!String.IsEqual(Window.Property(AdditionalInfo),similar)">Conditional</animation>
                         <!-- itemlayout movies -->
                         <itemlayout height="357" width="240">
                             <control type="group">
@@ -1079,7 +1079,7 @@
                     <!-- similar info details -->
                     <control type="group">
 						<include>animation_window_open_close</include>
-                        <visible>StringCompare(Window.Property(AdditionalInfo),similar)</visible>
+                        <visible>String.IsEqual(Window.Property(AdditionalInfo),similar)</visible>
                         <control type="group">
                             <right>50</right>
                             <posy>210</posy>
