@@ -11,11 +11,14 @@ Installation instructions:
 ## Beta version repository
 If you want to try out the latest features you can install my beta repository:
 
+https://marcelveldt.github.io/repository.marcelveldt/repository.marcelveldt/repository.marcelveldt-1.0.1.zip
+
  
-PLEASE DO NOT INSTALL THE SKIN FROM GITHUB, I WILL NOT PROVIDE SUPPORT !
-USE OFFICIAL VERSION FROM KODI REPO OR THE BETA VERSION FROM EMBY REPO ONLY!
+PLEASE DO NOT INSTALL THE SKIN DIRECTLY FROM GITHUB, I WILL NOT PROVIDE SUPPORT !
+USE OFFICIAL VERSION FROM KODI REPO OR THE BETA VERSION FROM MY REPO ONLY!
 
-Bug reports and feature requests
-Feel free to post a message on the forum or send me a PM to get support for the skin, I'll be glad to assist. Also I'm also looking for users with feedback or suggestions about the skin. If you have a feature you would like to see included, please ask on the feature requests thread!
 
-FORUM: http://forum.kodi.tv/forumdisplay.php?fid=212
+## Help needed with maintaining !
+I am very busy currently so I do not have a lot of time to work on this project or watch the forums.
+Be aware that this is a community driven project, so feel free to submit PR's yourself to improve the code and/or help others with support on the forums etc. If you're willing to really participate in the development, please contact me so I can give you write access to the repo. I do my best to maintain the project every once in a while, when I have some spare time left.
+Thanbks for understanding!
