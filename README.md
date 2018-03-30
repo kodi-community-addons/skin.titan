@@ -1,12 +1,6 @@
 # skin.titan
 
-This skin is available in the official Kodi repository.
-
-Installation instructions:
- 1. In Kodi, go to Settings --> Appearance --> Skin
- 2. Press the "Get more" button
- 3. Select Titan and hit install
- 4. Default installation now complete and you can sit back and enjoy :-)
+This skin's stable version is available in the official Kodi repository.
 
 ## Beta version repository
 If you want to try out the latest features you can install my beta repository:
