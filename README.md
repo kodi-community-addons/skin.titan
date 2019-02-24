@@ -5,7 +5,7 @@ This skin's stable version is available in the official Kodi repository.
 ## Beta version repository
 If you want to try out the latest features you can install my beta repository:
 
-https://marcelveldt.github.io/repository.marcelveldt/repository.marcelveldt/repository.marcelveldt-1.0.1.zip
+https://github.com/kodi-community-addons/repository.marcelveldt/raw/master/repository.marcelveldt/repository.marcelveldt-1.0.1.zip
 
  
 PLEASE DO NOT INSTALL THE SKIN DIRECTLY FROM GITHUB, I WILL NOT PROVIDE SUPPORT !
